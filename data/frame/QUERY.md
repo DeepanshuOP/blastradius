@@ -1,5 +1,33 @@
 # SEART GitHub Search query — BlastRadius repository sampling frame
 
+## 0. Fill in this form
+
+Language → Java (Run 1) / Python (Run 2)
+Stars (min) → 500
+Commits (min) → 1000
+Include forks → unchecked / off
+Last commit (from) → 2026-06-05
+License → check all SPDX license checkboxes (exclude only "None")
+
+Leave every other field on the form at its default.
+
+Run twice — once with Language=Java, once with Language=Python. Export each to CSV.
+
+## Verify on site
+
+Two of the fields above are named from memory, not confirmed against the
+live form. Check both before running:
+
+- **"Include forks"** — believed to be a fork-inclusion toggle that excludes
+  forks when left unchecked. If the live form has no control matching this
+  description, find whichever control actually governs fork inclusion under
+  its real label. Do not run the query until you've identified it.
+- **"License"** — believed to present as a set of SPDX license checkboxes.
+  If it's a dropdown, multi-select, or anything else, set it to include
+  every license and exclude only "no license" / unlicensed — do not narrow
+  to a permissive subset. If you can't tell which setting does that, stop
+  and ask rather than guessing.
+
 Step 1 of T0.1a only. No code in this document; this is the query
 specification and export procedure. Produced against ROADMAP §23.1
 (criteria), §23.3 (attrition funnel), §8.1 (T0.1 subtasks). Where
@@ -42,36 +70,6 @@ supplies static repo metadata only, nothing about Actions runs, workflow
 content, or time-windowed PR activity. Rows 1–6 are the only ones that go
 into the exported SEART query itself.
 
-### 2.1 Licence policy
-
-§23.1 and §22.4 both govern licence, but at different stages, and they say
-different things — this is not a conflict to resolve, it's two gates that
-bind at different times:
-
-- **§23.1 (frame time)** requires only that a `LICENSE` is present. **§22.4
-  (release hygiene)** requires **permissive licences only** before BR-Bench
-  ships. Both are in force; neither overrides the other, because they apply
-  to different stages of the pipeline.
-- **Frame-time policy: filter on presence only. Do not filter on licence
-  type in SEART** (row 6 above stays presence-only, not permissive-only).
-  Rationale: GitHub Actions logs expire after 90 days (§5, T1) — that clock
-  is the one unrecoverable resource in this project, so narrowing the frame
-  by licence type before harvest would permanently destroy ground truth
-  that a later, more careful licence decision might have wanted to keep.
-  A permissive-only filter at frame time also skews the corpus toward
-  Apache-heavy Java against the §23.4 language-balance target, which is a
-  sampling-bias cost paid for nothing if the repo would have been excluded
-  at release anyway on other grounds.
-- **Capture the SPDX identifier per repo** so licence becomes a reportable
-  attrition stage (§23.3) applied at release, not silently at capture —
-  the funnel should show how many repos permissive-licence filtering
-  removes, not hide it by never harvesting them.
-- **Open question for the guide:** whether *derived* metadata (test names,
-  SHAs, outcome counts — not the source code itself) mined from a copyleft
-  repo is redistributable under CC-BY 4.0 (§22.2) is a question for
-  Dr. Yoga Raja C A, not something to settle unilaterally in a query
-  specification file.
-
 ## 3. Two runs, one merged file
 
 SEART filters by a single **Language** value per query — it cannot export
@@ -106,15 +104,7 @@ before any attrition). §8.1 separately says to over-sample toward
 ~300 candidates by stage 3 and ~60–100 usable repos by stage 8 — aggressive
 over-sampling here is the explicit design, not a mistake to correct later.
 
-**If the actual combined count is far off:**
-- **Far under** (roughly <1,000): the SEART-side thresholds (rows 2–3,
-  stars/commits) are likely too strict for the combined Java+Python pool —
-  loosen them, document the change and the reason, and bump
-  `frame_version` rather than silently re-running with different numbers.
-- **Far over** (roughly >5,000): no action needed. Rows 7–10 (CI liveness
-  and workflow triage) are API-side and will cut this down sharply on their
-  own; record the raw stage-0 count for the attrition table (§23.3) and move
-  on to `liveness.py`.
+If the actual combined count is far off, see the appendix.
 
 ## 6. Export destination
 
@@ -133,4 +123,55 @@ owner, repo, lang, stars, commits, default_branch, n_runs_90d, test_workflow_ids
 
 ## 7. Actual result count
 
-ACTUAL RESULT COUNT: ___
+JAVA COUNT: 1123
+PYTHON COUNT: 2548
+COMBINED: 3671
+DATE RUN: 2026-08-05
+
+Java:Python ratio is ~1:2.3 by repo count — revisit against §23.4's instance-count balance target.
+
+---
+
+## Appendix — Rationale — read only if challenged
+
+### Licence policy (§2.1)
+
+§23.1 and §22.4 both govern licence, but at different stages, and they say
+different things — this is not a conflict to resolve, it's two gates that
+bind at different times:
+
+- **§23.1 (frame time)** requires only that a `LICENSE` is present. **§22.4
+  (release hygiene)** requires **permissive licences only** before BR-Bench
+  ships. Both are in force; neither overrides the other, because they apply
+  to different stages of the pipeline.
+- **Frame-time policy: filter on presence only. Do not filter on licence
+  type in SEART** (row 6 above stays presence-only, not permissive-only).
+  Rationale: GitHub Actions logs expire after 90 days (§5, T1) — that clock
+  is the one unrecoverable resource in this project, so narrowing the frame
+  by licence type before harvest would permanently destroy ground truth
+  that a later, more careful licence decision might have wanted to keep.
+  A permissive-only filter at frame time also skews the corpus toward
+  Apache-heavy Java against the §23.4 language-balance target, which is a
+  sampling-bias cost paid for nothing if the repo would have been excluded
+  at release anyway on other grounds.
+- **Capture the SPDX identifier per repo** so licence becomes a reportable
+  attrition stage (§23.3) applied at release, not silently at capture —
+  the funnel should show how many repos permissive-licence filtering
+  removes, not hide it by never harvesting them.
+- **Open question for the guide:** whether *derived* metadata (test names,
+  SHAs, outcome counts — not the source code itself) mined from a copyleft
+  repo is redistributable under CC-BY 4.0 (§22.2) is a question for
+  Dr. Yoga Raja C A, not something to settle unilaterally in a query
+  specification file.
+
+### Expected count — over/under guidance (§5)
+
+**If the actual combined count is far off:**
+- **Far under** (roughly <1,000): the SEART-side thresholds (rows 2–3,
+  stars/commits) are likely too strict for the combined Java+Python pool —
+  loosen them, document the change and the reason, and bump
+  `frame_version` rather than silently re-running with different numbers.
+- **Far over** (roughly >5,000): no action needed. Rows 7–10 (CI liveness
+  and workflow triage) are API-side and will cut this down sharply on their
+  own; record the raw stage-0 count for the attrition table (§23.3) and move
+  on to `liveness.py`.
