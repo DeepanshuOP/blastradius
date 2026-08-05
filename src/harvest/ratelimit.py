@@ -112,9 +112,9 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _log(entry: dict) -> None:
-    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with LOG_PATH.open("a", encoding="utf-8") as fh:
+def _log(entry: dict, log_path: Path) -> None:
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(entry) + "\n")
 
 
@@ -148,7 +148,8 @@ def get_with_backoff(
                     "duration_ms": duration_ms,
                     "attempt": attempt,
                     "error": type(exc).__name__,
-                }
+                },
+                LOG_PATH,
             )
             last_exc = exc
             if attempt == max_attempts:
@@ -173,7 +174,8 @@ def get_with_backoff(
                 "remaining": remaining,
                 "duration_ms": duration_ms,
                 "attempt": attempt,
-            }
+            },
+            LOG_PATH,
         )
 
         if response.ok:

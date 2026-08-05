@@ -14,7 +14,8 @@ import pytest
 import requests
 import responses
 
-from src.harvest.ratelimit import LOG_PATH, TokenPool, get_with_backoff
+import src.harvest.ratelimit as ratelimit
+from src.harvest.ratelimit import TokenPool, get_with_backoff
 
 URL = "https://api.github.com/repos/x/y"
 
@@ -101,7 +102,7 @@ def test_connection_error_then_success_logs_null_status(mock_sleep):
     assert resp.status_code == 200
     assert len(responses.calls) == 2
 
-    lines = Path(LOG_PATH).read_text(encoding="utf-8").strip().splitlines()
+    lines = Path(ratelimit.LOG_PATH).read_text(encoding="utf-8").strip().splitlines()
     last_two = [json.loads(line) for line in lines[-2:]]
     assert last_two[0]["status"] is None
     assert last_two[0]["error"] == "ConnectionError"
@@ -119,3 +120,34 @@ def test_404_raises_immediately_after_exactly_one_request(mock_sleep):
 
     assert len(responses.calls) == 1
     mock_sleep.assert_not_called()
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_log_destination_is_injectable_and_real_log_untouched(mock_sleep, tmp_path, monkeypatch):
+    """Regression test for the log-injection fix (§8.2, §34.1 Rule 6):
+    get_with_backoff must write to whatever LOG_PATH currently resolves to
+    — here, redirected to a location distinct from both the real log and
+    conftest's own autouse tmp_path — and must never fall back to the real
+    logs/requests.jsonl once redirected."""
+    responses.add(
+        responses.GET,
+        URL,
+        status=200,
+        json={"ok": True},
+        headers={"X-RateLimit-Remaining": "4999"},
+    )
+    custom_log = tmp_path / "custom" / "requests.jsonl"
+    monkeypatch.setattr(ratelimit, "LOG_PATH", custom_log)
+    real_log = Path("logs/requests.jsonl")
+    real_log_before = real_log.read_bytes() if real_log.exists() else None
+
+    pool = TokenPool(["tok_a"])
+    get_with_backoff(URL, pool=pool)
+
+    assert custom_log.exists()
+    entry = json.loads(custom_log.read_text(encoding="utf-8").strip())
+    assert entry["status"] == 200
+
+    real_log_after = real_log.read_bytes() if real_log.exists() else None
+    assert real_log_after == real_log_before
