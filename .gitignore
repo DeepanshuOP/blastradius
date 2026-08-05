@@ -1,0 +1,15 @@
+.env
+data/*
+corpus/
+logs/
+worktrees/
+paper/generated/
+__pycache__/
+.venv/
+*.parquet
+*.jsonl.gz
+.pytest_cache/
+.ruff_cache/
+
+!data/frame/
+!data/frame/**

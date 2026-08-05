@@ -1,0 +1,3 @@
+This project vendors a modified subset of Graphify (MIT License) at
+vendor/graphify-br/. Attribution and pinned upstream commit hash to be
+recorded here at task T2.1d.
