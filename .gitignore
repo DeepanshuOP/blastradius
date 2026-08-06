@@ -13,3 +13,5 @@ __pycache__/
 
 !data/frame/
 !data/frame/**
+.env*
+!.env.example
