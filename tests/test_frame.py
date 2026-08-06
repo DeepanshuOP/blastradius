@@ -5,6 +5,7 @@ with `responses` at the transport layer, same convention as test_ratelimit.py.
 """
 
 import csv
+import time
 
 import pytest
 import responses
@@ -211,12 +212,15 @@ def test_404_on_call_1_writes_terminal_verdict_naming_status(tmp_path):
 @responses.activate
 def test_403_remaining_0_not_written_to_partial(tmp_path):
     _mock_rate_limit_ok()
+    # GitHub always sends X-RateLimit-Reset alongside a rate-limit 403; a
+    # fixture without it is unfaithful to the real API.
+    reset_at = str(int(time.time()) + 1800)
     for _ in range(6):
         responses.add(
             responses.GET,
             _runs_url("owner", "exhausted-repo"),
             status=403,
-            headers={"X-RateLimit-Remaining": "0"},
+            headers={"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": reset_at},
         )
 
     input_path, partial_path, output_path, attrition_path = _setup_run(tmp_path, ["owner/exhausted-repo"])
