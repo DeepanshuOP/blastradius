@@ -34,7 +34,7 @@ def test_acquire_selects_token_with_most_remaining_quota():
 
 
 @patch("src.harvest.ratelimit.time.sleep")
-def test_acquire_sleeps_until_earliest_reset_when_all_exhausted(mock_sleep):
+def test_acquire_sleeps_until_earliest_reset_when_all_exhausted(mock_sleep, capsys):
     pool = TokenPool(["tok_a", "tok_b"])
     now = time.time()
     pool.update(0, remaining=0, reset_at=now + 50)
@@ -46,6 +46,89 @@ def test_acquire_sleeps_until_earliest_reset_when_all_exhausted(mock_sleep):
     assert mock_sleep.call_count == 1
     (waited,) = mock_sleep.call_args.args
     assert 29.0 <= waited <= 30.0
+
+    err = capsys.readouterr().err
+    lines = [line for line in err.splitlines() if line.strip()]
+    assert len(lines) == 2
+    assert "token_idx=1" in lines[0]
+    assert "29." in lines[0] or "30." in lines[0]
+    assert "token_idx=1" in lines[1]
+    assert "woke after" in lines[1]
+
+
+@patch("src.harvest.ratelimit.time.sleep")
+def test_acquire_clamps_wait_exceeding_max_reset_wait(mock_sleep, capsys):
+    pool = TokenPool(["tok_a"])
+    now = time.time()
+    pool.update(0, remaining=0, reset_at=now + 10_000)
+
+    idx, _headers = pool.acquire()
+
+    assert idx == 0
+    assert mock_sleep.call_count == 1
+    (waited,) = mock_sleep.call_args.args
+    assert waited == ratelimit.MAX_RESET_WAIT_SECONDS
+
+    err = capsys.readouterr().err
+    lines = [line for line in err.splitlines() if line.strip()]
+    assert any("clamping" in line and "10000.0" in line for line in lines)
+    assert any(str(ratelimit.MAX_RESET_WAIT_SECONDS) in line for line in lines)
+
+
+@patch("src.harvest.ratelimit.time.sleep")
+def test_acquire_treats_zero_reset_at_as_blocked_not_handed_out_unslept(mock_sleep):
+    pool = TokenPool(["tok_a"])
+    pool.update(0, remaining=0, reset_at=None)  # reset_at stays default 0.0
+
+    idx, _headers = pool.acquire()
+
+    assert idx == 0
+    assert mock_sleep.call_count == 1
+    (waited,) = mock_sleep.call_args.args
+    assert waited == ratelimit.FALLBACK_RESET_WAIT_SECONDS
+
+
+@patch("src.harvest.ratelimit.time.sleep")
+def test_acquire_sleep_writes_no_line_to_request_log(mock_sleep):
+    pool = TokenPool(["tok_a"])
+    now = time.time()
+    pool.update(0, remaining=0, reset_at=now + 5)
+
+    pool.acquire()
+
+    assert not ratelimit.LOG_PATH.exists()
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_primary_exhaustion_routes_to_other_token_and_succeeds(mock_sleep):
+    """End-to-end coverage of the primary_exhausted branch: a 403 carrying
+    X-RateLimit-Remaining: 0 must retry (not raise) and route to the pool's
+    other token rather than re-blocking on the exhausted one."""
+    responses.add(
+        responses.GET,
+        URL,
+        status=403,
+        headers={
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": str(int(time.time()) + 3600),
+        },
+        body='{"message": "API rate limit exceeded"}',
+    )
+    responses.add(
+        responses.GET,
+        URL,
+        status=200,
+        json={"ok": True},
+        headers={"X-RateLimit-Remaining": "4999"},
+    )
+
+    pool = TokenPool(["tok_a", "tok_b"])
+    resp = get_with_backoff(URL, pool=pool)
+
+    assert resp.status_code == 200
+    assert len(responses.calls) == 2
+    mock_sleep.assert_not_called()
 
 
 @responses.activate

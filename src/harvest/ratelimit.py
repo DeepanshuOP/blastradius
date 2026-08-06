@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import sys
 import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -26,6 +27,20 @@ BACKOFF_CAP_SECONDS = 60.0
 TIMEOUT = (5, 30)  # (connect, read) seconds
 LOG_PATH = Path("logs/requests.jsonl")
 RETRYABLE_STATUSES = (429, 500, 502, 503, 504)
+
+# One hour (GitHub's primary rate-limit window) plus slack for clock skew.
+# A wait longer than this is more likely a malformed/stale X-RateLimit-Reset
+# than a real 65-minute-away reset, so it gets clamped rather than honored —
+# an early wake just re-403s and the existing retry loop handles that.
+MAX_RESET_WAIT_SECONDS = 3900
+
+# Used when a token has remaining <= 0 but no usable reset_at (never
+# observed, or stale/in the past). We can't trust any specific duration in
+# that case, so re-probe at the same cadence as ordinary retry backoff
+# (BACKOFF_CAP_SECONDS) rather than blind-guessing up to an hour: the next
+# real response supplies an authoritative reset_at, and acquire() will wait
+# correctly from then on.
+FALLBACK_RESET_WAIT_SECONDS = 60.0
 
 
 @dataclass
@@ -61,17 +76,43 @@ class TokenPool:
 
     def acquire(self) -> tuple[int, dict[str, str]]:
         now = time.time()
-        blocked = {
-            i
-            for i, s in enumerate(self._states)
-            if s.remaining <= 0 and s.reset_at > now
-        }
+        blocked = {i for i, s in enumerate(self._states) if s.remaining <= 0}
 
         if blocked and len(blocked) == len(self._states):
-            earliest_idx = min(blocked, key=lambda i: self._states[i].reset_at)
-            wait = max(0.0, self._states[earliest_idx].reset_at - now)
+
+            def _raw_wait(idx: int) -> float:
+                reset_at = self._states[idx].reset_at
+                if reset_at > now:
+                    return reset_at - now
+                return FALLBACK_RESET_WAIT_SECONDS
+
+            chosen = min(blocked, key=_raw_wait)
+            raw_wait = _raw_wait(chosen)
+            wait = min(raw_wait, MAX_RESET_WAIT_SECONDS)
+
+            if raw_wait > MAX_RESET_WAIT_SECONDS:
+                print(
+                    f"[ratelimit] token_idx={chosen} computed wait "
+                    f"{raw_wait:.1f}s exceeds MAX_RESET_WAIT_SECONDS="
+                    f"{MAX_RESET_WAIT_SECONDS}s; clamping to {wait:.1f}s",
+                    file=sys.stderr,
+                )
+
+            end_at = datetime.fromtimestamp(now + wait, tz=timezone.utc).isoformat()
+            print(
+                f"[ratelimit] token_idx={chosen} exhausted; sleeping "
+                f"{wait:.1f}s until {end_at} (all tokens blocked)",
+                file=sys.stderr,
+            )
+            sleep_start = time.monotonic()
             time.sleep(wait)
-            return earliest_idx, self._headers_for(earliest_idx)
+            elapsed = time.monotonic() - sleep_start
+            print(
+                f"[ratelimit] token_idx={chosen} woke after {elapsed:.1f}s "
+                f"(expected {wait:.1f}s)",
+                file=sys.stderr,
+            )
+            return chosen, self._headers_for(chosen)
 
         candidates = [i for i in range(len(self._states)) if i not in blocked]
         max_remaining = max(self._states[i].remaining for i in candidates)
