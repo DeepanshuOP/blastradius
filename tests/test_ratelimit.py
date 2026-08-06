@@ -151,3 +151,58 @@ def test_log_destination_is_injectable_and_real_log_untouched(mock_sleep, tmp_pa
 
     real_log_after = real_log.read_bytes() if real_log.exists() else None
     assert real_log_after == real_log_before
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_unhandled_request_exception_subclass_still_logs(mock_sleep, tmp_path, monkeypatch):
+    """Regression for the dead-token cascade: any requests.RequestException,
+    not just ConnectionError/Timeout, must produce a log line before
+    retrying or raising — a narrower except clause is exactly what let 10
+    of 20 failures in that run vanish with zero trace."""
+    custom_log = tmp_path / "requests.jsonl"
+    monkeypatch.setattr(ratelimit, "LOG_PATH", custom_log)
+    responses.add(responses.GET, URL, body=requests.exceptions.ChunkedEncodingError("boom"))
+    responses.add(
+        responses.GET,
+        URL,
+        status=200,
+        json={"ok": True},
+        headers={"X-RateLimit-Remaining": "4999"},
+    )
+
+    pool = TokenPool(["tok_a"])
+    resp = get_with_backoff(URL, pool=pool)
+
+    assert resp.status_code == 200
+    lines = custom_log.read_text(encoding="utf-8").strip().splitlines()
+    assert len(lines) == 2
+    first = json.loads(lines[0])
+    assert first["status"] is None
+    assert first["error"] == "ChunkedEncodingError"
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_403_with_retry_after_logs_retry_after_and_body_snippet(mock_sleep, tmp_path, monkeypatch):
+    """§6's rate-limit detector needs Retry-After and response body text in
+    the log to ever detect secondary limiting — previously neither field
+    was recorded at all, so grepping for evidence always found nothing."""
+    custom_log = tmp_path / "requests.jsonl"
+    monkeypatch.setattr(ratelimit, "LOG_PATH", custom_log)
+    for _ in range(6):
+        responses.add(
+            responses.GET,
+            URL,
+            status=403,
+            headers={"Retry-After": "30"},
+            body='{"message": "secondary rate limit"}',
+        )
+
+    pool = TokenPool(["tok_a"])
+    with pytest.raises(requests.HTTPError):
+        get_with_backoff(URL, pool=pool)
+
+    lines = [json.loads(line) for line in custom_log.read_text(encoding="utf-8").strip().splitlines()]
+    assert lines[0]["retry_after"] == "30"
+    assert "secondary rate limit" in lines[0]["body_snippet"]

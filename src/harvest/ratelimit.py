@@ -136,7 +136,14 @@ def get_with_backoff(
             response = requests.get(
                 url, params=params, headers=headers, timeout=TIMEOUT
             )
-        except (requests.ConnectionError, requests.Timeout) as exc:
+        except requests.exceptions.RequestException as exc:
+            # Broadened from (ConnectionError, Timeout): any RequestException
+            # raised by requests.get() itself — InvalidHeader, a broken
+            # credential's malformed Authorization value, whatever — must
+            # still produce a log line before retrying or raising. A narrower
+            # except clause here is exactly what let 10 of 20 failures in the
+            # dead-token cascade vanish with zero trace (§8.2, §34.1 Rule 6).
+            exc.token_idx = token_idx
             duration_ms = (time.monotonic() - start) * 1000
             _log(
                 {
@@ -165,24 +172,32 @@ def get_with_backoff(
         if remaining is not None or reset_at is not None:
             pool.update(token_idx, remaining=remaining, reset_at=reset_at)
 
-        _log(
-            {
-                "ts": _now_iso(),
-                "url": url,
-                "status": response.status_code,
-                "token_idx": token_idx,
-                "remaining": remaining,
-                "duration_ms": duration_ms,
-                "attempt": attempt,
-            },
-            LOG_PATH,
-        )
+        log_entry = {
+            "ts": _now_iso(),
+            "url": url,
+            "status": response.status_code,
+            "token_idx": token_idx,
+            "remaining": remaining,
+            "duration_ms": duration_ms,
+            "attempt": attempt,
+        }
+        retry_after = response.headers.get("Retry-After")
+        if not response.ok:
+            # §6's rate-limit-exhaustion detector needs this to exist at
+            # all: previously _log() recorded neither Retry-After nor any
+            # response body text, so grepping the log for secondary-limit
+            # evidence always returned nothing regardless of whether it
+            # happened. body_snippet is response.text only — server-supplied
+            # inbound content — never response.request.headers or the pool,
+            # so no token value can appear in it.
+            log_entry["retry_after"] = retry_after
+            log_entry["body_snippet"] = response.text[:200] if response.text else None
+        _log(log_entry, LOG_PATH)
 
         if response.ok:
             return response
 
         status = response.status_code
-        retry_after = response.headers.get("Retry-After")
         secondary_limited = status in (403, 429) and (
             retry_after is not None
             or "secondary rate limit" in response.text.lower()
@@ -192,7 +207,11 @@ def get_with_backoff(
         )
 
         if attempt == max_attempts:
-            response.raise_for_status()
+            try:
+                response.raise_for_status()
+            except requests.HTTPError as http_exc:
+                http_exc.token_idx = token_idx
+                raise
 
         if primary_exhausted:
             # pool.update() above already recorded remaining=0 for this
@@ -212,7 +231,11 @@ def get_with_backoff(
 
         # Non-retryable 4xx (401, 404, 422, plain 403, ...) — do not burn
         # attempts on a request that will never succeed.
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as http_exc:
+            http_exc.token_idx = token_idx
+            raise
 
     if last_exc is not None:
         raise last_exc
