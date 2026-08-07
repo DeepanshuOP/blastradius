@@ -1,0 +1,9 @@
+owner,repo,lang,n_runs_90d,n_workflows,n_test_workflows,verdict,failing_call,status,exception_class
+a,kept1,Java,150,3,1,kept,,,
+a,kept2,Java,160,2,1,kept,,,
+a,kept3,Python,170,4,2,kept,,,
+a,kept4,Python,180,1,1,kept,,,
+a,noci1,Java,12,2,1,no_ci,,,
+a,noci2,Python,5,1,0,no_ci,,,
+a,notw1,Java,140,2,0,no_test_workflow,,,
+a,err1,Java,,,,api_error,runs,404,HTTPError

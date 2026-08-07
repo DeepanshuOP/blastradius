@@ -1,0 +1,9 @@
+owner,repo,lang,stars,commits,default_branch,n_runs_90d,test_workflow_ids,license
+ownjava1,repojava1,Java,501,1001,main,101,1001,MIT
+ownjava2,repojava2,Java,502,1002,main,102,1002,MIT
+ownjava3,repojava3,Java,503,1003,main,103,1003,MIT
+ownpython1,repopython1,Python,501,1001,main,101,1001,MIT
+ownpython2,repopython2,Python,502,1002,main,102,1002,MIT
+ownpython3,repopython3,Python,503,1003,main,103,1003,MIT
+ownpython4,repopython4,Python,504,1004,main,104,1004,MIT
+ownpython5,repopython5,Python,505,1005,main,105,1005,MIT

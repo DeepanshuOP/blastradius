@@ -1,0 +1,80 @@
+{
+  "seed": 20261110,
+  "stages": [
+    {
+      "stage": "seart_export",
+      "filter": "SEART GitHub Search query, Java+Python merged (data/frame/QUERY.md)",
+      "input_count": null,
+      "output_count": 3671,
+      "removed_count": null,
+      "status": "measured"
+    },
+    {
+      "stage": "ci_live",
+      "filter": "\u2265100 GitHub Actions workflow runs in the trailing 90 days (src/harvest/frame.py)",
+      "input_count": 3671,
+      "output_count": 2646,
+      "removed_count": 1025,
+      "status": "measured"
+    },
+    {
+      "stage": "has_test_workflow",
+      "filter": "\u22651 workflow classified as test-intent (src/harvest/frame.py:classify_workflows)",
+      "input_count": 2646,
+      "output_count": 2333,
+      "removed_count": 313,
+      "status": "measured"
+    },
+    {
+      "stage": "sampled",
+      "filter": "Seeded language-stratified draw of 150 Java + 150 Python from verdict==kept (scripts/sample_frame.py, SEED=20261110)",
+      "input_count": 2333,
+      "output_count": 300,
+      "removed_count": 2033,
+      "status": "measured"
+    },
+    {
+      "stage": "produces_parseable_outcomes",
+      "filter": "ROADMAP \u00a723.3 stage 5 \u2014 produces parseable test outcomes",
+      "input_count": null,
+      "output_count": null,
+      "removed_count": null,
+      "status": "not_yet_measured"
+    },
+    {
+      "stage": "fault_revealing_instance",
+      "filter": "ROADMAP \u00a723.3 stage 6 \u2014 produces \u22651 fault-revealing instance",
+      "input_count": null,
+      "output_count": null,
+      "removed_count": null,
+      "status": "not_yet_measured"
+    },
+    {
+      "stage": "graph_builds_in_budget",
+      "filter": "ROADMAP \u00a723.3 stage 7 \u2014 graph builds within budget (\u00a719.4)",
+      "input_count": null,
+      "output_count": null,
+      "removed_count": null,
+      "status": "not_yet_measured"
+    },
+    {
+      "stage": "test_node_binding_rate",
+      "filter": "ROADMAP \u00a723.3 stage 8 \u2014 test-node binding rate \u226570% (T8)",
+      "input_count": null,
+      "output_count": null,
+      "removed_count": null,
+      "status": "not_yet_measured"
+    }
+  ],
+  "exclusions": [
+    {
+      "stage": "ci_live",
+      "reason": "api_error",
+      "owner": "LuminolMC",
+      "repo": "Luminol",
+      "failing_call": "runs",
+      "status": "404",
+      "exception_class": "HTTPError"
+    }
+  ]
+}

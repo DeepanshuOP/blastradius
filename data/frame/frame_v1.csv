@@ -1,0 +1,301 @@
+owner,repo,lang,stars,commits,default_branch,n_runs_90d,test_workflow_ids,license,sample_rank
+graphql-java,graphql-java,Java,6225,6513,master,768,242705764;5487211,MIT License,1
+viaversion,viabackwards,Java,606,1871,master,138,111209744,GNU General Public License v3.0,2
+bobbylight,rsyntaxtextarea,Java,1244,1158,master,307,10605742,BSD 3-Clause New or Revised License,3
+spring-cloud,spring-cloud-config,Java,2047,2952,main,448,229757028,Apache License 2.0,4
+opentripplanner,opentripplanner,Java,2704,33329,dev-2.x,4579,4725846;16281584;169243674,Other,5
+xerial,sqlite-jdbc,Java,3271,1934,master,101,33134470;31646247,Apache License 2.0,6
+knowm,xchart,Java,1591,2028,develop,376,12035840;12035841,Apache License 2.0,7
+higress-group,himarket,Java,1251,1007,main,175,218403276;218403277,Other,8
+bumptech,glide,Java,35028,3105,master,1924,3799052,Other,9
+spiculedata,saiku,Java,1314,7375,development,3357,262971156,Apache License 2.0,10
+igniterealtime,openfire,Java,3049,12829,main,1297,989437,Apache License 2.0,11
+domaframework,doma,Java,504,4021,master,607,2136491;2165944,Apache License 2.0,12
+wso2,product-is,Java,865,18800,master,3611,5939557;61798720;78597417;233521014;238093849;253586132;268255510;247306300,Apache License 2.0,13
+robo-code,robocode,Java,811,2768,main,107,5782187;287709883,Other,14
+signalapp,signal-server,Java,10643,5176,main,154,54701087;7566864,GNU Affero General Public License v3.0,15
+membrane,api-gateway,Java,626,5219,master,833,49137429,Apache License 2.0,16
+rptools,maptool,Java,921,14041,develop,466,77137553;1126502,GNU Affero General Public License v3.0,17
+apache,zeppelin,Java,6647,5717,master,2105,185390495,Apache License 2.0,18
+jhipster,prettier-java,Java,1210,1028,main,788,1029031;103255902,Apache License 2.0,19
+spring-projects,spring-kafka,Java,2494,3097,main,1020,78024715;78024716;261436045,Apache License 2.0,20
+nitrite,nitrite-java,Java,909,1304,main,253,1784494,Apache License 2.0,21
+mcreator,mcreator,Java,1186,7603,master,1474,9031657,Other,22
+diffplug,spotless,Java,5576,7121,main,622,7518921,Apache License 2.0,23
+zaproxy,zaproxy,Java,15497,10328,main,1267,4971210;2248399,Apache License 2.0,24
+spring-cloud,spring-cloud-commons,Java,748,2552,main,373,245350894,Apache License 2.0,25
+plantuml,plantuml,Java,13203,3051,master,1530,6986032;154955125;154955126;248902028;255884620,GNU Lesser General Public License v3.0,26
+schemacrawler,schemacrawler,Java,1819,11727,main,1349,40990791;54389158;72860902;219503378,Other,27
+crimera,piko,Java,4304,2308,main,1012,268194559,GNU General Public License v3.0,28
+atmosphere,atmosphere,Java,3790,8360,main,6218,233211210;235506209;243302163;247490677;247979121;257095207;257648410;257648411;257648412;259833389;262905076;265687297;304834225;305609963;314009891;314009892,Apache License 2.0,29
+baomidou,mybatis-plus,Java,17418,6237,3.0,158,89897298,Apache License 2.0,30
+cryptomator,cryptomator,Java,15781,6504,develop,3330,1069733;22085723;22088008;22091435;22093644;130219241;233892654;249010202,GNU General Public License v3.0,31
+floci-io,floci,Java,17994,1137,main,11264,328182449;250783449;252607520;251100171,MIT License,32
+apache,dolphinscheduler,Java,14401,9034,dev,5265,212771;28155443;12399891,Apache License 2.0,33
+apache,flink,Java,26155,38134,master,1707,84356788;84356789,Apache License 2.0,34
+gurkenlabs,litiengine,Java,833,4287,main,777,9103883;128048595,MIT License,35
+ovirt,ovirt-engine,Java,605,34956,master,164,18322258,Other,36
+apache,beam,Java,8638,47723,master,376597,1729654;2083803;2173354;8109733;14199170;21085822;33538566;34096057;41249340;42910426;43791567;47092706;51968448;53648814,Apache License 2.0,37
+apache,hbase,Java,5553,21221,master,4334,324016376,Apache License 2.0,38
+castorini,anserini,Java,1151,2610,master,226,14503740,Apache License 2.0,39
+linkedin,brooklin,Java,962,1505,master,129,196571918,BSD 2-Clause Simplified License,40
+eclipse-openj9,openj9,Java,3534,26458,master,9339,5707018;5707019;10265441,Other,41
+oracle,opengrok,Java,4879,7790,master,625,3207132,Other,42
+bytechefhq,bytechef,Java,923,18612,master,3008,39170554;39170555,Other,43
+apache,hugegraph,Java,3134,2144,master,4789,39789355;116535157;110728622;324256642;92515654;259441816;92515655,Apache License 2.0,44
+dbeaver,dbeaver,Java,51189,28921,devel,5313,655787,Apache License 2.0,45
+sirixdb,sirix,Java,1210,4493,main,964,195434;5706062;270124326,BSD 3-Clause New or Revised License,46
+openremote,openremote,Java,1816,5100,master,3690,19435539;279482455;287017425;287017434;287017441;287017442;287017445;287017447,Other,47
+nats-io,nats.java,Java,670,2754,main,332,43490848;47471173;47589830,Apache License 2.0,48
+apache,hertzbeat,Java,7339,2888,master,1770,78592394;99262480;60585477;78592393;185529428;157580710;112212938,Apache License 2.0,49
+thealgorithms,java,Java,66071,3256,master,3186,3166674,MIT License,50
+apache,streampark,Java,4324,2041,dev,1237,15269413;102506291,Apache License 2.0,51
+airlift,airlift,Java,636,4558,master,1101,1079236,Apache License 2.0,52
+unicode-org,cldr,Java,1123,18395,main,3041,12919078;23041519;2490736;114478573,Other,53
+gaul,s3proxy,Java,2301,1833,master,365,29245276,Apache License 2.0,54
+jline,jline3,Java,1794,3472,master,1558,651948,Other,55
+apple,servicetalk,Java,1035,4685,main,2140,37266174;4256184;4232852;4256185;4232853;2489881,Apache License 2.0,56
+decentralized-identity,universal-resolver,Java,644,2090,main,787,9456731,Apache License 2.0,57
+zinggai,zingg,Java,1233,2949,main,233,23218341;149065651;149065652;312963314,GNU Affero General Public License v3.0,58
+grobidOrg,grobid,Java,5033,4149,master,1933,42373004,Apache License 2.0,59
+apache,tika,Java,3894,10552,main,3026,25004425;72319728;72319727;72319729;188132433;188132431;188132434;188132432;123825113;123825114;123825115;123825116;13995797;205946587;210578391;210553872;70284131;193592762,Apache License 2.0,60
+apache,fineract,Java,2340,10558,develop,6016,34372872;91014693;132232817;171924826;171924827;171924828;191790011;265172045;266701595;266701597,Apache License 2.0,61
+davidb,scala-maven-plugin,Java,571,1296,master,189,8609164,The Unlicense,62
+apache,atlas,Java,2125,4142,master,458,139258202;303015239,Apache License 2.0,63
+spring-projects,spring-data-redis,Java,1867,3364,main,476,224982897,Apache License 2.0,64
+google,j2objc,Java,6038,6187,master,336,12711090,Other,65
+webauthn4j,webauthn4j,Java,580,3199,master,2841,201636;15231;19726,Apache License 2.0,66
+Stirling-Tools,Stirling-PDF,Java,88247,5618,main,41901,80768812;119122926;173239653;175234288;195278459;240904091;244248744,Other,67
+hcoles,pitest,Java,1835,2753,master,113,4190628,Apache License 2.0,68
+aeron-io,simple-binary-encoding,Java,3477,4070,master,174,102889,Apache License 2.0,69
+nordic-institute,x-road,Java,824,15306,develop,1477,236603225;236603227;236603228;236603229;236603230;194517913;87462705,Other,70
+codenameone,codenameone,Java,1855,9331,master,84797,269297545;283181559;398584;217272675;257456180;199852089;327614365;248263149,Other,71
+elastic,logstash,Java,14905,11474,main,6395,294705047;21807553,Other,72
+openfeign,feign,Java,9794,3279,master,682,143024776,Apache License 2.0,73
+line,centraldogma,Java,664,1139,main,246,36594552,Apache License 2.0,74
+bitcoinj,bitcoinj,Java,5225,5813,master,347,219710211;219598643;218896392;21167055;742081;198633762;198633763,Apache License 2.0,75
+openmrs,openmrs-core,Java,1886,13149,master,4872,4198673;4198674;165971234,Other,76
+cleanroommc,cleanroom,Java,594,1101,main,241,49391710,GNU Lesser General Public License v2.1,77
+netflix,spectator,Java,765,2130,main,125,3655213,Apache License 2.0,78
+OtterMind,Chat2DB,Java,25862,3917,main,19647,60857614,Apache License 2.0,79
+giscience,openrouteservice,Java,1937,6387,main,1374,3500405;87609902;193538380;212682827;216663068,GNU General Public License v3.0,80
+CaffeineMC,sodium,Java,5690,1627,dev,323,63325840;83878113,Other,81
+google,tsunami-security-scanner-plugins,Java,1013,1814,master,183,13716347;81708054;170931797;4038459;4038460;177053631;164767861,Apache License 2.0,82
+hub4j,github-api,Java,1258,4485,main,224,172260;21896,MIT License,83
+minestom,minestom,Java,3233,6415,master,2233,110948083;174040373,Apache License 2.0,84
+typetools,checker-framework,Java,1143,20037,master,3233,266075043,Other,85
+restlet,restlet-framework-java,Java,667,9055,2.6,128,119930073,Other,86
+jenkinsci,configuration-as-code-plugin,Java,2793,2110,master,1958,212027,MIT License,87
+apache,cloudstack,Java,2996,38957,main,14536,42648624;42509236;42648623,Apache License 2.0,88
+android,android-test,Java,1222,1967,main,166,46277938,Apache License 2.0,89
+MariaDB4j,MariaDB4j,Java,898,1263,main,538,50203885,Apache License 2.0,90
+openhab,openhab-addons,Java,2055,7645,main,3403,14623714;157866222;262867323,Eclipse Public License 2.0,91
+apache,cassandra,Java,10034,32109,trunk,329,320979387,Apache License 2.0,92
+wildfly,quickstart,Java,925,3777,main,749,97103124;68519106;70908063;97405139;70507793;72329538;73611394;85238519;75196022;73717219;75166051;79030676;79021822;81138017;98912278;75175391;71668828;72221505;72212394;122860821;79522128;77164025;68519104;79453829;74737675;77671756;76157756;77431764,Apache License 2.0,93
+apache,hop,Java,1417,9330,main,3819,8181525,Apache License 2.0,94
+minicraftplus,minicraft-plus-revived,Java,575,3355,main,109,60623276,GNU General Public License v3.0,95
+apache,commons-pool,Java,552,3305,master,186,80036;221946,Apache License 2.0,96
+StarRocks,starrocks,Java,11883,26161,main,150334,40524888;51589511;51867775;55361223;57262288;63364233;63581629;69003819;71864682;75668949;82393534;89197095;223256772;224057468;242377356;260830105,Apache License 2.0,97
+easymock,objenesis,Java,631,1211,master,217,13566620,Apache License 2.0,98
+redis,lettuce,Java,5771,3047,main,1817,129394959;174045065;235762188;267737901,MIT License,99
+automattic,simplenote-android,Java,1903,5246,trunk,520,41352790;86797547;82833250,GNU General Public License v2.0,100
+zalando,logbook,Java,2056,2828,main,447,10226,MIT License,101
+metersphere,metersphere,Java,13404,22135,v3.x,441,98992178,Other,102
+alibaba,arthas,Java,37454,2233,master,363,56572746;8631444;4250752,Apache License 2.0,103
+openrewrite,rewrite,Java,3586,11662,main,4283,6289407;198154867;239650191;247820320,Apache License 2.0,104
+soulfiremc-com,SoulFire,Java,588,4668,main,2089,17082724,GNU Affero General Public License v3.0,105
+dropwizard,metrics,Java,7846,4240,release/4.2.x,1319,65934,Apache License 2.0,106
+trackercontrol,tracker-control-android,Java,2559,1444,master,407,255555951,GNU General Public License v3.0,107
+dogtagpki,pki,Java,500,15056,master,8550,2279645;3553226;3602200;3718663;3718664;3718665;3718666;3718667;3722766;4101237;4773451;20529528;24620941;27666950;33345594;33345595;33345596;33537893;33537894;33537895;33629850;33629851;33653740;33731879;33731880;33731883,GNU General Public License v2.0,108
+iluwatar,java-design-patterns,Java,94284,4401,master,396,2226876;2214207,Other,109
+waffle,waffle,Java,505,8219,master,586,3842104;3819969,MIT License,110
+teamnewpipe,newpipe,Java,39139,12240,dev,3252,4377913,GNU General Public License v3.0,111
+nielsbasjes,yauaa,Java,940,5279,main,615,8089660,Apache License 2.0,112
+apache,hadoop,Java,15618,28302,trunk,4330,173894005;125995118;196273092;264456084;265556822;258063175;258063176;258063174;264456085;276978903;264456086;265556823;264456088,Apache License 2.0,113
+alfio-event,alf.io,Java,1599,3972,main,354,58693;3334572;87389903,GNU General Public License v3.0,114
+apache,linkis,Java,3406,4339,master,1127,33949590;33949589;17142827;33949587;20301980;58458228,Apache License 2.0,115
+sonaropencommunity,sonar-cxx,Java,1089,4267,master,310,19109789,GNU Lesser General Public License v3.0,116
+spotbugs,spotbugs,Java,3911,18307,master,380,189904682,GNU Lesser General Public License v2.1,117
+devoxx,DevoxxGenieIDEAPlugin,Java,670,2938,master,2216,124403454;145273704,MIT License,118
+eclipse-vertx,vert.x,Java,14679,7314,master,779,50442488;163702246;50459707;163702247;3595014,Other,119
+spring-projects,spring-framework,Java,60140,35261,main,1836,89639430;6318443,Apache License 2.0,120
+apache,logging-flume,Java,2565,2088,trunk,443,80090171,Apache License 2.0,121
+apache,gravitino,Java,3136,4158,main,51545,114108901;117274409;90377463;55204565;147612594;316440423;91904986;117274410;99167654;90377462;131125314;291390592;275904716;68022224;287602967;245445270;254839335;254265354;294453959;282743551;91915880,Apache License 2.0,122
+lets-mica,mica,Java,2238,1996,master,183,1237055,GNU Lesser General Public License v3.0,123
+cinit,qauxiliary,Java,5677,3023,main,189,21281725;19735131,Other,124
+multiverse,multiverse-core,Java,1096,3071,main,171,66974808;67275258,BSD 3-Clause New or Revised License,125
+apache,rocketmq,Java,22532,9168,develop,5762,33018588;33026548;115797954,Apache License 2.0,126
+dataease,dataease,Java,24298,20963,dev-v2,2748,132651285,GNU General Public License v3.0,127
+cbioportal,cbioportal,Java,1028,20952,master,4797,3246313;15370097;1455639;5334521;81899134;250423777,GNU Affero General Public License v3.0,128
+validator,validator,Java,1963,5246,main,1562,11148184;203342534,MIT License,129
+robolectric,robolectric,Java,6031,15940,master,4561,72583966;39696362;51824787;5493643,Other,130
+pmd,pmd,Java,5461,31776,main,2293,162127093;162191213;2543383,Other,131
+dropwizard,dropwizard,Java,8575,9138,release/5.0.x,1254,9590,Apache License 2.0,132
+card-forge,forge,Java,2514,74190,master,5311,319848946;123060637;184146454;24502121;46345897,GNU General Public License v3.0,133
+nationalsecurityagency,datawave,Java,714,5637,integration,2867,119658508;170668704;179099845;170668705;170668687;184473579;241783,Apache License 2.0,134
+apache,commons-collections,Java,724,5290,master,728,76502,Apache License 2.0,135
+winds-studio,leaf,Java,1034,1989,ver/26.2,391,138809289;146585682;154828535;168908518;171812290;175307289;223971346;297787497,Other,136
+skylot,jadx,Java,49827,2689,master,108,26773545;27032656,Apache License 2.0,137
+pnoker,iot-dc3,Java,658,3134,main,2089,303460086;303460085;276059616,Other,138
+Sunagatov,Iced-Latte,Java,637,2551,development,1054,241016251;241016253,Other,139
+dspace,dspace,Java,1085,24595,main,5545,3812729,BSD 3-Clause New or Revised License,140
+alibaba,druid,Java,28173,7809,master,179,27918753,Apache License 2.0,141
+junit-team,junit-framework,Java,7048,10973,main,3095,24797;162380;927970;94022487;215636878;277287548;277389632;277389636,Eclipse Public License 2.0,142
+apache,fluss,Java,2006,1921,main,4803,148109601;171509827;129909918;285304951;285304950;285304952;285304948;242861728,Apache License 2.0,143
+testng-team,testng,Java,2055,5510,master,899,9962738;9976138;84773093,Apache License 2.0,144
+hibernate,hibernate-orm,Java,6465,29139,main,5278,70159257;124546728;7519553;3855798,Apache License 2.0,145
+papermc,paper,Java,12534,20031,main,3458,3253128;79947463,Other,146
+skriptlang,skript,Java,1323,4724,master,4442,228141;96176165;96176166;223949021;255475485;255475486,GNU General Public License v3.0,147
+msgpack,msgpack-java,Java,1471,1880,main,269,1576516,Apache License 2.0,148
+timefoldai,timefold-solver,Java,1729,10512,main,3752,300887592,Apache License 2.0,149
+sonarsource,sonar-java,Java,1211,9715,master,5866,18228259;309887009,Other,150
+farama-foundation,highwayenv,Python,3300,1481,main,757,721164,MIT License,1
+fla-org,flash-linear-attention,Python,5491,2044,main,6643,152581732;170756204;250733355;263018463;293798245;294491125;317879436;323715071;178693604,MIT License,2
+dask,distributed,Python,1675,6203,main,2327,2596506;6036942;16137815;17358163;306158560,BSD 3-Clause New or Revised License,3
+theupdateframework,python-tuf,Python,1719,6718,develop,496,24897007;94872100;4322136;33618162,Apache License 2.0,4
+agno-agi,agno,Python,41530,5928,main,15532,39891913;39891914,Apache License 2.0,5
+langchain-ai,langchain,Python,143162,16494,master,29868,63682547;73727361;78427738;117412332;194679127;255879657,MIT License,6
+postlund,pyatv,Python,1132,1833,master,390,452450,MIT License,7
+flagsmith,flagsmith,Python,6480,6437,main,16805,25730965;42996206;73929148;224945812,BSD 3-Clause New or Revised License,8
+googlechrome,chromium-dashboard,Python,738,4963,main,4743,12324105;56624646;26160896,Apache License 2.0,9
+xerrors,Yuxi,Python,6342,2389,main,533,329013421,MIT License,10
+e2b-dev,e2b,Python,13214,5003,main,6070,257801473;69389306;70529364;70529365;235070703;75945365,Apache License 2.0,11
+ranger,ranger,Python,17327,5276,master,111,53862177;11474543;103736,GNU General Public License v3.0,12
+jython,jython,Python,1528,8524,master,349,24749285;24768150;292151954;304672808;25677068,Other,13
+lutris,lutris,Python,10124,11709,master,279,279364086,GNU General Public License v3.0,14
+pyinstaller,pyinstaller,Python,13048,10069,develop,460,7530222,Other,15
+wasserth,totalsegmentator,Python,2913,1083,master,674,78943215;67807923;129984669;69856464;86293539,Apache License 2.0,16
+sktime,sktime,Python,9896,6224,main,2342,17190997;70447838;73442653;83154121;265484965;266185250;282520745;282521877;282523894;298711466;327902225,BSD 3-Clause New or Revised License,17
+xilinx,brevitas,Python,1557,1740,master,4417,940219;42994189;175558538;113818136;1003506;175558539;990614;41639009;6195451;201986106;201986092;201986095;201986101;201986103;940280;45919329;45919326;175520353;113795753;45919325;175520354;45919330;45919328;45919324;45919327,Other,18
+freelawproject,courtlistener,Python,984,24791,main,4705,83851783,Other,19
+opengeos,leafmap,Python,3744,1638,master,796,18518647;118787038;18518645;18518646,MIT License,20
+pretalx,pretalx,Python,927,8174,main,2200,65301691;2006620,Other,21
+pypa,cibuildwheel,Python,2250,3682,main,1416,2367226;80004;4393271,BSD 2-Clause Simplified License,22
+datadog,dd-trace-py,Python,645,12373,main,58132,19046787;49767675;55493487;63544906;99118461;105554776;127776967;131452766;132521240;143767090,Other,23
+ChesterRa,cccc,Python,1063,1168,main,335,220846931,Apache License 2.0,24
+meta-pytorch,torchrec,Python,2591,3727,main,7520,18857265;22514192;41811263;32148064;152050568,BSD 3-Clause New or Revised License,25
+milescranmer,pysr,Python,3593,2846,master,2502,5622654;9732565;111001362;19736307;18500916;9732863;225338536,Apache License 2.0,26
+distrochooser,distrochooser,Python,880,1556,main,100,171400294,GNU Affero General Public License v3.0,27
+artefactual,archivematica,Python,510,4878,qa/1.x,699,5546864;119549893;4038870,GNU Affero General Public License v3.0,28
+frappe,gameplan,Python,507,1757,develop,940,322523307;302997161;318279715;288817215;295356146;36957367,GNU Affero General Public License v3.0,29
+jumpserver,jumpserver,Python,31189,13434,dev,3152,292565006;107855987;197757729;41722300,GNU General Public License v3.0,30
+nltk,nltk,Python,14687,15351,develop,1533,11500496;191710319;249114814,Apache License 2.0,31
+Azure,GPT-RAG,Python,1165,1315,main,526,320777137;320759744,MIT License,32
+intel,neural-compressor,Python,2692,4116,main,3945,208025517,Apache License 2.0,33
+faust-streaming,faust,Python,1880,4662,master,795,3275506,Other,34
+containers,podman-compose,Python,6172,1347,main,772,88919969,GNU General Public License v2.0,35
+mozilla,fx-private-relay,Python,1764,14087,main,5196,177813658;12986161;35342470;21630602,Other,36
+langflow-ai,langflow,Python,152700,18515,main,66446,293176960;285648353;55247101;292272036;177564466;252553231,MIT License,37
+elementary-data,dbt-data-reliability,Python,518,3533,master,782,33044716;33044717;239942145,Apache License 2.0,38
+numba,llvmlite,Python,2277,3130,main,411,142075945;142241365;153161726;157643504;158021779;173894744;174098354;221472279;287253889;293501658,BSD 2-Clause Simplified License,39
+apeworx,ape,Python,1050,1716,main,485,112430325;5798837,Apache License 2.0,40
+sharkwouter,minigalaxy,Python,1321,1741,master,227,25797337;534360,GNU General Public License v3.0,41
+dask,dask,Python,13874,9840,main,3113,6923587;16139711;82409323;312635123,BSD 3-Clause New or Revised License,42
+django-json-api,django-rest-framework-json-api,Python,1251,1157,main,132,4562276,BSD 2-Clause Simplified License,43
+OpenHands,OpenHands,Python,80389,7043,main,54161,179514436;187867926;187867929;232492208;249660532;249661841;286724319,Other,44
+python-discord,site,Python,653,5165,main,357,3616604;50344113,MIT License,45
+simonw,datasette,Python,11344,3403,main,4029,1555184;25325384;102588441;2218076,Apache License 2.0,46
+buildbot,buildbot,Python,5460,28837,master,272,3808255;80271540,GNU General Public License v2.0,47
+jupytext,jupytext,Python,7225,2674,main,1637,72922117;73242671;73242674;73242675;75850069,MIT License,48
+assafelovic,gpt-researcher,Python,28737,3077,main,189,225642184,Apache License 2.0,49
+tslearn-team,tslearn,Python,3166,1773,main,197,1098313;176809728;199600548,BSD 2-Clause Simplified License,50
+openai,openai-python,Python,31272,1430,main,1173,75177492;170530081,Apache License 2.0,51
+danforthcenter,plantcv,Python,813,9520,main,355,1484046,Mozilla Public License 2.0,52
+plasmapy,plasmapy,Python,702,4787,main,4977,96475609;199812325;199812327;224760565,BSD 3-Clause New or Revised License,53
+pythainlp,pythainlp,Python,1145,6496,main,404,125580834;224166880;231210089;231220873;231375606;19575332,Apache License 2.0,54
+automatic-ripping-machine,automatic-ripping-machine,Python,5042,2785,main,881,290972286;290972281;290972287;290972283;290972280,MIT License,55
+ros2,ros2_documentation,Python,967,2468,rolling,781,4278095,Creative Commons Attribution 4.0 International,56
+ansys,pymapdl,Python,511,2907,main,3467,13296335;13272381;148330549;148330551,MIT License,57
+pyjanitor-devs,pyjanitor,Python,1500,1933,dev,147,4610602,MIT License,58
+poco-ai,poco-claw,Python,1341,1291,main,625,237863585;237863586;237863587;237863588;237863589,MIT License,59
+marketcalls,openalgo,Python,2357,4576,main,614,206373642,GNU Affero General Public License v3.0,60
+mcclouds,subgen,Python,1447,1197,main,433,273088094,MIT License,61
+mesa,mesa,Python,3758,3143,main,290,20455983;243453350,Apache License 2.0,62
+meeb,tubesync,Python,2761,3814,main,3160,4221543,GNU Affero General Public License v3.0,63
+apache,iceberg-python,Python,1102,2825,main,6613,142751104;141758874;239223068;71017483;141758875,Apache License 2.0,64
+SolaceLabs,solace-agent-mesh,Python,4955,2274,main,590,263680830;206051002;146348520;261936409;245261817;216477164;221518351;180109751,Apache License 2.0,65
+ietf-tools,datatracker,Python,1048,17210,main,979,21954552;294350121;294350122,BSD 3-Clause New or Revised License,66
+langchain-ai,langgraph,Python,38618,7014,main,7318,103236097;103662670;284483889;103236099;116958332,MIT License,67
+scrapinghub,dateparser,Python,2847,1581,master,221,79631386;5684164,BSD 3-Clause New or Revised License,68
+azuread,microsoft-authentication-library-for-python,Python,965,1290,dev,567,5418235,Other,69
+ginlix-ai,LangAlpha,Python,1597,1581,main,2754,293167331;247209927;244100100,Apache License 2.0,70
+zostera,django-bootstrap4,Python,1026,1342,main,211,3290596,BSD 3-Clause New or Revised License,71
+canonical,snapcraft,Python,1279,7277,main,2914,3578718;300855529,GNU General Public License v3.0,72
+jeremylongshore,claude-code-plugins-plus-skills,Python,2583,1633,main,7585,218381429;279945468;308411683;310462834;311499623;311505193,MIT License,73
+project-monai,monai,Python,8563,3462,dev,4733,10640081;187422557,Apache License 2.0,74
+fastavro,fastavro,Python,711,1668,master,749,2918011;2918010;2918009;3834746,MIT License,75
+flaskbb,flaskbb,Python,2659,2150,master,115,11267171,Other,76
+rotki,rotki,Python,3964,20932,develop,4639,973312;2218229;29158595;41312871;41369945;55620142;294840805,GNU Affero General Public License v3.0,77
+zenml-io,zenml,Python,5528,8892,main,18451,21792361;66413433;77625963;82037860;82037861;83508531;83517600;83517601;127719326;127719327,Apache License 2.0,78
+geonode,geonode,Python,1702,19532,master,2440,200526761;201613315;201524847,Other,79
+aws-cloudformation,cfn-lint,Python,2632,3399,main,1055,96189012;116095700;96176791;298550142;298550141,MIT No Attribution,80
+pyglet,pyglet,Python,2208,6677,master,130,13267357,BSD 3-Clause New or Revised License,81
+kapicorp,kapitan,Python,1922,2246,master,1436,181697739;17917953;181712469,Apache License 2.0,82
+google,adk-python,Python,20964,3530,main,13273,155326142,Apache License 2.0,83
+pyproj4,pyproj,Python,1220,1705,main,128,3666535;3655458,MIT License,84
+RaoFoundation,bittensor,Python,1467,9953,master,1236,99187001;174891496;175590743;185199005;205752211,MIT License,85
+electricitymaps,electricitymaps-contrib,Python,4019,6821,master,998,26660528,GNU Affero General Public License v3.0,86
+rocketpy-team,rocketpy,Python,1036,4867,master,1013,108301252;14377402,MIT License,87
+simonw,sqlite-utils,Python,2136,1176,main,1277,10503182;160641034;2360607,Apache License 2.0,88
+willmiao,ComfyUI-Lora-Manager,Python,1339,2782,main,407,192361387;192155026,GNU General Public License v3.0,89
+ytdl-patched,ytdl-patched,Python,623,24973,ytdlp,590,10315081;10315084,The Unlicense,90
+lumina37,aiotieba,Python,654,1818,master,331,33705960;107107896,The Unlicense,91
+dpgaspar,flask-appbuilder,Python,4957,4058,master,298,3187689,BSD 3-Clause New or Revised License,92
+voxpupuli,puppetboard,Python,731,1799,master,401,5777267,Apache License 2.0,93
+aio-libs,aiobotocore,Python,1421,1286,main,2155,113182469;159085436;159085437,Apache License 2.0,94
+microsoft,qlib,Python,46848,2066,main,851,28245845;28245846;28751384,MIT License,95
+asreview,asreview,Python,960,1783,main,477,1051159;157537498;103343002;13905636,Apache License 2.0,96
+google,clusterfuzz,Python,5584,3966,master,3695,216796569;2697866,Apache License 2.0,97
+aws,chalice,Python,11063,2499,master,192,4173566,Apache License 2.0,98
+sosreport,sos,Python,594,5320,main,596,150048447;150048448;282178427;265775896;282178429,GNU General Public License v2.0,99
+django-hijack,django-hijack,Python,1734,1113,master,293,5305743,MIT License,100
+octoprint,octoprint,Python,9057,10425,dev,1141,1675527,GNU Affero General Public License v3.0,101
+labgrid-project,labgrid,Python,505,3639,master,425,42056631;46425771;46425772,Other,102
+maziyarpanahi,openmed,Python,4780,3349,master,15632,305630393;196791645;315956123;255784193;307296600;304650646;255784960,Apache License 2.0,103
+devitocodes,devito,Python,709,14285,main,3335,203470;203471;153796154;222084391;222084392;222084393,MIT License,104
+onnx,onnx,Python,21248,3913,main,19735,5701766;93239932;147131563;167401835;168320647;220364078;234243087;252075250,Apache License 2.0,105
+jgravelle,jcodemunch-mcp,Python,2458,1283,main,1473,234671197,Other,106
+Lightning-AI,pytorch-lightning,Python,31264,11119,master,4082,31223723;31224101;31224102;32052423;38034803;38557841;38557842;42948453;43340243;43571654;48030758,Apache License 2.0,107
+obspy,obspy,Python,1320,16171,master,337,17687039;20411787,Other,108
+livekit,agents,Python,11590,3731,main,20080,86219990;125295751;171598013;219895840;248638878,Apache License 2.0,109
+google,uncertainty-baselines,Python,1582,1183,main,310,13524957,Apache License 2.0,110
+debpalash,OmniVoice-Studio,Python,9365,1133,main,5389,285410959;264801301,GNU Affero General Public License v3.0,111
+Comfy-Org,ComfyUI,Python,123099,5676,master,23249,69835357;111537740;111542496;111882099;116517292;186139103;190535384;223378236,GNU General Public License v3.0,112
+django-cms,django-filer,Python,1851,2639,master,423,7476919;56713607;7476921;137224490,Other,113
+NVIDIA,physicsnemo,Python,3112,1108,main,6559,51095579;306829843;223705900;214871097;280213014;300952510,Apache License 2.0,114
+boto,botocore,Python,1634,13349,develop,1579,255367039;6581749;3274105,Apache License 2.0,115
+Akkudoktor-EOS,EOS,Python,1637,1029,main,2040,120734693,Other,116
+redistimeseries,redistimeseries,Python,1070,1786,master,2441,43867528;71569843;72257836;133483380;133483549;229332121;309958654,Other,117
+python-attrs,attrs,Python,5826,1816,main,672,32950192;43392580,MIT License,118
+mlflow,mlflow,Python,27317,12841,master,151007,1042492;2242558;3867410;30689442;31009118;39806986;85151591;94840768,Apache License 2.0,119
+e2niee,pandapower,Python,1231,10799,develop,627,3982446,Other,120
+unidata,metpy,Python,1432,7241,main,1649,4149775;24422675;8773691;48747383;2032039;2032040;49904824,BSD 3-Clause New or Revised License,121
+ilius,pyglossary,Python,2657,4455,master,1796,69685564;183826836;188506845;296871801;298292777;308318147;308318148,GNU General Public License v3.0,122
+python-humanize,humanize,Python,740,1069,main,810,21237388,MIT License,123
+dottxt-ai,outlines,Python,15467,1316,main,855,56246379;51522940;183486655,Apache License 2.0,124
+haidra-org,ai-horde,Python,1492,1420,main,170,86421675;87682163,GNU Affero General Public License v3.0,125
+NVIDIA-NeMo,Speech,Python,17842,9470,main,30484,82199800;144595386;157603866;158320052;158492905;158492909;158623652,Apache License 2.0,126
+enarjord,passivbot,Python,2042,10690,master,3000,140324424,The Unlicense,127
+opendronemap,odm,Python,6345,3521,master,131,3344076;182844947,GNU Affero General Public License v3.0,128
+disnakedev,disnake,Python,769,4962,master,1465,26643626,MIT License,129
+pytorch,helion,Python,913,2154,main,26992,303013648;185463005;304402029;190144187;157884933,BSD 3-Clause New or Revised License,130
+django-oauth,django-oauth-toolkit,Python,3330,1564,master,2120,4348086,Other,131
+jupyterhub,jupyterhub,Python,8328,8701,main,711,286155246;21654517;3537134,BSD 3-Clause New or Revised License,132
+geopandas,geopandas,Python,5207,2217,main,205,2641926,BSD 3-Clause New or Revised License,133
+doorstop-dev,doorstop,Python,649,2733,develop,473,21145197;21145198;21145199,Other,134
+fsspec,filesystem_spec,Python,1333,2588,master,158,4143604,BSD 3-Clause New or Revised License,135
+optuna,optuna,Python,14589,21546,master,4951,1521937;2823212;6556638;19543760;41183218;49112799;86781473;157748237,MIT License,136
+arm-doe,pyart,Python,595,3251,main,538,21472763;319050514;35486881,Other,137
+wandb,weave,Python,1109,7148,master,35533,120357246;154532226;264252546;59449588;122538670;300882529,Apache License 2.0,138
+kennethreitz,responder,Python,3620,1353,main,523,3961343,Apache License 2.0,139
+dapr,dapr-agents,Python,728,1269,main,4539,155858700;243622103;203971284,Apache License 2.0,140
+zappa,zappa,Python,3692,3104,master,977,92768232,MIT License,141
+lnbits,lnbits,Python,1224,7227,dev,866,1145947;30304263;66756942;72196144;77445851;119464078,MIT License,142
+pyocd,pyocd,Python,1441,3070,main,288,6251267;27149710,Apache License 2.0,143
+crewAIInc,crewAI,Python,56460,2699,main,21378,81882037;188127668;188179036;188891751;229712095;327225925,MIT License,144
+gee-community,geemap,Python,4001,2334,master,586,18518922;18518923;18518924,MIT License,145
+vectorize-io,hindsight,Python,18989,2300,main,3711,264748321;271220453;205926938;286770531,MIT License,146
+OneDragon-Anything,StarRailOneDragon,Python,1503,1457,main,125,308080757,GNU General Public License v3.0,147
+tribler,tribler,Python,5283,20102,main,483,26281428;111496395;111496398;113799905,GNU General Public License v3.0,148
+tensorflow,quantum,Python,2174,1026,master,426,578359;139424852;139631036,Apache License 2.0,149
+qutip,qutip,Python,2050,12754,master,539,8642691;8958189;109995582,BSD 3-Clause New or Revised License,150
