@@ -3,11 +3,13 @@
 No mocks: every test opens an actual sqlite3 database under tmp_path.
 """
 
+import re
 from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from src.harvest.cursor import CursorStore
+from src.harvest.cursor import _SCHEMA, CursorStore
+from src.harvest.rawstore import ALLOWED_KINDS
 
 
 # -- repo-level PR sweep (unchanged by the capture_unit redesign) -----------
@@ -323,3 +325,18 @@ def test_stats_reports_correct_expired_rate_on_known_mix(tmp_path):
     assert stats["by_kind_status"]["logs"] == {"expired": 1, "failed": 1}
 
     store.close()
+
+
+# -- contract: capture_unit.kind CHECK must match rawstore.ALLOWED_KINDS ----
+# (D-20(c)'s revisit trigger: these are two places kept in sync by hand.)
+
+
+def test_capture_unit_kind_check_matches_rawstore_allowed_kinds():
+    match = re.search(
+        r"kind\s+TEXT NOT NULL CHECK \(kind IN \((.*?)\)\)", _SCHEMA, re.DOTALL
+    )
+    assert match is not None, "could not find capture_unit's kind CHECK constraint in _SCHEMA"
+
+    kinds_in_check = {token.strip().strip("'") for token in match.group(1).split(",")}
+
+    assert kinds_in_check == set(ALLOWED_KINDS)
