@@ -1,4 +1,5 @@
-"""Tests for src.harvest.daemon — the T0.3 PR-sweep stage (endpoints 1-3).
+"""Tests for src.harvest.daemon — the T0.3 PR-sweep (stage 1, endpoints 1-3)
+and run-discovery (stage 2, endpoints 4-5) stages.
 
 No network: all GitHub calls go through get_with_backoff and are intercepted
 with `responses` at the transport layer, same convention as test_frame.py.
@@ -6,6 +7,7 @@ No mocks of our own modules — real RawStore/CursorStore against tmp_path.
 """
 
 import csv
+import json
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -14,12 +16,15 @@ from responses import matchers
 
 from src.harvest import daemon
 from src.harvest.cursor import CursorStore
-from src.harvest.rawstore import RawStore
+from src.harvest.rawstore import RawRecord, RawStore
 from src.harvest.ratelimit import TokenPool
 
 RECENT = "2026-08-01T00:00:00Z"
 OLD = "2026-04-01T00:00:00Z"  # well over 90 days before "now" below
 NOW = datetime(2026, 8, 7, tzinfo=timezone.utc)
+
+SHA_A = "a" * 40
+SHA_B = "b" * 40
 
 
 def _pool():
@@ -334,3 +339,287 @@ def test_dry_run_issues_zero_requests_and_prints_a_count(tmp_path, capsys):
     out = capsys.readouterr().out
     assert "2" in out
     assert len(responses.calls) == 0
+
+
+# -- FIX 1: pull_commits/pull_files pagination -------------------------------
+
+
+@responses.activate
+def test_two_page_pull_commits_captures_all_commits_from_both_pages(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    page1 = [_pr(1, RECENT)]
+    _mock_pulls_page("owner", "repo", 1, page1)
+    responses.add(responses.GET, _files_url("owner", "repo", 1), json=[], status=200)
+
+    commits_page1 = [{"sha": f"{i:040d}"} for i in range(100)]
+    commits_page2 = [{"sha": f"{100:040d}"}]
+    responses.add(
+        responses.GET, _commits_url("owner", "repo", 1), json=commits_page1, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "1"})],
+    )
+    responses.add(
+        responses.GET, _commits_url("owner", "repo", 1), json=commits_page2, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "2"})],
+    )
+
+    daemon.sweep_repo("owner", "repo", pool=pool, store=store, cursor=cursor, cutoff=_cutoff())
+
+    unit = cursor.get_capture_unit("owner/repo", "pull_commits", 1)
+    assert unit.status == "complete"
+
+    records = store.read_records("owner/repo", "pull_commits", 1)
+    assert len(records) == 2  # one RawRecord per page, same (repo, kind, pr_number) unit
+    all_commits = daemon._read_paginated_json(store, "owner/repo", "pull_commits", 1)
+    assert len(all_commits) == 101
+
+    cursor.close()
+
+
+@responses.activate
+def test_endpoint_returning_full_pages_forever_stops_at_max_pr_pages(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    full_page = [{"sha": f"{i:040d}"} for i in range(100)]
+    # No query matcher: the same registered response is returned for every
+    # page request, simulating an endpoint that never returns a short page.
+    responses.add(responses.GET, _commits_url("owner", "repo", 1), json=full_page, status=200)
+
+    status, detail = daemon._capture_pr_unit(
+        "owner", "repo", 1, "pull_commits", "pulls/1/commits",
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    assert status == daemon.PR_UNIT_FAILED
+    assert str(daemon.MAX_PR_PAGES) in detail
+    assert len(responses.calls) == daemon.MAX_PR_PAGES
+
+    unit = cursor.get_capture_unit("owner/repo", "pull_commits", 1)
+    assert unit.status == "failed"
+    assert str(daemon.MAX_PR_PAGES) in unit.reason
+
+    assert not store.exists("owner/repo", "pull_commits", 1)
+
+    cursor.close()
+
+
+@responses.activate
+def test_three_page_pull_commits_completes_normally_under_the_cap(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    page1 = [{"sha": f"{i:040d}"} for i in range(100)]
+    page2 = [{"sha": f"{i:040d}"} for i in range(100, 200)]
+    page3 = [{"sha": f"{200:040d}"}]
+    responses.add(
+        responses.GET, _commits_url("owner", "repo", 1), json=page1, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "1"})],
+    )
+    responses.add(
+        responses.GET, _commits_url("owner", "repo", 1), json=page2, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "2"})],
+    )
+    responses.add(
+        responses.GET, _commits_url("owner", "repo", 1), json=page3, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "3"})],
+    )
+
+    status, detail = daemon._capture_pr_unit(
+        "owner", "repo", 1, "pull_commits", "pulls/1/commits",
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    assert status == daemon.PR_UNIT_COMPLETE
+    assert cursor.get_capture_unit("owner/repo", "pull_commits", 1).status == "complete"
+    all_commits = daemon._read_paginated_json(store, "owner/repo", "pull_commits", 1)
+    assert len(all_commits) == 201
+
+    cursor.close()
+
+
+# -- Stage 2: run discovery ---------------------------------------------------
+
+
+def _runs_url(owner, repo):
+    return f"https://api.github.com/repos/{owner}/{repo}/actions/runs"
+
+
+def _jobs_url(owner, repo, run_id):
+    return f"https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
+
+
+def _seed_pulls_page(store, cursor, repo, page, prs):
+    cursor.mark_unit_started(repo, "pulls", page)
+    store.write_records(
+        repo, "pulls", page,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps(prs).encode())],
+    )
+    cursor.mark_unit_complete(repo, "pulls", page)
+
+
+def _seed_pull_commits(store, cursor, repo, pr_number, shas):
+    cursor.mark_unit_started(repo, "pull_commits", pr_number)
+    body = [{"sha": s} for s in shas]
+    store.write_records(
+        repo, "pull_commits", pr_number,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps(body).encode())],
+    )
+    cursor.mark_unit_complete(repo, "pull_commits", pr_number)
+
+
+def _run_obj(run_id, started_at):
+    return {"id": run_id, "run_started_at": started_at, "created_at": started_at}
+
+
+@responses.activate
+def test_two_prs_sharing_head_sha_produce_one_runs_request(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT), _pr(2, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_pull_commits(store, cursor, "owner/repo", 2, [SHA_A])  # same head sha as PR 1
+
+    responses.add(
+        responses.GET, _runs_url("owner", "repo"), json={"workflow_runs": []}, status=200,
+        match=[matchers.query_param_matcher({"head_sha": SHA_A, "per_page": "100"})],
+    )
+
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_shas_total"] == 1  # deduped at the sha-set level before any request
+    assert len(responses.calls) == 1
+    assert cursor.get_capture_unit("owner/repo", "runs", SHA_A).status == "complete"
+
+    cursor.close()
+
+
+@responses.activate
+def test_sha_with_terminal_runs_unit_is_not_refetched_on_rerun(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    cursor.mark_unit_started("owner/repo", "runs", SHA_A)
+    store.write_records(
+        "owner/repo", "runs", SHA_A,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps({"workflow_runs": []}).encode())],
+    )
+    cursor.mark_unit_complete("owner/repo", "runs", SHA_A)
+
+    # No responses registered at all: any HTTP attempt would raise here.
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert len(responses.calls) == 0
+    assert stats["n_shas_dedup_skipped"] == 1
+    assert stats["n_shas_fetched_fresh"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_each_run_produces_one_jobs_unit_keyed_by_run_id(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    workflow_runs = [_run_obj(101, RECENT), _run_obj(202, RECENT)]
+    responses.add(responses.GET, _runs_url("owner", "repo"), json={"workflow_runs": workflow_runs}, status=200)
+    responses.add(responses.GET, _jobs_url("owner", "repo", 101), json={"jobs": [{"id": 1}]}, status=200)
+    responses.add(responses.GET, _jobs_url("owner", "repo", 202), json={"jobs": [{"id": 2}, {"id": 3}]}, status=200)
+
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert cursor.get_capture_unit("owner/repo", "jobs", 101).status == "complete"
+    assert cursor.get_capture_unit("owner/repo", "jobs", 202).status == "complete"
+    assert store.read_records("owner/repo", "jobs", 101)[0].body == json.dumps({"jobs": [{"id": 1}]}).encode()
+    assert stats["jobs_per_run_counts"] == [1, 2]
+
+    cursor.close()
+
+
+@responses.activate
+def test_pr_with_in_flight_pull_commits_contributes_zero_shas_and_is_counted_skipped(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    cursor.mark_unit_started("owner/repo", "pull_commits", 1)  # left in_flight, never completed
+
+    # No responses registered at all: any HTTP attempt would raise here.
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert len(responses.calls) == 0
+    assert stats["n_prs_skipped_commits_not_complete"] == 1
+    assert stats["n_shas_total"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_404_on_jobs_marks_unit_failed_and_discovery_continues(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    workflow_runs = [_run_obj(1, RECENT), _run_obj(2, RECENT)]
+    responses.add(responses.GET, _runs_url("owner", "repo"), json={"workflow_runs": workflow_runs}, status=200)
+    responses.add(responses.GET, _jobs_url("owner", "repo", 1), status=404)
+    responses.add(responses.GET, _jobs_url("owner", "repo", 2), json={"jobs": [{"id": 9}]}, status=200)
+
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    job1 = cursor.get_capture_unit("owner/repo", "jobs", 1)
+    job2 = cursor.get_capture_unit("owner/repo", "jobs", 2)
+    assert job1.status == "failed"
+    assert "404" in job1.reason
+    assert job2.status == "complete"
+    assert stats["n_jobs_failed_terminal"] == 1
+    assert stats["jobs_per_run_counts"] == [1]  # only run 2's jobs counted — run 1's data is unknown, not zero
+
+    cursor.close()
+
+
+@responses.activate
+def test_run_age_report_counts_100_day_old_run_as_already_expired(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    old_started_at = (NOW - timedelta(days=100)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    workflow_runs = [_run_obj(1, old_started_at)]
+    responses.add(responses.GET, _runs_url("owner", "repo"), json={"workflow_runs": workflow_runs}, status=200)
+    responses.add(responses.GET, _jobs_url("owner", "repo", 1), json={"jobs": []}, status=200)
+
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["run_age_days"] == [pytest.approx(100.0, abs=0.01)]
+
+    report = daemon.build_run_ages_report({"owner/repo": stats})
+    assert report["overall"]["n_runs_expired_90d"] == 1
+    assert report["overall"]["expired_90d_rate"] == 1.0
+    assert report["per_repo"]["owner/repo"]["n_runs_expired_90d"] == 1
+
+    cursor.close()
