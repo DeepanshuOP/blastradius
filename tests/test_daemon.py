@@ -1,5 +1,6 @@
-"""Tests for src.harvest.daemon — the T0.3 PR-sweep (stage 1, endpoints 1-3)
-and run-discovery (stage 2, endpoints 4-5) stages.
+"""Tests for src.harvest.daemon — the T0.3 PR-sweep (stage 1, endpoints 1-3),
+run-discovery (stage 2, endpoints 4-5), and check-run/annotation capture
+(stage 3, endpoints 6-7) stages.
 
 No network: all GitHub calls go through get_with_backoff and are intercepted
 with `responses` at the transport layer, same convention as test_frame.py.
@@ -25,6 +26,7 @@ NOW = datetime(2026, 8, 7, tzinfo=timezone.utc)
 
 SHA_A = "a" * 40
 SHA_B = "b" * 40
+SHA_C = "c" * 40
 
 
 def _pool():
@@ -566,7 +568,10 @@ def test_pr_with_in_flight_pull_commits_contributes_zero_shas_and_is_counted_ski
     stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
 
     assert len(responses.calls) == 0
-    assert stats["n_prs_skipped_commits_not_complete"] == 1
+    # A row exists (in_flight) — attempted but not complete, distinct from
+    # out-of-window (no row at all, see test_out_of_window_and_not_complete_counters_are_distinct).
+    assert stats["n_prs_pull_commits_not_complete"] == 1
+    assert stats["n_prs_out_of_window"] == 0
     assert stats["n_shas_total"] == 0
 
     cursor.close()
@@ -621,5 +626,226 @@ def test_run_age_report_counts_100_day_old_run_as_already_expired(tmp_path):
     assert report["overall"]["n_runs_expired_90d"] == 1
     assert report["overall"]["expired_90d_rate"] == 1.0
     assert report["per_repo"]["owner/repo"]["n_runs_expired_90d"] == 1
+
+    cursor.close()
+
+
+# -- Stage 3: check-run + annotation capture ----------------------------------
+
+
+def _checkruns_url(owner, repo, sha):
+    return f"https://api.github.com/repos/{owner}/{repo}/commits/{sha}/check-runs"
+
+
+def _annotations_url(owner, repo, check_run_id):
+    return f"https://api.github.com/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations"
+
+
+def _seed_runs_unit(store, cursor, repo, sha, workflow_runs):
+    cursor.mark_unit_started(repo, "runs", sha)
+    store.write_records(
+        repo, "runs", sha,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps({"workflow_runs": workflow_runs}).encode())],
+    )
+    cursor.mark_unit_complete(repo, "runs", sha)
+
+
+@responses.activate
+def test_shas_processed_oldest_run_first(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT), _pr(2, RECENT), _pr(3, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_pull_commits(store, cursor, "owner/repo", 2, [SHA_B])
+    _seed_pull_commits(store, cursor, "owner/repo", 3, [SHA_C])
+
+    oldest = (NOW - timedelta(days=200)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    middle = (NOW - timedelta(days=50)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    newest = (NOW - timedelta(days=5)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Seeded out of age order deliberately — sha-set iteration/dict order
+    # must not be what determines request order.
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_C, [_run_obj(3, newest)])
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_A, [_run_obj(1, oldest)])
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_B, [_run_obj(2, middle)])
+
+    for sha in (SHA_A, SHA_B, SHA_C):
+        responses.add(responses.GET, _checkruns_url("owner", "repo", sha), json={"check_runs": []}, status=200)
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    called_shas = []
+    for call in responses.calls:
+        for sha in (SHA_A, SHA_B, SHA_C):
+            if sha in call.request.url:
+                called_shas.append(sha)
+    assert called_shas == [SHA_A, SHA_B, SHA_C]  # oldest (200d) -> middle (50d) -> newest (5d)
+
+    cursor.close()
+
+
+@responses.activate
+def test_sha_with_terminal_checkruns_unit_is_not_refetched(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    cursor.mark_unit_started("owner/repo", "checkruns", SHA_A)
+    store.write_records(
+        "owner/repo", "checkruns", SHA_A,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps({"check_runs": []}).encode())],
+    )
+    cursor.mark_unit_complete("owner/repo", "checkruns", SHA_A)
+
+    # No responses registered at all: any HTTP attempt would raise here.
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert len(responses.calls) == 0
+    assert stats["n_checkruns_dedup_skipped"] == 1
+    assert stats["n_checkruns_fetched_fresh"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_each_checkrun_produces_one_annotations_unit_keyed_by_check_run_id(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A}, {"id": 22, "head_sha": SHA_A}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=[{"message": "m1"}], status=200)
+    responses.add(
+        responses.GET, _annotations_url("owner", "repo", 22),
+        json=[{"message": "m2"}, {"message": "m3"}], status=200,
+    )
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    unit11 = cursor.get_capture_unit("owner/repo", "annotations", 11)
+    unit22 = cursor.get_capture_unit("owner/repo", "annotations", 22)
+    assert unit11.status == "complete"
+    assert unit22.status == "complete"
+    assert store.read_records("owner/repo", "annotations", 11)[0].body == json.dumps([{"message": "m1"}]).encode()
+    assert stats["annotations_per_checkrun_counts"] == [1, 2]
+    # parent_run_id is not resolvable from the check-run object (see report) — always NULL.
+    assert unit11.parent_run_id is None
+    assert unit22.parent_run_id is None
+
+    cursor.close()
+
+
+@responses.activate
+def test_checkrun_with_zero_annotations_records_complete_not_failure(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A),
+        json={"check_runs": [{"id": 11, "head_sha": SHA_A}]}, status=200,
+    )
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=[], status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    unit = cursor.get_capture_unit("owner/repo", "annotations", 11)
+    assert unit.status == "complete"
+    assert stats["n_checkruns_zero_annotations"] == 1
+    assert stats["annotations_per_checkrun_counts"] == [0]
+
+    cursor.close()
+
+
+@responses.activate
+def test_404_on_annotations_marks_unit_failed_and_processing_continues(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A}, {"id": 22, "head_sha": SHA_A}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), status=404)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 22), json=[{"message": "m"}], status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    unit11 = cursor.get_capture_unit("owner/repo", "annotations", 11)
+    unit22 = cursor.get_capture_unit("owner/repo", "annotations", 22)
+    assert unit11.status == "failed"
+    assert "404" in unit11.reason
+    assert unit22.status == "complete"
+    assert stats["n_annotations_failed_terminal"] == 1
+    assert stats["annotations_per_checkrun_counts"] == [1]  # only run 22's — run 11's is unknown, not zero
+
+    cursor.close()
+
+
+@responses.activate
+def test_annotations_pagination_past_cap_marks_failed_and_writes_nothing(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A),
+        json={"check_runs": [{"id": 11, "head_sha": SHA_A}]}, status=200,
+    )
+    full_page = [{"message": f"m{i}"} for i in range(100)]
+    # No query matcher: the same registered response is returned for every
+    # page request, simulating an endpoint that never returns a short page.
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=full_page, status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    unit = cursor.get_capture_unit("owner/repo", "annotations", 11)
+    assert unit.status == "failed"
+    assert str(daemon.MAX_PR_PAGES) in unit.reason
+    assert not store.exists("owner/repo", "annotations", 11)
+    assert stats["n_annotations_failed_terminal"] == 1
+    # 1 checkruns request + MAX_PR_PAGES annotation-page requests.
+    assert len(responses.calls) == 1 + daemon.MAX_PR_PAGES
+
+    cursor.close()
+
+
+@responses.activate
+def test_out_of_window_and_not_complete_counters_are_distinct(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    # PR 1: listed on the pulls page but pull_commits was never attempted
+    # (out of window — sweep_repo's window filter never called _capture_pr,
+    # so no capture_unit row exists at all).
+    # PR 2: pull_commits attempted but left in_flight (not complete).
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, OLD), _pr(2, RECENT)])
+    cursor.mark_unit_started("owner/repo", "pull_commits", 2)
+
+    # No responses registered: neither PR contributes a sha, so zero requests.
+    stats = daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert len(responses.calls) == 0
+    assert stats["n_prs_out_of_window"] == 1
+    assert stats["n_prs_pull_commits_not_complete"] == 1
 
     cursor.close()

@@ -1,4 +1,4 @@
-"""The rolling harvester daemon — stages 1-2 (T0.3, ROADMAP §8.3).
+"""The rolling harvester daemon — stages 1-3 (T0.3, ROADMAP §8.3).
 
 Stage 1 (endpoints 1-3), per repo:
 
@@ -66,6 +66,25 @@ pagination can continue without re-fetching it.
 Stage 2 also emits `data/raw/RUN_AGES.json` — the run-age distribution and
 90-day-expiry count Stage 3 needs to prioritise oldest-run-first before its
 job logs disappear (§23.3).
+
+Stage 3 (endpoints 6-7), check-run + annotation capture — the label source
+that survives log expiry (§35 T0.3c: "priority: persists >90d"):
+
+  6. GET /repos/{o}/{r}/commits/{sha}/check-runs      (kind 'checkruns', key = sha)
+  7. GET /repos/{o}/{r}/check-runs/{id}/annotations   (kind 'annotations', key = check_run_id)
+
+Unlike Stages 1-2, Stage 3 is NOT processed repo-by-repo: SHAs are ordered
+oldest-discovered-run-first across the WHOLE invocation (`capture_checkruns()`),
+because that ordering — capturing annotations for the runs closest to losing
+their logs first — is the entire reason this stage is sequenced before log
+capture. `annotations` is paginated with the same MAX_PR_PAGES bound as
+Stage 1's PR-scoped kinds; a cap hit marks the unit `failed` and writes
+nothing, same all-or-nothing contract. `parent_run_id` is left NULL on every
+`annotations` unit — the check-run object carries no documented, resolvable
+field back to an Actions workflow run id (see the report this stage shipped
+with for the evidence); D-20 reserves the column for exactly this kind, but
+inventing a linkage from an undocumented URL shape is worse than leaving it
+unset.
 """
 
 from __future__ import annotations
@@ -323,8 +342,65 @@ def _iter_captured_pr_numbers(repo_full: str, store: RawStore, cursor: CursorSto
     return pr_numbers
 
 
+def _collect_repo_shas(
+    repo_full: str, store: RawStore, cursor: CursorStore
+) -> tuple[set[str], int, int, int]:
+    """Derive the repo's distinct head-SHA set from every PR the persisted
+    `pulls` pages list, splitting the PRs that contribute no SHAs by *why*:
+
+      - out-of-window: no `pull_commits` capture_unit row at all. This is
+        `sweep_repo()`'s own window filter — `_capture_pr()` is only ever
+        called for PRs with `updated_at >= cutoff`, so a PR outside that
+        window never got `mark_unit_started()` and never will; the row's
+        absence isn't a hole, it's the intended "never attempted" state.
+      - not-complete: a row exists (in_flight/failed/skipped/expired) — a
+        PR the sweep DID attempt but that hasn't (or couldn't) resolve to
+        real commit data. This is the genuine incompleteness case; the two
+        must stay separate; a PR out of window silently inflating an
+        "incomplete units" count was the bug (see report).
+
+    Shared by Stage 2 (discover_repo) and Stage 3 (capture_checkruns) so
+    both count PRs the same way."""
+    pr_numbers = _iter_captured_pr_numbers(repo_full, store, cursor)
+    n_prs_out_of_window = 0
+    n_prs_pull_commits_not_complete = 0
+    shas: set[str] = set()
+    for pr_number in pr_numbers:
+        unit = cursor.get_capture_unit(repo_full, "pull_commits", pr_number)
+        if unit is None:
+            n_prs_out_of_window += 1
+            continue
+        if unit.status != "complete":
+            n_prs_pull_commits_not_complete += 1
+            continue
+        for commit in _read_paginated_json(store, repo_full, "pull_commits", pr_number):
+            shas.add(commit["sha"])
+    return shas, len(pr_numbers), n_prs_out_of_window, n_prs_pull_commits_not_complete
+
+
 def _run_started_at(run: dict) -> str:
     return run.get("run_started_at") or run["created_at"]
+
+
+def _read_run_ages_for_sha(
+    store: RawStore, cursor: CursorStore, repo_full: str, sha: str, now: datetime
+) -> list[float]:
+    """Ages (days) of every run already discovered for this sha, read back
+    from Stage 2's persisted `runs` unit — never re-fetched here (Stage 3
+    owns endpoints 6-7 only, not endpoint 4). Empty if the unit doesn't
+    exist, isn't `complete`, or genuinely discovered zero runs — Stage 3's
+    ordering treats all three the same (see report: no age signal to order
+    by, so these sort after every SHA that does have one)."""
+    unit = cursor.get_capture_unit(repo_full, "runs", sha)
+    if unit is None or unit.status != "complete":
+        return []
+    records = store.read_records(repo_full, "runs", sha)
+    body = json.loads(records[0].body) if records else {}
+    workflow_runs = body.get("workflow_runs", [])
+    return [
+        (now - _parse_github_ts(_run_started_at(run))).total_seconds() / 86400
+        for run in workflow_runs
+    ]
 
 
 def _fetch_runs_for_sha(
@@ -423,20 +499,14 @@ def discover_repo(
     repo_full = f"{owner}/{repo}"
     now = now or datetime.now(timezone.utc)
 
-    pr_numbers = _iter_captured_pr_numbers(repo_full, store, cursor)
-    n_prs_skipped_commits_not_complete = 0
-    shas: set[str] = set()
-    for pr_number in pr_numbers:
-        unit = cursor.get_capture_unit(repo_full, "pull_commits", pr_number)
-        if unit is None or unit.status != "complete":
-            n_prs_skipped_commits_not_complete += 1
-            continue
-        for commit in _read_paginated_json(store, repo_full, "pull_commits", pr_number):
-            shas.add(commit["sha"])
+    shas, n_prs_seen, n_prs_out_of_window, n_prs_pull_commits_not_complete = _collect_repo_shas(
+        repo_full, store, cursor
+    )
 
     stats = {
-        "n_prs_seen": len(pr_numbers),
-        "n_prs_skipped_commits_not_complete": n_prs_skipped_commits_not_complete,
+        "n_prs_seen": n_prs_seen,
+        "n_prs_out_of_window": n_prs_out_of_window,
+        "n_prs_pull_commits_not_complete": n_prs_pull_commits_not_complete,
         "n_shas_total": len(shas),
         "n_shas_dedup_skipped": 0,
         "n_shas_fetched_fresh": 0,
@@ -509,6 +579,248 @@ def discover_repo(
             else:
                 stats["n_jobs_fetched_fresh"] += 1
             stats["jobs_per_run_counts"].append(len(jobs))
+
+    return stats
+
+
+def _fetch_checkruns_for_sha(
+    owner: str,
+    repo: str,
+    sha: str,
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    cursor: CursorStore,
+    repo_full: str,
+) -> tuple[str, list[dict] | None]:
+    """Endpoint 6. Same (status, check_runs) shape as `_fetch_runs_for_sha`."""
+    existing = cursor.get_capture_unit(repo_full, "checkruns", sha)
+    if existing is not None and existing.status != "in_flight":
+        if existing.status == "complete":
+            records = store.read_records(repo_full, "checkruns", sha)
+            body = json.loads(records[0].body) if records else {}
+            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("check_runs", [])
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None
+
+    cursor.mark_unit_started(repo_full, "checkruns", sha)
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits/{sha}/check-runs"
+    try:
+        response = get_with_backoff(url, params={"per_page": 100}, pool=pool)
+    except Exception as exc:
+        bucket, status, exception_class = _classify_failure(exc)
+        detail = f"{status} {exception_class}"
+        if bucket == "terminal":
+            cursor.mark_unit_failed(repo_full, "checkruns", sha, detail)
+            return PR_UNIT_FAILED, None
+        return PR_UNIT_TRANSIENT, None
+
+    body = response.json()
+    store.write_records(repo_full, "checkruns", sha, [_record_from_response(response)])
+    cursor.mark_unit_complete(repo_full, "checkruns", sha)
+    return PR_UNIT_COMPLETE, body.get("check_runs", [])
+
+
+def _fetch_annotations_for_checkrun(
+    owner: str,
+    repo: str,
+    check_run_id: int,
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    cursor: CursorStore,
+    repo_full: str,
+) -> tuple[str, list[dict] | None]:
+    """Endpoint 7, paginated (unwrapped JSON array, like pull_commits/
+    pull_files) with the same MAX_PR_PAGES bound and all-or-nothing write:
+    a cap hit marks the unit `failed` and writes nothing, never a partial
+    `complete` — a truncated annotation set silently marked complete is
+    exactly the FIX 1 bug repeated at a different endpoint.
+
+    parent_run_id is always NULL here (see report): the check-run object
+    carries no documented, resolvable field back to the Actions workflow
+    run id, so D-20's parent_run_id column — reserved for job/checkrun-
+    scoped kinds precisely so `logs`/`annotations` expiry is attributable
+    to a run — is left unset rather than invented from an undocumented URL
+    shape."""
+    existing = cursor.get_capture_unit(repo_full, "annotations", check_run_id)
+    if existing is not None and existing.status != "in_flight":
+        if existing.status == "complete":
+            items: list[dict] = []
+            for record in store.read_records(repo_full, "annotations", check_run_id):
+                items.extend(json.loads(record.body))
+            return PR_UNIT_SKIPPED_ALREADY_DONE, items
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None
+
+    cursor.mark_unit_started(repo_full, "annotations", check_run_id, parent_run_id=None)
+    url = f"https://api.github.com/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations"
+
+    records: list[RawRecord] = []
+    items: list[dict] = []
+    for page in range(1, MAX_PR_PAGES + 1):
+        try:
+            response = get_with_backoff(
+                url, params={"per_page": PULLS_PER_PAGE, "page": page}, pool=pool
+            )
+        except Exception as exc:
+            bucket, status, exception_class = _classify_failure(exc)
+            detail = f"{status} {exception_class}"
+            if bucket == "terminal":
+                cursor.mark_unit_failed(repo_full, "annotations", check_run_id, detail)
+                return PR_UNIT_FAILED, None
+            return PR_UNIT_TRANSIENT, None
+
+        page_body = response.json()
+        records.append(_record_from_response(response))
+        items.extend(page_body)
+        if len(page_body) < PULLS_PER_PAGE:
+            break
+    else:
+        detail = f"exceeded MAX_PR_PAGES={MAX_PR_PAGES} without a short page"
+        cursor.mark_unit_failed(repo_full, "annotations", check_run_id, detail)
+        return PR_UNIT_FAILED, None
+
+    store.write_records(repo_full, "annotations", check_run_id, records)
+    cursor.mark_unit_complete(repo_full, "annotations", check_run_id)
+    return PR_UNIT_COMPLETE, items
+
+
+def capture_checkruns(
+    repos: list[tuple[str, str]],
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    cursor: CursorStore,
+    now: datetime | None = None,
+) -> dict:
+    """Stage 3: check-run + annotation capture (endpoints 6-7), oldest-
+    discovered-run-first across the WHOLE invocation, not repo-by-repo and
+    not in discovery order — this ordering is the entire point of the
+    stage (see report: expired_90d_rate=0.110, median run age 61d, p90 93d
+    — job logs for those runs are already gone; annotations, captured now,
+    are not).
+
+    Ordering key: for every distinct head SHA (same derivation as Stage 2,
+    `_collect_repo_shas`), the age in days of its OLDEST already-discovered
+    run, read back from Stage 2's persisted 'runs' units — never
+    re-fetched (Stage 3 owns endpoints 6-7 only). SHAs with no age signal
+    (no 'runs' unit, an incomplete one, or one that completed with zero
+    runs — all three are indistinguishable from "nothing to prioritise
+    by") sort after every SHA that has one, in a deterministic (repo, sha)
+    order among themselves — see report for why zero-run and missing-data
+    SHAs are treated identically here.
+
+    Mirrors sweep_repo()/discover_repo()'s AbortRun-after-
+    CONSECUTIVE_TRANSIENT_LIMIT pattern, one counter shared across both the
+    'checkruns' and 'annotations' fetches, but as a single counter across
+    the whole ordered sequence (not reset per repo) since the sequence
+    itself spans every repo."""
+    now = now or datetime.now(timezone.utc)
+
+    entries: list[tuple[str, str, str, str, list[float]]] = []  # (repo_full, owner, repo, sha, run_ages)
+    n_prs_out_of_window_total = 0
+    n_prs_pull_commits_not_complete_total = 0
+    for owner, repo in repos:
+        repo_full = f"{owner}/{repo}"
+        shas, _n_seen, n_out, n_not_complete = _collect_repo_shas(repo_full, store, cursor)
+        n_prs_out_of_window_total += n_out
+        n_prs_pull_commits_not_complete_total += n_not_complete
+        for sha in sorted(shas):
+            run_ages = _read_run_ages_for_sha(store, cursor, repo_full, sha, now)
+            entries.append((repo_full, owner, repo, sha, run_ages))
+
+    # Stable sort: deterministic (repo, sha) tie-break first, then oldest-
+    # run-age-first: known ages sort before unknown ones (None), and among
+    # known ages, larger age (older run) sorts first.
+    entries.sort(key=lambda e: (e[0], e[3]))
+    entries.sort(key=lambda e: (0, -max(e[4])) if e[4] else (1, 0.0))
+
+    stats = {
+        "n_prs_out_of_window": n_prs_out_of_window_total,
+        "n_prs_pull_commits_not_complete": n_prs_pull_commits_not_complete_total,
+        "n_shas_total": len(entries),
+        "n_checkruns_dedup_skipped": 0,
+        "n_checkruns_fetched_fresh": 0,
+        "n_checkruns_failed_terminal": 0,
+        "n_transient_checkruns": 0,
+        "n_checkruns_discovered": 0,
+        "n_annotations_dedup_skipped": 0,
+        "n_annotations_fetched_fresh": 0,
+        "n_annotations_failed_terminal": 0,
+        "n_transient_annotations": 0,
+        "annotations_per_checkrun_counts": [],
+        "n_checkruns_zero_annotations": 0,
+        # "runs" here means: every discovered run whose head sha ended up
+        # with >=1 captured annotation this (or a prior) invocation. Runs
+        # are attributed by head_sha, not by run_id — parent_run_id is
+        # NULL (see report), so a run-level join isn't possible; SHAs
+        # shared by multiple runs (reruns/matrix legs) count every one of
+        # those runs as recovered together.
+        "recovered_runs_over_90d": 0,
+    }
+
+    consecutive_transient = 0
+    for repo_full, owner, repo, sha, run_ages in entries:
+        cr_status, check_runs = _fetch_checkruns_for_sha(
+            owner, repo, sha, pool=pool, store=store, cursor=cursor, repo_full=repo_full
+        )
+
+        if cr_status == PR_UNIT_TRANSIENT:
+            stats["n_transient_checkruns"] += 1
+            consecutive_transient += 1
+            if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
+                raise AbortRun(
+                    f"aborting after {consecutive_transient} consecutive transient "
+                    "checkrun/annotation failures"
+                )
+            continue
+        consecutive_transient = 0
+
+        if cr_status == PR_UNIT_FAILED:
+            stats["n_checkruns_failed_terminal"] += 1
+            continue
+        if check_runs is None:
+            continue  # already-terminal non-complete unit from an earlier run — no data
+        if cr_status == PR_UNIT_SKIPPED_ALREADY_DONE:
+            stats["n_checkruns_dedup_skipped"] += 1
+        else:
+            stats["n_checkruns_fetched_fresh"] += 1
+        stats["n_checkruns_discovered"] += len(check_runs)
+
+        sha_got_annotation = False
+        for check_run in check_runs:
+            check_run_id = check_run["id"]
+            an_status, annotations = _fetch_annotations_for_checkrun(
+                owner, repo, check_run_id, pool=pool, store=store, cursor=cursor, repo_full=repo_full
+            )
+            if an_status == PR_UNIT_TRANSIENT:
+                stats["n_transient_annotations"] += 1
+                consecutive_transient += 1
+                if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
+                    raise AbortRun(
+                        f"aborting after {consecutive_transient} consecutive transient "
+                        "checkrun/annotation failures"
+                    )
+                continue
+            consecutive_transient = 0
+
+            if an_status == PR_UNIT_FAILED:
+                stats["n_annotations_failed_terminal"] += 1
+                continue
+            if annotations is None:
+                continue
+            if an_status == PR_UNIT_SKIPPED_ALREADY_DONE:
+                stats["n_annotations_dedup_skipped"] += 1
+            else:
+                stats["n_annotations_fetched_fresh"] += 1
+
+            stats["annotations_per_checkrun_counts"].append(len(annotations))
+            if len(annotations) == 0:
+                stats["n_checkruns_zero_annotations"] += 1
+            else:
+                sha_got_annotation = True
+
+        if sha_got_annotation:
+            stats["recovered_runs_over_90d"] += sum(1 for a in run_ages if a > LOG_RETENTION_DAYS)
 
     return stats
 
@@ -645,7 +957,8 @@ def _summarize_repo_stats(stats: dict) -> dict:
     n_expired = sum(1 for a in run_ages if a > LOG_RETENTION_DAYS)
     return {
         "n_prs_seen": stats["n_prs_seen"],
-        "n_prs_skipped_commits_not_complete": stats["n_prs_skipped_commits_not_complete"],
+        "n_prs_out_of_window": stats["n_prs_out_of_window"],
+        "n_prs_pull_commits_not_complete": stats["n_prs_pull_commits_not_complete"],
         "n_shas_total": stats["n_shas_total"],
         "n_shas_dedup_skipped": stats["n_shas_dedup_skipped"],
         "n_shas_fetched_fresh": stats["n_shas_fetched_fresh"],
@@ -720,6 +1033,38 @@ def _write_run_ages_json(report: dict, path: Path = RUN_AGES_PATH) -> None:
     path.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
 
+def _load_existing_run_ages(path: Path = RUN_AGES_PATH) -> dict | None:
+    """Lets `--stage 3` run standalone (no Stage 2 this invocation) and
+    still augment a RUN_AGES.json a prior invocation already wrote,
+    instead of clobbering Stage 2's numbers with an empty shell."""
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _empty_run_ages_report() -> dict:
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "log_retention_days": LOG_RETENTION_DAYS,
+        "per_repo": {},
+        "overall": {},
+    }
+
+
+def _apply_stage3_to_report(report: dict, stage3_stats: dict) -> dict:
+    """Add Stage 3's fields to the `overall` block in place. `runs` in
+    `n_runs_over_90d_recovered_via_annotations` means "runs whose head sha
+    got >=1 captured annotation" — a sha-level join, not a run-level one,
+    because parent_run_id is NULL (see report: the check-run object has no
+    resolvable run id)."""
+    overall = report.setdefault("overall", {})
+    overall["annotations_per_checkrun"] = _dist_mean(stage3_stats["annotations_per_checkrun_counts"])
+    overall["n_checkruns_discovered"] = stage3_stats["n_checkruns_discovered"]
+    overall["n_checkruns_zero_annotations"] = stage3_stats["n_checkruns_zero_annotations"]
+    overall["n_runs_over_90d_recovered_via_annotations"] = stage3_stats["recovered_runs_over_90d"]
+    return report
+
+
 def run(
     *,
     pool: TokenPool,
@@ -730,12 +1075,24 @@ def run(
     cutoff: datetime,
     stage: str = DEFAULT_STAGE,
 ) -> dict:
-    """Run Stage 1 (PR sweep) and/or Stage 2 (run discovery) for each repo
-    in turn, printing a one-line summary per repo and a total at the end.
-    Propagates AbortRun uncaught (same as frame.py's run_frame); main()
-    handles it. Stage 2, if run, writes data/raw/RUN_AGES.json once at the
-    end over every repo processed this invocation."""
+    """Run Stage 1 (PR sweep), Stage 2 (run discovery), and/or Stage 3
+    (check-run + annotation capture) for each repo in turn, printing a
+    one-line summary per repo and a total at the end. Propagates AbortRun
+    uncaught (same as frame.py's run_frame); main() handles it.
+
+    Stages 1-2 are per-repo (unchanged: 'both' means 1+2, same as before
+    this stage existed). Stage 3 is NOT per-repo — oldest-run-first
+    ordering is cross-repo by design (see capture_checkruns()), so it runs
+    once over the whole `repos` list after the per-repo loop. Whichever of
+    Stage 2 / Stage 3 ran this invocation writes/augments
+    data/raw/RUN_AGES.json; Stage 3 running standalone (`--stage 3`, no
+    Stage 2 this invocation) augments a prior invocation's file instead of
+    clobbering it."""
     repos = _load_repos(repos_path, limit)
+    run_stage1 = stage in ("1", "both", "all")
+    run_stage2 = stage in ("2", "both", "all")
+    run_stage3 = stage in ("3", "all")
+
     total = {
         "repos_processed": 0,
         "pages_fetched": 0,
@@ -746,13 +1103,16 @@ def run(
         "n_shas_total": 0,
         "n_runs_discovered": 0,
         "n_transient_discovery": 0,
+        "n_checkruns_discovered": 0,
+        "n_annotations_captured": 0,
+        "n_transient_stage3": 0,
     }
     stage2_raw: dict[str, dict] = {}
 
     for owner, repo in repos:
         repo_full = f"{owner}/{repo}"
         total["repos_processed"] += 1
-        if stage in ("1", "both"):
+        if run_stage1:
             result = sweep_repo(owner, repo, pool=pool, store=store, cursor=cursor, cutoff=cutoff)
             print(
                 f"[{repo_full}] stage1 pages={result['pages_fetched']} "
@@ -767,12 +1127,13 @@ def run(
             total["n_prs_failed_terminal"] += result["n_prs_failed_terminal"]
             total["n_transient"] += result["n_transient"]
 
-        if stage in ("2", "both"):
+        if run_stage2:
             stats = discover_repo(owner, repo, pool=pool, store=store, cursor=cursor)
             stage2_raw[repo_full] = stats
             print(
                 f"[{repo_full}] stage2 shas={stats['n_shas_total']} "
-                f"prs_skipped_commits_not_complete={stats['n_prs_skipped_commits_not_complete']} "
+                f"out_of_window={stats['n_prs_out_of_window']} "
+                f"pull_commits_not_complete={stats['n_prs_pull_commits_not_complete']} "
                 f"runs_discovered={len(stats['run_age_days'])} "
                 f"failed_terminal={stats['n_shas_failed_terminal'] + stats['n_jobs_failed_terminal']} "
                 f"transient={stats['n_transient_runs'] + stats['n_transient_jobs']}"
@@ -781,26 +1142,68 @@ def run(
             total["n_runs_discovered"] += len(stats["run_age_days"])
             total["n_transient_discovery"] += stats["n_transient_runs"] + stats["n_transient_jobs"]
 
-    if stage in ("2", "both") and stage2_raw:
-        report = build_run_ages_report(stage2_raw)
-        _write_run_ages_json(report)
-        overall = report["overall"]
+    stage2_report = None
+    if run_stage2 and stage2_raw:
+        stage2_report = build_run_ages_report(stage2_raw)
+
+    stage3_stats = None
+    if run_stage3:
+        stage3_stats = capture_checkruns(repos, pool=pool, store=store, cursor=cursor)
         print(
-            f"RUN_AGES: n_runs={overall['n_runs_discovered']} "
-            f"runs_per_sha(mean/median/p90/max)={overall['runs_per_sha']} "
-            f"jobs_per_run(mean/median/p90/max)={overall['jobs_per_run']} "
-            f"run_age_days(min/median/p90/max)={overall['run_age_days']} "
-            f"expired_90d={overall['n_runs_expired_90d']} "
-            f"(rate={overall['expired_90d_rate']}) "
-            f"extrapolation_300_repos={overall['extrapolation']}"
+            f"STAGE3: shas={stage3_stats['n_shas_total']} "
+            f"out_of_window={stage3_stats['n_prs_out_of_window']} "
+            f"pull_commits_not_complete={stage3_stats['n_prs_pull_commits_not_complete']} "
+            f"checkruns_discovered={stage3_stats['n_checkruns_discovered']} "
+            f"annotations_per_checkrun(mean/median/p90/max)="
+            f"{_dist_mean(stage3_stats['annotations_per_checkrun_counts'])} "
+            f"zero_annotation_checkruns={stage3_stats['n_checkruns_zero_annotations']} "
+            f"recovered_runs_over_90d={stage3_stats['recovered_runs_over_90d']} "
+            f"failed_terminal={stage3_stats['n_checkruns_failed_terminal'] + stage3_stats['n_annotations_failed_terminal']} "
+            f"transient={stage3_stats['n_transient_checkruns'] + stage3_stats['n_transient_annotations']}"
         )
+        total["n_checkruns_discovered"] += stage3_stats["n_checkruns_discovered"]
+        total["n_annotations_captured"] += sum(stage3_stats["annotations_per_checkrun_counts"])
+        total["n_transient_stage3"] += (
+            stage3_stats["n_transient_checkruns"] + stage3_stats["n_transient_annotations"]
+        )
+
+    if stage2_report is not None or stage3_stats is not None:
+        if stage2_report is not None:
+            report = stage2_report
+        else:
+            report = _load_existing_run_ages() or _empty_run_ages_report()
+        if stage3_stats is not None:
+            _apply_stage3_to_report(report, stage3_stats)
+        _write_run_ages_json(report)
+
+        overall = report["overall"]
+        if "n_runs_discovered" in overall:
+            print(
+                f"RUN_AGES: n_runs={overall['n_runs_discovered']} "
+                f"runs_per_sha(mean/median/p90/max)={overall['runs_per_sha']} "
+                f"jobs_per_run(mean/median/p90/max)={overall['jobs_per_run']} "
+                f"run_age_days(min/median/p90/max)={overall['run_age_days']} "
+                f"expired_90d={overall['n_runs_expired_90d']} "
+                f"(rate={overall['expired_90d_rate']}) "
+                f"extrapolation_300_repos={overall['extrapolation']}"
+            )
+        if stage3_stats is not None:
+            print(
+                f"RUN_AGES: annotations_per_checkrun={overall['annotations_per_checkrun']} "
+                f"zero_annotation_checkruns={overall['n_checkruns_zero_annotations']} "
+                f"n_runs_over_90d_recovered_via_annotations="
+                f"{overall['n_runs_over_90d_recovered_via_annotations']}"
+            )
 
     print(
         f"TOTAL: repos={total['repos_processed']} pages={total['pages_fetched']} "
         f"captured={total['n_prs_captured']} failed_terminal={total['n_prs_failed_terminal']} "
         f"transient={total['n_transient']} window_stops={total['window_stops']} "
         f"shas={total['n_shas_total']} runs_discovered={total['n_runs_discovered']} "
-        f"transient_discovery={total['n_transient_discovery']}"
+        f"transient_discovery={total['n_transient_discovery']} "
+        f"checkruns_discovered={total['n_checkruns_discovered']} "
+        f"annotations_captured={total['n_annotations_captured']} "
+        f"transient_stage3={total['n_transient_stage3']}"
     )
     return total
 
@@ -810,7 +1213,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--repos", type=Path, default=DEFAULT_REPOS_PATH)
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--stage", choices=("1", "2", "both"), default=DEFAULT_STAGE)
+    parser.add_argument("--stage", choices=("1", "2", "3", "both", "all"), default=DEFAULT_STAGE)
     return parser.parse_args(argv)
 
 
