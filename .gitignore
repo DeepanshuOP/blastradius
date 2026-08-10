@@ -16,4 +16,4 @@ __pycache__/
 .env*
 !.env.example
 data/frame/repos.partial.csv
-data/frame/repos.partial.csv
+.claude/

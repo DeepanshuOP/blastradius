@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.csv -text
+*.png binary
+*.gz binary
+*.parquet binary
+*.jsonl.gz binary
