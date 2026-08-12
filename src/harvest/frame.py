@@ -32,8 +32,10 @@ connection errors — a credential or infrastructure problem, not a fact
 about the repo) are never written to repos.partial.csv at all, so the repo
 is simply retried on the next invocation — no special resume flag needed,
 since "not yet done" is already the natural state for a repo nothing was
-ever written for. Five consecutive transient failures abort the run rather
-than silently grinding through the rest of the frame producing nothing.
+ever written for. Five consecutive transient failures hand control to
+TransientGovernor, which pauses and re-probes rather than aborting
+outright — see its docstring — and only raises once its pause ladder is
+exhausted.
 """
 
 from __future__ import annotations
@@ -42,9 +44,13 @@ import argparse
 import csv
 import os
 import re
+import sys
+import time
 from collections import Counter
 from dataclasses import dataclass, fields
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Callable
 
 import requests
 
@@ -80,6 +86,18 @@ TERMINAL_STATUSES = frozenset({404, 410, 451})
 # failure."
 CONSECUTIVE_TRANSIENT_LIMIT = 5
 
+# GET /rate_limit doesn't count against quota (same call validate_tokens
+# uses at startup) so it's safe to spend on a probe.
+PROBE_URL = "https://api.github.com/rate_limit"
+
+# 60s catches a Wi-Fi reassociation blip almost immediately; 300s covers
+# the middle of the outage spans already observed in logs/requests.jsonl
+# (86s/386s/357s under the old immediate-abort behavior); 900s gives a
+# genuine router/ISP outage room to clear before giving up. Total time to
+# abort from a single ladder entry: 1260s (21 min) — bounded, but well
+# past what a hostel Wi-Fi blip needs (§30.1).
+DEFAULT_PAUSE_LADDER: tuple[float, ...] = (60.0, 300.0, 900.0)
+
 INCLUDE_RE = re.compile(r"test|ci|build|pytest|mvn|gradle", re.IGNORECASE)
 EXCLUDE_RE = re.compile(r"release|deploy|docker|publish|docs|dependabot|codeql|lint-only", re.IGNORECASE)
 
@@ -113,6 +131,145 @@ class AbortRun(RuntimeError):
     """Raised to stop a run outright rather than let it keep writing
     nothing useful — startup token validation failures and runs of
     consecutive transient failures both raise this."""
+
+
+class TransientGovernor:
+    """Pauses and re-probes on a run of consecutive transient failures
+    instead of aborting outright, so a temporary network dropout (§30.1:
+    "the harvester must survive hostel Wi-Fi") doesn't kill a sweep that
+    would have recovered on its own.
+
+    A probe is one unretried `GET /rate_limit` per token in the pool via
+    `get_with_backoff(..., max_attempts=1)` — the only HTTP path allowed
+    (§34.4 C.1) — repeated across every token because a single token's
+    probe can't tell "network is down" from "this one token is dead" (the
+    same ambiguity `validate_tokens` already resolves at startup by
+    probing every token there too).
+
+    rung_index is sticky: it advances on every ladder entry (success or
+    failure alike) and is never reset by a successful probe, only by
+    `recovery_threshold` consecutive `record_success()` calls. A run that
+    keeps flapping (recovers, fails again, recovers again) escalates the
+    pause each time rather than resetting to the shortest rung on every
+    recovery.
+    """
+
+    def __init__(
+        self,
+        pool: TokenPool,
+        *,
+        consecutive_limit: int = CONSECUTIVE_TRANSIENT_LIMIT,
+        pause_ladder: tuple[float, ...] = DEFAULT_PAUSE_LADDER,
+        recovery_threshold: int = 3,
+        monotonic: Callable[[], float] | None = None,
+        sleep: Callable[[float], None] | None = None,
+    ) -> None:
+        self._pool = pool
+        self._consecutive_limit = consecutive_limit
+        self._pause_ladder = pause_ladder
+        self._recovery_threshold = recovery_threshold
+        # Resolved here, not as a bound default (`= time.sleep`): a default
+        # expression is evaluated once at import time, so it captures the
+        # real function permanently and no later monkeypatch of the `time`
+        # module's `sleep` attribute can reach it. Looking it up here, in
+        # the body, re-reads the (possibly patched) module attribute on
+        # every construction instead.
+        self._monotonic = monotonic if monotonic is not None else time.monotonic
+        self._sleep = sleep if sleep is not None else time.sleep
+
+        self._consecutive = 0
+        self._rung_index = 0
+        self._recovery_streak = 0
+        self._cumulative_paused = 0.0
+
+    def record_success(self) -> None:
+        self._consecutive = 0
+        self._recovery_streak += 1
+        if self._recovery_streak >= self._recovery_threshold:
+            self._rung_index = 0
+            self._recovery_streak = 0
+
+    def record_transient(self, *, status: int | None, token_idx: object) -> None:
+        self._consecutive += 1
+        self._recovery_streak = 0
+        if self._consecutive >= self._consecutive_limit:
+            self._pause_and_probe(status=status, token_idx=token_idx)
+
+    def _log(self, message: str) -> None:
+        ts = datetime.now(timezone.utc).isoformat()
+        print(f"[transient-governor] {ts} {message}", file=sys.stderr)
+
+    def _all_tokens_quota_exhausted(self) -> bool:
+        # TokenPool exposes no public quota accessor. This reads the same
+        # private `_states` list acquire() itself checks at ratelimit.py:79
+        # to decide whether IT would block — we must replicate that check,
+        # not call acquire() to find out, because that call's own
+        # time.sleep (up to MAX_RESET_WAIT_SECONDS=3900s) is not the
+        # injected one and cannot be interrupted or asserted on.
+        return all(state.remaining <= 0 for state in self._pool._states)
+
+    def _probe_all_tokens(self) -> bool:
+        # Mirrors validate_tokens(): len(pool) consecutive get_with_backoff
+        # calls, relying on TokenPool.acquire()'s round-robin tie-break to
+        # visit each token once, since get_with_backoff has no parameter to
+        # pin a specific token index.
+        all_ok = True
+        for _ in range(len(self._pool)):
+            try:
+                get_with_backoff(PROBE_URL, pool=self._pool, max_attempts=1)
+            except requests.exceptions.RequestException as exc:
+                token_idx = getattr(exc, "token_idx", "unknown")
+                self._log(f"probe token_idx={token_idx} -> failed ({type(exc).__name__})")
+                all_ok = False
+            else:
+                self._log("probe -> ok")
+        return all_ok
+
+    def _pause_and_probe(self, *, status: int | None, token_idx: object) -> None:
+        while self._rung_index < len(self._pause_ladder):
+            rung = self._rung_index
+            duration = self._pause_ladder[rung]
+            self._log(
+                f"pausing rung={rung + 1}/{len(self._pause_ladder)} for {duration}s "
+                f"after {self._consecutive_limit} consecutive transient failures "
+                f"(last_status={status}, last_token_idx={token_idx})"
+            )
+            sleep_start = self._monotonic()
+            self._sleep(duration)
+            elapsed = self._monotonic() - sleep_start
+            self._cumulative_paused += duration
+            self._log(f"rung={rung} woke after {elapsed:.1f}s (expected {duration:.1f}s)")
+
+            if self._all_tokens_quota_exhausted():
+                self._log(
+                    f"rung={rung} probe skipped: all {len(self._pool)} tokens "
+                    "quota-exhausted (probing would block inside "
+                    "pool.acquire()); retrying same rung on next entry"
+                )
+                return
+
+            if self._probe_all_tokens():
+                self._rung_index += 1
+                self._consecutive = 0
+                self._log(
+                    f"probe succeeded at rung={rung}; resuming sweep, "
+                    "consecutive-transient counter reset"
+                )
+                return
+
+            self._rung_index += 1
+
+        self._log(
+            f"ABORTING: rung={len(self._pause_ladder)}/{len(self._pause_ladder)} "
+            f"exhausted ({self._cumulative_paused}s cumulative paused); "
+            f"last_status={status}, last_token_idx={token_idx}"
+        )
+        raise AbortRun(
+            f"aborting after transient-governor ladder exhausted at "
+            f"rung={len(self._pause_ladder)}/{len(self._pause_ladder)} "
+            f"({self._cumulative_paused}s cumulative paused); "
+            f"last_status={status}, last_token_idx={token_idx}"
+        )
 
 
 @dataclass
@@ -319,6 +476,8 @@ def run_frame(
     attrition_path: Path = ATTRITION_PATH,
     since: str = SINCE_DATE,
     limit: int = DEFAULT_LIMIT,
+    sleep: Callable[[float], None] | None = None,
+    monotonic: Callable[[], float] | None = None,
 ) -> dict:
     validate_tokens(pool)
 
@@ -329,9 +488,11 @@ def run_frame(
     done_keys = {(r["owner"], r["repo"]) for r in existing_rows}
 
     newly_processed = 0
-    consecutive_transient = 0
-    last_status: str | None = None
-    last_token_idx: object = None
+    governor = TransientGovernor(
+        pool,
+        sleep=sleep if sleep is not None else time.sleep,
+        monotonic=monotonic if monotonic is not None else time.monotonic,
+    )
 
     for row in input_rows:
         owner, repo = row["name"].split("/", 1)
@@ -343,18 +504,13 @@ def run_frame(
         result = process_repo(row, pool, since)
 
         if isinstance(result, TransientFailure):
-            consecutive_transient += 1
             response = getattr(result.exc, "response", None)
-            last_status = getattr(response, "status_code", None)
-            last_token_idx = getattr(result.exc, "token_idx", None)
-            if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                raise AbortRun(
-                    f"aborting after {consecutive_transient} consecutive transient "
-                    f"failures; last status={last_status}, last token_idx={last_token_idx}"
-                )
+            status = getattr(response, "status_code", None)
+            token_idx = getattr(result.exc, "token_idx", None)
+            governor.record_transient(status=status, token_idx=token_idx)
             continue
 
-        consecutive_transient = 0
+        governor.record_success()
         _append_partial(partial_path, result)
         newly_processed += 1
 

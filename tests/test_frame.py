@@ -6,6 +6,7 @@ with `responses` at the transport layer, same convention as test_ratelimit.py.
 
 import csv
 import time
+from unittest.mock import Mock
 
 import pytest
 import responses
@@ -237,20 +238,36 @@ def test_403_remaining_0_not_written_to_partial(tmp_path):
 
 
 @responses.activate
-def test_5_consecutive_transient_failures_abort_run(tmp_path):
-    _mock_rate_limit_ok()
+def test_transient_failures_abort_run_after_ladder_exhausted(tmp_path):
+    """Supersedes the old test_5_consecutive_transient_failures_abort_run,
+    which encoded the pre-governor contract: abort the instant the 5th
+    consecutive transient failure is seen. TransientGovernor (this task)
+    deliberately replaced that with pause-and-probe, so AbortRun now fires
+    only once the pause ladder itself is exhausted — proven here by
+    checking the full 1260s ladder was actually slept through (via the
+    injected fake sleep) rather than skipped, i.e. the abort was not simply
+    "on the 5th consecutive transient alone."
+    """
+    _mock_rate_limit_ok()  # consumed once, by validate_tokens' startup ping
+    responses.add(responses.GET, RATE_LIMIT_URL, status=503)  # every ladder probe after that fails
+
     names = [f"owner/flaky{i}" for i in range(5)]
     for i in range(5):
         responses.add(responses.GET, _runs_url("owner", f"flaky{i}"), status=401)
 
     input_path, partial_path, output_path, attrition_path = _setup_run(tmp_path, names)
 
-    with pytest.raises(AbortRun, match="5 consecutive"):
+    fake_sleep = Mock()
+
+    with pytest.raises(AbortRun, match="ladder exhausted"):
         run_frame(
             pool=_pool(), input_path=input_path, partial_path=partial_path,
             output_path=output_path, attrition_path=attrition_path, since=SINCE, limit=20,
+            sleep=fake_sleep, monotonic=lambda: 0.0,
         )
 
+    assert fake_sleep.call_count == 3
+    assert sum(call.args[0] for call in fake_sleep.call_args_list) == 1260.0
     assert not partial_path.exists()
 
 
