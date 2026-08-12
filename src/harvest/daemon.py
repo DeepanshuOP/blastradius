@@ -100,7 +100,7 @@ from src.harvest.cursor import CursorStore, DEFAULT_DB_PATH
 # Reused, not reinvented (frame.py's terminal/transient split, unmodified —
 # CONSECUTIVE_TRANSIENT_LIMIT is public there, so imported rather than
 # redefined, per the same D-09 lesson D-19/D-20 keep citing).
-from src.harvest.frame import CONSECUTIVE_TRANSIENT_LIMIT, _classify_failure
+from src.harvest.frame import AbortRun, CONSECUTIVE_TRANSIENT_LIMIT, TransientGovernor, _classify_failure
 from src.harvest.ratelimit import TokenPool, get_with_backoff
 from src.harvest.rawstore import DEFAULT_ROOT, RawRecord, RawStore
 
@@ -131,13 +131,6 @@ PR_UNIT_COMPLETE = "complete"
 PR_UNIT_FAILED = "failed"
 PR_UNIT_SKIPPED_ALREADY_DONE = "skipped_already_done"
 PR_UNIT_TRANSIENT = "transient"
-
-
-class AbortRun(RuntimeError):
-    """Raised to stop a run outright rather than let it keep producing
-    holes. Mirrors frame.py's AbortRun/CONSECUTIVE_TRANSIENT_LIMIT pattern
-    at the PR level: five consecutive transient failures in a row means a
-    systemic problem (dead credential, network outage), not bad luck."""
 
 
 def _now_iso() -> str:
@@ -488,6 +481,7 @@ def discover_repo(
     store: RawStore,
     cursor: CursorStore,
     now: datetime | None = None,
+    governor: TransientGovernor | None = None,
 ) -> dict:
     """Stage 2: run discovery for one repo, per distinct head SHA drawn from
     every PR whose `pull_commits` unit is `complete` (D-20/G4). Mirrors
@@ -498,6 +492,7 @@ def discover_repo(
     into the RUN_AGES.json shape."""
     repo_full = f"{owner}/{repo}"
     now = now or datetime.now(timezone.utc)
+    governor = governor if governor is not None else TransientGovernor(pool)
 
     shas, n_prs_seen, n_prs_out_of_window, n_prs_pull_commits_not_complete = _collect_repo_shas(
         repo_full, store, cursor
@@ -521,7 +516,6 @@ def discover_repo(
         "run_age_days": [],
     }
 
-    consecutive_transient = 0
     for sha in sorted(shas):
         status, workflow_runs = _fetch_runs_for_sha(
             owner, repo, sha, pool=pool, store=store, cursor=cursor, repo_full=repo_full
@@ -529,14 +523,9 @@ def discover_repo(
 
         if status == PR_UNIT_TRANSIENT:
             stats["n_transient_runs"] += 1
-            consecutive_transient += 1
-            if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                raise AbortRun(
-                    f"aborting after {consecutive_transient} consecutive transient "
-                    f"discovery failures in {repo_full}"
-                )
+            governor.record_transient(status=status, token_idx=None)
             continue
-        consecutive_transient = 0
+        governor.record_success()
 
         if status == PR_UNIT_FAILED:
             stats["n_shas_failed_terminal"] += 1
@@ -560,14 +549,9 @@ def discover_repo(
             )
             if j_status == PR_UNIT_TRANSIENT:
                 stats["n_transient_jobs"] += 1
-                consecutive_transient += 1
-                if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                    raise AbortRun(
-                        f"aborting after {consecutive_transient} consecutive transient "
-                        f"discovery failures in {repo_full}"
-                    )
+                governor.record_transient(status=j_status, token_idx=None)
                 continue
-            consecutive_transient = 0
+            governor.record_success()
 
             if j_status == PR_UNIT_FAILED:
                 stats["n_jobs_failed_terminal"] += 1
@@ -691,6 +675,7 @@ def capture_checkruns(
     store: RawStore,
     cursor: CursorStore,
     now: datetime | None = None,
+    governor: TransientGovernor | None = None,
 ) -> dict:
     """Stage 3: check-run + annotation capture (endpoints 6-7), oldest-
     discovered-run-first across the WHOLE invocation, not repo-by-repo and
@@ -715,6 +700,7 @@ def capture_checkruns(
     the whole ordered sequence (not reset per repo) since the sequence
     itself spans every repo."""
     now = now or datetime.now(timezone.utc)
+    governor = governor if governor is not None else TransientGovernor(pool)
 
     entries: list[tuple[str, str, str, str, list[float]]] = []  # (repo_full, owner, repo, sha, run_ages)
     n_prs_out_of_window_total = 0
@@ -758,7 +744,6 @@ def capture_checkruns(
         "recovered_runs_over_90d": 0,
     }
 
-    consecutive_transient = 0
     for repo_full, owner, repo, sha, run_ages in entries:
         cr_status, check_runs = _fetch_checkruns_for_sha(
             owner, repo, sha, pool=pool, store=store, cursor=cursor, repo_full=repo_full
@@ -766,14 +751,9 @@ def capture_checkruns(
 
         if cr_status == PR_UNIT_TRANSIENT:
             stats["n_transient_checkruns"] += 1
-            consecutive_transient += 1
-            if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                raise AbortRun(
-                    f"aborting after {consecutive_transient} consecutive transient "
-                    "checkrun/annotation failures"
-                )
+            governor.record_transient(status=cr_status, token_idx=None)
             continue
-        consecutive_transient = 0
+        governor.record_success()
 
         if cr_status == PR_UNIT_FAILED:
             stats["n_checkruns_failed_terminal"] += 1
@@ -794,14 +774,9 @@ def capture_checkruns(
             )
             if an_status == PR_UNIT_TRANSIENT:
                 stats["n_transient_annotations"] += 1
-                consecutive_transient += 1
-                if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                    raise AbortRun(
-                        f"aborting after {consecutive_transient} consecutive transient "
-                        "checkrun/annotation failures"
-                    )
+                governor.record_transient(status=an_status, token_idx=None)
                 continue
-            consecutive_transient = 0
+            governor.record_success()
 
             if an_status == PR_UNIT_FAILED:
                 stats["n_annotations_failed_terminal"] += 1
@@ -843,6 +818,7 @@ def sweep_repo(
     store: RawStore,
     cursor: CursorStore,
     cutoff: datetime,
+    governor: TransientGovernor | None = None,
 ) -> dict:
     """Run (or resume) the PR sweep for one repo. `complete_sweep()` is
     called only when the sweep reaches a clean stopping point (a short page
@@ -853,6 +829,7 @@ def sweep_repo(
     CONSECUTIVE_TRANSIENT_LIMIT consecutive transient PR failures, mirroring
     frame.py's repo-level abort at the PR level."""
     repo_full = f"{owner}/{repo}"
+    governor = governor if governor is not None else TransientGovernor(pool)
     cursor.start_sweep(repo_full)
     rc = cursor.get_repo_cursor(repo_full)
     page = rc.pr_page if rc is not None else 1
@@ -862,7 +839,6 @@ def sweep_repo(
     n_prs_captured = 0
     n_prs_failed_terminal = 0
     n_transient = 0
-    consecutive_transient = 0
 
     while True:
         page_body = _fetch_pulls_page(
@@ -886,15 +862,10 @@ def sweep_repo(
 
             if status == PR_UNIT_TRANSIENT:
                 n_transient += 1
-                consecutive_transient += 1
-                if consecutive_transient >= CONSECUTIVE_TRANSIENT_LIMIT:
-                    raise AbortRun(
-                        f"aborting after {consecutive_transient} consecutive transient "
-                        f"PR failures in {repo_full}; last status={detail}"
-                    )
+                governor.record_transient(status=detail, token_idx=None)
                 continue
 
-            consecutive_transient = 0
+            governor.record_success()
             if status == PR_UNIT_FAILED:
                 n_prs_failed_terminal += 1
             else:  # complete or skipped_already_done
@@ -1092,6 +1063,7 @@ def run(
     run_stage1 = stage in ("1", "both", "all")
     run_stage2 = stage in ("2", "both", "all")
     run_stage3 = stage in ("3", "all")
+    governor = TransientGovernor(pool)
 
     total = {
         "repos_processed": 0,
@@ -1113,7 +1085,9 @@ def run(
         repo_full = f"{owner}/{repo}"
         total["repos_processed"] += 1
         if run_stage1:
-            result = sweep_repo(owner, repo, pool=pool, store=store, cursor=cursor, cutoff=cutoff)
+            result = sweep_repo(
+                owner, repo, pool=pool, store=store, cursor=cursor, cutoff=cutoff, governor=governor
+            )
             print(
                 f"[{repo_full}] stage1 pages={result['pages_fetched']} "
                 f"captured={result['n_prs_captured']} "
@@ -1128,7 +1102,7 @@ def run(
             total["n_transient"] += result["n_transient"]
 
         if run_stage2:
-            stats = discover_repo(owner, repo, pool=pool, store=store, cursor=cursor)
+            stats = discover_repo(owner, repo, pool=pool, store=store, cursor=cursor, governor=governor)
             stage2_raw[repo_full] = stats
             print(
                 f"[{repo_full}] stage2 shas={stats['n_shas_total']} "
@@ -1148,7 +1122,7 @@ def run(
 
     stage3_stats = None
     if run_stage3:
-        stage3_stats = capture_checkruns(repos, pool=pool, store=store, cursor=cursor)
+        stage3_stats = capture_checkruns(repos, pool=pool, store=store, cursor=cursor, governor=governor)
         print(
             f"STAGE3: shas={stage3_stats['n_shas_total']} "
             f"out_of_window={stage3_stats['n_prs_out_of_window']} "

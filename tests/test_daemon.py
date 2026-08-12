@@ -279,10 +279,30 @@ def test_summary_dict_reports_hand_computable_counts(tmp_path):
 
 
 @responses.activate
-def test_five_consecutive_transient_pr_failures_abort_run(tmp_path):
+def test_transient_pr_failures_abort_after_ladder_exhausted(tmp_path):
+    """Supersedes test_five_consecutive_transient_pr_failures_abort_run: that
+    test asserted the pre-governor contract of an immediate abort on the 5th
+    consecutive transient failure. The approved pause-and-probe design
+    deliberately replaced that with escalating through every ladder rung
+    first, so the abort (frame.py's single unified AbortRun) now only fires
+    once the probe has failed at every rung."""
+    from src.harvest.frame import AbortRun, TransientGovernor
+
     store = RawStore(tmp_path / "raw")
     cursor = CursorStore(tmp_path / "cursor.db")
     pool = _pool()
+
+    sleeps: list[float] = []
+    fake_now = [0.0]
+
+    def fake_sleep(seconds):
+        sleeps.append(seconds)
+        fake_now[0] += seconds
+
+    def fake_monotonic():
+        return fake_now[0]
+
+    governor = TransientGovernor(pool, sleep=fake_sleep, monotonic=fake_monotonic)
 
     prs = [_pr(n, RECENT) for n in range(1, 6)]
     _mock_pulls_page("owner", "repo", 1, prs)
@@ -295,8 +315,15 @@ def test_five_consecutive_transient_pr_failures_abort_run(tmp_path):
         # needs a mock even though this test is only about pull_files.
         responses.add(responses.GET, _commits_url("owner", "repo", n), json=[], status=200)
 
-    with pytest.raises(daemon.AbortRun, match="5 consecutive"):
-        daemon.sweep_repo("owner", "repo", pool=pool, store=store, cursor=cursor, cutoff=_cutoff())
+    for _ in range(3):  # every rung of DEFAULT_PAUSE_LADDER probed, and fails
+        responses.add(responses.GET, "https://api.github.com/rate_limit", status=503)
+
+    with pytest.raises(AbortRun):
+        daemon.sweep_repo(
+            "owner", "repo", pool=pool, store=store, cursor=cursor, cutoff=_cutoff(), governor=governor
+        )
+
+    assert sum(sleeps) == 1260.0  # 60.0 + 300.0 + 900.0, every rung exhausted
 
     cursor.close()
 
@@ -847,5 +874,86 @@ def test_out_of_window_and_not_complete_counters_are_distinct(tmp_path):
     assert len(responses.calls) == 0
     assert stats["n_prs_out_of_window"] == 1
     assert stats["n_prs_pull_commits_not_complete"] == 1
+
+    cursor.close()
+
+
+# -- TransientGovernor wiring -------------------------------------------------
+
+
+@responses.activate
+def test_shared_governor_carries_sticky_rung_across_repo_boundary(tmp_path):
+    """One governor passed into two successive sweep_repo() calls must not
+    reset its rung index at the repo boundary: 5 transient PR failures in
+    repo A pause at rung 0 (60s) and the probe succeeds; 5 more in repo B
+    must pause at the now-advanced rung 1 (300s), not repeat rung 0."""
+    from src.harvest.frame import TransientGovernor
+
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    sleeps: list[float] = []
+    fake_now = [0.0]
+
+    def fake_sleep(seconds):
+        sleeps.append(seconds)
+        fake_now[0] += seconds
+
+    def fake_monotonic():
+        return fake_now[0]
+
+    governor = TransientGovernor(pool, sleep=fake_sleep, monotonic=fake_monotonic)
+
+    for repo in ("repoA", "repoB"):
+        prs = [_pr(n, RECENT) for n in range(1, 6)]
+        _mock_pulls_page("owner", repo, 1, prs)
+        for n in range(1, 6):
+            for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+                responses.add(responses.GET, _files_url("owner", repo, n), status=503)
+            responses.add(responses.GET, _commits_url("owner", repo, n), json=[], status=200)
+        responses.add(responses.GET, "https://api.github.com/rate_limit", json={}, status=200)
+
+        daemon.sweep_repo(
+            "owner", repo, pool=pool, store=store, cursor=cursor, cutoff=_cutoff(), governor=governor
+        )
+
+    assert sleeps == [60.0, 300.0]
+
+    cursor.close()
+
+
+@responses.activate
+def test_discover_repo_ladder_exhausted_raises_and_leaves_units_in_flight(tmp_path):
+    """A probe that fails at every rung during discover_repo's run-fetch
+    escalates through the whole ladder inside a single record_transient()
+    call and raises frame.AbortRun. The SHA capture units that never
+    resolved stay in_flight, and since sweep_repo() was never invoked for
+    this repo, complete_sweep() never fired (no repo_cursor row exists)."""
+    from src.harvest.frame import AbortRun as FrameAbortRun
+    from src.harvest.frame import TransientGovernor
+
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    shas = [str(n) * 40 for n in range(1, 6)]
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(n, RECENT) for n in range(1, 6)])
+    for n, sha in enumerate(shas, start=1):
+        _seed_pull_commits(store, cursor, "owner/repo", n, [sha])
+
+    for _ in shas:
+        for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+            responses.add(responses.GET, _runs_url("owner", "repo"), status=503)
+    for _ in range(3):  # every rung of DEFAULT_PAUSE_LADDER probed, and fails
+        responses.add(responses.GET, "https://api.github.com/rate_limit", status=503)
+
+    governor = TransientGovernor(pool, sleep=lambda seconds: None, monotonic=lambda: 0.0)
+
+    with pytest.raises(FrameAbortRun):
+        daemon.discover_repo("owner", "repo", pool=pool, store=store, cursor=cursor, now=NOW, governor=governor)
+
+    assert len(cursor.incomplete_units("owner/repo", "runs")) == 5
+    assert cursor.get_repo_cursor("owner/repo") is None  # sweep_repo() never ran
 
     cursor.close()
