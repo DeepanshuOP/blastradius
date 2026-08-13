@@ -405,18 +405,21 @@ def _fetch_runs_for_sha(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, list[dict] | None]:
-    """Endpoint 4. Returns (status, workflow_runs): workflow_runs is the
-    list of run dicts when real data is available (freshly fetched, or read
-    back from an already-`complete` unit — G4 dedup, zero requests either
-    way), else None (failed/transient/skipped/expired with nothing to read)."""
+) -> tuple[str, list[dict] | None, int | None]:
+    """Endpoint 4. Returns (status, workflow_runs, status_code): workflow_runs
+    is the list of run dicts when real data is available (freshly fetched, or
+    read back from an already-`complete` unit — G4 dedup, zero requests
+    either way), else None (failed/transient/skipped/expired with nothing to
+    read). status_code is the real HTTP status as an int on a fresh
+    terminal/transient failure, else None (success, dedup/skip reads with no
+    fresh request, or an exception that carried no HTTP response)."""
     existing = cursor.get_capture_unit(repo_full, "runs", sha)
     if existing is not None and existing.status != "in_flight":
         if existing.status == "complete":
             records = store.read_records(repo_full, "runs", sha)
             body = json.loads(records[0].body) if records else {}
-            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("workflow_runs", [])
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None  # already resolved failed/skipped/expired
+            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("workflow_runs", []), None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None  # already resolved failed/skipped/expired
 
     cursor.mark_unit_started(repo_full, "runs", sha)
     url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs"
@@ -425,15 +428,16 @@ def _fetch_runs_for_sha(
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
+        status_code = int(status) if status else None
         if bucket == "terminal":
             cursor.mark_unit_failed(repo_full, "runs", sha, detail)
-            return PR_UNIT_FAILED, None
-        return PR_UNIT_TRANSIENT, None
+            return PR_UNIT_FAILED, None, status_code
+        return PR_UNIT_TRANSIENT, None, status_code
 
     body = response.json()
     store.write_records(repo_full, "runs", sha, [_record_from_response(response)])
     cursor.mark_unit_complete(repo_full, "runs", sha)
-    return PR_UNIT_COMPLETE, body.get("workflow_runs", [])
+    return PR_UNIT_COMPLETE, body.get("workflow_runs", []), None
 
 
 def _fetch_jobs_for_run(
@@ -445,15 +449,16 @@ def _fetch_jobs_for_run(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, list[dict] | None]:
-    """Endpoint 5. Same (status, jobs) shape as `_fetch_runs_for_sha`."""
+) -> tuple[str, list[dict] | None, int | None]:
+    """Endpoint 5. Same (status, jobs, status_code) shape as
+    `_fetch_runs_for_sha`."""
     existing = cursor.get_capture_unit(repo_full, "jobs", run_id)
     if existing is not None and existing.status != "in_flight":
         if existing.status == "complete":
             records = store.read_records(repo_full, "jobs", run_id)
             body = json.loads(records[0].body) if records else {}
-            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("jobs", [])
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None
+            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("jobs", []), None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
 
     cursor.mark_unit_started(repo_full, "jobs", run_id)
     url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
@@ -462,15 +467,16 @@ def _fetch_jobs_for_run(
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
+        status_code = int(status) if status else None
         if bucket == "terminal":
             cursor.mark_unit_failed(repo_full, "jobs", run_id, detail)
-            return PR_UNIT_FAILED, None
-        return PR_UNIT_TRANSIENT, None
+            return PR_UNIT_FAILED, None, status_code
+        return PR_UNIT_TRANSIENT, None, status_code
 
     body = response.json()
     store.write_records(repo_full, "jobs", run_id, [_record_from_response(response)])
     cursor.mark_unit_complete(repo_full, "jobs", run_id)
-    return PR_UNIT_COMPLETE, body.get("jobs", [])
+    return PR_UNIT_COMPLETE, body.get("jobs", []), None
 
 
 def discover_repo(
@@ -517,13 +523,13 @@ def discover_repo(
     }
 
     for sha in sorted(shas):
-        status, workflow_runs = _fetch_runs_for_sha(
+        status, workflow_runs, status_code = _fetch_runs_for_sha(
             owner, repo, sha, pool=pool, store=store, cursor=cursor, repo_full=repo_full
         )
 
         if status == PR_UNIT_TRANSIENT:
             stats["n_transient_runs"] += 1
-            governor.record_transient(status=status, token_idx=None)
+            governor.record_transient(status=status_code, token_idx=None)
             continue
         governor.record_success()
 
@@ -544,12 +550,12 @@ def discover_repo(
             age_days = (now - _parse_github_ts(_run_started_at(run))).total_seconds() / 86400
             stats["run_age_days"].append(age_days)
 
-            j_status, jobs = _fetch_jobs_for_run(
+            j_status, jobs, j_status_code = _fetch_jobs_for_run(
                 owner, repo, run_id, pool=pool, store=store, cursor=cursor, repo_full=repo_full
             )
             if j_status == PR_UNIT_TRANSIENT:
                 stats["n_transient_jobs"] += 1
-                governor.record_transient(status=j_status, token_idx=None)
+                governor.record_transient(status=j_status_code, token_idx=None)
                 continue
             governor.record_success()
 
@@ -576,15 +582,16 @@ def _fetch_checkruns_for_sha(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, list[dict] | None]:
-    """Endpoint 6. Same (status, check_runs) shape as `_fetch_runs_for_sha`."""
+) -> tuple[str, list[dict] | None, int | None]:
+    """Endpoint 6. Same (status, check_runs, status_code) shape as
+    `_fetch_runs_for_sha`."""
     existing = cursor.get_capture_unit(repo_full, "checkruns", sha)
     if existing is not None and existing.status != "in_flight":
         if existing.status == "complete":
             records = store.read_records(repo_full, "checkruns", sha)
             body = json.loads(records[0].body) if records else {}
-            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("check_runs", [])
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None
+            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("check_runs", []), None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
 
     cursor.mark_unit_started(repo_full, "checkruns", sha)
     url = f"https://api.github.com/repos/{owner}/{repo}/commits/{sha}/check-runs"
@@ -593,15 +600,16 @@ def _fetch_checkruns_for_sha(
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
+        status_code = int(status) if status else None
         if bucket == "terminal":
             cursor.mark_unit_failed(repo_full, "checkruns", sha, detail)
-            return PR_UNIT_FAILED, None
-        return PR_UNIT_TRANSIENT, None
+            return PR_UNIT_FAILED, None, status_code
+        return PR_UNIT_TRANSIENT, None, status_code
 
     body = response.json()
     store.write_records(repo_full, "checkruns", sha, [_record_from_response(response)])
     cursor.mark_unit_complete(repo_full, "checkruns", sha)
-    return PR_UNIT_COMPLETE, body.get("check_runs", [])
+    return PR_UNIT_COMPLETE, body.get("check_runs", []), None
 
 
 def _fetch_annotations_for_checkrun(
@@ -613,12 +621,15 @@ def _fetch_annotations_for_checkrun(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, list[dict] | None]:
+) -> tuple[str, list[dict] | None, int | None]:
     """Endpoint 7, paginated (unwrapped JSON array, like pull_commits/
     pull_files) with the same MAX_PR_PAGES bound and all-or-nothing write:
     a cap hit marks the unit `failed` and writes nothing, never a partial
     `complete` — a truncated annotation set silently marked complete is
-    exactly the FIX 1 bug repeated at a different endpoint.
+    exactly the FIX 1 bug repeated at a different endpoint. Third element is
+    the (status, items, status_code) shape shared with `_fetch_runs_for_sha`;
+    the MAX_PR_PAGES-exhausted branch carries no HTTP failure of its own, so
+    its status_code is None.
 
     parent_run_id is always NULL here (see report): the check-run object
     carries no documented, resolvable field back to the Actions workflow
@@ -632,8 +643,8 @@ def _fetch_annotations_for_checkrun(
             items: list[dict] = []
             for record in store.read_records(repo_full, "annotations", check_run_id):
                 items.extend(json.loads(record.body))
-            return PR_UNIT_SKIPPED_ALREADY_DONE, items
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None
+            return PR_UNIT_SKIPPED_ALREADY_DONE, items, None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
 
     cursor.mark_unit_started(repo_full, "annotations", check_run_id, parent_run_id=None)
     url = f"https://api.github.com/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations"
@@ -648,10 +659,11 @@ def _fetch_annotations_for_checkrun(
         except Exception as exc:
             bucket, status, exception_class = _classify_failure(exc)
             detail = f"{status} {exception_class}"
+            status_code = int(status) if status else None
             if bucket == "terminal":
                 cursor.mark_unit_failed(repo_full, "annotations", check_run_id, detail)
-                return PR_UNIT_FAILED, None
-            return PR_UNIT_TRANSIENT, None
+                return PR_UNIT_FAILED, None, status_code
+            return PR_UNIT_TRANSIENT, None, status_code
 
         page_body = response.json()
         records.append(_record_from_response(response))
@@ -661,11 +673,11 @@ def _fetch_annotations_for_checkrun(
     else:
         detail = f"exceeded MAX_PR_PAGES={MAX_PR_PAGES} without a short page"
         cursor.mark_unit_failed(repo_full, "annotations", check_run_id, detail)
-        return PR_UNIT_FAILED, None
+        return PR_UNIT_FAILED, None, None
 
     store.write_records(repo_full, "annotations", check_run_id, records)
     cursor.mark_unit_complete(repo_full, "annotations", check_run_id)
-    return PR_UNIT_COMPLETE, items
+    return PR_UNIT_COMPLETE, items, None
 
 
 def capture_checkruns(
@@ -745,13 +757,13 @@ def capture_checkruns(
     }
 
     for repo_full, owner, repo, sha, run_ages in entries:
-        cr_status, check_runs = _fetch_checkruns_for_sha(
+        cr_status, check_runs, cr_status_code = _fetch_checkruns_for_sha(
             owner, repo, sha, pool=pool, store=store, cursor=cursor, repo_full=repo_full
         )
 
         if cr_status == PR_UNIT_TRANSIENT:
             stats["n_transient_checkruns"] += 1
-            governor.record_transient(status=cr_status, token_idx=None)
+            governor.record_transient(status=cr_status_code, token_idx=None)
             continue
         governor.record_success()
 
@@ -769,12 +781,12 @@ def capture_checkruns(
         sha_got_annotation = False
         for check_run in check_runs:
             check_run_id = check_run["id"]
-            an_status, annotations = _fetch_annotations_for_checkrun(
+            an_status, annotations, an_status_code = _fetch_annotations_for_checkrun(
                 owner, repo, check_run_id, pool=pool, store=store, cursor=cursor, repo_full=repo_full
             )
             if an_status == PR_UNIT_TRANSIENT:
                 stats["n_transient_annotations"] += 1
-                governor.record_transient(status=an_status, token_idx=None)
+                governor.record_transient(status=an_status_code, token_idx=None)
                 continue
             governor.record_success()
 

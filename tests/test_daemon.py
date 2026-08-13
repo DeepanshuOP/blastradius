@@ -12,6 +12,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 import pytest
+import requests
 import responses
 from responses import matchers
 
@@ -955,5 +956,70 @@ def test_discover_repo_ladder_exhausted_raises_and_leaves_units_in_flight(tmp_pa
 
     assert len(cursor.incomplete_units("owner/repo", "runs")) == 5
     assert cursor.get_repo_cursor("owner/repo") is None  # sweep_repo() never ran
+
+    cursor.close()
+
+
+class _SpyGovernor:
+    """Records the exact value each record_transient()/record_success() call
+    receives instead of acting on it — lets a test assert what daemon.py
+    passes through without exercising TransientGovernor's real pause-and-
+    probe ladder."""
+
+    def __init__(self):
+        self.transient_calls: list[int | None] = []
+        self.success_calls = 0
+
+    def record_transient(self, *, status, token_idx):
+        self.transient_calls.append(status)
+
+    def record_success(self):
+        self.success_calls += 1
+
+
+@responses.activate
+def test_503_on_checkruns_reaches_governor_as_int_not_string(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), status=503)
+
+    governor = _SpyGovernor()
+    daemon.capture_checkruns(
+        [("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW, governor=governor
+    )
+
+    assert governor.transient_calls == [503]
+    assert type(governor.transient_calls[0]) is int  # not "503", not "transient"
+
+    cursor.close()
+
+
+@responses.activate
+def test_connection_error_on_checkruns_reaches_governor_as_none(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(
+            responses.GET, _checkruns_url("owner", "repo", SHA_A),
+            body=requests.exceptions.ConnectionError(),
+        )
+
+    governor = _SpyGovernor()
+    daemon.capture_checkruns(
+        [("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW, governor=governor
+    )
+
+    assert governor.transient_calls == [None]
 
     cursor.close()
