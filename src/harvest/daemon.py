@@ -216,13 +216,16 @@ def _capture_pr_unit(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, str | None]:
+) -> tuple[str, str | None, int | None]:
     """Fetch one capture unit for a PR, following `per_page=100` pagination
     until a short page (FIX for silent truncation on PRs with >100
-    commits/files). Returns (status, detail): status is one of the
-    PR_UNIT_* constants; detail is the "{status} {exception_class}" string
-    (same convention as the `reason` written to cursor) for FAILED and
-    TRANSIENT, else None.
+    commits/files). Returns (status, detail, status_code): status is one of
+    the PR_UNIT_* constants; detail is the "{status} {exception_class}"
+    string (same convention as the `reason` written to cursor) for FAILED and
+    TRANSIENT, else None. status_code is the real HTTP status as an int on a
+    fresh terminal/transient failure, else None (success, dedup/skip with no
+    fresh request, MAX_PR_PAGES exhaustion with no HTTP failure of its own,
+    or an exception that carried no HTTP response).
 
     All pages are buffered in memory and written as one `write_records()`
     call under the single existing (repo, kind, pr_number) key — no compound
@@ -236,7 +239,7 @@ def _capture_pr_unit(
     beats invisible data loss."""
     existing = cursor.get_capture_unit(repo_full, kind, pr_number)
     if existing is not None and existing.status != "in_flight":
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None  # already resolved — no request
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None  # already resolved — no request
 
     cursor.mark_unit_started(repo_full, kind, pr_number)
     url = f"https://api.github.com/repos/{owner}/{repo}/{path_suffix}"
@@ -250,10 +253,11 @@ def _capture_pr_unit(
         except Exception as exc:
             bucket, status, exception_class = _classify_failure(exc)
             detail = f"{status} {exception_class}"
+            status_code = int(status) if status else None
             if bucket == "terminal":
                 cursor.mark_unit_failed(repo_full, kind, pr_number, detail)
-                return PR_UNIT_FAILED, detail
-            return PR_UNIT_TRANSIENT, detail  # nothing written — a rerun retries page 1
+                return PR_UNIT_FAILED, detail, status_code
+            return PR_UNIT_TRANSIENT, detail, status_code  # nothing written — a rerun retries page 1
 
         page_body = response.json()
         records.append(_record_from_response(response))
@@ -262,11 +266,11 @@ def _capture_pr_unit(
     else:
         detail = f"exceeded MAX_PR_PAGES={MAX_PR_PAGES} without a short page"
         cursor.mark_unit_failed(repo_full, kind, pr_number, detail)
-        return PR_UNIT_FAILED, detail
+        return PR_UNIT_FAILED, detail, None
 
     store.write_records(repo_full, kind, pr_number, records)
     cursor.mark_unit_complete(repo_full, kind, pr_number)
-    return PR_UNIT_COMPLETE, None
+    return PR_UNIT_COMPLETE, None, None
 
 
 def _capture_pr(
@@ -278,32 +282,35 @@ def _capture_pr(
     store: RawStore,
     cursor: CursorStore,
     repo_full: str,
-) -> tuple[str, str | None]:
+) -> tuple[str, str | None, int | None]:
     """Capture both of a PR's units (independent: one failing must not skip
-    the other) and aggregate to a single (status, detail), worst-first:
-    transient > failed > complete > skipped_already_done. "complete" beats
-    "skipped_already_done" so a PR with at least one freshly-captured unit
-    this run reads as active work, not a no-op."""
-    files_status, files_detail = _capture_pr_unit(
+    the other) and aggregate to a single (status, detail, status_code),
+    worst-first: transient > failed > complete > skipped_already_done.
+    "complete" beats "skipped_already_done" so a PR with at least one
+    freshly-captured unit this run reads as active work, not a no-op."""
+    files_status, files_detail, files_status_code = _capture_pr_unit(
         owner, repo, pr_number, "pull_files", f"pulls/{pr_number}/files",
         pool=pool, store=store, cursor=cursor, repo_full=repo_full,
     )
-    commits_status, commits_detail = _capture_pr_unit(
+    commits_status, commits_detail, commits_status_code = _capture_pr_unit(
         owner, repo, pr_number, "pull_commits", f"pulls/{pr_number}/commits",
         pool=pool, store=store, cursor=cursor, repo_full=repo_full,
     )
 
+    # Both units can fail transiently; files is captured first, so on a
+    # double transient failure its status_code (the first one encountered)
+    # is what's reported.
     if files_status == PR_UNIT_TRANSIENT:
-        return PR_UNIT_TRANSIENT, files_detail
+        return PR_UNIT_TRANSIENT, files_detail, files_status_code
     if commits_status == PR_UNIT_TRANSIENT:
-        return PR_UNIT_TRANSIENT, commits_detail
+        return PR_UNIT_TRANSIENT, commits_detail, commits_status_code
     if files_status == PR_UNIT_FAILED:
-        return PR_UNIT_FAILED, files_detail
+        return PR_UNIT_FAILED, files_detail, files_status_code
     if commits_status == PR_UNIT_FAILED:
-        return PR_UNIT_FAILED, commits_detail
+        return PR_UNIT_FAILED, commits_detail, commits_status_code
     if files_status == PR_UNIT_SKIPPED_ALREADY_DONE and commits_status == PR_UNIT_SKIPPED_ALREADY_DONE:
-        return PR_UNIT_SKIPPED_ALREADY_DONE, None
-    return PR_UNIT_COMPLETE, None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
+    return PR_UNIT_COMPLETE, None, None
 
 
 def _read_paginated_json(store: RawStore, repo_full: str, kind: str, key: int) -> list[dict]:
@@ -868,13 +875,13 @@ def sweep_repo(
 
         in_window = [pr for pr in page_body if _parse_github_ts(pr["updated_at"]) >= cutoff]
         for pr in in_window:
-            status, detail = _capture_pr(
+            status, detail, status_code = _capture_pr(
                 owner, repo, pr["number"], pool=pool, store=store, cursor=cursor, repo_full=repo_full
             )
 
             if status == PR_UNIT_TRANSIENT:
                 n_transient += 1
-                governor.record_transient(status=detail, token_idx=None)
+                governor.record_transient(status=status_code, token_idx=None)
                 continue
 
             governor.record_success()

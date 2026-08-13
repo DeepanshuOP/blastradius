@@ -419,7 +419,7 @@ def test_endpoint_returning_full_pages_forever_stops_at_max_pr_pages(tmp_path):
     # page request, simulating an endpoint that never returns a short page.
     responses.add(responses.GET, _commits_url("owner", "repo", 1), json=full_page, status=200)
 
-    status, detail = daemon._capture_pr_unit(
+    status, detail, status_code = daemon._capture_pr_unit(
         "owner", "repo", 1, "pull_commits", "pulls/1/commits",
         pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
     )
@@ -459,7 +459,7 @@ def test_three_page_pull_commits_completes_normally_under_the_cap(tmp_path):
         match=[matchers.query_param_matcher({"per_page": "100", "page": "3"})],
     )
 
-    status, detail = daemon._capture_pr_unit(
+    status, detail, status_code = daemon._capture_pr_unit(
         "owner", "repo", 1, "pull_commits", "pulls/1/commits",
         pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
     )
@@ -1021,5 +1021,51 @@ def test_connection_error_on_checkruns_reaches_governor_as_none(tmp_path):
     )
 
     assert governor.transient_calls == [None]
+
+
+@responses.activate
+def test_503_on_pull_files_reaches_sweep_repo_governor_as_int_not_string(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _mock_pulls_page("owner", "repo", 1, [_pr(1, RECENT)])
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(responses.GET, _files_url("owner", "repo", 1), status=503)
+    responses.add(responses.GET, _commits_url("owner", "repo", 1), json=[], status=200)
+
+    governor = _SpyGovernor()
+    daemon.sweep_repo(
+        "owner", "repo", pool=pool, store=store, cursor=cursor, cutoff=_cutoff(), governor=governor
+    )
+
+    assert governor.transient_calls == [503]
+    assert type(governor.transient_calls[0]) is int  # not "503", not "503 HTTPError"
+
+    cursor.close()
+
+
+@responses.activate
+def test_connection_error_on_pull_files_reaches_sweep_repo_governor_as_none(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _mock_pulls_page("owner", "repo", 1, [_pr(1, RECENT)])
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(
+            responses.GET, _files_url("owner", "repo", 1),
+            body=requests.exceptions.ConnectionError(),
+        )
+    responses.add(responses.GET, _commits_url("owner", "repo", 1), json=[], status=200)
+
+    governor = _SpyGovernor()
+    daemon.sweep_repo(
+        "owner", "repo", pool=pool, store=store, cursor=cursor, cutoff=_cutoff(), governor=governor
+    )
+
+    assert governor.transient_calls == [None]
+
+    cursor.close()
 
     cursor.close()
