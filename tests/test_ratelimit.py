@@ -338,3 +338,83 @@ def test_evict_same_index_twice_logs_once_and_does_not_raise(capsys):
     assert "token_idx=0" in lines[0]
     assert "401 unauthorized" in lines[0]
     assert "tok_a" not in err
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_401_evicts_token_and_exception_carries_token_idx(mock_sleep):
+    responses.add(responses.GET, URL, status=401)
+
+    pool = TokenPool(["tok_a", "tok_b", "tok_c"])
+    with pytest.raises(requests.HTTPError) as exc_info:
+        get_with_backoff(URL, pool=pool)
+
+    evicted_idx = exc_info.value.token_idx
+
+    seen = {pool.acquire()[0] for _ in range(20)}
+    assert evicted_idx not in seen
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_404_does_not_evict_token(mock_sleep):
+    responses.add(responses.GET, URL, status=404)
+
+    pool = TokenPool(["tok_a", "tok_b"])
+    with pytest.raises(requests.HTTPError) as exc_info:
+        get_with_backoff(URL, pool=pool)
+
+    used_idx = exc_info.value.token_idx
+
+    seen = {pool.acquire()[0] for _ in range(20)}
+    assert used_idx in seen
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_invalid_header_evicts_and_raises_after_exactly_one_attempt(mock_sleep):
+    responses.add(responses.GET, URL, body=requests.exceptions.InvalidHeader("bad header"))
+
+    pool = TokenPool(["tok_a", "tok_b"])
+    with pytest.raises(requests.exceptions.InvalidHeader) as exc_info:
+        get_with_backoff(URL, pool=pool)
+
+    assert len(responses.calls) == 1
+    mock_sleep.assert_not_called()
+
+    evicted_idx = exc_info.value.token_idx
+    seen = {pool.acquire()[0] for _ in range(20)}
+    assert evicted_idx not in seen
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_connection_error_retries_full_attempts_and_does_not_evict(mock_sleep):
+    for _ in range(6):
+        responses.add(responses.GET, URL, body=requests.exceptions.ConnectionError())
+
+    pool = TokenPool(["tok_a"])
+    with pytest.raises(requests.exceptions.ConnectionError):
+        get_with_backoff(URL, pool=pool)
+
+    assert len(responses.calls) == 6
+
+    idx, _headers = pool.acquire()
+    assert idx == 0
+
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.sleep")
+def test_both_tokens_401_then_all_tokens_dead_on_next_acquire(mock_sleep):
+    responses.add(responses.GET, URL, status=401)
+    responses.add(responses.GET, URL, status=401)
+
+    pool = TokenPool(["tok_a", "tok_b"])
+    with pytest.raises(requests.HTTPError):
+        get_with_backoff(URL, pool=pool)
+    with pytest.raises(requests.HTTPError):
+        get_with_backoff(URL, pool=pool)
+
+    with pytest.raises(AllTokensDead):
+        pool.acquire()
+    mock_sleep.assert_not_called()

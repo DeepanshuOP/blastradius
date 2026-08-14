@@ -229,6 +229,9 @@ def get_with_backoff(
                 },
                 LOG_PATH,
             )
+            if isinstance(exc, requests.exceptions.InvalidHeader):
+                pool.evict(token_idx, "malformed header")
+                raise
             last_exc = exc
             if attempt == max_attempts:
                 raise
@@ -306,6 +309,8 @@ def get_with_backoff(
             response.raise_for_status()
         except requests.HTTPError as http_exc:
             http_exc.token_idx = token_idx
+            if status == 401:
+                pool.evict(token_idx, "401 unauthorized")
             raise
 
     if last_exc is not None:

@@ -253,7 +253,8 @@ def test_transient_failures_abort_run_after_ladder_exhausted(tmp_path):
 
     names = [f"owner/flaky{i}" for i in range(5)]
     for i in range(5):
-        responses.add(responses.GET, _runs_url("owner", f"flaky{i}"), status=401)
+        # 503 not 401 — 401 now evicts the token (dead credential), which is not what this test simulates.
+        responses.add(responses.GET, _runs_url("owner", f"flaky{i}"), status=503)
 
     input_path, partial_path, output_path, attrition_path = _setup_run(tmp_path, names)
 
