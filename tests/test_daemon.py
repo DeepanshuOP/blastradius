@@ -9,6 +9,7 @@ No mocks of our own modules — real RawStore/CursorStore against tmp_path.
 
 import csv
 import json
+import time
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -1068,4 +1069,81 @@ def test_connection_error_on_pull_files_reaches_sweep_repo_governor_as_none(tmp_
 
     cursor.close()
 
+
+def _setup_all_tokens_dead_run(tmp_path, monkeypatch):
+    """A single-token pool, driven through daemon.main() end to end: PR 1's
+    pull_files gets a real 401 (evicts the pool's only token via
+    ratelimit.py's own eviction, unmodified here); every capture attempt
+    after that calls pool.acquire() against an already-dead pool, so
+    get_with_backoff raises AllTokensDead before any HTTP request — caught
+    and misclassified as an ordinary transient failure by daemon.py's own
+    broad `except Exception` in _capture_pr_unit, same as any other
+    unrecognised exception. Only once 5 such PRs (CONSECUTIVE_TRANSIENT_LIMIT)
+    have accumulated does the governor's ladder-exhaustion probe call
+    pool.acquire() directly (frame.py's _probe_all_tokens, guarded only by
+    `except requests.exceptions.RequestException`) — there AllTokensDead
+    finally escapes uncaught, all the way out of sweep_repo/run() to
+    main(). time.sleep is patched so the one ladder rung entered before the
+    probe fires costs no wall-clock time; TransientGovernor re-reads
+    time.sleep at construction (see frame.py), so run()'s internally-built
+    governor picks up the patch even though nothing here constructs it."""
+    db_path = tmp_path / "cursor.db"
+    monkeypatch.setattr(daemon, "DEFAULT_DB_PATH", db_path)
+    monkeypatch.setattr(daemon, "DEFAULT_ROOT", tmp_path / "raw")
+    monkeypatch.setenv("GITHUB_PAT_1", "tok_a")
+    monkeypatch.delenv("GITHUB_PAT_2", raising=False)
+    monkeypatch.delenv("GITHUB_PAT_3", raising=False)
+    monkeypatch.setattr(time, "sleep", lambda seconds: None)
+
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    repos_csv = tmp_path / "repos.csv"
+    with repos_csv.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["owner", "repo"])
+        writer.writerow(["owner", "repo"])
+
+    prs = [_pr(n, now) for n in range(1, 6)]
+    _mock_pulls_page("owner", "repo", 1, prs)
+    responses.add(responses.GET, _files_url("owner", "repo", 1), status=401)
+
+    return repos_csv, db_path
+
+
+@responses.activate
+def test_main_exits_cleanly_on_all_tokens_dead(tmp_path, monkeypatch, capsys):
+    """AllTokensDead, raised from inside the sweep once every token has been
+    evicted, must be caught by main() as a clean, distinguishable exit: the
+    same exit code as the AbortRun path, a stderr message naming dead
+    credentials and pointing at .env, and no token value anywhere in
+    stdout or stderr."""
+    repos_csv, _ = _setup_all_tokens_dead_run(tmp_path, monkeypatch)
+
+    with pytest.raises(SystemExit) as exc_info:
+        daemon.main(["--repos", str(repos_csv), "--limit", "1", "--stage", "1"])
+
+    assert exc_info.value.code == 1
+
+    captured = capsys.readouterr()
+    assert "dead credentials" in captured.err
+    assert ".env" in captured.err
+    assert "tok_a" not in captured.out
+    assert "tok_a" not in captured.err
+
+
+@responses.activate
+def test_main_all_tokens_dead_leaves_units_in_flight(tmp_path, monkeypatch):
+    """The AllTokensDead exit must not touch the cursor beyond the existing
+    unconditional close(): in-flight capture_unit rows from the interrupted
+    sweep stay in_flight (re-swept on the next run), and complete_sweep()
+    must not have fired."""
+    repos_csv, db_path = _setup_all_tokens_dead_run(tmp_path, monkeypatch)
+
+    with pytest.raises(SystemExit):
+        daemon.main(["--repos", str(repos_csv), "--limit", "1", "--stage", "1"])
+
+    cursor = CursorStore(db_path)
+    for n in range(1, 6):
+        assert cursor.get_capture_unit("owner/repo", "pull_files", n).status == "in_flight"
+        assert cursor.get_capture_unit("owner/repo", "pull_commits", n).status == "in_flight"
+    assert cursor.get_repo_cursor("owner/repo").sweep_status == "in_progress"
     cursor.close()

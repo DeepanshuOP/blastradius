@@ -93,6 +93,7 @@ import argparse
 import csv
 import json
 import statistics
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -101,7 +102,7 @@ from src.harvest.cursor import CursorStore, DEFAULT_DB_PATH
 # CONSECUTIVE_TRANSIENT_LIMIT is public there, so imported rather than
 # redefined, per the same D-09 lesson D-19/D-20 keep citing).
 from src.harvest.frame import AbortRun, CONSECUTIVE_TRANSIENT_LIMIT, TransientGovernor, _classify_failure
-from src.harvest.ratelimit import TokenPool, get_with_backoff
+from src.harvest.ratelimit import AllTokensDead, TokenPool, get_with_backoff
 from src.harvest.rawstore import DEFAULT_ROOT, RawRecord, RawStore
 
 DEFAULT_REPOS_PATH = Path("data/frame/frame_v1.csv")
@@ -1238,6 +1239,9 @@ def main(argv: list[str] | None = None) -> None:
         )
     except AbortRun as exc:
         print(f"ABORTED: {exc}")
+        raise SystemExit(1) from exc
+    except AllTokensDead as exc:
+        print("ABORTED: dead credentials — every token evicted, check .env", file=sys.stderr)
         raise SystemExit(1) from exc
     finally:
         cursor.close()
