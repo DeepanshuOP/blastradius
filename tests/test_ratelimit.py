@@ -15,7 +15,7 @@ import requests
 import responses
 
 import src.harvest.ratelimit as ratelimit
-from src.harvest.ratelimit import TokenPool, get_with_backoff
+from src.harvest.ratelimit import AllTokensDead, TokenPool, get_with_backoff
 
 URL = "https://api.github.com/repos/x/y"
 
@@ -289,3 +289,52 @@ def test_403_with_retry_after_logs_retry_after_and_body_snippet(mock_sleep, tmp_
     lines = [json.loads(line) for line in custom_log.read_text(encoding="utf-8").strip().splitlines()]
     assert lines[0]["retry_after"] == "30"
     assert "secondary rate limit" in lines[0]["body_snippet"]
+
+
+def test_evicted_token_never_selected_across_many_acquires():
+    pool = TokenPool(["tok_a", "tok_b", "tok_c"])
+    pool.evict(1, "401 unauthorized")
+
+    seen = {pool.acquire()[0] for _ in range(20)}
+
+    assert 1 not in seen
+    assert seen == {0, 2}
+
+
+@patch("src.harvest.ratelimit.time.sleep")
+def test_all_tokens_dead_raises_without_sleeping(mock_sleep):
+    pool = TokenPool(["tok_a", "tok_b", "tok_c"])
+    pool.evict(0, "401 unauthorized")
+    pool.evict(1, "401 unauthorized")
+    pool.evict(2, "401 unauthorized")
+
+    with pytest.raises(ratelimit.AllTokensDead):
+        pool.acquire()
+
+    mock_sleep.assert_not_called()
+
+
+@patch("src.harvest.ratelimit.time.sleep")
+def test_dead_token_excluded_while_live_but_exhausted_token_still_used(mock_sleep):
+    pool = TokenPool(["tok_a", "tok_b"])
+    pool.evict(0, "401 unauthorized")
+    now = time.time()
+    pool.update(1, remaining=0, reset_at=now + 30)
+
+    idx, _headers = pool.acquire()
+
+    assert idx == 1
+    assert mock_sleep.call_count == 1
+
+
+def test_evict_same_index_twice_logs_once_and_does_not_raise(capsys):
+    pool = TokenPool(["tok_a"])
+    pool.evict(0, "401 unauthorized")
+    pool.evict(0, "401 unauthorized")
+
+    err = capsys.readouterr().err
+    lines = [line for line in err.splitlines() if line.strip()]
+    assert len(lines) == 1
+    assert "token_idx=0" in lines[0]
+    assert "401 unauthorized" in lines[0]
+    assert "tok_a" not in err

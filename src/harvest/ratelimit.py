@@ -48,6 +48,13 @@ class _TokenState:
     token: str
     remaining: int = DEFAULT_REMAINING
     reset_at: float = 0.0  # epoch seconds; 0.0 means never observed
+    dead: bool = False
+    dead_reason: str | None = None
+
+
+class AllTokensDead(RuntimeError):
+    """Every token in the pool has been evicted as permanently unusable;
+    unlike quota exhaustion this can never recover within the process."""
 
 
 class TokenPool:
@@ -76,9 +83,15 @@ class TokenPool:
 
     def acquire(self) -> tuple[int, dict[str, str]]:
         now = time.time()
-        blocked = {i for i, s in enumerate(self._states) if s.remaining <= 0}
+        live = [i for i, s in enumerate(self._states) if not s.dead]
+        if not live:
+            raise AllTokensDead(
+                "every token in the pool has been evicted as permanently unusable"
+            )
 
-        if blocked and len(blocked) == len(self._states):
+        blocked = {i for i in live if self._states[i].remaining <= 0}
+
+        if blocked and len(blocked) == len(live):
 
             def _raw_wait(idx: int) -> float:
                 reset_at = self._states[idx].reset_at
@@ -114,7 +127,7 @@ class TokenPool:
             )
             return chosen, self._headers_for(chosen)
 
-        candidates = [i for i in range(len(self._states)) if i not in blocked]
+        candidates = [i for i in live if i not in blocked]
         max_remaining = max(self._states[i].remaining for i in candidates)
         tied = [i for i in candidates if self._states[i].remaining == max_remaining]
 
@@ -136,6 +149,23 @@ class TokenPool:
             state.remaining = remaining
         if reset_at is not None:
             state.reset_at = reset_at
+
+    def evict(self, idx: int, reason: str) -> None:
+        """Mark token `idx` permanently dead. Unlike quota exhaustion
+        (remaining <= 0), a dead token is never reconsidered by acquire()
+        for the rest of the process. Evicting an already-dead token is a
+        no-op — no double log line, no error."""
+        state = self._states[idx]
+        if state.dead:
+            return
+        state.dead = True
+        state.dead_reason = reason
+        live_count = sum(1 for s in self._states if not s.dead)
+        print(
+            f"[ratelimit] {_now_iso()} token_idx={idx} evicted: {reason} "
+            f"({live_count} token(s) still live)",
+            file=sys.stderr,
+        )
 
     def _headers_for(self, idx: int) -> dict[str, str]:
         return {
