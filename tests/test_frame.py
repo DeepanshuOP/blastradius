@@ -14,11 +14,12 @@ import responses
 from src.harvest.frame import (
     AbortRun,
     RepoResult,
+    TransientFailure,
     classify_workflows,
     process_repo,
     run_frame,
 )
-from src.harvest.ratelimit import TokenPool
+from src.harvest.ratelimit import AllTokensDead, TokenPool
 
 SINCE = "2026-05-07"
 RATE_LIMIT_URL = "https://api.github.com/rate_limit"
@@ -108,6 +109,20 @@ def test_runs_but_zero_test_workflows_gets_no_test_workflow():
 
     assert result.verdict == "no_test_workflow"
     assert result.test_workflow_ids == ""
+
+
+def test_all_tokens_dead_from_acquire_propagates_out_of_process_repo():
+    pool = Mock()
+    pool.acquire.side_effect = AllTokensDead(
+        "every token in the pool has been evicted as permanently unusable"
+    )
+
+    result = None
+    with pytest.raises(AllTokensDead):
+        result = process_repo(_row(), pool, SINCE)
+
+    assert result is None
+    assert not isinstance(result, TransientFailure)
 
 
 def _write_input_csv(path, names):

@@ -54,7 +54,7 @@ from typing import Callable
 
 import requests
 
-from src.harvest.ratelimit import TokenPool, get_with_backoff
+from src.harvest.ratelimit import AllTokensDead, TokenPool, get_with_backoff
 
 INPUT_PATH = Path("data/frame/repos_raw.csv")
 PARTIAL_PATH = Path("data/frame/repos.partial.csv")
@@ -351,6 +351,8 @@ def process_repo(row: dict, pool: TokenPool, since: str) -> RepoResult | Transie
 
     try:
         n_runs_90d = fetch_n_runs_90d(owner, repo, pool, since)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         if bucket == "transient":
@@ -369,6 +371,8 @@ def process_repo(row: dict, pool: TokenPool, since: str) -> RepoResult | Transie
 
     try:
         workflows = fetch_workflows(owner, repo, pool)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         if bucket == "transient":
