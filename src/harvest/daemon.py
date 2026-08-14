@@ -194,6 +194,8 @@ def _fetch_pulls_page(
     }
     try:
         response = get_with_backoff(url, params=params, pool=pool)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         if bucket == "terminal":
@@ -251,6 +253,8 @@ def _capture_pr_unit(
             response = get_with_backoff(
                 url, params={"per_page": PULLS_PER_PAGE, "page": page}, pool=pool
             )
+        except AllTokensDead:
+            raise
         except Exception as exc:
             bucket, status, exception_class = _classify_failure(exc)
             detail = f"{status} {exception_class}"
@@ -433,6 +437,8 @@ def _fetch_runs_for_sha(
     url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs"
     try:
         response = get_with_backoff(url, params={"head_sha": sha, "per_page": 100}, pool=pool)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
@@ -472,6 +478,8 @@ def _fetch_jobs_for_run(
     url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
     try:
         response = get_with_backoff(url, params={"per_page": 100}, pool=pool)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
@@ -605,6 +613,8 @@ def _fetch_checkruns_for_sha(
     url = f"https://api.github.com/repos/{owner}/{repo}/commits/{sha}/check-runs"
     try:
         response = get_with_backoff(url, params={"per_page": 100}, pool=pool)
+    except AllTokensDead:
+        raise
     except Exception as exc:
         bucket, status, exception_class = _classify_failure(exc)
         detail = f"{status} {exception_class}"
@@ -664,6 +674,8 @@ def _fetch_annotations_for_checkrun(
             response = get_with_backoff(
                 url, params={"per_page": PULLS_PER_PAGE, "page": page}, pool=pool
             )
+        except AllTokensDead:
+            raise
         except Exception as exc:
             bucket, status, exception_class = _classify_failure(exc)
             detail = f"{status} {exception_class}"

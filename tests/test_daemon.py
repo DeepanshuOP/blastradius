@@ -20,7 +20,7 @@ from responses import matchers
 from src.harvest import daemon
 from src.harvest.cursor import CursorStore
 from src.harvest.rawstore import RawRecord, RawStore
-from src.harvest.ratelimit import TokenPool
+from src.harvest.ratelimit import AllTokensDead, TokenPool
 
 RECENT = "2026-08-01T00:00:00Z"
 OLD = "2026-04-01T00:00:00Z"  # well over 90 days before "now" below
@@ -1070,6 +1070,32 @@ def test_connection_error_on_pull_files_reaches_sweep_repo_governor_as_none(tmp_
     cursor.close()
 
 
+@responses.activate
+def test_capture_pr_unit_lets_all_tokens_dead_escape_uncaught(tmp_path):
+    """The narrow `except AllTokensDead: raise` now placed ahead of
+    _capture_pr_unit's broad `except Exception` must let the exception
+    propagate rather than being classified transient: a dead pool means no
+    further request can ever succeed in this process, which is not what
+    PR_UNIT_TRANSIENT means (retry next run). mark_unit_failed must not
+    fire either — the unit stays in_flight, same as any other transient
+    outcome, so a rerun (with live credentials) resumes it."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = TokenPool(["tok_a"])
+    pool.evict(0, "test setup: pretend dead before any request is attempted")
+
+    with pytest.raises(AllTokensDead):
+        daemon._capture_pr_unit(
+            "owner", "repo", 1, "pull_files", "pulls/1/files",
+            pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+        )
+
+    assert len(responses.calls) == 0  # pool.acquire() raised before any request
+    assert cursor.get_capture_unit("owner/repo", "pull_files", 1).status == "in_flight"
+
+    cursor.close()
+
+
 def _setup_all_tokens_dead_run(tmp_path, monkeypatch):
     """A single-token pool, driven through daemon.main() end to end: PR 1's
     pull_files gets a real 401 (evicts the pool's only token via
@@ -1133,17 +1159,28 @@ def test_main_exits_cleanly_on_all_tokens_dead(tmp_path, monkeypatch, capsys):
 @responses.activate
 def test_main_all_tokens_dead_leaves_units_in_flight(tmp_path, monkeypatch):
     """The AllTokensDead exit must not touch the cursor beyond the existing
-    unconditional close(): in-flight capture_unit rows from the interrupted
-    sweep stay in_flight (re-swept on the next run), and complete_sweep()
-    must not have fired."""
+    unconditional close(): PR 1's pull_files unit, in_flight when the
+    exception fires, stays in_flight (re-swept on the next run with live
+    credentials), and complete_sweep() must not have fired.
+
+    Superseded expectation: this test used to assert all five PRs' files
+    and commits units were in_flight, which encoded the six broad handlers
+    swallowing AllTokensDead as an ordinary transient failure and looping
+    through all five PRs before the ladder-exhaustion probe let it escape.
+    Now that the six re-raise clauses stop that swallowing, AllTokensDead
+    escapes immediately at PR 1 itself — PRs 2-5 are never reached, so no
+    capture_unit row is ever created for them. Asserting None for PRs 2-5
+    is the stronger claim: it pins the early exit, so any future change
+    that reintroduces swallowing fails here loudly."""
     repos_csv, db_path = _setup_all_tokens_dead_run(tmp_path, monkeypatch)
 
     with pytest.raises(SystemExit):
         daemon.main(["--repos", str(repos_csv), "--limit", "1", "--stage", "1"])
 
     cursor = CursorStore(db_path)
-    for n in range(1, 6):
-        assert cursor.get_capture_unit("owner/repo", "pull_files", n).status == "in_flight"
-        assert cursor.get_capture_unit("owner/repo", "pull_commits", n).status == "in_flight"
+    assert cursor.get_capture_unit("owner/repo", "pull_files", 1).status == "in_flight"
+    for n in range(2, 6):
+        assert cursor.get_capture_unit("owner/repo", "pull_files", n) is None
+        assert cursor.get_capture_unit("owner/repo", "pull_commits", n) is None
     assert cursor.get_repo_cursor("owner/repo").sweep_status == "in_progress"
     cursor.close()
