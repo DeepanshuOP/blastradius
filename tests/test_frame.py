@@ -16,6 +16,7 @@ from src.harvest.frame import (
     RepoResult,
     TransientFailure,
     classify_workflows,
+    main,
     process_repo,
     run_frame,
 )
@@ -123,6 +124,28 @@ def test_all_tokens_dead_from_acquire_propagates_out_of_process_repo():
 
     assert result is None
     assert not isinstance(result, TransientFailure)
+
+
+def test_all_tokens_dead_escaping_run_frame_is_caught_by_main(monkeypatch, capsys):
+    secret_token = "ghp_secretvalue_should_never_print"
+    monkeypatch.setenv("GITHUB_PAT_1", secret_token)
+    monkeypatch.delenv("GITHUB_PAT_2", raising=False)
+    monkeypatch.delenv("GITHUB_PAT_3", raising=False)
+
+    def _raise_all_tokens_dead(**kwargs):
+        raise AllTokensDead("every token in the pool has been evicted as permanently unusable")
+
+    monkeypatch.setattr("src.harvest.frame.run_frame", _raise_all_tokens_dead)
+
+    with pytest.raises(SystemExit) as exc_info:
+        main([])
+
+    assert exc_info.value.code == 1
+    captured = capsys.readouterr()
+    assert "dead credentials" in captured.err
+    assert ".env" in captured.err
+    assert secret_token not in captured.out
+    assert secret_token not in captured.err
 
 
 def _write_input_csv(path, names):

@@ -544,6 +544,9 @@ def main(argv: list[str] | None = None) -> None:
     except AbortRun as exc:
         print(f"ABORTED: {exc}")
         raise SystemExit(1) from exc
+    except AllTokensDead as exc:
+        print("ABORTED: dead credentials — every token evicted, check .env", file=sys.stderr)
+        raise SystemExit(1) from exc
 
     print(f"Newly processed this run: {summary['newly_processed']}")
     print(f"Total repos recorded so far: {summary['total_recorded']}")
