@@ -767,6 +767,7 @@ def capture_checkruns(
         "n_transient_annotations": 0,
         "annotations_per_checkrun_counts": [],
         "n_checkruns_zero_annotations": 0,
+        "n_annotations_skipped_zero_count": 0,
         # "runs" here means: every discovered run whose head sha ended up
         # with >=1 captured annotation this (or a prior) invocation. Runs
         # are attributed by head_sha, not by run_id — parent_run_id is
@@ -801,6 +802,15 @@ def capture_checkruns(
         sha_got_annotation = False
         for check_run in check_runs:
             check_run_id = check_run["id"]
+
+            output = check_run.get("output") or {}
+            annotations_count = output.get("annotations_count")
+            if annotations_count == 0:
+                stats["n_checkruns_zero_annotations"] += 1
+                stats["annotations_per_checkrun_counts"].append(0)
+                stats["n_annotations_skipped_zero_count"] += 1
+                continue
+
             an_status, annotations, an_status_code = _fetch_annotations_for_checkrun(
                 owner, repo, check_run_id, pool=pool, store=store, cursor=cursor, repo_full=repo_full
             )

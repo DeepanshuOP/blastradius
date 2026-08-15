@@ -857,6 +857,157 @@ def test_annotations_pagination_past_cap_marks_failed_and_writes_nothing(tmp_pat
     cursor.close()
 
 
+# -- Stage 3: zero-annotations skip (measured 53.47% of check-runs on disk) --
+
+
+def _annotations_called_for(check_run_id):
+    return any(str(check_run_id) in call.request.url and "/annotations" in call.request.url
+               for call in responses.calls)
+
+
+@responses.activate
+def test_zero_annotations_count_skips_the_fetch(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    # No annotations response registered: any fetch attempt would raise.
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert not _annotations_called_for(11)
+
+    cursor.close()
+
+
+@responses.activate
+def test_positive_annotations_count_still_fetches(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 2}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(
+        responses.GET, _annotations_url("owner", "repo", 11),
+        json=[{"message": "m1"}, {"message": "m2"}], status=200,
+    )
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert _annotations_called_for(11)
+
+    cursor.close()
+
+
+@responses.activate
+def test_missing_output_key_fails_open_and_fetches(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A}]  # no "output" key at all
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=[], status=200)
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert _annotations_called_for(11)
+
+    cursor.close()
+
+
+@responses.activate
+def test_output_present_without_annotations_count_fails_open_and_fetches(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"title": "no annotations_count key"}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=[], status=200)
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert _annotations_called_for(11)
+
+    cursor.close()
+
+
+@responses.activate
+def test_annotations_count_none_fails_open_and_fetches(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": None}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 11), json=[], status=200)
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert _annotations_called_for(11)
+
+    cursor.close()
+
+
+@responses.activate
+def test_skipped_zero_count_checkrun_writes_no_capture_unit(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+
+    daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert cursor.get_capture_unit("owner/repo", "annotations", 11) is None
+
+    cursor.close()
+
+
+@responses.activate
+def test_skipped_zero_count_checkrun_updates_stats(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_checkruns_zero_annotations"] == 1
+    assert stats["annotations_per_checkrun_counts"] == [0]
+    assert stats["n_annotations_skipped_zero_count"] == 1
+
+    cursor.close()
+
+
 @responses.activate
 def test_out_of_window_and_not_complete_counters_are_distinct(tmp_path):
     store = RawStore(tmp_path / "raw")
