@@ -599,35 +599,57 @@ def _fetch_checkruns_for_sha(
     cursor: CursorStore,
     repo_full: str,
 ) -> tuple[str, list[dict] | None, int | None]:
-    """Endpoint 6. Same (status, check_runs, status_code) shape as
-    `_fetch_runs_for_sha`."""
+    """Endpoint 6, paginated (wrapped-object body, unlike pull_commits/
+    pull_files/annotations) with the same MAX_PR_PAGES bound and
+    all-or-nothing write as `_fetch_annotations_for_checkrun`: a cap hit
+    marks the unit `failed` and writes nothing, never a partial `complete`
+    — a truncated check-run list silently marked complete is the same
+    failure class as the 100-commit truncation. Same (status, check_runs,
+    status_code) shape as `_fetch_runs_for_sha`."""
     existing = cursor.get_capture_unit(repo_full, "checkruns", sha)
     if existing is not None and existing.status != "in_flight":
         if existing.status == "complete":
-            records = store.read_records(repo_full, "checkruns", sha)
-            body = json.loads(records[0].body) if records else {}
-            return PR_UNIT_SKIPPED_ALREADY_DONE, body.get("check_runs", []), None
+            check_runs: list[dict] = []
+            for record in store.read_records(repo_full, "checkruns", sha):
+                check_runs.extend(json.loads(record.body).get("check_runs", []))
+            return PR_UNIT_SKIPPED_ALREADY_DONE, check_runs, None
         return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
 
     cursor.mark_unit_started(repo_full, "checkruns", sha)
     url = f"https://api.github.com/repos/{owner}/{repo}/commits/{sha}/check-runs"
-    try:
-        response = get_with_backoff(url, params={"per_page": 100}, pool=pool)
-    except AllTokensDead:
-        raise
-    except Exception as exc:
-        bucket, status, exception_class = _classify_failure(exc)
-        detail = f"{status} {exception_class}"
-        status_code = int(status) if status else None
-        if bucket == "terminal":
-            cursor.mark_unit_failed(repo_full, "checkruns", sha, detail)
-            return PR_UNIT_FAILED, None, status_code
-        return PR_UNIT_TRANSIENT, None, status_code
 
-    body = response.json()
-    store.write_records(repo_full, "checkruns", sha, [_record_from_response(response)])
+    records: list[RawRecord] = []
+    check_runs = []
+    for page in range(1, MAX_PR_PAGES + 1):
+        try:
+            response = get_with_backoff(
+                url, params={"per_page": PULLS_PER_PAGE, "page": page}, pool=pool
+            )
+        except AllTokensDead:
+            raise
+        except Exception as exc:
+            bucket, status, exception_class = _classify_failure(exc)
+            detail = f"{status} {exception_class}"
+            status_code = int(status) if status else None
+            if bucket == "terminal":
+                cursor.mark_unit_failed(repo_full, "checkruns", sha, detail)
+                return PR_UNIT_FAILED, None, status_code
+            return PR_UNIT_TRANSIENT, None, status_code
+
+        page_body = response.json()
+        page_check_runs = page_body.get("check_runs", [])
+        records.append(_record_from_response(response))
+        check_runs.extend(page_check_runs)
+        if len(page_check_runs) < PULLS_PER_PAGE:
+            break
+    else:
+        detail = f"exceeded MAX_PR_PAGES={MAX_PR_PAGES} without a short page"
+        cursor.mark_unit_failed(repo_full, "checkruns", sha, detail)
+        return PR_UNIT_FAILED, None, None
+
+    store.write_records(repo_full, "checkruns", sha, records)
     cursor.mark_unit_complete(repo_full, "checkruns", sha)
-    return PR_UNIT_COMPLETE, body.get("check_runs", []), None
+    return PR_UNIT_COMPLETE, check_runs, None
 
 
 def _fetch_annotations_for_checkrun(

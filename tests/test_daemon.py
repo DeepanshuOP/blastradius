@@ -1008,6 +1008,128 @@ def test_skipped_zero_count_checkrun_updates_stats(tmp_path):
     cursor.close()
 
 
+# -- Stage 3: check-run list pagination -----------------------------------
+
+
+@responses.activate
+def test_two_full_checkrun_pages_then_short_page_unions_in_order(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    page1 = [{"id": i, "head_sha": SHA_A} for i in range(100)]
+    page2 = [{"id": i, "head_sha": SHA_A} for i in range(100, 200)]
+    page3 = [{"id": 200, "head_sha": SHA_A}]
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": page1}, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "1"})],
+    )
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": page2}, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "2"})],
+    )
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": page3}, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "3"})],
+    )
+
+    status, check_runs, status_code = daemon._fetch_checkruns_for_sha(
+        "owner", "repo", SHA_A, pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    assert status == daemon.PR_UNIT_COMPLETE
+    assert [cr["id"] for cr in check_runs] == list(range(201))
+    assert len(store.read_records("owner/repo", "checkruns", SHA_A)) == 3
+    assert cursor.get_capture_unit("owner/repo", "checkruns", SHA_A).status == "complete"
+
+    cursor.close()
+
+
+@responses.activate
+def test_single_short_checkrun_page_makes_exactly_one_request(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A),
+        json={"check_runs": [{"id": 11, "head_sha": SHA_A}]}, status=200,
+    )
+
+    status, check_runs, status_code = daemon._fetch_checkruns_for_sha(
+        "owner", "repo", SHA_A, pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    assert status == daemon.PR_UNIT_COMPLETE
+    assert [cr["id"] for cr in check_runs] == [11]
+    assert len(responses.calls) == 1
+    assert len(store.read_records("owner/repo", "checkruns", SHA_A)) == 1
+
+    cursor.close()
+
+
+@responses.activate
+def test_checkrun_pagination_past_cap_marks_failed_and_writes_nothing(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    full_page = [{"id": i, "head_sha": SHA_A} for i in range(100)]
+    # No query matcher: the same registered response is returned for every
+    # page request, simulating an endpoint that never returns a short page.
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": full_page}, status=200)
+
+    status, check_runs, status_code = daemon._fetch_checkruns_for_sha(
+        "owner", "repo", SHA_A, pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    unit = cursor.get_capture_unit("owner/repo", "checkruns", SHA_A)
+    assert status == daemon.PR_UNIT_FAILED
+    assert check_runs is None
+    assert status_code is None
+    assert unit.status == "failed"
+    assert str(daemon.MAX_PR_PAGES) in unit.reason
+    assert not store.exists("owner/repo", "checkruns", SHA_A)
+    assert len(responses.calls) == daemon.MAX_PR_PAGES
+
+    cursor.close()
+
+
+@responses.activate
+def test_resumed_checkrun_fetch_returns_union_of_all_persisted_pages(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    page1 = [{"id": i, "head_sha": SHA_A} for i in range(100)]
+    page2 = [{"id": 100, "head_sha": SHA_A}]
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": page1}, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "1"})],
+    )
+    responses.add(
+        responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": page2}, status=200,
+        match=[matchers.query_param_matcher({"per_page": "100", "page": "2"})],
+    )
+
+    first_status, first_check_runs, _ = daemon._fetch_checkruns_for_sha(
+        "owner", "repo", SHA_A, pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+    assert first_status == daemon.PR_UNIT_COMPLETE
+    assert len(first_check_runs) == 101
+
+    # Resume: unit is already 'complete', no further HTTP responses are
+    # registered, so any new request would raise here.
+    second_status, second_check_runs, _ = daemon._fetch_checkruns_for_sha(
+        "owner", "repo", SHA_A, pool=pool, store=store, cursor=cursor, repo_full="owner/repo",
+    )
+
+    assert second_status == daemon.PR_UNIT_SKIPPED_ALREADY_DONE
+    assert [cr["id"] for cr in second_check_runs] == list(range(101))  # union of both pages, not just page 1
+
+    cursor.close()
+
+
 @responses.activate
 def test_out_of_window_and_not_complete_counters_are_distinct(tmp_path):
     store = RawStore(tmp_path / "raw")
