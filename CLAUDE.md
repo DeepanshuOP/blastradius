@@ -44,6 +44,13 @@ Python 3.11 · uv · **WSL2 Ubuntu, not PowerShell** for anything in this repo �
 8. Commit at every green test. Conventional messages: `feat:` `fix:` `data:` `paper:`.
 9. **Do not build ahead of the current stage.** Build order: harvester → parsers → labels → graph → features → baselines → model → demo → paper.
 
+## Commit hygiene
+
+- **Commit identity is `DeepanshuOP` with the operator's GitHub noreply email.** Before any commit, verify with `git config user.name && git config user.email`. If either is wrong, **STOP and report** — GitHub attributes by email, and a mismatch drops the commit from the operator's contribution history. Repo-local config only; never touch `--global`.
+- **No trailers, ever.** Never append `Co-Authored-By`, `Claude-Session`, or anything else to a commit message. This history carries no trailers. Use the operator's `-m` string verbatim and nothing more.
+- **Never `git add -A` or `git add .`.** Always name explicit paths.
+- **Never commit without explicit operator authorization** given as its own step.
+
 ## Frozen contracts — changing these breaks the project
 
 | Contract | Where | Frozen |
