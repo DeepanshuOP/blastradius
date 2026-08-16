@@ -1627,3 +1627,221 @@ def test_empty_checkrun_list_conserves_trivially(tmp_path):
     assert stats["n_checkruns_unaccounted"] == 0
 
     cursor.close()
+
+
+# ---------------------------------------------------------------------------
+# T0.3e stage 4 — _fetch_job_log (endpoint 9, GET /actions/jobs/{jid}/logs).
+# Helper only; the orchestrator and CLI wiring are separate tasks.
+# ---------------------------------------------------------------------------
+
+
+def _job_log_url(owner, repo, job_id):
+    return f"https://api.github.com/repos/{owner}/{repo}/actions/jobs/{job_id}/logs"
+
+
+@responses.activate
+def test_job_log_success_returns_byte_count_not_body(tmp_path):
+    """A 200 writes exactly one record and returns the SIZE of the body. The
+    middle element is an int, never the payload itself — a live probe measured
+    one real log at 1,497,943 bytes, and no caller should be handed that."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    body = b"2026-08-01T00:00:00.0000000Z Run pytest\n2026-08-01T00:00:01.0000000Z 1 passed\n"
+    responses.add(responses.GET, _job_log_url("owner", "repo", 777), body=body, status=200)
+
+    status, n_bytes, status_code = daemon._fetch_job_log(
+        "owner", "repo", 777,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+
+    assert status == daemon.PR_UNIT_COMPLETE
+    assert n_bytes == len(body)
+    assert type(n_bytes) is int
+    assert status_code is None
+    assert cursor.get_capture_unit("owner/repo", "logs", 777).status == "complete"
+    assert len(store.read_records("owner/repo", "logs", 777)) == 1
+
+    cursor.close()
+
+
+@responses.activate
+def test_job_log_body_round_trips_byte_identical_through_rawstore(tmp_path):
+    """The test that matters most: every other kind in this pipeline has only
+    ever stored JSON. A job log is plain text carrying ANSI colour escapes and
+    arbitrary test-output bytes, so it exercises rawstore's UTF-8-or-base64
+    encoding path on a non-JSON payload for the first time.
+
+    Both branches are covered here deliberately. The first body is valid UTF-8
+    (ANSI escapes plus non-ASCII text) and takes `_encode_body`'s utf8 branch;
+    the second carries a lone 0x9c continuation byte that is NOT valid UTF-8
+    and forces the base64 fallback. Byte-identity must hold either way — the
+    helper never decodes, parses, or ANSI-strips anything (capture wide, parse
+    narrow; parsing is T1.1's job)."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    utf8_body = (
+        b"\x1b[0;32mPASSED\x1b[0m tests/test_caf\xc3\xa9.py::test_\xe2\x9c\x93\n"
+        b"\x1b[1;31mFAILED\x1b[0m tests/test_na\xc3\xafve.py::test_\xc2\xb5s\n"
+    )
+    raw_body = b"\x1b[31mERROR\x1b[0m corrupt chunk: \x9c\xff\xfe not utf-8\n"
+
+    responses.add(responses.GET, _job_log_url("owner", "repo", 1), body=utf8_body, status=200)
+    responses.add(responses.GET, _job_log_url("owner", "repo", 2), body=raw_body, status=200)
+
+    _, utf8_bytes, _ = daemon._fetch_job_log(
+        "owner", "repo", 1,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+    _, raw_bytes, _ = daemon._fetch_job_log(
+        "owner", "repo", 2,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+
+    assert store.read_records("owner/repo", "logs", 1)[0].body == utf8_body
+    assert store.read_records("owner/repo", "logs", 2)[0].body == raw_body
+    assert utf8_bytes == len(utf8_body)
+    assert raw_bytes == len(raw_body)
+
+    # The escape bytes survive rather than being stripped somewhere in transit.
+    assert b"\x1b[0;32m" in store.read_records("owner/repo", "logs", 1)[0].body
+    assert b"\x9c" in store.read_records("owner/repo", "logs", 2)[0].body
+
+    cursor.close()
+
+
+@responses.activate
+def test_job_log_persists_parent_run_id_from_the_owning_run(tmp_path):
+    """`logs` has scope `job`, which `_validate_parent_run_id` permits, and
+    D-20 reserved the column precisely so this 90-day-expiring kind's expiry
+    is attributable to a run. No other helper populates it — annotations
+    cannot (no resolvable run id on a check-run), and per D-23 this one costs
+    nothing because the job object already carries `run_id`."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    responses.add(responses.GET, _job_log_url("owner", "repo", 777), body=b"log\n", status=200)
+
+    daemon._fetch_job_log(
+        "owner", "repo", 777,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=424242,
+    )
+
+    unit = cursor.get_capture_unit("owner/repo", "logs", 777)
+    assert unit.parent_run_id == 424242
+    assert type(unit.parent_run_id) is int  # not the string "424242"
+
+    cursor.close()
+
+
+@responses.activate
+def test_404_on_job_log_is_terminal_expiry_and_writes_nothing(tmp_path):
+    """A 404 (and equally a 410) means the log has aged past GitHub's 90-day
+    retention. Both are in frame.TERMINAL_STATUSES, so the unit is marked
+    `failed` — deliberately not retried and not given a status of its own.
+    Terminal means terminal; the orchestrator tells expiry apart from other
+    terminal causes by the returned status_code."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    responses.add(responses.GET, _job_log_url("owner", "repo", 777), status=404)
+
+    status, n_bytes, status_code = daemon._fetch_job_log(
+        "owner", "repo", 777,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+
+    assert status == daemon.PR_UNIT_FAILED
+    assert n_bytes is None
+    assert status_code == 404
+    assert type(status_code) is int  # not "404", not "404 HTTPError"
+    assert cursor.get_capture_unit("owner/repo", "logs", 777).status == "failed"
+    assert store.exists("owner/repo", "logs", 777) is False
+
+    cursor.close()
+
+
+@responses.activate
+def test_503_on_job_log_is_transient_and_leaves_the_unit_resumable(tmp_path):
+    """A transient failure writes nothing and does NOT mark the unit
+    terminal — it stays in_flight so a rerun retries it, which is what
+    PR_UNIT_TRANSIENT means."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(responses.GET, _job_log_url("owner", "repo", 777), status=503)
+
+    status, n_bytes, status_code = daemon._fetch_job_log(
+        "owner", "repo", 777,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+
+    assert status == daemon.PR_UNIT_TRANSIENT
+    assert n_bytes is None
+    assert status_code == 503
+    assert cursor.get_capture_unit("owner/repo", "logs", 777).status != "complete"
+    assert store.exists("owner/repo", "logs", 777) is False
+
+    cursor.close()
+
+
+@responses.activate
+def test_already_complete_job_log_skips_without_any_request(tmp_path):
+    """Dedup mirrors the existing helpers' two-branch shape. A `complete` unit
+    returns the persisted size read back off disk; NO response is registered,
+    so any HTTP request at all would surface as a connection error rather than
+    passing silently."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    body = b"\x1b[32mpreviously captured\x1b[0m\n"
+    store.write_records("owner/repo", "logs", 777, [
+        RawRecord(url=_job_log_url("owner", "repo", 777), status=200,
+                  fetched_at="2026-08-01T00:00:00+00:00", etag=None, body=body),
+    ])
+    cursor.mark_unit_started("owner/repo", "logs", 777, parent_run_id=555)
+    cursor.mark_unit_complete("owner/repo", "logs", 777)
+
+    status, n_bytes, status_code = daemon._fetch_job_log(
+        "owner", "repo", 777,
+        pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+    )
+
+    assert status == daemon.PR_UNIT_SKIPPED_ALREADY_DONE
+    assert n_bytes == len(body)
+    assert status_code is None
+    assert len(responses.calls) == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_job_log_lets_all_tokens_dead_escape_uncaught(tmp_path):
+    """Same contract as `_capture_pr_unit`: a dead pool means no further
+    request can succeed in this process, which is not what PR_UNIT_TRANSIENT
+    means. The narrow `except AllTokensDead: raise` must let it propagate, and
+    the unit stays in_flight so a rerun with live credentials resumes it."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = TokenPool(["tok_a"])
+    pool.evict(0, "test setup: pretend dead before any request is attempted")
+
+    with pytest.raises(AllTokensDead):
+        daemon._fetch_job_log(
+            "owner", "repo", 777,
+            pool=pool, store=store, cursor=cursor, repo_full="owner/repo", parent_run_id=555,
+        )
+
+    assert len(responses.calls) == 0  # pool.acquire() raised before any request
+    assert cursor.get_capture_unit("owner/repo", "logs", 777).status == "in_flight"
+    assert store.exists("owner/repo", "logs", 777) is False
+
+    cursor.close()

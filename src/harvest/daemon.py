@@ -722,6 +722,73 @@ def _fetch_annotations_for_checkrun(
     return PR_UNIT_COMPLETE, items, None
 
 
+def _fetch_job_log(
+    owner: str,
+    repo: str,
+    job_id: int,
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    cursor: CursorStore,
+    repo_full: str,
+    parent_run_id: int,
+) -> tuple[str, int | None, int | None]:
+    """Endpoint 9, a SINGLE request — not paginated. The endpoint returns the
+    whole log in one response (a 302 from api.github.com to a blob host, which
+    `get_with_backoff` already follows with Authorization stripped on the
+    redirected leg), so there is no `per_page` and no page loop to copy from
+    `_fetch_annotations_for_checkrun`.
+
+    The body is plain text, not JSON, and is never decoded, parsed, or
+    ANSI-stripped here — §8.3's principle is capture wide, parse narrow, and
+    parsing belongs to T1.1. `_record_from_response` stores `response.content`
+    verbatim; rawstore's `_encode_body` falls back to base64 when those bytes
+    are not valid UTF-8.
+
+    Middle element is the SIZE IN BYTES of the log body, not the body — a
+    caller must never be handed a ~1.5 MB payload it does not need (a live
+    probe measured one log at 1,497,943 bytes). It is None on every
+    non-complete path.
+
+    parent_run_id is REQUIRED and is populated from the job's own `run_id`
+    field, unlike every other helper: `logs` has scope `job`, which
+    `_validate_parent_run_id` permits, and D-20 reserved the column precisely
+    so this 90-day-expiring kind's expiry is attributable to a run. Per D-23
+    it costs nothing, because the job object already carries `run_id`.
+
+    A 404 or 410 means the log has EXPIRED. Both are in `TERMINAL_STATUSES`,
+    so `_classify_failure` buckets them terminal and the unit is marked
+    `failed` — correct, and deliberately not given a retry or a status of its
+    own. The orchestrator distinguishes expiry from the returned status_code.
+    """
+    existing = cursor.get_capture_unit(repo_full, "logs", job_id)
+    if existing is not None and existing.status != "in_flight":
+        if existing.status == "complete":
+            size = sum(len(record.body) for record in store.read_records(repo_full, "logs", job_id))
+            return PR_UNIT_SKIPPED_ALREADY_DONE, size, None
+        return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
+
+    cursor.mark_unit_started(repo_full, "logs", job_id, parent_run_id=parent_run_id)
+    url = f"https://api.github.com/repos/{owner}/{repo}/actions/jobs/{job_id}/logs"
+
+    try:
+        response = get_with_backoff(url, pool=pool)
+    except AllTokensDead:
+        raise
+    except Exception as exc:
+        bucket, status, exception_class = _classify_failure(exc)
+        detail = f"{status} {exception_class}"
+        status_code = int(status) if status else None
+        if bucket == "terminal":
+            cursor.mark_unit_failed(repo_full, "logs", job_id, detail)
+            return PR_UNIT_FAILED, None, status_code
+        return PR_UNIT_TRANSIENT, None, status_code
+
+    store.write_records(repo_full, "logs", job_id, [_record_from_response(response)])
+    cursor.mark_unit_complete(repo_full, "logs", job_id)
+    return PR_UNIT_COMPLETE, len(response.content), None
+
+
 def capture_checkruns(
     repos: list[tuple[str, str]],
     *,
