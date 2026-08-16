@@ -790,6 +790,9 @@ def capture_checkruns(
         "annotations_per_checkrun_counts": [],
         "n_checkruns_zero_annotations": 0,
         "n_annotations_skipped_zero_count": 0,
+        "n_checkruns_seen": 0,
+        "n_annotations_skipped_prior_failure": 0,
+        "n_checkruns_unaccounted": 0,
         # "runs" here means: every discovered run whose head sha ended up
         # with >=1 captured annotation this (or a prior) invocation. Runs
         # are attributed by head_sha, not by run_id — parent_run_id is
@@ -823,6 +826,7 @@ def capture_checkruns(
 
         sha_got_annotation = False
         for check_run in check_runs:
+            stats["n_checkruns_seen"] += 1
             check_run_id = check_run["id"]
 
             output = check_run.get("output") or {}
@@ -846,6 +850,7 @@ def capture_checkruns(
                 stats["n_annotations_failed_terminal"] += 1
                 continue
             if annotations is None:
+                stats["n_annotations_skipped_prior_failure"] += 1
                 continue
             if an_status == PR_UNIT_SKIPPED_ALREADY_DONE:
                 stats["n_annotations_dedup_skipped"] += 1
@@ -860,6 +865,23 @@ def capture_checkruns(
 
         if sha_got_annotation:
             stats["recovered_runs_over_90d"] += sum(1 for a in run_ages if a > LOG_RETENTION_DAYS)
+
+    accounted = (
+        stats["n_annotations_skipped_zero_count"]
+        + stats["n_transient_annotations"]
+        + stats["n_annotations_failed_terminal"]
+        + stats["n_annotations_skipped_prior_failure"]
+        + stats["n_annotations_dedup_skipped"]
+        + stats["n_annotations_fetched_fresh"]
+    )
+    stats["n_checkruns_unaccounted"] = stats["n_checkruns_seen"] - accounted
+    if stats["n_checkruns_unaccounted"] != 0:
+        print(
+            f"capture_checkruns: conservation check failed — "
+            f"n_checkruns_seen={stats['n_checkruns_seen']} accounted={accounted} "
+            f"n_checkruns_unaccounted={stats['n_checkruns_unaccounted']}",
+            file=sys.stderr,
+        )
 
     return stats
 

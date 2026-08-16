@@ -1456,4 +1456,174 @@ def test_main_all_tokens_dead_leaves_units_in_flight(tmp_path, monkeypatch):
         assert cursor.get_capture_unit("owner/repo", "pull_files", n) is None
         assert cursor.get_capture_unit("owner/repo", "pull_commits", n) is None
     assert cursor.get_repo_cursor("owner/repo").sweep_status == "in_progress"
+
+
+# -- Stage 3: check-run conservation counters ---------------------------------
+
+
+def _seed_annotations_unit_complete(store, cursor, repo, check_run_id, annotations):
+    cursor.mark_unit_started(repo, "annotations", check_run_id)
+    store.write_records(
+        repo, "annotations", check_run_id,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                    body=json.dumps(annotations).encode())],
+    )
+    cursor.mark_unit_complete(repo, "annotations", check_run_id)
+
+
+def _seed_annotations_unit_failed(cursor, repo, check_run_id):
+    cursor.mark_unit_started(repo, "annotations", check_run_id)
+    cursor.mark_unit_failed(repo, "annotations", check_run_id, "seeded failure")
+
+
+@responses.activate
+def test_conservation_holds_across_mixed_checkrun_outcomes(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    # 11: zero-count skip. 22: fetched fresh. 33: dedup (already complete).
+    # 44: previously-failed (dedup read-back of a "failed" unit).
+    check_runs = [
+        {"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}},
+        {"id": 22, "head_sha": SHA_A, "output": {"annotations_count": 2}},
+        {"id": 33, "head_sha": SHA_A, "output": {"annotations_count": 1}},
+        {"id": 44, "head_sha": SHA_A, "output": {"annotations_count": 1}},
+    ]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(
+        responses.GET, _annotations_url("owner", "repo", 22),
+        json=[{"message": "m1"}, {"message": "m2"}], status=200,
+    )
+    _seed_annotations_unit_complete(store, cursor, "owner/repo", 33, [{"message": "existing"}])
+    _seed_annotations_unit_failed(cursor, "owner/repo", 44)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_checkruns_seen"] == 4
+    assert stats["n_checkruns_unaccounted"] == 0
+    assert stats["n_annotations_skipped_zero_count"] == 1
+    assert stats["n_annotations_fetched_fresh"] == 1
+    assert stats["n_annotations_dedup_skipped"] == 1
+    assert stats["n_annotations_skipped_prior_failure"] == 1
+
+    cursor.close()
+
+
+@responses.activate
+def test_previously_failed_annotations_unit_counted_as_prior_failure_only(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 1}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    # No annotations response registered: the pre-seeded "failed" unit means
+    # the dedup path returns without touching the network.
+    _seed_annotations_unit_failed(cursor, "owner/repo", 11)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_annotations_skipped_prior_failure"] == 1
+    assert stats["n_annotations_dedup_skipped"] == 0
+    assert stats["n_annotations_fetched_fresh"] == 0
+    assert stats["n_annotations_failed_terminal"] == 0
+    assert stats["n_checkruns_unaccounted"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_transient_annotations_fetch_still_conserves(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 1}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    for _ in range(6):  # MAX_ATTEMPTS in ratelimit.py
+        responses.add(responses.GET, _annotations_url("owner", "repo", 11), status=503)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_transient_annotations"] == 1
+    assert stats["n_checkruns_unaccounted"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_zero_count_skip_still_conserves(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    check_runs = [{"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}}]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_checkruns_seen"] == 1
+    assert stats["n_annotations_skipped_zero_count"] == 1
+    assert stats["n_checkruns_unaccounted"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_zero_annotations_counter_is_cross_cutting_not_a_partition_member(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    # 11 skips via annotations_count == 0. 22 is fetched fresh but the
+    # fetch itself comes back empty. Both land in n_checkruns_zero_annotations,
+    # via two different increment sites — a future reader must not fold this
+    # counter into the conservation sum.
+    check_runs = [
+        {"id": 11, "head_sha": SHA_A, "output": {"annotations_count": 0}},
+        {"id": 22, "head_sha": SHA_A, "output": {"annotations_count": 3}},
+    ]
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": check_runs}, status=200)
+    responses.add(responses.GET, _annotations_url("owner", "repo", 22), json=[], status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_checkruns_zero_annotations"] == 2
+    assert stats["n_checkruns_unaccounted"] == 0
+
+    cursor.close()
+
+
+@responses.activate
+def test_empty_checkrun_list_conserves_trivially(tmp_path):
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+
+    responses.add(responses.GET, _checkruns_url("owner", "repo", SHA_A), json={"check_runs": []}, status=200)
+
+    stats = daemon.capture_checkruns([("owner", "repo")], pool=pool, store=store, cursor=cursor, now=NOW)
+
+    assert stats["n_checkruns_seen"] == 0
+    assert stats["n_checkruns_unaccounted"] == 0
+
     cursor.close()
