@@ -20,5 +20,13 @@
 | **017** | 2026-08-17 | Expiry Cliff | 90-day log-expiry exposure analysis (`analysis/expiry_cliff.py`) | [017-2026-08-17-expiry-cliff.md](file:///home/shree/blastradius/docs/session/017-2026-08-17-expiry-cliff.md) |
 | **018** | 2026-08-17 | D-24 | Propose decision record D-24 for check-run annotation demotion | [018-2026-08-17-d24-annotation-demotion.md](file:///home/shree/blastradius/docs/session/018-2026-08-17-d24-annotation-demotion.md) |
 | **019** | 2026-08-17 | Daemon Relaunch | Relaunch harvester daemon over 300-repo frame (PID 14016) after 13:30Z incident | [019-2026-08-17-daemon-relaunch.md](file:///home/shree/blastradius/docs/session/019-2026-08-17-daemon-relaunch.md) |
+| **020** | 2026-08-17 | Progress Diagnosis | Read-only diagnosis of daemon progress on 300-repo frame (floci-io/floci Stage 2) | [020-2026-08-17-daemon-progress-diagnosis.md](file:///home/shree/blastradius/docs/session/020-2026-08-17-daemon-progress-diagnosis.md) |
+| **021** | 2026-08-17 | T1.1g | Implement `normalize_test_id()` and `TestId` dataclass with table test suite | [021-2026-08-17-t11g-testid-implementation.md](file:///home/shree/blastradius/docs/session/021-2026-08-17-t11g-testid-implementation.md) |
+| **022** | 2026-08-17 | Corpus Stats | Implement `analysis/corpus_stats.py` Review 1 corpus metrics generator | [022-2026-08-17-corpus-stats.md](file:///home/shree/blastradius/docs/session/022-2026-08-17-corpus-stats.md) |
+| **023** | 2026-08-17 | Attrition Diagnosis | Read-only diagnosis of attrition funnel reconciliation and reporting integrity | [023-2026-08-17-attrition-discrepancy.md](file:///home/shree/blastradius/docs/session/023-2026-08-17-attrition-discrepancy.md) |
+| **024** | 2026-08-18 | Pytest Config | Stop pytest from collecting tests under `vendor/` via `pyproject.toml` | [024-2026-08-18-pytest-collection-fix.md](file:///home/shree/blastradius/docs/session/024-2026-08-18-pytest-collection-fix.md) |
+| **025** | 2026-08-18 | D-25 | Append decision record D-25 on the two-key model for test identity (`docs/DECISIONS.md`) | [025-2026-08-18-d25-two-key-model.md](file:///home/shree/blastradius/docs/session/025-2026-08-18-d25-two-key-model.md) |
 
-*Note: Sequence number 011 is deliberately unused so that 012 and 013 keep the numbers already cited in `docs/HANDOFF.md`.*
+*Note: Sequence number 011 is deliberately unused.*
+
+
