@@ -34,6 +34,7 @@ check-log-isolation:
 tables:
 	mkdir -p paper/generated
 	uv run python analysis/attrition_funnel.py
+	uv run python analysis/expiry_cliff.py
 
 
 figures:
