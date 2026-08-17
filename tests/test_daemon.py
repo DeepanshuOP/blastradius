@@ -1794,10 +1794,17 @@ def test_503_on_job_log_is_transient_and_leaves_the_unit_resumable(tmp_path):
 
 @responses.activate
 def test_already_complete_job_log_skips_without_any_request(tmp_path):
-    """Dedup mirrors the existing helpers' two-branch shape. A `complete` unit
-    returns the persisted size read back off disk; NO response is registered,
-    so any HTTP request at all would surface as a connection error rather than
-    passing silently."""
+    """SUPERSEDES the earlier assertion that a `complete` unit returns the
+    persisted size. The dedup path deliberately no longer reports a size:
+    sizing a skipped log required decompressing ~1.5 MB off disk for a number
+    nobody uses, on every resume of a long stage-4 capture. Returning the
+    compressed on-disk size instead was rejected — it is a different quantity,
+    and the middle element now means exactly one thing, bytes actually fetched
+    over the network this invocation.
+
+    NO response is registered, so any HTTP request at all would surface as a
+    connection error rather than passing silently, and the persisted record
+    must still be on disk — skipped, not read."""
     store = RawStore(tmp_path / "raw")
     cursor = CursorStore(tmp_path / "cursor.db")
     pool = _pool()
@@ -1816,9 +1823,10 @@ def test_already_complete_job_log_skips_without_any_request(tmp_path):
     )
 
     assert status == daemon.PR_UNIT_SKIPPED_ALREADY_DONE
-    assert n_bytes == len(body)
+    assert n_bytes is None
     assert status_code is None
     assert len(responses.calls) == 0
+    assert store.exists("owner/repo", "logs", 777) is True
 
     cursor.close()
 

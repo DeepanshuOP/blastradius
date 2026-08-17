@@ -745,10 +745,14 @@ def _fetch_job_log(
     verbatim; rawstore's `_encode_body` falls back to base64 when those bytes
     are not valid UTF-8.
 
-    Middle element is the SIZE IN BYTES of the log body, not the body — a
-    caller must never be handed a ~1.5 MB payload it does not need (a live
-    probe measured one log at 1,497,943 bytes). It is None on every
-    non-complete path.
+    Middle element is the SIZE IN BYTES of the log fetched THIS invocation,
+    not the body — a caller must never be handed a ~1.5 MB payload it does not
+    need (a live probe measured one log at 1,497,943 bytes). It is None on
+    every path that did not fetch, INCLUDING a successful dedup skip: sizing an
+    already-captured log would mean gunzipping it off disk for a number nobody
+    uses, and the compressed on-disk size is a different quantity that must not
+    travel through the same field. The orchestrator counts dedup skips
+    separately.
 
     parent_run_id is REQUIRED and is populated from the job's own `run_id`
     field, unlike every other helper: `logs` has scope `job`, which
@@ -763,9 +767,6 @@ def _fetch_job_log(
     """
     existing = cursor.get_capture_unit(repo_full, "logs", job_id)
     if existing is not None and existing.status != "in_flight":
-        if existing.status == "complete":
-            size = sum(len(record.body) for record in store.read_records(repo_full, "logs", job_id))
-            return PR_UNIT_SKIPPED_ALREADY_DONE, size, None
         return PR_UNIT_SKIPPED_ALREADY_DONE, None, None
 
     cursor.mark_unit_started(repo_full, "logs", job_id, parent_run_id=parent_run_id)
