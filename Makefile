@@ -32,7 +32,9 @@ check-log-isolation:
 	echo "OK: logs/requests.jsonl unchanged (lines=$$before_lines, mtime=$$before_mtime) after running the suite"
 
 tables:
-	@echo "not implemented"
+	mkdir -p paper/generated
+	uv run python analysis/attrition_funnel.py
+
 
 figures:
 	@echo "not implemented"
