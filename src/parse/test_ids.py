@@ -22,7 +22,7 @@ from dataclasses import dataclass
 import re
 import unicodedata
 
-__all__ = ["TestId", "normalize_test_id"]
+__all__ = ["TestId", "normalize_test_id", "derive_node_id"]
 
 
 @dataclass(frozen=True)
@@ -416,3 +416,39 @@ def normalize_test_id(
                 )
 
     return None
+
+
+def derive_node_id(test_id: str) -> str:
+    r"""Derive an internal Graphify node ID from a canonical test identifier string.
+
+    This implements Decision D-25: test_id and graph_node_id are two distinct keys.
+    test_id is the canonical, lossless, case-preserving join key; graph_node_id is an
+    internal, opaque, lossy key used solely to bind a test to a Graphify graph node.
+
+    This function mirrors the normalization recipe in vendor/graphify-br/graphify/ids.py
+    (`ids.normalize_id`):
+      1. unicodedata.normalize("NFKC", s)
+      2. unicodedata.normalize("NFKC", s.casefold())
+      3. re.sub(r"[^\w]+", "_", s, flags=re.UNICODE)
+      4. re.sub(r"_+", "_", s)
+      5. s.strip("_")
+
+    Note: In graphify, `make_id(*parts)` strips "_" and "." from individual parts before
+    joining with "_". Because we derive from a single unified canonical `test_id` string
+    rather than decomposed AST tokens, we apply the `normalize_id` transformation directly
+    across the entire string. Any punctuation (such as the '.' in 'test_foo.py' or '#'
+    in Java identifiers) is replaced by underscores, repeated underscores collapse, and
+    edges are stripped.
+
+    This is a LOSSY, MANY-TO-ONE derivation. It is the internal graph-binding key only;
+    it MUST NEVER be written to the published dataset in place of test_id.
+    Must be re-verified if vendor/graphify-br is updated.
+    """
+    if not isinstance(test_id, str):
+        return ""
+    s = unicodedata.normalize("NFKC", test_id)
+    s = unicodedata.normalize("NFKC", s.casefold())
+    s = re.sub(r"[^\w]+", "_", s, flags=re.UNICODE)
+    s = re.sub(r"_+", "_", s)
+    return s.strip("_")
+

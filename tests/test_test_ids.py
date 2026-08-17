@@ -12,7 +12,7 @@ from __future__ import annotations
 import dataclasses
 import pytest
 
-from src.parse.test_ids import TestId, normalize_test_id
+from src.parse.test_ids import TestId, derive_node_id, normalize_test_id
 
 
 TEST_CASES = [
@@ -330,3 +330,61 @@ def test_unparseable_inputs_return_none() -> None:
     assert normalize_test_id("Random prose that does not match any format") is None
     assert normalize_test_id("::error:: Workflow timed out") is None
     assert normalize_test_id("> Task :compileJava") is None
+
+
+def test_derive_node_id_java_canonical() -> None:
+    # (a) Standard Java canonical ID derivation
+    assert (
+        derive_node_id("com.example.FooTest#testBar")
+        == "com_example_footest_testbar"
+    )
+
+
+def test_derive_node_id_python_canonical() -> None:
+    # (b) Standard Python canonical ID derivation
+    assert (
+        derive_node_id("tests/test_foo.py::TestFoo::test_bar")
+        == "tests_test_foo_py_testfoo_test_bar"
+    )
+
+
+@pytest.mark.parametrize(
+    "canonical_id",
+    [
+        "com.example.FooTest#testBar",
+        "tests/test_foo.py::TestFoo::test_bar",
+        "org.apache.hadoop.hdfs.TestDFSClient#testReadBlock",
+        "tests/unit/test_auth.py::test_login",
+        "com.example.FooTest$NestedTest#testNested",
+    ],
+)
+def test_derive_node_id_idempotency(canonical_id: str) -> None:
+    # (c) Idempotency: derive_node_id(derive_node_id(s)) == derive_node_id(s)
+    first_pass = derive_node_id(canonical_id)
+    second_pass = derive_node_id(first_pass)
+    assert first_pass == second_pass
+
+
+def test_derive_node_id_intentional_many_to_one_collision_d25() -> None:
+    # (d) Intentional many-to-one collision per Decision D-25:
+    # test_id preserves case (FooTest#testBar vs FooTest#testbar),
+    # but graph_node_id is lossy and merges them.
+    id1 = "com.example.FooTest#testBar"
+    id2 = "com.example.FooTest#testbar"
+    assert id1 != id2
+    derived1 = derive_node_id(id1)
+    derived2 = derive_node_id(id2)
+    assert derived1 == "com_example_footest_testbar"
+    assert derived2 == "com_example_footest_testbar"
+    assert derived1 == derived2
+
+
+def test_derive_node_id_round_trip_from_raw_xml() -> None:
+    # (e) Raw Surefire XML string -> normalize_test_id -> derive_node_id
+    raw_xml = '<testcase classname="com.example.FooTest" name="testBar"/>'
+    test_id = normalize_test_id(raw_xml)
+    assert test_id is not None
+    assert test_id.canonical == "com.example.FooTest#testBar"
+    node_id = derive_node_id(test_id.canonical)
+    assert node_id == "com_example_footest_testbar"
+
