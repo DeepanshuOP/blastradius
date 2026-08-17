@@ -26,6 +26,9 @@
 | **023** | 2026-08-17 | Attrition Diagnosis | Read-only diagnosis of attrition funnel reconciliation and reporting integrity | [023-2026-08-17-attrition-discrepancy.md](file:///home/shree/blastradius/docs/session/023-2026-08-17-attrition-discrepancy.md) |
 | **024** | 2026-08-18 | Pytest Config | Stop pytest from collecting tests under `vendor/` via `pyproject.toml` | [024-2026-08-18-pytest-collection-fix.md](file:///home/shree/blastradius/docs/session/024-2026-08-18-pytest-collection-fix.md) |
 | **025** | 2026-08-18 | D-25 | Append decision record D-25 on the two-key model for test identity (`docs/DECISIONS.md`) | [025-2026-08-18-d25-two-key-model.md](file:///home/shree/blastradius/docs/session/025-2026-08-18-d25-two-key-model.md) |
+| **026** | 2026-08-18 | D-25 | Implement `derive_node_id()` in `src/parse/test_ids.py` with contract tests | [026-2026-08-18-derive-node-id.md](file:///home/shree/blastradius/docs/session/026-2026-08-18-derive-node-id.md) |
+| **027** | 2026-08-18 | Isolation Race | Redesign `check-log-isolation` Makefile target to use allowlist over appended log slice | [027-2026-08-18-log-isolation-race.md](file:///home/shree/blastradius/docs/session/027-2026-08-18-log-isolation-race.md) |
+| **028** | 2026-08-18 | Tables Rehearsal | Cold-start verification of `make tables` runtime, determinism, and number sheet | [028-2026-08-18-make-tables-rehearsal.md](file:///home/shree/blastradius/docs/session/028-2026-08-18-make-tables-rehearsal.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 
