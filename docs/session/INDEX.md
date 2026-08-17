@@ -14,5 +14,11 @@
 | **010** | 2026-08-17 | T0.5a | Implement `dashboard.py` read-only Streamlit corpus dashboard | [010-2026-08-17-t05a-dashboard.md](file:///home/shree/blastradius/docs/session/010-2026-08-17-t05a-dashboard.md) |
 | **012** | 2026-08-17 | T0.5a | Fix storage panel in `dashboard.py` to report on-disk usage vs apparent size | [012-2026-08-17-t05a-storage-fix.md](file:///home/shree/blastradius/docs/session/012-2026-08-17-t05a-storage-fix.md) |
 | **013** | 2026-08-17 | T0.7 | Implement `analysis/attrition_funnel.py` to regenerate attrition funnel table | [013-2026-08-17-t07-attrition-funnel.md](file:///home/shree/blastradius/docs/session/013-2026-08-17-t07-attrition-funnel.md) |
+| **014** | 2026-08-17 | T1.1g | Survey and PROPOSE design for `normalize_test_id()` per §34.4 C.2 and D-09 | [014-2026-08-17-t11g-testid-survey.md](file:///home/shree/blastradius/docs/session/014-2026-08-17-t11g-testid-survey.md) |
+| **015** | 2026-08-17 | T0 Inventory | Code-verified inventory of ROADMAP §35 Week-0 tasks and §8.6 exit audit | [015-2026-08-17-t0-inventory.md](file:///home/shree/blastradius/docs/session/015-2026-08-17-t0-inventory.md) |
+| **016** | 2026-08-17 | Census | Unbiased census of check-run annotations across corpus (`analysis/annotation_census.py`) | [016-2026-08-17-annotation-census.md](file:///home/shree/blastradius/docs/session/016-2026-08-17-annotation-census.md) |
+| **017** | 2026-08-17 | Expiry Cliff | 90-day log-expiry exposure analysis (`analysis/expiry_cliff.py`) | [017-2026-08-17-expiry-cliff.md](file:///home/shree/blastradius/docs/session/017-2026-08-17-expiry-cliff.md) |
+| **018** | 2026-08-17 | D-24 | Propose decision record D-24 for check-run annotation demotion | [018-2026-08-17-d24-annotation-demotion.md](file:///home/shree/blastradius/docs/session/018-2026-08-17-d24-annotation-demotion.md) |
+| **019** | 2026-08-17 | Daemon Relaunch | Relaunch harvester daemon over 300-repo frame (PID 14016) after 13:30Z incident | [019-2026-08-17-daemon-relaunch.md](file:///home/shree/blastradius/docs/session/019-2026-08-17-daemon-relaunch.md) |
 
 *Note: Sequence number 011 is deliberately unused so that 012 and 013 keep the numbers already cited in `docs/HANDOFF.md`.*

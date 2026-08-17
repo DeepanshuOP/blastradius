@@ -4,11 +4,11 @@
 Read this first. Append newest entries at the bottom. Never rewrite history.
 
 ## Live process — do not stop it
-Harvester daemon: PID 7217 (parent 7214), launched 2026-08-17T06:50:11Z.
+Harvester daemon: PID 14016 (parent 14013), launched 2026-08-17T14:39:33Z.
     setsid nohup uv run --env-file .env python -m src.harvest.daemon \
       --repos data/frame/frame_v1.csv --limit 300 --stage both \
-      > logs/daemon_20260817.log 2>&1 < /dev/null &
-Stages 1+2 only (stage 3 deferred per D-23). Measured ~3,900 req/hr at launch.
+      > logs/daemon_20260817b.log 2>&1 < /dev/null &
+Stages 1+2 only (stage 3 deferred per D-23). Measured ~1,585 req/hr at relaunch.
 The log file is block-buffered and will look empty even when healthy — verify
 liveness with `ps aux | grep '[h]arvest\.daemon'`, not with the log.
 
@@ -22,4 +22,11 @@ T1.1g normalize_test_id.
 - 2026-08-17 · Gemini 3.7 Flash · T0.5a · Implemented read-only Streamlit corpus dashboard (dashboard.py) with 7 panels and lock-safe read-only queries · touched dashboard.py, docs/session/2026-08-17-t05a-dashboard.md, docs/HANDOFF.md · 152 tests passing (baseline) · uncommitted · Next: T0.7 attrition funnel or review dashboard demo.
 - 2026-08-17 · Gemini 3.7 Flash · T0.5a storage fix · Corrected storage panel in dashboard.py to report on-disk block-allocated usage vs apparent size, file/dir counts, and on-disk 90-day projection with Stage 1+2 metadata caveats · touched dashboard.py, docs/session/012-2026-08-17-t05a-storage-fix.md, docs/HANDOFF.md · 152 tests passing (baseline) · uncommitted · Next: T0.7 attrition funnel.
 - 2026-08-17 · Gemini 3.7 Flash · T0.7 · Implemented analysis/attrition_funnel.py to dynamically regenerate the language-stratified attrition funnel table from data/frame/ artefacts; emitted paper/generated/attrition_funnel.md · touched analysis/attrition_funnel.py, paper/generated/attrition_funnel.md, docs/session/013-2026-08-17-t07-attrition-funnel.md, docs/HANDOFF.md · 152 tests passing (predicted 152) · uncommitted · Next: T1.1g normalize_test_id.
+- 2026-08-17 · Gemini 3.7 Flash · Commit & Hygiene · Renamed 10 session reports to NNN- format (001-010), created docs/session/INDEX.md, wired analysis/attrition_funnel.py into Makefile tables target, and landed 3 commits (1f0473b, c042ea8, abc23fa) pushed to origin/main · touched Makefile, docs/session/*, docs/HANDOFF.md · 152 tests passing (baseline) · uncommitted · Next: T1.1g normalize_test_id.
+- 2026-08-17 · Gemini 3.7 Flash · T0 Inventory · Completed code-verified inventory of ROADMAP §35 Week-0 tasks and §8.6 exit criteria audit (0 MET, 1 PARTIAL, 4 NOT MET); verified 20,531 runs and 2,132 failures across 28 repos in cursor.db · touched docs/session/015-2026-08-17-t0-inventory.md, docs/session/INDEX.md, docs/HANDOFF.md · 152 tests passing (baseline) · uncommitted · Next: T1.1g normalize_test_id.
+- 2026-08-17 · Gemini 3.7 Flash · T1.1g · Surveyed captured annotations (16,240 files) & language reality (32 Java, 0 Python), identified vendor/graphify-br absence and annotation noise, and proposed full normalize_test_id() design with TestId dataclass, 6-source mapping table, edge case handlers, 5 open questions, and 32-pair test plan · touched docs/session/014-2026-08-17-t11g-testid-survey.md, docs/session/INDEX.md, docs/HANDOFF.md · 152 tests passing (baseline, not run) · uncommitted · Next: Operator approval on normalize_test_id design proposal & resolution of vendor/graphify-br vendoring.
+- 2026-08-17 · Gemini 3.7 Flash · Census · Implemented analysis/annotation_census.py and generated paper/generated/annotation_census.md; 1,500-file stratified census (seed 20261110, 9.24% fraction) proved 99.73% null titles and 0.00% usable test-ID yield, decisively demoting annotations as primary label source per §5.5 · touched analysis/annotation_census.py, paper/generated/annotation_census.md, docs/session/016-2026-08-17-annotation-census.md, docs/session/INDEX.md, docs/HANDOFF.md · 152 tests passing (baseline, not run) · uncommitted · Next: Operator approval on normalize_test_id design & vendor/graphify-br vendoring.
+- 2026-08-17 · Gemini 3.7 Flash · Expiry Cliff · Implemented analysis/expiry_cliff.py and generated paper/generated/expiry_cliff.md; verified 20,531 unique runs across 32 repos; confirmed 1,631 failed runs (76.5%) remain recoverable today while 501 (23.5%) are permanently expired and 473 sit in 60-90d band (~15-16 fails lost/day); wired to Makefile tables target · touched analysis/expiry_cliff.py, Makefile, paper/generated/expiry_cliff.md, docs/session/017-2026-08-17-expiry-cliff.md, docs/session/INDEX.md, docs/HANDOFF.md · 152 tests passing (baseline, not run) · uncommitted · Next: Operator authorization to commit & Stage 4 log capture prioritization.
+- 2026-08-17 · Gemini 3.7 Flash · Daemon Relaunch · Relaunched harvester daemon under PID 14016 (parent 14013) to logs/daemon_20260817b.log after 13:30Z incident abort; verified alive at +15s and +10min with 286 requests issued, 0 new 401/429/403 errors, and 617M data/raw · touched docs/HANDOFF.md, docs/session/019-2026-08-17-daemon-relaunch.md, docs/session/INDEX.md · 152 tests passing (baseline, not run) · uncommitted · Next: T1.1g normalize_test_id design approval or Stage 4 job log orchestrator (T0.3e).
+
 
