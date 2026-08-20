@@ -29,6 +29,7 @@
 | **026** | 2026-08-18 | D-25 | Implement `derive_node_id()` in `src/parse/test_ids.py` with contract tests | [026-2026-08-18-derive-node-id.md](file:///home/shree/blastradius/docs/session/026-2026-08-18-derive-node-id.md) |
 | **027** | 2026-08-18 | Isolation Race | Redesign `check-log-isolation` Makefile target to use allowlist over appended log slice | [027-2026-08-18-log-isolation-race.md](file:///home/shree/blastradius/docs/session/027-2026-08-18-log-isolation-race.md) |
 | **028** | 2026-08-18 | Tables Rehearsal | Cold-start verification of `make tables` runtime, determinism, and number sheet | [028-2026-08-18-make-tables-rehearsal.md](file:///home/shree/blastradius/docs/session/028-2026-08-18-make-tables-rehearsal.md) |
+| **029** | 2026-08-18 | Stale Constants | Dynamically compute all narrative figures & breakdown counts in `expiry_cliff.py` and `corpus_stats.py` | [029-2026-08-18-stale-constants.md](file:///home/shree/blastradius/docs/session/029-2026-08-18-stale-constants.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 
