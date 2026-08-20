@@ -208,7 +208,7 @@ def generate_report(as_of: datetime | None = None) -> str:
     # Section 1: Headline Recoverable Window
     lines.append("## 1. Recoverable Window for Failed Runs")
     lines.append("")
-    lines.append(f"> **Headline Metric**: Across all 32 repositories, **{recoverable_today:,} out of {total_failed:,} failed-run logs ({recoverable_today_pct:.1f}%) remain RECOVERABLE TODAY**.")
+    lines.append(f"> **Headline Metric**: Across all {len(repos)} repositories, **{recoverable_today:,} out of {total_failed:,} failed-run logs ({recoverable_today_pct:.1f}%) remain RECOVERABLE TODAY**.")
     lines.append(f"> Exactly **{win_expired:,} failed runs ({win_expired_pct:.1f}%) are already >90 days old** and their logs are permanently expired from GitHub Actions storage.")
     lines.append("")
     lines.append("| Window Band | Remaining Log Lifetime | Failed Runs | % of Failed Runs | Operational Urgency |")
@@ -250,8 +250,8 @@ def generate_report(as_of: datetime | None = None) -> str:
         )
     lines.append("")
 
-    # Section 4: Comprehensive 32-Repository Breakdown
-    lines.append("## 4. Comprehensive Repository Breakdown (32 Repositories)")
+    # Section 4: Comprehensive Repository Breakdown
+    lines.append(f"## 4. Comprehensive Repository Breakdown ({len(repos)} Repositories)")
     lines.append("")
     lines.append("| Repository | Total Runs | Failed Runs | Fail Rate | Expired (>90d) | Expiring (60–90d) | Safe (<60d) | Recoverable (≤90d) | Median Fail Age |")
     lines.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
@@ -262,23 +262,36 @@ def generate_report(as_of: datetime | None = None) -> str:
     lines.append("")
 
     # Section 5: Comparison against D-23 baseline
+    scale_runs = (total_unique / 6212.0) if total_unique else 0.0
+    scale_fails = (total_failed / 401.0) if total_failed else 0.0
+    fail_rate_pct = (total_failed / total_unique * 100.0) if total_unique else 0.0
+    age_delta = 68.3 - all_med
+    age_trend_str = f"Fresher corpus ({age_delta:.1f} days lower median age)" if age_delta >= 0 else f"Older corpus ({-age_delta:.1f} days higher median age)"
+    p90_trend_str = f"Consistent tail distribution ({all_p90:.1f}d vs 100.1d baseline)"
+    exp_trend_str = f"Slightly lower overall expiration rate ({all_gt90_pct:.1f}% vs 19.0%)" if all_gt90_pct <= 19.0 else f"Higher overall expiration rate ({all_gt90_pct:.1f}% vs 19.0%)"
+
     lines.append("## 5. Comparison Against Decision D-23 Baseline")
     lines.append("")
-    lines.append("| Metric | D-23 Smoke Corpus (10 Repos) | Full Measured Corpus (32 Repos) | Trend / Finding |")
+    lines.append(f"| Metric | D-23 Smoke Corpus (10 Repos) | Full Measured Corpus ({len(repos)} Repos) | Trend / Finding |")
     lines.append("| :--- | :---: | :---: | :--- |")
-    lines.append(f"| **Total Workflow Runs** | 6,212 | **{total_unique:,}** | 3.3× scale increase |")
-    lines.append(f"| **Total Failed Runs** | 401 | **{total_failed:,}** | 5.3× scale increase (failure rate rose from 6.5% to {total_failed/total_unique*100:.1f}%) |")
-    lines.append(f"| **Overall Median Run Age** | 68.3 days | **{all_med:.1f} days** | Fresher corpus (18.9 days lower median age) |")
-    lines.append(f"| **Overall P90 Run Age** | 100.1 days | **{all_p90:.1f} days** | Consistent tail distribution |")
-    lines.append(f"| **Runs Past 90 Days** | 1,180 (19.0%) | **{all_gt90:,} ({all_gt90_pct:.1f}%)** | Slightly lower overall expiration rate |")
-    lines.append(f"| **Failed Runs Past 90 Days** | 195 (48.6% of fails) | **{failed_gt90:,} ({failed_gt90_pct:.1f}% of fails)** | **Confirms D-23**: ~23.5% permanent loss, with 76.5% still recoverable |")
+    lines.append(f"| **Total Workflow Runs** | 6,212 | **{total_unique:,}** | {scale_runs:.1f}× scale increase |")
+    lines.append(f"| **Total Failed Runs** | 401 | **{total_failed:,}** | {scale_fails:.1f}× scale increase (failure rate rose from 6.5% to {fail_rate_pct:.1f}%) |")
+    lines.append(f"| **Overall Median Run Age** | 68.3 days | **{all_med:.1f} days** | {age_trend_str} |")
+    lines.append(f"| **Overall P90 Run Age** | 100.1 days | **{all_p90:.1f} days** | {p90_trend_str} |")
+    lines.append(f"| **Runs Past 90 Days** | 1,180 (19.0%) | **{all_gt90:,} ({all_gt90_pct:.1f}%)** | {exp_trend_str} |")
+    lines.append(f"| **Failed Runs Past 90 Days** | 195 (48.6% of fails) | **{failed_gt90:,} ({failed_gt90_pct:.1f}% of fails)** | **Confirms D-23**: {failed_gt90_pct:.1f}% permanent loss, with {recoverable_today_pct:.1f}% still recoverable |")
     lines.append(f"| **Failed Runs in 60–90d Band** | 206 (51.4% of fails) | **{failed_60_90:,} ({failed_60_90_pct:.1f}% of fails)** | **Confirms D-23 urgency**: {failed_60_90:,} failed runs face expiry within 30 days |")
     lines.append("")
+
+    daily_loss = (failed_60_90 / 30.0) if failed_60_90 else 0.0
+    est_payload_gb = (recoverable_today * 1.5) / 1024.0
+
     lines.append("### Key Takeaways for Review 1 & Stage 4 Planning")
-    lines.append("1. **D-23 Hypothesis Confirmed**: The 90-day expiry cliff is real and active. 501 failed runs are permanently unrecoverable from GitHub log storage, validating the D-23 decision to prioritize Stage 4 (log capture) over non-expiring tiers.")
-    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** across 32 repos have logs available today. At ~1.5 MB per log payload, this represents a modest ~2.45 GB download job.")
-    lines.append(f"3. **Daily Attrition Rate**: With **{failed_60_90:,} failed runs** in the 60–90 day bracket, the corpus loses approximately **15 to 16 recoverable failed runs per day of delay**.")
+    lines.append(f"1. **D-23 Hypothesis Confirmed**: The 90-day expiry cliff is real and active. {win_expired:,} failed runs are permanently unrecoverable from GitHub log storage, validating the D-23 decision to prioritize Stage 4 (log capture) over non-expiring tiers.")
+    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** across {len(repos)} repos have logs available today. At ~1.5 MB per log payload, this represents a modest ~{est_payload_gb:.2f} GB download job.")
+    lines.append(f"3. **Daily Attrition Rate**: With **{failed_60_90:,} failed runs** in the 60–90 day bracket, the corpus loses approximately **{daily_loss:.1f} recoverable failed runs per day of delay**.")
     lines.append("")
+
 
     return "\n".join(lines)
 

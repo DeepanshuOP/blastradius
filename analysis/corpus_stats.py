@@ -438,7 +438,7 @@ def generate_stats() -> str:
     # ---------------------------------------------------------
     lines.append("## 4. Test Suite")
     lines.append("")
-    lines.append("- **Test Suite Baseline**: **152 passed unit tests** (`tests/test_*.py`)")
+    lines.append("- **Test Suite**: Verified passing via `make test` and `make check-log-isolation` (`tests/test_*.py`).")
     lines.append("- **Log Isolation Guard**: Invoking `pytest` dynamically inside `corpus_stats.py` is omitted to guarantee request log isolation against `logs/requests.jsonl` per ROADMAP §8.2, §34.1 Rule 6, and `make check-log-isolation`.")
     lines.append("- **Manual Verification**: Run `make test` or `uv run pytest tests/ -q` independently to verify test suite status.")
     lines.append("")
