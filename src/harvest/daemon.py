@@ -123,7 +123,7 @@ MAX_PR_PAGES = 10
 # GitHub's retention window for job logs (§8.3, §23.3). A run older than
 # this has already lost its logs — Stage 3 needs to know how many before it
 # spends requests fetching logs that no longer exist.
-LOG_RETENTION_DAYS = 90
+LOG_RETENTION_DAYS = 90.0
 
 # Four terminal-ish outcomes a single capture unit (or a PR's pair of them)
 # can land in for one sweep_repo() call. Reused as-is for Stage 2's per-SHA
@@ -952,6 +952,69 @@ def capture_checkruns(
         )
 
     return stats
+
+
+def _build_log_worklist(
+    repo_fulls: list[str],
+    *,
+    store: RawStore,
+    cursor: CursorStore,
+    now: datetime | None = None,
+) -> list[tuple[str, int, int, float | None]]:
+    """(repo_full, job_id, parent_run_id, run_age_days), recoverable runs first."""
+    now = now or datetime.now(timezone.utc)
+    items: list[tuple[str, int, int, float | None]] = []
+
+    for repo_full in repo_fulls:
+        shas, _n_seen, _n_out, _n_not_complete = _collect_repo_shas(
+            repo_full, store, cursor
+        )
+        for sha in shas:
+            unit = cursor.get_capture_unit(repo_full, "runs", sha)
+            if unit is None or unit.status != "complete":
+                continue
+            records = store.read_records(repo_full, "runs", sha)
+            if not records:
+                continue
+            try:
+                body = json.loads(records[0].body)
+            except Exception:
+                continue
+            workflow_runs = body.get("workflow_runs", []) if isinstance(body, dict) else []
+            for run in workflow_runs:
+                run_id = run["id"]
+                try:
+                    ts_str = _run_started_at(run)
+                    if not ts_str:
+                        run_age_days = None
+                    else:
+                        ts = _parse_github_ts(ts_str)
+                        run_age_days = (now - ts).total_seconds() / 86400
+                except Exception:
+                    run_age_days = None
+
+                jobs_unit = cursor.get_capture_unit(repo_full, "jobs", run_id)
+                if jobs_unit is None or jobs_unit.status != "complete":
+                    continue
+                jobs_records = store.read_records(repo_full, "jobs", run_id)
+                if not jobs_records:
+                    continue
+                try:
+                    jobs_body = json.loads(jobs_records[0].body)
+                except Exception:
+                    continue
+                jobs = jobs_body.get("jobs", []) if isinstance(jobs_body, dict) else []
+                for job in jobs:
+                    if job.get("conclusion") == "failure":
+                        items.append((repo_full, job["id"], run_id, run_age_days))
+
+    items.sort(key=lambda e: (e[0], e[1]))
+    items.sort(
+        key=lambda e: (2, 0.0)
+        if e[3] is None
+        else ((0, -e[3]) if e[3] <= LOG_RETENTION_DAYS else (1, -e[3]))
+    )
+    return items
 
 
 def _summary(pages_fetched, window_stopped, n_prs_captured, n_prs_failed_terminal, n_transient) -> dict:

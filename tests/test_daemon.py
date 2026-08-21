@@ -1853,3 +1853,211 @@ def test_job_log_lets_all_tokens_dead_escape_uncaught(tmp_path):
     assert store.exists("owner/repo", "logs", 777) is False
 
     cursor.close()
+
+
+# ---------------------------------------------------------------------------
+# T0.3e stage 4 — _build_log_worklist tests
+# ---------------------------------------------------------------------------
+
+def _seed_jobs_unit(store, cursor, repo, run_id, jobs):
+    cursor.mark_unit_started(repo, "jobs", run_id)
+    store.write_records(
+        repo, "jobs", run_id,
+        [RawRecord(url="seed", status=200, fetched_at="2020-01-01T00:00:00+00:00", etag=None,
+                   body=json.dumps({"jobs": jobs}).encode())],
+    )
+    cursor.mark_unit_complete(repo, "jobs", run_id)
+
+
+def test_worklist_filters_success_and_keeps_failure_in_same_run(tmp_path):
+    """1. A 'success' job in the SAME run as a 'failure' job: failure is in the list, success is not."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    run_ts = (now - timedelta(days=10)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_A, [_run_obj(100, run_ts)])
+    _seed_jobs_unit(
+        store, cursor, "owner/repo", 100,
+        [
+            {"id": 1001, "conclusion": "failure"},
+            {"id": 1002, "conclusion": "success"},
+        ],
+    )
+
+    worklist = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert worklist == [("owner/repo", 1001, 100, 10.0)]
+    cursor.close()
+
+
+def test_worklist_excludes_non_failure_conclusions(tmp_path):
+    """2. Conclusions 'cancelled', 'skipped', 'timed_out', and missing/None are each excluded."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    run_ts = (now - timedelta(days=5)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_A, [_run_obj(200, run_ts)])
+    _seed_jobs_unit(
+        store, cursor, "owner/repo", 200,
+        [
+            {"id": 2001, "conclusion": "cancelled"},
+            {"id": 2002, "conclusion": "skipped"},
+            {"id": 2003, "conclusion": "timed_out"},
+            {"id": 2004, "conclusion": None},
+            {"id": 2005},  # missing conclusion key
+        ],
+    )
+
+    worklist = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert worklist == []
+    cursor.close()
+
+
+def test_worklist_interleaves_two_repos_oldest_first(tmp_path):
+    """3. Oldest-first across TWO repos: jobs from repo A and repo B interleave by age."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    # Repo A: run 1 (70d ago), run 2 (20d ago)
+    _seed_pulls_page(store, cursor, "org/repo-a", 1, [_pr(1, RECENT), _pr(2, RECENT)])
+    _seed_pull_commits(store, cursor, "org/repo-a", 1, [SHA_A])
+    _seed_pull_commits(store, cursor, "org/repo-a", 2, [SHA_B])
+    _seed_runs_unit(store, cursor, "org/repo-a", SHA_A, [_run_obj(1, (now - timedelta(days=70)).strftime("%Y-%m-%dT%H:%M:%SZ"))])
+    _seed_runs_unit(store, cursor, "org/repo-a", SHA_B, [_run_obj(2, (now - timedelta(days=20)).strftime("%Y-%m-%dT%H:%M:%SZ"))])
+    _seed_jobs_unit(store, cursor, "org/repo-a", 1, [{"id": 101, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "org/repo-a", 2, [{"id": 102, "conclusion": "failure"}])
+
+    # Repo B: run 3 (50d ago), run 4 (10d ago)
+    _seed_pulls_page(store, cursor, "org/repo-b", 1, [_pr(1, RECENT), _pr(2, RECENT)])
+    _seed_pull_commits(store, cursor, "org/repo-b", 1, [SHA_C])
+    _seed_pull_commits(store, cursor, "org/repo-b", 2, ["d" * 40])
+    _seed_runs_unit(store, cursor, "org/repo-b", SHA_C, [_run_obj(3, (now - timedelta(days=50)).strftime("%Y-%m-%dT%H:%M:%SZ"))])
+    _seed_runs_unit(store, cursor, "org/repo-b", "d" * 40, [_run_obj(4, (now - timedelta(days=10)).strftime("%Y-%m-%dT%H:%M:%SZ"))])
+    _seed_jobs_unit(store, cursor, "org/repo-b", 3, [{"id": 201, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "org/repo-b", 4, [{"id": 202, "conclusion": "failure"}])
+
+    worklist = daemon._build_log_worklist(["org/repo-a", "org/repo-b"], store=store, cursor=cursor, now=now)
+
+    # Hand-computed expected order:
+    # 1. repo-a job 101 (70d)
+    # 2. repo-b job 201 (50d)
+    # 3. repo-a job 102 (20d)
+    # 4. repo-b job 202 (10d)
+    assert worklist == [
+        ("org/repo-a", 101, 1, 70.0),
+        ("org/repo-b", 201, 3, 50.0),
+        ("org/repo-a", 102, 2, 20.0),
+        ("org/repo-b", 202, 4, 10.0),
+    ]
+    cursor.close()
+
+
+def test_worklist_partition_120d_sorts_after_80d(tmp_path):
+    """4. PARTITION: a job whose run is 120 days old sorts AFTER a job whose run is 80 days old."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT), _pr(2, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_pull_commits(store, cursor, "owner/repo", 2, [SHA_B])
+
+    run_120d = (now - timedelta(days=120)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    run_80d = (now - timedelta(days=80)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_A, [_run_obj(301, run_120d)])
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_B, [_run_obj(302, run_80d)])
+    _seed_jobs_unit(store, cursor, "owner/repo", 301, [{"id": 3001, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 302, [{"id": 3002, "conclusion": "failure"}])
+
+    worklist = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert len(worklist) == 2
+    # 80d job is partition 0 (urgent within 90d retention), 120d is partition 1 (expired cliff)
+    assert worklist[0] == ("owner/repo", 3002, 302, 80.0)
+    assert worklist[1] == ("owner/repo", 3001, 301, 120.0)
+    assert worklist.index(("owner/repo", 3002, 302, 80.0)) < worklist.index(("owner/repo", 3001, 301, 120.0))
+    cursor.close()
+
+
+def test_worklist_retains_120d_expired_job(tmp_path):
+    """5. The 120-day job is PRESENT in the returned list (deprioritised, never dropped)."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    run_120d = (now - timedelta(days=120)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    _seed_runs_unit(store, cursor, "owner/repo", SHA_A, [_run_obj(401, run_120d)])
+    _seed_jobs_unit(store, cursor, "owner/repo", 401, [{"id": 4001, "conclusion": "failure"}])
+
+    worklist = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert len(worklist) == 1
+    assert worklist == [("owner/repo", 4001, 401, 120.0)]
+    assert worklist[0][3] == 120.0
+    assert worklist[0][3] > daemon.LOG_RETENTION_DAYS
+    cursor.close()
+
+
+def test_worklist_deterministic_on_identical_input(tmp_path):
+    """6. Determinism: two calls on identical input return identical lists."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT), _pr(2, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_pull_commits(store, cursor, "owner/repo", 2, [SHA_B])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(501, (now - timedelta(days=40)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_B,
+        [_run_obj(502, (now - timedelta(days=110)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 501, [{"id": 5001, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 502, [{"id": 5002, "conclusion": "failure"}])
+
+    worklist_1 = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+    worklist_2 = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert len(worklist_1) == 2
+    assert worklist_1 == worklist_2
+    cursor.close()
+
+
+def test_worklist_all_non_failure_jobs_returns_empty(tmp_path):
+    """7. A repo whose jobs are all non-failure returns [] and does not raise."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(601, (now - timedelta(days=15)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(
+        store, cursor, "owner/repo", 601,
+        [
+            {"id": 6001, "conclusion": "success"},
+            {"id": 6002, "conclusion": "skipped"},
+        ],
+    )
+
+    worklist = daemon._build_log_worklist(["owner/repo"], store=store, cursor=cursor, now=now)
+
+    assert worklist == []
+    cursor.close()
+
