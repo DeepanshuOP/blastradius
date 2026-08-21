@@ -30,7 +30,11 @@
 | **027** | 2026-08-18 | Isolation Race | Redesign `check-log-isolation` Makefile target to use allowlist over appended log slice | [027-2026-08-18-log-isolation-race.md](file:///home/shree/blastradius/docs/session/027-2026-08-18-log-isolation-race.md) |
 | **028** | 2026-08-18 | Tables Rehearsal | Cold-start verification of `make tables` runtime, determinism, and number sheet | [028-2026-08-18-make-tables-rehearsal.md](file:///home/shree/blastradius/docs/session/028-2026-08-18-make-tables-rehearsal.md) |
 | **029** | 2026-08-18 | Stale Constants | Dynamically compute all narrative figures & breakdown counts in `expiry_cliff.py` and `corpus_stats.py` | [029-2026-08-18-stale-constants.md](file:///home/shree/blastradius/docs/session/029-2026-08-18-stale-constants.md) |
+| **030** | 2026-08-19 | Daemon Census | Census of harvester daemon processes, launch provenance, and capture advancement verification | [030-2026-08-19-daemon-census.md](file:///home/shree/blastradius/docs/session/030-2026-08-19-daemon-census.md) |
+| **031** | 2026-08-20 | Commit Backlog | Land outstanding working-tree changes in three logical commits and push to origin/main | [031-2026-08-20-commit-backlog.md](file:///home/shree/blastradius/docs/session/031-2026-08-20-commit-backlog.md) |
+| **032** | 2026-08-20 | T0.3e Survey | Read-only survey of Stage 4 (job-log capture, T0.3e) plug points, schemas, and design constraints | [032-2026-08-20-t03e-stage4-survey.md](file:///home/shree/blastradius/docs/session/032-2026-08-20-t03e-stage4-survey.md) |
+| **033** | 2026-08-20 | T0.3e Worklist | Add `LOG_RETENTION_DAYS = 90.0` and `_build_log_worklist()` in `src/harvest/daemon.py` | [033-2026-08-20-t03e-worklist-fn.md](file:///home/shree/blastradius/docs/session/033-2026-08-20-t03e-worklist-fn.md) |
+| **034** | 2026-08-20 | Expiry Cliff | Fix unfalsifiable narrative claims for P90 trend and Stage 4 payload sizing in `analysis/expiry_cliff.py` | [034-2026-08-20-expiry-cliff-narrative.md](file:///home/shree/blastradius/docs/session/034-2026-08-20-expiry-cliff-narrative.md) |
+| **035** | 2026-08-20 | T0.3e Tests | Add comprehensive unit tests for `_build_log_worklist()` in `tests/test_daemon.py` | [035-2026-08-20-t03e-worklist-tests.md](file:///home/shree/blastradius/docs/session/035-2026-08-20-t03e-worklist-tests.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
-
-
