@@ -21,6 +21,10 @@ RAW_DIR = Path("data/raw")
 OUTPUT_DIR = Path("paper/generated")
 OUTPUT_MD_PATH = OUTPUT_DIR / "expiry_cliff.md"
 
+D23_P90_BASELINE_DAYS = 100.1
+P90_TOLERANCE_DAYS = 2.0
+ASSUMED_LOG_MB = 1.5
+
 
 def _percentile(values: list[float], q: float) -> float:
     """Compute percentile using linear interpolation between closest ranks."""
@@ -267,7 +271,13 @@ def generate_report(as_of: datetime | None = None) -> str:
     fail_rate_pct = (total_failed / total_unique * 100.0) if total_unique else 0.0
     age_delta = 68.3 - all_med
     age_trend_str = f"Fresher corpus ({age_delta:.1f} days lower median age)" if age_delta >= 0 else f"Older corpus ({-age_delta:.1f} days higher median age)"
-    p90_trend_str = f"Consistent tail distribution ({all_p90:.1f}d vs 100.1d baseline)"
+    p90_delta = all_p90 - D23_P90_BASELINE_DAYS
+    if abs(p90_delta) <= P90_TOLERANCE_DAYS:
+        p90_trend_str = f"Consistent tail distribution ({all_p90:.1f}d vs {D23_P90_BASELINE_DAYS:.1f}d baseline)"
+    elif p90_delta < 0:
+        p90_trend_str = f"Shorter tail distribution ({all_p90:.1f}d vs {D23_P90_BASELINE_DAYS:.1f}d baseline)"
+    else:
+        p90_trend_str = f"Longer tail distribution ({all_p90:.1f}d vs {D23_P90_BASELINE_DAYS:.1f}d baseline)"
     exp_trend_str = f"Slightly lower overall expiration rate ({all_gt90_pct:.1f}% vs 19.0%)" if all_gt90_pct <= 19.0 else f"Higher overall expiration rate ({all_gt90_pct:.1f}% vs 19.0%)"
 
     lines.append("## 5. Comparison Against Decision D-23 Baseline")
@@ -284,11 +294,11 @@ def generate_report(as_of: datetime | None = None) -> str:
     lines.append("")
 
     daily_loss = (failed_60_90 / 30.0) if failed_60_90 else 0.0
-    est_payload_gb = (recoverable_today * 1.5) / 1024.0
+    est_payload_gb = (recoverable_today * ASSUMED_LOG_MB) / 1024.0
 
     lines.append("### Key Takeaways for Review 1 & Stage 4 Planning")
     lines.append(f"1. **D-23 Hypothesis Confirmed**: The 90-day expiry cliff is real and active. {win_expired:,} failed runs are permanently unrecoverable from GitHub log storage, validating the D-23 decision to prioritize Stage 4 (log capture) over non-expiring tiers.")
-    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** across {len(repos)} repos have logs available today. At ~1.5 MB per log payload, this represents a modest ~{est_payload_gb:.2f} GB download job.")
+    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** across {len(repos)} repos have logs available today. At an assumed ~{ASSUMED_LOG_MB:.1f} MB per log payload (unmeasured assumption; Stage 4 will report empirical payload sizes), this represents an estimated ~{est_payload_gb:.2f} GB download job.")
     lines.append(f"3. **Daily Attrition Rate**: With **{failed_60_90:,} failed runs** in the 60–90 day bracket, the corpus loses approximately **{daily_loss:.1f} recoverable failed runs per day of delay**.")
     lines.append("")
 
