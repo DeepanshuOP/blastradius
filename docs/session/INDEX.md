@@ -38,5 +38,8 @@
 | **035** | 2026-08-20 | T0.3e Tests | Add comprehensive unit tests for `_build_log_worklist()` in `tests/test_daemon.py` | [035-2026-08-20-t03e-worklist-tests.md](file:///home/shree/blastradius/docs/session/035-2026-08-20-t03e-worklist-tests.md) |
 | **036** | 2026-08-21 | Commit Worklist | Land Stage 4 worklist implementation, expiry-cliff narrative fix, and session records in three commits | [036-2026-08-21-commit-worklist.md](file:///home/shree/blastradius/docs/session/036-2026-08-21-commit-worklist.md) |
 | **037** | 2026-08-21 | T0.3e Orchestrator | Implement `capture_job_logs()` in `src/harvest/daemon.py` with 5 comprehensive unit tests | [037-2026-08-21-t03e-orchestrator.md](file:///home/shree/blastradius/docs/session/037-2026-08-21-t03e-orchestrator.md) |
+| **038** | 2026-08-21 | Commit Orchestrator | Land Stage 4 orchestrator implementation, explorer relocation, and session records in three commits | [038-2026-08-21-commit-orchestrator.md](file:///home/shree/blastradius/docs/session/038-2026-08-21-commit-orchestrator.md) |
+| **039** | 2026-08-21 | T0.3e CLI Wiring | Wire Stage 4 into CLI arguments, membership in `all`, and full stats output with 5 dispatch tests | [039-2026-08-21-t03e-cli-wiring.md](file:///home/shree/blastradius/docs/session/039-2026-08-21-t03e-cli-wiring.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
+
