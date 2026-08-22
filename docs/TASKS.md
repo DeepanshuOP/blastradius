@@ -35,16 +35,16 @@ Must exist — see ROADMAP §39.1:
 `[merged v1 + v2 Part G]` — each line is a self-contained micro-task. Copy one, add the §34.3 context header, hand it to Claude Code. ⭐ marks a task where getting it wrong invalidates downstream work.
 
 ### Week 0 — Harvester (Aug 4–10) 🔴
-- [ ] `T0.1a` Export SEART query → `data/frame/repos_raw.csv`; document query in `QUERY.md`
-- [ ] `T0.1b` Implement `src/harvest/liveness.py` — CI-liveness filter via `total_count`
-- [ ] `T0.1c` Implement `src/harvest/workflow_triage.py` — classify workflows test/build/deploy
-- [ ] `T0.1d` Produce `repos.csv` (300 candidates); manual review of top 50
-- [ ] `T0.2a` Implement `TokenPool` with quota-aware round-robin
-- [ ] `T0.2b` Implement `get_with_backoff()` — sole HTTP entry point
-- [ ] `T0.2c` Add request logging + `--dry-run` budget estimator
-- [ ] `T0.3a` SQLite cursor store + resume logic
-- [ ] `T0.3b` PR + commits + runs capture loop → gzipped JSONL
-- [ ] `T0.3c` Check-run annotations capture (priority: persists >90d)
+- [x] `T0.1a` Export SEART query → `data/frame/repos_raw.csv`; document query in `QUERY.md`
+- [x] `T0.1b` Implement `src/harvest/liveness.py` — CI-liveness filter via `total_count` (implemented as fetch_n_runs_90d in src/harvest/frame.py)
+- [x] `T0.1c` Implement `src/harvest/workflow_triage.py` — classify workflows test/build/deploy (implemented as classify_workflows / is_test_intent in src/harvest/frame.py)
+- [x] `T0.1d` Produce `repos.csv` (300 candidates); manual review of top 50
+- [x] `T0.2a` Implement `TokenPool` with quota-aware round-robin
+- [x] `T0.2b` Implement `get_with_backoff()` — sole HTTP entry point
+- [x] `T0.2c` Add request logging + `--dry-run` budget estimator
+- [x] `T0.3a` SQLite cursor store + resume logic
+- [x] `T0.3b` PR + commits + runs capture loop → gzipped JSONL
+- [x] `T0.3c` Check-run annotations capture (priority: persists >90d)
 - [ ] `T0.3d` Artifact capture with name/size filter
 - [ ] `T0.3e` Job-log capture, failures prioritised
 - [ ] `T0.3f` SIGTERM flush + daily MANIFEST.json
@@ -52,10 +52,10 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T0.3h` `[v2]` Lift `_parse_ci` + `_path_match` from graphify `prs.py`
 - [ ] `T0.4a` Directory contract + CHECKSUMS
 - [ ] `T0.4b` Nightly rclone/rsync mirror; verify by restoring one file
-- [ ] `T0.5a` Streamlit corpus dashboard
+- [x] `T0.5a` Streamlit corpus dashboard
 - [ ] `T0.6` `[v2]` Dependabot / bot-PR capture with `is_bot_pr` tagging
-- [ ] `T0.7` `[new]` Attrition funnel instrumentation → `ATTRITION.json` + dashboard
-- [ ] `T0.8` `[new]` Frame freeze + version tag before Phase 1
+- [x] `T0.7` `[new]` Attrition funnel instrumentation → `ATTRITION.json` + dashboard
+- [x] `T0.8` `[new]` Frame freeze + version tag before Phase 1
 
 ### Weeks 1–4 — Corpus & Ground Truth (Aug 10–Sep 6)
 - [ ] `T1.1a` Build 40-log fixture corpus with hand-labelled expected output
