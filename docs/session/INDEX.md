@@ -36,5 +36,7 @@
 | **033** | 2026-08-20 | T0.3e Worklist | Add `LOG_RETENTION_DAYS = 90.0` and `_build_log_worklist()` in `src/harvest/daemon.py` | [033-2026-08-20-t03e-worklist-fn.md](file:///home/shree/blastradius/docs/session/033-2026-08-20-t03e-worklist-fn.md) |
 | **034** | 2026-08-20 | Expiry Cliff | Fix unfalsifiable narrative claims for P90 trend and Stage 4 payload sizing in `analysis/expiry_cliff.py` | [034-2026-08-20-expiry-cliff-narrative.md](file:///home/shree/blastradius/docs/session/034-2026-08-20-expiry-cliff-narrative.md) |
 | **035** | 2026-08-20 | T0.3e Tests | Add comprehensive unit tests for `_build_log_worklist()` in `tests/test_daemon.py` | [035-2026-08-20-t03e-worklist-tests.md](file:///home/shree/blastradius/docs/session/035-2026-08-20-t03e-worklist-tests.md) |
+| **036** | 2026-08-21 | Commit Worklist | Land Stage 4 worklist implementation, expiry-cliff narrative fix, and session records in three commits | [036-2026-08-21-commit-worklist.md](file:///home/shree/blastradius/docs/session/036-2026-08-21-commit-worklist.md) |
+| **037** | 2026-08-21 | T0.3e Orchestrator | Implement `capture_job_logs()` in `src/harvest/daemon.py` with 5 comprehensive unit tests | [037-2026-08-21-t03e-orchestrator.md](file:///home/shree/blastradius/docs/session/037-2026-08-21-t03e-orchestrator.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
