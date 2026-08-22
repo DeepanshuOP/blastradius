@@ -40,6 +40,10 @@
 | **037** | 2026-08-21 | T0.3e Orchestrator | Implement `capture_job_logs()` in `src/harvest/daemon.py` with 5 comprehensive unit tests | [037-2026-08-21-t03e-orchestrator.md](file:///home/shree/blastradius/docs/session/037-2026-08-21-t03e-orchestrator.md) |
 | **038** | 2026-08-21 | Commit Orchestrator | Land Stage 4 orchestrator implementation, explorer relocation, and session records in three commits | [038-2026-08-21-commit-orchestrator.md](file:///home/shree/blastradius/docs/session/038-2026-08-21-commit-orchestrator.md) |
 | **039** | 2026-08-21 | T0.3e CLI Wiring | Wire Stage 4 into CLI arguments, membership in `all`, and full stats output with 5 dispatch tests | [039-2026-08-21-t03e-cli-wiring.md](file:///home/shree/blastradius/docs/session/039-2026-08-21-t03e-cli-wiring.md) |
+| **040** | 2026-08-22 | Commit CLI Wiring | Land Stage 4 CLI wiring implementation and session records in two commits and push to main | [040-2026-08-22-commit-cli-wiring.md](file:///home/shree/blastradius/docs/session/040-2026-08-22-commit-cli-wiring.md) |
+| **041** | 2026-08-22 | Commit Tasks | Land `docs/TASKS.md` burndown and session record 040 in two commits and push to main | [041-2026-08-22-commit-tasks.md](file:///home/shree/blastradius/docs/session/041-2026-08-22-commit-tasks.md) |
+| **042** | 2026-08-22 | Log Payload Measurement | Measure empirical bytes-per-log from 21 captures, diagnose 4 HTTP 410 items, and evaluate ASSUMED_LOG_MB | [042-2026-08-22-log-payload-measurement.md](file:///home/shree/blastradius/docs/session/042-2026-08-22-log-payload-measurement.md) |
+| **043** | 2026-08-22 | Measured Log Size | Replace ASSUMED_LOG_MB with measured constants and fix run-vs-job unit conversion in `analysis/expiry_cliff.py` | [043-2026-08-22-measured-log-size.md](file:///home/shree/blastradius/docs/session/043-2026-08-22-measured-log-size.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 
