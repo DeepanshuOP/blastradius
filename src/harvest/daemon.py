@@ -1017,6 +1017,105 @@ def _build_log_worklist(
     return items
 
 
+def capture_job_logs(
+    repo_fulls: list[str],
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    cursor: CursorStore,
+    governor: TransientGovernor | None = None,
+    now: datetime | None = None,
+    max_logs: int | None = None,
+    skip_expired: bool = True,
+) -> dict[str, int]:
+    """Stage 4: job log capture (endpoint 9) for failed workflow jobs
+    discovered in Stage 2, prioritized by run age (recoverable runs under
+    90 days first)."""
+    now = now or datetime.now(timezone.utc)
+    governor = governor if governor is not None else TransientGovernor(pool)
+
+    worklist = _build_log_worklist(repo_fulls, store=store, cursor=cursor, now=now)
+
+    stats = {
+        "n_worklist_total": len(worklist),
+        "n_logs_captured": 0,
+        "n_logs_dedup_skipped": 0,
+        "n_logs_skipped_expired": 0,
+        "n_logs_expired": 0,
+        "n_logs_failed_terminal": 0,
+        "n_logs_transient": 0,
+        "n_logs_capped": 0,
+        "n_logs_unknown_status": 0,
+        "total_log_bytes": 0,
+    }
+
+    n_attempted = 0
+    for repo_full, job_id, parent_run_id, run_age_days in worklist:
+        if max_logs is not None and n_attempted >= max_logs:
+            stats["n_logs_capped"] += 1
+            continue
+
+        if skip_expired and run_age_days is not None and run_age_days > LOG_RETENTION_DAYS:
+            stats["n_logs_skipped_expired"] += 1
+            continue
+
+        owner, repo = repo_full.split("/", 1)
+        status, log_bytes, status_code = _fetch_job_log(
+            owner,
+            repo,
+            job_id,
+            pool=pool,
+            store=store,
+            cursor=cursor,
+            repo_full=repo_full,
+            parent_run_id=parent_run_id,
+        )
+
+        if status == PR_UNIT_SKIPPED_ALREADY_DONE:
+            stats["n_logs_dedup_skipped"] += 1
+            governor.record_success()
+            continue
+
+        n_attempted += 1
+
+        if status == PR_UNIT_TRANSIENT:
+            stats["n_logs_transient"] += 1
+            governor.record_transient(status=status_code, token_idx=None)
+            continue
+
+        governor.record_success()
+
+        if status == PR_UNIT_COMPLETE:
+            stats["n_logs_captured"] += 1
+            if log_bytes is not None:
+                stats["total_log_bytes"] += log_bytes
+        elif status == PR_UNIT_FAILED:
+            if status_code in (404, 410):
+                stats["n_logs_expired"] += 1
+            else:
+                stats["n_logs_failed_terminal"] += 1
+        else:
+            stats["n_logs_unknown_status"] += 1
+
+    accounted = (
+        stats["n_logs_captured"]
+        + stats["n_logs_dedup_skipped"]
+        + stats["n_logs_skipped_expired"]
+        + stats["n_logs_expired"]
+        + stats["n_logs_failed_terminal"]
+        + stats["n_logs_transient"]
+        + stats["n_logs_capped"]
+        + stats["n_logs_unknown_status"]
+    )
+    if accounted != stats["n_worklist_total"]:
+        raise AssertionError(
+            f"capture_job_logs: conservation check failed — "
+            f"n_worklist_total={stats['n_worklist_total']} accounted={accounted}"
+        )
+
+    return stats
+
+
 def _summary(pages_fetched, window_stopped, n_prs_captured, n_prs_failed_terminal, n_transient) -> dict:
     return {
         "pages_fetched": pages_fetched,

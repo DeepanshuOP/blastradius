@@ -2061,3 +2061,240 @@ def test_worklist_all_non_failure_jobs_returns_empty(tmp_path):
     assert worklist == []
     cursor.close()
 
+
+@responses.activate
+def test_conservation_holds_across_mixed_job_log_outcomes(tmp_path):
+    """1. Conservation: buckets sum to n_worklist_total on a mixed fixture."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [
+            _run_obj(101, (now - timedelta(days=10)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            _run_obj(102, (now - timedelta(days=20)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            _run_obj(103, (now - timedelta(days=120)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            _run_obj(104, (now - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            _run_obj(105, (now - timedelta(days=40)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+            _run_obj(106, (now - timedelta(days=50)).strftime("%Y-%m-%dT%H:%M:%SZ")),
+        ],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 101, [{"id": 1001, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 102, [{"id": 1002, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 103, [{"id": 1003, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 104, [{"id": 1004, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 105, [{"id": 1005, "conclusion": "failure"}])
+    _seed_jobs_unit(store, cursor, "owner/repo", 106, [{"id": 1006, "conclusion": "failure"}])
+
+    # 1001: fresh capture
+    log_content = b"2026-08-10 log output\n"
+    responses.add(responses.GET, _job_log_url("owner", "repo", 1001), body=log_content, status=200)
+
+    # 1002: dedup skip (already complete)
+    cursor.mark_unit_started("owner/repo", "logs", 1002, parent_run_id=102)
+    store.write_records(
+        "owner/repo", "logs", 1002,
+        [RawRecord(url=_job_log_url("owner", "repo", 1002), status=200,
+                   fetched_at="2026-08-01T00:00:00+00:00", etag=None, body=b"existing log")],
+    )
+    cursor.mark_unit_complete("owner/repo", "logs", 1002)
+
+    # 1003: 120-day item -> skipped expired with skip_expired=True (no request)
+
+    # 1004: 404 -> expired
+    responses.add(responses.GET, _job_log_url("owner", "repo", 1004), status=404)
+
+    # 1005: 451 -> non-expired terminal failure (451 in TERMINAL_STATUSES)
+    responses.add(responses.GET, _job_log_url("owner", "repo", 1005), status=451)
+
+    # 1006: 503 -> transient failure (6 retries)
+    for _ in range(6):
+        responses.add(responses.GET, _job_log_url("owner", "repo", 1006), status=503)
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+        skip_expired=True,
+    )
+
+    assert stats["n_worklist_total"] == 6
+    assert stats["n_logs_captured"] == 1
+    assert stats["n_logs_dedup_skipped"] == 1
+    assert stats["n_logs_skipped_expired"] == 1
+    assert stats["n_logs_expired"] == 1
+    assert stats["n_logs_failed_terminal"] == 1
+    assert stats["n_logs_transient"] == 1
+    assert stats["n_logs_capped"] == 0
+    assert stats["n_logs_unknown_status"] == 0
+    assert stats["total_log_bytes"] == len(log_content)
+    assert (
+        stats["n_logs_captured"]
+        + stats["n_logs_dedup_skipped"]
+        + stats["n_logs_skipped_expired"]
+        + stats["n_logs_expired"]
+        + stats["n_logs_failed_terminal"]
+        + stats["n_logs_transient"]
+        + stats["n_logs_capped"]
+        + stats["n_logs_unknown_status"]
+    ) == stats["n_worklist_total"]
+    cursor.close()
+
+
+@responses.activate
+def test_skip_expired_true_issues_zero_requests_for_old_item(tmp_path):
+    """2. skip_expired=True issues ZERO requests for a 120-day item and counts it as n_logs_skipped_expired."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(201, (now - timedelta(days=120)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 201, [{"id": 2001, "conclusion": "failure"}])
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+        skip_expired=True,
+    )
+
+    assert stats["n_worklist_total"] == 1
+    assert stats["n_logs_skipped_expired"] == 1
+    assert stats["n_logs_captured"] == 0
+    assert stats["n_logs_expired"] == 0
+    assert stats["n_logs_failed_terminal"] == 0
+    assert len(responses.calls) == 0
+    assert cursor.get_capture_unit("owner/repo", "logs", 2001) is None
+    cursor.close()
+
+
+@responses.activate
+def test_skip_expired_false_attempts_old_item_and_404_lands_in_expired(tmp_path):
+    """3. skip_expired=False attempts it, and a 404 lands in n_logs_expired, NOT n_logs_failed_terminal."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(301, (now - timedelta(days=120)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 301, [{"id": 3001, "conclusion": "failure"}])
+
+    responses.add(responses.GET, _job_log_url("owner", "repo", 3001), status=404)
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+        skip_expired=False,
+    )
+
+    assert stats["n_worklist_total"] == 1
+    assert stats["n_logs_skipped_expired"] == 0
+    assert stats["n_logs_expired"] == 1
+    assert stats["n_logs_failed_terminal"] == 0
+    assert len(responses.calls) == 1
+    assert cursor.get_capture_unit("owner/repo", "logs", 3001).status == "failed"
+    cursor.close()
+
+
+@responses.activate
+def test_max_logs_attempts_capped_count_and_caps_remainder(tmp_path):
+    """4. max_logs=1 attempts exactly one and puts the rest in n_logs_capped."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(401, (now - timedelta(days=10)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(
+        store, cursor, "owner/repo", 401,
+        [
+            {"id": 4001, "conclusion": "failure"},
+            {"id": 4002, "conclusion": "failure"},
+            {"id": 4003, "conclusion": "failure"},
+        ],
+    )
+
+    responses.add(responses.GET, _job_log_url("owner", "repo", 4001), body=b"log 4001", status=200)
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+        max_logs=1,
+    )
+
+    assert stats["n_worklist_total"] == 3
+    assert stats["n_logs_captured"] == 1
+    assert stats["n_logs_capped"] == 2
+    assert len(responses.calls) == 1
+    cursor.close()
+
+
+@responses.activate
+def test_already_complete_logs_unit_counts_as_dedup_skipped_without_request(tmp_path):
+    """5. An already-complete logs unit counts as n_logs_dedup_skipped with no request."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(501, (now - timedelta(days=10)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 501, [{"id": 5001, "conclusion": "failure"}])
+
+    cursor.mark_unit_started("owner/repo", "logs", 5001, parent_run_id=501)
+    store.write_records(
+        "owner/repo", "logs", 5001,
+        [RawRecord(url=_job_log_url("owner", "repo", 5001), status=200,
+                   fetched_at="2026-08-01T00:00:00+00:00", etag=None, body=b"persisted log")],
+    )
+    cursor.mark_unit_complete("owner/repo", "logs", 5001)
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+    )
+
+    assert stats["n_worklist_total"] == 1
+    assert stats["n_logs_dedup_skipped"] == 1
+    assert stats["n_logs_captured"] == 0
+    assert stats["total_log_bytes"] == 0
+    assert len(responses.calls) == 0
+    cursor.close()
+
