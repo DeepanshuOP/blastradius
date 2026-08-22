@@ -23,7 +23,10 @@ OUTPUT_MD_PATH = OUTPUT_DIR / "expiry_cliff.md"
 
 D23_P90_BASELINE_DAYS = 100.1
 P90_TOLERANCE_DAYS = 2.0
-ASSUMED_LOG_MB = 1.5
+# Empirical measurements from 21 logs (first live Stage 4 run, 2026-08-22, session 042; provisional, n=21 Java)
+MEASURED_LOG_MB = 0.0266          # mean uncompressed HTTP payload
+MEASURED_LOG_ON_DISK_MB = 0.0070  # mean gzipped on-disk footprint
+JOBS_PER_FAILED_RUN = 1.95        # 15,176 worklist jobs / 7,777 failed runs
 
 
 def _percentile(values: list[float], q: float) -> float:
@@ -294,11 +297,13 @@ def generate_report(as_of: datetime | None = None) -> str:
     lines.append("")
 
     daily_loss = (failed_60_90 / 30.0) if failed_60_90 else 0.0
-    est_payload_gb = (recoverable_today * ASSUMED_LOG_MB) / 1024.0
+    est_jobs = recoverable_today * JOBS_PER_FAILED_RUN
+    est_download_gb = (est_jobs * MEASURED_LOG_MB) / 1024.0
+    est_on_disk_gb = (est_jobs * MEASURED_LOG_ON_DISK_MB) / 1024.0
 
     lines.append("### Key Takeaways for Review 1 & Stage 4 Planning")
     lines.append(f"1. **D-23 Hypothesis Confirmed**: The 90-day expiry cliff is real and active. {win_expired:,} failed runs are permanently unrecoverable from GitHub log storage, validating the D-23 decision to prioritize Stage 4 (log capture) over non-expiring tiers.")
-    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** across {len(repos)} repos have logs available today. At an assumed ~{ASSUMED_LOG_MB:.1f} MB per log payload (unmeasured assumption; Stage 4 will report empirical payload sizes), this represents an estimated ~{est_payload_gb:.2f} GB download job.")
+    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** (~{est_jobs:,.0f} jobs at {JOBS_PER_FAILED_RUN:.2f} jobs/failed run) across {len(repos)} repos have logs available today. Measured across 21 logs (provisional, n=21, all Java: ~{MEASURED_LOG_MB:.4f} MB uncompressed HTTP payload, ~{MEASURED_LOG_ON_DISK_MB:.4f} MB on-disk gzipped per log), this represents an estimated ~{est_download_gb:.2f} GB download (~{est_on_disk_gb:.2f} GB on-disk footprint).")
     lines.append(f"3. **Daily Attrition Rate**: With **{failed_60_90:,} failed runs** in the 60–90 day bracket, the corpus loses approximately **{daily_loss:.1f} recoverable failed runs per day of delay**.")
     lines.append("")
 
