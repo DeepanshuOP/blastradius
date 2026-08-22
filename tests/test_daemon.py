@@ -2298,3 +2298,159 @@ def test_already_complete_logs_unit_counts_as_dedup_skipped_without_request(tmp_
     assert len(responses.calls) == 0
     cursor.close()
 
+
+def test_parse_args_stage_4_and_invalid():
+    """1. parse_args accepts --stage 4; invalid stage raises SystemExit."""
+    args = daemon.parse_args(["--stage", "4"])
+    assert args.stage == "4"
+
+    with pytest.raises(SystemExit):
+        daemon.parse_args(["--stage", "invalid"])
+
+
+def test_parse_args_max_logs_and_attempt_expired():
+    """2. --max-logs and --attempt-expired parse, attempt_expired defaults to False."""
+    args_default = daemon.parse_args([])
+    assert args_default.max_logs is None
+    assert args_default.attempt_expired is False
+    assert (not args_default.attempt_expired) is True
+
+    args_custom = daemon.parse_args(["--max-logs", "50", "--attempt-expired"])
+    assert args_custom.max_logs == 50
+    assert args_custom.attempt_expired is True
+    assert (not args_custom.attempt_expired) is False
+
+
+@responses.activate
+def test_stage_4_calls_capture_job_logs_once_with_all_repos(tmp_path, monkeypatch):
+    """3. run(..., stage="4") calls capture_job_logs exactly ONCE with a list
+    containing every repo processed, proving cross-repo ordering is preserved."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    repos_csv = tmp_path / "repos.csv"
+    with repos_csv.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["owner", "repo"])
+        writer.writerow(["owner1", "repo1"])
+        writer.writerow(["owner2", "repo2"])
+
+    captured_calls: list[tuple[list[str], dict]] = []
+    original_capture_job_logs = daemon.capture_job_logs
+
+    def tracking_capture_job_logs(repo_fulls: list[str], **kwargs) -> dict[str, int]:
+        captured_calls.append((repo_fulls, kwargs))
+        return original_capture_job_logs(repo_fulls, **kwargs)
+
+    monkeypatch.setattr(daemon, "capture_job_logs", tracking_capture_job_logs)
+
+    total = daemon.run(
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        repos_path=repos_csv,
+        limit=10,
+        cutoff=_cutoff(),
+        stage="4",
+    )
+
+    assert len(captured_calls) == 1
+    passed_repo_fulls, kwargs = captured_calls[0]
+    assert passed_repo_fulls == ["owner1/repo1", "owner2/repo2"]
+    assert kwargs["max_logs"] is None
+    assert kwargs["skip_expired"] is True
+    assert total["n_logs_captured"] == 0
+    assert total["total_log_bytes"] == 0
+    assert len(responses.calls) == 0
+    cursor.close()
+
+
+@responses.activate
+def test_stage_both_does_not_call_capture_job_logs(tmp_path, monkeypatch):
+    """4. run(..., stage="both") does NOT call capture_job_logs at all."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    repos_csv = tmp_path / "repos.csv"
+    with repos_csv.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["owner", "repo"])
+        writer.writerow(["owner1", "repo1"])
+
+    _mock_pulls_page("owner1", "repo1", 1, [])
+
+    captured_calls: list[list[str]] = []
+    monkeypatch.setattr(
+        daemon, "capture_job_logs", lambda repo_fulls, **kw: captured_calls.append(repo_fulls)
+    )
+
+    total = daemon.run(
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        repos_path=repos_csv,
+        limit=10,
+        cutoff=_cutoff(),
+        stage="both",
+    )
+
+    assert len(captured_calls) == 0
+    assert total["repos_processed"] == 1
+    assert total["n_logs_captured"] == 0
+    assert total["total_log_bytes"] == 0
+    cursor.close()
+
+
+def test_stage_4_passes_strings_not_tuples_to_capture_job_logs(tmp_path, monkeypatch):
+    """5. capture_job_logs receives a list of strings ("owner/repo"), not tuples."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    repos_csv = tmp_path / "repos.csv"
+    with repos_csv.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["owner", "repo"])
+        writer.writerow(["org_alpha", "repo_one"])
+        writer.writerow(["org_beta", "repo_two"])
+
+    captured_repos: list[list] = []
+
+    def stub_capture_job_logs(repo_fulls: list[str], **kwargs) -> dict[str, int]:
+        captured_repos.append(repo_fulls)
+        return {
+            "n_worklist_total": 0,
+            "n_logs_captured": 0,
+            "n_logs_dedup_skipped": 0,
+            "n_logs_skipped_expired": 0,
+            "n_logs_expired": 0,
+            "n_logs_failed_terminal": 0,
+            "n_logs_transient": 0,
+            "n_logs_capped": 0,
+            "n_logs_unknown_status": 0,
+            "total_log_bytes": 0,
+        }
+
+    monkeypatch.setattr(daemon, "capture_job_logs", stub_capture_job_logs)
+
+    daemon.run(
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        repos_path=repos_csv,
+        limit=10,
+        cutoff=_cutoff(),
+        stage="4",
+    )
+
+    assert len(captured_repos) == 1
+    repo_list = captured_repos[0]
+    assert isinstance(repo_list, list)
+    assert len(repo_list) == 2
+    for item in repo_list:
+        assert isinstance(item, str)
+        assert not isinstance(item, tuple)
+        assert "/" in item
+    assert repo_list == ["org_alpha/repo_one", "org_beta/repo_two"]
+    cursor.close()
+
+

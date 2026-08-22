@@ -1361,24 +1361,28 @@ def run(
     limit: int,
     cutoff: datetime,
     stage: str = DEFAULT_STAGE,
+    max_logs: int | None = None,
+    skip_expired: bool = True,
 ) -> dict:
-    """Run Stage 1 (PR sweep), Stage 2 (run discovery), and/or Stage 3
-    (check-run + annotation capture) for each repo in turn, printing a
-    one-line summary per repo and a total at the end. Propagates AbortRun
-    uncaught (same as frame.py's run_frame); main() handles it.
+    """Run Stage 1 (PR sweep), Stage 2 (run discovery), Stage 3
+    (check-run + annotation capture), and/or Stage 4 (job log capture)
+    for each repo in turn, printing a one-line summary per repo and a total
+    at the end. Propagates AbortRun uncaught (same as frame.py's run_frame);
+    main() handles it.
 
     Stages 1-2 are per-repo (unchanged: 'both' means 1+2, same as before
-    this stage existed). Stage 3 is NOT per-repo — oldest-run-first
-    ordering is cross-repo by design (see capture_checkruns()), so it runs
-    once over the whole `repos` list after the per-repo loop. Whichever of
-    Stage 2 / Stage 3 ran this invocation writes/augments
-    data/raw/RUN_AGES.json; Stage 3 running standalone (`--stage 3`, no
-    Stage 2 this invocation) augments a prior invocation's file instead of
-    clobbering it."""
+    this stage existed). Stages 3-4 are NOT per-repo — oldest-run-first
+    ordering is cross-repo by design (see capture_checkruns() and
+    capture_job_logs()), so they run once over the whole `repos` list after
+    the per-repo loop. Whichever of Stage 2 / Stage 3 ran this invocation
+    writes/augments data/raw/RUN_AGES.json; Stage 3 running standalone
+    (`--stage 3`, no Stage 2 this invocation) augments a prior invocation's
+    file instead of clobbering it."""
     repos = _load_repos(repos_path, limit)
     run_stage1 = stage in ("1", "both", "all")
     run_stage2 = stage in ("2", "both", "all")
     run_stage3 = stage in ("3", "all")
+    run_stage4 = stage in ("4", "all")
     governor = TransientGovernor(pool)
 
     total = {
@@ -1394,6 +1398,8 @@ def run(
         "n_checkruns_discovered": 0,
         "n_annotations_captured": 0,
         "n_transient_stage3": 0,
+        "n_logs_captured": 0,
+        "total_log_bytes": 0,
     }
     stage2_raw: dict[str, dict] = {}
 
@@ -1485,6 +1491,33 @@ def run(
                 f"{overall['n_runs_over_90d_recovered_via_annotations']}"
             )
 
+    stage4_stats = None
+    if run_stage4:
+        repo_fulls = [f"{owner}/{repo}" for owner, repo in repos]
+        stage4_stats = capture_job_logs(
+            repo_fulls,
+            pool=pool,
+            store=store,
+            cursor=cursor,
+            governor=governor,
+            max_logs=max_logs,
+            skip_expired=skip_expired,
+        )
+        print(
+            f"STAGE4: worklist={stage4_stats['n_worklist_total']} "
+            f"captured={stage4_stats['n_logs_captured']} "
+            f"dedup_skipped={stage4_stats['n_logs_dedup_skipped']} "
+            f"skipped_expired={stage4_stats['n_logs_skipped_expired']} "
+            f"expired={stage4_stats['n_logs_expired']} "
+            f"failed_terminal={stage4_stats['n_logs_failed_terminal']} "
+            f"transient={stage4_stats['n_logs_transient']} "
+            f"capped={stage4_stats['n_logs_capped']} "
+            f"unknown_status={stage4_stats['n_logs_unknown_status']} "
+            f"total_log_bytes={stage4_stats['total_log_bytes']}"
+        )
+        total["n_logs_captured"] += stage4_stats["n_logs_captured"]
+        total["total_log_bytes"] += stage4_stats["total_log_bytes"]
+
     print(
         f"TOTAL: repos={total['repos_processed']} pages={total['pages_fetched']} "
         f"captured={total['n_prs_captured']} failed_terminal={total['n_prs_failed_terminal']} "
@@ -1493,7 +1526,9 @@ def run(
         f"transient_discovery={total['n_transient_discovery']} "
         f"checkruns_discovered={total['n_checkruns_discovered']} "
         f"annotations_captured={total['n_annotations_captured']} "
-        f"transient_stage3={total['n_transient_stage3']}"
+        f"transient_stage3={total['n_transient_stage3']} "
+        f"logs_captured={total['n_logs_captured']} "
+        f"total_log_bytes={total['total_log_bytes']}"
     )
     return total
 
@@ -1503,7 +1538,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--repos", type=Path, default=DEFAULT_REPOS_PATH)
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--stage", choices=("1", "2", "3", "both", "all"), default=DEFAULT_STAGE)
+    parser.add_argument("--stage", choices=("1", "2", "3", "4", "both", "all"), default=DEFAULT_STAGE)
+    parser.add_argument("--max-logs", type=int, default=None)
+    parser.add_argument("--attempt-expired", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -1532,6 +1569,8 @@ def main(argv: list[str] | None = None) -> None:
             limit=args.limit,
             cutoff=_cutoff(),
             stage=args.stage,
+            max_logs=args.max_logs,
+            skip_expired=not args.attempt_expired,
         )
     except AbortRun as exc:
         print(f"ABORTED: {exc}")
