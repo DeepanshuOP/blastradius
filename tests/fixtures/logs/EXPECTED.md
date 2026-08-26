@@ -142,6 +142,10 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `Jun 06 04:05:43 04:05:43.382 [ERROR] org.apache.flink.test.checkpointing.SavepointITCase.testStopWithSavepointFailsOverToSavepoint`
   - RAW Summary: `Jun 06 04:33:52 04:33:52.032 [ERROR]   SavepointITCase.testStopWithSavepointFailsOverToSavepoint:326`
   - Canonical `normalize_test_id()`: `org.apache.flink.test.checkpointing.SavepointITCase#testStopWithSavepointFailsOverToSavepoint`
+  - RAW: `[ERROR] org.apache.flink.test.runtime.IPv6HostnamesITCase.testClusterWithIPv6host -- Time elapsed: 0.381 s <<< ERROR!`
+  - RAW Summary: `Jun 06 04:33:52 04:33:52.032 [ERROR]   IPv6HostnamesITCase.testClusterWithIPv6host:123 » Runtime Failed to fetch next result`
+  - Canonical `normalize_test_id()`: `org.apache.flink.test.runtime.IPv6HostnamesITCase#testClusterWithIPv6host`
+  - Note: Ground-truth omission identified by harness-count audit on 2026-08-26 (lines 7291, 7292, 7784, 7786), not by initial hand-labelling pass.
 - **Confidence:** CERTAIN
 
 ---
