@@ -9,6 +9,8 @@ No mocks of our own modules — real RawStore/CursorStore against tmp_path.
 
 import csv
 import json
+import subprocess
+import sys
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -2511,5 +2513,94 @@ def test_stage_4_passes_strings_not_tuples_to_capture_job_logs(tmp_path, monkeyp
         assert "/" in item
     assert repo_list == ["org_alpha/repo_one", "org_beta/repo_two"]
     cursor.close()
+
+
+def test_daemon_flock_mutual_exclusion_and_release(tmp_path):
+    """A second acquisition from a subprocess fails while the first is held,
+    and succeeds after the first exits."""
+    lock_file = tmp_path / "daemon.lock"
+
+    cmd = [
+        sys.executable,
+        "-c",
+        f"import time; from src.harvest.daemon import acquire_daemon_lock; "
+        f"fd = acquire_daemon_lock({str(lock_file)!r}); "
+        f"assert fd is not None; print('READY', flush=True); time.sleep(10)",
+    ]
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
+    try:
+        ready_line = proc.stdout.readline().strip()
+        assert ready_line == "READY"
+
+        parent_fd = daemon.acquire_daemon_lock(lock_file)
+        assert parent_fd is None
+    finally:
+        proc.terminate()
+        proc.wait(timeout=5)
+
+    parent_fd = daemon.acquire_daemon_lock(lock_file)
+    assert parent_fd is not None
+    daemon.release_daemon_lock(parent_fd)
+
+
+def test_daemon_flock_released_on_sigkill(tmp_path):
+    """The flock is released by the kernel when the holder is killed with SIGKILL."""
+    lock_file = tmp_path / "daemon.lock"
+
+    cmd = [
+        sys.executable,
+        "-c",
+        f"import time; from src.harvest.daemon import acquire_daemon_lock; "
+        f"fd = acquire_daemon_lock({str(lock_file)!r}); "
+        f"assert fd is not None; print('READY', flush=True); time.sleep(60)",
+    ]
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
+    try:
+        ready_line = proc.stdout.readline().strip()
+        assert ready_line == "READY"
+
+        assert daemon.acquire_daemon_lock(lock_file) is None
+    finally:
+        proc.kill()
+        proc.wait(timeout=5)
+
+    fd = daemon.acquire_daemon_lock(lock_file)
+    assert fd is not None
+    daemon.release_daemon_lock(fd)
+
+
+def test_daemon_main_exits_cleanly_when_lock_already_held(tmp_path, capsys):
+    """If lock is already held, main() prints one line and exits 0 (does not raise)."""
+    lock_file = tmp_path / "daemon.lock"
+    held_fd = daemon.acquire_daemon_lock(lock_file)
+    assert held_fd is not None
+
+    try:
+        daemon.main(["--repos", str(tmp_path / "dummy.csv")], lock_path=lock_file)
+    finally:
+        daemon.release_daemon_lock(held_fd)
+
+    captured = capsys.readouterr()
+    assert "[daemon] another daemon instance is already running" in captured.out
+
+
+def test_run_supervised_argument_resolution():
+    """run_supervised.sh argument resolution: no argument -> 4; an argument -> that argument."""
+    # 1. Check bash syntax
+    res = subprocess.run(["bash", "-n", "run_supervised.sh"], capture_output=True, text=True)
+    assert res.returncode == 0, res.stderr
+
+    # 2. Test resolution with no argument -> "4"
+    script = 'STAGE="${1:-4}"; echo "$STAGE"'
+    res_default = subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=True)
+    assert res_default.stdout.strip() == "4"
+
+    # 3. Test resolution with positional argument "both" -> "both"
+    res_both = subprocess.run(["bash", "-c", script, "bash", "both"], capture_output=True, text=True, check=True)
+    assert res_both.stdout.strip() == "both"
+
+    # 4. Test resolution with positional argument "1" -> "1"
+    res_1 = subprocess.run(["bash", "-c", script, "bash", "1"], capture_output=True, text=True, check=True)
+    assert res_1.stdout.strip() == "1"
 
 

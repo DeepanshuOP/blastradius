@@ -48,6 +48,8 @@
 | **045** | 2026-08-23 | Log Yield | Implement `analysis/log_yield.py` log yield & test failure classifier, measure 6.38 GB corpus, and commit deliverable | [045-2026-08-23-log-yield.md](file:///home/shree/blastradius/docs/session/045-2026-08-23-log-yield.md) |
 | **046** | 2026-08-25 | T1.1a | Build 40-log fixture corpus with hand-labelled ground truth and verify anomaly hypotheses | [046-2026-08-25-t11a-fixture-corpus.md](file:///home/shree/blastradius/docs/session/046-2026-08-25-t11a-fixture-corpus.md) |
 | **047** | 2026-08-26 | RawStore Write Race | Diagnose Stage 4 os.replace crash, prove concurrent duplicate writer, add unique tmp paths and error handling | [047-2026-08-26-rawstore-write-race.md](file:///home/shree/blastradius/docs/session/047-2026-08-26-rawstore-write-race.md) |
+| **048** | 2026-08-26 | Single Instance | Parameterise supervisor, in-daemon flock lock, and land pending work | [048-2026-08-26-daemon-single-instance.md](file:///home/shree/blastradius/docs/session/048-2026-08-26-daemon-single-instance.md) |
+| **049** | 2026-08-26 | Extractor Precision | Measure precision on 40 fixtures (97.06% / 0.8354 F1) & fix Surefire/Gradle patterns | [049-2026-08-26-extractor-precision.md](file:///home/shree/blastradius/docs/session/049-2026-08-26-extractor-precision.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 

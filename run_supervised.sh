@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+STAGE="${1:-4}"
 LOCKFILE="logs/supervisor.pid"
 
 if [ -f "$LOCKFILE" ]; then
@@ -16,9 +17,9 @@ echo $$ > "$LOCKFILE"
 trap 'rm -f "$LOCKFILE"' EXIT
 
 while true; do
-  echo "[supervisor] $(date -u +%FT%TZ) starting daemon"
+  echo "[supervisor] $(date -u +%FT%TZ) starting daemon (stage $STAGE)"
   uv run --env-file .env python -m src.harvest.daemon \
-    --repos data/frame/frame_v1.csv --limit 300 --stage both
+    --repos data/frame/frame_v1.csv --limit 300 --stage "$STAGE"
   echo "[supervisor] $(date -u +%FT%TZ) daemon exited, sleeping 120s"
   sleep 120
 done

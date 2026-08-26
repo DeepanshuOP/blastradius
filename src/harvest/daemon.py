@@ -91,7 +91,9 @@ from __future__ import annotations
 
 import argparse
 import csv
+import fcntl
 import json
+import os
 import statistics
 import sys
 from datetime import datetime, timedelta, timezone
@@ -108,6 +110,7 @@ from src.harvest.rawstore import DEFAULT_ROOT, RawRecord, RawStore, RawStoreWrit
 DEFAULT_REPOS_PATH = Path("data/frame/frame_v1.csv")
 DEFAULT_LIMIT = 2
 DEFAULT_STAGE = "both"
+DEFAULT_LOCK_PATH = Path("logs/daemon.lock")
 RUN_AGES_PATH = Path("data/raw/RUN_AGES.json")
 
 PULLS_PER_PAGE = 100
@@ -1553,7 +1556,47 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def main(argv: list[str] | None = None) -> None:
+def acquire_daemon_lock(lock_path: Path | str = DEFAULT_LOCK_PATH) -> int | None:
+    """Acquire an exclusive advisory flock on lock_path for the process lifetime.
+
+    Returns the open file descriptor on success, or None if already held.
+    """
+    path = Path(lock_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(path, os.O_CREAT | os.O_RDWR, 0o644)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except (BlockingIOError, OSError):
+        os.close(fd)
+        return None
+    try:
+        os.ftruncate(fd, 0)
+        os.write(fd, f"{os.getpid()}\n".encode("ascii"))
+    except OSError:
+        pass
+    return fd
+
+
+def read_lock_holder(lock_path: Path | str = DEFAULT_LOCK_PATH) -> str | None:
+    """Read the PID of the current lock holder if recorded in lock_path."""
+    try:
+        with open(lock_path, "r", encoding="ascii") as fh:
+            pid_str = fh.read().strip()
+            return pid_str if pid_str else None
+    except Exception:
+        return None
+
+
+def release_daemon_lock(fd: int) -> None:
+    """Release and close the daemon lock file descriptor."""
+    try:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)
+    except OSError:
+        pass
+
+
+def main(argv: list[str] | None = None, *, lock_path: Path | str = DEFAULT_LOCK_PATH) -> None:
     args = parse_args(argv)
 
     if args.dry_run:
@@ -1564,6 +1607,13 @@ def main(argv: list[str] | None = None) -> None:
             "Actual total also includes further pulls pages plus 2 requests per in-window PR — "
             "unknown without querying, which --dry-run does not do."
         )
+        return
+
+    lock_fd = acquire_daemon_lock(lock_path)
+    if lock_fd is None:
+        holder = read_lock_holder(lock_path)
+        holder_msg = f" (PID {holder})" if holder else ""
+        print(f"[daemon] another daemon instance is already running{holder_msg}; exiting cleanly (0)")
         return
 
     pool = TokenPool.from_env()
@@ -1589,6 +1639,7 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1) from exc
     finally:
         cursor.close()
+        release_daemon_lock(lock_fd)
 
 
 if __name__ == "__main__":
