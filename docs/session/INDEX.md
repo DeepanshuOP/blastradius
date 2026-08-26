@@ -47,6 +47,7 @@
 | **044** | 2026-08-22 | Commit Measured Sizes | Land measured log-size constants and session records 041, 042, 043 in two commits | [044-2026-08-22-commit-measured-sizes.md](file:///home/shree/blastradius/docs/session/044-2026-08-22-commit-measured-sizes.md) |
 | **045** | 2026-08-23 | Log Yield | Implement `analysis/log_yield.py` log yield & test failure classifier, measure 6.38 GB corpus, and commit deliverable | [045-2026-08-23-log-yield.md](file:///home/shree/blastradius/docs/session/045-2026-08-23-log-yield.md) |
 | **046** | 2026-08-25 | T1.1a | Build 40-log fixture corpus with hand-labelled ground truth and verify anomaly hypotheses | [046-2026-08-25-t11a-fixture-corpus.md](file:///home/shree/blastradius/docs/session/046-2026-08-25-t11a-fixture-corpus.md) |
+| **047** | 2026-08-26 | RawStore Write Race | Diagnose Stage 4 os.replace crash, prove concurrent duplicate writer, add unique tmp paths and error handling | [047-2026-08-26-rawstore-write-race.md](file:///home/shree/blastradius/docs/session/047-2026-08-26-rawstore-write-race.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 

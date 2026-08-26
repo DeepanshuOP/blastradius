@@ -38,6 +38,7 @@ import json
 import logging
 import os
 import re
+import uuid
 import zlib
 from dataclasses import dataclass
 from pathlib import Path
@@ -65,6 +66,10 @@ _SHA_SCOPE = "sha"
 _SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 _logger = logging.getLogger(__name__)
+
+
+class RawStoreWriteError(Exception):
+    """Raised when writing a raw capture record to disk fails."""
 
 
 class TruncatedRecordError(Exception):
@@ -150,35 +155,47 @@ class RawStore:
         self, repo: str, kind: str, key: int | str, records: list[RawRecord]
     ) -> Path:
         path = self.path_for(repo, kind, key)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        tmp_path = path.parent / f"{path.name}.tmp"
+        token = uuid.uuid4().hex
+        tmp_path = path.parent / f"{path.name}.{os.getpid()}.{token}.tmp"
 
-        lines = []
-        for record in records:
-            body_text, encoding = _encode_body(record.body)
-            lines.append(
-                json.dumps(
-                    {
-                        "url": record.url,
-                        "status": record.status,
-                        "fetched_at": record.fetched_at,
-                        "etag": record.etag,
-                        "encoding": encoding,
-                        "body": body_text,
-                    }
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            # Clean up any legacy unadorned .tmp file left from earlier crashes
+            (path.parent / f"{path.name}.tmp").unlink(missing_ok=True)
+
+            lines = []
+            for record in records:
+                body_text, encoding = _encode_body(record.body)
+                lines.append(
+                    json.dumps(
+                        {
+                            "url": record.url,
+                            "status": record.status,
+                            "fetched_at": record.fetched_at,
+                            "etag": record.etag,
+                            "encoding": encoding,
+                            "body": body_text,
+                        }
+                    )
                 )
-            )
-        lines.append(json.dumps({"_footer": True, "n": len(records)}))
-        payload = ("\n".join(lines) + "\n").encode("utf-8")
-        compressed = gzip.compress(payload, mtime=0)
+            lines.append(json.dumps({"_footer": True, "n": len(records)}))
+            payload = ("\n".join(lines) + "\n").encode("utf-8")
+            compressed = gzip.compress(payload, mtime=0)
 
-        with open(tmp_path, "wb") as fh:
-            fh.write(compressed)
-            fh.flush()
-            os.fsync(fh.fileno())
+            with open(tmp_path, "wb") as fh:
+                fh.write(compressed)
+                fh.flush()
+                os.fsync(fh.fileno())
 
-        os.replace(tmp_path, path)
-        self._fsync_dir(path.parent)
+            os.replace(tmp_path, path)
+            self._fsync_dir(path.parent)
+        except OSError as exc:
+            raise RawStoreWriteError(f"failed to write raw records to {path}: {exc}") from exc
+        finally:
+            try:
+                tmp_path.unlink(missing_ok=True)
+            except OSError:
+                pass
 
         return path
 

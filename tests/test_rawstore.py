@@ -1,11 +1,7 @@
-"""Tests for src.harvest.rawstore — RawStore against real files under tmp_path.
-
-No mocks: every test writes and reads actual gzipped files on disk.
-"""
-
+import os
 import pytest
 
-from src.harvest.rawstore import KIND_SCOPE, RawRecord, RawStore, TruncatedRecordError
+from src.harvest.rawstore import KIND_SCOPE, RawRecord, RawStore, RawStoreWriteError, TruncatedRecordError
 
 SHA_A = "a" * 40
 SHA_B = "b" * 40
@@ -208,3 +204,35 @@ def test_zero_record_write_creates_file_and_exists_true(tmp_path):
 
     assert store.exists("owner/repo", "jobs", 5) is True
     assert store.read_records("owner/repo", "jobs", 5) == []
+
+
+def test_two_writes_to_same_key_from_different_tmp_paths_both_succeed(tmp_path):
+    store = RawStore(tmp_path)
+    path = store.write_records("owner/repo", "jobs", 100, [_record(body=b"first-write")])
+    assert path.is_file()
+    assert store.read_records("owner/repo", "jobs", 100)[0].body == b"first-write"
+
+    path2 = store.write_records("owner/repo", "jobs", 100, [_record(body=b"second-write")])
+    assert path2 == path
+    assert store.read_records("owner/repo", "jobs", 100)[0].body == b"second-write"
+    # Ensure no stray tmp files left behind
+    assert list(path.parent.glob("*.tmp")) == []
+
+
+def test_deleting_tmp_file_mid_write_raises_rawstore_write_error(tmp_path, monkeypatch):
+    store = RawStore(tmp_path)
+    real_fsync = os.fsync
+
+    def deleting_fsync(fd):
+        # find and unlink the tmp file on disk while the descriptor is open
+        for p in tmp_path.rglob("*.tmp"):
+            p.unlink()
+        return real_fsync(fd)
+
+    monkeypatch.setattr(os, "fsync", deleting_fsync)
+
+    with pytest.raises(RawStoreWriteError) as exc_info:
+        store.write_records("owner/repo", "jobs", 42, [_record(body=b"payload")])
+
+    assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+    assert not store.exists("owner/repo", "jobs", 42)

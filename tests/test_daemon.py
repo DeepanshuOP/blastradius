@@ -19,7 +19,7 @@ from responses import matchers
 
 from src.harvest import daemon
 from src.harvest.cursor import CursorStore
-from src.harvest.rawstore import RawRecord, RawStore
+from src.harvest.rawstore import RawRecord, RawStore, RawStoreWriteError
 from src.harvest.ratelimit import AllTokensDead, TokenPool
 
 RECENT = "2026-08-01T00:00:00Z"
@@ -2296,6 +2296,65 @@ def test_already_complete_logs_unit_counts_as_dedup_skipped_without_request(tmp_
     assert stats["n_logs_captured"] == 0
     assert stats["total_log_bytes"] == 0
     assert len(responses.calls) == 0
+    cursor.close()
+
+
+@responses.activate
+def test_capture_job_logs_handles_rawstore_write_error_without_escaping(tmp_path, monkeypatch):
+    """RawStoreWriteError inside capture_job_logs increments n_logs_write_error,
+    marks unit failed in cursor, and does not escape."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+    now = datetime(2026, 8, 20, 12, 0, 0, tzinfo=timezone.utc)
+
+    _seed_pulls_page(store, cursor, "owner/repo", 1, [_pr(1, RECENT)])
+    _seed_pull_commits(store, cursor, "owner/repo", 1, [SHA_A])
+    _seed_runs_unit(
+        store, cursor, "owner/repo", SHA_A,
+        [_run_obj(601, (now - timedelta(days=5)).strftime("%Y-%m-%dT%H:%M:%SZ"))],
+    )
+    _seed_jobs_unit(store, cursor, "owner/repo", 601, [{"id": 6001, "conclusion": "failure"}])
+
+    responses.add(
+        responses.GET,
+        _job_log_url("owner", "repo", 6001),
+        body="test log content",
+        status=200,
+    )
+
+    def failing_write_records(*args, **kwargs):
+        raise RawStoreWriteError("simulated disk write failure")
+
+    monkeypatch.setattr(store, "write_records", failing_write_records)
+
+    stats = daemon.capture_job_logs(
+        ["owner/repo"],
+        pool=pool,
+        store=store,
+        cursor=cursor,
+        now=now,
+    )
+
+    assert stats["n_worklist_total"] == 1
+    assert stats["n_logs_write_error"] == 1
+    assert stats["n_logs_captured"] == 0
+    assert (
+        stats["n_logs_captured"]
+        + stats["n_logs_dedup_skipped"]
+        + stats["n_logs_skipped_expired"]
+        + stats["n_logs_expired"]
+        + stats["n_logs_failed_terminal"]
+        + stats["n_logs_write_error"]
+        + stats["n_logs_transient"]
+        + stats["n_logs_capped"]
+        + stats["n_logs_unknown_status"]
+    ) == stats["n_worklist_total"]
+
+    unit = cursor.get_capture_unit("owner/repo", "logs", 6001)
+    assert unit is not None
+    assert unit.status == "failed"
+    assert "write_error" in (unit.reason or "")
     cursor.close()
 
 

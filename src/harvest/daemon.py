@@ -103,7 +103,7 @@ from src.harvest.cursor import CursorStore, DEFAULT_DB_PATH
 # redefined, per the same D-09 lesson D-19/D-20 keep citing).
 from src.harvest.frame import AbortRun, CONSECUTIVE_TRANSIENT_LIMIT, TransientGovernor, _classify_failure
 from src.harvest.ratelimit import AllTokensDead, TokenPool, get_with_backoff
-from src.harvest.rawstore import DEFAULT_ROOT, RawRecord, RawStore
+from src.harvest.rawstore import DEFAULT_ROOT, RawRecord, RawStore, RawStoreWriteError
 
 DEFAULT_REPOS_PATH = Path("data/frame/frame_v1.csv")
 DEFAULT_LIMIT = 2
@@ -1043,6 +1043,7 @@ def capture_job_logs(
         "n_logs_skipped_expired": 0,
         "n_logs_expired": 0,
         "n_logs_failed_terminal": 0,
+        "n_logs_write_error": 0,
         "n_logs_transient": 0,
         "n_logs_capped": 0,
         "n_logs_unknown_status": 0,
@@ -1060,16 +1061,22 @@ def capture_job_logs(
             continue
 
         owner, repo = repo_full.split("/", 1)
-        status, log_bytes, status_code = _fetch_job_log(
-            owner,
-            repo,
-            job_id,
-            pool=pool,
-            store=store,
-            cursor=cursor,
-            repo_full=repo_full,
-            parent_run_id=parent_run_id,
-        )
+        try:
+            status, log_bytes, status_code = _fetch_job_log(
+                owner,
+                repo,
+                job_id,
+                pool=pool,
+                store=store,
+                cursor=cursor,
+                repo_full=repo_full,
+                parent_run_id=parent_run_id,
+            )
+        except (RawStoreWriteError, OSError) as exc:
+            cursor.mark_unit_failed(repo_full, "logs", job_id, f"write_error: {exc}")
+            stats["n_logs_write_error"] += 1
+            n_attempted += 1
+            continue
 
         if status == PR_UNIT_SKIPPED_ALREADY_DONE:
             stats["n_logs_dedup_skipped"] += 1
@@ -1103,6 +1110,7 @@ def capture_job_logs(
         + stats["n_logs_skipped_expired"]
         + stats["n_logs_expired"]
         + stats["n_logs_failed_terminal"]
+        + stats["n_logs_write_error"]
         + stats["n_logs_transient"]
         + stats["n_logs_capped"]
         + stats["n_logs_unknown_status"]
@@ -1510,6 +1518,7 @@ def run(
             f"skipped_expired={stage4_stats['n_logs_skipped_expired']} "
             f"expired={stage4_stats['n_logs_expired']} "
             f"failed_terminal={stage4_stats['n_logs_failed_terminal']} "
+            f"write_error={stage4_stats.get('n_logs_write_error', 0)} "
             f"transient={stage4_stats['n_logs_transient']} "
             f"capped={stage4_stats['n_logs_capped']} "
             f"unknown_status={stage4_stats['n_logs_unknown_status']} "
