@@ -53,6 +53,7 @@
 | **050** | 2026-08-26 | EXPECTED.md Audit | Amend EXPECTED.md for fixture 10, record D-27, and re-score corpus (100.00% precision) | [050-2026-08-26-expected-md-audit.md](file:///home/shree/blastradius/docs/session/050-2026-08-26-expected-md-audit.md) |
 | **051** | 2026-08-26 | T0.3d | Implement standalone artifact capture module (`src/harvest/artifacts.py`) and test suite | [051-2026-08-26-artifact-capture-module.md](file:///home/shree/blastradius/docs/session/051-2026-08-26-artifact-capture-module.md) |
 | **052** | 2026-08-26 | Artifact Cap & Lock Isolation | Fix artifact size cap to 300MB, isolate daemon lock in test suite, green with live daemon | [052-2026-08-26-artifact-cap-and-lock-isolation.md](file:///home/shree/blastradius/docs/session/052-2026-08-26-artifact-cap-and-lock-isolation.md) |
+| **053** | 2026-08-26 | T1.1c Holdout Set | Build held-out fixture set of 20 logs with hand-labelled ground truth and integrity test | [053-2026-08-26-holdout-fixture-set.md](file:///home/shree/blastradius/docs/session/053-2026-08-26-holdout-fixture-set.md) |
 | — | 2026-08-26 | T1.1b Gradle Parser | Read failing test names out of Gradle build logs (Terminal B, no session file) | — |
 
 *Note: Sequence number 011 is deliberately unused.*

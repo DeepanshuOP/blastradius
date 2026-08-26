@@ -235,10 +235,25 @@ def print_audit(rows: list[AuditRow]) -> None:
     print("=" * 115)
 
 
+import argparse
+
+
 def main() -> None:
-    rows = run_audit()
+    parser = argparse.ArgumentParser(description="Audit EXPECTED.md arithmetic against harness summaries")
+    parser.add_argument(
+        "fixtures_dir",
+        nargs="?",
+        default=FIXTURES_DIR,
+        type=Path,
+        help="Path to fixture directory containing logs and EXPECTED.md (default: tests/fixtures/logs)",
+    )
+    args = parser.parse_args()
+    fixtures_dir = args.fixtures_dir
+    expected_md = fixtures_dir / "EXPECTED.md"
+    rows = run_audit(fixtures_dir=fixtures_dir, expected_md=expected_md)
     print_audit(rows)
 
 
 if __name__ == "__main__":
     main()
+

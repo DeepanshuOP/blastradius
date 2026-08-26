@@ -1,0 +1,298 @@
+﻿2026-07-02T08:21:01.2796405Z Current runner version: '2.335.1'
+2026-07-02T08:21:01.2832040Z ##[group]Runner Image Provisioner
+2026-07-02T08:21:01.2833467Z Hosted Compute Agent
+2026-07-02T08:21:01.2834528Z Version: 20260611.554
+2026-07-02T08:21:01.2835836Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-07-02T08:21:01.2837233Z Build Date: 2026-06-11T21:40:46Z
+2026-07-02T08:21:01.2838426Z Worker ID: {809ec352-1b96-4941-950f-838807f69780}
+2026-07-02T08:21:01.2839800Z Azure Region: eastus
+2026-07-02T08:21:01.2840890Z ##[endgroup]
+2026-07-02T08:21:01.2843629Z ##[group]Operating System
+2026-07-02T08:21:01.2844883Z Ubuntu
+2026-07-02T08:21:01.2845816Z 24.04.4
+2026-07-02T08:21:01.2846860Z LTS
+2026-07-02T08:21:01.2847763Z ##[endgroup]
+2026-07-02T08:21:01.2848867Z ##[group]Runner Image
+2026-07-02T08:21:01.2850062Z Image: ubuntu-24.04
+2026-07-02T08:21:01.2850973Z Version: 20260622.220.1
+2026-07-02T08:21:01.2853381Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260622.220/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-02T08:21:01.2856264Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260622.220
+2026-07-02T08:21:01.2858005Z ##[endgroup]
+2026-07-02T08:21:01.2860107Z ##[group]GITHUB_TOKEN Permissions
+2026-07-02T08:21:01.2863434Z Contents: read
+2026-07-02T08:21:01.2864460Z Metadata: read
+2026-07-02T08:21:01.2865416Z ##[endgroup]
+2026-07-02T08:21:01.2868640Z Secret source: None
+2026-07-02T08:21:01.2869920Z Prepare workflow directory
+2026-07-02T08:21:01.3342091Z Prepare all required actions
+2026-07-02T08:21:01.3398208Z Getting action download info
+2026-07-02T08:21:01.5654702Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-07-02T08:21:01.6576872Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-07-02T08:21:02.2267096Z Download action repository 'gradle/actions@417ae3ccd767c252f5661f1ace9f835f9654f2b5' (SHA:417ae3ccd767c252f5661f1ace9f835f9654f2b5)
+2026-07-02T08:21:02.6227050Z Getting action download info
+2026-07-02T08:21:02.7146419Z Download action repository 'gradle/actions@v3.1.0' (SHA:417ae3ccd767c252f5661f1ace9f835f9654f2b5)
+2026-07-02T08:21:03.0623295Z Complete job name: dependency-submission
+2026-07-02T08:21:03.1524808Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:03.1536705Z ##[group]Run actions/checkout@v4
+2026-07-02T08:21:03.1537958Z with:
+2026-07-02T08:21:03.1538779Z   repository: baomidou/mybatis-plus
+2026-07-02T08:21:03.1549586Z   token: ***
+2026-07-02T08:21:03.1550384Z   ssh-strict: true
+2026-07-02T08:21:03.1551189Z   ssh-user: git
+2026-07-02T08:21:03.1552149Z   persist-credentials: true
+2026-07-02T08:21:03.1553073Z   clean: true
+2026-07-02T08:21:03.1553911Z   sparse-checkout-cone-mode: true
+2026-07-02T08:21:03.1554948Z   fetch-depth: 1
+2026-07-02T08:21:03.1555762Z   fetch-tags: false
+2026-07-02T08:21:03.1556582Z   show-progress: true
+2026-07-02T08:21:03.1557406Z   lfs: false
+2026-07-02T08:21:03.1558211Z   submodules: false
+2026-07-02T08:21:03.1559054Z   set-safe-directory: true
+2026-07-02T08:21:03.1560246Z ##[endgroup]
+2026-07-02T08:21:03.2565741Z Syncing repository: baomidou/mybatis-plus
+2026-07-02T08:21:03.2568867Z ##[group]Getting Git version info
+2026-07-02T08:21:03.2570400Z Working directory is '/home/runner/work/mybatis-plus/mybatis-plus'
+2026-07-02T08:21:03.2572860Z [command]/usr/bin/git version
+2026-07-02T08:21:03.2670686Z git version 2.54.0
+2026-07-02T08:21:03.2695774Z ##[endgroup]
+2026-07-02T08:21:03.2712844Z Temporarily overriding HOME='/home/runner/work/_temp/019b2bb1-fd7b-4a03-9fec-5c0169e7ac3a' before making global git config changes
+2026-07-02T08:21:03.2717756Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-02T08:21:03.2722661Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mybatis-plus/mybatis-plus
+2026-07-02T08:21:03.2773008Z Deleting the contents of '/home/runner/work/mybatis-plus/mybatis-plus'
+2026-07-02T08:21:03.2777504Z ##[group]Initializing the repository
+2026-07-02T08:21:03.2782737Z [command]/usr/bin/git init /home/runner/work/mybatis-plus/mybatis-plus
+2026-07-02T08:21:03.2905406Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-02T08:21:03.2909482Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-02T08:21:03.2913388Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-02T08:21:03.2916673Z hint: call:
+2026-07-02T08:21:03.2918144Z hint:
+2026-07-02T08:21:03.2919919Z hint: 	git config --global init.defaultBranch <name>
+2026-07-02T08:21:03.2922594Z hint:
+2026-07-02T08:21:03.2924805Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-02T08:21:03.2928416Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-02T08:21:03.2931936Z hint:
+2026-07-02T08:21:03.2933726Z hint: 	git branch -m <name>
+2026-07-02T08:21:03.2935687Z hint:
+2026-07-02T08:21:03.2938133Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-02T08:21:03.2942622Z Initialized empty Git repository in /home/runner/work/mybatis-plus/mybatis-plus/.git/
+2026-07-02T08:21:03.2949582Z [command]/usr/bin/git remote add origin https://github.com/baomidou/mybatis-plus
+2026-07-02T08:21:03.2974341Z ##[endgroup]
+2026-07-02T08:21:03.2976849Z ##[group]Disabling automatic garbage collection
+2026-07-02T08:21:03.2979133Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-02T08:21:03.3011807Z ##[endgroup]
+2026-07-02T08:21:03.3014212Z ##[group]Setting up auth
+2026-07-02T08:21:03.3020198Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-02T08:21:03.3057080Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-02T08:21:03.3491394Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-02T08:21:03.3529097Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-02T08:21:03.3759695Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-02T08:21:03.3794805Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-02T08:21:03.4021091Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-02T08:21:03.4056319Z ##[endgroup]
+2026-07-02T08:21:03.4057717Z ##[group]Fetching the repository
+2026-07-02T08:21:03.4065257Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7956ed59754ec9d4546d65be9dae01f846aeca12:refs/remotes/pull/7106/merge
+2026-07-02T08:21:03.8234964Z From https://github.com/baomidou/mybatis-plus
+2026-07-02T08:21:03.8238019Z  * [new ref]         7956ed59754ec9d4546d65be9dae01f846aeca12 -> pull/7106/merge
+2026-07-02T08:21:03.8284340Z ##[endgroup]
+2026-07-02T08:21:03.8286733Z ##[group]Determining the checkout info
+2026-07-02T08:21:03.8289433Z ##[endgroup]
+2026-07-02T08:21:03.8292890Z [command]/usr/bin/git sparse-checkout disable
+2026-07-02T08:21:03.8342079Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-02T08:21:03.8379120Z ##[group]Checking out the ref
+2026-07-02T08:21:03.8382644Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/7106/merge
+2026-07-02T08:21:03.9313952Z Note: switching to 'refs/remotes/pull/7106/merge'.
+2026-07-02T08:21:03.9315406Z 
+2026-07-02T08:21:03.9316636Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-02T08:21:03.9320172Z changes and commit them, and you can discard any commits you make in this
+2026-07-02T08:21:03.9323379Z state without impacting any branches by switching back to a branch.
+2026-07-02T08:21:03.9325177Z 
+2026-07-02T08:21:03.9326385Z If you want to create a new branch to retain commits you create, you may
+2026-07-02T08:21:03.9329077Z do so (now or later) by using -c with the switch command. Example:
+2026-07-02T08:21:03.9330729Z 
+2026-07-02T08:21:03.9331388Z   git switch -c <new-branch-name>
+2026-07-02T08:21:03.9332841Z 
+2026-07-02T08:21:03.9333483Z Or undo this operation with:
+2026-07-02T08:21:03.9334266Z 
+2026-07-02T08:21:03.9334688Z   git switch -
+2026-07-02T08:21:03.9335256Z 
+2026-07-02T08:21:03.9336172Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-02T08:21:03.9337498Z 
+2026-07-02T08:21:03.9338813Z HEAD is now at 7956ed5 Merge 52cb2701913fe4f8484cbaaffd00d179a14f9cd4 into f81155b9466267c25b84cf03eae71c3a4e08e4fe
+2026-07-02T08:21:03.9343282Z ##[endgroup]
+2026-07-02T08:21:03.9370840Z [command]/usr/bin/git log -1 --format=%H
+2026-07-02T08:21:03.9395181Z 7956ed59754ec9d4546d65be9dae01f846aeca12
+2026-07-02T08:21:03.9780467Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:03.9785574Z ##[group]Run actions/setup-java@v4
+2026-07-02T08:21:03.9786627Z with:
+2026-07-02T08:21:03.9787437Z   java-version: 21
+2026-07-02T08:21:03.9788322Z   distribution: temurin
+2026-07-02T08:21:03.9789248Z   java-package: jdk
+2026-07-02T08:21:03.9790138Z   check-latest: false
+2026-07-02T08:21:03.9791035Z   server-id: github
+2026-07-02T08:21:03.9792097Z   server-username: GITHUB_ACTOR
+2026-07-02T08:21:03.9793155Z   server-password: GITHUB_TOKEN
+2026-07-02T08:21:03.9794221Z   overwrite-settings: true
+2026-07-02T08:21:03.9795198Z   job-status: success
+2026-07-02T08:21:03.9805313Z   token: ***
+2026-07-02T08:21:03.9806162Z ##[endgroup]
+2026-07-02T08:21:04.1418763Z ##[group]Installed distributions
+2026-07-02T08:21:04.1561078Z Resolved Java 21.0.11+10 from tool-cache
+2026-07-02T08:21:04.1563197Z Setting Java 21.0.11+10 as the default
+2026-07-02T08:21:04.1572605Z (node:2195) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-02T08:21:04.1575082Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-02T08:21:04.1577290Z Creating toolchains.xml for JDK version 21 from temurin
+2026-07-02T08:21:04.1655872Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-02T08:21:04.1657171Z 
+2026-07-02T08:21:04.1657782Z Java configuration:
+2026-07-02T08:21:04.1659200Z   Distribution: temurin
+2026-07-02T08:21:04.1660663Z   Version: 21.0.11+10
+2026-07-02T08:21:04.1662867Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.1664359Z 
+2026-07-02T08:21:04.1665346Z ##[endgroup]
+2026-07-02T08:21:04.1680151Z Creating settings.xml with server-id: github
+2026-07-02T08:21:04.1681913Z Writing to /home/runner/.m2/settings.xml
+2026-07-02T08:21:04.2011064Z ##[group]Run gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5
+2026-07-02T08:21:04.2013016Z with:
+2026-07-02T08:21:04.2013884Z   dependency-graph: generate-and-submit
+2026-07-02T08:21:04.2015002Z   build-scan-publish: false
+2026-07-02T08:21:04.2015928Z env:
+2026-07-02T08:21:04.2017032Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2018848Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2020316Z ##[endgroup]
+2026-07-02T08:21:04.2142593Z ##[group]Run if [ -n "${GRADLE_BUILD_ACTION_SETUP_COMPLETED}" ]; then
+2026-07-02T08:21:04.2144380Z [36;1mif [ -n "${GRADLE_BUILD_ACTION_SETUP_COMPLETED}" ]; then[0m
+2026-07-02T08:21:04.2147293Z [36;1m  echo "The dependency-submission action cannot be used in the same Job as the setup-gradle action. Please use a separate Job for dependency submission."[0m
+2026-07-02T08:21:04.2149921Z [36;1m  exit 1[0m
+2026-07-02T08:21:04.2150901Z [36;1mfi[0m
+2026-07-02T08:21:04.2345687Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-02T08:21:04.2347257Z env:
+2026-07-02T08:21:04.2348480Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2350497Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2352649Z ##[endgroup]
+2026-07-02T08:21:04.2752063Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:04.2756402Z ##[group]Run gradle/actions/setup-gradle@v3.1.0
+2026-07-02T08:21:04.2757564Z with:
+2026-07-02T08:21:04.2758443Z   dependency-graph: generate-and-submit
+2026-07-02T08:21:04.2759635Z   dependency-graph-continue-on-failure: false
+2026-07-02T08:21:04.2760849Z   build-scan-publish: false
+2026-07-02T08:21:04.2761988Z   artifact-retention-days: 1
+2026-07-02T08:21:04.2764957Z   arguments: -Dorg.gradle.configureondemand=false
+-Dorg.gradle.dependency.verification=off
+-Dorg.gradle.unsafe.isolated-projects=false
+:ForceDependencyResolutionPlugin_resolveAllDependencies
+
+
+2026-07-02T08:21:04.2768042Z   cache-disabled: false
+2026-07-02T08:21:04.2768930Z   cache-read-only: true
+2026-07-02T08:21:04.2769842Z   cache-write-only: false
+2026-07-02T08:21:04.2770813Z   cache-overwrite-existing: false
+2026-07-02T08:21:04.2772367Z   gradle-home-cache-includes: caches
+notifications
+
+2026-07-02T08:21:04.2773645Z   gradle-home-cache-cleanup: false
+2026-07-02T08:21:04.2774675Z   add-job-summary: always
+2026-07-02T08:21:04.2775679Z   add-job-summary-as-pr-comment: never
+2026-07-02T08:21:04.2776780Z   generate-job-summary: true
+2026-07-02T08:21:04.2777794Z   gradle-home-cache-strict-match: false
+2026-07-02T08:21:04.2778900Z   workflow-job-context: null
+2026-07-02T08:21:04.2789089Z   github-token: ***
+2026-07-02T08:21:04.2789918Z env:
+2026-07-02T08:21:04.2791018Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2793014Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-02T08:21:04.2794495Z ##[endgroup]
+2026-07-02T08:21:04.4528350Z (node:2208) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-02T08:21:04.4534605Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-02T08:21:05.5838742Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-07-02T08:21:05.5842028Z ##[group]Restore Gradle state from cache
+2026-07-02T08:21:05.7011350Z ##[warning]Failed to restore v9-gradle|Linux|dependency-submission[04d8ed242d6e4f9366abd4632caf0523]-7956ed59754ec9d4546d65be9dae01f846aeca12: Error: Cache service responded with 400
+2026-07-02T08:21:05.7056270Z Gradle User Home cache not found. Will initialize empty.
+2026-07-02T08:21:05.7062829Z ##[endgroup]
+2026-07-02T08:21:05.7072776Z Enabling dependency graph generation
+2026-07-02T08:21:05.7081041Z [command]/home/runner/work/mybatis-plus/mybatis-plus/gradlew -Dorg.gradle.configureondemand=false -Dorg.gradle.dependency.verification=off -Dorg.gradle.unsafe.isolated-projects=false :ForceDependencyResolutionPlugin_resolveAllDependencies
+2026-07-02T08:21:06.0442896Z Downloading https://services.gradle.org/distributions/gradle-8.13-bin.zip
+2026-07-02T08:21:08.5280026Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+2026-07-02T08:21:09.8734539Z 
+2026-07-02T08:21:09.8735543Z Welcome to Gradle 8.13!
+2026-07-02T08:21:09.8736941Z 
+2026-07-02T08:21:09.8737653Z Here are the highlights of this release:
+2026-07-02T08:21:09.8738817Z  - Daemon JVM auto-provisioning
+2026-07-02T08:21:09.8740102Z  - Enhancements for Scala plugin and JUnit testing
+2026-07-02T08:21:09.8741807Z  - Improvements for build authors and plugin developers
+2026-07-02T08:21:09.8752710Z 
+2026-07-02T08:21:09.8753187Z For more details see https://docs.gradle.org/8.13/release-notes.html
+2026-07-02T08:21:09.8753789Z 
+2026-07-02T08:21:10.0732087Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-07-02T08:21:15.0733461Z Generating dependency graph into '/home/runner/work/mybatis-plus/mybatis-plus/dependency-graph-reports/java_ci_with_gradle-dependency-submission.json'
+2026-07-02T08:21:36.7745718Z > Task :ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:40.0743480Z > Task :mybatis-plus:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:40.0745152Z > Task :mybatis-plus-annotation:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:40.3730103Z > Task :mybatis-plus-bom:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:40.3762684Z > Task :mybatis-plus-core:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:40.5728432Z > Task :mybatis-plus-extension:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.1756418Z > Task :mybatis-plus-generator:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.1777657Z > Task :mybatis-plus-jsqlparser-support:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.2733550Z > Task :mybatis-plus-spring:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.2735385Z > Task :spring-boot-starter:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.3737153Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.4733809Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-4.9:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.4762090Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-5.0:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:45.5745447Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:47.0738642Z > Task :spring-boot-starter:mybatis-plus-boot-starter:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:47.2754582Z > Task :spring-boot-starter:mybatis-plus-boot-starter-test:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:47.3733505Z > Task :spring-boot-starter:mybatis-plus-spring-boot-autoconfigure:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:47.4729889Z > Task :spring-boot-starter:mybatis-plus-spring-boot-test-autoconfigure:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:50.3729636Z > Task :spring-boot-starter:mybatis-plus-spring-boot3-starter:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:50.5754801Z > Task :spring-boot-starter:mybatis-plus-spring-boot3-starter-test:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:52.1729191Z > Task :spring-boot-starter:mybatis-plus-spring-boot4-starter:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:52.2808530Z > Task :spring-boot-starter:mybatis-plus-spring-boot4-starter-test:ForceDependencyResolutionPlugin_resolveProjectDependencies
+2026-07-02T08:21:52.2812256Z > Task :ForceDependencyResolutionPlugin_resolveAllDependencies
+2026-07-02T08:21:52.3732924Z Constructing renderer: org.gradle.github.dependencygraph.GitHubDependencyGraphRenderer
+2026-07-02T08:21:52.9782518Z 
+2026-07-02T08:21:52.9812767Z GitHubDependencyGraphRenderer: Wrote dependency snapshot to 
+2026-07-02T08:21:52.9842615Z /home/runner/work/mybatis-plus/mybatis-plus/dependency-graph-reports/java_ci_with_gradle-dependency-submission.json
+2026-07-02T08:21:52.9862062Z 
+2026-07-02T08:21:52.9864576Z [Incubating] Problems report is available at: file:///home/runner/work/mybatis-plus/mybatis-plus/build/reports/problems/problems-report.html
+2026-07-02T08:21:52.9865575Z 
+2026-07-02T08:21:52.9866064Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-07-02T08:21:52.9866719Z 
+2026-07-02T08:21:52.9867460Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-02T08:21:52.9868399Z 
+2026-07-02T08:21:52.9869558Z For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-02T08:21:52.9870669Z 
+2026-07-02T08:21:52.9870835Z BUILD SUCCESSFUL in 47s
+2026-07-02T08:21:52.9871254Z 22 actionable tasks: 22 executed
+2026-07-02T08:21:53.3315798Z Post job cleanup.
+2026-07-02T08:21:53.3416359Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:53.3417573Z Post job cleanup.
+2026-07-02T08:21:53.5121592Z In post-action step
+2026-07-02T08:21:53.5128887Z Cache is read-only: will not save state for use in subsequent builds.
+2026-07-02T08:21:53.5131883Z (node:2472) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-02T08:21:53.5133379Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-02T08:21:53.5139323Z Generating Job Summary
+2026-07-02T08:21:53.6777686Z ##[error]Error: Dependency submission failed for dependency-graph-reports/java_ci_with_gradle-dependency-submission.json.
+HttpError: Resource not accessible by integration
+Please ensure that the 'contents: write' permission is available for the workflow job.
+Note that this permission is never available for a 'pull_request' trigger from a repository fork.
+        
+2026-07-02T08:21:53.7200634Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:53.7202264Z Post job cleanup.
+2026-07-02T08:21:53.8487006Z (node:2486) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-02T08:21:53.8487880Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-02T08:21:53.8674931Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-02T08:21:53.8676192Z Post job cleanup.
+2026-07-02T08:21:53.9536651Z [command]/usr/bin/git version
+2026-07-02T08:21:53.9575187Z git version 2.54.0
+2026-07-02T08:21:53.9614686Z Temporarily overriding HOME='/home/runner/work/_temp/fc65285c-3f8a-49ea-8c4b-92bf0d0b0e8b' before making global git config changes
+2026-07-02T08:21:53.9616064Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-02T08:21:53.9620846Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mybatis-plus/mybatis-plus
+2026-07-02T08:21:53.9657218Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-02T08:21:53.9689067Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-02T08:21:53.9915800Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-02T08:21:53.9943040Z http.https://github.com/.extraheader
+2026-07-02T08:21:53.9953779Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-07-02T08:21:53.9984676Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-02T08:21:54.0244019Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-02T08:21:54.0278572Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-02T08:21:54.0630823Z Cleaning up orphan processes
+2026-07-02T08:21:54.1006014Z Terminate orphan process: pid (2298) (java)
+2026-07-02T08:21:54.1183715Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, gradle/actions/setup-gradle@v3.1.0. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,853 @@
+﻿2026-07-09T14:54:22.9108152Z Current runner version: '2.335.1'
+2026-07-09T14:54:22.9126503Z ##[group]Runner Image Provisioner
+2026-07-09T14:54:22.9127234Z Hosted Compute Agent
+2026-07-09T14:54:22.9127709Z Version: 20260624.560
+2026-07-09T14:54:22.9128280Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-09T14:54:22.9128871Z Build Date: 2026-06-24T18:26:47Z
+2026-07-09T14:54:22.9129414Z Worker ID: {c293daa3-e603-43e2-bea0-1f0a63d43eb8}
+2026-07-09T14:54:22.9130019Z Azure Region: westus3
+2026-07-09T14:54:22.9130485Z ##[endgroup]
+2026-07-09T14:54:22.9131473Z ##[group]Operating System
+2026-07-09T14:54:22.9131975Z Ubuntu
+2026-07-09T14:54:22.9132396Z 24.04.4
+2026-07-09T14:54:22.9132831Z LTS
+2026-07-09T14:54:22.9133249Z ##[endgroup]
+2026-07-09T14:54:22.9134023Z ##[group]Runner Image
+2026-07-09T14:54:22.9134601Z Image: ubuntu-24.04
+2026-07-09T14:54:22.9135059Z Version: 20260705.232.1
+2026-07-09T14:54:22.9136072Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260705.232/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-09T14:54:22.9137271Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260705.232
+2026-07-09T14:54:22.9138048Z ##[endgroup]
+2026-07-09T14:54:22.9140488Z ##[group]GITHUB_TOKEN Permissions
+2026-07-09T14:54:22.9142293Z Actions: write
+2026-07-09T14:54:22.9142822Z ArtifactMetadata: write
+2026-07-09T14:54:22.9143321Z Attestations: write
+2026-07-09T14:54:22.9143928Z Checks: write
+2026-07-09T14:54:22.9144402Z CodeQuality: write
+2026-07-09T14:54:22.9144874Z Contents: write
+2026-07-09T14:54:22.9145357Z CopilotRequests: write
+2026-07-09T14:54:22.9145812Z Deployments: write
+2026-07-09T14:54:22.9146281Z Discussions: write
+2026-07-09T14:54:22.9146722Z Drives: write
+2026-07-09T14:54:22.9147153Z Issues: write
+2026-07-09T14:54:22.9147638Z Metadata: read
+2026-07-09T14:54:22.9148176Z Models: read
+2026-07-09T14:54:22.9148614Z Packages: write
+2026-07-09T14:54:22.9149050Z Pages: write
+2026-07-09T14:54:22.9149465Z PullRequests: write
+2026-07-09T14:54:22.9149977Z RepositoryProjects: write
+2026-07-09T14:54:22.9150493Z SecurityEvents: write
+2026-07-09T14:54:22.9150953Z Statuses: write
+2026-07-09T14:54:22.9151415Z VulnerabilityAlerts: read
+2026-07-09T14:54:22.9151896Z ##[endgroup]
+2026-07-09T14:54:22.9153559Z Secret source: Actions
+2026-07-09T14:54:22.9154349Z Prepare workflow directory
+2026-07-09T14:54:22.9402925Z Prepare all required actions
+2026-07-09T14:54:22.9435530Z Getting action download info
+2026-07-09T14:54:23.2908266Z Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-09T14:54:23.5256631Z Download action repository 'actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c' (SHA:3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c)
+2026-07-09T14:54:24.4127167Z Download action repository 'actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a' (SHA:0f481fcb613427c0f801b606911222b5b6f3083a)
+2026-07-09T14:54:25.2916080Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-07-09T14:54:25.5724271Z Uses: openremote/openremote/.github/workflows/ui-app-tests.yml@refs/pull/2916/merge (0eb9c48a5a0745f73b5a0a9ca7a8722908a2443b)
+2026-07-09T14:54:25.5727573Z ##[group] Inputs
+2026-07-09T14:54:25.5728096Z   skip: false
+2026-07-09T14:54:25.5728403Z ##[endgroup]
+2026-07-09T14:54:25.5728683Z Complete job name: Test / UI App Tests (1, 4)
+2026-07-09T14:54:25.6244690Z ##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+2026-07-09T14:54:25.6245318Z with:
+2026-07-09T14:54:25.6245575Z   lfs: true
+2026-07-09T14:54:25.6245857Z   repository: openremote/openremote
+2026-07-09T14:54:25.6248085Z   token: ***
+2026-07-09T14:54:25.6248335Z   ssh-strict: true
+2026-07-09T14:54:25.6248626Z   ssh-user: git
+2026-07-09T14:54:25.6248902Z   persist-credentials: true
+2026-07-09T14:54:25.6249187Z   clean: true
+2026-07-09T14:54:25.6249486Z   sparse-checkout-cone-mode: true
+2026-07-09T14:54:25.6249786Z   fetch-depth: 1
+2026-07-09T14:54:25.6250210Z   fetch-tags: false
+2026-07-09T14:54:25.6250479Z   show-progress: true
+2026-07-09T14:54:25.6250758Z   submodules: false
+2026-07-09T14:54:25.6251056Z   set-safe-directory: true
+2026-07-09T14:54:25.6251355Z   allow-unsafe-pr-checkout: false
+2026-07-09T14:54:25.6251766Z ##[endgroup]
+2026-07-09T14:54:25.7050673Z Syncing repository: openremote/openremote
+2026-07-09T14:54:25.7051937Z ##[group]Getting Git version info
+2026-07-09T14:54:25.7052385Z Working directory is '/home/runner/work/openremote/openremote'
+2026-07-09T14:54:25.7052957Z [command]/usr/bin/git version
+2026-07-09T14:54:25.7084315Z git version 2.54.0
+2026-07-09T14:54:25.7111229Z [command]/usr/bin/git lfs version
+2026-07-09T14:54:25.8734163Z git-lfs/3.7.1 (GitHub; linux amd64; go 1.24.4)
+2026-07-09T14:54:25.8742107Z ##[endgroup]
+2026-07-09T14:54:25.8751197Z Temporarily overriding HOME='/home/runner/work/_temp/ce45b473-9b13-4afd-b5a3-402915c95623' before making global git config changes
+2026-07-09T14:54:25.8752353Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-09T14:54:25.8754658Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-07-09T14:54:25.8805803Z Deleting the contents of '/home/runner/work/openremote/openremote'
+2026-07-09T14:54:25.8807884Z ##[group]Determining repository object format
+2026-07-09T14:54:25.8809535Z ##[endgroup]
+2026-07-09T14:54:25.8810027Z ##[group]Initializing the repository
+2026-07-09T14:54:25.8813985Z [command]/usr/bin/git init /home/runner/work/openremote/openremote
+2026-07-09T14:54:25.8882184Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-09T14:54:25.8883294Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-09T14:54:25.8886563Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-09T14:54:25.8887644Z hint: call:
+2026-07-09T14:54:25.8888532Z hint:
+2026-07-09T14:54:25.8889155Z hint: 	git config --global init.defaultBranch <name>
+2026-07-09T14:54:25.8889652Z hint:
+2026-07-09T14:54:25.8890131Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-09T14:54:25.8890810Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-09T14:54:25.8891405Z hint:
+2026-07-09T14:54:25.8891706Z hint: 	git branch -m <name>
+2026-07-09T14:54:25.8892037Z hint:
+2026-07-09T14:54:25.8892486Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-09T14:54:25.8893260Z Initialized empty Git repository in /home/runner/work/openremote/openremote/.git/
+2026-07-09T14:54:25.8907730Z [command]/usr/bin/git remote add origin https://github.com/openremote/openremote
+2026-07-09T14:54:25.8930915Z ##[endgroup]
+2026-07-09T14:54:25.8931382Z ##[group]Disabling automatic garbage collection
+2026-07-09T14:54:25.8933009Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-09T14:54:25.8952195Z ##[endgroup]
+2026-07-09T14:54:25.8952657Z ##[group]Setting up auth
+2026-07-09T14:54:25.8953044Z Removing SSH command configuration
+2026-07-09T14:54:25.8956910Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-09T14:54:25.8978692Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-09T14:54:25.9172240Z Removing HTTP extra header
+2026-07-09T14:54:25.9177279Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-09T14:54:25.9199735Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-09T14:54:25.9348705Z Removing includeIf entries pointing to credentials config files
+2026-07-09T14:54:25.9352481Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-09T14:54:25.9373364Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-09T14:54:25.9527550Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-09T14:54:25.9552087Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T14:54:25.9573590Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T14:54:25.9595168Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T14:54:25.9616616Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T14:54:25.9634596Z ##[endgroup]
+2026-07-09T14:54:25.9637426Z [command]/usr/bin/git lfs install --local
+2026-07-09T14:54:25.9881160Z Updated Git hooks.
+2026-07-09T14:54:25.9881751Z Git LFS initialized.
+2026-07-09T14:54:25.9910026Z ##[group]Fetching the repository
+2026-07-09T14:54:25.9916836Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0eb9c48a5a0745f73b5a0a9ca7a8722908a2443b:refs/remotes/pull/2916/merge
+2026-07-09T14:54:27.5635981Z From https://github.com/openremote/openremote
+2026-07-09T14:54:27.5645195Z  * [new ref]         0eb9c48a5a0745f73b5a0a9ca7a8722908a2443b -> pull/2916/merge
+2026-07-09T14:54:27.5653639Z ##[endgroup]
+2026-07-09T14:54:27.5655262Z ##[group]Determining the checkout info
+2026-07-09T14:54:27.5655853Z ##[endgroup]
+2026-07-09T14:54:27.5656351Z ##[group]Fetching LFS objects
+2026-07-09T14:54:27.5659709Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/2916/merge
+2026-07-09T14:54:27.5827107Z Fetching reference refs/remotes/pull/2916/merge
+2026-07-09T14:54:30.4500627Z ##[endgroup]
+2026-07-09T14:54:30.4505921Z [command]/usr/bin/git sparse-checkout disable
+2026-07-09T14:54:30.4545937Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-09T14:54:30.4561416Z ##[group]Checking out the ref
+2026-07-09T14:54:30.4565326Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2916/merge
+2026-07-09T14:54:30.6543099Z Note: switching to 'refs/remotes/pull/2916/merge'.
+2026-07-09T14:54:30.6544288Z 
+2026-07-09T14:54:30.6544832Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-09T14:54:30.6545386Z changes and commit them, and you can discard any commits you make in this
+2026-07-09T14:54:30.6546030Z state without impacting any branches by switching back to a branch.
+2026-07-09T14:54:30.6546446Z 
+2026-07-09T14:54:30.6546713Z If you want to create a new branch to retain commits you create, you may
+2026-07-09T14:54:30.6547265Z do so (now or later) by using -c with the switch command. Example:
+2026-07-09T14:54:30.6547632Z 
+2026-07-09T14:54:30.6547844Z   git switch -c <new-branch-name>
+2026-07-09T14:54:30.6548135Z 
+2026-07-09T14:54:30.6548326Z Or undo this operation with:
+2026-07-09T14:54:30.6548520Z 
+2026-07-09T14:54:30.6548900Z   git switch -
+2026-07-09T14:54:30.6549081Z 
+2026-07-09T14:54:30.6549418Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-09T14:54:30.6549862Z 
+2026-07-09T14:54:30.6550334Z HEAD is now at 0eb9c48 Merge 603e882f3e608e17b213e2c08320f0e8b4fe367b into a533713875e1070d72d2485fd9c5eef7f1df7cb4
+2026-07-09T14:54:30.6802597Z ##[endgroup]
+2026-07-09T14:54:30.6829492Z [command]/usr/bin/git log -1 --format=%H
+2026-07-09T14:54:30.6849554Z 0eb9c48a5a0745f73b5a0a9ca7a8722908a2443b
+2026-07-09T14:54:30.7018094Z ##[group]Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+2026-07-09T14:54:30.7018552Z with:
+2026-07-09T14:54:30.7018745Z   name: or-manager-build
+2026-07-09T14:54:30.7018978Z   path: manager/build
+2026-07-09T14:54:30.7019196Z   merge-multiple: false
+2026-07-09T14:54:30.7019448Z   repository: openremote/openremote
+2026-07-09T14:54:30.7019690Z   run-id: 29026970986
+2026-07-09T14:54:30.7019885Z   skip-decompress: false
+2026-07-09T14:54:30.7020093Z   digest-mismatch: error
+2026-07-09T14:54:30.7020291Z ##[endgroup]
+2026-07-09T14:54:30.8097689Z Downloading single artifact
+2026-07-09T14:54:31.0340464Z Preparing to download the following artifacts:
+2026-07-09T14:54:31.0341343Z - or-manager-build (ID: 8202136771, Size: 276387108, Expected Digest: sha256:3090cc51874c534958bb857b3394a0d9e14492aff52e605cd61aead43e0ecd74)
+2026-07-09T14:54:31.5045758Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/51bbc160-0802-4efb-89ed-b630cda82809/workflow-job-run-1c77fa55-2e2b-5fcd-8de4-1ffa499c843c/artifacts/3b9bf7f09cc3226bfeaf533055a08971b24a4a8f14a715a7c74dcf9c25f60f60.zip
+2026-07-09T14:54:31.5047657Z Starting download of artifact to: /home/runner/work/openremote/openremote/manager/build
+2026-07-09T14:54:31.8156018Z (node:2274) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-07-09T14:54:31.8156768Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-09T14:54:48.4329328Z SHA256 digest of downloaded artifact is 3090cc51874c534958bb857b3394a0d9e14492aff52e605cd61aead43e0ecd74
+2026-07-09T14:54:48.4330207Z Artifact download completed successfully.
+2026-07-09T14:54:48.4330738Z Total of 1 artifact(s) downloaded
+2026-07-09T14:54:48.4333482Z Download artifact has finished successfully
+2026-07-09T14:54:48.4464750Z ##[group]Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+2026-07-09T14:54:48.4465109Z with:
+2026-07-09T14:54:48.4465325Z   name: or-ui-component-build
+2026-07-09T14:54:48.4465557Z   path: ui/component
+2026-07-09T14:54:48.4465772Z   merge-multiple: false
+2026-07-09T14:54:48.4465993Z   repository: openremote/openremote
+2026-07-09T14:54:48.4466218Z   run-id: 29026970986
+2026-07-09T14:54:48.4466419Z   skip-decompress: false
+2026-07-09T14:54:48.4466630Z   digest-mismatch: error
+2026-07-09T14:54:48.4466835Z ##[endgroup]
+2026-07-09T14:54:48.5542492Z Downloading single artifact
+2026-07-09T14:54:48.7835628Z Preparing to download the following artifacts:
+2026-07-09T14:54:48.7836524Z - or-ui-component-build (ID: 8202138007, Size: 4690811, Expected Digest: sha256:6f1e9d6ee582a7de054ec84bbdc7331504d4f1970886d890b5ab9f5f72e95a4b)
+2026-07-09T14:54:49.2704342Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/51bbc160-0802-4efb-89ed-b630cda82809/workflow-job-run-1c77fa55-2e2b-5fcd-8de4-1ffa499c843c/artifacts/951fd959d842defa19da45437d2f7ae089f9c12d417adaae71534f94cde76abb.zip
+2026-07-09T14:54:49.2705983Z Starting download of artifact to: /home/runner/work/openremote/openremote/ui/component
+2026-07-09T14:54:49.6028800Z (node:2288) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-07-09T14:54:49.6029581Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-09T14:54:50.4995090Z SHA256 digest of downloaded artifact is 6f1e9d6ee582a7de054ec84bbdc7331504d4f1970886d890b5ab9f5f72e95a4b
+2026-07-09T14:54:50.4995904Z Artifact download completed successfully.
+2026-07-09T14:54:50.4996362Z Total of 1 artifact(s) downloaded
+2026-07-09T14:54:50.4999089Z Download artifact has finished successfully
+2026-07-09T14:54:50.5115921Z ##[group]Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+2026-07-09T14:54:50.5116323Z with:
+2026-07-09T14:54:50.5116564Z   name: playwright-browsers
+2026-07-09T14:54:50.5116826Z   path: /home/runner/.cache/ms-playwright
+2026-07-09T14:54:50.5117205Z   merge-multiple: false
+2026-07-09T14:54:50.5117466Z   repository: openremote/openremote
+2026-07-09T14:54:50.5117725Z   run-id: 29026970986
+2026-07-09T14:54:50.5117989Z   skip-decompress: false
+2026-07-09T14:54:50.5118217Z   digest-mismatch: error
+2026-07-09T14:54:50.5118424Z ##[endgroup]
+2026-07-09T14:54:50.6170717Z Downloading single artifact
+2026-07-09T14:54:50.8542733Z Preparing to download the following artifacts:
+2026-07-09T14:54:50.8543632Z - playwright-browsers (ID: 8202036386, Size: 110500761, Expected Digest: sha256:ab03bc53d33833bac4cd71357dfc2d435ce2c683978e0206239c847106b6152d)
+2026-07-09T14:54:51.3503596Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/51bbc160-0802-4efb-89ed-b630cda82809/workflow-job-run-f74e5555-1018-5cbc-8ff0-d24c997d4075/artifacts/dfd9711baeab04aa13428dba78c0703bba55e106493a58a23049150f32b8daac.zip
+2026-07-09T14:54:51.3505309Z Starting download of artifact to: /home/runner/.cache/ms-playwright
+2026-07-09T14:54:51.6238322Z (node:2300) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-07-09T14:54:51.6239049Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-09T14:55:13.3543128Z SHA256 digest of downloaded artifact is ab03bc53d33833bac4cd71357dfc2d435ce2c683978e0206239c847106b6152d
+2026-07-09T14:55:13.3543625Z Artifact download completed successfully.
+2026-07-09T14:55:13.3544036Z Total of 1 artifact(s) downloaded
+2026-07-09T14:55:13.3559871Z Download artifact has finished successfully
+2026-07-09T14:55:13.3642925Z ##[group]Run chmod -R +x /home/runner/.cache/ms-playwright
+2026-07-09T14:55:13.3643398Z [36;1mchmod -R +x /home/runner/.cache/ms-playwright[0m
+2026-07-09T14:55:13.3779057Z shell: /usr/bin/bash -e {0}
+2026-07-09T14:55:13.3779344Z ##[endgroup]
+2026-07-09T14:55:13.3926729Z ##[group]Run actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a
+2026-07-09T14:55:13.3927078Z with:
+2026-07-09T14:55:13.3927284Z   distribution: temurin
+2026-07-09T14:55:13.3927503Z   java-version: 21
+2026-07-09T14:55:13.3927706Z   cache: gradle
+2026-07-09T14:55:13.3927916Z   java-package: jdk
+2026-07-09T14:55:13.3928120Z   check-latest: false
+2026-07-09T14:55:13.3928332Z   set-default: true
+2026-07-09T14:55:13.3928536Z   verify-signature: false
+2026-07-09T14:55:13.3928755Z   server-id: github
+2026-07-09T14:55:13.3928970Z   server-username: GITHUB_ACTOR
+2026-07-09T14:55:13.3929207Z   server-password: GITHUB_TOKEN
+2026-07-09T14:55:13.3929454Z   overwrite-settings: true
+2026-07-09T14:55:13.3929680Z   job-status: success
+2026-07-09T14:55:13.3931497Z   token: ***
+2026-07-09T14:55:13.3931711Z   show-download-progress: false
+2026-07-09T14:55:13.3931954Z ##[endgroup]
+2026-07-09T14:55:13.5112220Z ##[group]Installed distributions
+2026-07-09T14:55:13.5367264Z Resolved Java 21.0.11+10 from tool-cache
+2026-07-09T14:55:13.5367686Z Setting Java 21.0.11+10 as the default
+2026-07-09T14:55:13.5375318Z Creating toolchains.xml for JDK version 21 from temurin
+2026-07-09T14:55:13.5430394Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-09T14:55:13.5430802Z 
+2026-07-09T14:55:13.5431037Z Java configuration:
+2026-07-09T14:55:13.5431572Z   Distribution: temurin
+2026-07-09T14:55:13.5431866Z   Version: 21.0.11+10
+2026-07-09T14:55:13.5432182Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-09T14:55:13.5432420Z 
+2026-07-09T14:55:13.5432678Z ##[endgroup]
+2026-07-09T14:55:13.5455603Z Creating settings.xml with server-id: github
+2026-07-09T14:55:13.5455961Z Writing to /home/runner/.m2/settings.xml
+2026-07-09T14:55:13.5456524Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-07-09T14:55:14.2597201Z Cache hit for: setup-java-Linux-x64-gradle-4c5f1336b04367102e1f4ed70177feb2804ab471f350381f998e5d9a9d152b20
+2026-07-09T14:55:15.4764016Z Received 25165824 of 507999079 (5.0%), 24.0 MBs/sec
+2026-07-09T14:55:16.4768338Z Received 125829120 of 507999079 (24.8%), 60.0 MBs/sec
+2026-07-09T14:55:17.4769066Z Received 226492416 of 507999079 (44.6%), 72.0 MBs/sec
+2026-07-09T14:55:18.4769701Z Received 310378496 of 507999079 (61.1%), 74.0 MBs/sec
+2026-07-09T14:55:19.4773115Z Received 402653184 of 507999079 (79.3%), 76.8 MBs/sec
+2026-07-09T14:55:20.4773662Z Received 503804775 of 507999079 (99.2%), 80.1 MBs/sec
+2026-07-09T14:55:20.5612547Z Received 507999079 of 507999079 (100.0%), 79.6 MBs/sec
+2026-07-09T14:55:20.5613140Z Cache Size: ~484 MB (507999079 B)
+2026-07-09T14:55:20.5642015Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a23ad158-7ac5-4234-acff-d2187af20bf1/cache.tzst -P -C /home/runner/work/openremote/openremote --use-compress-program unzstd
+2026-07-09T14:55:21.7890580Z Cache restored successfully
+2026-07-09T14:55:21.8053835Z Cache restored from key: setup-java-Linux-x64-gradle-4c5f1336b04367102e1f4ed70177feb2804ab471f350381f998e5d9a9d152b20
+2026-07-09T14:55:21.8202783Z ##[group]Run # Start the stack
+2026-07-09T14:55:21.8203094Z [36;1m# Start the stack[0m
+2026-07-09T14:55:21.8203430Z [36;1mdocker compose -f profile/dev-testing.yml up -d --no-build[0m
+2026-07-09T14:55:21.8204021Z [36;1m[0m
+2026-07-09T14:55:21.8204237Z [36;1m# Run the tests[0m
+2026-07-09T14:55:21.8204536Z [36;1m./gradlew -p ui/app npmTest -Pargs="--shard=1/4"[0m
+2026-07-09T14:55:21.8224376Z shell: /usr/bin/bash -e {0}
+2026-07-09T14:55:21.8224644Z env:
+2026-07-09T14:55:21.8224959Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-09T14:55:21.8225404Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-09T14:55:21.8225747Z   MAVEN_ARGS: -ntp
+2026-07-09T14:55:21.8225956Z ##[endgroup]
+2026-07-09T14:55:22.6485444Z time="2026-07-09T14:55:22Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-09T14:55:22.6534360Z time="2026-07-09T14:55:22Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-09T14:55:22.6667049Z  keycloak Pulling 
+2026-07-09T14:55:22.6667600Z  postgresql Pulling 
+2026-07-09T14:55:23.9492841Z  ea29d36b883e Pulling fs layer 
+2026-07-09T14:55:23.9493373Z  a9bb58c3bdd8 Pulling fs layer 
+2026-07-09T14:55:23.9493916Z  393f8747e4b4 Pulling fs layer 
+2026-07-09T14:55:23.9494437Z  20b69ee379c9 Pulling fs layer 
+2026-07-09T14:55:23.9495092Z  34f6e9793683 Pulling fs layer 
+2026-07-09T14:55:23.9495750Z  cc5389c8389e Pulling fs layer 
+2026-07-09T14:55:23.9496350Z  76f9ee5e648e Pulling fs layer 
+2026-07-09T14:55:23.9496899Z  393efe950606 Pulling fs layer 
+2026-07-09T14:55:23.9497281Z  3fdba431f168 Pulling fs layer 
+2026-07-09T14:55:23.9497526Z  bd6208a6da27 Pulling fs layer 
+2026-07-09T14:55:23.9497795Z  20b69ee379c9 Waiting 
+2026-07-09T14:55:23.9498188Z  34f6e9793683 Waiting 
+2026-07-09T14:55:23.9498407Z  76f9ee5e648e Waiting 
+2026-07-09T14:55:23.9498672Z  cc5389c8389e Waiting 
+2026-07-09T14:55:23.9499074Z  393efe950606 Waiting 
+2026-07-09T14:55:23.9499417Z  3fdba431f168 Waiting 
+2026-07-09T14:55:23.9499754Z  bd6208a6da27 Waiting 
+2026-07-09T14:55:24.0340022Z  cf242d89e8f2 Pulling fs layer 
+2026-07-09T14:55:24.0340736Z  cf242d89e8f2 Waiting 
+2026-07-09T14:55:24.1366472Z  a9bb58c3bdd8 Downloading [>                                                  ]  534.4kB/77.15MB
+2026-07-09T14:55:24.1468165Z  ea29d36b883e Downloading [>                                                  ]  80.34kB/7.221MB
+2026-07-09T14:55:24.1518702Z  393f8747e4b4 Downloading [>                                                  ]  539.9kB/177.9MB
+2026-07-09T14:55:24.1728084Z  ea29d36b883e Verifying Checksum 
+2026-07-09T14:55:24.1728720Z  ea29d36b883e Download complete 
+2026-07-09T14:55:24.1745847Z  ea29d36b883e Extracting [>                                                  ]   98.3kB/7.221MB
+2026-07-09T14:55:24.2395898Z  a9bb58c3bdd8 Downloading [========================>                          ]  37.72MB/77.15MB
+2026-07-09T14:55:24.2519239Z  393f8747e4b4 Downloading [============>                                      ]   42.9MB/177.9MB
+2026-07-09T14:55:24.2751131Z  ea29d36b883e Extracting [=================>                                 ]  2.458MB/7.221MB
+2026-07-09T14:55:24.3395726Z  a9bb58c3bdd8 Downloading [=================================================> ]  76.45MB/77.15MB
+2026-07-09T14:55:24.3411302Z  a9bb58c3bdd8 Verifying Checksum 
+2026-07-09T14:55:24.3411781Z  a9bb58c3bdd8 Download complete 
+2026-07-09T14:55:24.3520278Z  20b69ee379c9 Downloading [==================================================>]     551B/551B
+2026-07-09T14:55:24.3521509Z  20b69ee379c9 Verifying Checksum 
+2026-07-09T14:55:24.3522291Z  20b69ee379c9 Download complete 
+2026-07-09T14:55:24.3527661Z  393f8747e4b4 Downloading [========================>                          ]  86.47MB/177.9MB
+2026-07-09T14:55:24.3836870Z  ea29d36b883e Extracting [============================================>      ]   6.39MB/7.221MB
+2026-07-09T14:55:24.4094769Z  ea29d36b883e Extracting [==================================================>]  7.221MB/7.221MB
+2026-07-09T14:55:24.4164628Z  ea29d36b883e Pull complete 
+2026-07-09T14:55:24.4377001Z  a9bb58c3bdd8 Extracting [>                                                  ]  557.1kB/77.15MB
+2026-07-09T14:55:24.4554170Z  393f8747e4b4 Downloading [======================================>            ]  135.4MB/177.9MB
+2026-07-09T14:55:24.5083454Z  34f6e9793683 Downloading [>                                                  ]  32.77kB/2.419MB
+2026-07-09T14:55:24.5221403Z  34f6e9793683 Downloading [==================================================>]  2.419MB/2.419MB
+2026-07-09T14:55:24.5222041Z  34f6e9793683 Verifying Checksum 
+2026-07-09T14:55:24.5230342Z  34f6e9793683 Download complete 
+2026-07-09T14:55:24.5378293Z  a9bb58c3bdd8 Extracting [==>                                                ]  3.899MB/77.15MB
+2026-07-09T14:55:24.5442382Z  393f8747e4b4 Verifying Checksum 
+2026-07-09T14:55:24.5443089Z  393f8747e4b4 Download complete 
+2026-07-09T14:55:24.5816609Z  cc5389c8389e Downloading [>                                                  ]  245.1kB/23.87MB
+2026-07-09T14:55:24.6381155Z  cc5389c8389e Verifying Checksum 
+2026-07-09T14:55:24.6382743Z  cc5389c8389e Download complete 
+2026-07-09T14:55:24.6419244Z  a9bb58c3bdd8 Extracting [=======>                                           ]   11.7MB/77.15MB
+2026-07-09T14:55:24.6898583Z  76f9ee5e648e Downloading [==================================================>]     163B/163B
+2026-07-09T14:55:24.6899233Z  76f9ee5e648e Verifying Checksum 
+2026-07-09T14:55:24.6899696Z  76f9ee5e648e Download complete 
+2026-07-09T14:55:24.7267411Z  393efe950606 Downloading [==================================================>]     146B/146B
+2026-07-09T14:55:24.7268451Z  393efe950606 Verifying Checksum 
+2026-07-09T14:55:24.7269007Z  393efe950606 Download complete 
+2026-07-09T14:55:24.7429318Z  a9bb58c3bdd8 Extracting [=============>                                     ]  20.61MB/77.15MB
+2026-07-09T14:55:24.8245807Z  3fdba431f168 Downloading [==================================================>]     150B/150B
+2026-07-09T14:55:24.8246415Z  3fdba431f168 Verifying Checksum 
+2026-07-09T14:55:24.8246787Z  3fdba431f168 Download complete 
+2026-07-09T14:55:24.8495428Z  a9bb58c3bdd8 Extracting [===================>                               ]  29.52MB/77.15MB
+2026-07-09T14:55:24.8936641Z  bd6208a6da27 Downloading [==================================================>]     168B/168B
+2026-07-09T14:55:24.8937543Z  bd6208a6da27 Verifying Checksum 
+2026-07-09T14:55:24.8938389Z  bd6208a6da27 Download complete 
+2026-07-09T14:55:24.9101304Z  cf242d89e8f2 Downloading [>                                                  ]  537.5kB/856.3MB
+2026-07-09T14:55:24.9559559Z  a9bb58c3bdd8 Extracting [========================>                          ]  37.32MB/77.15MB
+2026-07-09T14:55:25.0107142Z  cf242d89e8f2 Downloading [==>                                                ]  47.72MB/856.3MB
+2026-07-09T14:55:25.0610767Z  a9bb58c3bdd8 Extracting [============================>                      ]  44.01MB/77.15MB
+2026-07-09T14:55:25.1115219Z  cf242d89e8f2 Downloading [=====>                                             ]  96.55MB/856.3MB
+2026-07-09T14:55:25.1644895Z  a9bb58c3bdd8 Extracting [================================>                  ]  50.69MB/77.15MB
+2026-07-09T14:55:25.2115519Z  cf242d89e8f2 Downloading [========>                                          ]  143.3MB/856.3MB
+2026-07-09T14:55:25.2732326Z  a9bb58c3bdd8 Extracting [====================================>              ]  56.82MB/77.15MB
+2026-07-09T14:55:25.3125138Z  cf242d89e8f2 Downloading [===========>                                       ]  192.2MB/856.3MB
+2026-07-09T14:55:25.3824602Z  a9bb58c3bdd8 Extracting [=========================================>         ]  64.06MB/77.15MB
+2026-07-09T14:55:25.4131511Z  cf242d89e8f2 Downloading [==============>                                    ]    242MB/856.3MB
+2026-07-09T14:55:25.4841256Z  a9bb58c3bdd8 Extracting [============================================>      ]  68.52MB/77.15MB
+2026-07-09T14:55:25.5738168Z  cf242d89e8f2 Downloading [================>                                  ]  280.7MB/856.3MB
+2026-07-09T14:55:25.5897005Z  a9bb58c3bdd8 Extracting [============================================>      ]  69.07MB/77.15MB
+2026-07-09T14:55:25.6745723Z  cf242d89e8f2 Downloading [==================>                                ]  325.3MB/856.3MB
+2026-07-09T14:55:25.8143000Z  cf242d89e8f2 Downloading [===================>                               ]  333.2MB/856.3MB
+2026-07-09T14:55:25.9368851Z  cf242d89e8f2 Downloading [===================>                               ]    338MB/856.3MB
+2026-07-09T14:55:25.9498154Z  a9bb58c3bdd8 Extracting [=============================================>     ]  70.75MB/77.15MB
+2026-07-09T14:55:26.0444450Z  cf242d89e8f2 Downloading [=====================>                             ]  362.4MB/856.3MB
+2026-07-09T14:55:26.1751220Z  cf242d89e8f2 Downloading [=====================>                             ]  365.6MB/856.3MB
+2026-07-09T14:55:26.2270666Z  a9bb58c3bdd8 Extracting [===============================================>   ]  73.53MB/77.15MB
+2026-07-09T14:55:26.2765015Z  cf242d89e8f2 Downloading [========================>                          ]  411.3MB/856.3MB
+2026-07-09T14:55:26.4247453Z  cf242d89e8f2 Downloading [=========================>                         ]  433.1MB/856.3MB
+2026-07-09T14:55:26.5446821Z  cf242d89e8f2 Downloading [=========================>                         ]  442.6MB/856.3MB
+2026-07-09T14:55:26.5815122Z  a9bb58c3bdd8 Extracting [================================================>  ]  74.09MB/77.15MB
+2026-07-09T14:55:26.6445232Z  cf242d89e8f2 Downloading [============================>                      ]  487.2MB/856.3MB
+2026-07-09T14:55:26.7446502Z  cf242d89e8f2 Downloading [===============================>                   ]    537MB/856.3MB
+2026-07-09T14:55:26.8447316Z  cf242d89e8f2 Downloading [==================================>                ]  585.8MB/856.3MB
+2026-07-09T14:55:26.9452875Z  cf242d89e8f2 Downloading [==================================>                ]  593.7MB/856.3MB
+2026-07-09T14:55:27.0136927Z  a9bb58c3bdd8 Extracting [================================================>  ]   75.2MB/77.15MB
+2026-07-09T14:55:27.1260696Z  cf242d89e8f2 Downloading [===================================>               ]  609.6MB/856.3MB
+2026-07-09T14:55:27.2466261Z  cf242d89e8f2 Downloading [===================================>               ]  614.4MB/856.3MB
+2026-07-09T14:55:27.3570732Z  cf242d89e8f2 Downloading [====================================>              ]  622.9MB/856.3MB
+2026-07-09T14:55:27.4580984Z  cf242d89e8f2 Downloading [=======================================>           ]  668.6MB/856.3MB
+2026-07-09T14:55:27.4735136Z  a9bb58c3bdd8 Extracting [=================================================> ]  75.76MB/77.15MB
+2026-07-09T14:55:27.5147044Z  a9bb58c3bdd8 Extracting [==================================================>]  77.15MB/77.15MB
+2026-07-09T14:55:27.5857156Z  cf242d89e8f2 Downloading [========================================>          ]  696.7MB/856.3MB
+2026-07-09T14:55:27.6862152Z  cf242d89e8f2 Downloading [===========================================>       ]  741.2MB/856.3MB
+2026-07-09T14:55:27.7868212Z  cf242d89e8f2 Downloading [=============================================>     ]  786.3MB/856.3MB
+2026-07-09T14:55:27.8877792Z  cf242d89e8f2 Downloading [================================================>  ]  831.9MB/856.3MB
+2026-07-09T14:55:27.9431550Z  cf242d89e8f2 Verifying Checksum 
+2026-07-09T14:55:27.9432026Z  cf242d89e8f2 Download complete 
+2026-07-09T14:55:28.1984358Z  cf242d89e8f2 Extracting [>                                                  ]  557.1kB/856.3MB
+2026-07-09T14:55:28.3032959Z  cf242d89e8f2 Extracting [>                                                  ]  8.356MB/856.3MB
+2026-07-09T14:55:28.4093258Z  cf242d89e8f2 Extracting [>                                                  ]  16.15MB/856.3MB
+2026-07-09T14:55:28.5144118Z  cf242d89e8f2 Extracting [=>                                                 ]  23.95MB/856.3MB
+2026-07-09T14:55:28.6194252Z  cf242d89e8f2 Extracting [=>                                                 ]  32.31MB/856.3MB
+2026-07-09T14:55:28.7212905Z  cf242d89e8f2 Extracting [==>                                                ]  40.67MB/856.3MB
+2026-07-09T14:55:28.8214394Z  cf242d89e8f2 Extracting [==>                                                ]  49.58MB/856.3MB
+2026-07-09T14:55:28.9257637Z  cf242d89e8f2 Extracting [===>                                               ]  59.05MB/856.3MB
+2026-07-09T14:55:29.0260656Z  cf242d89e8f2 Extracting [===>                                               ]  67.96MB/856.3MB
+2026-07-09T14:55:29.1320815Z  cf242d89e8f2 Extracting [====>                                              ]  77.43MB/856.3MB
+2026-07-09T14:55:29.2370869Z  cf242d89e8f2 Extracting [=====>                                             ]   86.9MB/856.3MB
+2026-07-09T14:55:29.3429123Z  cf242d89e8f2 Extracting [=====>                                             ]  96.37MB/856.3MB
+2026-07-09T14:55:29.4487967Z  cf242d89e8f2 Extracting [======>                                            ]  105.8MB/856.3MB
+2026-07-09T14:55:29.5536081Z  cf242d89e8f2 Extracting [======>                                            ]  115.3MB/856.3MB
+2026-07-09T14:55:29.6590637Z  cf242d89e8f2 Extracting [=======>                                           ]  124.8MB/856.3MB
+2026-07-09T14:55:29.7633959Z  cf242d89e8f2 Extracting [=======>                                           ]  134.3MB/856.3MB
+2026-07-09T14:55:29.8678549Z  cf242d89e8f2 Extracting [========>                                          ]  143.7MB/856.3MB
+2026-07-09T14:55:29.9738962Z  cf242d89e8f2 Extracting [========>                                          ]  153.2MB/856.3MB
+2026-07-09T14:55:30.0802156Z  cf242d89e8f2 Extracting [=========>                                         ]  162.7MB/856.3MB
+2026-07-09T14:55:30.1809455Z  cf242d89e8f2 Extracting [==========>                                        ]  171.6MB/856.3MB
+2026-07-09T14:55:30.2818625Z  cf242d89e8f2 Extracting [==========>                                        ]  180.5MB/856.3MB
+2026-07-09T14:55:30.3881841Z  cf242d89e8f2 Extracting [===========>                                       ]    190MB/856.3MB
+2026-07-09T14:55:30.4931347Z  cf242d89e8f2 Extracting [===========>                                       ]  199.4MB/856.3MB
+2026-07-09T14:55:30.5991526Z  cf242d89e8f2 Extracting [============>                                      ]  208.9MB/856.3MB
+2026-07-09T14:55:30.7054954Z  cf242d89e8f2 Extracting [============>                                      ]  218.4MB/856.3MB
+2026-07-09T14:55:30.8057785Z  cf242d89e8f2 Extracting [=============>                                     ]  227.3MB/856.3MB
+2026-07-09T14:55:30.9070516Z  cf242d89e8f2 Extracting [=============>                                     ]  236.2MB/856.3MB
+2026-07-09T14:55:31.0086600Z  cf242d89e8f2 Extracting [==============>                                    ]  245.1MB/856.3MB
+2026-07-09T14:55:31.1145661Z  cf242d89e8f2 Extracting [==============>                                    ]  254.6MB/856.3MB
+2026-07-09T14:55:31.2177554Z  cf242d89e8f2 Extracting [===============>                                   ]  263.5MB/856.3MB
+2026-07-09T14:55:31.3180644Z  cf242d89e8f2 Extracting [===============>                                   ]  271.8MB/856.3MB
+2026-07-09T14:55:31.4209376Z  cf242d89e8f2 Extracting [================>                                  ]  280.8MB/856.3MB
+2026-07-09T14:55:31.5226359Z  cf242d89e8f2 Extracting [================>                                  ]  289.7MB/856.3MB
+2026-07-09T14:55:31.6247944Z  cf242d89e8f2 Extracting [=================>                                 ]  298.6MB/856.3MB
+2026-07-09T14:55:31.7276242Z  cf242d89e8f2 Extracting [=================>                                 ]  306.4MB/856.3MB
+2026-07-09T14:55:31.8358650Z  cf242d89e8f2 Extracting [==================>                                ]  314.7MB/856.3MB
+2026-07-09T14:55:31.9364516Z  cf242d89e8f2 Extracting [==================>                                ]  323.1MB/856.3MB
+2026-07-09T14:55:32.0368524Z  cf242d89e8f2 Extracting [===================>                               ]    332MB/856.3MB
+2026-07-09T14:55:32.1408374Z  cf242d89e8f2 Extracting [===================>                               ]  341.5MB/856.3MB
+2026-07-09T14:55:32.2447489Z  cf242d89e8f2 Extracting [====================>                              ]  350.9MB/856.3MB
+2026-07-09T14:55:32.3491926Z  cf242d89e8f2 Extracting [=====================>                             ]  360.4MB/856.3MB
+2026-07-09T14:55:32.4538318Z  cf242d89e8f2 Extracting [=====================>                             ]  369.9MB/856.3MB
+2026-07-09T14:55:32.5596347Z  cf242d89e8f2 Extracting [======================>                            ]  379.4MB/856.3MB
+2026-07-09T14:55:32.6633988Z  cf242d89e8f2 Extracting [======================>                            ]  388.8MB/856.3MB
+2026-07-09T14:55:32.7669086Z  cf242d89e8f2 Extracting [=======================>                           ]  398.3MB/856.3MB
+2026-07-09T14:55:32.8700183Z  cf242d89e8f2 Extracting [=======================>                           ]  407.8MB/856.3MB
+2026-07-09T14:55:32.9745847Z  cf242d89e8f2 Extracting [========================>                          ]  417.2MB/856.3MB
+2026-07-09T14:55:33.0795776Z  cf242d89e8f2 Extracting [========================>                          ]  426.7MB/856.3MB
+2026-07-09T14:55:33.1853584Z  cf242d89e8f2 Extracting [=========================>                         ]  436.2MB/856.3MB
+2026-07-09T14:55:33.2909976Z  cf242d89e8f2 Extracting [==========================>                        ]  445.6MB/856.3MB
+2026-07-09T14:55:33.3960898Z  cf242d89e8f2 Extracting [==========================>                        ]  455.1MB/856.3MB
+2026-07-09T14:55:33.4985011Z  cf242d89e8f2 Extracting [===========================>                       ]    464MB/856.3MB
+2026-07-09T14:55:33.6043233Z  cf242d89e8f2 Extracting [===========================>                       ]  473.5MB/856.3MB
+2026-07-09T14:55:33.7084171Z  cf242d89e8f2 Extracting [============================>                      ]    483MB/856.3MB
+2026-07-09T14:55:33.8137005Z  cf242d89e8f2 Extracting [============================>                      ]  492.4MB/856.3MB
+2026-07-09T14:55:33.9184001Z  cf242d89e8f2 Extracting [=============================>                     ]  501.9MB/856.3MB
+2026-07-09T14:55:34.0184939Z  cf242d89e8f2 Extracting [=============================>                     ]  510.8MB/856.3MB
+2026-07-09T14:55:34.1211628Z  cf242d89e8f2 Extracting [==============================>                    ]  519.7MB/856.3MB
+2026-07-09T14:55:34.2976105Z  cf242d89e8f2 Extracting [==============================>                    ]    527MB/856.3MB
+2026-07-09T14:55:34.3994687Z  cf242d89e8f2 Extracting [===============================>                   ]  535.3MB/856.3MB
+2026-07-09T14:55:34.5086231Z  cf242d89e8f2 Extracting [===============================>                   ]  544.2MB/856.3MB
+2026-07-09T14:55:34.6145525Z  cf242d89e8f2 Extracting [================================>                  ]  551.5MB/856.3MB
+2026-07-09T14:55:34.7191822Z  cf242d89e8f2 Extracting [================================>                  ]  560.4MB/856.3MB
+2026-07-09T14:55:34.8199844Z  cf242d89e8f2 Extracting [=================================>                 ]  569.3MB/856.3MB
+2026-07-09T14:55:34.9269942Z  cf242d89e8f2 Extracting [=================================>                 ]  578.2MB/856.3MB
+2026-07-09T14:55:35.0326796Z  cf242d89e8f2 Extracting [==================================>                ]  584.9MB/856.3MB
+2026-07-09T14:55:35.1333253Z  cf242d89e8f2 Extracting [==================================>                ]  592.7MB/856.3MB
+2026-07-09T14:55:35.2392352Z  cf242d89e8f2 Extracting [===================================>               ]  602.2MB/856.3MB
+2026-07-09T14:55:35.3393499Z  cf242d89e8f2 Extracting [===================================>               ]  611.1MB/856.3MB
+2026-07-09T14:55:35.4438917Z  cf242d89e8f2 Extracting [====================================>              ]  621.7MB/856.3MB
+2026-07-09T14:55:35.5442208Z  cf242d89e8f2 Extracting [====================================>              ]  632.3MB/856.3MB
+2026-07-09T14:55:35.6496992Z  cf242d89e8f2 Extracting [=====================================>             ]  641.2MB/856.3MB
+2026-07-09T14:55:35.7499447Z  cf242d89e8f2 Extracting [=====================================>             ]  650.1MB/856.3MB
+2026-07-09T14:55:35.8551225Z  cf242d89e8f2 Extracting [======================================>            ]  657.3MB/856.3MB
+2026-07-09T14:55:35.9632324Z  cf242d89e8f2 Extracting [======================================>            ]  662.9MB/856.3MB
+2026-07-09T14:55:36.1058506Z  cf242d89e8f2 Extracting [======================================>            ]  664.6MB/856.3MB
+2026-07-09T14:55:36.2152044Z  cf242d89e8f2 Extracting [======================================>            ]  665.7MB/856.3MB
+2026-07-09T14:55:36.3434157Z  cf242d89e8f2 Extracting [=======================================>           ]  668.5MB/856.3MB
+2026-07-09T14:55:36.4456771Z  cf242d89e8f2 Extracting [=======================================>           ]  673.5MB/856.3MB
+2026-07-09T14:55:36.5547540Z  cf242d89e8f2 Extracting [=======================================>           ]  679.6MB/856.3MB
+2026-07-09T14:55:36.6601512Z  cf242d89e8f2 Extracting [========================================>          ]  685.7MB/856.3MB
+2026-07-09T14:55:36.7688110Z  cf242d89e8f2 Extracting [========================================>          ]  691.9MB/856.3MB
+2026-07-09T14:55:36.8759948Z  cf242d89e8f2 Extracting [========================================>          ]    698MB/856.3MB
+2026-07-09T14:55:36.9871901Z  cf242d89e8f2 Extracting [=========================================>         ]  704.1MB/856.3MB
+2026-07-09T14:55:37.0961664Z  cf242d89e8f2 Extracting [=========================================>         ]  710.2MB/856.3MB
+2026-07-09T14:55:37.2092830Z  cf242d89e8f2 Extracting [=========================================>         ]  716.4MB/856.3MB
+2026-07-09T14:55:37.3165509Z  cf242d89e8f2 Extracting [==========================================>        ]  722.5MB/856.3MB
+2026-07-09T14:55:37.4165424Z  cf242d89e8f2 Extracting [==========================================>        ]  728.1MB/856.3MB
+2026-07-09T14:55:37.5179049Z  cf242d89e8f2 Extracting [==========================================>        ]  733.6MB/856.3MB
+2026-07-09T14:55:37.6248634Z  cf242d89e8f2 Extracting [===========================================>       ]  739.8MB/856.3MB
+2026-07-09T14:55:37.7253913Z  cf242d89e8f2 Extracting [===========================================>       ]  745.3MB/856.3MB
+2026-07-09T14:55:37.8319340Z  cf242d89e8f2 Extracting [===========================================>       ]  751.5MB/856.3MB
+2026-07-09T14:55:37.9388954Z  cf242d89e8f2 Extracting [============================================>      ]  757.6MB/856.3MB
+2026-07-09T14:55:38.0507134Z  cf242d89e8f2 Extracting [============================================>      ]  761.5MB/856.3MB
+2026-07-09T14:55:38.1539018Z  cf242d89e8f2 Extracting [============================================>      ]  763.7MB/856.3MB
+2026-07-09T14:55:38.2740834Z  cf242d89e8f2 Extracting [============================================>      ]  765.4MB/856.3MB
+2026-07-09T14:55:38.3848777Z  cf242d89e8f2 Extracting [============================================>      ]  768.2MB/856.3MB
+2026-07-09T14:55:38.4876328Z  cf242d89e8f2 Extracting [=============================================>     ]  771.5MB/856.3MB
+2026-07-09T14:55:38.5921229Z  cf242d89e8f2 Extracting [=============================================>     ]  777.7MB/856.3MB
+2026-07-09T14:55:38.6975076Z  cf242d89e8f2 Extracting [=============================================>     ]  783.8MB/856.3MB
+2026-07-09T14:55:38.8028856Z  cf242d89e8f2 Extracting [==============================================>    ]  789.9MB/856.3MB
+2026-07-09T14:55:38.9087587Z  cf242d89e8f2 Extracting [==============================================>    ]    796MB/856.3MB
+2026-07-09T14:55:39.0129571Z  cf242d89e8f2 Extracting [==============================================>    ]  801.6MB/856.3MB
+2026-07-09T14:55:39.1135383Z  cf242d89e8f2 Extracting [===============================================>   ]  807.2MB/856.3MB
+2026-07-09T14:55:39.2227285Z  cf242d89e8f2 Extracting [===============================================>   ]  813.3MB/856.3MB
+2026-07-09T14:55:39.3291501Z  cf242d89e8f2 Extracting [===============================================>   ]  819.4MB/856.3MB
+2026-07-09T14:55:39.4294505Z  cf242d89e8f2 Extracting [================================================>  ]    825MB/856.3MB
+2026-07-09T14:55:39.5358440Z  cf242d89e8f2 Extracting [================================================>  ]  831.1MB/856.3MB
+2026-07-09T14:55:39.6387436Z  cf242d89e8f2 Extracting [================================================>  ]  836.1MB/856.3MB
+2026-07-09T14:55:39.7518585Z  cf242d89e8f2 Extracting [=================================================> ]    840MB/856.3MB
+2026-07-09T14:55:39.8647191Z  cf242d89e8f2 Extracting [=================================================> ]  841.7MB/856.3MB
+2026-07-09T14:55:39.9744932Z  cf242d89e8f2 Extracting [=================================================> ]  853.4MB/856.3MB
+2026-07-09T14:55:40.2247414Z  cf242d89e8f2 Extracting [=================================================> ]  854.5MB/856.3MB
+2026-07-09T14:55:40.3251377Z  cf242d89e8f2 Extracting [=================================================> ]  855.1MB/856.3MB
+2026-07-09T14:55:40.4846874Z  cf242d89e8f2 Extracting [=================================================> ]  856.2MB/856.3MB
+2026-07-09T14:55:40.4953346Z  cf242d89e8f2 Extracting [==================================================>]  856.3MB/856.3MB
+2026-07-09T14:55:40.7205819Z  cf242d89e8f2 Pull complete 
+2026-07-09T14:55:42.7124493Z  postgresql Pulled 
+2026-07-09T14:55:44.0737326Z  a9bb58c3bdd8 Pull complete 
+2026-07-09T14:55:44.5862991Z  393f8747e4b4 Extracting [>                                                  ]  557.1kB/177.9MB
+2026-07-09T14:55:44.6883996Z  393f8747e4b4 Extracting [=====>                                             ]  18.38MB/177.9MB
+2026-07-09T14:55:44.7891462Z  393f8747e4b4 Extracting [==========>                                        ]  38.99MB/177.9MB
+2026-07-09T14:55:44.8930511Z  393f8747e4b4 Extracting [================>                                  ]  60.16MB/177.9MB
+2026-07-09T14:55:44.9957539Z  393f8747e4b4 Extracting [======================>                            ]  80.22MB/177.9MB
+2026-07-09T14:55:45.0966230Z  393f8747e4b4 Extracting [============================>                      ]  101.9MB/177.9MB
+2026-07-09T14:55:45.1978463Z  393f8747e4b4 Extracting [===================================>               ]  127.6MB/177.9MB
+2026-07-09T14:55:45.3002723Z  393f8747e4b4 Extracting [============================================>      ]  157.1MB/177.9MB
+2026-07-09T14:55:45.3886668Z  393f8747e4b4 Extracting [==================================================>]  177.9MB/177.9MB
+2026-07-09T14:55:52.7030749Z  393f8747e4b4 Pull complete 
+2026-07-09T14:55:52.7045436Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-07-09T14:55:52.7049571Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-07-09T14:55:52.7145724Z  20b69ee379c9 Pull complete 
+2026-07-09T14:55:52.7155548Z  34f6e9793683 Extracting [>                                                  ]  32.77kB/2.419MB
+2026-07-09T14:55:52.7320836Z  34f6e9793683 Extracting [==================================================>]  2.419MB/2.419MB
+2026-07-09T14:55:52.7322468Z  34f6e9793683 Extracting [==================================================>]  2.419MB/2.419MB
+2026-07-09T14:55:52.7443518Z  34f6e9793683 Pull complete 
+2026-07-09T14:55:52.7551515Z  cc5389c8389e Extracting [>                                                  ]  262.1kB/23.87MB
+2026-07-09T14:55:52.8579319Z  cc5389c8389e Extracting [=======>                                           ]  3.408MB/23.87MB
+2026-07-09T14:55:52.9897483Z  cc5389c8389e Extracting [==============>                                    ]  7.078MB/23.87MB
+2026-07-09T14:55:53.0920432Z  cc5389c8389e Extracting [================================>                  ]  15.47MB/23.87MB
+2026-07-09T14:55:53.2004018Z  cc5389c8389e Extracting [===========================================>       ]  20.97MB/23.87MB
+2026-07-09T14:55:53.3614877Z  cc5389c8389e Extracting [==============================================>    ]  22.28MB/23.87MB
+2026-07-09T14:55:53.5345326Z  cc5389c8389e Extracting [===============================================>   ]  22.54MB/23.87MB
+2026-07-09T14:55:53.5718374Z  cc5389c8389e Extracting [==================================================>]  23.87MB/23.87MB
+2026-07-09T14:55:53.9046874Z  cc5389c8389e Pull complete 
+2026-07-09T14:55:53.9057504Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-07-09T14:55:53.9061895Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-07-09T14:55:53.9139167Z  76f9ee5e648e Pull complete 
+2026-07-09T14:55:53.9149059Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-07-09T14:55:53.9151127Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-07-09T14:55:53.9216259Z  393efe950606 Pull complete 
+2026-07-09T14:55:53.9226672Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-07-09T14:55:53.9229238Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-07-09T14:55:53.9296276Z  3fdba431f168 Pull complete 
+2026-07-09T14:55:53.9307169Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-07-09T14:55:53.9312977Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-07-09T14:55:53.9381723Z  bd6208a6da27 Pull complete 
+2026-07-09T14:55:53.9442923Z  keycloak Pulled 
+2026-07-09T14:55:53.9460312Z  Network profile_default  Creating
+2026-07-09T14:55:53.9727129Z  Network profile_default  Created
+2026-07-09T14:55:53.9730881Z  Volume "profile_postgresql-data"  Creating
+2026-07-09T14:55:53.9741953Z  Volume "profile_postgresql-data"  Created
+2026-07-09T14:55:53.9747450Z  Container profile-postgresql-1  Creating
+2026-07-09T14:55:53.9886095Z  Container profile-postgresql-1  Created
+2026-07-09T14:55:53.9886815Z  Container profile-keycloak-1  Creating
+2026-07-09T14:55:53.9972690Z  Container profile-keycloak-1  Created
+2026-07-09T14:55:53.9984128Z  Container profile-postgresql-1  Starting
+2026-07-09T14:55:54.1252867Z  Container profile-postgresql-1  Started
+2026-07-09T14:55:54.1253830Z  Container profile-postgresql-1  Waiting
+2026-07-09T14:55:59.6281074Z  Container profile-postgresql-1  Healthy
+2026-07-09T14:55:59.6282524Z  Container profile-keycloak-1  Starting
+2026-07-09T14:55:59.7247734Z  Container profile-keycloak-1  Started
+2026-07-09T14:56:02.3074963Z 
+2026-07-09T14:56:02.3136942Z Welcome to Gradle 9.6.1!
+2026-07-09T14:56:02.3148902Z 
+2026-07-09T14:56:02.3172009Z Here are the highlights of this release:
+2026-07-09T14:56:02.3209040Z  - Improved Configuration Cache hit rates
+2026-07-09T14:56:02.3233506Z  - Additional CLI rendering options
+2026-07-09T14:56:02.3294686Z  - Important project hierarchy lookup deprecations
+2026-07-09T14:56:02.3344265Z 
+2026-07-09T14:56:02.3345072Z For more details see https://docs.gradle.org/9.6.1/release-notes.html
+2026-07-09T14:56:02.3345524Z 
+2026-07-09T14:56:02.5105843Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-07-09T14:56:04.8066500Z Calculating task graph as no cached configuration is available for tasks: npmTest
+2026-07-09T14:56:12.0119297Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-09T14:56:14.5081177Z > Task :buildSrc:compileGroovy
+2026-07-09T14:56:14.5105081Z > Task :buildSrc:processResources NO-SOURCE
+2026-07-09T14:56:14.5111191Z > Task :buildSrc:classes
+2026-07-09T14:56:14.6085471Z > Task :buildSrc:jar
+2026-07-09T14:56:16.6086768Z 
+2026-07-09T14:56:16.6091088Z > Configure project :
+2026-07-09T14:56:16.6092143Z Unshallowing repo because the build is being executed on CI
+2026-07-09T14:56:34.6065654Z Unshallowing repo because the build is being executed on CI
+2026-07-09T14:56:35.4070008Z File encryption plugin config found, configuring git pre commit hook and decrypt task dependency
+2026-07-09T14:56:39.2067447Z 
+2026-07-09T14:56:39.2068443Z > Task :ui:test:clean UP-TO-DATE
+2026-07-09T14:56:41.2065275Z 
+2026-07-09T14:56:41.2066206Z > Task :ui:test:installTestDeps
+2026-07-09T14:56:41.2068062Z [94m➤[39m YN0000: · Yarn 4.12.0
+2026-07-09T14:56:41.2068820Z [94m➤[39m [90mYN0000[39m: ┌ Resolution step
+2026-07-09T14:56:41.2070038Z ##[group]Resolution step
+2026-07-09T14:56:41.2072778Z [94m➤[39m YN0085: │ [38;5;160m-[39m [38;5;166m@adobe/[39m[38;5;173mcss-tools[39m[38;5;111m@[39m[38;5;111mnpm:4.4.4[39m, [38;5;166m@babel/[39m[38;5;173mcode-frame[39m[38;5;111m@[39m[38;5;111mnpm:7.26.2[39m, [38;5;166m@babel/[39m[38;5;173mhelper-validator-identifier[39m[38;5;111m@[39m[38;5;111mnpm:7.29.7[39m, [38;5;166m@emnapi/[39m[38;5;173mcore[39m[38;5;111m@[39m[38;5;111mnpm:1.9.2[39m, and [38;5;220m328[39m more.
+2026-07-09T14:56:41.2075331Z ##[endgroup]
+2026-07-09T14:56:41.2076134Z [94m➤[39m [90mYN0000[39m: └ Completed
+2026-07-09T14:56:41.2076969Z [94m➤[39m [90mYN0000[39m: ┌ Post-resolution validation
+2026-07-09T14:56:41.2078007Z ##[group]Post-resolution validation
+2026-07-09T14:56:41.2079686Z [93m➤[39m YN0060: │ [38;5;173meslint[39m is listed by your project with version [38;5;111m10.5.0[39m ([38;5;111mpfa5c48[39m), which doesn't satisfy what [38;5;173meslint-config-standard[39m and other dependencies request ([38;5;37m^8.57.0[39m).
+2026-07-09T14:56:41.2082193Z [93m➤[39m YN0060: │ [38;5;173meslint-plugin-promise[39m is listed by your project with version [38;5;111m7.3.0[39m ([38;5;111mp1db79a[39m), which doesn't satisfy what [38;5;173meslint-config-standard[39m requests ([38;5;37m^6.0.0[39m).
+2026-07-09T14:56:41.2084798Z [93m➤[39m YN0002: │ [38;5;166m@openremote/[39m[38;5;173mutil[39m[38;5;111m@[39m[38;5;111mworkspace:ui/util[39m doesn't provide [38;5;173meslint-plugin-n[39m ([38;5;111mpee0da2[39m), requested by [38;5;173meslint-config-standard[39m.
+2026-07-09T14:56:41.2087146Z [93m➤[39m YN0002: │ [38;5;166m@openremote/[39m[38;5;173mutil[39m[38;5;111m@[39m[38;5;111mworkspace:ui/util[39m doesn't provide [38;5;173mlit[39m ([38;5;111mpc28dad[39m), requested by [38;5;166m@wc-toolkit/[39m[38;5;173mstorybook-helpers[39m.
+2026-07-09T14:56:41.2089301Z [93m➤[39m YN0002: │ [38;5;166m@openremote/[39m[38;5;173mutil[39m[38;5;111m@[39m[38;5;111mworkspace:ui/util[39m doesn't provide [38;5;173mstorybook[39m ([38;5;111mpcf93a5[39m), requested by [38;5;166m@wc-toolkit/[39m[38;5;173mstorybook-helpers[39m.
+2026-07-09T14:56:41.2091362Z [93m➤[39m YN0086: │ Some peer dependencies are incorrectly met by your project; run [38;5;111myarn explain peer-requirements <hash>[39m for details, where [38;5;111m<hash>[39m is the six-letter p-prefixed code.
+2026-07-09T14:56:41.2092761Z [93m➤[39m YN0086: │ Some peer dependencies are incorrectly met by dependencies; run [38;5;111myarn explain peer-requirements[39m for details.
+2026-07-09T14:56:41.2093955Z ##[endgroup]
+2026-07-09T14:56:41.2094649Z [94m➤[39m [90mYN0000[39m: └ Completed
+2026-07-09T14:56:41.2095260Z [94m➤[39m [90mYN0000[39m: ┌ Fetch step
+2026-07-09T14:56:41.2095840Z ##[group]Fetch step
+2026-07-09T14:56:46.4066177Z [94m➤[39m YN0013: │ [38;5;220m710[39m packages were added to the project ([38;5;160m+ 371.71 MiB[39m).
+2026-07-09T14:56:46.4067783Z ##[endgroup]
+2026-07-09T14:56:46.4068658Z [94m➤[39m [90mYN0000[39m: └ Completed in 6s 486ms
+2026-07-09T14:56:46.4069407Z [94m➤[39m [90mYN0000[39m: ┌ Link step
+2026-07-09T14:56:46.4070314Z ##[group]Link step
+2026-07-09T14:56:49.4077429Z [94m➤[39m YN0007: │ [38;5;173mrs-module-lexer[39m[38;5;111m@[39m[38;5;111mnpm:2.6.0[39m must be built because it never has been before or the last one failed
+2026-07-09T14:56:49.4078751Z [94m➤[39m YN0007: │ [38;5;173mesbuild[39m[38;5;111m@[39m[38;5;111mnpm:0.25.12[39m must be built because it never has been before or the last one failed
+2026-07-09T14:56:49.6066414Z ##[endgroup]
+2026-07-09T14:56:49.6067733Z [94m➤[39m [90mYN0000[39m: └ Completed in 3s 187ms
+2026-07-09T14:56:49.6069108Z [93m➤[39m YN0000: · Done with warnings in 9s 907ms
+2026-07-09T14:56:50.2065261Z 
+2026-07-09T14:56:50.2065948Z > Task :ui:app:storybook:npmTest
+2026-07-09T14:56:52.9073889Z [WebServer] Jul 09, 2026 2:56:52 PM net.fortuna.ical4j.util.Configurator <clinit>
+2026-07-09T14:56:52.9074890Z No tests
+2026-07-09T14:56:52.9085768Z 
+2026-07-09T14:56:52.9086504Z > Task :ui:app:manager:npmTest
+2026-07-09T14:56:52.9094342Z [WebServer] INFO: ical4j.properties not found.
+2026-07-09T14:56:52.9094923Z [WebServer] Jul 09, 2026 2:56:52 PM org.openremote.container.util.LogUtil initialiseJUL
+2026-07-09T14:56:52.9095779Z [WebServer] INFO: OR_LOGGING_DIR: ui/test/tmp/logs
+2026-07-09T14:56:52.9096637Z [WebServer] Jul 09, 2026 2:56:52 PM org.openremote.container.util.LogUtil getConfigInputStream
+2026-07-09T14:56:52.9097399Z [WebServer] INFO: Using logging configuration: ui/test/logging.properties
+2026-07-09T14:56:54.2085792Z [WebServer] 2026-07-09 14:56:54.107  WARNING [main                          ] container.persistence.PersistenceService : !!! Cleaning database !!!
+2026-07-09T14:56:55.4067419Z [WebServer] 2026-07-09 14:56:55.392  WARNING [main                          ] p.database.V20250916_01__AddServiceRoles : Client 'openremote' not found in realm master, skipping role creation.
+2026-07-09T14:56:55.7068652Z [WebServer] 2026-07-09 14:56:55.658  WARNING [main                          ] ger.notification.PushNotificationHandler : OR_FIREBASE_CONFIG_FILE not defined, can not send FCM notifications
+2026-07-09T14:57:01.9066118Z [WebServer] 2026-07-09 14:57:01.823  WARNING [main                          ] ger.notification.PushNotificationHandler : FCM configuration invalid so cannot start
+2026-07-09T14:57:04.1064378Z 
+2026-07-09T14:57:04.1065297Z Running 33 tests using 1 worker, shard 1 of 4
+2026-07-09T14:57:05.0066057Z [WebServer] 2026-07-09 14:57:04.952  WARNING [WebService task-2             ] e.manager.system.SslHealthStatusProvider : Failed to connect to SSL port 443 on host: null
+2026-07-09T14:59:57.5066233Z ································××F
+2026-07-09T14:59:57.5066687Z 
+2026-07-09T14:59:57.5084103Z   1) [cleanup manager] › test/test.cleanup.ts:32:8 › Delete the "smartcity" realm ──────────────────
+2026-07-09T14:59:57.5124232Z 
+2026-07-09T14:59:57.5126361Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+2026-07-09T14:59:57.5127847Z 
+2026-07-09T14:59:57.5128470Z     Locator:  getByRole('cell', { name: 'smartcity', exact: true })
+2026-07-09T14:59:57.5129975Z     Expected: [32m0[39m
+2026-07-09T14:59:57.5131128Z     Received: [31m1[39m
+2026-07-09T14:59:57.5132659Z     Timeout:  5000ms
+2026-07-09T14:59:57.5133578Z 
+2026-07-09T14:59:57.5134088Z     Call log:
+2026-07-09T14:59:57.5135409Z     [2m  - Expect "toHaveCount" with timeout 5000ms[22m
+2026-07-09T14:59:57.5137090Z     [2m  - waiting for getByRole('cell', { name: 'smartcity', exact: true })[22m
+2026-07-09T14:59:57.5138837Z     [2m    9 × locator resolved to 1 element[22m
+2026-07-09T14:59:57.5141042Z     [2m      - unexpected value "1"[22m
+2026-07-09T14:59:57.5142424Z 
+2026-07-09T14:59:57.5142547Z 
+2026-07-09T14:59:57.5143025Z       34 |   await manager.navigateToMenuItem("Realms");
+2026-07-09T14:59:57.5144011Z       35 |   await realmsPage.deleteRealm("smartcity");
+2026-07-09T14:59:57.5145813Z     > 36 |   await expect(page.getByRole("cell", { name: "smartcity", exact: true })).toHaveCount(0);
+2026-07-09T14:59:57.5146779Z          |                                                                            ^
+2026-07-09T14:59:57.5147793Z       37 |   await manager.goToRealmStartPage("master");
+2026-07-09T14:59:57.5148551Z       38 |   await page.locator("#desktop-right").waitFor();
+2026-07-09T14:59:57.5173312Z       39 |   await expect(page.locator("#desktop-right #realm-picker").getByRole("button")).toBeDisabled();
+2026-07-09T14:59:57.5184723Z         at /home/runner/work/openremote/openremote/ui/app/manager/test/test.cleanup.ts:36:76
+2026-07-09T14:59:57.5185420Z 
+2026-07-09T14:59:57.5186062Z     attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5187003Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager/video.webm
+2026-07-09T14:59:57.5188140Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5188606Z 
+2026-07-09T14:59:57.5189139Z     Error Context: test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager/error-context.md
+2026-07-09T14:59:57.5189796Z 
+2026-07-09T14:59:57.5190429Z     attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5191496Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager/trace.zip
+2026-07-09T14:59:57.5192233Z     Usage:
+2026-07-09T14:59:57.5192503Z 
+2026-07-09T14:59:57.5193113Z         yarn playwright show-trace test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager/trace.zip
+2026-07-09T14:59:57.5193949Z 
+2026-07-09T14:59:57.5194448Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5194908Z 
+2026-07-09T14:59:57.5195312Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5195718Z 
+2026-07-09T14:59:57.5196187Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+2026-07-09T14:59:57.5196753Z 
+2026-07-09T14:59:57.5197052Z     Locator:  getByRole('cell', { name: 'smartcity', exact: true })
+2026-07-09T14:59:57.5197603Z     Expected: [32m0[39m
+2026-07-09T14:59:57.5198173Z     Received: [31m1[39m
+2026-07-09T14:59:57.5198589Z     Timeout:  5000ms
+2026-07-09T14:59:57.5198838Z 
+2026-07-09T14:59:57.5199081Z     Call log:
+2026-07-09T14:59:57.5199682Z     [2m  - Expect "toHaveCount" with timeout 5000ms[22m
+2026-07-09T14:59:57.5200517Z     [2m  - waiting for getByRole('cell', { name: 'smartcity', exact: true })[22m
+2026-07-09T14:59:57.5201371Z     [2m    9 × locator resolved to 1 element[22m
+2026-07-09T14:59:57.5202127Z     [2m      - unexpected value "1"[22m
+2026-07-09T14:59:57.5202478Z 
+2026-07-09T14:59:57.5202487Z 
+2026-07-09T14:59:57.5202810Z       34 |   await manager.navigateToMenuItem("Realms");
+2026-07-09T14:59:57.5203486Z       35 |   await realmsPage.deleteRealm("smartcity");
+2026-07-09T14:59:57.5204490Z     > 36 |   await expect(page.getByRole("cell", { name: "smartcity", exact: true })).toHaveCount(0);
+2026-07-09T14:59:57.5205380Z          |                                                                            ^
+2026-07-09T14:59:57.5206404Z       37 |   await manager.goToRealmStartPage("master");
+2026-07-09T14:59:57.5207094Z       38 |   await page.locator("#desktop-right").waitFor();
+2026-07-09T14:59:57.5207965Z       39 |   await expect(page.locator("#desktop-right #realm-picker").getByRole("button")).toBeDisabled();
+2026-07-09T14:59:57.5209065Z         at /home/runner/work/openremote/openremote/ui/app/manager/test/test.cleanup.ts:36:76
+2026-07-09T14:59:57.5209640Z 
+2026-07-09T14:59:57.5210271Z     attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5211409Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry1/video.webm
+2026-07-09T14:59:57.5212664Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5213086Z 
+2026-07-09T14:59:57.5213984Z     Error Context: test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry1/error-context.md
+2026-07-09T14:59:57.5214725Z 
+2026-07-09T14:59:57.5215080Z     attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5215765Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry1/trace.zip
+2026-07-09T14:59:57.5216254Z     Usage:
+2026-07-09T14:59:57.5216413Z 
+2026-07-09T14:59:57.5216814Z         yarn playwright show-trace test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry1/trace.zip
+2026-07-09T14:59:57.5217289Z 
+2026-07-09T14:59:57.5217619Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5217897Z 
+2026-07-09T14:59:57.5218302Z     Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5218669Z 
+2026-07-09T14:59:57.5219104Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+2026-07-09T14:59:57.5219607Z 
+2026-07-09T14:59:57.5219953Z     Locator:  getByRole('cell', { name: 'smartcity', exact: true })
+2026-07-09T14:59:57.5220608Z     Expected: [32m0[39m
+2026-07-09T14:59:57.5221078Z     Received: [31m1[39m
+2026-07-09T14:59:57.5221594Z     Timeout:  5000ms
+2026-07-09T14:59:57.5221834Z 
+2026-07-09T14:59:57.5221966Z     Call log:
+2026-07-09T14:59:57.5222377Z     [2m  - Expect "toHaveCount" with timeout 5000ms[22m
+2026-07-09T14:59:57.5223281Z     [2m  - waiting for getByRole('cell', { name: 'smartcity', exact: true })[22m
+2026-07-09T14:59:57.5224871Z     [2m    9 × locator resolved to 1 element[22m
+2026-07-09T14:59:57.5225391Z     [2m      - unexpected value "1"[22m
+2026-07-09T14:59:57.5225663Z 
+2026-07-09T14:59:57.5225671Z 
+2026-07-09T14:59:57.5225917Z       34 |   await manager.navigateToMenuItem("Realms");
+2026-07-09T14:59:57.5226409Z       35 |   await realmsPage.deleteRealm("smartcity");
+2026-07-09T14:59:57.5226921Z     > 36 |   await expect(page.getByRole("cell", { name: "smartcity", exact: true })).toHaveCount(0);
+2026-07-09T14:59:57.5227595Z          |                                                                            ^
+2026-07-09T14:59:57.5228036Z       37 |   await manager.goToRealmStartPage("master");
+2026-07-09T14:59:57.5228473Z       38 |   await page.locator("#desktop-right").waitFor();
+2026-07-09T14:59:57.5229138Z       39 |   await expect(page.locator("#desktop-right #realm-picker").getByRole("button")).toBeDisabled();
+2026-07-09T14:59:57.5230127Z         at /home/runner/work/openremote/openremote/ui/app/manager/test/test.cleanup.ts:36:76
+2026-07-09T14:59:57.5230592Z 
+2026-07-09T14:59:57.5231090Z     attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5232098Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry2/video.webm
+2026-07-09T14:59:57.5233232Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5233641Z 
+2026-07-09T14:59:57.5234383Z     Error Context: test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry2/error-context.md
+2026-07-09T14:59:57.5235075Z 
+2026-07-09T14:59:57.5235782Z     attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5236782Z     test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry2/trace.zip
+2026-07-09T14:59:57.5237463Z     Usage:
+2026-07-09T14:59:57.5237673Z 
+2026-07-09T14:59:57.5238275Z         yarn playwright show-trace test-results/test-test.cleanup.ts-Delete-the-smartcity-realm-cleanup-manager-retry2/trace.zip
+2026-07-09T14:59:57.5238959Z 
+2026-07-09T14:59:57.5239690Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-07-09T14:59:57.5240088Z 
+2026-07-09T14:59:57.5240257Z   1 failed
+2026-07-09T14:59:57.5240995Z     [cleanup manager] › test/test.cleanup.ts:32:8 › Delete the "smartcity" realm ───────────────────
+2026-07-09T14:59:57.5241610Z   32 passed (3.1m)
+2026-07-09T14:59:57.6066885Z 
+2026-07-09T14:59:57.6066903Z 
+2026-07-09T14:59:57.6067416Z FAILURE: Build failed with an exception.
+2026-07-09T14:59:57.6067785Z 
+2026-07-09T14:59:57.6067992Z * What went wrong:
+2026-07-09T14:59:57.6068776Z Execution failed for task ':ui:app:manager:npmTest' (registered in build file 'ui/app/manager/build.gradle').
+2026-07-09T14:59:57.6069569Z > Process 'command 'yarn'' finished with non-zero exit value 1
+2026-07-09T14:59:57.6069993Z 
+2026-07-09T14:59:57.6070193Z * Try:
+2026-07-09T14:59:57.6070599Z > Run with --stacktrace option to get the stack trace.
+2026-07-09T14:59:57.6094863Z > Task :ui:app:manager:npmTest FAILED
+2026-07-09T14:59:57.6095509Z > Run with --info or --debug option to get more log output.
+2026-07-09T14:59:57.6095901Z 
+2026-07-09T14:59:57.6115168Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-07-09T14:59:57.6116381Z [Incubating] Problems report is available at: file:///home/runner/work/openremote/openremote/build/reports/problems/problems-report.html
+2026-07-09T14:59:57.6117643Z 
+2026-07-09T14:59:57.6118181Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-07-09T14:59:57.6118918Z 
+2026-07-09T14:59:57.6119688Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-09T14:59:57.6120525Z 
+2026-07-09T14:59:57.6121326Z For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-09T14:59:57.6122249Z > Get more help at https://help.gradle.org.
+2026-07-09T14:59:57.6122575Z 
+2026-07-09T14:59:57.6122773Z BUILD FAILED in 3m 56s
+2026-07-09T14:59:57.6124037Z 6 actionable tasks: 5 executed, 1 up-to-date
+2026-07-09T14:59:57.7042238Z Configuration cache entry stored.
+2026-07-09T14:59:58.0218331Z ##[error]Process completed with exit code 1.
+2026-07-09T14:59:58.0373210Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-07-09T14:59:58.0373953Z with:
+2026-07-09T14:59:58.0374301Z   name: or-ui-app-test-results-1
+2026-07-09T14:59:58.0374574Z   path: ui/app/*/app-test-report/**
+2026-07-09T14:59:58.0374835Z   if-no-files-found: warn
+2026-07-09T14:59:58.0375076Z   compression-level: 6
+2026-07-09T14:59:58.0375282Z   overwrite: false
+2026-07-09T14:59:58.0375523Z   include-hidden-files: false
+2026-07-09T14:59:58.0375796Z   archive: true
+2026-07-09T14:59:58.0375995Z env:
+2026-07-09T14:59:58.0376267Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-09T14:59:58.0376686Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-09T14:59:58.0377012Z   MAVEN_ARGS: -ntp
+2026-07-09T14:59:58.0377227Z ##[endgroup]
+2026-07-09T14:59:58.1595893Z With the provided path, there will be 56 files uploaded
+2026-07-09T14:59:58.1599402Z Artifact name is valid!
+2026-07-09T14:59:58.1599769Z Root directory input is valid!
+2026-07-09T14:59:58.4745379Z Uploading artifact: or-ui-app-test-results-1.zip
+2026-07-09T14:59:58.4773495Z Beginning upload of artifact content to blob storage
+2026-07-09T14:59:59.6411929Z Uploaded bytes 8388608
+2026-07-09T14:59:59.8171834Z Uploaded bytes 16777216
+2026-07-09T14:59:59.9353082Z Uploaded bytes 18664081
+2026-07-09T14:59:59.9959312Z Finished uploading artifact content to blob storage!
+2026-07-09T14:59:59.9962185Z SHA256 digest of uploaded artifact is ab7c3bcd6f695f88b17088ddff54566263c47e5fa807edc40182a3e78da5b2a2
+2026-07-09T14:59:59.9963937Z Finalizing artifact upload
+2026-07-09T15:00:00.3827711Z Artifact or-ui-app-test-results-1 successfully finalized. Artifact ID 8202309805
+2026-07-09T15:00:00.3828678Z Artifact or-ui-app-test-results-1 has been successfully uploaded! Final size is 18664081 bytes. Artifact ID is 8202309805
+2026-07-09T15:00:00.3832103Z Artifact download URL: https://github.com/openremote/openremote/actions/runs/29026970986/artifacts/8202309805
+2026-07-09T15:00:00.3982121Z Post job cleanup.
+2026-07-09T15:00:00.5053229Z Post job cleanup.
+2026-07-09T15:00:00.5793254Z [command]/usr/bin/git version
+2026-07-09T15:00:00.5851992Z git version 2.54.0
+2026-07-09T15:00:00.5876993Z Temporarily overriding HOME='/home/runner/work/_temp/62c303da-5e3b-49f7-a307-ac93f7977df7' before making global git config changes
+2026-07-09T15:00:00.5877972Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-09T15:00:00.5887289Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-07-09T15:00:00.5910066Z Removing SSH command configuration
+2026-07-09T15:00:00.5916044Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-09T15:00:00.5945154Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-09T15:00:00.6119041Z Removing HTTP extra header
+2026-07-09T15:00:00.6123537Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-09T15:00:00.6150894Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-09T15:00:00.6318030Z Removing includeIf entries pointing to credentials config files
+2026-07-09T15:00:00.6322740Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-09T15:00:00.6339775Z includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-07-09T15:00:00.6340661Z includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-07-09T15:00:00.6341507Z includeif.gitdir:/github/workspace/.git.path
+2026-07-09T15:00:00.6342401Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-09T15:00:00.6348271Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-07-09T15:00:00.6364312Z /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6371840Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6416080Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-07-09T15:00:00.6417664Z /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6427846Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6457600Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-09T15:00:00.6474502Z /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6480359Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6505676Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-09T15:00:00.6522499Z /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6529675Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config
+2026-07-09T15:00:00.6553681Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-09T15:00:00.6703349Z Removing credentials config '/home/runner/work/_temp/git-credentials-e743f7e3-a2ff-4d2e-ae1b-61592dedbbde.config'
+2026-07-09T15:00:00.6795958Z Cleaning up orphan processes
+2026-07-09T15:00:00.7102985Z Terminate orphan process: pid (2990) (java)

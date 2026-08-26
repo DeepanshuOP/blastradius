@@ -1,0 +1,163 @@
+﻿2026-06-16T03:51:16.3622690Z Current runner version: '2.335.1'
+2026-06-16T03:51:16.3646461Z ##[group]Runner Image Provisioner
+2026-06-16T03:51:16.3647272Z Hosted Compute Agent
+2026-06-16T03:51:16.3647891Z Version: 20260527.539
+2026-06-16T03:51:16.3648480Z Commit: a891dd388383b896fa6ac04a82c0b75cec981078
+2026-06-16T03:51:16.3649178Z Build Date: 2026-05-27T21:39:57Z
+2026-06-16T03:51:16.3649826Z Worker ID: {a313098a-03e0-45c1-a956-67a9c4da7b69}
+2026-06-16T03:51:16.3650537Z Azure Region: westus3
+2026-06-16T03:51:16.3651112Z ##[endgroup]
+2026-06-16T03:51:16.3652827Z ##[group]Operating System
+2026-06-16T03:51:16.3653432Z Ubuntu
+2026-06-16T03:51:16.3653985Z 24.04.4
+2026-06-16T03:51:16.3654466Z LTS
+2026-06-16T03:51:16.3654957Z ##[endgroup]
+2026-06-16T03:51:16.3655461Z ##[group]Runner Image
+2026-06-16T03:51:16.3656039Z Image: ubuntu-24.04
+2026-06-16T03:51:16.3656636Z Version: 20260607.184.1
+2026-06-16T03:51:16.3657775Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260607.184/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-16T03:51:16.3659145Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260607.184
+2026-06-16T03:51:16.3660026Z ##[endgroup]
+2026-06-16T03:51:16.3661066Z ##[group]GITHUB_TOKEN Permissions
+2026-06-16T03:51:16.3663333Z Metadata: read
+2026-06-16T03:51:16.3664247Z PullRequests: write
+2026-06-16T03:51:16.3664836Z ##[endgroup]
+2026-06-16T03:51:16.3666949Z Secret source: Actions
+2026-06-16T03:51:16.3667867Z Prepare workflow directory
+2026-06-16T03:51:16.4234023Z Prepare all required actions
+2026-06-16T03:51:16.4271575Z Getting action download info
+2026-06-16T03:51:16.7186940Z Download action repository 'actions/checkout@v6' (SHA:df4cb1c069e1874edd31b4311f1884172cec0e10)
+2026-06-16T03:51:17.4281857Z Complete job name: Open pull request
+2026-06-16T03:51:17.4901928Z ##[group]Run actions/checkout@v6
+2026-06-16T03:51:17.4903287Z with:
+2026-06-16T03:51:17.4903902Z   repository: crimera/piko
+2026-06-16T03:51:17.4908947Z   token: ***
+2026-06-16T03:51:17.4909564Z   ssh-strict: true
+2026-06-16T03:51:17.4910199Z   ssh-user: git
+2026-06-16T03:51:17.4910835Z   persist-credentials: true
+2026-06-16T03:51:17.4911476Z   clean: true
+2026-06-16T03:51:17.4912077Z   sparse-checkout-cone-mode: true
+2026-06-16T03:51:17.4913108Z   fetch-depth: 1
+2026-06-16T03:51:17.4913728Z   fetch-tags: false
+2026-06-16T03:51:17.4914301Z   show-progress: true
+2026-06-16T03:51:17.4914943Z   lfs: false
+2026-06-16T03:51:17.4915547Z   submodules: false
+2026-06-16T03:51:17.4916263Z   set-safe-directory: true
+2026-06-16T03:51:17.4917275Z env:
+2026-06-16T03:51:17.4917857Z   TITLE: chore: Merge branch `dev` to `main`
+2026-06-16T03:51:17.4918675Z   BODY: This pull request will `dev` to `main`.
+2026-06-16T03:51:17.4919409Z ##[endgroup]
+2026-06-16T03:51:17.5853290Z Syncing repository: crimera/piko
+2026-06-16T03:51:17.5855440Z ##[group]Getting Git version info
+2026-06-16T03:51:17.5856483Z Working directory is '/home/runner/work/piko/piko'
+2026-06-16T03:51:17.5857735Z [command]/usr/bin/git version
+2026-06-16T03:51:17.5901104Z git version 2.54.0
+2026-06-16T03:51:17.5921822Z ##[endgroup]
+2026-06-16T03:51:17.5935136Z Temporarily overriding HOME='/home/runner/work/_temp/5a33b7f4-58a3-4b82-a0b4-f55325a52892' before making global git config changes
+2026-06-16T03:51:17.5937127Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-16T03:51:17.5939445Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/piko/piko
+2026-06-16T03:51:17.5980078Z Deleting the contents of '/home/runner/work/piko/piko'
+2026-06-16T03:51:17.5984005Z ##[group]Determining repository object format
+2026-06-16T03:51:17.5985916Z ##[endgroup]
+2026-06-16T03:51:17.5987317Z ##[group]Initializing the repository
+2026-06-16T03:51:17.5990244Z [command]/usr/bin/git init /home/runner/work/piko/piko
+2026-06-16T03:51:17.6086363Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-16T03:51:17.6088247Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-16T03:51:17.6091210Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-16T03:51:17.6094417Z hint: call:
+2026-06-16T03:51:17.6096390Z hint:
+2026-06-16T03:51:17.6098415Z hint: 	git config --global init.defaultBranch <name>
+2026-06-16T03:51:17.6100316Z hint:
+2026-06-16T03:51:17.6102348Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-16T03:51:17.6105323Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-16T03:51:17.6107612Z hint:
+2026-06-16T03:51:17.6108985Z hint: 	git branch -m <name>
+2026-06-16T03:51:17.6109825Z hint:
+2026-06-16T03:51:17.6110825Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-16T03:51:17.6112223Z Initialized empty Git repository in /home/runner/work/piko/piko/.git/
+2026-06-16T03:51:17.6118257Z [command]/usr/bin/git remote add origin https://github.com/crimera/piko
+2026-06-16T03:51:17.6141151Z ##[endgroup]
+2026-06-16T03:51:17.6142174Z ##[group]Disabling automatic garbage collection
+2026-06-16T03:51:17.6144894Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-16T03:51:17.6166828Z ##[endgroup]
+2026-06-16T03:51:17.6168118Z ##[group]Setting up auth
+2026-06-16T03:51:17.6169028Z Removing SSH command configuration
+2026-06-16T03:51:17.6171667Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-16T03:51:17.6198476Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-16T03:51:17.6464256Z Removing HTTP extra header
+2026-06-16T03:51:17.6468281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-16T03:51:17.6491315Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-16T03:51:17.6658230Z Removing includeIf entries pointing to credentials config files
+2026-06-16T03:51:17.6664200Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-16T03:51:17.6690556Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-16T03:51:17.6856085Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-16T03:51:17.6883987Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/piko/piko/.git.path /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:17.6907049Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/piko/piko/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:17.6931694Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:17.7062615Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:17.7067983Z ##[endgroup]
+2026-06-16T03:51:17.7069909Z ##[group]Fetching the repository
+2026-06-16T03:51:17.7071461Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b30e1aea621d3edb5093255e6a334ec273ab80cf:refs/remotes/origin/dev
+2026-06-16T03:51:19.0425210Z From https://github.com/crimera/piko
+2026-06-16T03:51:19.0427834Z  * [new ref]         b30e1aea621d3edb5093255e6a334ec273ab80cf -> origin/dev
+2026-06-16T03:51:19.0465055Z [command]/usr/bin/git branch --list --remote origin/dev
+2026-06-16T03:51:19.0493788Z   origin/dev
+2026-06-16T03:51:19.0501691Z [command]/usr/bin/git rev-parse refs/remotes/origin/dev
+2026-06-16T03:51:19.0521435Z b30e1aea621d3edb5093255e6a334ec273ab80cf
+2026-06-16T03:51:19.0525524Z ##[endgroup]
+2026-06-16T03:51:19.0527033Z ##[group]Determining the checkout info
+2026-06-16T03:51:19.0528704Z ##[endgroup]
+2026-06-16T03:51:19.0529907Z [command]/usr/bin/git sparse-checkout disable
+2026-06-16T03:51:19.0565038Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-16T03:51:19.0586667Z ##[group]Checking out the ref
+2026-06-16T03:51:19.0588808Z [command]/usr/bin/git checkout --progress --force -B dev refs/remotes/origin/dev
+2026-06-16T03:51:19.1131560Z Switched to a new branch 'dev'
+2026-06-16T03:51:19.1133461Z branch 'dev' set up to track 'origin/dev'.
+2026-06-16T03:51:19.1143432Z ##[endgroup]
+2026-06-16T03:51:19.1176677Z [command]/usr/bin/git log -1 --format=%H
+2026-06-16T03:51:19.1195717Z b30e1aea621d3edb5093255e6a334ec273ab80cf
+2026-06-16T03:51:19.1413700Z ##[group]Run gh pr create -d -B main -H dev --title 'chore: Merge branch `dev` to `main`' --body 'This pull request will `dev` to `main`.' ||  gh pr edit -B main --title 'chore: Merge branch `dev` to `main`' --body 'This pull request will `dev` to `main`.'
+2026-06-16T03:51:19.1419778Z [36;1mgh pr create -d -B main -H dev --title 'chore: Merge branch `dev` to `main`' --body 'This pull request will `dev` to `main`.' ||  gh pr edit -B main --title 'chore: Merge branch `dev` to `main`' --body 'This pull request will `dev` to `main`.'[0m
+2026-06-16T03:51:19.1569679Z shell: /usr/bin/bash -e {0}
+2026-06-16T03:51:19.1570795Z env:
+2026-06-16T03:51:19.1571740Z   TITLE: chore: Merge branch `dev` to `main`
+2026-06-16T03:51:19.1573394Z   BODY: This pull request will `dev` to `main`.
+2026-06-16T03:51:19.1586141Z   GH_TOKEN: ***
+2026-06-16T03:51:19.1587076Z ##[endgroup]
+2026-06-16T03:51:19.9506491Z a pull request for branch "dev" into branch "main" already exists:
+2026-06-16T03:51:19.9507205Z https://github.com/crimera/piko/pull/1166
+2026-06-16T03:51:20.7160680Z no pull requests found for branch "dev"
+2026-06-16T03:51:20.7184863Z ##[error]Process completed with exit code 1.
+2026-06-16T03:51:20.7301303Z Post job cleanup.
+2026-06-16T03:51:20.8107814Z [command]/usr/bin/git version
+2026-06-16T03:51:20.8153943Z git version 2.54.0
+2026-06-16T03:51:20.8176829Z Temporarily overriding HOME='/home/runner/work/_temp/b31e0723-a2d3-4fd6-a48a-478b3fc6eeae' before making global git config changes
+2026-06-16T03:51:20.8178172Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-16T03:51:20.8182332Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/piko/piko
+2026-06-16T03:51:20.8209150Z Removing SSH command configuration
+2026-06-16T03:51:20.8216186Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-16T03:51:20.8242807Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-16T03:51:20.8408771Z Removing HTTP extra header
+2026-06-16T03:51:20.8413198Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-16T03:51:20.8439540Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-16T03:51:20.8602044Z Removing includeIf entries pointing to credentials config files
+2026-06-16T03:51:20.8607576Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-16T03:51:20.8625148Z includeif.gitdir:/home/runner/work/piko/piko/.git.path
+2026-06-16T03:51:20.8625979Z includeif.gitdir:/home/runner/work/piko/piko/.git/worktrees/*.path
+2026-06-16T03:51:20.8626632Z includeif.gitdir:/github/workspace/.git.path
+2026-06-16T03:51:20.8627182Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-16T03:51:20.8633041Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/piko/piko/.git.path
+2026-06-16T03:51:20.8649109Z /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8657947Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/piko/piko/.git.path /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8683445Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/piko/piko/.git/worktrees/*.path
+2026-06-16T03:51:20.8700643Z /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8707421Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/piko/piko/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8731070Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-16T03:51:20.8746698Z /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8751933Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8774637Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-16T03:51:20.8790038Z /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8796462Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config
+2026-06-16T03:51:20.8821988Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-16T03:51:20.8985122Z Removing credentials config '/home/runner/work/_temp/git-credentials-364dcda3-28cd-4a0a-9da8-86e268d8bef7.config'
+2026-06-16T03:51:20.9095907Z Cleaning up orphan processes
