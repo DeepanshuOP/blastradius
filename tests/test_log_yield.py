@@ -92,3 +92,23 @@ def test_ansi_heavy_log_clean_extraction() -> None:
     for item in extracted:
         assert "\x1b" not in item
         assert "[" not in item
+
+
+def test_flink_fixture_10_both_identifiers() -> None:
+    """Fixture 10 (Flink): Extractor returns both SavepointITCase and IPv6HostnamesITCase identifiers."""
+    body = _read_fixture("apache__flink__079848838447.txt")
+    extracted = extract_failing_test_ids(body)
+    assert extracted == {
+        "org.apache.flink.test.checkpointing.SavepointITCase::testStopWithSavepointFailsOverToSavepoint",
+        "org.apache.flink.test.runtime.IPv6HostnamesITCase::testClusterWithIPv6host",
+    }
+
+
+def test_expected_md_total_identifiers_count() -> None:
+    """EXPECTED.md must parse to exactly 46 total test identifiers across the 40 fixtures."""
+    from analysis.fixture_score import parse_expected
+    fixtures = parse_expected()
+    assert len(fixtures) == 40
+    total_ids = sum(len(f["expected_ids"]) for f in fixtures.values())
+    assert total_ids == 46
+
