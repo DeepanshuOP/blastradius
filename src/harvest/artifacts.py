@@ -36,8 +36,18 @@ DEFAULT_TEST_FILE_PATTERN = re.compile(
     r"(?i)(?:patch-unit-.*\.txt|TEST-.*\.xml|.*\.surefire|.*\bsurefire-reports/.*|.*\btest-results/.*|.*\.trx|.*test.*\.xml|.*test.*\.json|.*test.*\.log|.*test.*\.txt)$"
 )
 
-# Size caps and safety limits
-DEFAULT_MAX_ARTIFACT_SIZE_BYTES = 150 * 1024 * 1024  # 150 MB
+# Size caps and safety limits.
+#
+# Measured maximum test artifact in corpus: 252,250,140 bytes (~240.6 MB,
+# apache/hbase yetus-jdk17-hadoop3-unit-check-large-wave-3 from fixture
+# tests/fixtures/logs/apache__hbase__082907939305.txt:4681).
+# Set to 300 MB to safely accommodate large Yetus archives while guarding against unbounded downloads.
+#
+# Note on storage budget: This cap governs temporary download bandwidth and memory cost,
+# NOT disk storage. Extraction is selective (only matching test result files are extracted)
+# and the downloaded zip archive is discarded immediately after extraction. The 200-500 GB
+# disk budget applies to extracted test results and raw logs, not the temporary zip downloads.
+DEFAULT_MAX_ARTIFACT_SIZE_BYTES = 300 * 1024 * 1024  # 300 MB
 DEFAULT_MAX_EXTRACTED_BYTES = 500 * 1024 * 1024  # 500 MB decompression bomb guard
 DEFAULT_MAX_MEMBER_BYTES = 100 * 1024 * 1024  # 100 MB per single file in archive
 

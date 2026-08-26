@@ -1556,12 +1556,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def acquire_daemon_lock(lock_path: Path | str = DEFAULT_LOCK_PATH) -> int | None:
+def acquire_daemon_lock(lock_path: Path | str | None = None) -> int | None:
     """Acquire an exclusive advisory flock on lock_path for the process lifetime.
 
     Returns the open file descriptor on success, or None if already held.
     """
-    path = Path(lock_path)
+    path = Path(lock_path) if lock_path is not None else DEFAULT_LOCK_PATH
     path.parent.mkdir(parents=True, exist_ok=True)
     fd = os.open(path, os.O_CREAT | os.O_RDWR, 0o644)
     try:
@@ -1577,10 +1577,11 @@ def acquire_daemon_lock(lock_path: Path | str = DEFAULT_LOCK_PATH) -> int | None
     return fd
 
 
-def read_lock_holder(lock_path: Path | str = DEFAULT_LOCK_PATH) -> str | None:
+def read_lock_holder(lock_path: Path | str | None = None) -> str | None:
     """Read the PID of the current lock holder if recorded in lock_path."""
+    path = Path(lock_path) if lock_path is not None else DEFAULT_LOCK_PATH
     try:
-        with open(lock_path, "r", encoding="ascii") as fh:
+        with open(path, "r", encoding="ascii") as fh:
             pid_str = fh.read().strip()
             return pid_str if pid_str else None
     except Exception:
@@ -1596,7 +1597,7 @@ def release_daemon_lock(fd: int) -> None:
         pass
 
 
-def main(argv: list[str] | None = None, *, lock_path: Path | str = DEFAULT_LOCK_PATH) -> None:
+def main(argv: list[str] | None = None, *, lock_path: Path | str | None = None) -> None:
     args = parse_args(argv)
 
     if args.dry_run:
@@ -1609,9 +1610,10 @@ def main(argv: list[str] | None = None, *, lock_path: Path | str = DEFAULT_LOCK_
         )
         return
 
-    lock_fd = acquire_daemon_lock(lock_path)
+    effective_lock_path = Path(lock_path) if lock_path is not None else DEFAULT_LOCK_PATH
+    lock_fd = acquire_daemon_lock(effective_lock_path)
     if lock_fd is None:
-        holder = read_lock_holder(lock_path)
+        holder = read_lock_holder(effective_lock_path)
         holder_msg = f" (PID {holder})" if holder else ""
         print(f"[daemon] another daemon instance is already running{holder_msg}; exiting cleanly (0)")
         return

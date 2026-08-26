@@ -44,8 +44,8 @@ def test_filter_test_artifacts_hbase_names_and_rejections() -> None:
         {"name": "docker-image-layers", "size_in_bytes": 16384},
     ]
 
-    # Use a size limit large enough to accommodate the 252 MB HBase wave
-    result = filter_test_artifacts(artifacts, max_size_bytes=300 * 1024 * 1024)
+    # Verify default cap (300 MB) accommodates all 4 HBase artifacts and test report artifacts
+    result = filter_test_artifacts(artifacts)
 
     assert result.n_artifacts_total == 11
     assert result.n_artifacts_selected == 7
@@ -70,21 +70,37 @@ def test_filter_test_artifacts_hbase_names_and_rejections() -> None:
     }
 
 
+def test_filter_test_artifacts_measured_hbase_sizes_pass_default_cap() -> None:
+    """The four measured HBase artifact byte sizes (102597177, 252250140, 7526, 43053738)
+    must all pass filter_test_artifacts under DEFAULT_MAX_ARTIFACT_SIZE_BYTES (300 MB)."""
+    hbase_artifacts = [
+        {"name": "yetus-jdk17-hadoop3-unit-check-large-wave-2", "size_in_bytes": 102597177},
+        {"name": "yetus-jdk17-hadoop3-unit-check-large-wave-3", "size_in_bytes": 252250140},
+        {"name": "yetus-jdk8-hadoop2-unit-check-small", "size_in_bytes": 7526},
+        {"name": "yetus-jdk11-hadoop3-unit-check-large-wave-1", "size_in_bytes": 43053738},
+    ]
+    result = filter_test_artifacts(hbase_artifacts)
+    assert result.n_artifacts_total == 4
+    assert result.n_artifacts_selected == 4
+    assert result.n_artifacts_skipped_size == 0
+    assert [a["size_in_bytes"] for a in result.selected] == [102597177, 252250140, 7526, 43053738]
+
+
 def test_filter_test_artifacts_oversized_records_name_and_size() -> None:
     """filter_test_artifacts must reject artifacts exceeding max_size_bytes and record
     both the skipped name and size without dropping them silently."""
     artifacts = [
-        {"name": "yetus-jdk17-hadoop3-unit-check-large-wave-3", "size_in_bytes": 252250140},
+        {"name": "huge-yetus-archive", "size_in_bytes": 350 * 1024 * 1024},
         {"name": "yetus-jdk8-hadoop2-unit-check-small", "size_in_bytes": 7526},
     ]
 
-    # Standard default is 150 MB; the 252 MB artifact must be skipped for size
-    result = filter_test_artifacts(artifacts, max_size_bytes=DEFAULT_MAX_ARTIFACT_SIZE_BYTES)
+    # Standard default is 300 MB; the 350 MB artifact must be skipped for size
+    result = filter_test_artifacts(artifacts)
 
     assert result.n_artifacts_selected == 1
     assert result.selected[0]["name"] == "yetus-jdk8-hadoop2-unit-check-small"
     assert result.n_artifacts_skipped_size == 1
-    assert result.skipped_size == [("yetus-jdk17-hadoop3-unit-check-large-wave-3", 252250140)]
+    assert result.skipped_size == [("huge-yetus-archive", 350 * 1024 * 1024)]
 
 
 def test_filter_test_artifacts_expired_records_name() -> None:

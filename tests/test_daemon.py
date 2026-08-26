@@ -1391,6 +1391,7 @@ def _setup_all_tokens_dead_run(tmp_path, monkeypatch):
     db_path = tmp_path / "cursor.db"
     monkeypatch.setattr(daemon, "DEFAULT_DB_PATH", db_path)
     monkeypatch.setattr(daemon, "DEFAULT_ROOT", tmp_path / "raw")
+    monkeypatch.setattr(daemon, "DEFAULT_LOCK_PATH", tmp_path / "daemon.lock")
     monkeypatch.setenv("GITHUB_PAT_1", "tok_a")
     monkeypatch.delenv("GITHUB_PAT_2", raising=False)
     monkeypatch.delenv("GITHUB_PAT_3", raising=False)
@@ -1420,7 +1421,10 @@ def test_main_exits_cleanly_on_all_tokens_dead(tmp_path, monkeypatch, capsys):
     repos_csv, _ = _setup_all_tokens_dead_run(tmp_path, monkeypatch)
 
     with pytest.raises(SystemExit) as exc_info:
-        daemon.main(["--repos", str(repos_csv), "--limit", "1", "--stage", "1"])
+        daemon.main(
+            ["--repos", str(repos_csv), "--limit", "1", "--stage", "1"],
+            lock_path=tmp_path / "daemon.lock",
+        )
 
     assert exc_info.value.code == 1
 
@@ -1450,7 +1454,10 @@ def test_main_all_tokens_dead_leaves_units_in_flight(tmp_path, monkeypatch):
     repos_csv, db_path = _setup_all_tokens_dead_run(tmp_path, monkeypatch)
 
     with pytest.raises(SystemExit):
-        daemon.main(["--repos", str(repos_csv), "--limit", "1", "--stage", "1"])
+        daemon.main(
+            ["--repos", str(repos_csv), "--limit", "1", "--stage", "1"],
+            lock_path=tmp_path / "daemon.lock",
+        )
 
     cursor = CursorStore(db_path)
     assert cursor.get_capture_unit("owner/repo", "pull_files", 1).status == "in_flight"
