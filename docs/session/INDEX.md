@@ -51,5 +51,6 @@
 | **048** | 2026-08-26 | Single Instance | Parameterise supervisor, in-daemon flock lock, and land pending work | [048-2026-08-26-daemon-single-instance.md](file:///home/shree/blastradius/docs/session/048-2026-08-26-daemon-single-instance.md) |
 | **049** | 2026-08-26 | Extractor Precision | Measure precision on 40 fixtures (97.06% / 0.8354 F1) & fix Surefire/Gradle patterns | [049-2026-08-26-extractor-precision.md](file:///home/shree/blastradius/docs/session/049-2026-08-26-extractor-precision.md) |
 | **050** | 2026-08-26 | EXPECTED.md Audit | Amend EXPECTED.md for fixture 10, record D-27, and re-score corpus (100.00% precision) | [050-2026-08-26-expected-md-audit.md](file:///home/shree/blastradius/docs/session/050-2026-08-26-expected-md-audit.md) |
+| **051** | 2026-08-26 | T0.3d | Implement standalone artifact capture module (`src/harvest/artifacts.py`) and test suite | [051-2026-08-26-artifact-capture-module.md](file:///home/shree/blastradius/docs/session/051-2026-08-26-artifact-capture-module.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
