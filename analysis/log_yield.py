@@ -34,6 +34,7 @@ FAIL_KEYWORDS = (
     "test result: FAILED",
     "Tests:",
     "FAIL ",
+    "[ERROR]  ",
 )
 
 CLEAN_KEYWORDS = (
@@ -75,15 +76,33 @@ PATTERNS: dict[str, re.Pattern[str]] = {
     ),
 }
 
-TEST_ID_PATTERNS: list[re.Pattern[str]] = [
-    re.compile(r"<<< FAILURE!\s*(?:--|-)?\s*in\s*([^\s\n\r]+)", re.IGNORECASE),
-    re.compile(r"<<< ERROR!\s*(?:--|-)?\s*in\s*([^\s\n\r]+)", re.IGNORECASE),
+_ANSI_RE = re.compile(r"\x1b(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+
+# Surefire / Maven detail & summary patterns
+_SUREFIRE_FORM_A = re.compile(
+    r"\[ERROR\]\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+)\.([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\(.*?\))?(?:\[\d+\])?\s+--\s+Time elapsed:.*?(?:<<< FAILURE!|<<< ERROR!)",
+    re.IGNORECASE,
+)
+_SUREFIRE_FORM_B = re.compile(
+    r"<<< (?:FAILURE|ERROR)!\s*(?:--|-)?\s*in\s*([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+)",
+    re.IGNORECASE,
+)
+_SUREFIRE_FORM_C = re.compile(
+    r"\[ERROR\]\s{2,}([a-zA-Z_$][a-zA-Z0-9_$]*)\.([a-zA-Z_$][a-zA-Z0-9_$]*):[0-9]+",
+    re.IGNORECASE,
+)
+_SUREFIRE_FORM_D = re.compile(
+    r"\[ERROR\]\s+([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\(.*?\))?(?:\[\d+\])?\s+Time elapsed:.*?(?:<<< FAILURE!|<<< ERROR!)",
+    re.IGNORECASE,
+)
+
+# Standard non-Maven patterns (pytest, gradle test logger, go, rust)
+_OTHER_TEST_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"FAILED\s+([^\s\n\r:]+\.py::[^\s\n\r]+)", re.IGNORECASE),
     re.compile(r"([^\s\n\r:]+\.py::[^\s\n\r]+)\s+FAILED", re.IGNORECASE),
     re.compile(r"([a-zA-Z0-9_$.]+\s*>\s*[a-zA-Z0-9_$().]+)\s+FAILED", re.IGNORECASE),
     re.compile(r"---\s*FAIL:\s*([^\s\n\r]+)", re.IGNORECASE),
     re.compile(r"test\s+([^\s\n\r]+)\s+\.\.\.\s+FAILED", re.IGNORECASE),
-    re.compile(r">\s*Task\s+:([^\s\n\r]*test[^\s\n\r]*)\s+FAILED", re.IGNORECASE),
 ]
 
 TRUNCATION_PATTERN = re.compile(
@@ -93,18 +112,88 @@ TRUNCATION_PATTERN = re.compile(
 
 
 def extract_failing_test_ids(body: str) -> set[str]:
-    """Extract distinct failing test identifiers from a log body."""
-    found: set[str] = set()
-    fail_lines = [
-        l for l in body.splitlines() if any(k in l for k in FAIL_KEYWORDS)
-    ]
-    for fl in fail_lines:
-        for pat in TEST_ID_PATTERNS:
-            for m in pat.finditer(fl):
+    """Extract distinct failing test identifiers from a log body.
+
+    Applies ANSI escape stripping, extracts Maven Surefire Forms A/B/C/D and
+    multilingual test failure patterns, then applies suffix-collapse join rules
+    to reconcile short class/method summaries with package FQNs.
+    """
+    raw_fqn_methods: set[str] = set()
+    raw_simple_methods: set[tuple[str, str]] = set()
+    raw_fqn_classes: set[str] = set()
+    raw_bare_methods: set[str] = set()
+    other_ids: set[str] = set()
+
+    for raw_l in body.splitlines():
+        # (a) ANSI stripping applied before line filtering and regex matching
+        clean_l = _ANSI_RE.sub("", raw_l)
+        if not any(k in clean_l for k in FAIL_KEYWORDS):
+            continue
+
+        # FORM A: [ERROR] pkg.Class.method(...) -- Time elapsed: ... <<< FAILURE!
+        for m in _SUREFIRE_FORM_A.finditer(clean_l):
+            cls, meth = m.group(1), m.group(2)
+            raw_fqn_methods.add(f"{cls}::{meth}")
+
+        # FORM B: <<< FAILURE! ... in pkg.Class
+        for m in _SUREFIRE_FORM_B.finditer(clean_l):
+            cls = m.group(1)
+            raw_fqn_classes.add(cls)
+
+        # FORM C: [ERROR]   Class.method:LINE » Exception
+        for m in _SUREFIRE_FORM_C.finditer(clean_l):
+            cls, meth = m.group(1), m.group(2)
+            raw_simple_methods.add((cls, meth))
+
+        # FORM D: [ERROR] methodName Time elapsed: ... <<< FAILURE!
+        for m in _SUREFIRE_FORM_D.finditer(clean_l):
+            meth = m.group(1)
+            raw_bare_methods.add(meth)
+
+        # Other languages / frameworks (Pytest, Gradle, Go, Rust)
+        for pat in _OTHER_TEST_PATTERNS:
+            for m in pat.finditer(clean_l):
                 groups = [g for g in m.groups() if g]
                 if groups:
-                    found.add("::".join(groups).strip())
-    return found
+                    other_ids.add("::".join(groups).strip())
+
+    # JOIN RULE:
+    # 1. Gather all known FQN classes (from FORM B and FORM A)
+    known_fqn_classes = set(raw_fqn_classes)
+    for fm in raw_fqn_methods:
+        c = fm.split("::")[0]
+        if "." in c:
+            known_fqn_classes.add(c)
+
+    final_ids: set[str] = set(raw_fqn_methods) | other_ids
+    consumed_classes: set[str] = set()
+
+    # 2. Reconcile FORM C (Class, Method) with FQN classes
+    for cls, meth in raw_simple_methods:
+        matching_fqns = [fqn for fqn in known_fqn_classes if fqn.split(".")[-1] == cls]
+        if len(matching_fqns) == 1:
+            fqn_cls = matching_fqns[0]
+            final_ids.add(f"{fqn_cls}::{meth}")
+            consumed_classes.add(fqn_cls)
+        else:
+            # 0 matches (e.g. OTP) or ambiguous (>= 2) -> keep bare Class::method
+            final_ids.add(f"{cls}::{meth}")
+
+    # 3. Reconcile FORM D bare methods if exactly one FQN class is known
+    for meth in raw_bare_methods:
+        if len(known_fqn_classes) == 1:
+            fqn_cls = next(iter(known_fqn_classes))
+            final_ids.add(f"{fqn_cls}::{meth}")
+            consumed_classes.add(fqn_cls)
+        else:
+            final_ids.add(meth)
+
+    # 4. Retain unconsumed FQN classes where no method was resolved
+    for fqn in raw_fqn_classes:
+        if fqn not in consumed_classes and not any(id_str.startswith(f"{fqn}::") for id_str in final_ids):
+            final_ids.add(fqn)
+
+    return final_ids
 
 
 def classify_log(path: Path) -> tuple[str, set[str], bool]:
