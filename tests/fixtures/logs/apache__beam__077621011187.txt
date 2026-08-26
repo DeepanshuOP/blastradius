@@ -1,0 +1,194 @@
+﻿2026-05-24T19:10:39.8844410Z Current runner version: '2.334.0'
+2026-05-24T19:10:39.8858300Z ##[group]Runner Image Provisioner
+2026-05-24T19:10:39.8858780Z Hosted Compute Agent
+2026-05-24T19:10:39.8859130Z Version: 20260213.493
+2026-05-24T19:10:39.8859610Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-24T19:10:39.8860060Z Build Date: 2026-02-13T00:28:41Z
+2026-05-24T19:10:39.8860460Z Worker ID: {c8279fd9-e891-45d9-b015-8b6629196f23}
+2026-05-24T19:10:39.8860950Z Azure Region: westus
+2026-05-24T19:10:39.8861390Z ##[endgroup]
+2026-05-24T19:10:39.8862300Z ##[group]Operating System
+2026-05-24T19:10:39.8862740Z macOS
+2026-05-24T19:10:39.8863020Z 15.7.7
+2026-05-24T19:10:39.8863300Z 24G720
+2026-05-24T19:10:39.8863580Z ##[endgroup]
+2026-05-24T19:10:39.8863970Z ##[group]Runner Image
+2026-05-24T19:10:39.8864300Z Image: macos-15-arm64
+2026-05-24T19:10:39.8864620Z Version: 20260520.0085.1
+2026-05-24T19:10:39.8865390Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260520.0085/images/macos/macos-15-arm64-Readme.md
+2026-05-24T19:10:39.8866350Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260520.0085
+2026-05-24T19:10:39.8866950Z ##[endgroup]
+2026-05-24T19:10:39.8867670Z ##[group]GITHUB_TOKEN Permissions
+2026-05-24T19:10:39.8868740Z Contents: read
+2026-05-24T19:10:39.8869200Z Metadata: read
+2026-05-24T19:10:39.8869500Z Packages: read
+2026-05-24T19:10:39.8869810Z ##[endgroup]
+2026-05-24T19:10:39.8871260Z Secret source: None
+2026-05-24T19:10:39.8871870Z Prepare workflow directory
+2026-05-24T19:10:39.9262540Z Prepare all required actions
+2026-05-24T19:10:39.9294710Z Getting action download info
+2026-05-24T19:10:40.5053880Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-05-24T19:10:40.9801480Z Complete job name: Mac run local environment shell script
+2026-05-24T19:10:41.0821850Z ##[group]Run actions/checkout@v6
+2026-05-24T19:10:41.0824360Z with:
+2026-05-24T19:10:41.0824760Z   repository: apache/beam
+2026-05-24T19:10:41.0825820Z   token: ***
+2026-05-24T19:10:41.0826140Z   ssh-strict: true
+2026-05-24T19:10:41.0826450Z   ssh-user: git
+2026-05-24T19:10:41.0826770Z   persist-credentials: true
+2026-05-24T19:10:41.0827120Z   clean: true
+2026-05-24T19:10:41.0827450Z   sparse-checkout-cone-mode: true
+2026-05-24T19:10:41.0827840Z   fetch-depth: 1
+2026-05-24T19:10:41.0828140Z   fetch-tags: false
+2026-05-24T19:10:41.0828450Z   show-progress: true
+2026-05-24T19:10:41.0828760Z   lfs: false
+2026-05-24T19:10:41.0829090Z   submodules: false
+2026-05-24T19:10:41.0829440Z   set-safe-directory: true
+2026-05-24T19:10:41.0830900Z env:
+2026-05-24T19:10:41.0831290Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T19:10:41.0831680Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T19:10:41.0832090Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T19:10:41.0832480Z ##[endgroup]
+2026-05-24T19:10:41.4081070Z Syncing repository: apache/beam
+2026-05-24T19:10:41.4082740Z ##[group]Getting Git version info
+2026-05-24T19:10:41.4084210Z Working directory is '/Users/runner/work/beam/beam'
+2026-05-24T19:10:41.4085220Z [command]/opt/homebrew/bin/git version
+2026-05-24T19:10:41.4339380Z git version 2.54.0
+2026-05-24T19:10:41.4354330Z ##[endgroup]
+2026-05-24T19:10:41.4360740Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/5716b552-d84e-42b7-831a-b85b0f567ee6/.gitconfig'
+2026-05-24T19:10:41.4366730Z Temporarily overriding HOME='/Users/runner/work/_temp/5716b552-d84e-42b7-831a-b85b0f567ee6' before making global git config changes
+2026-05-24T19:10:41.4368100Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-24T19:10:41.4370530Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/beam/beam
+2026-05-24T19:10:41.4476090Z Deleting the contents of '/Users/runner/work/beam/beam'
+2026-05-24T19:10:41.4478720Z ##[group]Initializing the repository
+2026-05-24T19:10:41.4482200Z [command]/opt/homebrew/bin/git init /Users/runner/work/beam/beam
+2026-05-24T19:10:41.4708610Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-24T19:10:41.4716750Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-24T19:10:41.4718160Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-24T19:10:41.4719310Z hint: call:
+2026-05-24T19:10:41.4720010Z hint:
+2026-05-24T19:10:41.4720770Z hint: 	git config --global init.defaultBranch <name>
+2026-05-24T19:10:41.4721810Z hint:
+2026-05-24T19:10:41.4725230Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-24T19:10:41.4730280Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-24T19:10:41.4733530Z hint:
+2026-05-24T19:10:41.4736140Z hint: 	git branch -m <name>
+2026-05-24T19:10:41.4739090Z hint:
+2026-05-24T19:10:41.4740960Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-24T19:10:41.4744360Z Initialized empty Git repository in /Users/runner/work/beam/beam/.git/
+2026-05-24T19:10:41.4747660Z [command]/opt/homebrew/bin/git remote add origin https://github.com/apache/beam
+2026-05-24T19:10:41.4836160Z ##[endgroup]
+2026-05-24T19:10:41.4836770Z ##[group]Disabling automatic garbage collection
+2026-05-24T19:10:41.4838490Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-05-24T19:10:41.4899530Z ##[endgroup]
+2026-05-24T19:10:41.4900140Z ##[group]Setting up auth
+2026-05-24T19:10:41.4900600Z Removing SSH command configuration
+2026-05-24T19:10:41.4904300Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-24T19:10:41.4967920Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-24T19:10:41.5871330Z Removing HTTP extra header
+2026-05-24T19:10:41.5877140Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-24T19:10:41.5936020Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-24T19:10:41.6634600Z Removing includeIf entries pointing to credentials config files
+2026-05-24T19:10:41.6638180Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T19:10:41.6692830Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-24T19:10:41.7448180Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-24T19:10:41.7510810Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/beam/beam/.git.path /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:41.7565140Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/beam/beam/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:41.7617110Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:41.7671480Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:41.7741800Z ##[endgroup]
+2026-05-24T19:10:41.7742420Z ##[group]Fetching the repository
+2026-05-24T19:10:41.7747040Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +61bc233468eb1d59ea637489a6a00bf3266160a9:refs/remotes/pull/38619/merge
+2026-05-24T19:10:49.6088010Z From https://github.com/apache/beam
+2026-05-24T19:10:49.6089480Z  * [new ref]           61bc233468eb1d59ea637489a6a00bf3266160a9 -> pull/38619/merge
+2026-05-24T19:10:49.6189240Z ##[endgroup]
+2026-05-24T19:10:49.6189790Z ##[group]Determining the checkout info
+2026-05-24T19:10:49.6190430Z ##[endgroup]
+2026-05-24T19:10:49.6194720Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-05-24T19:10:49.6277680Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-24T19:10:49.6346950Z ##[group]Checking out the ref
+2026-05-24T19:10:49.6350320Z [command]/opt/homebrew/bin/git checkout --progress --force refs/remotes/pull/38619/merge
+2026-05-24T19:10:50.7423110Z Updating files:  60% (9226/15268)
+2026-05-24T19:10:50.7595420Z Updating files:  61% (9314/15268)
+2026-05-24T19:10:50.7877610Z Updating files:  62% (9467/15268)
+2026-05-24T19:10:50.8061900Z Updating files:  63% (9619/15268)
+2026-05-24T19:10:50.8290650Z Updating files:  64% (9772/15268)
+2026-05-24T19:10:50.8565380Z Updating files:  65% (9925/15268)
+2026-05-24T19:10:50.8766730Z Updating files:  66% (10077/15268)
+2026-05-24T19:10:50.8945840Z Updating files:  67% (10230/15268)
+2026-05-24T19:10:50.9101840Z Updating files:  68% (10383/15268)
+2026-05-24T19:10:50.9308710Z Updating files:  69% (10535/15268)
+2026-05-24T19:10:50.9666620Z Updating files:  70% (10688/15268)
+2026-05-24T19:10:50.9865480Z Updating files:  71% (10841/15268)
+2026-05-24T19:10:51.0034090Z Updating files:  72% (10993/15268)
+2026-05-24T19:10:51.0234280Z Updating files:  73% (11146/15268)
+2026-05-24T19:10:51.0394940Z Updating files:  74% (11299/15268)
+2026-05-24T19:10:51.0609680Z Updating files:  75% (11451/15268)
+2026-05-24T19:10:51.0799450Z Updating files:  76% (11604/15268)
+2026-05-24T19:10:51.0911480Z Updating files:  77% (11757/15268)
+2026-05-24T19:10:51.1072110Z Updating files:  78% (11910/15268)
+2026-05-24T19:10:51.1224880Z Updating files:  79% (12062/15268)
+2026-05-24T19:10:51.1341590Z Updating files:  80% (12215/15268)
+2026-05-24T19:10:51.1516950Z Updating files:  81% (12368/15268)
+2026-05-24T19:10:51.1671990Z Updating files:  82% (12520/15268)
+2026-05-24T19:10:51.1848080Z Updating files:  83% (12673/15268)
+2026-05-24T19:10:51.2055790Z Updating files:  84% (12826/15268)
+2026-05-24T19:10:51.2362900Z Updating files:  85% (12978/15268)
+2026-05-24T19:10:51.2545440Z Updating files:  86% (13131/15268)
+2026-05-24T19:10:51.2711630Z Updating files:  87% (13284/15268)
+2026-05-24T19:10:51.2856340Z Updating files:  88% (13436/15268)
+2026-05-24T19:10:51.3003380Z Updating files:  89% (13589/15268)
+2026-05-24T19:10:51.3179540Z Updating files:  90% (13742/15268)
+2026-05-24T19:10:51.3325920Z Updating files:  91% (13894/15268)
+2026-05-24T19:10:51.3463260Z Updating files:  92% (14047/15268)
+2026-05-24T19:10:51.3617170Z Updating files:  93% (14200/15268)
+2026-05-24T19:10:51.4008220Z Updating files:  94% (14352/15268)
+2026-05-24T19:10:51.4154560Z Updating files:  95% (14505/15268)
+2026-05-24T19:10:51.5050020Z Updating files:  96% (14658/15268)
+2026-05-24T19:10:51.5947340Z Updating files:  97% (14810/15268)
+2026-05-24T19:10:51.6727160Z Updating files:  98% (14963/15268)
+2026-05-24T19:10:51.6915300Z Updating files:  98% (15007/15268)
+2026-05-24T19:10:51.8040900Z Updating files:  99% (15116/15268)
+2026-05-24T19:10:51.8041390Z Updating files: 100% (15268/15268)
+2026-05-24T19:10:51.8041950Z Updating files: 100% (15268/15268), done.
+2026-05-24T19:10:51.8252850Z HEAD is now at 61bc2334 Merge 734513c70ea84cf28ef223bbe33755a88ae605de into 361c2c473a8eb6ebddfc3211f78553b521fdfa54
+2026-05-24T19:10:51.8272700Z ##[endgroup]
+2026-05-24T19:10:51.8383150Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-05-24T19:10:51.8457570Z 61bc233468eb1d59ea637489a6a00bf3266160a9
+2026-05-24T19:10:51.8753420Z Prepare all required actions
+2026-05-24T19:10:51.8753740Z Getting action download info
+2026-05-24T19:10:52.0580740Z ##[error]The action gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 is not allowed in apache/beam because all actions must be from a repository owned by your enterprise, created by GitHub, or match one of the patterns: 1Password/load-secrets-action/configure@8d0d610af187e78a2772c2d18d627f4c52d3fbfb, 1Password/load-secrets-action/configure@92467eb28f72e8255933372f1e0707c567ce2259, 1Password/load-secrets-action/configure@dafbe7cb03502b260e2b2893c753c352eee545bf, 1Password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb, 1Password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259, 1Password/load-secrets-action@dafbe7cb03502b260e2b2893c753c352eee545bf, AdoptOpenJDK/install-jdk@*, BobAnkh/auto-generate-changelog@*, DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101, DavidAnson/markdownlint-cli2-action@ce4853d43830c74c1753b39f3cf40f71c2031eb9, DavidAnson/markdownlint-cli2-action@ded1f9488f68a970bc66ea5619e13e9b52e601cd, EnricoM...
+2026-05-24T19:10:52.0676610Z Post job cleanup.
+2026-05-24T19:10:52.1726640Z [command]/opt/homebrew/bin/git version
+2026-05-24T19:10:52.1788340Z git version 2.54.0
+2026-05-24T19:10:52.1807350Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/e97311a2-abf6-4372-8300-b8a0755bc925/.gitconfig'
+2026-05-24T19:10:52.1813430Z Temporarily overriding HOME='/Users/runner/work/_temp/e97311a2-abf6-4372-8300-b8a0755bc925' before making global git config changes
+2026-05-24T19:10:52.1861920Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-24T19:10:52.1862630Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/beam/beam
+2026-05-24T19:10:52.1879190Z Removing SSH command configuration
+2026-05-24T19:10:52.1883830Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-24T19:10:52.1946010Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-24T19:10:52.2768120Z Removing HTTP extra header
+2026-05-24T19:10:52.2772500Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-24T19:10:52.2831700Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-24T19:10:52.3495020Z Removing includeIf entries pointing to credentials config files
+2026-05-24T19:10:52.3499860Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T19:10:52.3549510Z includeif.gitdir:/Users/runner/work/beam/beam/.git.path
+2026-05-24T19:10:52.3549900Z includeif.gitdir:/Users/runner/work/beam/beam/.git/worktrees/*.path
+2026-05-24T19:10:52.3550220Z includeif.gitdir:/github/workspace/.git.path
+2026-05-24T19:10:52.3550620Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-24T19:10:52.3555170Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/beam/beam/.git.path
+2026-05-24T19:10:52.3603610Z /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3610350Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/beam/beam/.git.path /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3667990Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/beam/beam/.git/worktrees/*.path
+2026-05-24T19:10:52.3716120Z /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3722250Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/beam/beam/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3779540Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-05-24T19:10:52.3829750Z /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3834590Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3893520Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-24T19:10:52.3941860Z /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.3947580Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config
+2026-05-24T19:10:52.4006140Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-24T19:10:52.4695210Z Removing credentials config '/Users/runner/work/_temp/git-credentials-90da635b-0d8f-4090-9c18-8dcf0ba52aba.config'
+2026-05-24T19:10:52.4772900Z Cleaning up orphan processes

@@ -1,0 +1,31 @@
+﻿2026-06-24T18:57:32.4568648Z Current runner version: '2.335.1'
+2026-06-24T18:57:32.4594784Z ##[group]Runner Image Provisioner
+2026-06-24T18:57:32.4595861Z Hosted Compute Agent
+2026-06-24T18:57:32.4596804Z Version: 20260611.554
+2026-06-24T18:57:32.4597649Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-24T18:57:32.4598656Z Build Date: 2026-06-11T21:40:46Z
+2026-06-24T18:57:32.4599608Z Worker ID: {61f1d1c8-0df2-48d3-863a-db9a8a5cf72e}
+2026-06-24T18:57:32.4600667Z Azure Region: northcentralus
+2026-06-24T18:57:32.4601452Z ##[endgroup]
+2026-06-24T18:57:32.4603449Z ##[group]Operating System
+2026-06-24T18:57:32.4604380Z Ubuntu
+2026-06-24T18:57:32.4605139Z 24.04.4
+2026-06-24T18:57:32.4605881Z LTS
+2026-06-24T18:57:32.4606610Z ##[endgroup]
+2026-06-24T18:57:32.4607420Z ##[group]Runner Image
+2026-06-24T18:57:32.4608212Z Image: ubuntu-24.04
+2026-06-24T18:57:32.4609016Z Version: 20260615.205.1
+2026-06-24T18:57:32.4610539Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260615.205/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-24T18:57:32.4612528Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260615.205
+2026-06-24T18:57:32.4613859Z ##[endgroup]
+2026-06-24T18:57:32.4615514Z ##[group]GITHUB_TOKEN Permissions
+2026-06-24T18:57:32.4617523Z Attestations: write
+2026-06-24T18:57:32.4618549Z Contents: write
+2026-06-24T18:57:32.4619312Z Metadata: read
+2026-06-24T18:57:32.4620072Z Packages: write
+2026-06-24T18:57:32.4620820Z ##[endgroup]
+2026-06-24T18:57:32.4623568Z Secret source: Actions
+2026-06-24T18:57:32.4624582Z Prepare workflow directory
+2026-06-24T18:57:32.4963952Z Prepare all required actions
+2026-06-24T18:57:32.5003164Z Getting action download info
+2026-06-24T18:57:32.8252506Z ##[error]Unable to resolve action `actions/setup-java@v6`, unable to find version `v6`

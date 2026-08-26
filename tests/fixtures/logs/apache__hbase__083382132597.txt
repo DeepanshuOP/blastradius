@@ -1,0 +1,1819 @@
+﻿2026-06-25T07:51:07.6125422Z Current runner version: '2.335.1'
+2026-06-25T07:51:07.6151748Z ##[group]Runner Image Provisioner
+2026-06-25T07:51:07.6152690Z Hosted Compute Agent
+2026-06-25T07:51:07.6153313Z Version: 20260611.554
+2026-06-25T07:51:07.6153988Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-25T07:51:07.6155024Z Build Date: 2026-06-11T21:40:46Z
+2026-06-25T07:51:07.6156104Z Worker ID: {bf30a56d-2c5b-430c-8776-b5dfd546d538}
+2026-06-25T07:51:07.6157213Z Azure Region: eastus2
+2026-06-25T07:51:07.6158082Z ##[endgroup]
+2026-06-25T07:51:07.6159881Z ##[group]Operating System
+2026-06-25T07:51:07.6160623Z Ubuntu
+2026-06-25T07:51:07.6161218Z 24.04.4
+2026-06-25T07:51:07.6162012Z LTS
+2026-06-25T07:51:07.6162638Z ##[endgroup]
+2026-06-25T07:51:07.6163207Z ##[group]Runner Image
+2026-06-25T07:51:07.6163871Z Image: ubuntu-24.04
+2026-06-25T07:51:07.6164481Z Version: 20260622.220.1
+2026-06-25T07:51:07.6165939Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260622.220/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-25T07:51:07.6167482Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260622.220
+2026-06-25T07:51:07.6168520Z ##[endgroup]
+2026-06-25T07:51:07.6169811Z ##[group]GITHUB_TOKEN Permissions
+2026-06-25T07:51:07.6172494Z Contents: read
+2026-06-25T07:51:07.6173138Z Metadata: read
+2026-06-25T07:51:07.6173726Z Statuses: read
+2026-06-25T07:51:07.6174367Z ##[endgroup]
+2026-06-25T07:51:07.6176652Z Secret source: None
+2026-06-25T07:51:07.6177688Z Prepare workflow directory
+2026-06-25T07:51:07.6577476Z Prepare all required actions
+2026-06-25T07:51:07.6616894Z Getting action download info
+2026-06-25T07:51:07.9188053Z Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-06-25T07:51:08.0142167Z Download action repository 'actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287' (SHA:ad2b38190b15e4d6bdf0c97fb4fca8412226d287)
+2026-06-25T07:51:08.2943670Z Download action repository 'actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8' (SHA:2c8a9bd7457de244a408f35966fab2fb45fda9c8)
+2026-06-25T07:51:08.5517128Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-25T07:51:08.7812823Z Complete job name: small
+2026-06-25T07:51:08.8698048Z ##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+2026-06-25T07:51:08.8699705Z with:
+2026-06-25T07:51:08.8700425Z   path: src
+2026-06-25T07:51:08.8701153Z   fetch-depth: 0
+2026-06-25T07:51:08.8702182Z   persist-credentials: false
+2026-06-25T07:51:08.8703103Z   repository: apache/hbase
+2026-06-25T07:51:08.8712521Z   token: ***
+2026-06-25T07:51:08.8713322Z   ssh-strict: true
+2026-06-25T07:51:08.8714098Z   ssh-user: git
+2026-06-25T07:51:08.8714848Z   clean: true
+2026-06-25T07:51:08.8715646Z   sparse-checkout-cone-mode: true
+2026-06-25T07:51:08.8716583Z   fetch-tags: false
+2026-06-25T07:51:08.8717383Z   show-progress: true
+2026-06-25T07:51:08.8718180Z   lfs: false
+2026-06-25T07:51:08.8718933Z   submodules: false
+2026-06-25T07:51:08.8719739Z   set-safe-directory: true
+2026-06-25T07:51:08.8720645Z   allow-unsafe-pr-checkout: false
+2026-06-25T07:51:08.8721968Z env:
+2026-06-25T07:51:08.8722694Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:08.8723505Z ##[endgroup]
+2026-06-25T07:51:08.9782103Z Syncing repository: apache/hbase
+2026-06-25T07:51:08.9784953Z ##[group]Getting Git version info
+2026-06-25T07:51:08.9786210Z Working directory is '/home/runner/work/hbase/hbase/src'
+2026-06-25T07:51:08.9788184Z [command]/usr/bin/git version
+2026-06-25T07:51:08.9812320Z git version 2.54.0
+2026-06-25T07:51:08.9832771Z ##[endgroup]
+2026-06-25T07:51:08.9845210Z Temporarily overriding HOME='/home/runner/work/_temp/661c6fed-51da-49b6-bc40-34bce96f71c8' before making global git config changes
+2026-06-25T07:51:08.9849349Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-25T07:51:08.9852825Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/hbase/hbase/src
+2026-06-25T07:51:08.9893336Z ##[group]Determining repository object format
+2026-06-25T07:51:08.9895345Z ##[endgroup]
+2026-06-25T07:51:08.9896936Z ##[group]Initializing the repository
+2026-06-25T07:51:08.9898878Z [command]/usr/bin/git init /home/runner/work/hbase/hbase/src
+2026-06-25T07:51:08.9976561Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-25T07:51:08.9979288Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-25T07:51:08.9982022Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-25T07:51:08.9983827Z hint: call:
+2026-06-25T07:51:08.9984724Z hint:
+2026-06-25T07:51:08.9985627Z hint: 	git config --global init.defaultBranch <name>
+2026-06-25T07:51:08.9986850Z hint:
+2026-06-25T07:51:08.9988343Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-25T07:51:08.9990064Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-25T07:51:08.9991444Z hint:
+2026-06-25T07:51:08.9992586Z hint: 	git branch -m <name>
+2026-06-25T07:51:08.9993440Z hint:
+2026-06-25T07:51:08.9994579Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-25T07:51:08.9996368Z Initialized empty Git repository in /home/runner/work/hbase/hbase/src/.git/
+2026-06-25T07:51:08.9999415Z [command]/usr/bin/git remote add origin https://github.com/apache/hbase
+2026-06-25T07:51:09.0035129Z ##[endgroup]
+2026-06-25T07:51:09.0036980Z ##[group]Disabling automatic garbage collection
+2026-06-25T07:51:09.0038734Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-25T07:51:09.0068800Z ##[endgroup]
+2026-06-25T07:51:09.0070198Z ##[group]Setting up auth
+2026-06-25T07:51:09.0071223Z Removing SSH command configuration
+2026-06-25T07:51:09.0074299Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-25T07:51:09.0109023Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-25T07:51:09.0420099Z Removing HTTP extra header
+2026-06-25T07:51:09.0425167Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-25T07:51:09.0460053Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-25T07:51:09.0695777Z Removing includeIf entries pointing to credentials config files
+2026-06-25T07:51:09.0697625Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-25T07:51:09.0738130Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-25T07:51:09.0975614Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-25T07:51:09.1012293Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/hbase/hbase/src/.git.path /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:09.1045590Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/hbase/hbase/src/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:09.1079453Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/src/.git.path /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:09.1116671Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/src/.git/worktrees/*.path /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:09.1144506Z ##[endgroup]
+2026-06-25T07:51:09.1145813Z ##[group]Fetching the repository
+2026-06-25T07:51:09.1152414Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +b1cabac26f28e999f413661bee83044fee907120:refs/remotes/pull/8414/merge
+2026-06-25T07:51:44.3508192Z From https://github.com/apache/hbase
+2026-06-25T07:51:44.3509154Z  * [new branch]            0.1                         -> origin/0.1
+2026-06-25T07:51:44.3522910Z  * [new branch]            0.18                        -> origin/0.18
+2026-06-25T07:51:44.3523833Z  * [new branch]            0.19                        -> origin/0.19
+2026-06-25T07:51:44.3526596Z  * [new branch]            0.19_on_hadoop_0.18         -> origin/0.19_on_hadoop_0.18
+2026-06-25T07:51:44.3527682Z  * [new branch]            0.2                         -> origin/0.2
+2026-06-25T07:51:44.3528611Z  * [new branch]            0.20                        -> origin/0.20
+2026-06-25T07:51:44.3529613Z  * [new branch]            0.20_on_hadoop-0.18.3       -> origin/0.20_on_hadoop-0.18.3
+2026-06-25T07:51:44.3530802Z  * [new branch]            0.20_on_hadoop-0.21         -> origin/0.20_on_hadoop-0.21
+2026-06-25T07:51:44.3532099Z  * [new branch]            0.89                        -> origin/0.89
+2026-06-25T07:51:44.3533312Z  * [new branch]            0.89-fb                     -> origin/0.89-fb
+2026-06-25T07:51:44.3534287Z  * [new branch]            0.89.0621                   -> origin/0.89.0621
+2026-06-25T07:51:44.3535203Z  * [new branch]            0.89.20100621               -> origin/0.89.20100621
+2026-06-25T07:51:44.3536109Z  * [new branch]            0.89.20100726               -> origin/0.89.20100726
+2026-06-25T07:51:44.3537089Z  * [new branch]            0.89.20100830               -> origin/0.89.20100830
+2026-06-25T07:51:44.3538045Z  * [new branch]            0.89.20100924               -> origin/0.89.20100924
+2026-06-25T07:51:44.3538907Z  * [new branch]            0.90                        -> origin/0.90
+2026-06-25T07:51:44.3539775Z  * [new branch]            0.90_coprocessors           -> origin/0.90_coprocessors
+2026-06-25T07:51:44.3540772Z  * [new branch]            0.90_master_rewrite         -> origin/0.90_master_rewrite
+2026-06-25T07:51:44.3541874Z  * [new branch]            0.92                        -> origin/0.92
+2026-06-25T07:51:44.3543159Z  * [new branch]            0.92.0rc4                   -> origin/0.92.0rc4
+2026-06-25T07:51:44.3544011Z  * [new branch]            0.94                        -> origin/0.94
+2026-06-25T07:51:44.3544850Z  * [new branch]            0.95                        -> origin/0.95
+2026-06-25T07:51:44.3545706Z  * [new branch]            0.96                        -> origin/0.96
+2026-06-25T07:51:44.3546604Z  * [new branch]            0.98                        -> origin/0.98
+2026-06-25T07:51:44.3547569Z  * [new branch]            2.4-rm_test                 -> origin/2.4-rm_test
+2026-06-25T07:51:44.3548619Z  * [new branch]            28842-branch-3              -> origin/28842-branch-3
+2026-06-25T07:51:44.3549622Z  * [new branch]            28897-branch-3              -> origin/28897-branch-3
+2026-06-25T07:51:44.3550580Z  * [new branch]            BackupCopyJob               -> origin/BackupCopyJob
+2026-06-25T07:51:44.3552336Z  * [new branch]            HBASE-11288                 -> origin/HBASE-11288
+2026-06-25T07:51:44.3553267Z  * [new branch]            HBASE-11288.branch-2        -> origin/HBASE-11288.branch-2
+2026-06-25T07:51:44.3553983Z  * [new branch]            HBASE-12259                 -> origin/HBASE-12259
+2026-06-25T07:51:44.3554662Z  * [new branch]            HBASE-14070.HLC             -> origin/HBASE-14070.HLC
+2026-06-25T07:51:44.3555312Z  * [new branch]            HBASE-15519                 -> origin/HBASE-15519
+2026-06-25T07:51:44.3556091Z  * [new branch]            HBASE-15867                 -> origin/HBASE-15867
+2026-06-25T07:51:44.3556773Z  * [new branch]            HBASE-18070                 -> origin/HBASE-18070
+2026-06-25T07:51:44.3557602Z  * [new branch]            HBASE-18070.branch-2        -> origin/HBASE-18070.branch-2
+2026-06-25T07:51:44.3558676Z  * [new branch]            HBASE-18477                 -> origin/HBASE-18477
+2026-06-25T07:51:44.3559294Z  * [new branch]            HBASE-20952                 -> origin/HBASE-20952
+2026-06-25T07:51:44.3559949Z  * [new branch]            HBASE-22114-branch-1        -> origin/HBASE-22114-branch-1
+2026-06-25T07:51:44.3560624Z  * [new branch]            HBASE-23162-branch-1        -> origin/HBASE-23162-branch-1
+2026-06-25T07:51:44.3561269Z  * [new branch]            HBASE-24666                 -> origin/HBASE-24666
+2026-06-25T07:51:44.3562694Z  * [new branch]            HBASE-24749                 -> origin/HBASE-24749
+2026-06-25T07:51:44.3563507Z  * [new branch]            HBASE-24767                 -> origin/HBASE-24767
+2026-06-25T07:51:44.3564265Z  * [new branch]            HBASE-24936                 -> origin/HBASE-24936
+2026-06-25T07:51:44.3565043Z  * [new branch]            HBASE-24950                 -> origin/HBASE-24950
+2026-06-25T07:51:44.3565844Z  * [new branch]            HBASE-25071-new             -> origin/HBASE-25071-new
+2026-06-25T07:51:44.3566587Z  * [new branch]            HBASE-25139                 -> origin/HBASE-25139
+2026-06-25T07:51:44.3567197Z  * [new branch]            HBASE-25194                 -> origin/HBASE-25194
+2026-06-25T07:51:44.3567759Z  * [new branch]            HBASE-25302                 -> origin/HBASE-25302
+2026-06-25T07:51:44.3568505Z  * [new branch]            HBASE-25713                 -> origin/HBASE-25713
+2026-06-25T07:51:44.3569280Z  * [new branch]            HBASE-25714                 -> origin/HBASE-25714
+2026-06-25T07:51:44.3570035Z  * [new branch]            HBASE-25904                 -> origin/HBASE-25904
+2026-06-25T07:51:44.3570751Z  * [new branch]            HBASE-26553                 -> origin/HBASE-26553
+2026-06-25T07:51:44.3571436Z  * [new branch]            HBASE-26871-branch-2        -> origin/HBASE-26871-branch-2
+2026-06-25T07:51:44.3572798Z  * [new branch]            HBASE-26913-replication-observability-framework -> origin/HBASE-26913-replication-observability-framework
+2026-06-25T07:51:44.3573555Z  * [new branch]            HBASE-27389                 -> origin/HBASE-27389
+2026-06-25T07:51:44.3574287Z  * [new branch]            HBASE-27389-rebase          -> origin/HBASE-27389-rebase
+2026-06-25T07:51:44.3574825Z  * [new branch]            HBASE-27740                 -> origin/HBASE-27740
+2026-06-25T07:51:44.3575317Z  * [new branch]            HBASE-27805                 -> origin/HBASE-27805
+2026-06-25T07:51:44.3575796Z  * [new branch]            HBASE-28463                 -> origin/HBASE-28463
+2026-06-25T07:51:44.3576274Z  * [new branch]            HBASE-28722                 -> origin/HBASE-28722
+2026-06-25T07:51:44.3576808Z  * [new branch]            HBASE-28806-branch-2.6      -> origin/HBASE-28806-branch-2.6
+2026-06-25T07:51:44.3577335Z  * [new branch]            HBASE-28957                 -> origin/HBASE-28957
+2026-06-25T07:51:44.3577839Z  * [new branch]            HBASE-28957_rebase          -> origin/HBASE-28957_rebase
+2026-06-25T07:51:44.3578412Z  * [new branch]            HBASE-28957_rebased         -> origin/HBASE-28957_rebased
+2026-06-25T07:51:44.3579031Z  * [new branch]            HBASE-29068-branch-2        -> origin/HBASE-29068-branch-2
+2026-06-25T07:51:44.3579925Z  * [new branch]            HBASE-29068-branch-2.6      -> origin/HBASE-29068-branch-2.6
+2026-06-25T07:51:44.3580488Z  * [new branch]            HBASE-29070-branch-2.5      -> origin/HBASE-29070-branch-2.5
+2026-06-25T07:51:44.3581048Z  * [new branch]            HBASE-29070-branch-2.6      -> origin/HBASE-29070-branch-2.6
+2026-06-25T07:51:44.3581805Z  * [new branch]            HBASE-29074-branch-2        -> origin/HBASE-29074-branch-2
+2026-06-25T07:51:44.3582336Z  * [new branch]            HBASE-29078                 -> origin/HBASE-29078
+2026-06-25T07:51:44.3582814Z  * [new branch]            HBASE-29081                 -> origin/HBASE-29081
+2026-06-25T07:51:44.3583318Z  * [new branch]            HBASE-29081_rebased         -> origin/HBASE-29081_rebased
+2026-06-25T07:51:44.3583966Z  * [new branch]            HBASE-29164                 -> origin/HBASE-29164
+2026-06-25T07:51:44.3584483Z  * [new branch]            HBASE-29229-branch-2        -> origin/HBASE-29229-branch-2
+2026-06-25T07:51:44.3585029Z  * [new branch]            HBASE-29229-branch-3        -> origin/HBASE-29229-branch-3
+2026-06-25T07:51:44.3585564Z  * [new branch]            HBASE-29239-branch-2        -> origin/HBASE-29239-branch-2
+2026-06-25T07:51:44.3586102Z  * [new branch]            HBASE-29239-branch-3        -> origin/HBASE-29239-branch-3
+2026-06-25T07:51:44.3586606Z  * [new branch]            HBASE-29325                 -> origin/HBASE-29325
+2026-06-25T07:51:44.3587244Z  * [new branch]            HBASE-29368-key-management-feature -> origin/HBASE-29368-key-management-feature
+2026-06-25T07:51:44.3587856Z  * [new branch]            HBASE-29427                 -> origin/HBASE-29427
+2026-06-25T07:51:44.3588378Z  * [new branch]            HBASE-29447-branch-2.6      -> origin/HBASE-29447-branch-2.6
+2026-06-25T07:51:44.3588972Z  * [new branch]            HBASE-29447-branch-3        -> origin/HBASE-29447-branch-3
+2026-06-25T07:51:44.3589537Z  * [new branch]            HBASE-29448-fixed-commit    -> origin/HBASE-29448-fixed-commit
+2026-06-25T07:51:44.3590071Z  * [new branch]            HBASE-29585                 -> origin/HBASE-29585
+2026-06-25T07:51:44.3590576Z  * [new branch]            HBASE-29588-feature         -> origin/HBASE-29588-feature
+2026-06-25T07:51:44.3591113Z  * [new branch]            HBASE-29631-branch-2        -> origin/HBASE-29631-branch-2
+2026-06-25T07:51:44.3591833Z  * [new branch]            HBASE-29688/varhandle       -> origin/HBASE-29688/varhandle
+2026-06-25T07:51:44.3592392Z  * [new branch]            HBASE-29880                 -> origin/HBASE-29880
+2026-06-25T07:51:44.3592890Z  * [new branch]            HBASE-29914                 -> origin/HBASE-29914
+2026-06-25T07:51:44.3593382Z  * [new branch]            HBASE-29980                 -> origin/HBASE-29980
+2026-06-25T07:51:44.3593875Z  * [new branch]            HBASE-30004                 -> origin/HBASE-30004
+2026-06-25T07:51:44.3594371Z  * [new branch]            HBASE-30018                 -> origin/HBASE-30018
+2026-06-25T07:51:44.3595034Z  * [new branch]            INFRA-21815.branch-2        -> origin/INFRA-21815.branch-2
+2026-06-25T07:51:44.3595572Z  * [new branch]            branch--3                   -> origin/branch--3
+2026-06-25T07:51:44.3596062Z  * [new branch]            branch-1                    -> origin/branch-1
+2026-06-25T07:51:44.3596561Z  * [new branch]            branch-1.0                  -> origin/branch-1.0
+2026-06-25T07:51:44.3597054Z  * [new branch]            branch-1.1                  -> origin/branch-1.1
+2026-06-25T07:51:44.3597536Z  * [new branch]            branch-1.2                  -> origin/branch-1.2
+2026-06-25T07:51:44.3598019Z  * [new branch]            branch-1.3                  -> origin/branch-1.3
+2026-06-25T07:51:44.3598504Z  * [new branch]            branch-1.4                  -> origin/branch-1.4
+2026-06-25T07:51:44.3598983Z  * [new branch]            branch-2                    -> origin/branch-2
+2026-06-25T07:51:44.3599462Z  * [new branch]            branch-2.0                  -> origin/branch-2.0
+2026-06-25T07:51:44.3599944Z  * [new branch]            branch-2.1                  -> origin/branch-2.1
+2026-06-25T07:51:44.3600420Z  * [new branch]            branch-2.2                  -> origin/branch-2.2
+2026-06-25T07:51:44.3600888Z  * [new branch]            branch-2.3                  -> origin/branch-2.3
+2026-06-25T07:51:44.3601364Z  * [new branch]            branch-2.4                  -> origin/branch-2.4
+2026-06-25T07:51:44.3602003Z  * [new branch]            branch-2.5                  -> origin/branch-2.5
+2026-06-25T07:51:44.3602478Z  * [new branch]            branch-2.6                  -> origin/branch-2.6
+2026-06-25T07:51:44.3602999Z  * [new branch]            branch-2.6-HBASE-29070      -> origin/branch-2.6-HBASE-29070
+2026-06-25T07:51:44.3603662Z  * [new branch]            branch-3                    -> origin/branch-3
+2026-06-25T07:51:44.3604170Z  * [new branch]            branch-3-HBASE-28963        -> origin/branch-3-HBASE-28963
+2026-06-25T07:51:44.3604689Z  * [new branch]            ccsmap                      -> origin/ccsmap
+2026-06-25T07:51:44.3605172Z  * [new branch]            former_0.20                 -> origin/former_0.20
+2026-06-25T07:51:44.3605657Z  * [new branch]            hbase-12439                 -> origin/hbase-12439
+2026-06-25T07:51:44.3606135Z  * [new branch]            hbase-14439                 -> origin/hbase-14439
+2026-06-25T07:51:44.3606669Z  * [new branch]            hbase-14439-experimental    -> origin/hbase-14439-experimental
+2026-06-25T07:51:44.3607254Z  * [new branch]            hbase-native-client         -> origin/hbase-native-client
+2026-06-25T07:51:44.3608085Z  * [new branch]            infrastructure-ruleset-bot/default-branch-protection -> origin/infrastructure-ruleset-bot/default-branch-protection
+2026-06-25T07:51:44.3608827Z  * [new branch]            master                      -> origin/master
+2026-06-25T07:51:44.3609306Z  * [new branch]            pom.xml                     -> origin/pom.xml
+2026-06-25T07:51:44.3610047Z  * [new branch]            revert-3271-25861-correct-addDeprecation-branch-2 -> origin/revert-3271-25861-correct-addDeprecation-branch-2
+2026-06-25T07:51:44.3610805Z  * [new branch]            revert-3579-HBASE-25828     -> origin/revert-3579-HBASE-25828
+2026-06-25T07:51:44.3611375Z  * [new branch]            revert-3684-HBASE-26274     -> origin/revert-3684-HBASE-26274
+2026-06-25T07:51:44.3612215Z  * [new branch]            revert-3843-HBASE-26450     -> origin/revert-3843-HBASE-26450
+2026-06-25T07:51:44.3612881Z  * [new branch]            revert-4178-25865-region-visualizer -> origin/revert-4178-25865-region-visualizer
+2026-06-25T07:51:44.3613537Z  * [new branch]            revert-4262-scanbuff2       -> origin/revert-4262-scanbuff2
+2026-06-25T07:51:44.3614095Z  * [new branch]            revert-4394-HBASE-26856     -> origin/revert-4394-HBASE-26856
+2026-06-25T07:51:44.3614656Z  * [new branch]            revert-4414-HBASE-27013     -> origin/revert-4414-HBASE-27013
+2026-06-25T07:51:44.3615359Z  * [new branch]            revert-4463-removetp        -> origin/revert-4463-removetp
+2026-06-25T07:51:44.3615921Z  * [new branch]            revert-4536-HBASE-25709     -> origin/revert-4536-HBASE-25709
+2026-06-25T07:51:44.3616558Z  * [new branch]            revert-4559-revert-4463-removetp -> origin/revert-4559-revert-4463-removetp
+2026-06-25T07:51:44.3617174Z  * [new branch]            revert-4985-HBASE-27578     -> origin/revert-4985-HBASE-27578
+2026-06-25T07:51:44.3617710Z  * [new branch]            revert-5041-hf2             -> origin/revert-5041-hf2
+2026-06-25T07:51:44.3618230Z  * [new branch]            revert-5042-hf25            -> origin/revert-5042-hf25
+2026-06-25T07:51:44.3618855Z  * [new branch]            revert-5086-HBASE-25709-branch-2.5 -> origin/revert-5086-HBASE-25709-branch-2.5
+2026-06-25T07:51:44.3619498Z  * [new branch]            revert-5158-batchCounter    -> origin/revert-5158-batchCounter
+2026-06-25T07:51:44.3620083Z  * [new branch]            revert-5468-hbase-27794-n   -> origin/revert-5468-hbase-27794-n
+2026-06-25T07:51:44.3620682Z  * [new branch]            revert-5522-HBASE-28204     -> origin/revert-5522-HBASE-28204
+2026-06-25T07:51:44.3621231Z  * [new branch]            revert-6368-HBASE-28921     -> origin/revert-6368-HBASE-28921
+2026-06-25T07:51:44.3621983Z  * [new branch]            revert-6573-hbase_HBASE-29055 -> origin/revert-6573-hbase_HBASE-29055
+2026-06-25T07:51:44.3622718Z  * [new branch]            revert-6886-revert-6573-hbase_HBASE-29055 -> origin/revert-6886-revert-6573-hbase_HBASE-29055
+2026-06-25T07:51:44.3623889Z  * [new branch]            revert-7230-HBASE-29507-IntegrationTestBackupRestore-getting-OutOfMemoryError -> origin/revert-7230-HBASE-29507-IntegrationTestBackupRestore-getting-OutOfMemoryError
+2026-06-25T07:51:44.3624882Z  * [new branch]            revert-7288-HBASE-29448     -> origin/revert-7288-HBASE-29448
+2026-06-25T07:51:44.3625700Z  * [new branch]            trunk_on_hadoop-0.19.1-dev_with_hadoop-4379 -> origin/trunk_on_hadoop-0.19.1-dev_with_hadoop-4379
+2026-06-25T07:51:44.3626304Z  * [new tag]               0.1.0                       -> 0.1.0
+2026-06-25T07:51:44.3626725Z  * [new tag]               0.1.1                       -> 0.1.1
+2026-06-25T07:51:44.3627127Z  * [new tag]               0.1.2                       -> 0.1.2
+2026-06-25T07:51:44.3627512Z  * [new tag]               0.1.3                       -> 0.1.3
+2026-06-25T07:51:44.3627908Z  * [new tag]               0.18.0                      -> 0.18.0
+2026-06-25T07:51:44.3628315Z  * [new tag]               0.18.1                      -> 0.18.1
+2026-06-25T07:51:44.3628719Z  * [new tag]               0.19.0                      -> 0.19.0
+2026-06-25T07:51:44.3629123Z  * [new tag]               0.19.1                      -> 0.19.1
+2026-06-25T07:51:44.3629534Z  * [new tag]               0.19.1RC1                   -> 0.19.1RC1
+2026-06-25T07:51:44.3629955Z  * [new tag]               0.19.2                      -> 0.19.2
+2026-06-25T07:51:44.3630360Z  * [new tag]               0.19.3RC1                   -> 0.19.3RC1
+2026-06-25T07:51:44.3630772Z  * [new tag]               0.19.4RC1                   -> 0.19.4RC1
+2026-06-25T07:51:44.3631166Z  * [new tag]               0.20.0                      -> 0.20.0
+2026-06-25T07:51:44.3631854Z  * [new tag]               0.20.0-alpha                -> 0.20.0-alpha
+2026-06-25T07:51:44.3632297Z  * [new tag]               0.20.0RC1                   -> 0.20.0RC1
+2026-06-25T07:51:44.3632702Z  * [new tag]               0.20.0RC3                   -> 0.20.0RC3
+2026-06-25T07:51:44.3633106Z  * [new tag]               0.20.1                      -> 0.20.1
+2026-06-25T07:51:44.3633499Z  * [new tag]               0.20.1RC2                   -> 0.20.1RC2
+2026-06-25T07:51:44.3633891Z  * [new tag]               0.20.2                      -> 0.20.2
+2026-06-25T07:51:44.3634286Z  * [new tag]               0.20.3                      -> 0.20.3
+2026-06-25T07:51:44.3634680Z  * [new tag]               0.20.3RC1                   -> 0.20.3RC1
+2026-06-25T07:51:44.3635078Z  * [new tag]               0.20.3RC2                   -> 0.20.3RC2
+2026-06-25T07:51:44.3635611Z  * [new tag]               0.20.4                      -> 0.20.4
+2026-06-25T07:51:44.3636005Z  * [new tag]               0.20.4RC1                   -> 0.20.4RC1
+2026-06-25T07:51:44.3636584Z  * [new tag]               0.20.4RC3                   -> 0.20.4RC3
+2026-06-25T07:51:44.3637031Z  * [new tag]               0.20.4RC4                   -> 0.20.4RC4
+2026-06-25T07:51:44.3637461Z  * [new tag]               0.20.4RC5                   -> 0.20.4RC5
+2026-06-25T07:51:44.3637880Z  * [new tag]               0.20.5                      -> 0.20.5
+2026-06-25T07:51:44.3638297Z  * [new tag]               0.20.5RC2                   -> 0.20.5RC2
+2026-06-25T07:51:44.3638703Z  * [new tag]               0.20.5RC3                   -> 0.20.5RC3
+2026-06-25T07:51:44.3639114Z  * [new tag]               0.20.5RC5                   -> 0.20.5RC5
+2026-06-25T07:51:44.3639517Z  * [new tag]               0.20.6                      -> 0.20.6
+2026-06-25T07:51:44.3639920Z  * [new tag]               0.20.6RC1                   -> 0.20.6RC1
+2026-06-25T07:51:44.3640338Z  * [new tag]               0.89.20100621               -> 0.89.20100621
+2026-06-25T07:51:44.3640836Z  * [new tag]               0.89.20100621-0.89.20100621-rc1 -> 0.89.20100621-0.89.20100621-rc1
+2026-06-25T07:51:44.3641343Z  * [new tag]               0.89.20100621-rc0           -> 0.89.20100621-rc0
+2026-06-25T07:51:44.3642001Z  * [new tag]               0.89.20100621-rc1           -> 0.89.20100621-rc1
+2026-06-25T07:51:44.3642446Z  * [new tag]               0.89.20100726               -> 0.89.20100726
+2026-06-25T07:51:44.3642888Z  * [new tag]               0.89.20100726RC2            -> 0.89.20100726RC2
+2026-06-25T07:51:44.3643324Z  * [new tag]               0.89.20100726rc1            -> 0.89.20100726rc1
+2026-06-25T07:51:44.3643911Z  * [new tag]               0.89.20100830RC1            -> 0.89.20100830RC1
+2026-06-25T07:51:44.3644339Z  * [new tag]               0.89.20100830RC2            -> 0.89.20100830RC2
+2026-06-25T07:51:44.3644769Z  * [new tag]               0.89.20100924RC1            -> 0.89.20100924RC1
+2026-06-25T07:51:44.3645187Z  * [new tag]               0.90.0                      -> 0.90.0
+2026-06-25T07:51:44.3645590Z  * [new tag]               0.90.0RC0                   -> 0.90.0RC0
+2026-06-25T07:51:44.3645998Z  * [new tag]               0.90.0RC1                   -> 0.90.0RC1
+2026-06-25T07:51:44.3646396Z  * [new tag]               0.90.0RC2                   -> 0.90.0RC2
+2026-06-25T07:51:44.3646800Z  * [new tag]               0.90.0RC3                   -> 0.90.0RC3
+2026-06-25T07:51:44.3647219Z  * [new tag]               0.90.0mvn                   -> 0.90.0mvn
+2026-06-25T07:51:44.3647637Z  * [new tag]               0.90.0mvn2                  -> 0.90.0mvn2
+2026-06-25T07:51:44.3648061Z  * [new tag]               0.90.0mvn3                  -> 0.90.0mvn3
+2026-06-25T07:51:44.3648468Z  * [new tag]               0.90.0mvn4                  -> 0.90.0mvn4
+2026-06-25T07:51:44.3648874Z  * [new tag]               0.90.0mvn7                  -> 0.90.0mvn7
+2026-06-25T07:51:44.3649295Z  * [new tag]               0.90.0mvn8                  -> 0.90.0mvn8
+2026-06-25T07:51:44.3649716Z  * [new tag]               0.90.1                      -> 0.90.1
+2026-06-25T07:51:44.3650132Z  * [new tag]               0.90.1RC0                   -> 0.90.1RC0
+2026-06-25T07:51:44.3650544Z  * [new tag]               0.90.1RC1                   -> 0.90.1RC1
+2026-06-25T07:51:44.3650946Z  * [new tag]               0.90.2                      -> 0.90.2
+2026-06-25T07:51:44.3651356Z  * [new tag]               0.90.2RC0-v2                -> 0.90.2RC0-v2
+2026-06-25T07:51:44.3652125Z  * [new tag]               0.90.2mvn                   -> 0.90.2mvn
+2026-06-25T07:51:44.3652735Z  * [new tag]               0.90.2mvn-step2             -> 0.90.2mvn-step2
+2026-06-25T07:51:44.3653195Z  * [new tag]               0.90.2mvn-v2                -> 0.90.2mvn-v2
+2026-06-25T07:51:44.3653617Z  * [new tag]               0.90.2mvn3                  -> 0.90.2mvn3
+2026-06-25T07:51:44.3654171Z  * [new tag]               0.90.3                      -> 0.90.3
+2026-06-25T07:51:44.3654578Z  * [new tag]               0.90.3RC0                   -> 0.90.3RC0
+2026-06-25T07:51:44.3654980Z  * [new tag]               0.90.3mvn                   -> 0.90.3mvn
+2026-06-25T07:51:44.3655408Z  * [new tag]               0.90.3mvnrelease            -> 0.90.3mvnrelease
+2026-06-25T07:51:44.3655833Z  * [new tag]               0.90.4                      -> 0.90.4
+2026-06-25T07:51:44.3656233Z  * [new tag]               0.90.4.mvn                  -> 0.90.4.mvn
+2026-06-25T07:51:44.3656647Z  * [new tag]               0.90.4.mvn2                 -> 0.90.4.mvn2
+2026-06-25T07:51:44.3657054Z  * [new tag]               0.90.4RC0                   -> 0.90.4RC0
+2026-06-25T07:51:44.3657467Z  * [new tag]               0.90.4RC1                   -> 0.90.4RC1
+2026-06-25T07:51:44.3657853Z  * [new tag]               0.90.5                      -> 0.90.5
+2026-06-25T07:51:44.3658248Z  * [new tag]               0.90.5RC0                   -> 0.90.5RC0
+2026-06-25T07:51:44.3658648Z  * [new tag]               0.90.5mvn                   -> 0.90.5mvn
+2026-06-25T07:51:44.3659052Z  * [new tag]               0.90.5mvn2                  -> 0.90.5mvn2
+2026-06-25T07:51:44.3659448Z  * [new tag]               0.90.6                      -> 0.90.6
+2026-06-25T07:51:44.3659835Z  * [new tag]               0.90.6RC0                   -> 0.90.6RC0
+2026-06-25T07:51:44.3660226Z  * [new tag]               0.90.6RC5                   -> 0.90.6RC5
+2026-06-25T07:51:44.3660611Z  * [new tag]               0.90.6rc0                   -> 0.90.6rc0
+2026-06-25T07:51:44.3661001Z  * [new tag]               0.92.0                      -> 0.92.0
+2026-06-25T07:51:44.3661395Z  * [new tag]               0.92.0RC1                   -> 0.92.0RC1
+2026-06-25T07:51:44.3662155Z  * [new tag]               0.92.0RC2                   -> 0.92.0RC2
+2026-06-25T07:51:44.3662556Z  * [new tag]               0.92.0mvn                   -> 0.92.0mvn
+2026-06-25T07:51:44.3662963Z  * [new tag]               0.92.0mvn0                  -> 0.92.0mvn0
+2026-06-25T07:51:44.3663369Z  * [new tag]               0.92.0mvn10                 -> 0.92.0mvn10
+2026-06-25T07:51:44.3663781Z  * [new tag]               0.92.0mvn11                 -> 0.92.0mvn11
+2026-06-25T07:51:44.3664186Z  * [new tag]               0.92.0mvn12                 -> 0.92.0mvn12
+2026-06-25T07:51:44.3664585Z  * [new tag]               0.92.0mvn13                 -> 0.92.0mvn13
+2026-06-25T07:51:44.3664991Z  * [new tag]               0.92.0mvn2                  -> 0.92.0mvn2
+2026-06-25T07:51:44.3665394Z  * [new tag]               0.92.0mvn20                 -> 0.92.0mvn20
+2026-06-25T07:51:44.3665799Z  * [new tag]               0.92.0mvn21                 -> 0.92.0mvn21
+2026-06-25T07:51:44.3666236Z  * [new tag]               0.92.0mvn3                  -> 0.92.0mvn3
+2026-06-25T07:51:44.3666680Z  * [new tag]               0.92.0mvn30                 -> 0.92.0mvn30
+2026-06-25T07:51:44.3667101Z  * [new tag]               0.92.0mvn4                  -> 0.92.0mvn4
+2026-06-25T07:51:44.3667511Z  * [new tag]               0.92.0mvn40                 -> 0.92.0mvn40
+2026-06-25T07:51:44.3667913Z  * [new tag]               0.92.0mvn5                  -> 0.92.0mvn5
+2026-06-25T07:51:44.3668319Z  * [new tag]               0.92.0mvn50                 -> 0.92.0mvn50
+2026-06-25T07:51:44.3668722Z  * [new tag]               0.92.0mvn6                  -> 0.92.0mvn6
+2026-06-25T07:51:44.3669127Z  * [new tag]               0.92.0mvn7                  -> 0.92.0mvn7
+2026-06-25T07:51:44.3669562Z  * [new tag]               0.92.0mvn_release           -> 0.92.0mvn_release
+2026-06-25T07:51:44.3670006Z  * [new tag]               0.92.0rc0                   -> 0.92.0rc0
+2026-06-25T07:51:44.3670418Z  * [new tag]               0.92.0rc2                   -> 0.92.0rc2
+2026-06-25T07:51:44.3670823Z  * [new tag]               0.92.0rc3                   -> 0.92.0rc3
+2026-06-25T07:51:44.3671223Z  * [new tag]               0.92.0rc4                   -> 0.92.0rc4
+2026-06-25T07:51:44.3671980Z  * [new tag]               0.92.1                      -> 0.92.1
+2026-06-25T07:51:44.3672386Z  * [new tag]               0.92.1RC0                   -> 0.92.1RC0
+2026-06-25T07:51:44.3672786Z  * [new tag]               0.92.1mvn                   -> 0.92.1mvn
+2026-06-25T07:51:44.3673217Z  * [new tag]               0.92.1mvn0                  -> 0.92.1mvn0
+2026-06-25T07:51:44.3673636Z  * [new tag]               0.92.1mvn1                  -> 0.92.1mvn1
+2026-06-25T07:51:44.3674068Z  * [new tag]               0.92.1mvn2security          -> 0.92.1mvn2security
+2026-06-25T07:51:44.3674535Z  * [new tag]               0.92.1mvn3security          -> 0.92.1mvn3security
+2026-06-25T07:51:44.3674960Z  * [new tag]               0.92.2                      -> 0.92.2
+2026-06-25T07:51:44.3675383Z  * [new tag]               0.92.2.st.mvn               -> 0.92.2.st.mvn
+2026-06-25T07:51:44.3675820Z  * [new tag]               0.92.2.st.mvn2              -> 0.92.2.st.mvn2
+2026-06-25T07:51:44.3676243Z  * [new tag]               0.92.2mvn                   -> 0.92.2mvn
+2026-06-25T07:51:44.3676652Z  * [new tag]               0.92.2mvn2                  -> 0.92.2mvn2
+2026-06-25T07:51:44.3677061Z  * [new tag]               0.92.2mvn3                  -> 0.92.2mvn3
+2026-06-25T07:51:44.3677463Z  * [new tag]               0.92.2rc0                   -> 0.92.2rc0
+2026-06-25T07:51:44.3677862Z  * [new tag]               0.92.2rc1                   -> 0.92.2rc1
+2026-06-25T07:51:44.3678262Z  * [new tag]               0.94.0                      -> 0.94.0
+2026-06-25T07:51:44.3678650Z  * [new tag]               0.94.0RC0                   -> 0.94.0RC0
+2026-06-25T07:51:44.3679046Z  * [new tag]               0.94.0RC1                   -> 0.94.0RC1
+2026-06-25T07:51:44.3679628Z  * [new tag]               0.94.0RC2                   -> 0.94.0RC2
+2026-06-25T07:51:44.3680023Z  * [new tag]               0.94.0RC3                   -> 0.94.0RC3
+2026-06-25T07:51:44.3680415Z  * [new tag]               0.94.0mvn                   -> 0.94.0mvn
+2026-06-25T07:51:44.3680930Z  * [new tag]               0.94.0mvnrelease            -> 0.94.0mvnrelease
+2026-06-25T07:51:44.3681394Z  * [new tag]               0.94.0mvnreleased2          -> 0.94.0mvnreleased2
+2026-06-25T07:51:44.3682001Z  * [new tag]               0.94.1                      -> 0.94.1
+2026-06-25T07:51:44.3682408Z  * [new tag]               0.94.10                     -> 0.94.10
+2026-06-25T07:51:44.3682814Z  * [new tag]               0.94.10RC0                  -> 0.94.10RC0
+2026-06-25T07:51:44.3683225Z  * [new tag]               0.94.10mvn                  -> 0.94.10mvn
+2026-06-25T07:51:44.3683634Z  * [new tag]               0.94.10mvn2                 -> 0.94.10mvn2
+2026-06-25T07:51:44.3684041Z  * [new tag]               0.94.11                     -> 0.94.11
+2026-06-25T07:51:44.3684463Z  * [new tag]               0.94.11RC0                  -> 0.94.11RC0
+2026-06-25T07:51:44.3684882Z  * [new tag]               0.94.11mvn                  -> 0.94.11mvn
+2026-06-25T07:51:44.3685298Z  * [new tag]               0.94.11mvn2                 -> 0.94.11mvn2
+2026-06-25T07:51:44.3685704Z  * [new tag]               0.94.12                     -> 0.94.12
+2026-06-25T07:51:44.3686104Z  * [new tag]               0.94.12RC0                  -> 0.94.12RC0
+2026-06-25T07:51:44.3686506Z  * [new tag]               0.94.12RC1                  -> 0.94.12RC1
+2026-06-25T07:51:44.3686920Z  * [new tag]               0.94.12RC2                  -> 0.94.12RC2
+2026-06-25T07:51:44.3687321Z  * [new tag]               0.94.12mvn                  -> 0.94.12mvn
+2026-06-25T07:51:44.3687743Z  * [new tag]               0.94.12mvn2                 -> 0.94.12mvn2
+2026-06-25T07:51:44.3688153Z  * [new tag]               0.94.13                     -> 0.94.13
+2026-06-25T07:51:44.3688578Z  * [new tag]               0.94.13RC0                  -> 0.94.13RC0
+2026-06-25T07:51:44.3688987Z  * [new tag]               0.94.13mvn                  -> 0.94.13mvn
+2026-06-25T07:51:44.3689389Z  * [new tag]               0.94.13mvn2                 -> 0.94.13mvn2
+2026-06-25T07:51:44.3689925Z  * [new tag]               0.94.14                     -> 0.94.14
+2026-06-25T07:51:44.3690331Z  * [new tag]               0.94.14RC0                  -> 0.94.14RC0
+2026-06-25T07:51:44.3690752Z  * [new tag]               0.94.14RC1                  -> 0.94.14RC1
+2026-06-25T07:51:44.3691152Z  * [new tag]               0.94.14mvn                  -> 0.94.14mvn
+2026-06-25T07:51:44.3691672Z  * [new tag]               0.94.14mvn2                 -> 0.94.14mvn2
+2026-06-25T07:51:44.3692085Z  * [new tag]               0.94.15                     -> 0.94.15
+2026-06-25T07:51:44.3692506Z  * [new tag]               0.94.15-junit-4.11          -> 0.94.15-junit-4.11
+2026-06-25T07:51:44.3692935Z  * [new tag]               0.94.15RC0                  -> 0.94.15RC0
+2026-06-25T07:51:44.3693344Z  * [new tag]               0.94.15mvn                  -> 0.94.15mvn
+2026-06-25T07:51:44.3693754Z  * [new tag]               0.94.15mvn2                 -> 0.94.15mvn2
+2026-06-25T07:51:44.3694162Z  * [new tag]               0.94.16                     -> 0.94.16
+2026-06-25T07:51:44.3694554Z  * [new tag]               0.94.16RC0                  -> 0.94.16RC0
+2026-06-25T07:51:44.3694948Z  * [new tag]               0.94.16mvn                  -> 0.94.16mvn
+2026-06-25T07:51:44.3695349Z  * [new tag]               0.94.16mvn2                 -> 0.94.16mvn2
+2026-06-25T07:51:44.3695748Z  * [new tag]               0.94.17                     -> 0.94.17
+2026-06-25T07:51:44.3696143Z  * [new tag]               0.94.17RC0                  -> 0.94.17RC0
+2026-06-25T07:51:44.3696538Z  * [new tag]               0.94.17RC1                  -> 0.94.17RC1
+2026-06-25T07:51:44.3696939Z  * [new tag]               0.94.17mvn                  -> 0.94.17mvn
+2026-06-25T07:51:44.3697473Z  * [new tag]               0.94.17mvn2                 -> 0.94.17mvn2
+2026-06-25T07:51:44.3697878Z  * [new tag]               0.94.18                     -> 0.94.18
+2026-06-25T07:51:44.3698268Z  * [new tag]               0.94.18RC0                  -> 0.94.18RC0
+2026-06-25T07:51:44.3698669Z  * [new tag]               0.94.18mvn                  -> 0.94.18mvn
+2026-06-25T07:51:44.3699071Z  * [new tag]               0.94.18mvn2                 -> 0.94.18mvn2
+2026-06-25T07:51:44.3699466Z  * [new tag]               0.94.19                     -> 0.94.19
+2026-06-25T07:51:44.3699865Z  * [new tag]               0.94.19RC0                  -> 0.94.19RC0
+2026-06-25T07:51:44.3700263Z  * [new tag]               0.94.19mvn                  -> 0.94.19mvn
+2026-06-25T07:51:44.3700662Z  * [new tag]               0.94.19mvn2                 -> 0.94.19mvn2
+2026-06-25T07:51:44.3701065Z  * [new tag]               0.94.1RC0                   -> 0.94.1RC0
+2026-06-25T07:51:44.3701627Z  * [new tag]               0.94.1RC1                   -> 0.94.1RC1
+2026-06-25T07:51:44.3702040Z  * [new tag]               0.94.1mvn                   -> 0.94.1mvn
+2026-06-25T07:51:44.3702483Z  * [new tag]               0.94.1mvn_perform           -> 0.94.1mvn_perform
+2026-06-25T07:51:44.3702946Z  * [new tag]               0.94.1mvn_prepare           -> 0.94.1mvn_prepare
+2026-06-25T07:51:44.3703376Z  * [new tag]               0.94.2                      -> 0.94.2
+2026-06-25T07:51:44.3703769Z  * [new tag]               0.94.20                     -> 0.94.20
+2026-06-25T07:51:44.3704164Z  * [new tag]               0.94.20RC0                  -> 0.94.20RC0
+2026-06-25T07:51:44.3704572Z  * [new tag]               0.94.20mvn2                 -> 0.94.20mvn2
+2026-06-25T07:51:44.3704972Z  * [new tag]               0.94.21                     -> 0.94.21
+2026-06-25T07:51:44.3705367Z  * [new tag]               0.94.21RC0                  -> 0.94.21RC0
+2026-06-25T07:51:44.3705769Z  * [new tag]               0.94.22                     -> 0.94.22
+2026-06-25T07:51:44.3706166Z  * [new tag]               0.94.22RC0                  -> 0.94.22RC0
+2026-06-25T07:51:44.3706599Z  * [new tag]               0.94.23                     -> 0.94.23
+2026-06-25T07:51:44.3707022Z  * [new tag]               0.94.23RC0                  -> 0.94.23RC0
+2026-06-25T07:51:44.3707600Z  * [new tag]               0.94.24                     -> 0.94.24
+2026-06-25T07:51:44.3708013Z  * [new tag]               0.94.24RC0                  -> 0.94.24RC0
+2026-06-25T07:51:44.3708422Z  * [new tag]               0.94.24RC1                  -> 0.94.24RC1
+2026-06-25T07:51:44.3708825Z  * [new tag]               0.94.24RC2                  -> 0.94.24RC2
+2026-06-25T07:51:44.3709224Z  * [new tag]               0.94.25                     -> 0.94.25
+2026-06-25T07:51:44.3709640Z  * [new tag]               0.94.25RC0                  -> 0.94.25RC0
+2026-06-25T07:51:44.3710048Z  * [new tag]               0.94.26                     -> 0.94.26
+2026-06-25T07:51:44.3710445Z  * [new tag]               0.94.26RC0                  -> 0.94.26RC0
+2026-06-25T07:51:44.3710861Z  * [new tag]               0.94.27                     -> 0.94.27
+2026-06-25T07:51:44.3711259Z  * [new tag]               0.94.27RC0                  -> 0.94.27RC0
+2026-06-25T07:51:44.3711803Z  * [new tag]               0.94.28RC0                  -> 0.94.28RC0
+2026-06-25T07:51:44.3712217Z  * [new tag]               0.94.2RC0                   -> 0.94.2RC0
+2026-06-25T07:51:44.3712628Z  * [new tag]               0.94.2RC1                   -> 0.94.2RC1
+2026-06-25T07:51:44.3713052Z  * [new tag]               0.94.2RC2                   -> 0.94.2RC2
+2026-06-25T07:51:44.3713465Z  * [new tag]               0.94.2RC3                   -> 0.94.2RC3
+2026-06-25T07:51:44.3713868Z  * [new tag]               0.94.2mvn                   -> 0.94.2mvn
+2026-06-25T07:51:44.3714289Z  * [new tag]               0.94.2mvnrelease            -> 0.94.2mvnrelease
+2026-06-25T07:51:44.3714730Z  * [new tag]               0.94.3                      -> 0.94.3
+2026-06-25T07:51:44.3715274Z  * [new tag]               0.94.3RC0                   -> 0.94.3RC0
+2026-06-25T07:51:44.3715683Z  * [new tag]               0.94.3mvn                   -> 0.94.3mvn
+2026-06-25T07:51:44.3716084Z  * [new tag]               0.94.3mvn2                  -> 0.94.3mvn2
+2026-06-25T07:51:44.3716520Z  * [new tag]               0.94.3mvn_release           -> 0.94.3mvn_release
+2026-06-25T07:51:44.3716950Z  * [new tag]               0.94.4                      -> 0.94.4
+2026-06-25T07:51:44.3717345Z  * [new tag]               0.94.4RC0                   -> 0.94.4RC0
+2026-06-25T07:51:44.3717758Z  * [new tag]               0.94.4RC1                   -> 0.94.4RC1
+2026-06-25T07:51:44.3718157Z  * [new tag]               0.94.4mvn                   -> 0.94.4mvn
+2026-06-25T07:51:44.3718565Z  * [new tag]               0.94.4mvn2                  -> 0.94.4mvn2
+2026-06-25T07:51:44.3718972Z  * [new tag]               0.94.5                      -> 0.94.5
+2026-06-25T07:51:44.3719372Z  * [new tag]               0.94.5RC0                   -> 0.94.5RC0
+2026-06-25T07:51:44.3719777Z  * [new tag]               0.94.5RC1                   -> 0.94.5RC1
+2026-06-25T07:51:44.3720178Z  * [new tag]               0.94.5mvn                   -> 0.94.5mvn
+2026-06-25T07:51:44.3720589Z  * [new tag]               0.94.5mvn2                  -> 0.94.5mvn2
+2026-06-25T07:51:44.3720989Z  * [new tag]               0.94.6                      -> 0.94.6
+2026-06-25T07:51:44.3721383Z  * [new tag]               0.94.6.1                    -> 0.94.6.1
+2026-06-25T07:51:44.3722093Z  * [new tag]               0.94.6.1mvn                 -> 0.94.6.1mvn
+2026-06-25T07:51:44.3722553Z  * [new tag]               0.94.6.1mvn-release2        -> 0.94.6.1mvn-release2
+2026-06-25T07:51:44.3723005Z  * [new tag]               0.94.6RC0                   -> 0.94.6RC0
+2026-06-25T07:51:44.3723406Z  * [new tag]               0.94.6RC1                   -> 0.94.6RC1
+2026-06-25T07:51:44.3723799Z  * [new tag]               0.94.6RC2                   -> 0.94.6RC2
+2026-06-25T07:51:44.3724199Z  * [new tag]               0.94.6mvn                   -> 0.94.6mvn
+2026-06-25T07:51:44.3724634Z  * [new tag]               0.94.6mvn-release           -> 0.94.6mvn-release
+2026-06-25T07:51:44.3725070Z  * [new tag]               0.94.7                      -> 0.94.7
+2026-06-25T07:51:44.3725606Z  * [new tag]               0.94.7RC0                   -> 0.94.7RC0
+2026-06-25T07:51:44.3726005Z  * [new tag]               0.94.7RC1                   -> 0.94.7RC1
+2026-06-25T07:51:44.3726399Z  * [new tag]               0.94.7mvn                   -> 0.94.7mvn
+2026-06-25T07:51:44.3726796Z  * [new tag]               0.94.7mvn2                  -> 0.94.7mvn2
+2026-06-25T07:51:44.3727191Z  * [new tag]               0.94.8                      -> 0.94.8
+2026-06-25T07:51:44.3727585Z  * [new tag]               0.94.8RC0                   -> 0.94.8RC0
+2026-06-25T07:51:44.3727969Z  * [new tag]               0.94.9                      -> 0.94.9
+2026-06-25T07:51:44.3728361Z  * [new tag]               0.94.9RC0                   -> 0.94.9RC0
+2026-06-25T07:51:44.3728761Z  * [new tag]               0.94.9mvn                   -> 0.94.9mvn
+2026-06-25T07:51:44.3729160Z  * [new tag]               0.94.9mvn2                  -> 0.94.9mvn2
+2026-06-25T07:51:44.3729568Z  * [new tag]               0.95.0                      -> 0.95.0
+2026-06-25T07:51:44.3729957Z  * [new tag]               0.95.0RC0                   -> 0.95.0RC0
+2026-06-25T07:51:44.3730349Z  * [new tag]               0.95.0RC1                   -> 0.95.0RC1
+2026-06-25T07:51:44.3730745Z  * [new tag]               0.95.0mvn                   -> 0.95.0mvn
+2026-06-25T07:51:44.3731169Z  * [new tag]               0.95.0mvn-release           -> 0.95.0mvn-release
+2026-06-25T07:51:44.3731729Z  * [new tag]               0.95.0mvnrelease            -> 0.95.0mvnrelease
+2026-06-25T07:51:44.3732154Z  * [new tag]               0.95.1                      -> 0.95.1
+2026-06-25T07:51:44.3732616Z  * [new tag]               0.95.1-hadoop1.mvnlabeling2 -> 0.95.1-hadoop1.mvnlabeling2
+2026-06-25T07:51:44.3733281Z  * [new tag]               0.95.1-hadoop2.mvn.label4   -> 0.95.1-hadoop2.mvn.label4
+2026-06-25T07:51:44.3733745Z  * [new tag]               0.95.1RC0                   -> 0.95.1RC0
+2026-06-25T07:51:44.3734158Z  * [new tag]               0.95.1RC1                   -> 0.95.1RC1
+2026-06-25T07:51:44.3734556Z  * [new tag]               0.95.1mvn                   -> 0.95.1mvn
+2026-06-25T07:51:44.3734963Z  * [new tag]               0.95.1mvn2                  -> 0.95.1mvn2
+2026-06-25T07:51:44.3735363Z  * [new tag]               0.95.2                      -> 0.95.2
+2026-06-25T07:51:44.3735756Z  * [new tag]               0.96.0RC0                   -> 0.96.0RC0
+2026-06-25T07:51:44.3736154Z  * [new tag]               0.96.0RC1                   -> 0.96.0RC1
+2026-06-25T07:51:44.3736545Z  * [new tag]               0.96.0RC3                   -> 0.96.0RC3
+2026-06-25T07:51:44.3736934Z  * [new tag]               0.96.0RC4                   -> 0.96.0RC4
+2026-06-25T07:51:44.3737327Z  * [new tag]               0.96.0RC5                   -> 0.96.0RC5
+2026-06-25T07:51:44.3737722Z  * [new tag]               0.96.0rc2                   -> 0.96.0rc2
+2026-06-25T07:51:44.3738112Z  * [new tag]               0.96.1                      -> 0.96.1
+2026-06-25T07:51:44.3738519Z  * [new tag]               0.96.1.1                    -> 0.96.1.1
+2026-06-25T07:51:44.3738932Z  * [new tag]               0.96.1.1rc0                 -> 0.96.1.1rc0
+2026-06-25T07:51:44.3739339Z  * [new tag]               0.96.1RC0                   -> 0.96.1RC0
+2026-06-25T07:51:44.3739733Z  * [new tag]               0.96.1RC2                   -> 0.96.1RC2
+2026-06-25T07:51:44.3740131Z  * [new tag]               0.96.1new                   -> 0.96.1new
+2026-06-25T07:51:44.3740523Z  * [new tag]               0.96.2                      -> 0.96.2
+2026-06-25T07:51:44.3740915Z  * [new tag]               0.96.2-RC2                  -> 0.96.2-RC2
+2026-06-25T07:51:44.3741319Z  * [new tag]               0.96.2RC0                   -> 0.96.2RC0
+2026-06-25T07:51:44.3741841Z  * [new tag]               0.96.2RC1                   -> 0.96.2RC1
+2026-06-25T07:51:44.3742230Z  * [new tag]               0.96.2RC2                   -> 0.96.2RC2
+2026-06-25T07:51:44.3742620Z  * [new tag]               0.98.0                      -> 0.98.0
+2026-06-25T07:51:44.3743166Z  * [new tag]               0.98.0RC0                   -> 0.98.0RC0
+2026-06-25T07:51:44.3743567Z  * [new tag]               0.98.0RC1                   -> 0.98.0RC1
+2026-06-25T07:51:44.3743956Z  * [new tag]               0.98.0RC2                   -> 0.98.0RC2
+2026-06-25T07:51:44.3744348Z  * [new tag]               0.98.1                      -> 0.98.1
+2026-06-25T07:51:44.3744743Z  * [new tag]               0.98.10                     -> 0.98.10
+2026-06-25T07:51:44.3745140Z  * [new tag]               0.98.10.1                   -> 0.98.10.1
+2026-06-25T07:51:44.3745552Z  * [new tag]               0.98.10.1RC0                -> 0.98.10.1RC0
+2026-06-25T07:51:44.3745964Z  * [new tag]               0.98.10RC0                  -> 0.98.10RC0
+2026-06-25T07:51:44.3746372Z  * [new tag]               0.98.10RC1                  -> 0.98.10RC1
+2026-06-25T07:51:44.3746769Z  * [new tag]               0.98.10RC2                  -> 0.98.10RC2
+2026-06-25T07:51:44.3747183Z  * [new tag]               0.98.11                     -> 0.98.11
+2026-06-25T07:51:44.3747593Z  * [new tag]               0.98.11RC0                  -> 0.98.11RC0
+2026-06-25T07:51:44.3747988Z  * [new tag]               0.98.12                     -> 0.98.12
+2026-06-25T07:51:44.3748383Z  * [new tag]               0.98.12.1                   -> 0.98.12.1
+2026-06-25T07:51:44.3748788Z  * [new tag]               0.98.12.1RC0                -> 0.98.12.1RC0
+2026-06-25T07:51:44.3749196Z  * [new tag]               0.98.12RC0                  -> 0.98.12RC0
+2026-06-25T07:51:44.3749593Z  * [new tag]               0.98.12RC1                  -> 0.98.12RC1
+2026-06-25T07:51:44.3749988Z  * [new tag]               0.98.12RC2                  -> 0.98.12RC2
+2026-06-25T07:51:44.3750518Z  * [new tag]               0.98.12RC3                  -> 0.98.12RC3
+2026-06-25T07:51:44.3750915Z  * [new tag]               0.98.13                     -> 0.98.13
+2026-06-25T07:51:44.3751308Z  * [new tag]               0.98.13RC0                  -> 0.98.13RC0
+2026-06-25T07:51:44.3751855Z  * [new tag]               0.98.13RC1                  -> 0.98.13RC1
+2026-06-25T07:51:44.3752257Z  * [new tag]               0.98.13RC2                  -> 0.98.13RC2
+2026-06-25T07:51:44.3752650Z  * [new tag]               0.98.14                     -> 0.98.14
+2026-06-25T07:51:44.3753044Z  * [new tag]               0.98.14RC0                  -> 0.98.14RC0
+2026-06-25T07:51:44.3753444Z  * [new tag]               0.98.14RC1                  -> 0.98.14RC1
+2026-06-25T07:51:44.3753843Z  * [new tag]               0.98.15                     -> 0.98.15
+2026-06-25T07:51:44.3754239Z  * [new tag]               0.98.15RC0                  -> 0.98.15RC0
+2026-06-25T07:51:44.3754634Z  * [new tag]               0.98.16                     -> 0.98.16
+2026-06-25T07:51:44.3755025Z  * [new tag]               0.98.16.1                   -> 0.98.16.1
+2026-06-25T07:51:44.3755431Z  * [new tag]               0.98.16.1RC0                -> 0.98.16.1RC0
+2026-06-25T07:51:44.3755847Z  * [new tag]               0.98.16RC0                  -> 0.98.16RC0
+2026-06-25T07:51:44.3756249Z  * [new tag]               0.98.17RC0                  -> 0.98.17RC0
+2026-06-25T07:51:44.3756654Z  * [new tag]               0.98.18RC0                  -> 0.98.18RC0
+2026-06-25T07:51:44.3757059Z  * [new tag]               0.98.19RC0                  -> 0.98.19RC0
+2026-06-25T07:51:44.3757460Z  * [new tag]               0.98.1RC0                   -> 0.98.1RC0
+2026-06-25T07:51:44.3757883Z  * [new tag]               0.98.1RC1                   -> 0.98.1RC1
+2026-06-25T07:51:44.3758287Z  * [new tag]               0.98.1RC2                   -> 0.98.1RC2
+2026-06-25T07:51:44.3758680Z  * [new tag]               0.98.1RC3                   -> 0.98.1RC3
+2026-06-25T07:51:44.3759079Z  * [new tag]               0.98.2                      -> 0.98.2
+2026-06-25T07:51:44.3759480Z  * [new tag]               0.98.20RC0                  -> 0.98.20RC0
+2026-06-25T07:51:44.3759881Z  * [new tag]               0.98.21RC0                  -> 0.98.21RC0
+2026-06-25T07:51:44.3760411Z  * [new tag]               0.98.21RC1                  -> 0.98.21RC1
+2026-06-25T07:51:44.3760810Z  * [new tag]               0.98.22RC0                  -> 0.98.22RC0
+2026-06-25T07:51:44.3761203Z  * [new tag]               0.98.23RC0                  -> 0.98.23RC0
+2026-06-25T07:51:44.3761754Z  * [new tag]               0.98.24RC0                  -> 0.98.24RC0
+2026-06-25T07:51:44.3762151Z  * [new tag]               0.98.2RC0                   -> 0.98.2RC0
+2026-06-25T07:51:44.3762542Z  * [new tag]               0.98.3                      -> 0.98.3
+2026-06-25T07:51:44.3762934Z  * [new tag]               0.98.3RC0                   -> 0.98.3RC0
+2026-06-25T07:51:44.3763328Z  * [new tag]               0.98.3RC1                   -> 0.98.3RC1
+2026-06-25T07:51:44.3763728Z  * [new tag]               0.98.3RC2                   -> 0.98.3RC2
+2026-06-25T07:51:44.3764115Z  * [new tag]               0.98.4                      -> 0.98.4
+2026-06-25T07:51:44.3764509Z  * [new tag]               0.98.4RC0                   -> 0.98.4RC0
+2026-06-25T07:51:44.3764897Z  * [new tag]               0.98.5                      -> 0.98.5
+2026-06-25T07:51:44.3765285Z  * [new tag]               0.98.5RC0                   -> 0.98.5RC0
+2026-06-25T07:51:44.3765675Z  * [new tag]               0.98.6                      -> 0.98.6
+2026-06-25T07:51:44.3766080Z  * [new tag]               0.98.6.1                    -> 0.98.6.1
+2026-06-25T07:51:44.3766488Z  * [new tag]               0.98.6.1RC0                 -> 0.98.6.1RC0
+2026-06-25T07:51:44.3766893Z  * [new tag]               0.98.6RC0                   -> 0.98.6RC0
+2026-06-25T07:51:44.3767287Z  * [new tag]               0.98.6RC1                   -> 0.98.6RC1
+2026-06-25T07:51:44.3767814Z  * [new tag]               0.98.6RC2                   -> 0.98.6RC2
+2026-06-25T07:51:44.3768203Z  * [new tag]               0.98.7                      -> 0.98.7
+2026-06-25T07:51:44.3768587Z  * [new tag]               0.98.7RC0                   -> 0.98.7RC0
+2026-06-25T07:51:44.3786342Z  * [new tag]               0.98.7RC1                   -> 0.98.7RC1
+2026-06-25T07:51:44.3786905Z  * [new tag]               0.98.8                      -> 0.98.8
+2026-06-25T07:51:44.3787351Z  * [new tag]               0.98.8RC0                   -> 0.98.8RC0
+2026-06-25T07:51:44.3787775Z  * [new tag]               0.98.8RC1                   -> 0.98.8RC1
+2026-06-25T07:51:44.3788186Z  * [new tag]               0.98.8RC2                   -> 0.98.8RC2
+2026-06-25T07:51:44.3788662Z  * [new tag]               0.98.9                      -> 0.98.9
+2026-06-25T07:51:44.3789072Z  * [new tag]               0.98.9RC0                   -> 0.98.9RC0
+2026-06-25T07:51:44.3789471Z  * [new tag]               0.98.9RC1                   -> 0.98.9RC1
+2026-06-25T07:51:44.3789871Z  * [new tag]               0.99.0                      -> 0.99.0
+2026-06-25T07:51:44.3790263Z  * [new tag]               0.99.0RC0                   -> 0.99.0RC0
+2026-06-25T07:51:44.3790658Z  * [new tag]               0.99.0RC1                   -> 0.99.0RC1
+2026-06-25T07:51:44.3791066Z  * [new tag]               0.99.1                      -> 0.99.1
+2026-06-25T07:51:44.3791597Z  * [new tag]               0.99.1RC0                   -> 0.99.1RC0
+2026-06-25T07:51:44.3792166Z  * [new tag]               0.99.2                      -> 0.99.2
+2026-06-25T07:51:44.3792571Z  * [new tag]               0.99.2RC0                   -> 0.99.2RC0
+2026-06-25T07:51:44.3792970Z  * [new tag]               1.0.0                       -> 1.0.0
+2026-06-25T07:51:44.3793384Z  * [new tag]               1.0.0RC0                    -> 1.0.0RC0
+2026-06-25T07:51:44.3793784Z  * [new tag]               1.0.0RC1                    -> 1.0.0RC1
+2026-06-25T07:51:44.3794172Z  * [new tag]               1.0.0RC2                    -> 1.0.0RC2
+2026-06-25T07:51:44.3794568Z  * [new tag]               1.0.0RC3                    -> 1.0.0RC3
+2026-06-25T07:51:44.3794967Z  * [new tag]               1.0.0RC4                    -> 1.0.0RC4
+2026-06-25T07:51:44.3795545Z  * [new tag]               1.0.0RC5                    -> 1.0.0RC5
+2026-06-25T07:51:44.3795942Z  * [new tag]               1.0.1                       -> 1.0.1
+2026-06-25T07:51:44.3796339Z  * [new tag]               1.0.1.1                     -> 1.0.1.1
+2026-06-25T07:51:44.3796745Z  * [new tag]               1.0.1.1RC0                  -> 1.0.1.1RC0
+2026-06-25T07:51:44.3797152Z  * [new tag]               1.0.1RC0                    -> 1.0.1RC0
+2026-06-25T07:51:44.3797540Z  * [new tag]               1.0.1RC1                    -> 1.0.1RC1
+2026-06-25T07:51:44.3797932Z  * [new tag]               1.0.1RC2                    -> 1.0.1RC2
+2026-06-25T07:51:44.3798341Z  * [new tag]               1.0.2                       -> 1.0.2
+2026-06-25T07:51:44.3798753Z  * [new tag]               1.0.2RC0                    -> 1.0.2RC0
+2026-06-25T07:51:44.3799168Z  * [new tag]               1.0.2RC1                    -> 1.0.2RC1
+2026-06-25T07:51:44.3799568Z  * [new tag]               1.0.2RC2                    -> 1.0.2RC2
+2026-06-25T07:51:44.3800008Z  * [new tag]               1.0.3RC0                    -> 1.0.3RC0
+2026-06-25T07:51:44.3800421Z  * [new tag]               1.0.3RC1                    -> 1.0.3RC1
+2026-06-25T07:51:44.3800843Z  * [new tag]               1.1.0                       -> 1.1.0
+2026-06-25T07:51:44.3801295Z  * [new tag]               1.1.0-SNAPSHOT-testing      -> 1.1.0-SNAPSHOT-testing
+2026-06-25T07:51:44.3801994Z  * [new tag]               1.1.0.1                     -> 1.1.0.1
+2026-06-25T07:51:44.3802410Z  * [new tag]               1.1.0.1RC0                  -> 1.1.0.1RC0
+2026-06-25T07:51:44.3802829Z  * [new tag]               1.1.0RC0                    -> 1.1.0RC0
+2026-06-25T07:51:44.3803233Z  * [new tag]               1.1.0RC1                    -> 1.1.0RC1
+2026-06-25T07:51:44.3803790Z  * [new tag]               1.1.0RC2                    -> 1.1.0RC2
+2026-06-25T07:51:44.3804193Z  * [new tag]               1.1.1                       -> 1.1.1
+2026-06-25T07:51:44.3804596Z  * [new tag]               1.1.10RC0                   -> 1.1.10RC0
+2026-06-25T07:51:44.3805012Z  * [new tag]               1.1.11RC0                   -> 1.1.11RC0
+2026-06-25T07:51:44.3805407Z  * [new tag]               1.1.12RC0                   -> 1.1.12RC0
+2026-06-25T07:51:44.3805806Z  * [new tag]               1.1.13RC0                   -> 1.1.13RC0
+2026-06-25T07:51:44.3806205Z  * [new tag]               1.1.1RC0                    -> 1.1.1RC0
+2026-06-25T07:51:44.3806601Z  * [new tag]               1.1.2                       -> 1.1.2
+2026-06-25T07:51:44.3807010Z  * [new tag]               1.1.2RC0                    -> 1.1.2RC0
+2026-06-25T07:51:44.3807403Z  * [new tag]               1.1.2RC1                    -> 1.1.2RC1
+2026-06-25T07:51:44.3807792Z  * [new tag]               1.1.2RC2                    -> 1.1.2RC2
+2026-06-25T07:51:44.3808184Z  * [new tag]               1.1.3RC0                    -> 1.1.3RC0
+2026-06-25T07:51:44.3808577Z  * [new tag]               1.1.3RC1                    -> 1.1.3RC1
+2026-06-25T07:51:44.3808966Z  * [new tag]               1.1.4RC0                    -> 1.1.4RC0
+2026-06-25T07:51:44.3809360Z  * [new tag]               1.1.5RC0                    -> 1.1.5RC0
+2026-06-25T07:51:44.3809742Z  * [new tag]               1.1.6RC0                    -> 1.1.6RC0
+2026-06-25T07:51:44.3810128Z  * [new tag]               1.1.6RC1                    -> 1.1.6RC1
+2026-06-25T07:51:44.3810516Z  * [new tag]               1.1.6RC2                    -> 1.1.6RC2
+2026-06-25T07:51:44.3810903Z  * [new tag]               1.1.7RC0                    -> 1.1.7RC0
+2026-06-25T07:51:44.3811293Z  * [new tag]               1.1.7RC1                    -> 1.1.7RC1
+2026-06-25T07:51:44.3811800Z  * [new tag]               1.1.8RC0                    -> 1.1.8RC0
+2026-06-25T07:51:44.3812194Z  * [new tag]               1.1.9RC0                    -> 1.1.9RC0
+2026-06-25T07:51:44.3812579Z  * [new tag]               1.2.0RC0                    -> 1.2.0RC0
+2026-06-25T07:51:44.3812968Z  * [new tag]               1.2.0RC1                    -> 1.2.0RC1
+2026-06-25T07:51:44.3813531Z  * [new tag]               1.2.0RC2                    -> 1.2.0RC2
+2026-06-25T07:51:44.3813918Z  * [new tag]               1.2.0RC3                    -> 1.2.0RC3
+2026-06-25T07:51:44.3814308Z  * [new tag]               1.2.0RC4                    -> 1.2.0RC4
+2026-06-25T07:51:44.3814701Z  * [new tag]               1.2.10RC0                   -> 1.2.10RC0
+2026-06-25T07:51:44.3815096Z  * [new tag]               1.2.11RC0                   -> 1.2.11RC0
+2026-06-25T07:51:44.3815496Z  * [new tag]               1.2.12RC0                   -> 1.2.12RC0
+2026-06-25T07:51:44.3815901Z  * [new tag]               1.2.1RC0                    -> 1.2.1RC0
+2026-06-25T07:51:44.3816288Z  * [new tag]               1.2.1RC1                    -> 1.2.1RC1
+2026-06-25T07:51:44.3816685Z  * [new tag]               1.2.2RC0                    -> 1.2.2RC0
+2026-06-25T07:51:44.3817065Z  * [new tag]               1.2.2RC1                    -> 1.2.2RC1
+2026-06-25T07:51:44.3817455Z  * [new tag]               1.2.2RC2                    -> 1.2.2RC2
+2026-06-25T07:51:44.3817841Z  * [new tag]               1.2.3RC0                    -> 1.2.3RC0
+2026-06-25T07:51:44.3818223Z  * [new tag]               1.2.4RC0                    -> 1.2.4RC0
+2026-06-25T07:51:44.3818606Z  * [new tag]               1.2.4RC1                    -> 1.2.4RC1
+2026-06-25T07:51:44.3818992Z  * [new tag]               1.2.5RC0                    -> 1.2.5RC0
+2026-06-25T07:51:44.3819387Z  * [new tag]               1.2.6.1RC0                  -> 1.2.6.1RC0
+2026-06-25T07:51:44.3819793Z  * [new tag]               1.2.6RC0                    -> 1.2.6RC0
+2026-06-25T07:51:44.3820203Z  * [new tag]               1.2.7RC0                    -> 1.2.7RC0
+2026-06-25T07:51:44.3820587Z  * [new tag]               1.2.8RC0                    -> 1.2.8RC0
+2026-06-25T07:51:44.3821096Z  * [new tag]               1.2.9RC0                    -> 1.2.9RC0
+2026-06-25T07:51:44.3821614Z  * [new tag]               1.3.0RC0                    -> 1.3.0RC0
+2026-06-25T07:51:44.3822015Z  * [new tag]               1.3.1RC0                    -> 1.3.1RC0
+2026-06-25T07:51:44.3822409Z  * [new tag]               1.3.1RC1                    -> 1.3.1RC1
+2026-06-25T07:51:44.3822808Z  * [new tag]               1.3.2.1RC0                  -> 1.3.2.1RC0
+2026-06-25T07:51:44.3823230Z  * [new tag]               1.3.2RC0                    -> 1.3.2RC0
+2026-06-25T07:51:44.3823618Z  * [new tag]               1.3.2RC1                    -> 1.3.2RC1
+2026-06-25T07:51:44.3824008Z  * [new tag]               1.3.3RC0                    -> 1.3.3RC0
+2026-06-25T07:51:44.3824397Z  * [new tag]               1.3.4RC0                    -> 1.3.4RC0
+2026-06-25T07:51:44.3824791Z  * [new tag]               1.3.5RC0                    -> 1.3.5RC0
+2026-06-25T07:51:44.3825187Z  * [new tag]               1.3.6RC0                    -> 1.3.6RC0
+2026-06-25T07:51:44.3825574Z  * [new tag]               1.3.6RC1                    -> 1.3.6RC1
+2026-06-25T07:51:44.3825959Z  * [new tag]               1.4.0RC0                    -> 1.4.0RC0
+2026-06-25T07:51:44.3826350Z  * [new tag]               1.4.0RC1                    -> 1.4.0RC1
+2026-06-25T07:51:44.3826747Z  * [new tag]               1.4.10RC0                   -> 1.4.10RC0
+2026-06-25T07:51:44.3827147Z  * [new tag]               1.4.10RC1                   -> 1.4.10RC1
+2026-06-25T07:51:44.3827547Z  * [new tag]               1.4.11RC0                   -> 1.4.11RC0
+2026-06-25T07:51:44.3827947Z  * [new tag]               1.4.12RC0                   -> 1.4.12RC0
+2026-06-25T07:51:44.3828337Z  * [new tag]               1.4.13RC0                   -> 1.4.13RC0
+2026-06-25T07:51:44.3828723Z  * [new tag]               1.4.14RC0                   -> 1.4.14RC0
+2026-06-25T07:51:44.3829123Z  * [new tag]               1.4.1RC0                    -> 1.4.1RC0
+2026-06-25T07:51:44.3829530Z  * [new tag]               1.4.2RC0                    -> 1.4.2RC0
+2026-06-25T07:51:44.3829920Z  * [new tag]               1.4.2RC1                    -> 1.4.2RC1
+2026-06-25T07:51:44.3830440Z  * [new tag]               1.4.3RC0                    -> 1.4.3RC0
+2026-06-25T07:51:44.3830833Z  * [new tag]               1.4.4RC0                    -> 1.4.4RC0
+2026-06-25T07:51:44.3831223Z  * [new tag]               1.4.5RC1                    -> 1.4.5RC1
+2026-06-25T07:51:44.3831885Z  * [new tag]               1.4.5rc0                    -> 1.4.5rc0
+2026-06-25T07:51:44.3832296Z  * [new tag]               1.4.6RC0                    -> 1.4.6RC0
+2026-06-25T07:51:44.3832683Z  * [new tag]               1.4.7RC0                    -> 1.4.7RC0
+2026-06-25T07:51:44.3833074Z  * [new tag]               1.4.8RC0                    -> 1.4.8RC0
+2026-06-25T07:51:44.3833466Z  * [new tag]               1.4.9RC0                    -> 1.4.9RC0
+2026-06-25T07:51:44.3833862Z  * [new tag]               1.4.9RC1                    -> 1.4.9RC1
+2026-06-25T07:51:44.3834253Z  * [new tag]               1.5.0RC0                    -> 1.5.0RC0
+2026-06-25T07:51:44.3834641Z  * [new tag]               1.5.0RC1                    -> 1.5.0RC1
+2026-06-25T07:51:44.3835036Z  * [new tag]               1.5.0RC2                    -> 1.5.0RC2
+2026-06-25T07:51:44.3835418Z  * [new tag]               1.5.0RC3                    -> 1.5.0RC3
+2026-06-25T07:51:44.3835806Z  * [new tag]               1.5.0RC4                    -> 1.5.0RC4
+2026-06-25T07:51:44.3836244Z  * [new tag]               1.5.HBASE-22466.0RC1        -> 1.5.HBASE-22466.0RC1
+2026-06-25T07:51:44.3836720Z  * [new tag]               1.5.HBASE-22466.0RC3        -> 1.5.HBASE-22466.0RC3
+2026-06-25T07:51:44.3837178Z  * [new tag]               1.5.HBASE-22466.0RC4        -> 1.5.HBASE-22466.0RC4
+2026-06-25T07:51:44.3837602Z  * [new tag]               1.6.0RC0                    -> 1.6.0RC0
+2026-06-25T07:51:44.3837992Z  * [new tag]               1.7.0RC0                    -> 1.7.0RC0
+2026-06-25T07:51:44.3838522Z  * [new tag]               1.7.1RC0                    -> 1.7.1RC0
+2026-06-25T07:51:44.3838912Z  * [new tag]               1.7.2RC0                    -> 1.7.2RC0
+2026-06-25T07:51:44.3839341Z  * [new tag]               2.0.0-alpha-1RC0            -> 2.0.0-alpha-1RC0
+2026-06-25T07:51:44.3839800Z  * [new tag]               2.0.0-alpha-2RC0            -> 2.0.0-alpha-2RC0
+2026-06-25T07:51:44.3840238Z  * [new tag]               2.0.0-alpha-3RC0            -> 2.0.0-alpha-3RC0
+2026-06-25T07:51:44.3840685Z  * [new tag]               2.0.0-alpha-3RC0.2          -> 2.0.0-alpha-3RC0.2
+2026-06-25T07:51:44.3841133Z  * [new tag]               2.0.0-alpha4RC0             -> 2.0.0-alpha4RC0
+2026-06-25T07:51:44.3841714Z  * [new tag]               2.0.0-beta-1-RC0            -> 2.0.0-beta-1-RC0
+2026-06-25T07:51:44.3842162Z  * [new tag]               2.0.0-beta-1-RC0.2          -> 2.0.0-beta-1-RC0.2
+2026-06-25T07:51:44.3842594Z  * [new tag]               2.0.0-beta-1-RC1            -> 2.0.0-beta-1-RC1
+2026-06-25T07:51:44.3843035Z  * [new tag]               2.0.0-beta-1-RC1.2          -> 2.0.0-beta-1-RC1.2
+2026-06-25T07:51:44.3843475Z  * [new tag]               2.0.0-beta-1-RC1.3          -> 2.0.0-beta-1-RC1.3
+2026-06-25T07:51:44.3843908Z  * [new tag]               2.0.0-beta-1-RC1.4          -> 2.0.0-beta-1-RC1.4
+2026-06-25T07:51:44.3844341Z  * [new tag]               2.0.0-beta-1-RC1.5          -> 2.0.0-beta-1-RC1.5
+2026-06-25T07:51:44.3844772Z  * [new tag]               2.0.0-beta-1-RC1.6          -> 2.0.0-beta-1-RC1.6
+2026-06-25T07:51:44.3845204Z  * [new tag]               2.0.0-beta-1-RC1.7          -> 2.0.0-beta-1-RC1.7
+2026-06-25T07:51:44.3845645Z  * [new tag]               2.0.0-beta-2RC0.2           -> 2.0.0-beta-2RC0.2
+2026-06-25T07:51:44.3846078Z  * [new tag]               2.0.0.1RC0                  -> 2.0.0.1RC0
+2026-06-25T07:51:44.3846482Z  * [new tag]               2.0.0RC0                    -> 2.0.0RC0
+2026-06-25T07:51:44.3846873Z  * [new tag]               2.0.0RC1                    -> 2.0.0RC1
+2026-06-25T07:51:44.3847270Z  * [new tag]               2.0.0RC2                    -> 2.0.0RC2
+2026-06-25T07:51:44.3847663Z  * [new tag]               2.0.1RC0                    -> 2.0.1RC0
+2026-06-25T07:51:44.3848169Z  * [new tag]               2.0.2RC0                    -> 2.0.2RC0
+2026-06-25T07:51:44.3848551Z  * [new tag]               2.0.2RC1                    -> 2.0.2RC1
+2026-06-25T07:51:44.3848942Z  * [new tag]               2.0.3RC0                    -> 2.0.3RC0
+2026-06-25T07:51:44.3849336Z  * [new tag]               2.0.4RC0                    -> 2.0.4RC0
+2026-06-25T07:51:44.3849717Z  * [new tag]               2.0.4RC1                    -> 2.0.4RC1
+2026-06-25T07:51:44.3850093Z  * [new tag]               2.0.5RC0                    -> 2.0.5RC0
+2026-06-25T07:51:44.3850473Z  * [new tag]               2.0.5RC1                    -> 2.0.5RC1
+2026-06-25T07:51:44.3850867Z  * [new tag]               2.0.5RC10                   -> 2.0.5RC10
+2026-06-25T07:51:44.3851271Z  * [new tag]               2.0.5RC11                   -> 2.0.5RC11
+2026-06-25T07:51:44.3851790Z  * [new tag]               2.0.5RC12                   -> 2.0.5RC12
+2026-06-25T07:51:44.3852200Z  * [new tag]               2.0.5RC13                   -> 2.0.5RC13
+2026-06-25T07:51:44.3852596Z  * [new tag]               2.0.5RC14                   -> 2.0.5RC14
+2026-06-25T07:51:44.3852987Z  * [new tag]               2.0.5RC15                   -> 2.0.5RC15
+2026-06-25T07:51:44.3853369Z  * [new tag]               2.0.5RC2                    -> 2.0.5RC2
+2026-06-25T07:51:44.3853754Z  * [new tag]               2.0.5RC3                    -> 2.0.5RC3
+2026-06-25T07:51:44.3854136Z  * [new tag]               2.0.5RC4                    -> 2.0.5RC4
+2026-06-25T07:51:44.3854517Z  * [new tag]               2.0.5RC5                    -> 2.0.5RC5
+2026-06-25T07:51:44.3854911Z  * [new tag]               2.0.5RC6                    -> 2.0.5RC6
+2026-06-25T07:51:44.3855298Z  * [new tag]               2.0.5RC7                    -> 2.0.5RC7
+2026-06-25T07:51:44.3855802Z  * [new tag]               2.0.5RC8                    -> 2.0.5RC8
+2026-06-25T07:51:44.3856189Z  * [new tag]               2.0.5RC9                    -> 2.0.5RC9
+2026-06-25T07:51:44.3856583Z  * [new tag]               2.0.6RC0                    -> 2.0.6RC0
+2026-06-25T07:51:44.3856977Z  * [new tag]               2.0.6RC1                    -> 2.0.6RC1
+2026-06-25T07:51:44.3857396Z  * [new tag]               2.1.0RC0                    -> 2.1.0RC0
+2026-06-25T07:51:44.3857781Z  * [new tag]               2.1.0RC1                    -> 2.1.0RC1
+2026-06-25T07:51:44.3858167Z  * [new tag]               2.1.10RC0                   -> 2.1.10RC0
+2026-06-25T07:51:44.3858562Z  * [new tag]               2.1.10RC1                   -> 2.1.10RC1
+2026-06-25T07:51:44.3858948Z  * [new tag]               2.1.1RC0                    -> 2.1.1RC0
+2026-06-25T07:51:44.3859327Z  * [new tag]               2.1.2RC0                    -> 2.1.2RC0
+2026-06-25T07:51:44.3859712Z  * [new tag]               2.1.2RC1                    -> 2.1.2RC1
+2026-06-25T07:51:44.3860110Z  * [new tag]               2.1.3RC0                    -> 2.1.3RC0
+2026-06-25T07:51:44.3860493Z  * [new tag]               2.1.3RC1                    -> 2.1.3RC1
+2026-06-25T07:51:44.3860887Z  * [new tag]               2.1.4RC0                    -> 2.1.4RC0
+2026-06-25T07:51:44.3861273Z  * [new tag]               2.1.4RC1                    -> 2.1.4RC1
+2026-06-25T07:51:44.3861778Z  * [new tag]               2.1.4RC1.5                  -> 2.1.4RC1.5
+2026-06-25T07:51:44.3862177Z  * [new tag]               2.1.5RC0                    -> 2.1.5RC0
+2026-06-25T07:51:44.3862564Z  * [new tag]               2.1.5RC1                    -> 2.1.5RC1
+2026-06-25T07:51:44.3862953Z  * [new tag]               2.1.6RC0                    -> 2.1.6RC0
+2026-06-25T07:51:44.3863340Z  * [new tag]               2.1.6RC1                    -> 2.1.6RC1
+2026-06-25T07:51:44.3863723Z  * [new tag]               2.1.7RC0                    -> 2.1.7RC0
+2026-06-25T07:51:44.3864116Z  * [new tag]               2.1.8RC0                    -> 2.1.8RC0
+2026-06-25T07:51:44.3864505Z  * [new tag]               2.1.9RC0                    -> 2.1.9RC0
+2026-06-25T07:51:44.3864896Z  * [new tag]               2.2.0-RC0                   -> 2.2.0-RC0
+2026-06-25T07:51:44.3865426Z  * [new tag]               2.2.0RC1                    -> 2.2.0RC1
+2026-06-25T07:51:44.3865811Z  * [new tag]               2.2.0RC2                    -> 2.2.0RC2
+2026-06-25T07:51:44.3866196Z  * [new tag]               2.2.0RC3                    -> 2.2.0RC3
+2026-06-25T07:51:44.3866576Z  * [new tag]               2.2.0RC4                    -> 2.2.0RC4
+2026-06-25T07:51:44.3866957Z  * [new tag]               2.2.0RC5                    -> 2.2.0RC5
+2026-06-25T07:51:44.3867344Z  * [new tag]               2.2.0RC6                    -> 2.2.0RC6
+2026-06-25T07:51:44.3867725Z  * [new tag]               2.2.1RC0                    -> 2.2.1RC0
+2026-06-25T07:51:44.3868107Z  * [new tag]               2.2.1RC1                    -> 2.2.1RC1
+2026-06-25T07:51:44.3868487Z  * [new tag]               2.2.1RC2                    -> 2.2.1RC2
+2026-06-25T07:51:44.3868870Z  * [new tag]               2.2.2RC0                    -> 2.2.2RC0
+2026-06-25T07:51:44.3869251Z  * [new tag]               2.2.3RC0                    -> 2.2.3RC0
+2026-06-25T07:51:44.3869633Z  * [new tag]               2.2.3RC1                    -> 2.2.3RC1
+2026-06-25T07:51:44.3870009Z  * [new tag]               2.2.4RC0                    -> 2.2.4RC0
+2026-06-25T07:51:44.3870387Z  * [new tag]               2.2.5RC0                    -> 2.2.5RC0
+2026-06-25T07:51:44.3870774Z  * [new tag]               2.2.6RC0                    -> 2.2.6RC0
+2026-06-25T07:51:44.3871156Z  * [new tag]               2.2.6RC1                    -> 2.2.6RC1
+2026-06-25T07:51:44.3871825Z  * [new tag]               2.2.6RC2                    -> 2.2.6RC2
+2026-06-25T07:51:44.3872240Z  * [new tag]               2.2.7RC0                    -> 2.2.7RC0
+2026-06-25T07:51:44.3872632Z  * [new tag]               2.3.0RC0                    -> 2.3.0RC0
+2026-06-25T07:51:44.3873175Z  * [new tag]               2.3.0RC1                    -> 2.3.0RC1
+2026-06-25T07:51:44.3873561Z  * [new tag]               2.3.0RC2                    -> 2.3.0RC2
+2026-06-25T07:51:44.3873951Z  * [new tag]               2.3.0RC3                    -> 2.3.0RC3
+2026-06-25T07:51:44.3874358Z  * [new tag]               2.3.1RC0                    -> 2.3.1RC0
+2026-06-25T07:51:44.3874758Z  * [new tag]               2.3.2RC0                    -> 2.3.2RC0
+2026-06-25T07:51:44.3875155Z  * [new tag]               2.3.2RC1                    -> 2.3.2RC1
+2026-06-25T07:51:44.3875545Z  * [new tag]               2.3.2RC2                    -> 2.3.2RC2
+2026-06-25T07:51:44.3875930Z  * [new tag]               2.3.2RC3                    -> 2.3.2RC3
+2026-06-25T07:51:44.3876311Z  * [new tag]               2.3.2RC4                    -> 2.3.2RC4
+2026-06-25T07:51:44.3876691Z  * [new tag]               2.3.3RC0                    -> 2.3.3RC0
+2026-06-25T07:51:44.3877075Z  * [new tag]               2.3.3RC1                    -> 2.3.3RC1
+2026-06-25T07:51:44.3877460Z  * [new tag]               2.3.4RC0                    -> 2.3.4RC0
+2026-06-25T07:51:44.3877844Z  * [new tag]               2.3.4RC1                    -> 2.3.4RC1
+2026-06-25T07:51:44.3878227Z  * [new tag]               2.3.4RC2                    -> 2.3.4RC2
+2026-06-25T07:51:44.3878621Z  * [new tag]               2.3.4RC3                    -> 2.3.4RC3
+2026-06-25T07:51:44.3878998Z  * [new tag]               2.3.4RC4                    -> 2.3.4RC4
+2026-06-25T07:51:44.3879384Z  * [new tag]               2.3.5RC0                    -> 2.3.5RC0
+2026-06-25T07:51:44.3879765Z  * [new tag]               2.3.5RC1                    -> 2.3.5RC1
+2026-06-25T07:51:44.3880149Z  * [new tag]               2.3.6RC0                    -> 2.3.6RC0
+2026-06-25T07:51:44.3880535Z  * [new tag]               2.3.6RC1                    -> 2.3.6RC1
+2026-06-25T07:51:44.3880914Z  * [new tag]               2.3.6RC2                    -> 2.3.6RC2
+2026-06-25T07:51:44.3881292Z  * [new tag]               2.3.6RC3                    -> 2.3.6RC3
+2026-06-25T07:51:44.3881790Z  * [new tag]               2.3.7RC0                    -> 2.3.7RC0
+2026-06-25T07:51:44.3882336Z  * [new tag]               2.4.0-rm_testRC0            -> 2.4.0-rm_testRC0
+2026-06-25T07:51:44.3882790Z  * [new tag]               2.4.0-rm_testRC1            -> 2.4.0-rm_testRC1
+2026-06-25T07:51:44.3883241Z  * [new tag]               2.4.0-rm_testRC10           -> 2.4.0-rm_testRC10
+2026-06-25T07:51:44.3883686Z  * [new tag]               2.4.0-rm_testRC15           -> 2.4.0-rm_testRC15
+2026-06-25T07:51:44.3884117Z  * [new tag]               2.4.0-rm_testRC16           -> 2.4.0-rm_testRC16
+2026-06-25T07:51:44.3884547Z  * [new tag]               2.4.0-rm_testRC17           -> 2.4.0-rm_testRC17
+2026-06-25T07:51:44.3884973Z  * [new tag]               2.4.0-rm_testRC3            -> 2.4.0-rm_testRC3
+2026-06-25T07:51:44.3885402Z  * [new tag]               2.4.0-rm_testRC4            -> 2.4.0-rm_testRC4
+2026-06-25T07:51:44.3885824Z  * [new tag]               2.4.0-rm_testRC5            -> 2.4.0-rm_testRC5
+2026-06-25T07:51:44.3886245Z  * [new tag]               2.4.0-rm_testRC9            -> 2.4.0-rm_testRC9
+2026-06-25T07:51:44.3886647Z  * [new tag]               2.4.0RC0                    -> 2.4.0RC0
+2026-06-25T07:51:44.3887036Z  * [new tag]               2.4.0RC1                    -> 2.4.0RC1
+2026-06-25T07:51:44.3887452Z  * [new tag]               2.4.1-rm_testRC25           -> 2.4.1-rm_testRC25
+2026-06-25T07:51:44.3887874Z  * [new tag]               2.4.1-rm_testRC30           -> 2.4.1-rm_testRC30
+2026-06-25T07:51:44.3888283Z  * [new tag]               2.4.10RC0                   -> 2.4.10RC0
+2026-06-25T07:51:44.3888723Z  * [new tag]               2.4.10RC1                   -> 2.4.10RC1
+2026-06-25T07:51:44.3889115Z  * [new tag]               2.4.11RC0                   -> 2.4.11RC0
+2026-06-25T07:51:44.3889506Z  * [new tag]               2.4.11RC1                   -> 2.4.11RC1
+2026-06-25T07:51:44.3890039Z  * [new tag]               2.4.12RC0                   -> 2.4.12RC0
+2026-06-25T07:51:44.3890432Z  * [new tag]               2.4.13RC0                   -> 2.4.13RC0
+2026-06-25T07:51:44.3890824Z  * [new tag]               2.4.13RC1                   -> 2.4.13RC1
+2026-06-25T07:51:44.3891218Z  * [new tag]               2.4.14RC0                   -> 2.4.14RC0
+2026-06-25T07:51:44.3891712Z  * [new tag]               2.4.14RC1                   -> 2.4.14RC1
+2026-06-25T07:51:44.3892105Z  * [new tag]               2.4.15RC0                   -> 2.4.15RC0
+2026-06-25T07:51:44.3892490Z  * [new tag]               2.4.16RC0                   -> 2.4.16RC0
+2026-06-25T07:51:44.3892872Z  * [new tag]               2.4.16RC1                   -> 2.4.16RC1
+2026-06-25T07:51:44.3893259Z  * [new tag]               2.4.17RC0                   -> 2.4.17RC0
+2026-06-25T07:51:44.3893652Z  * [new tag]               2.4.18RC0                   -> 2.4.18RC0
+2026-06-25T07:51:44.3894043Z  * [new tag]               2.4.1RC0                    -> 2.4.1RC0
+2026-06-25T07:51:44.3894433Z  * [new tag]               2.4.1RC1                    -> 2.4.1RC1
+2026-06-25T07:51:44.3894816Z  * [new tag]               2.4.1RC2                    -> 2.4.1RC2
+2026-06-25T07:51:44.3895197Z  * [new tag]               2.4.2RC0                    -> 2.4.2RC0
+2026-06-25T07:51:44.3895579Z  * [new tag]               2.4.3RC0                    -> 2.4.3RC0
+2026-06-25T07:51:44.3895962Z  * [new tag]               2.4.3RC1                    -> 2.4.3RC1
+2026-06-25T07:51:44.3896348Z  * [new tag]               2.4.4RC0                    -> 2.4.4RC0
+2026-06-25T07:51:44.3896728Z  * [new tag]               2.4.5RC0                    -> 2.4.5RC0
+2026-06-25T07:51:44.3897106Z  * [new tag]               2.4.5RC1                    -> 2.4.5RC1
+2026-06-25T07:51:44.3897487Z  * [new tag]               2.4.6RC0                    -> 2.4.6RC0
+2026-06-25T07:51:44.3897867Z  * [new tag]               2.4.7RC0                    -> 2.4.7RC0
+2026-06-25T07:51:44.3898246Z  * [new tag]               2.4.8RC0                    -> 2.4.8RC0
+2026-06-25T07:51:44.3898624Z  * [new tag]               2.4.9RC0                    -> 2.4.9RC0
+2026-06-25T07:51:44.3899010Z  * [new tag]               2.5.0RC0                    -> 2.5.0RC0
+2026-06-25T07:51:44.3899513Z  * [new tag]               2.5.0RC1                    -> 2.5.0RC1
+2026-06-25T07:51:44.3899897Z  * [new tag]               2.5.10RC0                   -> 2.5.10RC0
+2026-06-25T07:51:44.3900287Z  * [new tag]               2.5.10RC1                   -> 2.5.10RC1
+2026-06-25T07:51:44.3900682Z  * [new tag]               2.5.11RC0                   -> 2.5.11RC0
+2026-06-25T07:51:44.3901068Z  * [new tag]               2.5.11RC1                   -> 2.5.11RC1
+2026-06-25T07:51:44.3901450Z  * [new tag]               2.5.12RC0                   -> 2.5.12RC0
+2026-06-25T07:51:44.3901947Z  * [new tag]               2.5.13RC0                   -> 2.5.13RC0
+2026-06-25T07:51:44.3902333Z  * [new tag]               2.5.14RC0                   -> 2.5.14RC0
+2026-06-25T07:51:44.3902718Z  * [new tag]               2.5.14RC1                   -> 2.5.14RC1
+2026-06-25T07:51:44.3903103Z  * [new tag]               2.5.15RC0                   -> 2.5.15RC0
+2026-06-25T07:51:44.3903484Z  * [new tag]               2.5.1RC0                    -> 2.5.1RC0
+2026-06-25T07:51:44.3903869Z  * [new tag]               2.5.1RC1                    -> 2.5.1RC1
+2026-06-25T07:51:44.3904252Z  * [new tag]               2.5.2RC0                    -> 2.5.2RC0
+2026-06-25T07:51:44.3904632Z  * [new tag]               2.5.3RC0                    -> 2.5.3RC0
+2026-06-25T07:51:44.3905022Z  * [new tag]               2.5.3RC1                    -> 2.5.3RC1
+2026-06-25T07:51:44.3905405Z  * [new tag]               2.5.3RC2                    -> 2.5.3RC2
+2026-06-25T07:51:44.3905785Z  * [new tag]               2.5.4RC0                    -> 2.5.4RC0
+2026-06-25T07:51:44.3906170Z  * [new tag]               2.5.5                       -> 2.5.5
+2026-06-25T07:51:44.3906562Z  * [new tag]               2.5.5RC0                    -> 2.5.5RC0
+2026-06-25T07:51:44.3907076Z  * [new tag]               2.5.6RC0                    -> 2.5.6RC0
+2026-06-25T07:51:44.3907460Z  * [new tag]               2.5.7RC0                    -> 2.5.7RC0
+2026-06-25T07:51:44.3907842Z  * [new tag]               2.5.8RC0                    -> 2.5.8RC0
+2026-06-25T07:51:44.3908221Z  * [new tag]               2.5.9RC0                    -> 2.5.9RC0
+2026-06-25T07:51:44.3908607Z  * [new tag]               2.6.0RC0                    -> 2.6.0RC0
+2026-06-25T07:51:44.3908992Z  * [new tag]               2.6.0RC1                    -> 2.6.0RC1
+2026-06-25T07:51:44.3909376Z  * [new tag]               2.6.0RC2                    -> 2.6.0RC2
+2026-06-25T07:51:44.3909761Z  * [new tag]               2.6.0RC3                    -> 2.6.0RC3
+2026-06-25T07:51:44.3910143Z  * [new tag]               2.6.0RC4                    -> 2.6.0RC4
+2026-06-25T07:51:44.3910519Z  * [new tag]               2.6.1RC0                    -> 2.6.1RC0
+2026-06-25T07:51:44.3910902Z  * [new tag]               2.6.1RC1                    -> 2.6.1RC1
+2026-06-25T07:51:44.3911281Z  * [new tag]               2.6.2RC0                    -> 2.6.2RC0
+2026-06-25T07:51:44.3911934Z  * [new tag]               2.6.2RC1                    -> 2.6.2RC1
+2026-06-25T07:51:44.3912338Z  * [new tag]               2.6.3RC0                    -> 2.6.3RC0
+2026-06-25T07:51:44.3912719Z  * [new tag]               2.6.3RC1                    -> 2.6.3RC1
+2026-06-25T07:51:44.3913105Z  * [new tag]               2.6.3RC2                    -> 2.6.3RC2
+2026-06-25T07:51:44.3913486Z  * [new tag]               2.6.4RC0                    -> 2.6.4RC0
+2026-06-25T07:51:44.3913869Z  * [new tag]               2.6.4RC1                    -> 2.6.4RC1
+2026-06-25T07:51:44.3914257Z  * [new tag]               2.6.5RC0                    -> 2.6.5RC0
+2026-06-25T07:51:44.3914631Z  * [new tag]               2.6.5RC1                    -> 2.6.5RC1
+2026-06-25T07:51:44.3915009Z  * [new tag]               2.6.6RC0                    -> 2.6.6RC0
+2026-06-25T07:51:44.3915427Z  * [new tag]               3.0.0-alpha-1RC0            -> 3.0.0-alpha-1RC0
+2026-06-25T07:51:44.3915864Z  * [new tag]               3.0.0-alpha-2RC0            -> 3.0.0-alpha-2RC0
+2026-06-25T07:51:44.3916428Z  * [new tag]               3.0.0-alpha-2RC1            -> 3.0.0-alpha-2RC1
+2026-06-25T07:51:44.3916872Z  * [new tag]               3.0.0-alpha-2RC2            -> 3.0.0-alpha-2RC2
+2026-06-25T07:51:44.3917295Z  * [new tag]               3.0.0-alpha-3RC0            -> 3.0.0-alpha-3RC0
+2026-06-25T07:51:44.3917717Z  * [new tag]               3.0.0-alpha-4RC0            -> 3.0.0-alpha-4RC0
+2026-06-25T07:51:44.3918144Z  * [new tag]               3.0.0-beta-1RC0             -> 3.0.0-beta-1RC0
+2026-06-25T07:51:44.3918599Z  * [new tag]               HBASE-0.90.6-RC3            -> HBASE-0.90.6-RC3
+2026-06-25T07:51:44.3919027Z  * [new tag]               HBASE-0.90.6-RC4            -> HBASE-0.90.6-RC4
+2026-06-25T07:51:44.3919477Z  * [new tag]               HBASE-22466-1.5.0RC0        -> HBASE-22466-1.5.0RC0
+2026-06-25T07:51:44.3919950Z  * [new tag]               HBASE-22466-1.5.0RC1        -> HBASE-22466-1.5.0RC1
+2026-06-25T07:51:44.3920397Z  * [new tag]               HBASE-22466-1.5.0RC2        -> HBASE-22466-1.5.0RC2
+2026-06-25T07:51:44.3920852Z  * [new tag]               branch-1.2-EOM              -> branch-1.2-EOM
+2026-06-25T07:51:44.3921331Z  * [new tag]               feature-HBASE-22346-tag     -> feature-HBASE-22346-tag
+2026-06-25T07:51:44.3921910Z  * [new tag]               hbase-0.20.0-RC2            -> hbase-0.20.0-RC2
+2026-06-25T07:51:44.3922355Z  * [new tag]               hbase-0.90.6-RC3            -> hbase-0.90.6-RC3
+2026-06-25T07:51:44.3922805Z  * [new tag]               hbase-0.90.6-rc2            -> hbase-0.90.6-rc2
+2026-06-25T07:51:44.3923242Z  * [new tag]               hbase-0.90.6RC1             -> hbase-0.90.6RC1
+2026-06-25T07:51:44.3923684Z  * [new tag]               hbase-0.94.6.1              -> hbase-0.94.6.1
+2026-06-25T07:51:44.3924117Z  * [new tag]               hbase-0.95.0                -> hbase-0.95.0
+2026-06-25T07:51:44.3924700Z  * [new tag]               hbase-0.95.1-hadoop1        -> hbase-0.95.1-hadoop1
+2026-06-25T07:51:44.3925209Z  * [new tag]               hbase-0.95.1-hadoop2.by.mvn -> hbase-0.95.1-hadoop2.by.mvn
+2026-06-25T07:51:44.3925757Z  * [new tag]               hbase-0.95.1-hadoop2.by.mvn3 -> hbase-0.95.1-hadoop2.by.mvn3
+2026-06-25T07:51:44.3926262Z  * [new tag]               hbase-0.95.2-hadoop2        -> hbase-0.95.2-hadoop2
+2026-06-25T07:51:44.3926762Z  * [new tag]               hbase-0.95.2-hadoop2-testing -> hbase-0.95.2-hadoop2-testing
+2026-06-25T07:51:44.3927240Z  * [new tag]               hbase-0.96.0                -> hbase-0.96.0
+2026-06-25T07:51:44.3927672Z  * [new tag]               hbase-0.96.1RC1             -> hbase-0.96.1RC1
+2026-06-25T07:51:44.3928144Z  * [new tag]               mvn-release-test-01         -> mvn-release-test-01
+2026-06-25T07:51:44.3928588Z  * [new tag]               rel/0.1.0                   -> rel/0.1.0
+2026-06-25T07:51:44.3928995Z  * [new tag]               rel/0.1.1                   -> rel/0.1.1
+2026-06-25T07:51:44.3929390Z  * [new tag]               rel/0.1.2                   -> rel/0.1.2
+2026-06-25T07:51:44.3929779Z  * [new tag]               rel/0.1.3                   -> rel/0.1.3
+2026-06-25T07:51:44.3930180Z  * [new tag]               rel/0.18.0                  -> rel/0.18.0
+2026-06-25T07:51:44.3930581Z  * [new tag]               rel/0.18.1                  -> rel/0.18.1
+2026-06-25T07:51:44.3930980Z  * [new tag]               rel/0.19.0                  -> rel/0.19.0
+2026-06-25T07:51:44.3931370Z  * [new tag]               rel/0.19.1                  -> rel/0.19.1
+2026-06-25T07:51:44.3931878Z  * [new tag]               rel/0.19.2                  -> rel/0.19.2
+2026-06-25T07:51:44.3932276Z  * [new tag]               rel/0.20.0                  -> rel/0.20.0
+2026-06-25T07:51:44.3932681Z  * [new tag]               rel/0.20.1                  -> rel/0.20.1
+2026-06-25T07:51:44.3933071Z  * [new tag]               rel/0.20.2                  -> rel/0.20.2
+2026-06-25T07:51:44.3933466Z  * [new tag]               rel/0.20.3                  -> rel/0.20.3
+2026-06-25T07:51:44.3933853Z  * [new tag]               rel/0.20.4                  -> rel/0.20.4
+2026-06-25T07:51:44.3934368Z  * [new tag]               rel/0.20.5                  -> rel/0.20.5
+2026-06-25T07:51:44.3934790Z  * [new tag]               rel/0.20.6                  -> rel/0.20.6
+2026-06-25T07:51:44.3935206Z  * [new tag]               rel/0.90.0                  -> rel/0.90.0
+2026-06-25T07:51:44.3935598Z  * [new tag]               rel/0.90.1                  -> rel/0.90.1
+2026-06-25T07:51:44.3935988Z  * [new tag]               rel/0.90.2                  -> rel/0.90.2
+2026-06-25T07:51:44.3936382Z  * [new tag]               rel/0.90.3                  -> rel/0.90.3
+2026-06-25T07:51:44.3936771Z  * [new tag]               rel/0.90.4                  -> rel/0.90.4
+2026-06-25T07:51:44.3937167Z  * [new tag]               rel/0.90.5                  -> rel/0.90.5
+2026-06-25T07:51:44.3937565Z  * [new tag]               rel/0.90.6                  -> rel/0.90.6
+2026-06-25T07:51:44.3937959Z  * [new tag]               rel/0.92.0                  -> rel/0.92.0
+2026-06-25T07:51:44.3938348Z  * [new tag]               rel/0.92.1                  -> rel/0.92.1
+2026-06-25T07:51:44.3938738Z  * [new tag]               rel/0.92.2                  -> rel/0.92.2
+2026-06-25T07:51:44.3939130Z  * [new tag]               rel/0.94.0                  -> rel/0.94.0
+2026-06-25T07:51:44.3939507Z  * [new tag]               rel/0.94.1                  -> rel/0.94.1
+2026-06-25T07:51:44.3939906Z  * [new tag]               rel/0.94.10                 -> rel/0.94.10
+2026-06-25T07:51:44.3940309Z  * [new tag]               rel/0.94.11                 -> rel/0.94.11
+2026-06-25T07:51:44.3940707Z  * [new tag]               rel/0.94.12                 -> rel/0.94.12
+2026-06-25T07:51:44.3941105Z  * [new tag]               rel/0.94.13                 -> rel/0.94.13
+2026-06-25T07:51:44.3941606Z  * [new tag]               rel/0.94.14                 -> rel/0.94.14
+2026-06-25T07:51:44.3942163Z  * [new tag]               rel/0.94.15                 -> rel/0.94.15
+2026-06-25T07:51:44.3942562Z  * [new tag]               rel/0.94.16                 -> rel/0.94.16
+2026-06-25T07:51:44.3942956Z  * [new tag]               rel/0.94.17                 -> rel/0.94.17
+2026-06-25T07:51:44.3943355Z  * [new tag]               rel/0.94.18                 -> rel/0.94.18
+2026-06-25T07:51:44.3943755Z  * [new tag]               rel/0.94.19                 -> rel/0.94.19
+2026-06-25T07:51:44.3944149Z  * [new tag]               rel/0.94.2                  -> rel/0.94.2
+2026-06-25T07:51:44.3944549Z  * [new tag]               rel/0.94.20                 -> rel/0.94.20
+2026-06-25T07:51:44.3944945Z  * [new tag]               rel/0.94.21                 -> rel/0.94.21
+2026-06-25T07:51:44.3945337Z  * [new tag]               rel/0.94.22                 -> rel/0.94.22
+2026-06-25T07:51:44.3945728Z  * [new tag]               rel/0.94.23                 -> rel/0.94.23
+2026-06-25T07:51:44.3946133Z  * [new tag]               rel/0.94.24                 -> rel/0.94.24
+2026-06-25T07:51:44.3946528Z  * [new tag]               rel/0.94.25                 -> rel/0.94.25
+2026-06-25T07:51:44.3946929Z  * [new tag]               rel/0.94.26                 -> rel/0.94.26
+2026-06-25T07:51:44.3947319Z  * [new tag]               rel/0.94.27                 -> rel/0.94.27
+2026-06-25T07:51:44.3947711Z  * [new tag]               rel/0.94.3                  -> rel/0.94.3
+2026-06-25T07:51:44.3948110Z  * [new tag]               rel/0.94.4                  -> rel/0.94.4
+2026-06-25T07:51:44.3948499Z  * [new tag]               rel/0.94.5                  -> rel/0.94.5
+2026-06-25T07:51:44.3948894Z  * [new tag]               rel/0.94.6                  -> rel/0.94.6
+2026-06-25T07:51:44.3949281Z  * [new tag]               rel/0.94.7                  -> rel/0.94.7
+2026-06-25T07:51:44.3949672Z  * [new tag]               rel/0.94.8                  -> rel/0.94.8
+2026-06-25T07:51:44.3950066Z  * [new tag]               rel/0.94.9                  -> rel/0.94.9
+2026-06-25T07:51:44.3950461Z  * [new tag]               rel/0.95.0                  -> rel/0.95.0
+2026-06-25T07:51:44.3950844Z  * [new tag]               rel/0.95.1                  -> rel/0.95.1
+2026-06-25T07:51:44.3951358Z  * [new tag]               rel/0.95.2                  -> rel/0.95.2
+2026-06-25T07:51:44.3952012Z  * [new tag]               rel/0.96.0                  -> rel/0.96.0
+2026-06-25T07:51:44.3952409Z  * [new tag]               rel/0.96.1                  -> rel/0.96.1
+2026-06-25T07:51:44.3952811Z  * [new tag]               rel/0.96.1.1                -> rel/0.96.1.1
+2026-06-25T07:51:44.3953212Z  * [new tag]               rel/0.96.2                  -> rel/0.96.2
+2026-06-25T07:51:44.3953604Z  * [new tag]               rel/0.98.0                  -> rel/0.98.0
+2026-06-25T07:51:44.3953988Z  * [new tag]               rel/0.98.1                  -> rel/0.98.1
+2026-06-25T07:51:44.3954379Z  * [new tag]               rel/0.98.10                 -> rel/0.98.10
+2026-06-25T07:51:44.3954804Z  * [new tag]               rel/0.98.10.1               -> rel/0.98.10.1
+2026-06-25T07:51:44.3955221Z  * [new tag]               rel/0.98.11                 -> rel/0.98.11
+2026-06-25T07:51:44.3955627Z  * [new tag]               rel/0.98.12                 -> rel/0.98.12
+2026-06-25T07:51:44.3956035Z  * [new tag]               rel/0.98.12.1               -> rel/0.98.12.1
+2026-06-25T07:51:44.3956447Z  * [new tag]               rel/0.98.13                 -> rel/0.98.13
+2026-06-25T07:51:44.3956841Z  * [new tag]               rel/0.98.14                 -> rel/0.98.14
+2026-06-25T07:51:44.3957241Z  * [new tag]               rel/0.98.15                 -> rel/0.98.15
+2026-06-25T07:51:44.3957634Z  * [new tag]               rel/0.98.16                 -> rel/0.98.16
+2026-06-25T07:51:44.3958039Z  * [new tag]               rel/0.98.16.1               -> rel/0.98.16.1
+2026-06-25T07:51:44.3958465Z  * [new tag]               rel/0.98.17                 -> rel/0.98.17
+2026-06-25T07:51:44.3959000Z  * [new tag]               rel/0.98.18                 -> rel/0.98.18
+2026-06-25T07:51:44.3959416Z  * [new tag]               rel/0.98.19                 -> rel/0.98.19
+2026-06-25T07:51:44.3959832Z  * [new tag]               rel/0.98.2                  -> rel/0.98.2
+2026-06-25T07:51:44.3960240Z  * [new tag]               rel/0.98.20                 -> rel/0.98.20
+2026-06-25T07:51:44.3960641Z  * [new tag]               rel/0.98.21                 -> rel/0.98.21
+2026-06-25T07:51:44.3961032Z  * [new tag]               rel/0.98.22                 -> rel/0.98.22
+2026-06-25T07:51:44.3961423Z  * [new tag]               rel/0.98.23                 -> rel/0.98.23
+2026-06-25T07:51:44.3961933Z  * [new tag]               rel/0.98.24                 -> rel/0.98.24
+2026-06-25T07:51:44.3962330Z  * [new tag]               rel/0.98.3                  -> rel/0.98.3
+2026-06-25T07:51:44.3962738Z  * [new tag]               rel/0.98.4                  -> rel/0.98.4
+2026-06-25T07:51:44.3963141Z  * [new tag]               rel/0.98.5                  -> rel/0.98.5
+2026-06-25T07:51:44.3963534Z  * [new tag]               rel/0.98.6                  -> rel/0.98.6
+2026-06-25T07:51:44.3963939Z  * [new tag]               rel/0.98.6.1                -> rel/0.98.6.1
+2026-06-25T07:51:44.3964357Z  * [new tag]               rel/0.98.7                  -> rel/0.98.7
+2026-06-25T07:51:44.3964750Z  * [new tag]               rel/0.98.8                  -> rel/0.98.8
+2026-06-25T07:51:44.3965141Z  * [new tag]               rel/0.98.9                  -> rel/0.98.9
+2026-06-25T07:51:44.3965536Z  * [new tag]               rel/0.99.0                  -> rel/0.99.0
+2026-06-25T07:51:44.3965930Z  * [new tag]               rel/0.99.1                  -> rel/0.99.1
+2026-06-25T07:51:44.3966323Z  * [new tag]               rel/0.99.2                  -> rel/0.99.2
+2026-06-25T07:51:44.3966723Z  * [new tag]               rel/1.0.0                   -> rel/1.0.0
+2026-06-25T07:51:44.3967125Z  * [new tag]               rel/1.0.1                   -> rel/1.0.1
+2026-06-25T07:51:44.3967532Z  * [new tag]               rel/1.0.1.1                 -> rel/1.0.1.1
+2026-06-25T07:51:44.3967929Z  * [new tag]               rel/1.0.2                   -> rel/1.0.2
+2026-06-25T07:51:44.3968444Z  * [new tag]               rel/1.0.3                   -> rel/1.0.3
+2026-06-25T07:51:44.3968843Z  * [new tag]               rel/1.1.0                   -> rel/1.1.0
+2026-06-25T07:51:44.3969233Z  * [new tag]               rel/1.1.0.1                 -> rel/1.1.0.1
+2026-06-25T07:51:44.3969628Z  * [new tag]               rel/1.1.1                   -> rel/1.1.1
+2026-06-25T07:51:44.3970020Z  * [new tag]               rel/1.1.10                  -> rel/1.1.10
+2026-06-25T07:51:44.3970414Z  * [new tag]               rel/1.1.11                  -> rel/1.1.11
+2026-06-25T07:51:44.3970804Z  * [new tag]               rel/1.1.12                  -> rel/1.1.12
+2026-06-25T07:51:44.3971190Z  * [new tag]               rel/1.1.13                  -> rel/1.1.13
+2026-06-25T07:51:44.3971687Z  * [new tag]               rel/1.1.2                   -> rel/1.1.2
+2026-06-25T07:51:44.3972080Z  * [new tag]               rel/1.1.3                   -> rel/1.1.3
+2026-06-25T07:51:44.3972461Z  * [new tag]               rel/1.1.4                   -> rel/1.1.4
+2026-06-25T07:51:44.3972854Z  * [new tag]               rel/1.1.5                   -> rel/1.1.5
+2026-06-25T07:51:44.3973254Z  * [new tag]               rel/1.1.6                   -> rel/1.1.6
+2026-06-25T07:51:44.3973645Z  * [new tag]               rel/1.1.7                   -> rel/1.1.7
+2026-06-25T07:51:44.3974029Z  * [new tag]               rel/1.1.8                   -> rel/1.1.8
+2026-06-25T07:51:44.3974411Z  * [new tag]               rel/1.1.9                   -> rel/1.1.9
+2026-06-25T07:51:44.3974794Z  * [new tag]               rel/1.2.0                   -> rel/1.2.0
+2026-06-25T07:51:44.3975183Z  * [new tag]               rel/1.2.1                   -> rel/1.2.1
+2026-06-25T07:51:44.3975576Z  * [new tag]               rel/1.2.10                  -> rel/1.2.10
+2026-06-25T07:51:44.3976094Z  * [new tag]               rel/1.2.11                  -> rel/1.2.11
+2026-06-25T07:51:44.3976494Z  * [new tag]               rel/1.2.12                  -> rel/1.2.12
+2026-06-25T07:51:44.3976885Z  * [new tag]               rel/1.2.2                   -> rel/1.2.2
+2026-06-25T07:51:44.3977273Z  * [new tag]               rel/1.2.3                   -> rel/1.2.3
+2026-06-25T07:51:44.3977673Z  * [new tag]               rel/1.2.4                   -> rel/1.2.4
+2026-06-25T07:51:44.3978056Z  * [new tag]               rel/1.2.5                   -> rel/1.2.5
+2026-06-25T07:51:44.3978440Z  * [new tag]               rel/1.2.6                   -> rel/1.2.6
+2026-06-25T07:51:44.3978830Z  * [new tag]               rel/1.2.6.1                 -> rel/1.2.6.1
+2026-06-25T07:51:44.3979223Z  * [new tag]               rel/1.2.7                   -> rel/1.2.7
+2026-06-25T07:51:44.3979609Z  * [new tag]               rel/1.2.8                   -> rel/1.2.8
+2026-06-25T07:51:44.3979992Z  * [new tag]               rel/1.2.9                   -> rel/1.2.9
+2026-06-25T07:51:44.3980378Z  * [new tag]               rel/1.3.0                   -> rel/1.3.0
+2026-06-25T07:51:44.3980768Z  * [new tag]               rel/1.3.1                   -> rel/1.3.1
+2026-06-25T07:51:44.3981153Z  * [new tag]               rel/1.3.2                   -> rel/1.3.2
+2026-06-25T07:51:44.3981661Z  * [new tag]               rel/1.3.2.1                 -> rel/1.3.2.1
+2026-06-25T07:51:44.3982072Z  * [new tag]               rel/1.3.3                   -> rel/1.3.3
+2026-06-25T07:51:44.3982460Z  * [new tag]               rel/1.3.4                   -> rel/1.3.4
+2026-06-25T07:51:44.3982844Z  * [new tag]               rel/1.3.5                   -> rel/1.3.5
+2026-06-25T07:51:44.3983227Z  * [new tag]               rel/1.3.6                   -> rel/1.3.6
+2026-06-25T07:51:44.3983611Z  * [new tag]               rel/1.4.0                   -> rel/1.4.0
+2026-06-25T07:51:44.3983993Z  * [new tag]               rel/1.4.1                   -> rel/1.4.1
+2026-06-25T07:51:44.3984385Z  * [new tag]               rel/1.4.10                  -> rel/1.4.10
+2026-06-25T07:51:44.3984772Z  * [new tag]               rel/1.4.11                  -> rel/1.4.11
+2026-06-25T07:51:44.3985283Z  * [new tag]               rel/1.4.12                  -> rel/1.4.12
+2026-06-25T07:51:44.3985674Z  * [new tag]               rel/1.4.13                  -> rel/1.4.13
+2026-06-25T07:51:44.3986068Z  * [new tag]               rel/1.4.14                  -> rel/1.4.14
+2026-06-25T07:51:44.3986462Z  * [new tag]               rel/1.4.2                   -> rel/1.4.2
+2026-06-25T07:51:44.3986849Z  * [new tag]               rel/1.4.3                   -> rel/1.4.3
+2026-06-25T07:51:44.3987235Z  * [new tag]               rel/1.4.4                   -> rel/1.4.4
+2026-06-25T07:51:44.3987620Z  * [new tag]               rel/1.4.5                   -> rel/1.4.5
+2026-06-25T07:51:44.3988005Z  * [new tag]               rel/1.4.6                   -> rel/1.4.6
+2026-06-25T07:51:44.3988394Z  * [new tag]               rel/1.4.7                   -> rel/1.4.7
+2026-06-25T07:51:44.3988809Z  * [new tag]               rel/1.4.8                   -> rel/1.4.8
+2026-06-25T07:51:44.3989192Z  * [new tag]               rel/1.4.9                   -> rel/1.4.9
+2026-06-25T07:51:44.3989579Z  * [new tag]               rel/1.5.0                   -> rel/1.5.0
+2026-06-25T07:51:44.3989966Z  * [new tag]               rel/1.6.0                   -> rel/1.6.0
+2026-06-25T07:51:44.3990354Z  * [new tag]               rel/1.7.0                   -> rel/1.7.0
+2026-06-25T07:51:44.3990742Z  * [new tag]               rel/1.7.1                   -> rel/1.7.1
+2026-06-25T07:51:44.3991120Z  * [new tag]               rel/1.7.2                   -> rel/1.7.2
+2026-06-25T07:51:44.3991703Z  * [new tag]               rel/2.0.0                   -> rel/2.0.0
+2026-06-25T07:51:44.3992188Z  * [new tag]               rel/2.0.0-alpha-1           -> rel/2.0.0-alpha-1
+2026-06-25T07:51:44.3992642Z  * [new tag]               rel/2.0.0-alpha-2           -> rel/2.0.0-alpha-2
+2026-06-25T07:51:44.3993212Z  * [new tag]               rel/2.0.0-alpha-3           -> rel/2.0.0-alpha-3
+2026-06-25T07:51:44.3993651Z  * [new tag]               rel/2.0.0-beta-1            -> rel/2.0.0-beta-1
+2026-06-25T07:51:44.3994088Z  * [new tag]               rel/2.0.0-beta-2            -> rel/2.0.0-beta-2
+2026-06-25T07:51:44.3994506Z  * [new tag]               rel/2.0.1                   -> rel/2.0.1
+2026-06-25T07:51:44.3994899Z  * [new tag]               rel/2.0.2                   -> rel/2.0.2
+2026-06-25T07:51:44.3995294Z  * [new tag]               rel/2.0.3                   -> rel/2.0.3
+2026-06-25T07:51:44.3995677Z  * [new tag]               rel/2.0.4                   -> rel/2.0.4
+2026-06-25T07:51:44.3996058Z  * [new tag]               rel/2.0.5                   -> rel/2.0.5
+2026-06-25T07:51:44.3996441Z  * [new tag]               rel/2.0.6                   -> rel/2.0.6
+2026-06-25T07:51:44.3996823Z  * [new tag]               rel/2.1.0                   -> rel/2.1.0
+2026-06-25T07:51:44.3997209Z  * [new tag]               rel/2.1.1                   -> rel/2.1.1
+2026-06-25T07:51:44.3997589Z  * [new tag]               rel/2.1.2                   -> rel/2.1.2
+2026-06-25T07:51:44.3997970Z  * [new tag]               rel/2.1.3                   -> rel/2.1.3
+2026-06-25T07:51:44.3998370Z  * [new tag]               rel/2.1.4                   -> rel/2.1.4
+2026-06-25T07:51:44.3998754Z  * [new tag]               rel/2.1.5                   -> rel/2.1.5
+2026-06-25T07:51:44.3999138Z  * [new tag]               rel/2.1.6                   -> rel/2.1.6
+2026-06-25T07:51:44.3999537Z  * [new tag]               rel/2.1.7                   -> rel/2.1.7
+2026-06-25T07:51:44.3999917Z  * [new tag]               rel/2.1.8                   -> rel/2.1.8
+2026-06-25T07:51:44.4000292Z  * [new tag]               rel/2.1.9                   -> rel/2.1.9
+2026-06-25T07:51:44.4000674Z  * [new tag]               rel/2.2.0                   -> rel/2.2.0
+2026-06-25T07:51:44.4001056Z  * [new tag]               rel/2.2.1                   -> rel/2.2.1
+2026-06-25T07:51:44.4001445Z  * [new tag]               rel/2.2.2                   -> rel/2.2.2
+2026-06-25T07:51:44.4001948Z  * [new tag]               rel/2.2.3                   -> rel/2.2.3
+2026-06-25T07:51:44.4002459Z  * [new tag]               rel/2.2.4                   -> rel/2.2.4
+2026-06-25T07:51:44.4002843Z  * [new tag]               rel/2.2.5                   -> rel/2.2.5
+2026-06-25T07:51:44.4003232Z  * [new tag]               rel/2.2.6                   -> rel/2.2.6
+2026-06-25T07:51:44.4003613Z  * [new tag]               rel/2.2.7                   -> rel/2.2.7
+2026-06-25T07:51:44.4004007Z  * [new tag]               rel/2.3.0                   -> rel/2.3.0
+2026-06-25T07:51:44.4004390Z  * [new tag]               rel/2.3.1                   -> rel/2.3.1
+2026-06-25T07:51:44.4004766Z  * [new tag]               rel/2.3.2                   -> rel/2.3.2
+2026-06-25T07:51:44.4005148Z  * [new tag]               rel/2.3.3                   -> rel/2.3.3
+2026-06-25T07:51:44.4005536Z  * [new tag]               rel/2.3.4                   -> rel/2.3.4
+2026-06-25T07:51:44.4005917Z  * [new tag]               rel/2.3.5                   -> rel/2.3.5
+2026-06-25T07:51:44.4006304Z  * [new tag]               rel/2.3.6                   -> rel/2.3.6
+2026-06-25T07:51:44.4006688Z  * [new tag]               rel/2.3.7                   -> rel/2.3.7
+2026-06-25T07:51:44.4007065Z  * [new tag]               rel/2.4.0                   -> rel/2.4.0
+2026-06-25T07:51:44.4007439Z  * [new tag]               rel/2.4.1                   -> rel/2.4.1
+2026-06-25T07:51:44.4007829Z  * [new tag]               rel/2.4.10                  -> rel/2.4.10
+2026-06-25T07:51:44.4008224Z  * [new tag]               rel/2.4.11                  -> rel/2.4.11
+2026-06-25T07:51:44.4008608Z  * [new tag]               rel/2.4.12                  -> rel/2.4.12
+2026-06-25T07:51:44.4009026Z  * [new tag]               rel/2.4.13                  -> rel/2.4.13
+2026-06-25T07:51:44.4009431Z  * [new tag]               rel/2.4.14                  -> rel/2.4.14
+2026-06-25T07:51:44.4009934Z  * [new tag]               rel/2.4.15                  -> rel/2.4.15
+2026-06-25T07:51:44.4010328Z  * [new tag]               rel/2.4.16                  -> rel/2.4.16
+2026-06-25T07:51:44.4010719Z  * [new tag]               rel/2.4.17                  -> rel/2.4.17
+2026-06-25T07:51:44.4011106Z  * [new tag]               rel/2.4.18                  -> rel/2.4.18
+2026-06-25T07:51:44.4011601Z  * [new tag]               rel/2.4.2                   -> rel/2.4.2
+2026-06-25T07:51:44.4011992Z  * [new tag]               rel/2.4.3                   -> rel/2.4.3
+2026-06-25T07:51:44.4012379Z  * [new tag]               rel/2.4.4                   -> rel/2.4.4
+2026-06-25T07:51:44.4012780Z  * [new tag]               rel/2.4.5                   -> rel/2.4.5
+2026-06-25T07:51:44.4013161Z  * [new tag]               rel/2.4.6                   -> rel/2.4.6
+2026-06-25T07:51:44.4013546Z  * [new tag]               rel/2.4.7                   -> rel/2.4.7
+2026-06-25T07:51:44.4013937Z  * [new tag]               rel/2.4.8                   -> rel/2.4.8
+2026-06-25T07:51:44.4014321Z  * [new tag]               rel/2.4.9                   -> rel/2.4.9
+2026-06-25T07:51:44.4014704Z  * [new tag]               rel/2.5.0                   -> rel/2.5.0
+2026-06-25T07:51:44.4015091Z  * [new tag]               rel/2.5.1                   -> rel/2.5.1
+2026-06-25T07:51:44.4015473Z  * [new tag]               rel/2.5.10                  -> rel/2.5.10
+2026-06-25T07:51:44.4015863Z  * [new tag]               rel/2.5.11                  -> rel/2.5.11
+2026-06-25T07:51:44.4016253Z  * [new tag]               rel/2.5.12                  -> rel/2.5.12
+2026-06-25T07:51:44.4016647Z  * [new tag]               rel/2.5.13                  -> rel/2.5.13
+2026-06-25T07:51:44.4017042Z  * [new tag]               rel/2.5.14                  -> rel/2.5.14
+2026-06-25T07:51:44.4017430Z  * [new tag]               rel/2.5.15                  -> rel/2.5.15
+2026-06-25T07:51:44.4017813Z  * [new tag]               rel/2.5.2                   -> rel/2.5.2
+2026-06-25T07:51:44.4018199Z  * [new tag]               rel/2.5.3                   -> rel/2.5.3
+2026-06-25T07:51:44.4018585Z  * [new tag]               rel/2.5.4                   -> rel/2.5.4
+2026-06-25T07:51:44.4019103Z  * [new tag]               rel/2.5.5                   -> rel/2.5.5
+2026-06-25T07:51:44.4019496Z  * [new tag]               rel/2.5.6                   -> rel/2.5.6
+2026-06-25T07:51:44.4019881Z  * [new tag]               rel/2.5.7                   -> rel/2.5.7
+2026-06-25T07:51:44.4020261Z  * [new tag]               rel/2.5.8                   -> rel/2.5.8
+2026-06-25T07:51:44.4020648Z  * [new tag]               rel/2.5.9                   -> rel/2.5.9
+2026-06-25T07:51:44.4021031Z  * [new tag]               rel/2.6.0                   -> rel/2.6.0
+2026-06-25T07:51:44.4021424Z  * [new tag]               rel/2.6.1                   -> rel/2.6.1
+2026-06-25T07:51:44.4021922Z  * [new tag]               rel/2.6.2                   -> rel/2.6.2
+2026-06-25T07:51:44.4022313Z  * [new tag]               rel/2.6.3                   -> rel/2.6.3
+2026-06-25T07:51:44.4022694Z  * [new tag]               rel/2.6.4                   -> rel/2.6.4
+2026-06-25T07:51:44.4023078Z  * [new tag]               rel/2.6.5                   -> rel/2.6.5
+2026-06-25T07:51:44.4023464Z  * [new tag]               rel/2.6.6                   -> rel/2.6.6
+2026-06-25T07:51:44.4023876Z  * [new tag]               rel/3.0.0-alpha-1           -> rel/3.0.0-alpha-1
+2026-06-25T07:51:44.4024318Z  * [new tag]               rel/3.0.0-alpha-2           -> rel/3.0.0-alpha-2
+2026-06-25T07:51:44.4024817Z  * [new tag]               rel/3.0.0-alpha-3           -> rel/3.0.0-alpha-3
+2026-06-25T07:51:44.4025256Z  * [new tag]               rel/3.0.0-alpha-4           -> rel/3.0.0-alpha-4
+2026-06-25T07:51:44.4025687Z  * [new tag]               rel/3.0.0-beta-1            -> rel/3.0.0-beta-1
+2026-06-25T07:51:44.4026142Z  * [new tag]               release-0.18.0              -> release-0.18.0
+2026-06-25T07:51:44.4026708Z  * [new tag]               release-0.2.0               -> release-0.2.0
+2026-06-25T07:51:44.4027137Z  * [new tag]               release-0.2.1               -> release-0.2.1
+2026-06-25T07:51:44.4027553Z  * [new tag]               show                        -> show
+2026-06-25T07:51:44.4028043Z  * [new ref]               b1cabac26f28e999f413661bee83044fee907120 -> pull/8414/merge
+2026-06-25T07:51:44.4712427Z ##[endgroup]
+2026-06-25T07:51:44.4713914Z ##[group]Determining the checkout info
+2026-06-25T07:51:44.4714758Z ##[endgroup]
+2026-06-25T07:51:44.4720333Z [command]/usr/bin/git sparse-checkout disable
+2026-06-25T07:51:44.4769872Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-25T07:51:44.4803903Z ##[group]Checking out the ref
+2026-06-25T07:51:44.4807377Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/8414/merge
+2026-06-25T07:51:45.2041208Z Note: switching to 'refs/remotes/pull/8414/merge'.
+2026-06-25T07:51:45.2042513Z 
+2026-06-25T07:51:45.2043164Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-25T07:51:45.2044231Z changes and commit them, and you can discard any commits you make in this
+2026-06-25T07:51:45.2044980Z state without impacting any branches by switching back to a branch.
+2026-06-25T07:51:45.2045385Z 
+2026-06-25T07:51:45.2045687Z If you want to create a new branch to retain commits you create, you may
+2026-06-25T07:51:45.2046373Z do so (now or later) by using -c with the switch command. Example:
+2026-06-25T07:51:45.2046752Z 
+2026-06-25T07:51:45.2046928Z   git switch -c <new-branch-name>
+2026-06-25T07:51:45.2047217Z 
+2026-06-25T07:51:45.2047381Z Or undo this operation with:
+2026-06-25T07:51:45.2047621Z 
+2026-06-25T07:51:45.2047748Z   git switch -
+2026-06-25T07:51:45.2047950Z 
+2026-06-25T07:51:45.2048282Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-25T07:51:45.2048769Z 
+2026-06-25T07:51:45.2049328Z HEAD is now at b1cabac26f Merge 2281aa702a806a1bca84f682c42afb9327eca606 into a9b38cd98cae55dff8e944688739a10e34651e10
+2026-06-25T07:51:45.2123102Z ##[endgroup]
+2026-06-25T07:51:45.2175574Z [command]/usr/bin/git log -1 --format=%H
+2026-06-25T07:51:45.2207032Z b1cabac26f28e999f413661bee83044fee907120
+2026-06-25T07:51:45.2229041Z ##[group]Removing auth
+2026-06-25T07:51:45.2229779Z Removing SSH command configuration
+2026-06-25T07:51:45.2230454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-25T07:51:45.2258440Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-25T07:51:45.2506467Z Removing HTTP extra header
+2026-06-25T07:51:45.2513365Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-25T07:51:45.2544526Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-25T07:51:45.2790709Z Removing includeIf entries pointing to credentials config files
+2026-06-25T07:51:45.2794714Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-25T07:51:45.2825276Z includeif.gitdir:/home/runner/work/hbase/hbase/src/.git.path
+2026-06-25T07:51:45.2826194Z includeif.gitdir:/home/runner/work/hbase/hbase/src/.git/worktrees/*.path
+2026-06-25T07:51:45.2826872Z includeif.gitdir:/github/workspace/src/.git.path
+2026-06-25T07:51:45.2827445Z includeif.gitdir:/github/workspace/src/.git/worktrees/*.path
+2026-06-25T07:51:45.2835231Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/hbase/hbase/src/.git.path
+2026-06-25T07:51:45.2872972Z /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.2875378Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/hbase/hbase/src/.git.path /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.2912272Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/hbase/hbase/src/.git/worktrees/*.path
+2026-06-25T07:51:45.2937645Z /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.2947929Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/hbase/hbase/src/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.2998487Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/src/.git.path
+2026-06-25T07:51:45.3022639Z /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.3030983Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/src/.git.path /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.3065805Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/src/.git/worktrees/*.path
+2026-06-25T07:51:45.3094177Z /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.3101179Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/src/.git/worktrees/*.path /github/runner_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config
+2026-06-25T07:51:45.3133313Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-25T07:51:45.3376205Z Removing credentials config '/home/runner/work/_temp/git-credentials-ce260fac-c4e0-49e8-9f2a-2f9bd327c35e.config'
+2026-06-25T07:51:45.3385685Z ##[endgroup]
+2026-06-25T07:51:45.3649235Z ##[group]Run actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287
+2026-06-25T07:51:45.3649643Z with:
+2026-06-25T07:51:45.3649858Z   java-version: 8
+2026-06-25T07:51:45.3650082Z   distribution: temurin
+2026-06-25T07:51:45.3650338Z   java-package: jdk
+2026-06-25T07:51:45.3650558Z   check-latest: false
+2026-06-25T07:51:45.3650775Z   server-id: github
+2026-06-25T07:51:45.3650995Z   server-username: GITHUB_ACTOR
+2026-06-25T07:51:45.3651256Z   server-password: GITHUB_TOKEN
+2026-06-25T07:51:45.3651728Z   overwrite-settings: true
+2026-06-25T07:51:45.3651969Z   job-status: success
+2026-06-25T07:51:45.3654794Z   token: ***
+2026-06-25T07:51:45.3654996Z env:
+2026-06-25T07:51:45.3655191Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:45.3655421Z ##[endgroup]
+2026-06-25T07:51:45.5154470Z ##[group]Installed distributions
+2026-06-25T07:51:45.5321131Z Resolved Java 8.0.492+9 from tool-cache
+2026-06-25T07:51:45.5321768Z Setting Java 8.0.492+9 as the default
+2026-06-25T07:51:45.5332228Z Creating toolchains.xml for JDK version 8 from temurin
+2026-06-25T07:51:45.5404661Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-25T07:51:45.5405282Z 
+2026-06-25T07:51:45.5405508Z Java configuration:
+2026-06-25T07:51:45.5405972Z   Distribution: temurin
+2026-06-25T07:51:45.5406402Z   Version: 8.0.492+9
+2026-06-25T07:51:45.5406913Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:45.5412649Z 
+2026-06-25T07:51:45.5413321Z ##[endgroup]
+2026-06-25T07:51:45.5433338Z Creating settings.xml with server-id: github
+2026-06-25T07:51:45.5433742Z Writing to /home/runner/.m2/settings.xml
+2026-06-25T07:51:46.1373313Z ##[group]Run actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8
+2026-06-25T07:51:46.1373702Z with:
+2026-06-25T07:51:46.1373911Z   path: ~/.m2
+2026-06-25T07:51:46.1374273Z   key: hbase-m2-3660c65b39de42e83d25228ac188905185382d7f7b30414de4fcf625a2ed0ad9
+2026-06-25T07:51:46.1374698Z   restore-keys: hbase-m2-
+
+2026-06-25T07:51:46.1374957Z   enableCrossOsArchive: false
+2026-06-25T07:51:46.1375217Z   fail-on-cache-miss: false
+2026-06-25T07:51:46.1375462Z   lookup-only: false
+2026-06-25T07:51:46.1375686Z   save-always: false
+2026-06-25T07:51:46.1375898Z env:
+2026-06-25T07:51:46.1376094Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:46.1376620Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:46.1377110Z   JAVA_HOME_8_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:46.1377488Z ##[endgroup]
+2026-06-25T07:51:46.3227310Z Cache not found for input keys: hbase-m2-3660c65b39de42e83d25228ac188905185382d7f7b30414de4fcf625a2ed0ad9, hbase-m2-
+2026-06-25T07:51:46.3383093Z ##[group]Run mkdir -p yetus
+2026-06-25T07:51:46.3383466Z [36;1mmkdir -p yetus[0m
+2026-06-25T07:51:46.3383717Z [36;1mcd yetus[0m
+2026-06-25T07:51:46.3384251Z [36;1mbash "/home/runner/work/hbase/hbase/src/dev-support/jenkins-scripts/cache-apache-project-artifact.sh" \[0m
+2026-06-25T07:51:46.3384880Z [36;1m  --keys 'https://downloads.apache.org/yetus/KEYS' \[0m
+2026-06-25T07:51:46.3385230Z [36;1m  --verify-tar-gz \[0m
+2026-06-25T07:51:46.3385506Z [36;1m  ./apache-yetus-0.15.0-bin.tar.gz \[0m
+2026-06-25T07:51:46.3385842Z [36;1m  yetus/0.15.0/apache-yetus-0.15.0-bin.tar.gz[0m
+2026-06-25T07:51:46.3386270Z [36;1mtar --strip-components=1 -xzf apache-yetus-0.15.0-bin.tar.gz[0m
+2026-06-25T07:51:46.3386651Z [36;1mrm apache-yetus-0.15.0-bin.tar.gz[0m
+2026-06-25T07:51:46.3520791Z shell: /usr/bin/bash -e {0}
+2026-06-25T07:51:46.3521071Z env:
+2026-06-25T07:51:46.3521279Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:46.3522012Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:46.3522529Z   JAVA_HOME_8_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:46.3522902Z ##[endgroup]
+2026-06-25T07:51:46.3649558Z New download of 'yetus/0.15.0/apache-yetus-0.15.0-bin.tar.gz'
+2026-06-25T07:51:46.3686414Z installing project KEYS
+2026-06-25T07:51:46.3760046Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-06-25T07:51:46.3760818Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-06-25T07:51:46.3761251Z 
+2026-06-25T07:51:46.6151247Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-25T07:51:46.9006274Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-25T07:51:46.9007047Z 100 17553  100 17553    0     0  33453      0 --:--:-- --:--:-- --:--:-- 33434
+2026-06-25T07:51:46.9901882Z gpg: keybox '/tmp/hbase-download-apache-artifact-oERqzT/.gpg/pubring.kbx' created
+2026-06-25T07:51:47.0312716Z gpg: /tmp/hbase-download-apache-artifact-oERqzT/.gpg/trustdb.gpg: trustdb created
+2026-06-25T07:51:47.0313425Z gpg: key E65E11D40D80DB7C: public key "Sean Busbey (CODE SIGNING KEY) <busbey@apache.org>" imported
+2026-06-25T07:51:47.0663637Z gpg: key E01B34FBE846DF38: public key "Allen Wittenauer (CODE SIGNING KEY) <aw@apache.org>" imported
+2026-06-25T07:51:47.0679207Z gpg: key 2922A48261524827: public key "Kengo Seki (CODE SIGNING KEY) <sekikn@apache.org>" imported
+2026-06-25T07:51:47.0689557Z gpg: key 0411512D61CD1D5F: 4 signatures not checked due to missing keys
+2026-06-25T07:51:47.0696875Z gpg: key 0411512D61CD1D5F: public key "Ajay Yadava (CODE SIGNING KEY) <ajayyadava@apache.org>" imported
+2026-06-25T07:51:47.0704012Z gpg: Total number processed: 4
+2026-06-25T07:51:47.0704454Z gpg:               imported: 4
+2026-06-25T07:51:47.0704853Z gpg: no ultimately trusted keys found
+2026-06-25T07:51:47.0710779Z downloading signature
+2026-06-25T07:51:47.0767072Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-06-25T07:51:47.0767816Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-06-25T07:51:47.0768685Z 
+2026-06-25T07:51:47.7093287Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-25T07:51:47.7093992Z 100   833  100   833    0     0   1316      0 --:--:-- --:--:-- --:--:--  1315
+2026-06-25T07:51:47.7094609Z 100   833  100   833    0     0   1316      0 --:--:-- --:--:-- --:--:--  1315
+2026-06-25T07:51:47.7117652Z downloading artifact
+2026-06-25T07:51:47.7174850Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-06-25T07:51:47.7176021Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-06-25T07:51:47.7176622Z 
+2026-06-25T07:51:47.9049011Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-25T07:51:47.9049670Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-25T07:51:48.6237718Z 
+2026-06-25T07:51:49.0112503Z  24  162k   24 39945    0     0  44072      0  0:00:03 --:--:--  0:00:03 44072
+2026-06-25T07:51:49.0113157Z 100  162k  100  162k    0     0   125k      0  0:00:01  0:00:01 --:--:--  318k
+2026-06-25T07:51:49.0144769Z verifying artifact signature
+2026-06-25T07:51:49.0171274Z gpg: assuming signed data in '/tmp/hbase-download-apache-artifact-oERqzT/artifact'
+2026-06-25T07:51:49.0175865Z gpg: Signature made Tue Nov 14 05:53:55 2023 UTC
+2026-06-25T07:51:49.0176444Z gpg:                using RSA key 3365F0B8588B123CC13B5A19E01B34FBE846DF38
+2026-06-25T07:51:49.0179214Z gpg: Good signature from "Allen Wittenauer (CODE SIGNING KEY) <aw@apache.org>" [unknown]
+2026-06-25T07:51:49.0180066Z gpg: WARNING: This key is not certified with a trusted signature!
+2026-06-25T07:51:49.0180575Z gpg:          There is no indication that the signature belongs to the owner.
+2026-06-25T07:51:49.0181060Z Primary key fingerprint: 3365 F0B8 588B 123C C13B  5A19 E01B 34FB E846 DF38
+2026-06-25T07:51:49.0184375Z signature good.
+2026-06-25T07:51:49.0184838Z moving artifact into place at './apache-yetus-0.15.0-bin.tar.gz'
+2026-06-25T07:51:49.0214938Z all done!
+2026-06-25T07:51:49.0215274Z Stopping gpg agent daemon
+2026-06-25T07:51:49.0529938Z Stopped gpg agent daemon
+2026-06-25T07:51:49.0530577Z cleaning up temp space.
+2026-06-25T07:51:49.0715187Z ##[group]Run cd "/home/runner/work/hbase/hbase"
+2026-06-25T07:51:49.0715584Z [36;1mcd "/home/runner/work/hbase/hbase"[0m
+2026-06-25T07:51:49.0715974Z [36;1mbash src/dev-support/jenkins_precommit_github_yetus.sh[0m
+2026-06-25T07:51:49.0749431Z shell: /usr/bin/bash -e {0}
+2026-06-25T07:51:49.0749720Z env:
+2026-06-25T07:51:49.0749924Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:49.0750263Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:49.0750747Z   JAVA_HOME_8_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:49.0751230Z   ARCHIVE_PATTERN_LIST: TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump
+2026-06-25T07:51:49.0751930Z   DOCKERFILE: /home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile
+2026-06-25T07:51:49.0754995Z   GITHUB_PASSWORD: ***
+2026-06-25T07:51:49.0755430Z   GITHUB_USER: liuxiaocs7
+2026-06-25T07:51:49.0773399Z   JAVA8_HOME: /usr/lib/jvm/java-8
+2026-06-25T07:51:49.0774392Z   PATCHDIR: /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output
+2026-06-25T07:51:49.0775036Z   PLUGINS: github,htmlout,maven,unit
+2026-06-25T07:51:49.0775350Z   SET_JAVA_HOME: /usr/lib/jvm/java-8
+2026-06-25T07:51:49.0775647Z   SOURCEDIR: /home/runner/work/hbase/hbase/src
+2026-06-25T07:51:49.0775980Z   YETUSDIR: /home/runner/work/hbase/hbase/yetus
+2026-06-25T07:51:49.0776378Z   AUTHOR_IGNORE_LIST: src/main/asciidoc/_chapters/developer.adoc
+2026-06-25T07:51:49.0776856Z   BLANKS_EOL_IGNORE_FILE: dev-support/blanks-eol-ignore.txt
+2026-06-25T07:51:49.0777281Z   BLANKS_TABS_IGNORE_FILE: dev-support/blanks-tabs-ignore.txt
+2026-06-25T07:51:49.0777989Z   EXCLUDE_TESTS_URL: https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes
+2026-06-25T07:51:49.0778588Z   BUILD_THREAD: 4
+2026-06-25T07:51:49.0778831Z   SUREFIRE_FIRST_PART_FORK_COUNT: 1.0C
+2026-06-25T07:51:49.0779148Z   SUREFIRE_SECOND_PART_FORK_COUNT: 0.5C
+2026-06-25T07:51:49.0779427Z   BRANCH_NAME: branch-2
+2026-06-25T07:51:49.0779690Z   CHANGE_TARGET: branch-2
+2026-06-25T07:51:49.0779943Z   SKIP_ERRORPRONE: true
+2026-06-25T07:51:49.0780169Z   DEBUG: true
+2026-06-25T07:51:49.0780389Z   TEST_PROFILE: runSmallTests
+2026-06-25T07:51:49.0780646Z ##[endgroup]
+2026-06-25T07:51:49.0873454Z executing from /home/runner/work/hbase/hbase
+2026-06-25T07:51:49.0876478Z + printenv
+2026-06-25T07:51:49.0877138Z + sort
+2026-06-25T07:51:49.0942428Z ACCEPT_EULA=Y
+2026-06-25T07:51:49.0943203Z ACTIONS_ORCHESTRATION_ID=2e2875ba-4c5c-468e-b7c5-400e64025a60.jdk8-hadoop2-unit-check.small_runSmallTests
+2026-06-25T07:51:49.0944167Z ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE=/opt/actionarchivecache
+2026-06-25T07:51:49.0944632Z ACTIONS_RUNNER_RETURN_JOB_RESULT_FOR_HOSTED=1
+2026-06-25T07:51:49.0944955Z AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+2026-06-25T07:51:49.0945389Z ANDROID_HOME=/usr/local/lib/android/sdk
+2026-06-25T07:51:49.0945738Z ANDROID_NDK=/usr/local/lib/android/sdk/ndk/27.3.13750724
+2026-06-25T07:51:49.0946257Z ANDROID_NDK_HOME=/usr/local/lib/android/sdk/ndk/27.3.13750724
+2026-06-25T07:51:49.0946780Z ANDROID_NDK_LATEST_HOME=/usr/local/lib/android/sdk/ndk/29.0.14206865
+2026-06-25T07:51:49.0947445Z ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.3.13750724
+2026-06-25T07:51:49.0948067Z ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
+2026-06-25T07:51:49.0948616Z ANT_HOME=/usr/share/ant
+2026-06-25T07:51:49.0949144Z ARCHIVE_PATTERN_LIST=TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump
+2026-06-25T07:51:49.0949894Z AUTHOR_IGNORE_LIST=src/main/asciidoc/_chapters/developer.adoc
+2026-06-25T07:51:49.0950280Z AZURE_EXTENSION_DIR=/opt/az/azcliextensions
+2026-06-25T07:51:49.0950646Z BLANKS_EOL_IGNORE_FILE=dev-support/blanks-eol-ignore.txt
+2026-06-25T07:51:49.0951048Z BLANKS_TABS_IGNORE_FILE=dev-support/blanks-tabs-ignore.txt
+2026-06-25T07:51:49.0951750Z BOOTSTRAP_HASKELL_NONINTERACTIVE=1
+2026-06-25T07:51:49.0952212Z BRANCH_NAME=branch-2
+2026-06-25T07:51:49.0952550Z BUILD_THREAD=4
+2026-06-25T07:51:49.0952863Z CHANGE_TARGET=branch-2
+2026-06-25T07:51:49.0953548Z CHROMEWEBDRIVER=/usr/local/share/chromedriver-linux64
+2026-06-25T07:51:49.0954068Z CHROME_BIN=/usr/bin/google-chrome
+2026-06-25T07:51:49.0954450Z CI=true
+2026-06-25T07:51:49.0954752Z CONDA=/usr/share/miniconda
+2026-06-25T07:51:49.0955121Z DEBIAN_FRONTEND=noninteractive
+2026-06-25T07:51:49.0955481Z DEBUG=true
+2026-06-25T07:51:49.0956116Z DOCKERFILE=/home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile
+2026-06-25T07:51:49.0956743Z DOTNET_MULTILEVEL_LOOKUP=0
+2026-06-25T07:51:49.0957105Z DOTNET_NOLOGO=1
+2026-06-25T07:51:49.0957440Z DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+2026-06-25T07:51:49.0957886Z EDGEWEBDRIVER=/usr/local/share/edge_driver
+2026-06-25T07:51:49.0958335Z ENABLE_RUNNER_TRACING=true
+2026-06-25T07:51:49.0959212Z EXCLUDE_TESTS_URL=https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes
+2026-06-25T07:51:49.0960178Z GECKOWEBDRIVER=/usr/local/share/gecko_driver
+2026-06-25T07:51:49.0960640Z GHCUP_INSTALL_BASE_PREFIX=/usr/local
+2026-06-25T07:51:49.0961054Z GITHUB_ACTION=__run_3
+2026-06-25T07:51:49.0961384Z GITHUB_ACTIONS=true
+2026-06-25T07:51:49.0961897Z GITHUB_ACTION_REF=
+2026-06-25T07:51:49.0962226Z GITHUB_ACTION_REPOSITORY=
+2026-06-25T07:51:49.0962588Z GITHUB_ACTOR=liuxiaocs7
+2026-06-25T07:51:49.0963022Z + declare -i missing_env=0
+2026-06-25T07:51:49.0964081Z + required_envs=('ARCHIVE_PATTERN_LIST' 'DOCKERFILE' 'GITHUB_PASSWORD' 'GITHUB_USER' 'PATCHDIR' 'PLUGINS' 'SET_JAVA_HOME' 'SOURCEDIR' 'YETUSDIR' 'AUTHOR_IGNORE_LIST' 'BLANKS_EOL_IGNORE_FILE' 'BLANKS_TABS_IGNORE_FILE')
+2026-06-25T07:51:49.0965211Z + declare -a required_envs
+2026-06-25T07:51:49.0965590Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0966146Z + '[' -z 'TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump' ']'
+2026-06-25T07:51:49.0966706Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0967304Z + '[' -z /home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile ']'
+2026-06-25T07:51:49.0967928Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0973478Z + '[' -z *** ']'
+2026-06-25T07:51:49.0973867Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0974312Z + '[' -z liuxiaocs7 ']'
+2026-06-25T07:51:49.0974674Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0975278Z + '[' -z /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output ']'
+2026-06-25T07:51:49.0976284Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0976750Z + '[' -z github,htmlout,maven,unit ']'
+2026-06-25T07:51:49.0977203Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0977639Z + '[' -z /usr/lib/jvm/java-8 ']'
+2026-06-25T07:51:49.0978040Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0978492Z + '[' -z /home/runner/work/hbase/hbase/src ']'
+2026-06-25T07:51:49.0978946Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0979409Z + '[' -z /home/runner/work/hbase/hbase/yetus ']'
+2026-06-25T07:51:49.0979882Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0980401Z + '[' -z src/main/asciidoc/_chapters/developer.adoc ']'
+2026-06-25T07:51:49.0980910Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0981224Z + '[' -z dev-support/blanks-eol-ignore.txt ']'
+2026-06-25T07:51:49.0981891Z + for required_env in "${required_envs[@]}"
+2026-06-25T07:51:49.0982328Z + '[' -z dev-support/blanks-tabs-ignore.txt ']'
+2026-06-25T07:51:49.0982806Z + [[ true != \t\r\u\e ]]
+2026-06-25T07:51:49.0983171Z + '[' 0 -gt 0 ']'
+2026-06-25T07:51:49.0983653Z + TESTPATCHBIN=/home/runner/work/hbase/hbase/yetus/bin/test-patch
+2026-06-25T07:51:49.0984404Z + rm -rf /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output
+2026-06-25T07:51:49.0984833Z GITHUB_ACTOR_ID=42756849
+2026-06-25T07:51:49.0985112Z GITHUB_API_URL=https://api.github.com
+2026-06-25T07:51:49.0985391Z GITHUB_BASE_REF=branch-2
+2026-06-25T07:51:49.0985818Z GITHUB_ENV=/home/runner/work/_temp/_runner_file_commands/set_env_4f12d893-fc73-474f-9148-4e670054a236
+2026-06-25T07:51:49.0986485Z GITHUB_EVENT_NAME=pull_request
+2026-06-25T07:51:49.0986840Z GITHUB_EVENT_PATH=/home/runner/work/_temp/_github_workflow/event.json
+2026-06-25T07:51:49.0987265Z GITHUB_GRAPHQL_URL=https://api.github.com/graphql
+2026-06-25T07:51:49.0987591Z GITHUB_HEAD_REF=HBASE-30241-branch-2
+2026-06-25T07:51:49.0987881Z GITHUB_JOB=jdk8-hadoop2-unit-check
+2026-06-25T07:51:49.0988371Z GITHUB_OUTPUT=/home/runner/work/_temp/_runner_file_commands/set_output_4f12d893-fc73-474f-9148-4e670054a236
+2026-06-25T07:51:49.0991912Z GITHUB_PASSWORD=***
+2026-06-25T07:51:49.0992339Z GITHUB_PATH=/home/runner/work/_temp/_runner_file_commands/add_path_4f12d893-fc73-474f-9148-4e670054a236
+2026-06-25T07:51:49.0992815Z GITHUB_REF=refs/pull/8414/merge
+2026-06-25T07:51:49.0993076Z GITHUB_REF_NAME=8414/merge
+2026-06-25T07:51:49.0993321Z GITHUB_REF_PROTECTED=false
+2026-06-25T07:51:49.0993559Z GITHUB_REF_TYPE=branch
+2026-06-25T07:51:49.0993796Z GITHUB_REPOSITORY=apache/hbase
+2026-06-25T07:51:49.0994056Z GITHUB_REPOSITORY_ID=20089857
+2026-06-25T07:51:49.0994320Z GITHUB_REPOSITORY_OWNER=apache
+2026-06-25T07:51:49.0994581Z GITHUB_REPOSITORY_OWNER_ID=47359
+2026-06-25T07:51:49.0994841Z GITHUB_RETENTION_DAYS=90
+2026-06-25T07:51:49.0995078Z GITHUB_RUN_ATTEMPT=1
+2026-06-25T07:51:49.0995407Z GITHUB_RUN_ID=28155253251
+2026-06-25T07:51:49.0995746Z GITHUB_RUN_NUMBER=601
+2026-06-25T07:51:49.0996054Z GITHUB_SERVER_URL=https://github.com
+2026-06-25T07:51:49.0996521Z GITHUB_SHA=b1cabac26f28e999f413661bee83044fee907120
+2026-06-25T07:51:49.0997347Z GITHUB_STATE=/home/runner/work/_temp/_runner_file_commands/save_state_4f12d893-fc73-474f-9148-4e670054a236
+2026-06-25T07:51:49.0998376Z GITHUB_STEP_SUMMARY=/home/runner/work/_temp/_runner_file_commands/step_summary_4f12d893-fc73-474f-9148-4e670054a236
+2026-06-25T07:51:49.0998902Z GITHUB_TRIGGERING_ACTOR=liuxiaocs7
+2026-06-25T07:51:49.0999172Z GITHUB_USER=liuxiaocs7
+2026-06-25T07:51:49.0999433Z GITHUB_WORKFLOW=Yetus JDK8 Hadoop2 Unit Check
+2026-06-25T07:51:49.0999974Z GITHUB_WORKFLOW_REF=apache/hbase/.github/workflows/yetus-jdk8-hadoop2-unit-check.yml@refs/pull/8414/merge
+2026-06-25T07:51:49.1000540Z GITHUB_WORKFLOW_SHA=b1cabac26f28e999f413661bee83044fee907120
+2026-06-25T07:51:49.1000910Z GITHUB_WORKSPACE=/home/runner/work/hbase/hbase
+2026-06-25T07:51:49.1001262Z GOROOT_1_24_X64=/opt/hostedtoolcache/go/1.24.13/x64
+2026-06-25T07:51:49.1001833Z GOROOT_1_25_X64=/opt/hostedtoolcache/go/1.25.11/x64
+2026-06-25T07:51:49.1002335Z GOROOT_1_26_X64=/opt/hostedtoolcache/go/1.26.4/x64
+2026-06-25T07:51:49.1002654Z GRADLE_HOME=/usr/share/gradle-9.6.0
+2026-06-25T07:51:49.1002923Z HOME=/home/runner
+2026-06-25T07:51:49.1003165Z HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=3650
+2026-06-25T07:51:49.1003453Z HOMEBREW_NO_AUTO_UPDATE=1
+2026-06-25T07:51:49.1003731Z INVOCATION_ID=033d5adbfcfa475bb8e3d3df983eea46
+2026-06-25T07:51:49.1004022Z ImageOS=ubuntu24
+2026-06-25T07:51:49.1004239Z ImageVersion=20260622.220.1
+2026-06-25T07:51:49.1004488Z JAVA8_HOME=/usr/lib/jvm/java-8
+2026-06-25T07:51:49.1004841Z JAVA_HOME=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:49.1005264Z JAVA_HOME_11_X64=/usr/lib/jvm/temurin-11-jdk-amd64
+2026-06-25T07:51:49.1005592Z JAVA_HOME_17_X64=/usr/lib/jvm/temurin-17-jdk-amd64
+2026-06-25T07:51:49.1005910Z JAVA_HOME_21_X64=/usr/lib/jvm/temurin-21-jdk-amd64
+2026-06-25T07:51:49.1006233Z JAVA_HOME_25_X64=/usr/lib/jvm/temurin-25-jdk-amd64
+2026-06-25T07:51:49.1006639Z JAVA_HOME_8_X64=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:49.1007022Z JOURNAL_STREAM=9:12899
+2026-06-25T07:51:49.1007241Z LANG=C.UTF-8
+2026-06-25T07:51:49.1007439Z LOGNAME=runner
+2026-06-25T07:51:49.1007849Z MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/system.slice/hosted-compute-agent.service/memory.pressure
+2026-06-25T07:51:49.1008376Z MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+2026-06-25T07:51:49.1008701Z NVM_DIR=/home/runner/.nvm
+2026-06-25T07:51:49.1008974Z OLDPWD=/home/runner/work/hbase/hbase
+2026-06-25T07:51:49.1009390Z PATCHDIR=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output
+2026-06-25T07:51:49.1010853Z PATH=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+2026-06-25T07:51:49.1012239Z PIPX_BIN_DIR=/opt/pipx_bin
+2026-06-25T07:51:49.1012490Z PIPX_HOME=/opt/pipx
+2026-06-25T07:51:49.1012734Z PLUGINS=github,htmlout,maven,unit
+2026-06-25T07:51:49.1013058Z POWERSHELL_DISTRIBUTION_CHANNEL=GitHub-Actions-Linux
+2026-06-25T07:51:49.1013752Z PSModulePath=/root/.local/share/powershell/Modules:/usr/local/share/powershell/Modules:/opt/microsoft/powershell/7/Modules:/usr/share/az_15.6.1
+2026-06-25T07:51:49.1014471Z ***
+2026-06-25T07:51:49.1014664Z RUNNER_ARCH=X64
+2026-06-25T07:51:49.1014903Z RUNNER_ENVIRONMENT=github-hosted
+2026-06-25T07:51:49.1015190Z RUNNER_NAME=GitHub Actions 1021423721
+2026-06-25T07:51:49.1015454Z RUNNER_OS=Linux
+2026-06-25T07:51:49.1015680Z RUNNER_TEMP=/home/runner/work/_temp
+2026-06-25T07:51:49.1015967Z RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+2026-06-25T07:51:49.1016321Z RUNNER_TRACKING_ID=github_8ab7f1af-ce7c-4617-a802-837f989856e1
+2026-06-25T07:51:49.1016692Z RUNNER_WORKSPACE=/home/runner/work/hbase
+2026-06-25T07:51:49.1017027Z SELENIUM_JAR_PATH=/usr/share/java/selenium-server.jar
+2026-06-25T07:51:49.1017358Z SET_JAVA_HOME=/usr/lib/jvm/java-8
+2026-06-25T07:51:49.1017607Z SGX_AESM_ADDR=1
+2026-06-25T07:51:49.1017807Z SHELL=/bin/bash
+2026-06-25T07:51:49.1018001Z SHLVL=2
+2026-06-25T07:51:49.1018200Z SKIP_ERRORPRONE=true
+2026-06-25T07:51:49.1018450Z SOURCEDIR=/home/runner/work/hbase/hbase/src
+2026-06-25T07:51:49.1018928Z SUREFIRE_FIRST_PART_FORK_COUNT=1.0C
+2026-06-25T07:51:49.1019341Z SUREFIRE_SECOND_PART_FORK_COUNT=0.5C
+2026-06-25T07:51:49.1019745Z SWIFT_PATH=/usr/share/swift/usr/bin
+2026-06-25T07:51:49.1020025Z SYSTEMD_EXEC_PID=2090
+2026-06-25T07:51:49.1020259Z TEST_PROFILE=runSmallTests
+2026-06-25T07:51:49.1020495Z USER=runner
+2026-06-25T07:51:49.1020715Z USE_BAZEL_FALLBACK_VERSION=silent:
+2026-06-25T07:51:49.1021015Z VCPKG_INSTALLATION_ROOT=/usr/local/share/vcpkg
+2026-06-25T07:51:49.1021327Z XDG_CONFIG_HOME=/home/runner/.config
+2026-06-25T07:51:49.1021859Z XDG_RUNTIME_DIR=/run/user/1001
+2026-06-25T07:51:49.1022145Z YETUSDIR=/home/runner/work/hbase/hbase/yetus
+2026-06-25T07:51:49.1022587Z YETUS_VERSION=0.15.0
+2026-06-25T07:51:49.1022807Z _=/usr/bin/printenv
+2026-06-25T07:51:49.1023182Z + mkdir -p /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output
+2026-06-25T07:51:49.1023736Z + mkdir /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/machine
+2026-06-25T07:51:49.1024537Z + /home/runner/work/hbase/hbase/src/dev-support/gather_machine_environment.sh /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/machine
+2026-06-25T07:51:49.1025448Z getting machine specs, find in /artifact//home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/machine/
+2026-06-25T07:51:52.4373559Z + [[ true = \t\r\u\e ]]
+2026-06-25T07:51:52.4374046Z + YETUS_ARGS+=("--debug")
+2026-06-25T07:51:52.4374481Z + '[' -n /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64 ']'
+2026-06-25T07:51:52.4374898Z + unset JAVA_HOME
+2026-06-25T07:51:52.4375169Z + YETUS_ARGS+=("--ignore-unknown-options=true")
+2026-06-25T07:51:52.4375513Z + YETUS_ARGS+=("--patch-dir=${PATCHDIR}")
+2026-06-25T07:51:52.4375825Z + YETUS_ARGS+=("--basedir=${SOURCEDIR}")
+2026-06-25T07:51:52.4376108Z + YETUS_ARGS+=("--project=hbase")
+2026-06-25T07:51:52.4376439Z + YETUS_ARGS+=("--brief-report-file=${PATCHDIR}/brief.txt")
+2026-06-25T07:51:52.4376862Z + YETUS_ARGS+=("--console-report-file=${PATCHDIR}/console.txt")
+2026-06-25T07:51:52.4377265Z + YETUS_ARGS+=("--html-report-file=${PATCHDIR}/report.html")
+2026-06-25T07:51:52.4377628Z + YETUS_ARGS+=("--github-token=${GITHUB_PASSWORD}")
+2026-06-25T07:51:52.4377933Z + [[ true != \t\r\u\e ]]
+2026-06-25T07:51:52.4378178Z + YETUS_ARGS+=("--reapermode=kill")
+2026-06-25T07:51:52.4378745Z Launching yetus with command line:
+2026-06-25T07:51:52.4392975Z /home/runner/work/hbase/hbase/yetus/bin/test-patch --debug --ignore-unknown-options=true --patch-dir=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output --basedir=/home/runner/work/hbase/hbase/src --project=hbase --brief-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/brief.txt --console-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/console.txt --html-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/report.html --github-token=*** --reapermode=kill --dockermemlimit=20g --spotbugs-strict-precheck --archive-list=TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump --plugins=github,htmlout,maven,unit,-findbugs --docker --dockerfile=/home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile --mvn-custom-repos --java-home=/usr/lib/jvm/java-8 --author-ignore-list=src/main/asciidoc/_chapters/developer.adoc --blanks-eol-ignore-file=dev-support/blanks-eol-ignore.txt --blanks-tabs-ignore-file=dev-support/blanks-tabs-ignore.txt* --personality=/home/runner/work/hbase/hbase/src/dev-support/hbase-personality.sh --quick-hadoopcheck --skip-errorprone --skip-dirs=dev-support,.github,bin,conf --exclude-tests-url=https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes --sentinel --github-use-emoji-vote --build-thread=4 --surefire-first-part-fork-count=1.0C --surefire-second-part-fork-count=0.5C --java8-home=/usr/lib/jvm/java-8 --test-profile=runSmallTests
+2026-06-25T07:51:52.4399387Z + YETUS_ARGS+=("--dockermemlimit=20g")
+2026-06-25T07:51:52.4399718Z + YETUS_ARGS+=("--spotbugs-strict-precheck")
+2026-06-25T07:51:52.4400079Z + YETUS_ARGS+=("--archive-list=${ARCHIVE_PATTERN_LIST}")
+2026-06-25T07:51:52.4400404Z + [[ -n '' ]]
+2026-06-25T07:51:52.4400699Z + YETUS_ARGS+=("--plugins=${PLUGINS},-findbugs")
+2026-06-25T07:51:52.4401012Z + YETUS_ARGS+=("--docker")
+2026-06-25T07:51:52.4401273Z + YETUS_ARGS+=("--dockerfile=${DOCKERFILE}")
+2026-06-25T07:51:52.4401797Z + YETUS_ARGS+=("--mvn-custom-repos")
+2026-06-25T07:51:52.4402094Z + YETUS_ARGS+=("--java-home=${SET_JAVA_HOME}")
+2026-06-25T07:51:52.4402448Z + YETUS_ARGS+=("--author-ignore-list=${AUTHOR_IGNORE_LIST}")
+2026-06-25T07:51:52.4402861Z + YETUS_ARGS+=("--blanks-eol-ignore-file=${BLANKS_EOL_IGNORE_FILE}")
+2026-06-25T07:51:52.4403527Z + YETUS_ARGS+=("--blanks-tabs-ignore-file=${BLANKS_TABS_IGNORE_FILE}*")
+2026-06-25T07:51:52.4403886Z + [[ -n '' ]]
+2026-06-25T07:51:52.4404218Z + YETUS_ARGS+=("--personality=${SOURCEDIR}/dev-support/hbase-personality.sh")
+2026-06-25T07:51:52.4404628Z + YETUS_ARGS+=("--quick-hadoopcheck")
+2026-06-25T07:51:52.4404900Z + [[ true = \t\r\u\e ]]
+2026-06-25T07:51:52.4405147Z + YETUS_ARGS+=("--skip-errorprone")
+2026-06-25T07:51:52.4405476Z + YETUS_ARGS+=("--skip-dirs=dev-support,.github,bin,conf")
+2026-06-25T07:51:52.4405795Z + [[ -n '' ]]
+2026-06-25T07:51:52.4406312Z + [[ -n https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes ]]
+2026-06-25T07:51:52.4406921Z + YETUS_ARGS+=("--exclude-tests-url=${EXCLUDE_TESTS_URL}")
+2026-06-25T07:51:52.4407246Z + YETUS_ARGS+=("--sentinel")
+2026-06-25T07:51:52.4407524Z + YETUS_ARGS+=("--github-use-emoji-vote")
+2026-06-25T07:51:52.4407808Z + [[ -n '' ]]
+2026-06-25T07:51:52.4408013Z + [[ -n 4 ]]
+2026-06-25T07:51:52.4408254Z + YETUS_ARGS+=("--build-thread=${BUILD_THREAD}")
+2026-06-25T07:51:52.4408547Z + [[ -n 1.0C ]]
+2026-06-25T07:51:52.4408924Z + YETUS_ARGS+=("--surefire-first-part-fork-count=${SUREFIRE_FIRST_PART_FORK_COUNT}")
+2026-06-25T07:51:52.4409344Z + [[ -n 0.5C ]]
+2026-06-25T07:51:52.4409700Z + YETUS_ARGS+=("--surefire-second-part-fork-count=${SUREFIRE_SECOND_PART_FORK_COUNT}")
+2026-06-25T07:51:52.4410128Z + [[ -n /usr/lib/jvm/java-8 ]]
+2026-06-25T07:51:52.4410401Z + YETUS_ARGS+=("--java8-home=${JAVA8_HOME}")
+2026-06-25T07:51:52.4410685Z + [[ -n runSmallTests ]]
+2026-06-25T07:51:52.4410959Z + YETUS_ARGS+=("--test-profile=${TEST_PROFILE}")
+2026-06-25T07:51:52.4411286Z + echo 'Launching yetus with command line:'
+2026-06-25T07:51:52.4420580Z + echo '/home/runner/work/hbase/hbase/yetus/bin/test-patch --debug --ignore-unknown-options=true --patch-dir=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output --basedir=/home/runner/work/hbase/hbase/src --project=hbase --brief-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/brief.txt --console-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/console.txt --html-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/report.html --github-token=*** --reapermode=kill --dockermemlimit=20g --spotbugs-strict-precheck --archive-list=TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump --plugins=github,htmlout,maven,unit,-findbugs --docker --dockerfile=/home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile --mvn-custom-repos --java-home=/usr/lib/jvm/java-8 --author-ignore-list=src/main/asciidoc/_chapters/developer.adoc --blanks-eol-ignore-file=dev-support/blanks-eol-ignore.txt --blanks-tabs-ignore-file=dev-support/blanks-tabs-ignore.txt* --personality=/home/runner/work/hbase/hbase/src/dev-support/hbase-personality.sh --quick-hadoopcheck --skip-errorprone --skip-dirs=dev-support,.github,bin,conf --exclude-tests-url=https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes --sentinel --github-use-emoji-vote --build-thread=4 --surefire-first-part-fork-count=1.0C --surefire-second-part-fork-count=0.5C --java8-home=/usr/lib/jvm/java-8 --test-profile=runSmallTests'
+2026-06-25T07:51:52.4442222Z + /usr/bin/env bash /home/runner/work/hbase/hbase/yetus/bin/test-patch --debug --ignore-unknown-options=true --patch-dir=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output --basedir=/home/runner/work/hbase/hbase/src --project=hbase --brief-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/brief.txt --console-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/console.txt --html-report-file=/home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output/report.html --github-token=*** --reapermode=kill --dockermemlimit=20g --spotbugs-strict-precheck '--archive-list=TEST-*.xml,org.apache.h*.txt,*.dumpstream,*.dump' --plugins=github,htmlout,maven,unit,-findbugs --docker --dockerfile=/home/runner/work/hbase/hbase/src/dev-support/docker/Dockerfile --mvn-custom-repos --java-home=/usr/lib/jvm/java-8 --author-ignore-list=src/main/asciidoc/_chapters/developer.adoc --blanks-eol-ignore-file=dev-support/blanks-eol-ignore.txt '--blanks-tabs-ignore-file=dev-support/blanks-tabs-ignore.txt*' --personality=/home/runner/work/hbase/hbase/src/dev-support/hbase-personality.sh --quick-hadoopcheck --skip-errorprone --skip-dirs=dev-support,.github,bin,conf --exclude-tests-url=https://ci-hbase.apache.org/job/HBase-Find-Flaky-Tests/job/branch-2/lastSuccessfulBuild/artifact/output/excludes --sentinel --github-use-emoji-vote --build-thread=4 --surefire-first-part-fork-count=1.0C --surefire-second-part-fork-count=0.5C --java8-home=/usr/lib/jvm/java-8 --test-profile=runSmallTests
+2026-06-25T07:51:52.4725351Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/azurepipelines.sh
+2026-06-25T07:51:52.4742801Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/buildkite.sh
+2026-06-25T07:51:52.4762790Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/circleci.sh
+2026-06-25T07:51:52.4780471Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/cirrusci.sh
+2026-06-25T07:51:52.4797630Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/githubactions.sh
+2026-06-25T07:51:52.4801016Z ##[group]Bootstrap
+2026-06-25T07:51:52.4837317Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted GitHubActions
+2026-06-25T07:51:52.4853799Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/gitlabci.sh
+2026-06-25T07:51:52.4870175Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/jenkins.sh
+2026-06-25T07:51:52.4888166Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/semaphoreci.sh
+2026-06-25T07:51:52.4904542Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/robots.d/travisci.sh
+2026-06-25T07:51:52.4969657Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Set to archive: TEST-*.xml org.apache.h*.txt *.dumpstream *.dump
+2026-06-25T07:51:52.4998695Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Setting skipdirs to dev-support .github bin conf
+2026-06-25T07:51:52.5019311Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted Sentinel
+2026-06-25T07:51:52.5056217Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted Robot
+2026-06-25T07:51:52.5082782Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted Docker
+2026-06-25T07:51:52.5116548Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: add_vote_table_v2 >0< >reexec< >< >0< Docker mode activated.
+2026-06-25T07:51:52.5208311Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted ResetRepo
+2026-06-25T07:51:52.5225438Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: EXEC_MODES accepted UnitTests
+2026-06-25T07:51:52.5252862Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/src/dev-support/hbase-personality.sh
+2026-06-25T07:51:52.5270230Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/ansiblelint.sh
+2026-06-25T07:51:52.5287121Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if ansiblelint has been enabled by user
+2026-06-25T07:51:52.5314738Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/ant.sh
+2026-06-25T07:51:52.5330742Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if ant has been enabled by user
+2026-06-25T07:51:52.5350599Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/asflicense.sh
+2026-06-25T07:51:52.5366704Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if asflicense has been enabled by user
+2026-06-25T07:51:52.5387315Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/author.sh
+2026-06-25T07:51:52.5403386Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if author has been enabled by user
+2026-06-25T07:51:52.5422383Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/autoconf.sh
+2026-06-25T07:51:52.5438273Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if autoconf has been enabled by user
+2026-06-25T07:51:52.5458591Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/blanks.sh
+2026-06-25T07:51:52.5476191Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if blanks has been enabled by user
+2026-06-25T07:51:52.5497406Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/briefreport.sh
+2026-06-25T07:51:52.5513876Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if briefreport has been enabled by user
+2026-06-25T07:51:52.5536537Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/buf.sh
+2026-06-25T07:51:52.5553357Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if buf has been enabled by user
+2026-06-25T07:51:52.5570477Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if buflint has been enabled by user
+2026-06-25T07:51:52.5587436Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if bufcompat has been enabled by user
+2026-06-25T07:51:52.5617070Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/bugzilla.sh
+2026-06-25T07:51:52.5633504Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if bugzilla has been enabled by user
+2026-06-25T07:51:52.5653457Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/cc.sh
+2026-06-25T07:51:52.5669696Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if cc has been enabled by user
+2026-06-25T07:51:52.5688503Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/checkmake.sh
+2026-06-25T07:51:52.5705134Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if checkmake has been enabled by user
+2026-06-25T07:51:52.5732033Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/checkstyle.sh
+2026-06-25T07:51:52.5749200Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if checkstyle has been enabled by user
+2026-06-25T07:51:52.5773938Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/cmake.sh
+2026-06-25T07:51:52.5790766Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if cmake has been enabled by user
+2026-06-25T07:51:52.5810191Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/codespell.sh
+2026-06-25T07:51:52.5826755Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if codespell has been enabled by user
+2026-06-25T07:51:52.5853957Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/csvout.sh
+2026-06-25T07:51:52.5870794Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if csvout has been enabled by user
+2026-06-25T07:51:52.5890483Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/ctest.sh
+2026-06-25T07:51:52.5906803Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if ctest has been enabled by user
+2026-06-25T07:51:52.5925799Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/detsecrets.sh
+2026-06-25T07:51:52.5942484Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if detsecrets has been enabled by user
+2026-06-25T07:51:52.5970770Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/dupname.sh
+2026-06-25T07:51:52.5987958Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if dupname has been enabled by user
+2026-06-25T07:51:52.6006594Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if dupname has been enabled by user
+2026-06-25T07:51:52.6027458Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/github.sh
+2026-06-25T07:51:52.6045154Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if github has been enabled by user
+2026-06-25T07:51:52.6062288Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Post-parsing: github enabled
+2026-06-25T07:51:52.6080356Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: BUGSYSTEMS accepted github
+2026-06-25T07:51:52.6116901Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/gitlab.sh
+2026-06-25T07:51:52.6134767Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if gitlab has been enabled by user
+2026-06-25T07:51:52.6161027Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/golang.sh
+2026-06-25T07:51:52.6178687Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if golang has been enabled by user
+2026-06-25T07:51:52.6207255Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/golangci.sh
+2026-06-25T07:51:52.6224687Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if golangcilint has been enabled by user
+2026-06-25T07:51:52.6254532Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/gradle.sh
+2026-06-25T07:51:52.6273601Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if gradle has been enabled by user
+2026-06-25T07:51:52.6295433Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/hadolint.sh
+2026-06-25T07:51:52.6313120Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if hadolint has been enabled by user
+2026-06-25T07:51:52.6342076Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/htmlout.sh
+2026-06-25T07:51:52.6359365Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if htmlout has been enabled by user
+2026-06-25T07:51:52.6376457Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Post-parsing: htmlout enabled
+2026-06-25T07:51:52.6395143Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: BUGSYSTEMS accepted htmlout
+2026-06-25T07:51:52.6418530Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/java.sh
+2026-06-25T07:51:52.6436405Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if javac has been enabled by user
+2026-06-25T07:51:52.6454610Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if javadoc has been enabled by user
+2026-06-25T07:51:52.6474341Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: JDK_TEST_LIST accepted javadoc
+2026-06-25T07:51:52.6495018Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/jira.sh
+2026-06-25T07:51:52.6513270Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if jira has been enabled by user
+2026-06-25T07:51:52.6540480Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/jshint.sh
+2026-06-25T07:51:52.6558598Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if jshint has been enabled by user
+2026-06-25T07:51:52.6587908Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/jsonlint.sh
+2026-06-25T07:51:52.6605764Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if jsonlint has been enabled by user
+2026-06-25T07:51:52.6633996Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/junit.sh
+2026-06-25T07:51:52.6651687Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if junit has been enabled by user
+2026-06-25T07:51:52.6670601Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if junit has been enabled by user
+2026-06-25T07:51:52.6693649Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/make.sh
+2026-06-25T07:51:52.6711841Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if make has been enabled by user
+2026-06-25T07:51:52.6740929Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/markdownlint.sh
+2026-06-25T07:51:52.6758237Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if markdownlint has been enabled by user
+2026-06-25T07:51:52.6787235Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/maven.sh
+2026-06-25T07:51:52.6805394Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if mvnsite has been enabled by user
+2026-06-25T07:51:52.6823144Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if maven has been enabled by user
+2026-06-25T07:51:52.6840210Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Post-parsing: maven enabled
+2026-06-25T07:51:52.6858551Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: BUILDTOOLS accepted maven
+2026-06-25T07:51:52.6888263Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/nobuild.sh
+2026-06-25T07:51:52.6906574Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if nobuild has been enabled by user
+2026-06-25T07:51:52.6927075Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/pathlen.sh
+2026-06-25T07:51:52.6945868Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if pathlen has been enabled by user
+2026-06-25T07:51:52.6966483Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/perlcritic.sh
+2026-06-25T07:51:52.6984139Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if perlcritic has been enabled by user
+2026-06-25T07:51:52.7013683Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/pylint.sh
+2026-06-25T07:51:52.7031004Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if pylint has been enabled by user
+2026-06-25T07:51:52.7069468Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/revive.sh
+2026-06-25T07:51:52.7087044Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if revive has been enabled by user
+2026-06-25T07:51:52.7116140Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/rubocop.sh
+2026-06-25T07:51:52.7133744Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if rubocop has been enabled by user
+2026-06-25T07:51:52.7162425Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/scala.sh
+2026-06-25T07:51:52.7180310Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if scalac has been enabled by user
+2026-06-25T07:51:52.7198484Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if scaladoc has been enabled by user
+2026-06-25T07:51:52.7219222Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/shellcheck.sh
+2026-06-25T07:51:52.7237412Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if shellcheck has been enabled by user
+2026-06-25T07:51:52.7268840Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/shelldocs.sh
+2026-06-25T07:51:52.7286769Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if shelldocs has been enabled by user
+2026-06-25T07:51:52.7317444Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/slack.sh
+2026-06-25T07:51:52.7335449Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if slack has been enabled by user
+2026-06-25T07:51:52.7356273Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/spotbugs.sh
+2026-06-25T07:51:52.7374432Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if spotbugs has been enabled by user
+2026-06-25T07:51:52.7401442Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/tap.sh
+2026-06-25T07:51:52.7420234Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if tap has been enabled by user
+2026-06-25T07:51:52.7440439Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/test4tests.sh
+2026-06-25T07:51:52.7459184Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if test4tests has been enabled by user
+2026-06-25T07:51:52.7479091Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/unitveto.sh
+2026-06-25T07:51:52.7497735Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if unitveto has been enabled by user
+2026-06-25T07:51:52.7517822Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/xml.sh
+2026-06-25T07:51:52.7535530Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if xmllint has been enabled by user
+2026-06-25T07:51:52.7565824Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/yetus/lib/precommit/plugins.d/yamllint.sh
+2026-06-25T07:51:52.7583571Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if yamllint has been enabled by user
+2026-06-25T07:51:52.7612105Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Importing /home/runner/work/hbase/hbase/src/dev-support/hbase-personality.sh
+2026-06-25T07:51:52.7636343Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if refguide has been enabled by user
+2026-06-25T07:51:52.7656469Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if shadedjars has been enabled by user
+2026-06-25T07:51:52.7676262Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if hadoopcheck has been enabled by user
+2026-06-25T07:51:52.7697728Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if hbaseprotoc has been enabled by user
+2026-06-25T07:51:52.7717881Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if hbaseanti has been enabled by user
+2026-06-25T07:51:52.7737085Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Testing if spotless has been enabled by user
+2026-06-25T07:51:52.7761367Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Running github_parse_args
+2026-06-25T07:51:52.7790912Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Running htmlout_parse_args
+2026-06-25T07:51:52.7893673Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Running maven_parse_args
+2026-06-25T07:51:52.8703863Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Running github_initialize
+2026-06-25T07:51:52.8725334Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Running maven_initialize
+2026-06-25T07:51:52.8746705Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: MAVEN_NEED_INSTALL accepted compile
+2026-06-25T07:51:52.8767292Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: MAVEN_NEED_INSTALL accepted mvnsite
+2026-06-25T07:51:52.8789227Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: MAVEN_NEED_INSTALL accepted unit
+2026-06-25T07:51:52.8809658Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: REAPER_NAMES accepted surefirebooter
+2026-06-25T07:51:52.8859849Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: Creating /home/runner/yetus-m2
+2026-06-25T07:51:52.8878980Z Modes: GitHubActions Sentinel Robot Docker ResetRepo UnitTests
+2026-06-25T07:51:52.8898653Z [Thu Jun 25 07:51:52 UTC 2026 DEBUG]: locate patch
+2026-06-25T07:51:52.8899647Z Processing: GH:8414
+2026-06-25T07:51:52.8903767Z GITHUB PR #8414 is being downloaded from
+2026-06-25T07:51:52.8904245Z https://api.github.com/repos/apache/hbase/pulls/8414
+2026-06-25T07:51:52.8921991Z   JSON data at Thu Jun 25 07:51:52 UTC 2026
+2026-06-25T07:51:54.4597134Z [Thu Jun 25 07:51:54 UTC 2026 DEBUG]: github_locate_patch: cannot download json
+2026-06-25T07:51:54.4732068Z [Thu Jun 25 07:51:54 UTC 2026 DEBUG]: generic_locate_patch: failed to download the patch.
+2026-06-25T07:51:54.4732894Z ERROR: Unsure how to process GH:8414. Permissions missing?
+2026-06-25T07:51:54.4738598Z ##[endgroup]
+2026-06-25T07:51:54.4738982Z ##[endgroup]
+2026-06-25T07:51:54.4739347Z ##[group]Finished build.
+2026-06-25T07:51:54.4739523Z 
+2026-06-25T07:51:54.4739528Z 
+2026-06-25T07:51:54.4739706Z ============================================================================
+2026-06-25T07:51:54.4740086Z ============================================================================
+2026-06-25T07:51:54.4740417Z                               Finished build.
+2026-06-25T07:51:54.4741081Z ============================================================================
+2026-06-25T07:51:54.4741407Z ============================================================================
+2026-06-25T07:51:54.4741842Z 
+2026-06-25T07:51:54.4741847Z 
+2026-06-25T07:51:54.4781336Z ##[error]Process completed with exit code 1.
+2026-06-25T07:51:54.4832342Z ##[group]Run cd "/home/runner/work/hbase/hbase"
+2026-06-25T07:51:54.4832752Z [36;1mcd "/home/runner/work/hbase/hbase"[0m
+2026-06-25T07:51:54.4833326Z [36;1mpython3 src/dev-support/yetus_console_to_md.py yetus-jdk8-hadoop2-unit-check/output >> $GITHUB_STEP_SUMMARY[0m
+2026-06-25T07:51:54.4866471Z shell: /usr/bin/bash -e {0}
+2026-06-25T07:51:54.4866731Z env:
+2026-06-25T07:51:54.4866942Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:54.4867292Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:54.4867792Z   JAVA_HOME_8_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:54.4868171Z ##[endgroup]
+2026-06-25T07:51:54.5318599Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-25T07:51:54.5319027Z with:
+2026-06-25T07:51:54.5319269Z   name: yetus-jdk8-hadoop2-unit-check-small
+2026-06-25T07:51:54.5319680Z   path: /home/runner/work/hbase/hbase/yetus-jdk8-hadoop2-unit-check/output
+2026-06-25T07:51:54.5320072Z   retention-days: 7
+2026-06-25T07:51:54.5320304Z   if-no-files-found: warn
+2026-06-25T07:51:54.5320548Z   compression-level: 6
+2026-06-25T07:51:54.5320778Z   overwrite: false
+2026-06-25T07:51:54.5321010Z   include-hidden-files: false
+2026-06-25T07:51:54.5321257Z   archive: true
+2026-06-25T07:51:54.5321692Z env:
+2026-06-25T07:51:54.5321945Z   YETUS_VERSION: 0.15.0
+2026-06-25T07:51:54.5322286Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:54.5322771Z   JAVA_HOME_8_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.492-9/x64
+2026-06-25T07:51:54.5323149Z ##[endgroup]
+2026-06-25T07:51:54.6812721Z With the provided path, there will be 17 files uploaded
+2026-06-25T07:51:54.6818429Z Artifact name is valid!
+2026-06-25T07:51:54.6819071Z Root directory input is valid!
+2026-06-25T07:51:54.8791035Z Uploading artifact: yetus-jdk8-hadoop2-unit-check-small.zip
+2026-06-25T07:51:54.8832871Z Beginning upload of artifact content to blob storage
+2026-06-25T07:51:54.9564849Z Uploaded bytes 7526
+2026-06-25T07:51:54.9677600Z Finished uploading artifact content to blob storage!
+2026-06-25T07:51:54.9678493Z SHA256 digest of uploaded artifact is a65912cf2c96c108c97ac08ed9a3912039706f33fb9f78697de2bd9b65461fa2
+2026-06-25T07:51:54.9679194Z Finalizing artifact upload
+2026-06-25T07:51:55.2640788Z Artifact yetus-jdk8-hadoop2-unit-check-small successfully finalized. Artifact ID 7871957434
+2026-06-25T07:51:55.2641922Z Artifact yetus-jdk8-hadoop2-unit-check-small has been successfully uploaded! Final size is 7526 bytes. Artifact ID is 7871957434
+2026-06-25T07:51:55.2645978Z Artifact download URL: https://github.com/apache/hbase/actions/runs/28155253251/artifacts/7871957434
+2026-06-25T07:51:55.2822955Z Post job cleanup.
+2026-06-25T07:51:55.4252794Z Post job cleanup.
+2026-06-25T07:51:55.5111656Z [command]/usr/bin/git version
+2026-06-25T07:51:55.5154204Z git version 2.54.0
+2026-06-25T07:51:55.5197210Z Temporarily overriding HOME='/home/runner/work/_temp/455a3335-3662-4d19-946f-fb588f31def2' before making global git config changes
+2026-06-25T07:51:55.5198670Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-25T07:51:55.5203058Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/hbase/hbase/src
+2026-06-25T07:51:55.5237185Z Removing SSH command configuration
+2026-06-25T07:51:55.5245544Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-25T07:51:55.5285568Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-25T07:51:55.5551983Z Removing HTTP extra header
+2026-06-25T07:51:55.5557897Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-25T07:51:55.5594345Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-25T07:51:55.5837254Z Removing includeIf entries pointing to credentials config files
+2026-06-25T07:51:55.5844530Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-25T07:51:55.5879184Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-25T07:51:55.6263188Z Cleaning up orphan processes

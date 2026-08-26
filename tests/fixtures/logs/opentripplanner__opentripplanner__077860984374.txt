@@ -1,0 +1,48 @@
+﻿2026-05-26T12:26:06.7578362Z Current runner version: '2.334.0'
+2026-05-26T12:26:06.7597827Z ##[group]Runner Image Provisioner
+2026-05-26T12:26:06.7598457Z Hosted Compute Agent
+2026-05-26T12:26:06.7599026Z Version: 20260213.493
+2026-05-26T12:26:06.7599597Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-26T12:26:06.7600251Z Build Date: 2026-02-13T00:28:41Z
+2026-05-26T12:26:06.7600771Z Worker ID: {06743b28-43d5-4548-b729-2e8a944f88e4}
+2026-05-26T12:26:06.7601281Z Azure Region: westcentralus
+2026-05-26T12:26:06.7601673Z ##[endgroup]
+2026-05-26T12:26:06.7602718Z ##[group]Operating System
+2026-05-26T12:26:06.7603126Z Microsoft Windows Server 2025
+2026-05-26T12:26:06.7603541Z 10.0.26100
+2026-05-26T12:26:06.7603855Z Datacenter
+2026-05-26T12:26:06.7604195Z ##[endgroup]
+2026-05-26T12:26:06.7604551Z ##[group]Runner Image
+2026-05-26T12:26:06.7604918Z Image: windows-2025
+2026-05-26T12:26:06.7605285Z Version: 20260518.141.1
+2026-05-26T12:26:06.7607002Z Included Software: https://github.com/actions/runner-images/blob/win25/20260518.141/images/windows/Windows2025-Readme.md
+2026-05-26T12:26:06.7608735Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260518.141
+2026-05-26T12:26:06.7609767Z ##[endgroup]
+2026-05-26T12:26:06.7612952Z ##[group]GITHUB_TOKEN Permissions
+2026-05-26T12:26:06.7614864Z Actions: read
+2026-05-26T12:26:06.7615447Z ArtifactMetadata: read
+2026-05-26T12:26:06.7615945Z Attestations: read
+2026-05-26T12:26:06.7616417Z Checks: read
+2026-05-26T12:26:06.7616870Z CodeQuality: read
+2026-05-26T12:26:06.7617349Z Contents: read
+2026-05-26T12:26:06.7617799Z Deployments: read
+2026-05-26T12:26:06.7618295Z Discussions: read
+2026-05-26T12:26:06.7618855Z Issues: read
+2026-05-26T12:26:06.7619337Z Metadata: read
+2026-05-26T12:26:06.7619815Z Models: read
+2026-05-26T12:26:06.7620235Z Packages: read
+2026-05-26T12:26:06.7620763Z Pages: read
+2026-05-26T12:26:06.7621182Z PullRequests: read
+2026-05-26T12:26:06.7621701Z RepositoryProjects: read
+2026-05-26T12:26:06.7622248Z SecurityEvents: read
+2026-05-26T12:26:06.7622757Z Statuses: read
+2026-05-26T12:26:06.7623249Z VulnerabilityAlerts: read
+2026-05-26T12:26:06.7623791Z ##[endgroup]
+2026-05-26T12:26:06.7625668Z Secret source: None
+2026-05-26T12:26:06.7626373Z Prepare workflow directory
+2026-05-26T12:26:06.7928418Z Prepare all required actions
+2026-05-26T12:26:06.7969137Z Getting action download info
+2026-05-26T12:26:07.1953244Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-26T12:26:07.3042071Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-05-26T12:26:07.5108109Z ##[error]An action could not be found at the URI 'https://codeload.github.com/actions/setup-java/zip/be666c2fcd27ec809703dec50e508c2fdc7f6654' (3008:163F83:1C7D53:249958:6A15915F)
+2026-05-26T12:26:07.5130071Z ##[error]Failed to download archive 'https://codeload.github.com/actions/setup-java/zip/be666c2fcd27ec809703dec50e508c2fdc7f6654' after 1 attempts.

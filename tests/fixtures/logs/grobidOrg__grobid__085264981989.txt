@@ -1,0 +1,445 @@
+﻿2026-07-05T22:22:50.8580492Z Current runner version: '2.335.1'
+2026-07-05T22:22:50.8600349Z ##[group]Runner Image Provisioner
+2026-07-05T22:22:50.8601133Z Hosted Compute Agent
+2026-07-05T22:22:50.8601588Z Version: 20260624.560
+2026-07-05T22:22:50.8602354Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-05T22:22:50.8603152Z Build Date: 2026-06-24T18:26:47Z
+2026-07-05T22:22:50.8603769Z Worker ID: {67776eaf-edf3-4e0c-a662-986e076f830e}
+2026-07-05T22:22:50.8604354Z Azure Region: westcentralus
+2026-07-05T22:22:50.8604832Z ##[endgroup]
+2026-07-05T22:22:50.8606282Z ##[group]Operating System
+2026-07-05T22:22:50.8606784Z Ubuntu
+2026-07-05T22:22:50.8607188Z 24.04.4
+2026-07-05T22:22:50.8607671Z LTS
+2026-07-05T22:22:50.8608087Z ##[endgroup]
+2026-07-05T22:22:50.8608567Z ##[group]Runner Image
+2026-07-05T22:22:50.8609044Z Image: ubuntu-24.04
+2026-07-05T22:22:50.8609495Z Version: 20260628.225.1
+2026-07-05T22:22:50.8610552Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260628.225/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-05T22:22:50.8611773Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260628.225
+2026-07-05T22:22:50.8612812Z ##[endgroup]
+2026-07-05T22:22:50.8613724Z ##[group]GITHUB_TOKEN Permissions
+2026-07-05T22:22:50.8615474Z Contents: read
+2026-07-05T22:22:50.8615986Z Metadata: read
+2026-07-05T22:22:50.8616483Z Packages: read
+2026-07-05T22:22:50.8616943Z ##[endgroup]
+2026-07-05T22:22:50.8618575Z Secret source: Actions
+2026-07-05T22:22:50.8619273Z Prepare workflow directory
+2026-07-05T22:22:50.8921070Z Prepare all required actions
+2026-07-05T22:22:50.8951790Z Getting action download info
+2026-07-05T22:22:51.2030909Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-07-05T22:22:51.2656702Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-07-05T22:22:52.1046121Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-07-05T22:22:53.8426008Z Download action repository 'mikepenz/action-junit-report@v4' (SHA:db71d41eb79864e25ab0337e395c352e84523afe)
+2026-07-05T22:22:54.9485774Z Download action repository 'coverallsapp/github-action@v2' (SHA:5cbfd81b66ca5d10c19b062c04de0199c215fb6e)
+2026-07-05T22:22:55.3306736Z Complete job name: build (ubuntu-latest)
+2026-07-05T22:22:55.3899923Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:22:55.3905855Z ##[group]Run actions/checkout@v4
+2026-07-05T22:22:55.3906180Z with:
+2026-07-05T22:22:55.3906355Z   repository: grobidOrg/grobid
+2026-07-05T22:22:55.3908669Z   token: ***
+2026-07-05T22:22:55.3908843Z   ssh-strict: true
+2026-07-05T22:22:55.3909011Z   ssh-user: git
+2026-07-05T22:22:55.3909192Z   persist-credentials: true
+2026-07-05T22:22:55.3909392Z   clean: true
+2026-07-05T22:22:55.3909581Z   sparse-checkout-cone-mode: true
+2026-07-05T22:22:55.3909787Z   fetch-depth: 1
+2026-07-05T22:22:55.3909962Z   fetch-tags: false
+2026-07-05T22:22:55.3910136Z   show-progress: true
+2026-07-05T22:22:55.3910314Z   lfs: false
+2026-07-05T22:22:55.3910505Z   submodules: false
+2026-07-05T22:22:55.3910675Z   set-safe-directory: true
+2026-07-05T22:22:55.3910996Z ##[endgroup]
+2026-07-05T22:22:55.4725915Z Syncing repository: grobidOrg/grobid
+2026-07-05T22:22:55.4726990Z ##[group]Getting Git version info
+2026-07-05T22:22:55.4727285Z Working directory is '/home/runner/work/grobid/grobid'
+2026-07-05T22:22:55.4727768Z [command]/usr/bin/git version
+2026-07-05T22:22:55.5513168Z git version 2.54.0
+2026-07-05T22:22:55.5528500Z ##[endgroup]
+2026-07-05T22:22:55.5541187Z Temporarily overriding HOME='/home/runner/work/_temp/6dddb9eb-1bd4-4dfe-8ae9-88d282acd528' before making global git config changes
+2026-07-05T22:22:55.5542269Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-05T22:22:55.5546159Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/grobid/grobid
+2026-07-05T22:22:55.6083119Z Deleting the contents of '/home/runner/work/grobid/grobid'
+2026-07-05T22:22:55.6086788Z ##[group]Initializing the repository
+2026-07-05T22:22:55.6091310Z [command]/usr/bin/git init /home/runner/work/grobid/grobid
+2026-07-05T22:22:55.7744023Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-05T22:22:55.7744861Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-05T22:22:55.7747141Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-05T22:22:55.7747839Z hint: call:
+2026-07-05T22:22:55.7748216Z hint:
+2026-07-05T22:22:55.7748588Z hint: 	git config --global init.defaultBranch <name>
+2026-07-05T22:22:55.7748996Z hint:
+2026-07-05T22:22:55.7749400Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-05T22:22:55.7749956Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-05T22:22:55.7750243Z hint:
+2026-07-05T22:22:55.7750403Z hint: 	git branch -m <name>
+2026-07-05T22:22:55.7750582Z hint:
+2026-07-05T22:22:55.7750860Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-05T22:22:55.7751265Z Initialized empty Git repository in /home/runner/work/grobid/grobid/.git/
+2026-07-05T22:22:55.7758441Z [command]/usr/bin/git remote add origin https://github.com/grobidOrg/grobid
+2026-07-05T22:22:55.7835547Z ##[endgroup]
+2026-07-05T22:22:55.7836098Z ##[group]Disabling automatic garbage collection
+2026-07-05T22:22:55.7838562Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-05T22:22:55.8343554Z ##[endgroup]
+2026-07-05T22:22:55.8344381Z ##[group]Setting up auth
+2026-07-05T22:22:55.8345569Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-05T22:22:55.8375737Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-05T22:22:55.9504044Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-05T22:22:55.9528579Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-05T22:22:55.9709962Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-05T22:22:55.9734613Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-05T22:22:55.9950180Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-05T22:22:56.0824074Z ##[endgroup]
+2026-07-05T22:22:56.0824726Z ##[group]Fetching the repository
+2026-07-05T22:22:56.0833906Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +46e37a679ce68a3f0852f89870ba1d67b83a04f9:refs/remotes/origin/copilot/fix-null-pointer-exception
+2026-07-05T22:23:39.6631003Z From https://github.com/grobidOrg/grobid
+2026-07-05T22:23:39.6633066Z  * [new ref]         46e37a679ce68a3f0852f89870ba1d67b83a04f9 -> origin/copilot/fix-null-pointer-exception
+2026-07-05T22:23:39.6653392Z ##[endgroup]
+2026-07-05T22:23:39.6654000Z ##[group]Determining the checkout info
+2026-07-05T22:23:39.6654511Z ##[endgroup]
+2026-07-05T22:23:39.6657738Z [command]/usr/bin/git sparse-checkout disable
+2026-07-05T22:23:39.6690043Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-05T22:23:39.6711884Z ##[group]Checking out the ref
+2026-07-05T22:23:39.6715988Z [command]/usr/bin/git checkout --progress --force -B copilot/fix-null-pointer-exception refs/remotes/origin/copilot/fix-null-pointer-exception
+2026-07-05T22:23:41.4007243Z Updating files:   5% (712/13902)
+2026-07-05T22:23:41.4168124Z Updating files:   6% (835/13902)
+2026-07-05T22:23:41.7032627Z Updating files:   7% (974/13902)
+2026-07-05T22:23:42.1573892Z Updating files:   7% (994/13902)
+2026-07-05T22:23:42.1696536Z Updating files:   8% (1113/13902)
+2026-07-05T22:23:42.1788726Z Updating files:   9% (1252/13902)
+2026-07-05T22:23:42.1880795Z Updating files:  10% (1391/13902)
+2026-07-05T22:23:42.2020687Z Updating files:  11% (1530/13902)
+2026-07-05T22:23:42.2057493Z Updating files:  12% (1669/13902)
+2026-07-05T22:23:42.2093130Z Updating files:  13% (1808/13902)
+2026-07-05T22:23:42.2129964Z Updating files:  14% (1947/13902)
+2026-07-05T22:23:42.2167069Z Updating files:  15% (2086/13902)
+2026-07-05T22:23:42.2203885Z Updating files:  16% (2225/13902)
+2026-07-05T22:23:42.2242102Z Updating files:  17% (2364/13902)
+2026-07-05T22:23:42.2276733Z Updating files:  18% (2503/13902)
+2026-07-05T22:23:42.2314857Z Updating files:  19% (2642/13902)
+2026-07-05T22:23:42.2375636Z Updating files:  20% (2781/13902)
+2026-07-05T22:23:42.2410292Z Updating files:  21% (2920/13902)
+2026-07-05T22:23:42.2446842Z Updating files:  22% (3059/13902)
+2026-07-05T22:23:42.2544044Z Updating files:  23% (3198/13902)
+2026-07-05T22:23:42.2580606Z Updating files:  24% (3337/13902)
+2026-07-05T22:23:42.2617975Z Updating files:  25% (3476/13902)
+2026-07-05T22:23:42.2953271Z Updating files:  26% (3615/13902)
+2026-07-05T22:23:42.3180456Z Updating files:  27% (3754/13902)
+2026-07-05T22:23:42.3529343Z Updating files:  28% (3893/13902)
+2026-07-05T22:23:42.4781809Z Updating files:  29% (4032/13902)
+2026-07-05T22:23:42.5403106Z Updating files:  30% (4171/13902)
+2026-07-05T22:23:42.5803564Z Updating files:  31% (4310/13902)
+2026-07-05T22:23:42.6034602Z Updating files:  32% (4449/13902)
+2026-07-05T22:23:42.6228993Z Updating files:  33% (4588/13902)
+2026-07-05T22:23:42.6363165Z Updating files:  34% (4727/13902)
+2026-07-05T22:23:42.6488926Z Updating files:  35% (4866/13902)
+2026-07-05T22:23:42.6618378Z Updating files:  36% (5005/13902)
+2026-07-05T22:23:42.6756489Z Updating files:  37% (5144/13902)
+2026-07-05T22:23:42.6816065Z Updating files:  38% (5283/13902)
+2026-07-05T22:23:42.6826038Z Updating files:  38% (5405/13902)
+2026-07-05T22:23:42.6888445Z Updating files:  39% (5422/13902)
+2026-07-05T22:23:42.6939583Z Updating files:  40% (5561/13902)
+2026-07-05T22:23:42.6990360Z Updating files:  41% (5700/13902)
+2026-07-05T22:23:42.7039479Z Updating files:  42% (5839/13902)
+2026-07-05T22:23:42.7092003Z Updating files:  43% (5978/13902)
+2026-07-05T22:23:42.7202430Z Updating files:  44% (6117/13902)
+2026-07-05T22:23:42.7329698Z Updating files:  45% (6256/13902)
+2026-07-05T22:23:42.7427301Z Updating files:  46% (6395/13902)
+2026-07-05T22:23:42.7519256Z Updating files:  47% (6534/13902)
+2026-07-05T22:23:42.7610057Z Updating files:  48% (6673/13902)
+2026-07-05T22:23:42.7712486Z Updating files:  49% (6812/13902)
+2026-07-05T22:23:42.7780653Z Updating files:  50% (6951/13902)
+2026-07-05T22:23:42.7852304Z Updating files:  51% (7091/13902)
+2026-07-05T22:23:42.7901352Z Updating files:  52% (7230/13902)
+2026-07-05T22:23:42.7951045Z Updating files:  53% (7369/13902)
+2026-07-05T22:23:42.8000152Z Updating files:  54% (7508/13902)
+2026-07-05T22:23:42.8050549Z Updating files:  55% (7647/13902)
+2026-07-05T22:23:42.8107835Z Updating files:  56% (7786/13902)
+2026-07-05T22:23:42.8143359Z Updating files:  57% (7925/13902)
+2026-07-05T22:23:42.8178631Z Updating files:  58% (8064/13902)
+2026-07-05T22:23:42.8216003Z Updating files:  59% (8203/13902)
+2026-07-05T22:23:42.8251651Z Updating files:  60% (8342/13902)
+2026-07-05T22:23:42.8288023Z Updating files:  61% (8481/13902)
+2026-07-05T22:23:42.8324900Z Updating files:  62% (8620/13902)
+2026-07-05T22:23:42.8361389Z Updating files:  63% (8759/13902)
+2026-07-05T22:23:42.8417606Z Updating files:  64% (8898/13902)
+2026-07-05T22:23:42.8713530Z Updating files:  65% (9037/13902)
+2026-07-05T22:23:42.9095921Z Updating files:  66% (9176/13902)
+2026-07-05T22:23:42.9521502Z Updating files:  67% (9315/13902)
+2026-07-05T22:23:42.9617032Z Updating files:  68% (9454/13902)
+2026-07-05T22:23:43.0275258Z Updating files:  69% (9593/13902)
+2026-07-05T22:23:43.0733129Z Updating files:  70% (9732/13902)
+2026-07-05T22:23:43.1154603Z Updating files:  71% (9871/13902)
+2026-07-05T22:23:43.1601233Z Updating files:  72% (10010/13902)
+2026-07-05T22:23:43.1977631Z Updating files:  73% (10149/13902)
+2026-07-05T22:23:43.2316245Z Updating files:  74% (10288/13902)
+2026-07-05T22:23:43.2660756Z Updating files:  75% (10427/13902)
+2026-07-05T22:23:43.2962720Z Updating files:  76% (10566/13902)
+2026-07-05T22:23:43.3314200Z Updating files:  77% (10705/13902)
+2026-07-05T22:23:43.3630141Z Updating files:  78% (10844/13902)
+2026-07-05T22:23:43.3924222Z Updating files:  79% (10983/13902)
+2026-07-05T22:23:43.4191370Z Updating files:  80% (11122/13902)
+2026-07-05T22:23:43.4409763Z Updating files:  81% (11261/13902)
+2026-07-05T22:23:43.4744253Z Updating files:  82% (11400/13902)
+2026-07-05T22:23:43.5055164Z Updating files:  83% (11539/13902)
+2026-07-05T22:23:43.5349529Z Updating files:  84% (11678/13902)
+2026-07-05T22:23:43.5649388Z Updating files:  85% (11817/13902)
+2026-07-05T22:23:43.5980528Z Updating files:  86% (11956/13902)
+2026-07-05T22:23:43.6273658Z Updating files:  87% (12095/13902)
+2026-07-05T22:23:43.6527623Z Updating files:  88% (12234/13902)
+2026-07-05T22:23:43.6742565Z Updating files:  89% (12373/13902)
+2026-07-05T22:23:43.6818009Z Updating files:  90% (12512/13902)
+2026-07-05T22:23:43.7029885Z Updating files:  90% (12549/13902)
+2026-07-05T22:23:43.7335773Z Updating files:  91% (12651/13902)
+2026-07-05T22:23:43.7667570Z Updating files:  92% (12790/13902)
+2026-07-05T22:23:43.7980217Z Updating files:  93% (12929/13902)
+2026-07-05T22:23:43.8256143Z Updating files:  94% (13068/13902)
+2026-07-05T22:23:43.8507821Z Updating files:  95% (13207/13902)
+2026-07-05T22:23:43.8743240Z Updating files:  96% (13346/13902)
+2026-07-05T22:23:43.9048349Z Updating files:  97% (13485/13902)
+2026-07-05T22:23:43.9414890Z Updating files:  98% (13624/13902)
+2026-07-05T22:23:43.9501954Z Updating files:  99% (13763/13902)
+2026-07-05T22:23:43.9502433Z Updating files: 100% (13902/13902)
+2026-07-05T22:23:43.9502758Z Updating files: 100% (13902/13902), done.
+2026-07-05T22:23:44.1755339Z Switched to a new branch 'copilot/fix-null-pointer-exception'
+2026-07-05T22:23:44.1756549Z branch 'copilot/fix-null-pointer-exception' set up to track 'origin/copilot/fix-null-pointer-exception'.
+2026-07-05T22:23:44.1865878Z ##[endgroup]
+2026-07-05T22:23:44.1900074Z [command]/usr/bin/git log -1 --format=%H
+2026-07-05T22:23:44.1921247Z 46e37a679ce68a3f0852f89870ba1d67b83a04f9
+2026-07-05T22:23:44.2142448Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:23:44.2144045Z ##[group]Run actions/setup-java@v4
+2026-07-05T22:23:44.2144248Z with:
+2026-07-05T22:23:44.2144424Z   java-version: 21
+2026-07-05T22:23:44.2144598Z   distribution: temurin
+2026-07-05T22:23:44.2144777Z   java-package: jdk
+2026-07-05T22:23:44.2144942Z   check-latest: false
+2026-07-05T22:23:44.2145111Z   server-id: github
+2026-07-05T22:23:44.2145279Z   server-username: GITHUB_ACTOR
+2026-07-05T22:23:44.2145479Z   server-password: GITHUB_TOKEN
+2026-07-05T22:23:44.2145677Z   overwrite-settings: true
+2026-07-05T22:23:44.2145863Z   job-status: success
+2026-07-05T22:23:44.2147970Z   token: ***
+2026-07-05T22:23:44.2148131Z ##[endgroup]
+2026-07-05T22:23:44.3399785Z ##[group]Installed distributions
+2026-07-05T22:23:44.3483830Z Resolved Java 21.0.11+10 from tool-cache
+2026-07-05T22:23:44.3484197Z Setting Java 21.0.11+10 as the default
+2026-07-05T22:23:44.3490998Z (node:2099) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-05T22:23:44.3491523Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-05T22:23:44.3494174Z Creating toolchains.xml for JDK version 21 from temurin
+2026-07-05T22:23:44.3546728Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-05T22:23:44.3546993Z 
+2026-07-05T22:23:44.3547091Z Java configuration:
+2026-07-05T22:23:44.3547345Z   Distribution: temurin
+2026-07-05T22:23:44.3547599Z   Version: 21.0.11+10
+2026-07-05T22:23:44.3547969Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:23:44.3548309Z 
+2026-07-05T22:23:44.3548648Z ##[endgroup]
+2026-07-05T22:23:44.3563836Z Creating settings.xml with server-id: github
+2026-07-05T22:23:44.3564137Z Writing to /home/runner/.m2/settings.xml
+2026-07-05T22:23:44.3778002Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:23:44.3778996Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-07-05T22:23:44.3779215Z with:
+2026-07-05T22:23:44.3779375Z   cache-disabled: false
+2026-07-05T22:23:44.3779555Z   cache-read-only: true
+2026-07-05T22:23:44.3779730Z   cache-write-only: false
+2026-07-05T22:23:44.3779922Z   cache-overwrite-existing: false
+2026-07-05T22:23:44.3780129Z   cache-cleanup: on-success
+2026-07-05T22:23:44.3780352Z   gradle-home-cache-includes: caches
+notifications
+
+2026-07-05T22:23:44.3780597Z   add-job-summary: always
+2026-07-05T22:23:44.3780788Z   add-job-summary-as-pr-comment: never
+2026-07-05T22:23:44.3781002Z   dependency-graph: disabled
+2026-07-05T22:23:44.3781279Z   dependency-graph-report-dir: dependency-graph-reports
+2026-07-05T22:23:44.3781559Z   dependency-graph-continue-on-failure: true
+2026-07-05T22:23:44.3781798Z   build-scan-publish: false
+2026-07-05T22:23:44.3781996Z   validate-wrappers: true
+2026-07-05T22:23:44.3782440Z   allow-snapshot-wrappers: false
+2026-07-05T22:23:44.3782675Z   gradle-home-cache-strict-match: false
+2026-07-05T22:23:44.3782925Z   workflow-job-context: {
+  "os": "ubuntu-latest"
+}
+2026-07-05T22:23:44.3785130Z   github-token: ***
+2026-07-05T22:23:44.3785299Z env:
+2026-07-05T22:23:44.3785532Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:23:44.3785909Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:23:44.3786202Z ##[endgroup]
+2026-07-05T22:23:45.7092387Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-07-05T22:23:45.7097868Z ##[group]Restore Gradle state from cache
+2026-07-05T22:23:45.8818536Z Gradle User Home cache not found. Will initialize empty.
+2026-07-05T22:23:45.8819129Z ##[endgroup]
+2026-07-05T22:23:46.0050952Z ##[group]All Gradle Wrapper jars are valid
+2026-07-05T22:23:46.0052315Z ✓ Found known Gradle Wrapper JAR files:
+2026-07-05T22:23:46.0052988Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+2026-07-05T22:23:46.0053832Z ##[endgroup]
+2026-07-05T22:23:46.0164315Z ##[group]Run ./gradlew spotlessCheck
+2026-07-05T22:23:46.0164599Z [36;1m./gradlew spotlessCheck[0m
+2026-07-05T22:23:46.0509022Z shell: /usr/bin/bash -e {0}
+2026-07-05T22:23:46.0509237Z env:
+2026-07-05T22:23:46.0509493Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:23:46.0509898Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:23:46.0510220Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-05T22:23:46.0510458Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-05T22:23:46.0510677Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-05T22:23:46.0510906Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-07-05T22:23:46.0511237Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-05T22:23:46.0511602Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-05T22:23:46.0511853Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-05T22:23:46.0512330Z ##[endgroup]
+2026-07-05T22:23:46.8079164Z Downloading https://services.gradle.org/distributions/gradle-9.0.0-bin.zip
+2026-07-05T22:23:48.5127810Z ............10%.............20%.............30%.............40%.............50%............60%.............70%.............80%.............90%.............100%
+2026-07-05T22:23:49.5418434Z 
+2026-07-05T22:23:49.5419176Z Welcome to Gradle 9.0.0!
+2026-07-05T22:23:49.5419445Z 
+2026-07-05T22:23:49.5419595Z Here are the highlights of this release:
+2026-07-05T22:23:49.5420079Z  - Configuration Cache is the recommended execution mode
+2026-07-05T22:23:49.5420567Z  - Gradle requires JVM 17 or higher to run
+2026-07-05T22:23:49.5420977Z  - Build scripts use Kotlin 2.2 and Groovy 4.0
+2026-07-05T22:23:49.5421421Z  - Improved Kotlin DSL script compilation avoidance
+2026-07-05T22:23:49.5421714Z 
+2026-07-05T22:23:49.5421976Z For more details see https://docs.gradle.org/9.0.0/release-notes.html
+2026-07-05T22:23:49.5422540Z 
+2026-07-05T22:23:49.6403036Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-07-05T22:24:30.2400081Z 
+2026-07-05T22:24:30.2401383Z > Configure project :
+2026-07-05T22:24:30.2401913Z Checking git under /home/runner/work/grobid/grobid
+2026-07-05T22:24:30.2402660Z Current Git revision: 46e37a6
+2026-07-05T22:24:33.3394910Z 
+2026-07-05T22:24:33.3452962Z > Task :spotlessInternalRegisterDependencies
+2026-07-05T22:24:42.6395707Z 
+2026-07-05T22:24:42.6423039Z > Task :grobid-core:spotlessJava
+2026-07-05T22:24:42.6451598Z Can't parse copyright year '', defaulting to 2026
+2026-07-05T22:24:42.8395351Z Can't parse copyright year '', defaulting to 2026
+2026-07-05T22:24:43.3396530Z Skipping 'src/main/java/org/grobid/core/engines/FullTextParser.java' because it does not converge.  Run {@code spotlessDiagnose} to understand why
+2026-07-05T22:24:43.8412786Z 
+2026-07-05T22:24:43.8412811Z 
+2026-07-05T22:24:43.8443280Z FAILURE: Build failed with an exception.
+2026-07-05T22:24:43.8443712Z > Task :grobid-core:spotlessJavaCheck FAILED
+2026-07-05T22:24:43.8463288Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1783290233110.json
+2026-07-05T22:24:43.8472451Z 
+2026-07-05T22:24:43.8472762Z * What went wrong:
+2026-07-05T22:24:43.8482689Z 3 actionable tasks: 3 executed
+2026-07-05T22:24:43.8502798Z Execution failed for task ':grobid-core:spotlessJavaCheck'.
+2026-07-05T22:24:43.8533016Z > The following files had format violations:
+2026-07-05T22:24:43.8533787Z       src/test/java/org/grobid/core/engines/ReferenceSegmenterParserTest.java
+2026-07-05T22:24:43.8562797Z           @@ -15,19 +15,20 @@
+2026-07-05T22:24:43.8577104Z            ·*/
+2026-07-05T22:24:43.8577699Z            package·org.grobid.core.engines;
+2026-07-05T22:24:43.8578238Z            
+2026-07-05T22:24:43.8579266Z           +import·static·org.hamcrest.CoreMatchers.notNullValue;
+2026-07-05T22:24:43.8579960Z           +import·static·org.junit.Assert.assertThat;
+2026-07-05T22:24:43.8580392Z           +
+2026-07-05T22:24:43.8581336Z            import·com.google.common.collect.SortedSetMultimap;
+2026-07-05T22:24:43.8581995Z            import·com.google.common.collect.TreeMultimap;
+2026-07-05T22:24:43.8582811Z            import·org.apache.commons.lang3.tuple.Pair;
+2026-07-05T22:24:43.8583277Z           +import·org.junit.BeforeClass;
+2026-07-05T22:24:43.8583663Z           +import·org.junit.Test;
+2026-07-05T22:24:43.8583890Z           +
+2026-07-05T22:24:43.8584119Z            import·org.grobid.core.document.Document;
+2026-07-05T22:24:43.8584433Z            import·org.grobid.core.document.DocumentPiece;
+2026-07-05T22:24:43.8584768Z            import·org.grobid.core.document.DocumentPointer;
+2026-07-05T22:24:43.8585134Z            import·org.grobid.core.engines.label.SegmentationLabels;
+2026-07-05T22:24:43.8585527Z            import·org.grobid.core.factory.AbstractEngineFactory;
+2026-07-05T22:24:43.8585962Z           -import·org.junit.BeforeClass;
+2026-07-05T22:24:43.8586216Z           -import·org.junit.Test;
+2026-07-05T22:24:43.8586405Z           -
+2026-07-05T22:24:43.8586676Z           -import·static·org.hamcrest.CoreMatchers.notNullValue;
+2026-07-05T22:24:43.8587189Z           -import·static·org.junit.Assert.assertThat;
+2026-07-05T22:24:43.8587410Z            
+2026-07-05T22:24:43.8587631Z            public·class·ReferenceSegmenterParserTest·{
+2026-07-05T22:24:43.8587895Z            ····@BeforeClass
+2026-07-05T22:24:43.8588078Z           @@ -41,8 +42,8 @@
+2026-07-05T22:24:43.8588482Z            ········SortedSetMultimap<String,·DocumentPiece>·labeledBlocks·=·TreeMultimap.create();
+2026-07-05T22:24:43.8588973Z            ········int·lastTokenIndex·=·doc.getTokenizations().size()·-·1;
+2026-07-05T22:24:43.8589346Z            ········DocumentPiece·references·=·new·DocumentPiece(
+2026-07-05T22:24:43.8589666Z           -············new·DocumentPointer(doc,·0,·0),
+2026-07-05T22:24:43.8589992Z           -············new·DocumentPointer(doc,·0,·lastTokenIndex));
+2026-07-05T22:24:43.8590316Z           +················new·DocumentPointer(doc,·0,·0),
+2026-07-05T22:24:43.8590664Z           +················new·DocumentPointer(doc,·0,·lastTokenIndex));
+2026-07-05T22:24:43.8591113Z            ········labeledBlocks.put(SegmentationLabels.REFERENCES.getLabel(),·references);
+2026-07-05T22:24:43.8591510Z            ········doc.setLabeledBlocks(labeledBlocks);
+2026-07-05T22:24:43.8591743Z            
+2026-07-05T22:24:43.8591931Z   Run './gradlew spotlessApply' to fix all violations.
+2026-07-05T22:24:43.8592266Z 
+2026-07-05T22:24:43.8592344Z * Try:
+2026-07-05T22:24:43.8592532Z > Run with --stacktrace option to get the stack trace.
+2026-07-05T22:24:43.8592811Z > Run with --info or --debug option to get more log output.
+2026-07-05T22:24:43.8593113Z > Run with --scan to generate a Build Scan (Powered by Develocity).
+2026-07-05T22:24:43.8593413Z > Get more help at https://help.gradle.org.
+2026-07-05T22:24:43.8593579Z 
+2026-07-05T22:24:43.8593651Z BUILD FAILED in 57s
+2026-07-05T22:24:44.2705744Z ##[error]Process completed with exit code 1.
+2026-07-05T22:24:44.2811594Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:24:44.2812778Z ##[group]Run mikepenz/action-junit-report@v4
+2026-07-05T22:24:44.2813004Z with:
+2026-07-05T22:24:44.2813197Z   report_paths: **/build/test-results/test/TEST-*.xml
+2026-07-05T22:24:44.2815371Z   token: ***
+2026-07-05T22:24:44.2815538Z   annotate_only: false
+2026-07-05T22:24:44.2815717Z   check_annotations: true
+2026-07-05T22:24:44.2815903Z   update_check: false
+2026-07-05T22:24:44.2816081Z   check_name: JUnit Test Report
+2026-07-05T22:24:44.2816276Z   fail_on_failure: false
+2026-07-05T22:24:44.2816452Z   require_tests: false
+2026-07-05T22:24:44.2816628Z   require_passed_tests: false
+2026-07-05T22:24:44.2816819Z   include_passed: false
+2026-07-05T22:24:44.2817036Z   check_retries: false
+2026-07-05T22:24:44.2817205Z   transformers: []
+2026-07-05T22:24:44.2817371Z   job_summary: true
+2026-07-05T22:24:44.2817533Z   detailed_summary: false
+2026-07-05T22:24:44.2817711Z   annotate_notice: false
+2026-07-05T22:24:44.2817885Z   follow_symlink: false
+2026-07-05T22:24:44.2818051Z   job_name: build
+2026-07-05T22:24:44.2818215Z   truncate_stack_traces: true
+2026-07-05T22:24:44.2818392Z env:
+2026-07-05T22:24:44.2818629Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:24:44.2819004Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-05T22:24:44.2819326Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-05T22:24:44.2819562Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-05T22:24:44.2819787Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-05T22:24:44.2820015Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-07-05T22:24:44.2820352Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-05T22:24:44.2820712Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-05T22:24:44.2821136Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-05T22:24:44.2821344Z ##[endgroup]
+2026-07-05T22:24:44.3463687Z ##[group]📘 Reading input values
+2026-07-05T22:24:44.3465133Z ##[endgroup]
+2026-07-05T22:24:44.3465665Z ##[group]📦 Process test results
+2026-07-05T22:24:44.3466164Z Preparing 1 report as configured.
+2026-07-05T22:24:44.9472752Z Found and parsed 0 test report files.
+2026-07-05T22:24:44.9480020Z ℹ️ Posting with conclusion 'success' to refs/heads/copilot/fix-null-pointer-exception (sha: 46e37a679ce68a3f0852f89870ba1d67b83a04f9)
+2026-07-05T22:24:44.9481111Z ##[endgroup]
+2026-07-05T22:24:44.9481690Z ##[group]🚀 Publish results
+2026-07-05T22:24:44.9482713Z ℹ️ - JUnit Test Report - No test results found!
+2026-07-05T22:24:44.9490358Z ℹ️ - JUnit Test Report - Creating check (Annotations: 0)
+2026-07-05T22:24:45.2465847Z ##[error]❌ Failed to create checks using the provided token. (HttpError: Resource not accessible by integration - https://docs.github.com/rest/checks/runs#create-a-check-run)
+2026-07-05T22:24:45.2469720Z ##[warning]⚠️ This usually indicates insufficient permissions. More details: https://github.com/mikepenz/action-junit-report/issues/23
+2026-07-05T22:24:45.2471638Z ⚠️ No annotations found for JUnit Test Report. If you want to include passed results in this table please configure 'include_passed' as 'true'
+2026-07-05T22:24:45.2472781Z ##[endgroup]
+2026-07-05T22:24:45.2809328Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:24:45.2810233Z Post job cleanup.
+2026-07-05T22:24:45.4629740Z In post-action step
+2026-07-05T22:24:45.4637294Z Cache is read-only: will not save state for use in subsequent builds.
+2026-07-05T22:24:45.4641577Z Generating Job Summary
+2026-07-05T22:24:45.4656745Z Completed post-action step
+2026-07-05T22:24:45.4777810Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:24:45.4778723Z Post job cleanup.
+2026-07-05T22:24:45.5799278Z (node:2330) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-05T22:24:45.5799846Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-05T22:24:45.5921354Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-05T22:24:45.5922509Z Post job cleanup.
+2026-07-05T22:24:45.6574457Z [command]/usr/bin/git version
+2026-07-05T22:24:45.6635457Z git version 2.54.0
+2026-07-05T22:24:45.6663443Z Temporarily overriding HOME='/home/runner/work/_temp/91863702-9584-49fa-aa16-2b67905f2dba' before making global git config changes
+2026-07-05T22:24:45.6664043Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-05T22:24:45.6668364Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/grobid/grobid
+2026-07-05T22:24:45.6697198Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-05T22:24:45.6724812Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-05T22:24:45.6928631Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-05T22:24:45.6947662Z http.https://github.com/.extraheader
+2026-07-05T22:24:45.6956067Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-07-05T22:24:45.6981097Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-05T22:24:45.7177178Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-05T22:24:45.7204157Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-05T22:24:45.7514339Z Cleaning up orphan processes
+2026-07-05T22:24:45.7781183Z Terminate orphan process: pid (2201) (java)
+2026-07-05T22:24:45.7790194Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, gradle/actions/setup-gradle@v4, mikepenz/action-junit-report@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,581 @@
+﻿2026-06-08T16:08:58.4243302Z Current runner version: '2.334.0'
+2026-06-08T16:08:58.4283072Z ##[group]Runner Image Provisioner
+2026-06-08T16:08:58.4283892Z Hosted Compute Agent
+2026-06-08T16:08:58.4284414Z Version: 20260520.533
+2026-06-08T16:08:58.4284958Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-08T16:08:58.4285556Z Build Date: 2026-05-20T17:44:04Z
+2026-06-08T16:08:58.4286105Z Worker ID: {eef0683c-5b26-49a3-82e8-ea61a8774eab}
+2026-06-08T16:08:58.4286750Z Azure Region: westus
+2026-06-08T16:08:58.4287219Z ##[endgroup]
+2026-06-08T16:08:58.4288389Z ##[group]Operating System
+2026-06-08T16:08:58.4288968Z Ubuntu
+2026-06-08T16:08:58.4289432Z 24.04.4
+2026-06-08T16:08:58.4289903Z LTS
+2026-06-08T16:08:58.4290359Z ##[endgroup]
+2026-06-08T16:08:58.4290826Z ##[group]Runner Image
+2026-06-08T16:08:58.4291528Z Image: ubuntu-24.04
+2026-06-08T16:08:58.4291995Z Version: 20260525.161.1
+2026-06-08T16:08:58.4293089Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-08T16:08:58.4294278Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-08T16:08:58.4295087Z ##[endgroup]
+2026-06-08T16:08:58.4296019Z ##[group]GITHUB_TOKEN Permissions
+2026-06-08T16:08:58.4297531Z Contents: read
+2026-06-08T16:08:58.4298027Z Metadata: read
+2026-06-08T16:08:58.4298472Z ##[endgroup]
+2026-06-08T16:08:58.4300305Z Secret source: None
+2026-06-08T16:08:58.4300913Z Prepare workflow directory
+2026-06-08T16:08:58.4722165Z Prepare all required actions
+2026-06-08T16:08:58.4752942Z Getting action download info
+2026-06-08T16:08:59.0563424Z Download action repository 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-08T16:09:00.4875085Z Download action repository 'actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c' (SHA:3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c)
+2026-06-08T16:09:00.9380333Z Download action repository 'gradle/actions@0723195856401067f7a2779048b490ace7a47d7c' (SHA:0723195856401067f7a2779048b490ace7a47d7c)
+2026-06-08T16:09:02.9917750Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-08T16:09:03.2883846Z Uses: apache/fineract/.github/workflows/build-postgresql.yml@refs/pull/5813/merge (d4c46acc2de6604f5cedbc8ea39276a35cd3a18c)
+2026-06-08T16:09:03.2887824Z Complete job name: run-integrations-tests-on-postgresql / PostgreSQL Tests (Shard 1 of 15)
+2026-06-08T16:09:03.3517404Z ##[group]Run actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+2026-06-08T16:09:03.3517961Z with:
+2026-06-08T16:09:03.3518135Z   java-version: 21
+2026-06-08T16:09:03.3518320Z   distribution: zulu
+2026-06-08T16:09:03.3518514Z   java-package: jdk
+2026-06-08T16:09:03.3518703Z   check-latest: false
+2026-06-08T16:09:03.3518888Z   server-id: github
+2026-06-08T16:09:03.3519083Z   server-username: GITHUB_ACTOR
+2026-06-08T16:09:03.3519309Z   server-password: GITHUB_TOKEN
+2026-06-08T16:09:03.3519543Z   overwrite-settings: true
+2026-06-08T16:09:03.3519780Z   job-status: success
+2026-06-08T16:09:03.3522365Z   token: ***
+2026-06-08T16:09:03.3522684Z env:
+2026-06-08T16:09:03.3522848Z   TZ: Asia/Kolkata
+2026-06-08T16:09:03.3523031Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:09:03.3523222Z   IMAGE_NAME: fineract
+2026-06-08T16:09:03.3523444Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:09:03.3523728Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:09:03.3524056Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:09:03.3524296Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:09:03.3524502Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:09:03.3524711Z   AWS_REGION: us-east-1
+2026-06-08T16:09:03.3524909Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:09:03.3525175Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:09:03.3525484Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:09:03.3525754Z ##[endgroup]
+2026-06-08T16:09:03.4792505Z ##[group]Installed distributions
+2026-06-08T16:09:03.4793457Z Trying to resolve the latest version from remote
+2026-06-08T16:09:03.5885089Z Resolved latest version as 21.0.11+10
+2026-06-08T16:09:03.5885434Z Trying to download...
+2026-06-08T16:09:03.5885928Z Downloading Java 21.0.11+10 (Zulu) from https://cdn.azul.com/zulu/bin/zulu21.50.19-ca-crac-jdk21.0.11-linux_x64.tar.gz ...
+2026-06-08T16:09:07.0556569Z Extracting Java archive...
+2026-06-08T16:09:07.0663998Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/211dd48f-c125-4e97-8ec7-077823406a29 -f /home/runner/work/_temp/50b38bd2-a2b3-4fe9-9ebb-734a22a14212
+2026-06-08T16:09:11.0973508Z Java 21.0.11+10 was downloaded
+2026-06-08T16:09:11.0974031Z Setting Java 21.0.11+10 as the default
+2026-06-08T16:09:11.0982768Z Creating toolchains.xml for JDK version 21 from zulu
+2026-06-08T16:09:11.1036078Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-08T16:09:11.1036431Z 
+2026-06-08T16:09:11.1036552Z Java configuration:
+2026-06-08T16:09:11.1036902Z   Distribution: zulu
+2026-06-08T16:09:11.1037186Z   Version: 21.0.11+10
+2026-06-08T16:09:11.1037571Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:09:11.1037905Z 
+2026-06-08T16:09:11.1038471Z ##[endgroup]
+2026-06-08T16:09:11.1124258Z Creating settings.xml with server-id: github
+2026-06-08T16:09:11.1124663Z Writing to /home/runner/.m2/settings.xml
+2026-06-08T16:09:11.1263908Z ##[group]Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+2026-06-08T16:09:11.1264258Z with:
+2026-06-08T16:09:11.1264446Z   name: fineract-workspace-27146509365
+2026-06-08T16:09:11.1264671Z   path: .
+2026-06-08T16:09:11.1264837Z   merge-multiple: false
+2026-06-08T16:09:11.1265036Z   repository: apache/fineract
+2026-06-08T16:09:11.1265238Z   run-id: 27146509365
+2026-06-08T16:09:11.1265420Z   skip-decompress: false
+2026-06-08T16:09:11.1265625Z   digest-mismatch: error
+2026-06-08T16:09:11.1265800Z env:
+2026-06-08T16:09:11.1265959Z   TZ: Asia/Kolkata
+2026-06-08T16:09:11.1266157Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:09:11.1266345Z   IMAGE_NAME: fineract
+2026-06-08T16:09:11.1266583Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:09:11.1266875Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:09:11.1267149Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:09:11.1267419Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:09:11.1267693Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:09:11.1267904Z   AWS_REGION: us-east-1
+2026-06-08T16:09:11.1268101Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:09:11.1268367Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:09:11.1268658Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:09:11.1269052Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:09:11.1269420Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:09:11.1269694Z ##[endgroup]
+2026-06-08T16:09:11.2564703Z Downloading single artifact
+2026-06-08T16:09:11.5641020Z Preparing to download the following artifacts:
+2026-06-08T16:09:11.5642170Z - fineract-workspace-27146509365 (ID: 7484814426, Size: 1075345811, Expected Digest: sha256:d7a54e99edb8b4bda5f1c96cad6e4f6cba5fe3a9002a5c7897c36a9f5a91743a)
+2026-06-08T16:09:12.1305945Z Redirecting to blob download url: https://productionresultssa12.blob.core.windows.net/actions-results/ff41cee4-842e-4f55-bd42-86c0a8232d7f/workflow-job-run-22e2a221-3e38-53fe-9c0c-76c228bc9008/artifacts/cca60a2b663775029ba18def932cc61dd02536079eeddfb1e52236d219ab6a32.zip
+2026-06-08T16:09:12.1307542Z Starting download of artifact to: /home/runner/work/fineract/fineract
+2026-06-08T16:09:12.4785755Z (node:1982) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-06-08T16:09:12.4786946Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-08T16:11:03.9804274Z SHA256 digest of downloaded artifact is d7a54e99edb8b4bda5f1c96cad6e4f6cba5fe3a9002a5c7897c36a9f5a91743a
+2026-06-08T16:11:03.9805112Z Artifact download completed successfully.
+2026-06-08T16:11:03.9805582Z Total of 1 artifact(s) downloaded
+2026-06-08T16:11:03.9809932Z Download artifact has finished successfully
+2026-06-08T16:11:03.9933982Z ##[group]Run tar -xf fineract-workspace.tar
+2026-06-08T16:11:03.9934334Z [36;1mtar -xf fineract-workspace.tar[0m
+2026-06-08T16:11:03.9959065Z shell: /usr/bin/bash -e {0}
+2026-06-08T16:11:03.9959286Z env:
+2026-06-08T16:11:03.9959445Z   TZ: Asia/Kolkata
+2026-06-08T16:11:03.9959626Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:11:03.9959813Z   IMAGE_NAME: fineract
+2026-06-08T16:11:03.9960038Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:11:03.9960320Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:11:03.9960601Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:11:03.9960836Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:11:03.9961042Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:11:03.9961547Z   AWS_REGION: us-east-1
+2026-06-08T16:11:03.9961740Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:11:03.9962006Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:11:03.9962329Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:11:03.9962637Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:03.9962970Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:03.9963239Z ##[endgroup]
+2026-06-08T16:11:10.3588637Z ##[group]Run gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c
+2026-06-08T16:11:10.3588967Z with:
+2026-06-08T16:11:10.3589142Z   validate-wrappers: true
+2026-06-08T16:11:10.3589345Z   cache-disabled: false
+2026-06-08T16:11:10.3589529Z   cache-read-only: true
+2026-06-08T16:11:10.3589707Z   cache-write-only: false
+2026-06-08T16:11:10.3589953Z   cache-overwrite-existing: false
+2026-06-08T16:11:10.3590168Z   cache-cleanup: on-success
+2026-06-08T16:11:10.3590418Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-08T16:11:10.3590669Z   add-job-summary: always
+2026-06-08T16:11:10.3590877Z   add-job-summary-as-pr-comment: never
+2026-06-08T16:11:10.3591108Z   dependency-graph: disabled
+2026-06-08T16:11:10.3591575Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-08T16:11:10.3591879Z   dependency-graph-continue-on-failure: true
+2026-06-08T16:11:10.3592119Z   build-scan-publish: false
+2026-06-08T16:11:10.3592325Z   allow-snapshot-wrappers: false
+2026-06-08T16:11:10.3592597Z   gradle-home-cache-strict-match: false
+2026-06-08T16:11:10.3592889Z   workflow-job-context: {
+  "shard_index": 1,
+  "total_shards": 15
+}
+2026-06-08T16:11:10.3595272Z   github-token: ***
+2026-06-08T16:11:10.3595445Z env:
+2026-06-08T16:11:10.3595598Z   TZ: Asia/Kolkata
+2026-06-08T16:11:10.3595769Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:11:10.3595954Z   IMAGE_NAME: fineract
+2026-06-08T16:11:10.3596172Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:11:10.3596444Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:11:10.3596696Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:11:10.3596941Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:11:10.3597152Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:11:10.3597360Z   AWS_REGION: us-east-1
+2026-06-08T16:11:10.3597555Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:11:10.3597823Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:11:10.3598116Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:11:10.3598419Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:10.3598740Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:10.3599007Z ##[endgroup]
+2026-06-08T16:11:10.9200610Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-08T16:11:10.9203042Z ##[group]Restore Gradle state from cache
+2026-06-08T16:11:11.2618493Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build-core[2dff7f8d818e835a2a99d4e9a0e842f5]-d4c46acc2de6604f5cedbc8ea39276a35cd3a18c
+2026-06-08T16:11:12.5674556Z Received 0 of 70185874 (0.0%), 0.0 MBs/sec
+2026-06-08T16:11:13.2064490Z Received 70185874 of 70185874 (100.0%), 40.8 MBs/sec
+2026-06-08T16:11:13.2066877Z Cache Size: ~67 MB (70185874 B)
+2026-06-08T16:11:13.2132012Z [command]/usr/bin/tar -xf /home/runner/work/_temp/77027cec-822b-4a47-9822-32b5c153d3ee/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:13.8893219Z Cache restored successfully
+2026-06-08T16:11:13.8924202Z Restored cache entry with key gradle-home-v1|Linux-X64|test[3c4c87bc08e193eba8bd19f8eb1a0d5c]-d4c46acc2de6604f5cedbc8ea39276a35cd3a18c to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 2972ms
+2026-06-08T16:11:14.2399963Z Cache hit for: gradle-groovy-dsl-v1-8285f4dbd0942633b9030735f7a40428
+2026-06-08T16:11:14.2402112Z Cache hit for: gradle-generated-gradle-jars-v1-25b2c315cd2e13470e39deb0538ff4bf
+2026-06-08T16:11:14.2403851Z Cache hit for: gradle-dependencies-v1-c910b375f871348cfa1a9f747afdfacc
+2026-06-08T16:11:14.2405575Z Cache hit for: gradle-transforms-v1-a0891d856b60ec8afdf72e36c6fc60c6
+2026-06-08T16:11:14.2407015Z Cache hit for: gradle-wrapper-zips-v1-757181886b05e0ae9a93551c58d4d054
+2026-06-08T16:11:14.2409015Z Cache hit for: gradle-instrumented-jars-v1-3928251ee610f0100c9658728d37bd9e
+2026-06-08T16:11:15.2137370Z Received 520151 of 520151 (100.0%), 0.7 MBs/sec
+2026-06-08T16:11:15.2139035Z Cache Size: ~0 MB (520151 B)
+2026-06-08T16:11:15.2169045Z [command]/usr/bin/tar -xf /home/runner/work/_temp/4f5a5723-11df-480d-aab3-ad0326eae624/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:15.2470301Z Received 1684989 of 1684989 (100.0%), 2.2 MBs/sec
+2026-06-08T16:11:15.2502455Z Cache Size: ~2 MB (1684989 B)
+2026-06-08T16:11:15.2862917Z Cache restored successfully
+2026-06-08T16:11:15.2863989Z Restored cache entry with key gradle-instrumented-jars-v1-3928251ee610f0100c9658728d37bd9e to /home/runner/.gradle/caches/jars-*/*/ in 1391ms
+2026-06-08T16:11:15.2870537Z [command]/usr/bin/tar -xf /home/runner/work/_temp/6af5c693-1ab8-4036-8b80-524035a64e9d/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:15.3226703Z Received 130023424 of 137360820 (94.7%), 123.9 MBs/sec
+2026-06-08T16:11:15.7253187Z Received 137360820 of 137360820 (100.0%), 93.3 MBs/sec
+2026-06-08T16:11:15.7254020Z Cache Size: ~131 MB (137360820 B)
+2026-06-08T16:11:15.7265122Z Received 0 of 41361639 (0.0%), 0.0 MBs/sec
+2026-06-08T16:11:15.7266545Z Received 0 of 88387656 (0.0%), 0.0 MBs/sec
+2026-06-08T16:11:15.7266950Z Received 0 of 423720787 (0.0%), 0.0 MBs/sec
+2026-06-08T16:11:15.7709131Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c9cb63dc-4a3d-47f8-8e7e-24699b4f5ad8/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:15.8765908Z Cache restored successfully
+2026-06-08T16:11:15.8770252Z Restored cache entry with key gradle-groovy-dsl-v1-8285f4dbd0942633b9030735f7a40428 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 1980ms
+2026-06-08T16:11:16.0003091Z Cache restored successfully
+2026-06-08T16:11:16.0073871Z Restored cache entry with key gradle-wrapper-zips-v1-757181886b05e0ae9a93551c58d4d054 to /home/runner/.gradle/wrapper/dists/gradle-8.14.5-bin/690y85m0j9nfaub7xoiayko8a in 2113ms
+2026-06-08T16:11:16.2939186Z Received 41361639 of 41361639 (100.0%), 22.2 MBs/sec
+2026-06-08T16:11:16.2940468Z Cache Size: ~39 MB (41361639 B)
+2026-06-08T16:11:16.3113640Z [command]/usr/bin/tar -xf /home/runner/work/_temp/3a87ea93-e75a-44ac-93fc-66dfd78bb558/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:16.5773122Z Cache restored successfully
+2026-06-08T16:11:16.5821014Z Restored cache entry with key gradle-generated-gradle-jars-v1-25b2c315cd2e13470e39deb0538ff4bf to /home/runner/.gradle/caches/8.14.5/generated-gradle-jars/gradle-api-8.14.5.jar in 2688ms
+2026-06-08T16:11:16.7212068Z Received 88387656 of 88387656 (100.0%), 38.7 MBs/sec
+2026-06-08T16:11:16.7212822Z Cache Size: ~84 MB (88387656 B)
+2026-06-08T16:11:16.7285756Z Received 75497472 of 423720787 (17.8%), 33.1 MBs/sec
+2026-06-08T16:11:16.7317859Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a2dde902-e088-4f86-9cb0-e07d937a3eba/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:17.7293182Z Received 201326592 of 423720787 (47.5%), 60.5 MBs/sec
+2026-06-08T16:11:18.2583094Z Cache restored successfully
+2026-06-08T16:11:18.2623264Z Restored cache entry with key gradle-transforms-v1-a0891d856b60ec8afdf72e36c6fc60c6 to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 4365ms
+2026-06-08T16:11:18.7300032Z Received 348127232 of 423720787 (82.2%), 79.5 MBs/sec
+2026-06-08T16:11:19.3377693Z Received 423720787 of 423720787 (100.0%), 84.6 MBs/sec
+2026-06-08T16:11:19.3427620Z Cache Size: ~404 MB (423720787 B)
+2026-06-08T16:11:19.3482378Z [command]/usr/bin/tar -xf /home/runner/work/_temp/079dcbed-f4b3-439d-b1a8-7744efeccce4/cache.tzst -P -C /home/runner/work/fineract/fineract --use-compress-program unzstd
+2026-06-08T16:11:20.6135146Z Cache restored successfully
+2026-06-08T16:11:20.6300645Z Restored cache entry with key gradle-dependencies-v1-c910b375f871348cfa1a9f747afdfacc to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 6735ms
+2026-06-08T16:11:20.7376895Z ##[endgroup]
+2026-06-08T16:11:21.1215277Z ##[group]All Gradle Wrapper jars are valid
+2026-06-08T16:11:21.1216303Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-08T16:11:21.1217018Z   d3b261c2820e9e3d8d639ed084900f11f4a86050a8f83342ade7b6bc9b0d2bdd gradle/wrapper/gradle-wrapper.jar
+2026-06-08T16:11:21.1217813Z ##[endgroup]
+2026-06-08T16:11:21.3304777Z ##[group]Run ./gradlew --no-daemon --console=plain :fineract-provider:jibDockerBuild -Djib.to.image=$IMAGE_NAME -x test -x cucumber -x buildJavaSdk
+2026-06-08T16:11:21.3305670Z [36;1m./gradlew --no-daemon --console=plain :fineract-provider:jibDockerBuild -Djib.to.image=$IMAGE_NAME -x test -x cucumber -x buildJavaSdk[0m
+2026-06-08T16:11:21.3328243Z shell: /usr/bin/bash -e {0}
+2026-06-08T16:11:21.3328490Z env:
+2026-06-08T16:11:21.3328679Z   TZ: Asia/Kolkata
+2026-06-08T16:11:21.3328889Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:11:21.3329116Z   IMAGE_NAME: fineract
+2026-06-08T16:11:21.3329376Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:11:21.3329696Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:11:21.3329987Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:11:21.3330259Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:11:21.3330504Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:11:21.3330747Z   AWS_REGION: us-east-1
+2026-06-08T16:11:21.3330999Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:11:21.3331484Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:11:21.3331813Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:11:21.3332164Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:21.3332536Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:11:21.3332873Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-08T16:11:21.3333152Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-08T16:11:21.3333420Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-08T16:11:21.3333691Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-08T16:11:21.3334085Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-08T16:11:21.3334492Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-08T16:11:21.3334786Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-08T16:11:21.3335047Z ##[endgroup]
+2026-06-08T16:11:22.2172947Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.5/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-06-08T16:11:23.1166160Z Daemon will be stopped at the end of the build 
+2026-06-08T16:11:28.2181783Z > Task :buildSrc:extractPluginRequests UP-TO-DATE
+2026-06-08T16:11:28.2188170Z > Task :buildSrc:generatePluginAdapters UP-TO-DATE
+2026-06-08T16:11:28.2188963Z > Task :buildSrc:compileJava UP-TO-DATE
+2026-06-08T16:11:28.3151096Z > Task :buildSrc:compileGroovy UP-TO-DATE
+2026-06-08T16:11:28.3152232Z > Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+2026-06-08T16:11:28.3152953Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-06-08T16:11:28.3168151Z > Task :buildSrc:processResources UP-TO-DATE
+2026-06-08T16:11:28.3168663Z > Task :buildSrc:classes UP-TO-DATE
+2026-06-08T16:11:28.3169110Z > Task :buildSrc:jar UP-TO-DATE
+2026-06-08T16:11:33.2177718Z 
+2026-06-08T16:11:33.2226489Z > Configure project :
+2026-06-08T16:11:33.2242224Z gather git situation from GitHub Actions environment variable: GITHUB_REF
+2026-06-08T16:11:33.2252755Z matching ref: COMMIT - d4c46acc2de6604f5cedbc8ea39276a35cd3a18c
+2026-06-08T16:11:33.2281695Z   ref configuration: COMMIT - pattern: null
+2026-06-08T16:11:33.2295145Z     version: ${describe.tag.version.major}.${describe.tag.version.minor.next}.0-SNAPSHOT
+2026-06-08T16:11:33.2321693Z     describeTagPattern: .*(\d+\.\d+\.\d+).*
+2026-06-08T16:11:33.2337744Z     describeTagFirstParent: false
+2026-06-08T16:11:33.2338303Z 
+2026-06-08T16:11:33.2338604Z project version: 1.15.0-SNAPSHOT
+2026-06-08T16:11:49.3150346Z 
+2026-06-08T16:11:49.3176840Z > Task :fineract-core:processResources UP-TO-DATE
+2026-06-08T16:11:49.3202116Z > Task :fineract-tax:processResources UP-TO-DATE
+2026-06-08T16:11:49.3232100Z > Task :fineract-charge:processResources UP-TO-DATE
+2026-06-08T16:11:49.4169112Z > Task :fineract-accounting:processResources UP-TO-DATE
+2026-06-08T16:11:49.4198112Z > Task :fineract-branch:processResources UP-TO-DATE
+2026-06-08T16:11:49.4211870Z > Task :fineract-cob:processResources UP-TO-DATE
+2026-06-08T16:11:49.4241911Z > Task :fineract-command-audit:processResources UP-TO-DATE
+2026-06-08T16:11:49.4255538Z > Task :fineract-avro-schemas:compileJava UP-TO-DATE
+2026-06-08T16:11:49.4272090Z > Task :fineract-command-jdbc:processResources UP-TO-DATE
+2026-06-08T16:11:49.4301900Z > Task :fineract-document:processResources NO-SOURCE
+2026-06-08T16:11:49.4332128Z > Task :fineract-rates:processResources UP-TO-DATE
+2026-06-08T16:11:49.4353923Z > Task :fineract-loan:processResources UP-TO-DATE
+2026-06-08T16:11:49.4392079Z > Task :fineract-investor:processResources UP-TO-DATE
+2026-06-08T16:11:49.4392893Z > Task :fineract-avro-schemas:processResources UP-TO-DATE
+2026-06-08T16:11:49.4412828Z > Task :fineract-avro-schemas:classes
+2026-06-08T16:11:49.4414241Z > Task :fineract-loan-origination:processResources UP-TO-DATE
+2026-06-08T16:11:49.4415560Z > Task :fineract-mix:processResources NO-SOURCE
+2026-06-08T16:11:49.5172777Z > Task :fineract-progressive-loan:processResources UP-TO-DATE
+2026-06-08T16:11:49.5202310Z > Task :fineract-avro-schemas:jar UP-TO-DATE
+2026-06-08T16:11:49.5222078Z > Task :fineract-report:processResources UP-TO-DATE
+2026-06-08T16:11:49.5251976Z > Task :fineract-command:compileJava FROM-CACHE
+2026-06-08T16:11:49.5261929Z > Task :fineract-validation:compileJava FROM-CACHE
+2026-06-08T16:11:49.5281906Z > Task :fineract-savings:processResources UP-TO-DATE
+2026-06-08T16:11:49.5311847Z > Task :fineract-security:processResources NO-SOURCE
+2026-06-08T16:11:49.5341912Z > Task :fineract-validation:processResources UP-TO-DATE
+2026-06-08T16:11:49.5347319Z > Task :fineract-validation:classes UP-TO-DATE
+2026-06-08T16:11:49.5371794Z > Task :fineract-command:processResources UP-TO-DATE
+2026-06-08T16:11:49.5401844Z > Task :fineract-command:classes UP-TO-DATE
+2026-06-08T16:11:49.5411864Z > Task :fineract-command:jar UP-TO-DATE
+2026-06-08T16:11:49.5441768Z > Task :fineract-validation:jar UP-TO-DATE
+2026-06-08T16:11:49.5471842Z > Task :fineract-working-capital-loan:processResources UP-TO-DATE
+2026-06-08T16:11:49.5499859Z > Task :fineract-command-audit:compileJava FROM-CACHE
+2026-06-08T16:11:49.5531978Z > Task :fineract-command-audit:classes UP-TO-DATE
+2026-06-08T16:11:49.5555865Z > Task :fineract-command-audit:jar UP-TO-DATE
+2026-06-08T16:11:49.7162696Z > Task :fineract-command-jdbc:compileJava FROM-CACHE
+2026-06-08T16:11:49.7182859Z > Task :fineract-command-jdbc:classes UP-TO-DATE
+2026-06-08T16:11:49.8156169Z > Task :fineract-command-jdbc:jar UP-TO-DATE
+2026-06-08T16:11:50.0152299Z > Task :fineract-core:compileJava FROM-CACHE
+2026-06-08T16:11:50.0224501Z > Task :fineract-core:classes UP-TO-DATE
+2026-06-08T16:11:50.0241908Z > Task :fineract-core:jar UP-TO-DATE
+2026-06-08T16:11:50.1157592Z > Task :fineract-tax:compileJava FROM-CACHE
+2026-06-08T16:11:50.1202138Z > Task :fineract-tax:classes UP-TO-DATE
+2026-06-08T16:11:50.1272227Z > Task :fineract-tax:jar UP-TO-DATE
+2026-06-08T16:11:50.1342170Z > Task :fineract-cob:compileJava FROM-CACHE
+2026-06-08T16:11:50.1392026Z > Task :fineract-cob:classes UP-TO-DATE
+2026-06-08T16:11:50.1431795Z > Task :fineract-cob:jar UP-TO-DATE
+2026-06-08T16:11:50.2162949Z > Task :fineract-document:compileJava FROM-CACHE
+2026-06-08T16:11:50.2232102Z > Task :fineract-document:classes UP-TO-DATE
+2026-06-08T16:11:50.2280591Z > Task :fineract-document:jar UP-TO-DATE
+2026-06-08T16:11:50.2297694Z > Task :fineract-rates:compileJava FROM-CACHE
+2026-06-08T16:11:50.2298424Z > Task :fineract-rates:classes UP-TO-DATE
+2026-06-08T16:11:50.2299213Z > Task :fineract-rates:jar UP-TO-DATE
+2026-06-08T16:11:50.2299815Z > Task :fineract-charge:compileJava FROM-CACHE
+2026-06-08T16:11:50.2300371Z > Task :fineract-charge:classes UP-TO-DATE
+2026-06-08T16:11:50.2300895Z > Task :fineract-charge:jar UP-TO-DATE
+2026-06-08T16:11:50.3166610Z > Task :fineract-report:compileJava FROM-CACHE
+2026-06-08T16:11:50.3188372Z > Task :fineract-report:classes UP-TO-DATE
+2026-06-08T16:11:50.3207807Z > Task :fineract-mix:compileJava FROM-CACHE
+2026-06-08T16:11:50.3243387Z > Task :fineract-mix:classes UP-TO-DATE
+2026-06-08T16:11:50.3261997Z > Task :fineract-report:jar UP-TO-DATE
+2026-06-08T16:11:50.3322366Z > Task :fineract-mix:jar UP-TO-DATE
+2026-06-08T16:11:50.4154372Z > Task :fineract-security:compileJava FROM-CACHE
+2026-06-08T16:11:50.4202295Z > Task :fineract-security:classes UP-TO-DATE
+2026-06-08T16:11:50.4203252Z > Task :fineract-security:jar UP-TO-DATE
+2026-06-08T16:11:50.5163161Z > Task :fineract-accounting:compileJava FROM-CACHE
+2026-06-08T16:11:50.5192664Z > Task :fineract-accounting:classes UP-TO-DATE
+2026-06-08T16:11:50.5212299Z > Task :fineract-accounting:jar UP-TO-DATE
+2026-06-08T16:11:50.7178542Z > Task :fineract-branch:compileJava FROM-CACHE
+2026-06-08T16:11:50.7205790Z > Task :fineract-branch:classes UP-TO-DATE
+2026-06-08T16:11:50.7233470Z > Task :fineract-savings:compileJava FROM-CACHE
+2026-06-08T16:11:50.7258560Z > Task :fineract-savings:classes UP-TO-DATE
+2026-06-08T16:11:50.7262117Z > Task :fineract-branch:jar UP-TO-DATE
+2026-06-08T16:11:50.7301991Z > Task :fineract-savings:jar UP-TO-DATE
+2026-06-08T16:11:51.0172606Z > Task :fineract-loan:compileJava FROM-CACHE
+2026-06-08T16:11:51.0202312Z > Task :fineract-loan:classes UP-TO-DATE
+2026-06-08T16:11:51.0212036Z > Task :fineract-loan:jar UP-TO-DATE
+2026-06-08T16:11:51.2168774Z > Task :fineract-loan-origination:compileJava FROM-CACHE
+2026-06-08T16:11:51.2201710Z > Task :fineract-loan-origination:classes UP-TO-DATE
+2026-06-08T16:11:51.2232089Z > Task :fineract-loan-origination:jar UP-TO-DATE
+2026-06-08T16:11:51.2261778Z > Task :fineract-investor:compileJava FROM-CACHE
+2026-06-08T16:11:51.2284788Z > Task :fineract-investor:classes UP-TO-DATE
+2026-06-08T16:11:51.2301923Z > Task :fineract-progressive-loan:compileJava FROM-CACHE
+2026-06-08T16:11:51.2322040Z > Task :fineract-progressive-loan:classes UP-TO-DATE
+2026-06-08T16:11:51.2341843Z > Task :fineract-progressive-loan:jar UP-TO-DATE
+2026-06-08T16:11:51.2355239Z > Task :fineract-investor:jar UP-TO-DATE
+2026-06-08T16:11:51.2356324Z > Task :fineract-provider:generateGitProperties
+2026-06-08T16:11:51.2357474Z > Task :fineract-provider:generateRebelMain UP-TO-DATE
+2026-06-08T16:11:51.4152001Z > Task :fineract-working-capital-loan:compileJava FROM-CACHE
+2026-06-08T16:11:51.4182463Z > Task :fineract-working-capital-loan:classes UP-TO-DATE
+2026-06-08T16:11:51.4212106Z > Task :fineract-working-capital-loan:jar UP-TO-DATE
+2026-06-08T16:11:51.4231438Z > Task :fineract-provider:processResources
+2026-06-08T16:11:52.5151084Z > Task :fineract-provider:compileJava FROM-CACHE
+2026-06-08T16:11:52.5155020Z > Task :fineract-provider:classes
+2026-06-08T16:11:52.5155736Z > Task :fineract-provider:prepareInputYaml UP-TO-DATE
+2026-06-08T16:12:16.7150176Z > Task :fineract-provider:resolve
+2026-06-08T16:12:16.7198557Z > Task :fineract-provider:resolveMainClassName
+2026-06-08T16:12:20.0150267Z > Task :fineract-provider:bootJar
+2026-06-08T16:12:22.0151589Z 
+2026-06-08T16:12:22.0154493Z > Task :fineract-provider:jibDockerBuild
+2026-06-08T16:12:22.0155075Z 
+2026-06-08T16:12:22.0155773Z Containerizing application to Docker daemon as fineract, fineract:1.15.0-SNAPSHOT, fineract...
+2026-06-08T16:12:22.0156830Z Base image 'azul/zulu-openjdk-alpine:21' does not use a specific image digest - build may not be reproducible
+2026-06-08T16:12:22.0157703Z Getting manifest for base image azul/zulu-openjdk-alpine:21...
+2026-06-08T16:12:22.0158233Z Building dependencies layer...
+2026-06-08T16:12:22.0158613Z Building resources layer...
+2026-06-08T16:12:22.0158986Z Building classes layer...
+2026-06-08T16:12:22.0159374Z Building project dependencies layer...
+2026-06-08T16:12:22.0159807Z Building jvm arg files layer...
+2026-06-08T16:12:22.0160370Z The base image requires auth. Trying again for azul/zulu-openjdk-alpine:21...
+2026-06-08T16:12:22.0161421Z Using credentials from Docker config (/home/runner/.docker/config.json) for azul/zulu-openjdk-alpine:21
+2026-06-08T16:12:40.9149645Z 
+2026-06-08T16:12:40.9152284Z > Task :fineract-provider:jibDockerBuild FAILED
+2026-06-08T16:12:41.0167152Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1780935084563.json
+2026-06-08T16:12:41.0167978Z 
+2026-06-08T16:12:41.0174945Z FAILURE: Build failed with an exception.
+2026-06-08T16:12:41.0175271Z 
+2026-06-08T16:12:41.0175447Z 
+2026-06-08T16:12:41.0175728Z * What went wrong:
+2026-06-08T16:12:41.0176311Z Execution failed for task ':fineract-provider:jibDockerBuild'.
+2026-06-08T16:12:41.0177287Z > com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException: Build to Docker daemon failed
+2026-06-08T16:12:41.0177998Z 
+2026-06-08T16:12:41.0178244Z * Try:
+2026-06-08T16:12:41.0178722Z > Run with --stacktrace option to get the stack trace.
+2026-06-08T16:12:41.0179369Z > Run with --info or --debug option to get more log output.
+2026-06-08T16:12:41.0180000Z > Get more help at https://help.gradle.org.
+2026-06-08T16:12:41.0180425Z 
+2026-06-08T16:12:41.0180679Z BUILD FAILED in 1m 19s
+2026-06-08T16:12:41.0192475Z [Incubating] Problems report is available at: file:///home/runner/work/fineract/fineract/build/reports/problems/problems-report.html
+2026-06-08T16:12:41.0193279Z 
+2026-06-08T16:12:41.0193767Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-06-08T16:12:41.0194451Z 
+2026-06-08T16:12:41.0195148Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-08T16:12:41.0195935Z 
+2026-06-08T16:12:41.0196687Z For more on this, please refer to https://docs.gradle.org/8.14.5/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-08T16:12:41.0197781Z 80 actionable tasks: 6 executed, 22 from cache, 52 up-to-date
+2026-06-08T16:12:41.4019607Z ##[error]Process completed with exit code 1.
+2026-06-08T16:12:41.4096612Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-08T16:12:41.4096974Z with:
+2026-06-08T16:12:41.4097215Z   name: test-results-postgresql-shard-1-attempt-2
+2026-06-08T16:12:41.4097516Z   path: **/build/reports/
+2026-06-08T16:12:41.4097744Z   retention-days: 5
+2026-06-08T16:12:41.4097957Z   compression-level: 9
+2026-06-08T16:12:41.4098176Z   if-no-files-found: warn
+2026-06-08T16:12:41.4098535Z   overwrite: false
+2026-06-08T16:12:41.4098745Z   include-hidden-files: false
+2026-06-08T16:12:41.4098980Z   archive: true
+2026-06-08T16:12:41.4099173Z env:
+2026-06-08T16:12:41.4099356Z   TZ: Asia/Kolkata
+2026-06-08T16:12:41.4099558Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:12:41.4099774Z   IMAGE_NAME: fineract
+2026-06-08T16:12:41.4100031Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:12:41.4100342Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:12:41.4100637Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:12:41.4100945Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:12:41.4101435Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:12:41.4101742Z   AWS_REGION: us-east-1
+2026-06-08T16:12:41.4101968Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:12:41.4102273Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:12:41.4102598Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:12:41.4102946Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:41.4103311Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:41.4103645Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-08T16:12:41.4103929Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-08T16:12:41.4104197Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-08T16:12:41.4104472Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-08T16:12:41.4104854Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-08T16:12:41.4105280Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-08T16:12:41.4105566Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-08T16:12:41.4105821Z ##[endgroup]
+2026-06-08T16:12:43.5415408Z With the provided path, there will be 1 file uploaded
+2026-06-08T16:12:43.5420445Z Artifact name is valid!
+2026-06-08T16:12:43.5420987Z Root directory input is valid!
+2026-06-08T16:12:43.9256993Z Uploading artifact: test-results-postgresql-shard-1-attempt-2.zip
+2026-06-08T16:12:43.9287423Z Beginning upload of artifact content to blob storage
+2026-06-08T16:12:44.3758500Z Uploaded bytes 41754
+2026-06-08T16:12:44.4570735Z Finished uploading artifact content to blob storage!
+2026-06-08T16:12:44.4571674Z SHA256 digest of uploaded artifact is c4c73c644ccfb78c155abde81117c4cc5f92331011e58b8b0a1d002a97e0978f
+2026-06-08T16:12:44.4572338Z Finalizing artifact upload
+2026-06-08T16:12:44.8503014Z Artifact test-results-postgresql-shard-1-attempt-2 successfully finalized. Artifact ID 7485983793
+2026-06-08T16:12:44.8504165Z Artifact test-results-postgresql-shard-1-attempt-2 has been successfully uploaded! Final size is 41754 bytes. Artifact ID is 7485983793
+2026-06-08T16:12:44.8507268Z Artifact download URL: https://github.com/apache/fineract/actions/runs/27146509365/artifacts/7485983793
+2026-06-08T16:12:44.8671614Z ##[group]Run mkdir -p "$DOCKER_LOG_DIR"
+2026-06-08T16:12:44.8671968Z [36;1mmkdir -p "$DOCKER_LOG_DIR"[0m
+2026-06-08T16:12:44.8672324Z [36;1mdocker ps -a > "$DOCKER_LOG_DIR/docker-ps.txt" 2>&1 || true[0m
+2026-06-08T16:12:44.8672800Z [36;1mdocker compose -f "$COMPOSE_FILE" ps --all > "$DOCKER_LOG_DIR/docker-compose-ps.txt" 2>&1 || true[0m
+2026-06-08T16:12:44.8673398Z [36;1mdocker compose -f "$COMPOSE_FILE" logs --no-color --timestamps > "$DOCKER_LOG_DIR/docker-compose.log" 2>&1 || true[0m
+2026-06-08T16:12:44.8673947Z [36;1mdocker stats --no-stream > "$DOCKER_LOG_DIR/docker-stats.txt" 2>&1 || true[0m
+2026-06-08T16:12:44.8674289Z [36;1m[0m
+2026-06-08T16:12:44.8674590Z [36;1mdocker compose -f "$COMPOSE_FILE" ps -q | while read -r container_id; do[0m
+2026-06-08T16:12:44.8674970Z [36;1m  [ -n "$container_id" ] || continue[0m
+2026-06-08T16:12:44.8675478Z [36;1m  container_name="$(docker inspect --format '{{.Name}}' "$container_id" 2>/dev/null | sed 's#^/##; s#[^A-Za-z0-9_.-]#_#g')"[0m
+2026-06-08T16:12:44.8676001Z [36;1m  [ -n "$container_name" ] || container_name="$container_id"[0m
+2026-06-08T16:12:44.8676463Z [36;1m  docker logs --timestamps "$container_id" > "$DOCKER_LOG_DIR/${container_name}.log" 2>&1 || true[0m
+2026-06-08T16:12:44.8677163Z [36;1m  docker inspect "$container_id" > "$DOCKER_LOG_DIR/${container_name}.inspect.json" 2>&1 || true[0m
+2026-06-08T16:12:44.8677553Z [36;1mdone[0m
+2026-06-08T16:12:44.8699809Z shell: /usr/bin/bash -e {0}
+2026-06-08T16:12:44.8700051Z env:
+2026-06-08T16:12:44.8700241Z   TZ: Asia/Kolkata
+2026-06-08T16:12:44.8700456Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:12:44.8700680Z   IMAGE_NAME: fineract
+2026-06-08T16:12:44.8700940Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:12:44.8701524Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:12:44.8701831Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:12:44.8702114Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:12:44.8702376Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:12:44.8702627Z   AWS_REGION: us-east-1
+2026-06-08T16:12:44.8702859Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:12:44.8703172Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:12:44.8703512Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:12:44.8703862Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:44.8704231Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:44.8704570Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-08T16:12:44.8704866Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-08T16:12:44.8705136Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-08T16:12:44.8705410Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-08T16:12:44.8705804Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-08T16:12:44.8706218Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-08T16:12:44.8706515Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-08T16:12:44.8706774Z ##[endgroup]
+2026-06-08T16:12:45.5770273Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-08T16:12:45.5770667Z with:
+2026-06-08T16:12:45.5770914Z   name: server-logs-postgresql-shard-1-attempt-2
+2026-06-08T16:12:45.5771432Z   path: ci-logs/
+build/fineract/logs/
+
+2026-06-08T16:12:45.5771756Z   retention-days: 5
+2026-06-08T16:12:45.5771968Z   compression-level: 9
+2026-06-08T16:12:45.5772187Z   if-no-files-found: warn
+2026-06-08T16:12:45.5772413Z   overwrite: false
+2026-06-08T16:12:45.5772634Z   include-hidden-files: false
+2026-06-08T16:12:45.5772871Z   archive: true
+2026-06-08T16:12:45.5773065Z env:
+2026-06-08T16:12:45.5773257Z   TZ: Asia/Kolkata
+2026-06-08T16:12:45.5773463Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:12:45.5773677Z   IMAGE_NAME: fineract
+2026-06-08T16:12:45.5773934Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:12:45.5774247Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:12:45.5774552Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:12:45.5774871Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:12:45.5775116Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:12:45.5775367Z   AWS_REGION: us-east-1
+2026-06-08T16:12:45.5775599Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:12:45.5775905Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:12:45.5776235Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:12:45.5776586Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:45.5776960Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:45.5777297Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-08T16:12:45.5777584Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-08T16:12:45.5777856Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-08T16:12:45.5778130Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-08T16:12:45.5778521Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-08T16:12:45.5778934Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-08T16:12:45.5779223Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-08T16:12:45.5779671Z ##[endgroup]
+2026-06-08T16:12:45.6882728Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-06-08T16:12:45.6884417Z The least common ancestor is /home/runner/work/fineract/fineract. This will be the root directory of the artifact
+2026-06-08T16:12:45.6885113Z With the provided path, there will be 4 files uploaded
+2026-06-08T16:12:45.6887487Z Artifact name is valid!
+2026-06-08T16:12:45.6887987Z Root directory input is valid!
+2026-06-08T16:12:45.9949925Z Uploading artifact: server-logs-postgresql-shard-1-attempt-2.zip
+2026-06-08T16:12:45.9979196Z Beginning upload of artifact content to blob storage
+2026-06-08T16:12:46.3342966Z Uploaded bytes 920
+2026-06-08T16:12:46.4163688Z Finished uploading artifact content to blob storage!
+2026-06-08T16:12:46.4164947Z SHA256 digest of uploaded artifact is 34f4fe513b9608969e46392f5c37f2180c57823dadb704d9c77dabfdc2f5a1c0
+2026-06-08T16:12:46.4165701Z Finalizing artifact upload
+2026-06-08T16:12:46.7822885Z Artifact server-logs-postgresql-shard-1-attempt-2 successfully finalized. Artifact ID 7485984547
+2026-06-08T16:12:46.7824010Z Artifact server-logs-postgresql-shard-1-attempt-2 has been successfully uploaded! Final size is 920 bytes. Artifact ID is 7485984547
+2026-06-08T16:12:46.7826624Z Artifact download URL: https://github.com/apache/fineract/actions/runs/27146509365/artifacts/7485984547
+2026-06-08T16:12:46.7916662Z ##[group]Run docker compose -f "$COMPOSE_FILE" down -v
+2026-06-08T16:12:46.7917047Z [36;1mdocker compose -f "$COMPOSE_FILE" down -v[0m
+2026-06-08T16:12:46.7939325Z shell: /usr/bin/bash -e {0}
+2026-06-08T16:12:46.7939579Z env:
+2026-06-08T16:12:46.7939784Z   TZ: Asia/Kolkata
+2026-06-08T16:12:46.7940006Z   DEVELOCITY_ACCESS_KEY: 
+2026-06-08T16:12:46.7940243Z   IMAGE_NAME: fineract
+2026-06-08T16:12:46.7940510Z   COMPOSE_FILE: docker-compose-postgresql-test.yml
+2026-06-08T16:12:46.7940847Z   DOCKER_LOG_DIR: ci-logs/postgresql-shard-1
+2026-06-08T16:12:46.7941330Z   AWS_ENDPOINT_URL: http://localhost:4566
+2026-06-08T16:12:46.7941642Z   AWS_ACCESS_KEY_ID: localstack
+2026-06-08T16:12:46.7941898Z   AWS_SECRET_ACCESS_KEY: localstack
+2026-06-08T16:12:46.7942151Z   AWS_REGION: us-east-1
+2026-06-08T16:12:46.7942394Z   FINERACT_REPORT_EXPORT_S3_ENABLED: true
+2026-06-08T16:12:46.7942714Z   FINERACT_REPORT_EXPORT_S3_BUCKET_NAME: fineract-reports
+2026-06-08T16:12:46.7943093Z   FINERACT_TEST_EXTERNAL_HOST: host.docker.internal
+2026-06-08T16:12:46.7943450Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:46.7943837Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-06-08T16:12:46.7944187Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-08T16:12:46.7944486Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-08T16:12:46.7944769Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-08T16:12:46.7945060Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-08T16:12:46.7945458Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-08T16:12:46.7945891Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-08T16:12:46.7946190Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-08T16:12:46.7946462Z ##[endgroup]
+2026-06-08T16:12:46.8667499Z Post job cleanup.
+2026-06-08T16:12:47.1556798Z In post-action step
+2026-06-08T16:12:47.1564391Z Cache is read-only: will not save state for use in subsequent builds.
+2026-06-08T16:12:47.1569248Z Generating Job Summary
+2026-06-08T16:12:47.1585456Z Completed post-action step
+2026-06-08T16:12:47.1757021Z Post job cleanup.
+2026-06-08T16:12:47.2839947Z Cleaning up orphan processes

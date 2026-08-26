@@ -1,0 +1,1022 @@
+﻿2026-05-25T10:38:09.0259896Z Current runner version: '2.334.0'
+2026-05-25T10:38:09.0284149Z ##[group]Runner Image Provisioner
+2026-05-25T10:38:09.0285003Z Hosted Compute Agent
+2026-05-25T10:38:09.0285584Z Version: 20260213.493
+2026-05-25T10:38:09.0286329Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-25T10:38:09.0287077Z Build Date: 2026-02-13T00:28:41Z
+2026-05-25T10:38:09.0287800Z Worker ID: {42b7adee-8d15-4273-a503-5dd226cf46b7}
+2026-05-25T10:38:09.0288771Z Azure Region: westus3
+2026-05-25T10:38:09.0289384Z ##[endgroup]
+2026-05-25T10:38:09.0291200Z ##[group]Operating System
+2026-05-25T10:38:09.0291847Z Ubuntu
+2026-05-25T10:38:09.0292417Z 24.04.4
+2026-05-25T10:38:09.0292951Z LTS
+2026-05-25T10:38:09.0293494Z ##[endgroup]
+2026-05-25T10:38:09.0294089Z ##[group]Runner Image
+2026-05-25T10:38:09.0294701Z Image: ubuntu-24.04
+2026-05-25T10:38:09.0295245Z Version: 20260518.149.1
+2026-05-25T10:38:09.0296541Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260518.149/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-25T10:38:09.0298401Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260518.149
+2026-05-25T10:38:09.0299410Z ##[endgroup]
+2026-05-25T10:38:09.0302212Z ##[group]GITHUB_TOKEN Permissions
+2026-05-25T10:38:09.0304255Z Actions: read
+2026-05-25T10:38:09.0304897Z ArtifactMetadata: read
+2026-05-25T10:38:09.0305649Z Attestations: read
+2026-05-25T10:38:09.0306237Z Checks: read
+2026-05-25T10:38:09.0306844Z CodeQuality: read
+2026-05-25T10:38:09.0307421Z Contents: read
+2026-05-25T10:38:09.0308230Z Deployments: read
+2026-05-25T10:38:09.0308902Z Discussions: read
+2026-05-25T10:38:09.0309471Z Issues: read
+2026-05-25T10:38:09.0310042Z Metadata: read
+2026-05-25T10:38:09.0310602Z Models: read
+2026-05-25T10:38:09.0311163Z Packages: read
+2026-05-25T10:38:09.0311846Z Pages: read
+2026-05-25T10:38:09.0312395Z PullRequests: read
+2026-05-25T10:38:09.0312973Z RepositoryProjects: read
+2026-05-25T10:38:09.0313695Z SecurityEvents: read
+2026-05-25T10:38:09.0314305Z Statuses: read
+2026-05-25T10:38:09.0314910Z VulnerabilityAlerts: read
+2026-05-25T10:38:09.0315504Z ##[endgroup]
+2026-05-25T10:38:09.0317534Z Secret source: None
+2026-05-25T10:38:09.0318591Z Prepare workflow directory
+2026-05-25T10:38:09.0844072Z Prepare all required actions
+2026-05-25T10:38:09.0880790Z Getting action download info
+2026-05-25T10:38:09.5867472Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-05-25T10:38:09.7298978Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-05-25T10:38:10.9299233Z Download action repository 'gradle/actions@v5' (SHA:0723195856401067f7a2779048b490ace7a47d7c)
+2026-05-25T10:38:12.7465949Z Complete job name: Sanity Check 🦢
+2026-05-25T10:38:12.8095932Z ##[group]Run actions/checkout@v6
+2026-05-25T10:38:12.8096545Z with:
+2026-05-25T10:38:12.8096763Z   fetch-depth: 0
+2026-05-25T10:38:12.8097005Z   repository: diffplug/spotless
+2026-05-25T10:38:12.8100032Z   token: ***
+2026-05-25T10:38:12.8100250Z   ssh-strict: true
+2026-05-25T10:38:12.8100478Z   ssh-user: git
+2026-05-25T10:38:12.8100689Z   persist-credentials: true
+2026-05-25T10:38:12.8100939Z   clean: true
+2026-05-25T10:38:12.8101150Z   sparse-checkout-cone-mode: true
+2026-05-25T10:38:12.8101413Z   fetch-tags: false
+2026-05-25T10:38:12.8101635Z   show-progress: true
+2026-05-25T10:38:12.8101844Z   lfs: false
+2026-05-25T10:38:12.8102031Z   submodules: false
+2026-05-25T10:38:12.8102246Z   set-safe-directory: true
+2026-05-25T10:38:12.8102724Z env:
+2026-05-25T10:38:12.8102925Z   buildcacheuser: 
+2026-05-25T10:38:12.8103135Z   buildcachepass: 
+2026-05-25T10:38:12.8103337Z ##[endgroup]
+2026-05-25T10:38:12.9126913Z Syncing repository: diffplug/spotless
+2026-05-25T10:38:12.9128829Z ##[group]Getting Git version info
+2026-05-25T10:38:12.9129314Z Working directory is '/home/runner/work/spotless/spotless'
+2026-05-25T10:38:12.9129917Z [command]/usr/bin/git version
+2026-05-25T10:38:12.9185408Z git version 2.54.0
+2026-05-25T10:38:12.9209244Z ##[endgroup]
+2026-05-25T10:38:12.9225002Z Temporarily overriding HOME='/home/runner/work/_temp/c7e8b676-4287-4224-940f-99b8519c938d' before making global git config changes
+2026-05-25T10:38:12.9226526Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-25T10:38:12.9231703Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/spotless/spotless
+2026-05-25T10:38:12.9280433Z Deleting the contents of '/home/runner/work/spotless/spotless'
+2026-05-25T10:38:12.9285114Z ##[group]Initializing the repository
+2026-05-25T10:38:12.9290159Z [command]/usr/bin/git init /home/runner/work/spotless/spotless
+2026-05-25T10:38:12.9419619Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-25T10:38:12.9420578Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-25T10:38:12.9421156Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-25T10:38:12.9421577Z hint: call:
+2026-05-25T10:38:12.9421786Z hint:
+2026-05-25T10:38:12.9422123Z hint: 	git config --global init.defaultBranch <name>
+2026-05-25T10:38:12.9422462Z hint:
+2026-05-25T10:38:12.9422770Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-25T10:38:12.9423786Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-25T10:38:12.9424460Z hint:
+2026-05-25T10:38:12.9424689Z hint: 	git branch -m <name>
+2026-05-25T10:38:12.9425039Z hint:
+2026-05-25T10:38:12.9425709Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-25T10:38:12.9426855Z Initialized empty Git repository in /home/runner/work/spotless/spotless/.git/
+2026-05-25T10:38:12.9436982Z [command]/usr/bin/git remote add origin https://github.com/diffplug/spotless
+2026-05-25T10:38:12.9480940Z ##[endgroup]
+2026-05-25T10:38:12.9481637Z ##[group]Disabling automatic garbage collection
+2026-05-25T10:38:12.9485817Z [command]/usr/bin/git config --local gc.auto 0
+2026-05-25T10:38:12.9514500Z ##[endgroup]
+2026-05-25T10:38:12.9515178Z ##[group]Setting up auth
+2026-05-25T10:38:12.9515834Z Removing SSH command configuration
+2026-05-25T10:38:12.9522536Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-25T10:38:12.9557020Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-25T10:38:12.9900468Z Removing HTTP extra header
+2026-05-25T10:38:12.9906344Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-25T10:38:12.9937861Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-25T10:38:13.0166442Z Removing includeIf entries pointing to credentials config files
+2026-05-25T10:38:13.0173818Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-25T10:38:13.0206620Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-25T10:38:13.0428828Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-25T10:38:13.0464914Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/spotless/spotless/.git.path /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:38:13.0495717Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/spotless/spotless/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:38:13.0529442Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:38:13.0560320Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:38:13.0587188Z ##[endgroup]
+2026-05-25T10:38:13.0587590Z ##[group]Fetching the repository
+2026-05-25T10:38:13.0597714Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +90a3404d6876bdeec63c1d1be9842bbce2e85d77:refs/remotes/pull/2935/merge
+2026-05-25T10:38:15.8189977Z From https://github.com/diffplug/spotless
+2026-05-25T10:38:15.8191828Z  * [new branch]          feat/cleanup-breaking-changes -> origin/feat/cleanup-breaking-changes
+2026-05-25T10:38:15.8193536Z  * [new branch]          feat/config-cache-implement -> origin/feat/config-cache-implement
+2026-05-25T10:38:15.8194712Z  * [new branch]          feat/equo-wtp             -> origin/feat/equo-wtp
+2026-05-25T10:38:15.8195936Z  * [new branch]          feat/git-rachet-debug     -> origin/feat/git-rachet-debug
+2026-05-25T10:38:15.8197147Z  * [new branch]          feat/ide-hook-future-compat -> origin/feat/ide-hook-future-compat
+2026-05-25T10:38:15.8198521Z  * [new branch]          feat/java-25              -> origin/feat/java-25
+2026-05-25T10:38:15.8199340Z  * [new branch]          feat/lint                 -> origin/feat/lint
+2026-05-25T10:38:15.8200741Z  * [new branch]          feature/783-license-git-history-respects-existing-dates -> origin/feature/783-license-git-history-respects-existing-dates
+2026-05-25T10:38:15.8202143Z  * [new branch]          g/20260307/include-build  -> origin/g/20260307/include-build
+2026-05-25T10:38:15.8203026Z  * [new branch]          gh-pages                  -> origin/gh-pages
+2026-05-25T10:38:15.8203957Z  * [new branch]          ifgitdiff                 -> origin/ifgitdiff
+2026-05-25T10:38:15.8204801Z  * [new branch]          investigate-1087          -> origin/investigate-1087
+2026-05-25T10:38:15.8205710Z  * [new branch]          issue_292                 -> origin/issue_292
+2026-05-25T10:38:15.8207078Z  * [new branch]          license-header-example    -> origin/license-header-example
+2026-05-25T10:38:15.8207976Z  * [new branch]          main                      -> origin/main
+2026-05-25T10:38:15.8209211Z  * [new branch]          no-system-change-per-default -> origin/no-system-change-per-default
+2026-05-25T10:38:15.8210148Z  * [new branch]          release                   -> origin/release
+2026-05-25T10:38:15.8210930Z  * [new branch]          relocate-jgit             -> origin/relocate-jgit
+2026-05-25T10:38:15.8212369Z  * [new branch]          renovate/com.facebook-ktfmt-0.x -> origin/renovate/com.facebook-ktfmt-0.x
+2026-05-25T10:38:15.8214115Z  * [new branch]          renovate/com.github.javaparser-javaparser-symbol-solver-core-3.x -> origin/renovate/com.github.javaparser-javaparser-symbol-solver-core-3.x
+2026-05-25T10:38:15.8216283Z  * [new branch]          renovate/com.google.googlejavaformat-google-java-format-1.x -> origin/renovate/com.google.googlejavaformat-google-java-format-1.x
+2026-05-25T10:38:15.8217924Z  * [new branch]          renovate/error-prone-monorepo -> origin/renovate/error-prone-monorepo
+2026-05-25T10:38:15.8219248Z  * [new branch]          renovate/gradle-9.x       -> origin/renovate/gradle-9.x
+2026-05-25T10:38:15.8220468Z  * [new branch]          renovate/io.cucumber-gherkin-utils-11.x -> origin/renovate/io.cucumber-gherkin-utils-11.x
+2026-05-25T10:38:15.8221994Z  * [new branch]          renovate/io.github.solven-eu.cleanthat-java-2.x -> origin/renovate/io.github.solven-eu.cleanthat-java-2.x
+2026-05-25T10:38:15.8223319Z  * [new branch]          renovate/jackson-monorepo -> origin/renovate/jackson-monorepo
+2026-05-25T10:38:15.8224280Z  * [new branch]          renovate/maven.api        -> origin/renovate/maven.api
+2026-05-25T10:38:15.8225594Z  * [new branch]          renovate/org.scalameta-scalafmt-core_2.13-3.x -> origin/renovate/org.scalameta-scalafmt-core_2.13-3.x
+2026-05-25T10:38:15.8227193Z  * [new branch]          repro/747                 -> origin/repro/747
+2026-05-25T10:38:15.8228748Z  * [new branch]          revert-2242-feat/cli-workaround-not-needed -> origin/revert-2242-feat/cli-workaround-not-needed
+2026-05-25T10:38:15.8229984Z  * [new branch]          save-gradle-locks         -> origin/save-gradle-locks
+2026-05-25T10:38:15.8230900Z  * [new tag]             ext-eclipse-base/3.0.0    -> ext-eclipse-base/3.0.0
+2026-05-25T10:38:15.8231746Z  * [new tag]             ext-eclipse-base/3.1.0    -> ext-eclipse-base/3.1.0
+2026-05-25T10:38:15.8232604Z  * [new tag]             ext-eclipse-base/3.1.1    -> ext-eclipse-base/3.1.1
+2026-05-25T10:38:15.8233458Z  * [new tag]             ext-eclipse-base/3.2.0    -> ext-eclipse-base/3.2.0
+2026-05-25T10:38:15.8234308Z  * [new tag]             ext-eclipse-base/3.2.1    -> ext-eclipse-base/3.2.1
+2026-05-25T10:38:15.8235154Z  * [new tag]             ext-eclipse-base/3.3.0    -> ext-eclipse-base/3.3.0
+2026-05-25T10:38:15.8235991Z  * [new tag]             ext-eclipse-base/3.4.0    -> ext-eclipse-base/3.4.0
+2026-05-25T10:38:15.8236812Z  * [new tag]             ext-eclipse-base/3.4.1    -> ext-eclipse-base/3.4.1
+2026-05-25T10:38:15.8237623Z  * [new tag]             ext-eclipse-base/3.4.2    -> ext-eclipse-base/3.4.2
+2026-05-25T10:38:15.8238915Z  * [new tag]             ext-eclipse-base/3.5.0    -> ext-eclipse-base/3.5.0
+2026-05-25T10:38:15.8239756Z  * [new tag]             ext-eclipse-base/3.5.1    -> ext-eclipse-base/3.5.1
+2026-05-25T10:38:15.8240688Z  * [new tag]             ext-eclipse-base/3.5.2    -> ext-eclipse-base/3.5.2
+2026-05-25T10:38:15.8241505Z  * [new tag]             ext-eclipse-cdt/10.0.0    -> ext-eclipse-cdt/10.0.0
+2026-05-25T10:38:15.8242348Z  * [new tag]             ext-eclipse-cdt/10.1.0    -> ext-eclipse-cdt/10.1.0
+2026-05-25T10:38:15.8243181Z  * [new tag]             ext-eclipse-cdt/10.2.0    -> ext-eclipse-cdt/10.2.0
+2026-05-25T10:38:15.8244011Z  * [new tag]             ext-eclipse-cdt/10.3.0    -> ext-eclipse-cdt/10.3.0
+2026-05-25T10:38:15.8244866Z  * [new tag]             ext-eclipse-cdt/10.4.0    -> ext-eclipse-cdt/10.4.0
+2026-05-25T10:38:15.8245716Z  * [new tag]             ext-eclipse-cdt/10.5.0    -> ext-eclipse-cdt/10.5.0
+2026-05-25T10:38:15.8246554Z  * [new tag]             ext-eclipse-cdt/9.10.0    -> ext-eclipse-cdt/9.10.0
+2026-05-25T10:38:15.8247389Z  * [new tag]             ext-eclipse-cdt/9.11.0    -> ext-eclipse-cdt/9.11.0
+2026-05-25T10:38:15.8248550Z  * [new tag]             ext-eclipse-cdt/9.4.3     -> ext-eclipse-cdt/9.4.3
+2026-05-25T10:38:15.8249429Z  * [new tag]             ext-eclipse-cdt/9.4.4     -> ext-eclipse-cdt/9.4.4
+2026-05-25T10:38:15.8250490Z  * [new tag]             ext-eclipse-cdt/9.4.5     -> ext-eclipse-cdt/9.4.5
+2026-05-25T10:38:15.8251352Z  * [new tag]             ext-eclipse-cdt/9.7.0     -> ext-eclipse-cdt/9.7.0
+2026-05-25T10:38:15.8252188Z  * [new tag]             ext-eclipse-cdt/9.8.0     -> ext-eclipse-cdt/9.8.0
+2026-05-25T10:38:15.8252995Z  * [new tag]             ext-eclipse-cdt/9.8.1     -> ext-eclipse-cdt/9.8.1
+2026-05-25T10:38:15.8253828Z  * [new tag]             ext-eclipse-cdt/9.9.0     -> ext-eclipse-cdt/9.9.0
+2026-05-25T10:38:15.8254727Z  * [new tag]             ext-eclipse-groovy/2.9.2  -> ext-eclipse-groovy/2.9.2
+2026-05-25T10:38:15.8255651Z  * [new tag]             ext-eclipse-groovy/3.0.0  -> ext-eclipse-groovy/3.0.0
+2026-05-25T10:38:15.8256565Z  * [new tag]             ext-eclipse-groovy/3.0.1  -> ext-eclipse-groovy/3.0.1
+2026-05-25T10:38:15.8257485Z  * [new tag]             ext-eclipse-groovy/3.2.0  -> ext-eclipse-groovy/3.2.0
+2026-05-25T10:38:15.8258648Z  * [new tag]             ext-eclipse-groovy/3.4.0  -> ext-eclipse-groovy/3.4.0
+2026-05-25T10:38:15.8259556Z  * [new tag]             ext-eclipse-groovy/3.5.0  -> ext-eclipse-groovy/3.5.0
+2026-05-25T10:38:15.8260452Z  * [new tag]             ext-eclipse-groovy/3.6.0  -> ext-eclipse-groovy/3.6.0
+2026-05-25T10:38:15.8261369Z  * [new tag]             ext-eclipse-groovy/3.7.0  -> ext-eclipse-groovy/3.7.0
+2026-05-25T10:38:15.8262503Z  * [new tag]             ext-eclipse-groovy/3.8.0  -> ext-eclipse-groovy/3.8.0
+2026-05-25T10:38:15.8263405Z  * [new tag]             ext-eclipse-groovy/3.8.1  -> ext-eclipse-groovy/3.8.1
+2026-05-25T10:38:15.8264334Z  * [new tag]             ext-eclipse-groovy/3.9.0  -> ext-eclipse-groovy/3.9.0
+2026-05-25T10:38:15.8265239Z  * [new tag]             ext-eclipse-groovy/4.0.0  -> ext-eclipse-groovy/4.0.0
+2026-05-25T10:38:15.8266123Z  * [new tag]             ext-eclipse-groovy/4.1.0  -> ext-eclipse-groovy/4.1.0
+2026-05-25T10:38:15.8266990Z  * [new tag]             ext-eclipse-groovy/4.2.0  -> ext-eclipse-groovy/4.2.0
+2026-05-25T10:38:15.8267867Z  * [new tag]             ext-eclipse-groovy/4.3.0  -> ext-eclipse-groovy/4.3.0
+2026-05-25T10:38:15.8269075Z  * [new tag]             ext-eclipse-jdt/4.6.3     -> ext-eclipse-jdt/4.6.3
+2026-05-25T10:38:15.8269970Z  * [new tag]             ext-eclipse-jdt/4.7.0     -> ext-eclipse-jdt/4.7.0
+2026-05-25T10:38:15.8270842Z  * [new tag]             ext-eclipse-jdt/4.7.1     -> ext-eclipse-jdt/4.7.1
+2026-05-25T10:38:15.8271701Z  * [new tag]             ext-eclipse-jdt/4.7.2     -> ext-eclipse-jdt/4.7.2
+2026-05-25T10:38:15.8272545Z  * [new tag]             ext-eclipse-jdt/4.8.0     -> ext-eclipse-jdt/4.8.0
+2026-05-25T10:38:15.8273386Z  * [new tag]             ext-eclipse-jdt/4.8.1     -> ext-eclipse-jdt/4.8.1
+2026-05-25T10:38:15.8274278Z  * [new tag]             ext-eclipse-wtp/3.10.0    -> ext-eclipse-wtp/3.10.0
+2026-05-25T10:38:15.8275152Z  * [new tag]             ext-eclipse-wtp/3.14.0    -> ext-eclipse-wtp/3.14.0
+2026-05-25T10:38:15.8276032Z  * [new tag]             ext-eclipse-wtp/3.15.0    -> ext-eclipse-wtp/3.15.0
+2026-05-25T10:38:15.8276913Z  * [new tag]             ext-eclipse-wtp/3.15.1    -> ext-eclipse-wtp/3.15.1
+2026-05-25T10:38:15.8277770Z  * [new tag]             ext-eclipse-wtp/3.15.2    -> ext-eclipse-wtp/3.15.2
+2026-05-25T10:38:15.8278921Z  * [new tag]             ext-eclipse-wtp/3.15.3    -> ext-eclipse-wtp/3.15.3
+2026-05-25T10:38:15.8279793Z  * [new tag]             ext-eclipse-wtp/3.16.0    -> ext-eclipse-wtp/3.16.0
+2026-05-25T10:38:15.8280657Z  * [new tag]             ext-eclipse-wtp/3.17.0    -> ext-eclipse-wtp/3.17.0
+2026-05-25T10:38:15.8281524Z  * [new tag]             ext-eclipse-wtp/3.18.0    -> ext-eclipse-wtp/3.18.0
+2026-05-25T10:38:15.8282374Z  * [new tag]             ext-eclipse-wtp/3.18.1    -> ext-eclipse-wtp/3.18.1
+2026-05-25T10:38:15.8283208Z  * [new tag]             ext-eclipse-wtp/3.19.0    -> ext-eclipse-wtp/3.19.0
+2026-05-25T10:38:15.8284053Z  * [new tag]             ext-eclipse-wtp/3.20.0    -> ext-eclipse-wtp/3.20.0
+2026-05-25T10:38:15.8284869Z  * [new tag]             ext-eclipse-wtp/3.21.0    -> ext-eclipse-wtp/3.21.0
+2026-05-25T10:38:15.8285921Z  * [new tag]             ext-eclipse-wtp/3.22.0    -> ext-eclipse-wtp/3.22.0
+2026-05-25T10:38:15.8286770Z  * [new tag]             ext-eclipse-wtp/3.23.0    -> ext-eclipse-wtp/3.23.0
+2026-05-25T10:38:15.8287619Z  * [new tag]             ext-eclipse-wtp/3.9.5     -> ext-eclipse-wtp/3.9.5
+2026-05-25T10:38:15.8288794Z  * [new tag]             ext-eclipse-wtp/3.9.6     -> ext-eclipse-wtp/3.9.6
+2026-05-25T10:38:15.8289678Z  * [new tag]             ext-eclipse-wtp/3.9.7     -> ext-eclipse-wtp/3.9.7
+2026-05-25T10:38:15.8290538Z  * [new tag]             ext-eclipse-wtp/3.9.8     -> ext-eclipse-wtp/3.9.8
+2026-05-25T10:38:15.8291346Z  * [new tag]             ext-greclipse/2.3.0       -> ext-greclipse/2.3.0
+2026-05-25T10:38:15.8292146Z  * [new tag]             gradle/3.0.0              -> gradle/3.0.0
+2026-05-25T10:38:15.8292908Z  * [new tag]             gradle/3.0.0.ALPHA        -> gradle/3.0.0.ALPHA
+2026-05-25T10:38:15.8293686Z  * [new tag]             gradle/3.0.0.BETA         -> gradle/3.0.0.BETA
+2026-05-25T10:38:15.8294478Z  * [new tag]             gradle/3.0.0.BETA2        -> gradle/3.0.0.BETA2
+2026-05-25T10:38:15.8295276Z  * [new tag]             gradle/3.0.0.BETA3        -> gradle/3.0.0.BETA3
+2026-05-25T10:38:15.8296079Z  * [new tag]             gradle/3.0.0.RC1          -> gradle/3.0.0.RC1
+2026-05-25T10:38:15.8297175Z  * [new tag]             gradle/3.0.0.RC2          -> gradle/3.0.0.RC2
+2026-05-25T10:38:15.8297944Z  * [new tag]             gradle/3.1.0              -> gradle/3.1.0
+2026-05-25T10:38:15.8298982Z  * [new tag]             gradle/3.10.0             -> gradle/3.10.0
+2026-05-25T10:38:15.8299737Z  * [new tag]             gradle/3.12.0             -> gradle/3.12.0
+2026-05-25T10:38:15.8300474Z  * [new tag]             gradle/3.13.0             -> gradle/3.13.0
+2026-05-25T10:38:15.8301199Z  * [new tag]             gradle/3.14.0             -> gradle/3.14.0
+2026-05-25T10:38:15.8301894Z  * [new tag]             gradle/3.15.0             -> gradle/3.15.0
+2026-05-25T10:38:15.8302609Z  * [new tag]             gradle/3.16.0             -> gradle/3.16.0
+2026-05-25T10:38:15.8303434Z  * [new tag]             gradle/3.17.0             -> gradle/3.17.0
+2026-05-25T10:38:15.8304153Z  * [new tag]             gradle/3.18.0             -> gradle/3.18.0
+2026-05-25T10:38:15.8304870Z  * [new tag]             gradle/3.19.0             -> gradle/3.19.0
+2026-05-25T10:38:15.8305616Z  * [new tag]             gradle/3.2.0              -> gradle/3.2.0
+2026-05-25T10:38:15.8306339Z  * [new tag]             gradle/3.20.0             -> gradle/3.20.0
+2026-05-25T10:38:15.8307064Z  * [new tag]             gradle/3.21.0             -> gradle/3.21.0
+2026-05-25T10:38:15.8307799Z  * [new tag]             gradle/3.21.1             -> gradle/3.21.1
+2026-05-25T10:38:15.8308786Z  * [new tag]             gradle/3.22.0             -> gradle/3.22.0
+2026-05-25T10:38:15.8309492Z  * [new tag]             gradle/3.23.0             -> gradle/3.23.0
+2026-05-25T10:38:15.8310188Z  * [new tag]             gradle/3.23.1             -> gradle/3.23.1
+2026-05-25T10:38:15.8310885Z  * [new tag]             gradle/3.24.0             -> gradle/3.24.0
+2026-05-25T10:38:15.8311572Z  * [new tag]             gradle/3.24.1             -> gradle/3.24.1
+2026-05-25T10:38:15.8312254Z  * [new tag]             gradle/3.24.2             -> gradle/3.24.2
+2026-05-25T10:38:15.8312952Z  * [new tag]             gradle/3.24.3             -> gradle/3.24.3
+2026-05-25T10:38:15.8313650Z  * [new tag]             gradle/3.25.0             -> gradle/3.25.0
+2026-05-25T10:38:15.8314386Z  * [new tag]             gradle/3.26.0             -> gradle/3.26.0
+2026-05-25T10:38:15.8315119Z  * [new tag]             gradle/3.26.1             -> gradle/3.26.1
+2026-05-25T10:38:15.8315854Z  * [new tag]             gradle/3.27.0             -> gradle/3.27.0
+2026-05-25T10:38:15.8316576Z  * [new tag]             gradle/3.27.1             -> gradle/3.27.1
+2026-05-25T10:38:15.8317322Z  * [new tag]             gradle/3.27.2             -> gradle/3.27.2
+2026-05-25T10:38:15.8318572Z  * [new tag]             gradle/3.28.0             -> gradle/3.28.0
+2026-05-25T10:38:15.8319399Z  * [new tag]             gradle/3.28.1             -> gradle/3.28.1
+2026-05-25T10:38:15.8320144Z  * [new tag]             gradle/3.29.0             -> gradle/3.29.0
+2026-05-25T10:38:15.8320875Z  * [new tag]             gradle/3.3.0              -> gradle/3.3.0
+2026-05-25T10:38:15.8321627Z  * [new tag]             gradle/3.3.2              -> gradle/3.3.2
+2026-05-25T10:38:15.8322359Z  * [new tag]             gradle/3.30.0             -> gradle/3.30.0
+2026-05-25T10:38:15.8323089Z  * [new tag]             gradle/3.4.0              -> gradle/3.4.0
+2026-05-25T10:38:15.8323899Z  * [new tag]             gradle/3.4.1              -> gradle/3.4.1
+2026-05-25T10:38:15.8324624Z  * [new tag]             gradle/3.5.0              -> gradle/3.5.0
+2026-05-25T10:38:15.8325324Z  * [new tag]             gradle/3.5.1              -> gradle/3.5.1
+2026-05-25T10:38:15.8326024Z  * [new tag]             gradle/3.5.2              -> gradle/3.5.2
+2026-05-25T10:38:15.8326729Z  * [new tag]             gradle/3.6.0              -> gradle/3.6.0
+2026-05-25T10:38:15.8327438Z  * [new tag]             gradle/3.7.0              -> gradle/3.7.0
+2026-05-25T10:38:15.8328440Z  * [new tag]             gradle/3.8.0              -> gradle/3.8.0
+2026-05-25T10:38:15.8329166Z  * [new tag]             gradle/3.9.0              -> gradle/3.9.0
+2026-05-25T10:38:15.8330111Z  * [new tag]             gradle/4.0.0              -> gradle/4.0.0
+2026-05-25T10:38:15.8330801Z  * [new tag]             gradle/4.0.1              -> gradle/4.0.1
+2026-05-25T10:38:15.8331493Z  * [new tag]             gradle/4.1.0              -> gradle/4.1.0
+2026-05-25T10:38:15.8332197Z  * [new tag]             gradle/4.2.0              -> gradle/4.2.0
+2026-05-25T10:38:15.8332918Z  * [new tag]             gradle/4.2.1              -> gradle/4.2.1
+2026-05-25T10:38:15.8333654Z  * [new tag]             gradle/4.3.0              -> gradle/4.3.0
+2026-05-25T10:38:15.8334360Z  * [new tag]             gradle/4.3.1              -> gradle/4.3.1
+2026-05-25T10:38:15.8335070Z  * [new tag]             gradle/4.4.0              -> gradle/4.4.0
+2026-05-25T10:38:15.8335772Z  * [new tag]             gradle/4.5.0              -> gradle/4.5.0
+2026-05-25T10:38:15.8336467Z  * [new tag]             gradle/4.5.1              -> gradle/4.5.1
+2026-05-25T10:38:15.8337151Z  * [new tag]             gradle/5.0.0              -> gradle/5.0.0
+2026-05-25T10:38:15.8337848Z  * [new tag]             gradle/5.1.0              -> gradle/5.1.0
+2026-05-25T10:38:15.8338930Z  * [new tag]             gradle/5.1.1              -> gradle/5.1.1
+2026-05-25T10:38:15.8339630Z  * [new tag]             gradle/5.1.2              -> gradle/5.1.2
+2026-05-25T10:38:15.8340333Z  * [new tag]             gradle/5.10.0             -> gradle/5.10.0
+2026-05-25T10:38:15.8341026Z  * [new tag]             gradle/5.10.1             -> gradle/5.10.1
+2026-05-25T10:38:15.8341720Z  * [new tag]             gradle/5.10.2             -> gradle/5.10.2
+2026-05-25T10:38:15.8342424Z  * [new tag]             gradle/5.11.0             -> gradle/5.11.0
+2026-05-25T10:38:15.8343113Z  * [new tag]             gradle/5.11.1             -> gradle/5.11.1
+2026-05-25T10:38:15.8343792Z  * [new tag]             gradle/5.12.0             -> gradle/5.12.0
+2026-05-25T10:38:15.8344490Z  * [new tag]             gradle/5.12.1             -> gradle/5.12.1
+2026-05-25T10:38:15.8345189Z  * [new tag]             gradle/5.12.2             -> gradle/5.12.2
+2026-05-25T10:38:15.8345883Z  * [new tag]             gradle/5.12.3             -> gradle/5.12.3
+2026-05-25T10:38:15.8346567Z  * [new tag]             gradle/5.12.4             -> gradle/5.12.4
+2026-05-25T10:38:15.8347249Z  * [new tag]             gradle/5.12.5             -> gradle/5.12.5
+2026-05-25T10:38:15.8347925Z  * [new tag]             gradle/5.13.0             -> gradle/5.13.0
+2026-05-25T10:38:15.8348932Z  * [new tag]             gradle/5.14.0             -> gradle/5.14.0
+2026-05-25T10:38:15.8349616Z  * [new tag]             gradle/5.14.1             -> gradle/5.14.1
+2026-05-25T10:38:15.8350528Z  * [new tag]             gradle/5.14.2             -> gradle/5.14.2
+2026-05-25T10:38:15.8351251Z  * [new tag]             gradle/5.14.3             -> gradle/5.14.3
+2026-05-25T10:38:15.8351951Z  * [new tag]             gradle/5.15.0             -> gradle/5.15.0
+2026-05-25T10:38:15.8352629Z  * [new tag]             gradle/5.15.1             -> gradle/5.15.1
+2026-05-25T10:38:15.8353310Z  * [new tag]             gradle/5.15.2             -> gradle/5.15.2
+2026-05-25T10:38:15.8353971Z  * [new tag]             gradle/5.16.0             -> gradle/5.16.0
+2026-05-25T10:38:15.8354637Z  * [new tag]             gradle/5.17.0             -> gradle/5.17.0
+2026-05-25T10:38:15.8355285Z  * [new tag]             gradle/5.17.1             -> gradle/5.17.1
+2026-05-25T10:38:15.8355946Z  * [new tag]             gradle/5.2.0              -> gradle/5.2.0
+2026-05-25T10:38:15.8356607Z  * [new tag]             gradle/5.3.0              -> gradle/5.3.0
+2026-05-25T10:38:15.8357288Z  * [new tag]             gradle/5.4.0              -> gradle/5.4.0
+2026-05-25T10:38:15.8357971Z  * [new tag]             gradle/5.5.0              -> gradle/5.5.0
+2026-05-25T10:38:15.8358969Z  * [new tag]             gradle/5.5.1              -> gradle/5.5.1
+2026-05-25T10:38:15.8359675Z  * [new tag]             gradle/5.5.2              -> gradle/5.5.2
+2026-05-25T10:38:15.8360652Z  * [new tag]             gradle/5.6.0              -> gradle/5.6.0
+2026-05-25T10:38:15.8361319Z  * [new tag]             gradle/5.6.1              -> gradle/5.6.1
+2026-05-25T10:38:15.8362033Z  * [new tag]             gradle/5.7.0              -> gradle/5.7.0
+2026-05-25T10:38:15.8362716Z  * [new tag]             gradle/5.8.0              -> gradle/5.8.0
+2026-05-25T10:38:15.8363396Z  * [new tag]             gradle/5.8.1              -> gradle/5.8.1
+2026-05-25T10:38:15.8364079Z  * [new tag]             gradle/5.8.2              -> gradle/5.8.2
+2026-05-25T10:38:15.8364747Z  * [new tag]             gradle/5.9.0              -> gradle/5.9.0
+2026-05-25T10:38:15.8365428Z  * [new tag]             gradle/6.0.0              -> gradle/6.0.0
+2026-05-25T10:38:15.8366086Z  * [new tag]             gradle/6.0.1              -> gradle/6.0.1
+2026-05-25T10:38:15.8366731Z  * [new tag]             gradle/6.0.2              -> gradle/6.0.2
+2026-05-25T10:38:15.8367381Z  * [new tag]             gradle/6.0.3              -> gradle/6.0.3
+2026-05-25T10:38:15.8368287Z  * [new tag]             gradle/6.0.4              -> gradle/6.0.4
+2026-05-25T10:38:15.8369046Z  * [new tag]             gradle/6.0.5              -> gradle/6.0.5
+2026-05-25T10:38:15.8369716Z  * [new tag]             gradle/6.1.0              -> gradle/6.1.0
+2026-05-25T10:38:15.8370356Z  * [new tag]             gradle/6.1.1              -> gradle/6.1.1
+2026-05-25T10:38:15.8371016Z  * [new tag]             gradle/6.1.2              -> gradle/6.1.2
+2026-05-25T10:38:15.8371667Z  * [new tag]             gradle/6.10.0             -> gradle/6.10.0
+2026-05-25T10:38:15.8372335Z  * [new tag]             gradle/6.11.0             -> gradle/6.11.0
+2026-05-25T10:38:15.8373023Z  * [new tag]             gradle/6.12.0             -> gradle/6.12.0
+2026-05-25T10:38:15.8373726Z  * [new tag]             gradle/6.12.1             -> gradle/6.12.1
+2026-05-25T10:38:15.8374348Z  * [new tag]             gradle/6.14.0             -> gradle/6.14.0
+2026-05-25T10:38:15.8375051Z  * [new tag]             gradle/6.14.1             -> gradle/6.14.1
+2026-05-25T10:38:15.8375688Z  * [new tag]             gradle/6.15.0             -> gradle/6.15.0
+2026-05-25T10:38:15.8376339Z  * [new tag]             gradle/6.16.0             -> gradle/6.16.0
+2026-05-25T10:38:15.8376981Z  * [new tag]             gradle/6.17.0             -> gradle/6.17.0
+2026-05-25T10:38:15.8377637Z  * [new tag]             gradle/6.18.0             -> gradle/6.18.0
+2026-05-25T10:38:15.8378606Z  * [new tag]             gradle/6.19.0             -> gradle/6.19.0
+2026-05-25T10:38:15.8379299Z  * [new tag]             gradle/6.2.0              -> gradle/6.2.0
+2026-05-25T10:38:15.8380225Z  * [new tag]             gradle/6.2.1              -> gradle/6.2.1
+2026-05-25T10:38:15.8380951Z  * [new tag]             gradle/6.2.2              -> gradle/6.2.2
+2026-05-25T10:38:15.8381613Z  * [new tag]             gradle/6.20.0             -> gradle/6.20.0
+2026-05-25T10:38:15.8382303Z  * [new tag]             gradle/6.21.0             -> gradle/6.21.0
+2026-05-25T10:38:15.8382979Z  * [new tag]             gradle/6.22.0             -> gradle/6.22.0
+2026-05-25T10:38:15.8383641Z  * [new tag]             gradle/6.23.0             -> gradle/6.23.0
+2026-05-25T10:38:15.8384288Z  * [new tag]             gradle/6.23.1             -> gradle/6.23.1
+2026-05-25T10:38:15.8384957Z  * [new tag]             gradle/6.23.3             -> gradle/6.23.3
+2026-05-25T10:38:15.8385600Z  * [new tag]             gradle/6.24.0             -> gradle/6.24.0
+2026-05-25T10:38:15.8386240Z  * [new tag]             gradle/6.25.0             -> gradle/6.25.0
+2026-05-25T10:38:15.8386899Z  * [new tag]             gradle/6.3.0              -> gradle/6.3.0
+2026-05-25T10:38:15.8387554Z  * [new tag]             gradle/6.4.0              -> gradle/6.4.0
+2026-05-25T10:38:15.8388564Z  * [new tag]             gradle/6.4.1              -> gradle/6.4.1
+2026-05-25T10:38:15.8389256Z  * [new tag]             gradle/6.4.2              -> gradle/6.4.2
+2026-05-25T10:38:15.8389929Z  * [new tag]             gradle/6.5.0              -> gradle/6.5.0
+2026-05-25T10:38:15.8390920Z  * [new tag]             gradle/6.5.1              -> gradle/6.5.1
+2026-05-25T10:38:15.8391614Z  * [new tag]             gradle/6.5.2              -> gradle/6.5.2
+2026-05-25T10:38:15.8392305Z  * [new tag]             gradle/6.6.0              -> gradle/6.6.0
+2026-05-25T10:38:15.8393100Z  * [new tag]             gradle/6.6.1              -> gradle/6.6.1
+2026-05-25T10:38:15.8393847Z  * [new tag]             gradle/6.7.0              -> gradle/6.7.0
+2026-05-25T10:38:15.8394509Z  * [new tag]             gradle/6.7.1              -> gradle/6.7.1
+2026-05-25T10:38:15.8395155Z  * [new tag]             gradle/6.7.2              -> gradle/6.7.2
+2026-05-25T10:38:15.8395876Z  * [new tag]             gradle/6.8.0              -> gradle/6.8.0
+2026-05-25T10:38:15.8396519Z  * [new tag]             gradle/6.9.0              -> gradle/6.9.0
+2026-05-25T10:38:15.8397163Z  * [new tag]             gradle/6.9.1              -> gradle/6.9.1
+2026-05-25T10:38:15.8397815Z  * [new tag]             gradle/7.0.0              -> gradle/7.0.0
+2026-05-25T10:38:15.8398819Z  * [new tag]             gradle/7.0.0.BETA1        -> gradle/7.0.0.BETA1
+2026-05-25T10:38:15.8399531Z  * [new tag]             gradle/7.0.0.BETA2        -> gradle/7.0.0.BETA2
+2026-05-25T10:38:15.8400257Z  * [new tag]             gradle/7.0.0.BETA3        -> gradle/7.0.0.BETA3
+2026-05-25T10:38:15.8400962Z  * [new tag]             gradle/7.0.0.BETA4        -> gradle/7.0.0.BETA4
+2026-05-25T10:38:15.8401674Z  * [new tag]             gradle/7.0.1              -> gradle/7.0.1
+2026-05-25T10:38:15.8402372Z  * [new tag]             gradle/7.0.2              -> gradle/7.0.2
+2026-05-25T10:38:15.8403146Z  * [new tag]             gradle/7.0.3              -> gradle/7.0.3
+2026-05-25T10:38:15.8403799Z  * [new tag]             gradle/7.0.4              -> gradle/7.0.4
+2026-05-25T10:38:15.8404439Z  * [new tag]             gradle/7.1.0              -> gradle/7.1.0
+2026-05-25T10:38:15.8405105Z  * [new tag]             gradle/7.2.0              -> gradle/7.2.0
+2026-05-25T10:38:15.8405826Z  * [new tag]             gradle/7.2.1              -> gradle/7.2.1
+2026-05-25T10:38:15.8406511Z  * [new tag]             gradle/8.0.0              -> gradle/8.0.0
+2026-05-25T10:38:15.8407223Z  * [new tag]             gradle/8.1.0              -> gradle/8.1.0
+2026-05-25T10:38:15.8407906Z  * [new tag]             gradle/8.2.0              -> gradle/8.2.0
+2026-05-25T10:38:15.8408888Z  * [new tag]             gradle/8.2.1              -> gradle/8.2.1
+2026-05-25T10:38:15.8409592Z  * [new tag]             gradle/8.3.0              -> gradle/8.3.0
+2026-05-25T10:38:15.8410266Z  * [new tag]             gradle/8.4.0              -> gradle/8.4.0
+2026-05-25T10:38:15.8411211Z  * [new tag]             gradle/8.5.0              -> gradle/8.5.0
+2026-05-25T10:38:15.8411929Z  * [new tag]             gradle/8.5.1              -> gradle/8.5.1
+2026-05-25T10:38:15.8412697Z  * [new tag]             graveyard/orthogonal-lazy -> graveyard/orthogonal-lazy
+2026-05-25T10:38:15.8413446Z  * [new tag]             lib/1.0.0                 -> lib/1.0.0
+2026-05-25T10:38:15.8414109Z  * [new tag]             lib/1.0.0.ALPHA           -> lib/1.0.0.ALPHA
+2026-05-25T10:38:15.8414813Z  * [new tag]             lib/1.0.0.BETA            -> lib/1.0.0.BETA
+2026-05-25T10:38:15.8415535Z  * [new tag]             lib/1.0.0.BETA2           -> lib/1.0.0.BETA2
+2026-05-25T10:38:15.8416228Z  * [new tag]             lib/1.0.0.BETA3           -> lib/1.0.0.BETA3
+2026-05-25T10:38:15.8416929Z  * [new tag]             lib/1.0.0.RC1             -> lib/1.0.0.RC1
+2026-05-25T10:38:15.8417600Z  * [new tag]             lib/1.0.0.RC2             -> lib/1.0.0.RC2
+2026-05-25T10:38:15.8418608Z  * [new tag]             lib/1.1.0                 -> lib/1.1.0
+2026-05-25T10:38:15.8419265Z  * [new tag]             lib/1.10.0                -> lib/1.10.0
+2026-05-25T10:38:15.8419895Z  * [new tag]             lib/1.11.0                -> lib/1.11.0
+2026-05-25T10:38:15.8420515Z  * [new tag]             lib/1.12.0                -> lib/1.12.0
+2026-05-25T10:38:15.8421371Z  * [new tag]             lib/1.13.0                -> lib/1.13.0
+2026-05-25T10:38:15.8421997Z  * [new tag]             lib/1.14.0                -> lib/1.14.0
+2026-05-25T10:38:15.8422616Z  * [new tag]             lib/1.15.0                -> lib/1.15.0
+2026-05-25T10:38:15.8423228Z  * [new tag]             lib/1.16.0                -> lib/1.16.0
+2026-05-25T10:38:15.8423843Z  * [new tag]             lib/1.17.0                -> lib/1.17.0
+2026-05-25T10:38:15.8424461Z  * [new tag]             lib/1.18.0                -> lib/1.18.0
+2026-05-25T10:38:15.8425076Z  * [new tag]             lib/1.19.0                -> lib/1.19.0
+2026-05-25T10:38:15.8425707Z  * [new tag]             lib/1.2.0                 -> lib/1.2.0
+2026-05-25T10:38:15.8426349Z  * [new tag]             lib/1.20.0                -> lib/1.20.0
+2026-05-25T10:38:15.8426967Z  * [new tag]             lib/1.21.1                -> lib/1.21.1
+2026-05-25T10:38:15.8427572Z  * [new tag]             lib/1.22.0                -> lib/1.22.0
+2026-05-25T10:38:15.8428467Z  * [new tag]             lib/1.23.0                -> lib/1.23.0
+2026-05-25T10:38:15.8429132Z  * [new tag]             lib/1.23.1                -> lib/1.23.1
+2026-05-25T10:38:15.8429766Z  * [new tag]             lib/1.24.0                -> lib/1.24.0
+2026-05-25T10:38:15.8430376Z  * [new tag]             lib/1.24.1                -> lib/1.24.1
+2026-05-25T10:38:15.8431021Z  * [new tag]             lib/1.24.3                -> lib/1.24.3
+2026-05-25T10:38:15.8431733Z  * [new tag]             lib/1.25.0                -> lib/1.25.0
+2026-05-25T10:38:15.8432344Z  * [new tag]             lib/1.26.0                -> lib/1.26.0
+2026-05-25T10:38:15.8432992Z  * [new tag]             lib/1.26.1                -> lib/1.26.1
+2026-05-25T10:38:15.8433645Z  * [new tag]             lib/1.27.0                -> lib/1.27.0
+2026-05-25T10:38:15.8434283Z  * [new tag]             lib/1.28.0                -> lib/1.28.0
+2026-05-25T10:38:15.8434931Z  * [new tag]             lib/1.28.1                -> lib/1.28.1
+2026-05-25T10:38:15.8435593Z  * [new tag]             lib/1.29.0                -> lib/1.29.0
+2026-05-25T10:38:15.8436239Z  * [new tag]             lib/1.3.0                 -> lib/1.3.0
+2026-05-25T10:38:15.8436884Z  * [new tag]             lib/1.3.2                 -> lib/1.3.2
+2026-05-25T10:38:15.8437536Z  * [new tag]             lib/1.30.0                -> lib/1.30.0
+2026-05-25T10:38:15.8438480Z  * [new tag]             lib/1.30.1                -> lib/1.30.1
+2026-05-25T10:38:15.8439171Z  * [new tag]             lib/1.31.0                -> lib/1.31.0
+2026-05-25T10:38:15.8439825Z  * [new tag]             lib/1.32.0                -> lib/1.32.0
+2026-05-25T10:38:15.8440720Z  * [new tag]             lib/1.33.0                -> lib/1.33.0
+2026-05-25T10:38:15.8441424Z  * [new tag]             lib/1.33.1                -> lib/1.33.1
+2026-05-25T10:38:15.8442081Z  * [new tag]             lib/1.34.0                -> lib/1.34.0
+2026-05-25T10:38:15.8442700Z  * [new tag]             lib/1.34.1                -> lib/1.34.1
+2026-05-25T10:38:15.8443339Z  * [new tag]             lib/1.4.0                 -> lib/1.4.0
+2026-05-25T10:38:15.8443969Z  * [new tag]             lib/1.4.1                 -> lib/1.4.1
+2026-05-25T10:38:15.8444592Z  * [new tag]             lib/1.5.0                 -> lib/1.5.0
+2026-05-25T10:38:15.8445199Z  * [new tag]             lib/1.5.1                 -> lib/1.5.1
+2026-05-25T10:38:15.8445818Z  * [new tag]             lib/1.6.0                 -> lib/1.6.0
+2026-05-25T10:38:15.8446425Z  * [new tag]             lib/1.7.0                 -> lib/1.7.0
+2026-05-25T10:38:15.8447027Z  * [new tag]             lib/1.8.0                 -> lib/1.8.0
+2026-05-25T10:38:15.8447643Z  * [new tag]             lib/1.9.0                 -> lib/1.9.0
+2026-05-25T10:38:15.8448541Z  * [new tag]             lib/2.0.0                 -> lib/2.0.0
+2026-05-25T10:38:15.8449182Z  * [new tag]             lib/2.1.0                 -> lib/2.1.0
+2026-05-25T10:38:15.8449816Z  * [new tag]             lib/2.10.0                -> lib/2.10.0
+2026-05-25T10:38:15.8450771Z  * [new tag]             lib/2.10.1                -> lib/2.10.1
+2026-05-25T10:38:15.8451389Z  * [new tag]             lib/2.10.2                -> lib/2.10.2
+2026-05-25T10:38:15.8451988Z  * [new tag]             lib/2.11.0                -> lib/2.11.0
+2026-05-25T10:38:15.8452610Z  * [new tag]             lib/2.12.0                -> lib/2.12.0
+2026-05-25T10:38:15.8453236Z  * [new tag]             lib/2.12.1                -> lib/2.12.1
+2026-05-25T10:38:15.8453853Z  * [new tag]             lib/2.13.0                -> lib/2.13.0
+2026-05-25T10:38:15.8454466Z  * [new tag]             lib/2.13.1                -> lib/2.13.1
+2026-05-25T10:38:15.8455099Z  * [new tag]             lib/2.13.2                -> lib/2.13.2
+2026-05-25T10:38:15.8455704Z  * [new tag]             lib/2.13.3                -> lib/2.13.3
+2026-05-25T10:38:15.8456323Z  * [new tag]             lib/2.13.4                -> lib/2.13.4
+2026-05-25T10:38:15.8456955Z  * [new tag]             lib/2.13.5                -> lib/2.13.5
+2026-05-25T10:38:15.8457559Z  * [new tag]             lib/2.14.0                -> lib/2.14.0
+2026-05-25T10:38:15.8458431Z  * [new tag]             lib/2.15.0                -> lib/2.15.0
+2026-05-25T10:38:15.8459060Z  * [new tag]             lib/2.15.1                -> lib/2.15.1
+2026-05-25T10:38:15.8459691Z  * [new tag]             lib/2.15.2                -> lib/2.15.2
+2026-05-25T10:38:15.8460353Z  * [new tag]             lib/2.15.3                -> lib/2.15.3
+2026-05-25T10:38:15.8460961Z  * [new tag]             lib/2.16.0                -> lib/2.16.0
+2026-05-25T10:38:15.8461564Z  * [new tag]             lib/2.16.1                -> lib/2.16.1
+2026-05-25T10:38:15.8462188Z  * [new tag]             lib/2.17.0                -> lib/2.17.0
+2026-05-25T10:38:15.8462828Z  * [new tag]             lib/2.18.0                -> lib/2.18.0
+2026-05-25T10:38:15.8463455Z  * [new tag]             lib/2.19.0                -> lib/2.19.0
+2026-05-25T10:38:15.8464083Z  * [new tag]             lib/2.19.1                -> lib/2.19.1
+2026-05-25T10:38:15.8464690Z  * [new tag]             lib/2.19.2                -> lib/2.19.2
+2026-05-25T10:38:15.8465369Z  * [new tag]             lib/2.2.0                 -> lib/2.2.0
+2026-05-25T10:38:15.8466093Z  * [new tag]             lib/2.2.1                 -> lib/2.2.1
+2026-05-25T10:38:15.8466786Z  * [new tag]             lib/2.2.2                 -> lib/2.2.2
+2026-05-25T10:38:15.8467486Z  * [new tag]             lib/2.20.0                -> lib/2.20.0
+2026-05-25T10:38:15.8468422Z  * [new tag]             lib/2.20.1                -> lib/2.20.1
+2026-05-25T10:38:15.8469360Z  * [new tag]             lib/2.20.2                -> lib/2.20.2
+2026-05-25T10:38:15.8470056Z  * [new tag]             lib/2.20.3                -> lib/2.20.3
+2026-05-25T10:38:15.8470714Z  * [new tag]             lib/2.21.0                -> lib/2.21.0
+2026-05-25T10:38:15.8471361Z  * [new tag]             lib/2.21.1                -> lib/2.21.1
+2026-05-25T10:38:15.8472007Z  * [new tag]             lib/2.21.2                -> lib/2.21.2
+2026-05-25T10:38:15.8472644Z  * [new tag]             lib/2.22.0                -> lib/2.22.0
+2026-05-25T10:38:15.8473276Z  * [new tag]             lib/2.22.1                -> lib/2.22.1
+2026-05-25T10:38:15.8473900Z  * [new tag]             lib/2.22.2                -> lib/2.22.2
+2026-05-25T10:38:15.8474532Z  * [new tag]             lib/2.23.0                -> lib/2.23.0
+2026-05-25T10:38:15.8475154Z  * [new tag]             lib/2.24.0                -> lib/2.24.0
+2026-05-25T10:38:15.8475786Z  * [new tag]             lib/2.24.1                -> lib/2.24.1
+2026-05-25T10:38:15.8476432Z  * [new tag]             lib/2.24.2                -> lib/2.24.2
+2026-05-25T10:38:15.8477075Z  * [new tag]             lib/2.25.0                -> lib/2.25.0
+2026-05-25T10:38:15.8477712Z  * [new tag]             lib/2.25.1                -> lib/2.25.1
+2026-05-25T10:38:15.8478637Z  * [new tag]             lib/2.25.2                -> lib/2.25.2
+2026-05-25T10:38:15.8479573Z  * [new tag]             lib/2.25.3                -> lib/2.25.3
+2026-05-25T10:38:15.8480210Z  * [new tag]             lib/2.26.0                -> lib/2.26.0
+2026-05-25T10:38:15.8480836Z  * [new tag]             lib/2.26.1                -> lib/2.26.1
+2026-05-25T10:38:15.8481448Z  * [new tag]             lib/2.26.2                -> lib/2.26.2
+2026-05-25T10:38:15.8482064Z  * [new tag]             lib/2.27.0                -> lib/2.27.0
+2026-05-25T10:38:15.8482693Z  * [new tag]             lib/2.28.0                -> lib/2.28.0
+2026-05-25T10:38:15.8483306Z  * [new tag]             lib/2.28.1                -> lib/2.28.1
+2026-05-25T10:38:15.8483909Z  * [new tag]             lib/2.29.0                -> lib/2.29.0
+2026-05-25T10:38:15.8484530Z  * [new tag]             lib/2.3.0                 -> lib/2.3.0
+2026-05-25T10:38:15.8485143Z  * [new tag]             lib/2.30.0                -> lib/2.30.0
+2026-05-25T10:38:15.8485763Z  * [new tag]             lib/2.31.0                -> lib/2.31.0
+2026-05-25T10:38:15.8486385Z  * [new tag]             lib/2.31.1                -> lib/2.31.1
+2026-05-25T10:38:15.8486988Z  * [new tag]             lib/2.32.0                -> lib/2.32.0
+2026-05-25T10:38:15.8487618Z  * [new tag]             lib/2.33.0                -> lib/2.33.0
+2026-05-25T10:38:15.8488497Z  * [new tag]             lib/2.34.0                -> lib/2.34.0
+2026-05-25T10:38:15.8489126Z  * [new tag]             lib/2.34.1                -> lib/2.34.1
+2026-05-25T10:38:15.8489745Z  * [new tag]             lib/2.35.0                -> lib/2.35.0
+2026-05-25T10:38:15.8490395Z  * [new tag]             lib/2.36.0                -> lib/2.36.0
+2026-05-25T10:38:15.8491068Z  * [new tag]             lib/2.37.0                -> lib/2.37.0
+2026-05-25T10:38:15.8491715Z  * [new tag]             lib/2.38.0                -> lib/2.38.0
+2026-05-25T10:38:15.8492365Z  * [new tag]             lib/2.39.0                -> lib/2.39.0
+2026-05-25T10:38:15.8493038Z  * [new tag]             lib/2.4.0                 -> lib/2.4.0
+2026-05-25T10:38:15.8493718Z  * [new tag]             lib/2.40.0                -> lib/2.40.0
+2026-05-25T10:38:15.8494386Z  * [new tag]             lib/2.41.0                -> lib/2.41.0
+2026-05-25T10:38:15.8495043Z  * [new tag]             lib/2.42.0                -> lib/2.42.0
+2026-05-25T10:38:15.8495687Z  * [new tag]             lib/2.43.0                -> lib/2.43.0
+2026-05-25T10:38:15.8496350Z  * [new tag]             lib/2.43.1                -> lib/2.43.1
+2026-05-25T10:38:15.8497013Z  * [new tag]             lib/2.44.0                -> lib/2.44.0
+2026-05-25T10:38:15.8497656Z  * [new tag]             lib/2.45.0                -> lib/2.45.0
+2026-05-25T10:38:15.8498805Z  * [new tag]             lib/2.5.0                 -> lib/2.5.0
+2026-05-25T10:38:15.8499470Z  * [new tag]             lib/2.6.0                 -> lib/2.6.0
+2026-05-25T10:38:15.8500121Z  * [new tag]             lib/2.6.1                 -> lib/2.6.1
+2026-05-25T10:38:15.8500761Z  * [new tag]             lib/2.6.2                 -> lib/2.6.2
+2026-05-25T10:38:15.8501417Z  * [new tag]             lib/2.7.0                 -> lib/2.7.0
+2026-05-25T10:38:15.8502053Z  * [new tag]             lib/2.8.0                 -> lib/2.8.0
+2026-05-25T10:38:15.8502687Z  * [new tag]             lib/2.9.0                 -> lib/2.9.0
+2026-05-25T10:38:15.8503408Z  * [new tag]             lib/3.0.0                 -> lib/3.0.0
+2026-05-25T10:38:15.8504092Z  * [new tag]             lib/3.0.0.BETA1           -> lib/3.0.0.BETA1
+2026-05-25T10:38:15.8504812Z  * [new tag]             lib/3.0.0.BETA2           -> lib/3.0.0.BETA2
+2026-05-25T10:38:15.8505516Z  * [new tag]             lib/3.0.0.BETA3           -> lib/3.0.0.BETA3
+2026-05-25T10:38:15.8506221Z  * [new tag]             lib/3.0.0.BETA4           -> lib/3.0.0.BETA4
+2026-05-25T10:38:15.8506911Z  * [new tag]             lib/3.0.1                 -> lib/3.0.1
+2026-05-25T10:38:15.8507539Z  * [new tag]             lib/3.0.2                 -> lib/3.0.2
+2026-05-25T10:38:15.8508431Z  * [new tag]             lib/3.1.0                 -> lib/3.1.0
+2026-05-25T10:38:15.8509363Z  * [new tag]             lib/3.1.1                 -> lib/3.1.1
+2026-05-25T10:38:15.8509984Z  * [new tag]             lib/3.1.2                 -> lib/3.1.2
+2026-05-25T10:38:15.8510593Z  * [new tag]             lib/3.2.0                 -> lib/3.2.0
+2026-05-25T10:38:15.8511201Z  * [new tag]             lib/3.21.0                -> lib/3.21.0
+2026-05-25T10:38:15.8511823Z  * [new tag]             lib/3.3.0                 -> lib/3.3.0
+2026-05-25T10:38:15.8512432Z  * [new tag]             lib/3.3.1                 -> lib/3.3.1
+2026-05-25T10:38:15.8513036Z  * [new tag]             lib/4.0.0                 -> lib/4.0.0
+2026-05-25T10:38:15.8513645Z  * [new tag]             lib/4.1.0                 -> lib/4.1.0
+2026-05-25T10:38:15.8514242Z  * [new tag]             lib/4.2.0                 -> lib/4.2.0
+2026-05-25T10:38:15.8514834Z  * [new tag]             lib/4.3.0                 -> lib/4.3.0
+2026-05-25T10:38:15.8515426Z  * [new tag]             lib/4.4.0                 -> lib/4.4.0
+2026-05-25T10:38:15.8516057Z  * [new tag]             lib/4.5.0                 -> lib/4.5.0
+2026-05-25T10:38:15.8516672Z  * [new tag]             lib/4.6.0                 -> lib/4.6.0
+2026-05-25T10:38:15.8517278Z  * [new tag]             lib/4.6.1                 -> lib/4.6.1
+2026-05-25T10:38:15.8517921Z  * [new tag]             maven/1.0.0.ALPHA         -> maven/1.0.0.ALPHA
+2026-05-25T10:38:15.8518903Z  * [new tag]             maven/1.0.0.BETA1         -> maven/1.0.0.BETA1
+2026-05-25T10:38:15.8519599Z  * [new tag]             maven/1.0.0.BETA2         -> maven/1.0.0.BETA2
+2026-05-25T10:38:15.8520292Z  * [new tag]             maven/1.0.0.BETA3         -> maven/1.0.0.BETA3
+2026-05-25T10:38:15.8520983Z  * [new tag]             maven/1.0.0.BETA4         -> maven/1.0.0.BETA4
+2026-05-25T10:38:15.8521662Z  * [new tag]             maven/1.0.0.BETA5         -> maven/1.0.0.BETA5
+2026-05-25T10:38:15.8522330Z  * [new tag]             maven/1.13.0              -> maven/1.13.0
+2026-05-25T10:38:15.8522974Z  * [new tag]             maven/1.14.0              -> maven/1.14.0
+2026-05-25T10:38:15.8523599Z  * [new tag]             maven/1.15.0              -> maven/1.15.0
+2026-05-25T10:38:15.8524303Z  * [new tag]             maven/1.16.0              -> maven/1.16.0
+2026-05-25T10:38:15.8524985Z  * [new tag]             maven/1.17.0              -> maven/1.17.0
+2026-05-25T10:38:15.8525610Z  * [new tag]             maven/1.18.0              -> maven/1.18.0
+2026-05-25T10:38:15.8526233Z  * [new tag]             maven/1.19.0              -> maven/1.19.0
+2026-05-25T10:38:15.8526878Z  * [new tag]             maven/1.20.0              -> maven/1.20.0
+2026-05-25T10:38:15.8527765Z  * [new tag]             maven/1.21.0              -> maven/1.21.0
+2026-05-25T10:38:15.8528730Z  * [new tag]             maven/1.21.1              -> maven/1.21.1
+2026-05-25T10:38:15.8529365Z  * [new tag]             maven/1.22.0              -> maven/1.22.0
+2026-05-25T10:38:15.8530189Z  * [new tag]             maven/1.23.0              -> maven/1.23.0
+2026-05-25T10:38:15.8530969Z  * [new tag]             maven/1.23.1              -> maven/1.23.1
+2026-05-25T10:38:15.8531654Z  * [new tag]             maven/1.24.0              -> maven/1.24.0
+2026-05-25T10:38:15.8532309Z  * [new tag]             maven/1.24.1              -> maven/1.24.1
+2026-05-25T10:38:15.8532957Z  * [new tag]             maven/1.24.3              -> maven/1.24.3
+2026-05-25T10:38:15.8533615Z  * [new tag]             maven/1.25.0              -> maven/1.25.0
+2026-05-25T10:38:15.8534252Z  * [new tag]             maven/1.25.1              -> maven/1.25.1
+2026-05-25T10:38:15.8534897Z  * [new tag]             maven/1.26.0              -> maven/1.26.0
+2026-05-25T10:38:15.8535534Z  * [new tag]             maven/1.26.1              -> maven/1.26.1
+2026-05-25T10:38:15.8536166Z  * [new tag]             maven/1.27.0              -> maven/1.27.0
+2026-05-25T10:38:15.8536801Z  * [new tag]             maven/1.28.0              -> maven/1.28.0
+2026-05-25T10:38:15.8537750Z  * [new tag]             maven/1.29.0              -> maven/1.29.0
+2026-05-25T10:38:15.8538671Z  * [new tag]             maven/1.30.0              -> maven/1.30.0
+2026-05-25T10:38:15.8539334Z  * [new tag]             maven/1.31.0              -> maven/1.31.0
+2026-05-25T10:38:15.8539976Z  * [new tag]             maven/1.31.1              -> maven/1.31.1
+2026-05-25T10:38:15.8540658Z  * [new tag]             maven/1.31.2              -> maven/1.31.2
+2026-05-25T10:38:15.8541319Z  * [new tag]             maven/1.31.3              -> maven/1.31.3
+2026-05-25T10:38:15.8541980Z  * [new tag]             maven/2.0.0               -> maven/2.0.0
+2026-05-25T10:38:15.8542666Z  * [new tag]             maven/2.0.1               -> maven/2.0.1
+2026-05-25T10:38:15.8543332Z  * [new tag]             maven/2.0.2               -> maven/2.0.2
+2026-05-25T10:38:15.8544004Z  * [new tag]             maven/2.0.3               -> maven/2.0.3
+2026-05-25T10:38:15.8544682Z  * [new tag]             maven/2.1.0               -> maven/2.1.0
+2026-05-25T10:38:15.8545363Z  * [new tag]             maven/2.10.0              -> maven/2.10.0
+2026-05-25T10:38:15.8546047Z  * [new tag]             maven/2.10.1              -> maven/2.10.1
+2026-05-25T10:38:15.8546712Z  * [new tag]             maven/2.10.2              -> maven/2.10.2
+2026-05-25T10:38:15.8547351Z  * [new tag]             maven/2.10.3              -> maven/2.10.3
+2026-05-25T10:38:15.8547994Z  * [new tag]             maven/2.11.0              -> maven/2.11.0
+2026-05-25T10:38:15.8548930Z  * [new tag]             maven/2.11.1              -> maven/2.11.1
+2026-05-25T10:38:15.8549591Z  * [new tag]             maven/2.12.0              -> maven/2.12.0
+2026-05-25T10:38:15.8550262Z  * [new tag]             maven/2.12.1              -> maven/2.12.1
+2026-05-25T10:38:15.8550933Z  * [new tag]             maven/2.12.2              -> maven/2.12.2
+2026-05-25T10:38:15.8551591Z  * [new tag]             maven/2.12.3              -> maven/2.12.3
+2026-05-25T10:38:15.8552293Z  * [new tag]             maven/2.13.0              -> maven/2.13.0
+2026-05-25T10:38:15.8552942Z  * [new tag]             maven/2.13.1              -> maven/2.13.1
+2026-05-25T10:38:15.8553587Z  * [new tag]             maven/2.14.0              -> maven/2.14.0
+2026-05-25T10:38:15.8554215Z  * [new tag]             maven/2.15.0              -> maven/2.15.0
+2026-05-25T10:38:15.8554851Z  * [new tag]             maven/2.16.0              -> maven/2.16.0
+2026-05-25T10:38:15.8555480Z  * [new tag]             maven/2.17.0              -> maven/2.17.0
+2026-05-25T10:38:15.8556096Z  * [new tag]             maven/2.17.1              -> maven/2.17.1
+2026-05-25T10:38:15.8556720Z  * [new tag]             maven/2.17.2              -> maven/2.17.2
+2026-05-25T10:38:15.8557676Z  * [new tag]             maven/2.17.3              -> maven/2.17.3
+2026-05-25T10:38:15.8558622Z  * [new tag]             maven/2.17.4              -> maven/2.17.4
+2026-05-25T10:38:15.8559276Z  * [new tag]             maven/2.17.5              -> maven/2.17.5
+2026-05-25T10:38:15.8559905Z  * [new tag]             maven/2.17.6              -> maven/2.17.6
+2026-05-25T10:38:15.8560541Z  * [new tag]             maven/2.17.7              -> maven/2.17.7
+2026-05-25T10:38:15.8561185Z  * [new tag]             maven/2.18.0              -> maven/2.18.0
+2026-05-25T10:38:15.8561841Z  * [new tag]             maven/2.19.0              -> maven/2.19.0
+2026-05-25T10:38:15.8562481Z  * [new tag]             maven/2.19.1              -> maven/2.19.1
+2026-05-25T10:38:15.8563137Z  * [new tag]             maven/2.19.2              -> maven/2.19.2
+2026-05-25T10:38:15.8563524Z  * [new tag]             maven/2.2.0               -> maven/2.2.0
+2026-05-25T10:38:15.8563906Z  * [new tag]             maven/2.20.0              -> maven/2.20.0
+2026-05-25T10:38:15.8564263Z  * [new tag]             maven/2.20.1              -> maven/2.20.1
+2026-05-25T10:38:15.8564603Z  * [new tag]             maven/2.20.2              -> maven/2.20.2
+2026-05-25T10:38:15.8564942Z  * [new tag]             maven/2.21.0              -> maven/2.21.0
+2026-05-25T10:38:15.8565473Z  * [new tag]             maven/2.22.0              -> maven/2.22.0
+2026-05-25T10:38:15.8565819Z  * [new tag]             maven/2.22.1              -> maven/2.22.1
+2026-05-25T10:38:15.8566154Z  * [new tag]             maven/2.22.2              -> maven/2.22.2
+2026-05-25T10:38:15.8566492Z  * [new tag]             maven/2.22.3              -> maven/2.22.3
+2026-05-25T10:38:15.8566826Z  * [new tag]             maven/2.22.4              -> maven/2.22.4
+2026-05-25T10:38:15.8567161Z  * [new tag]             maven/2.22.5              -> maven/2.22.5
+2026-05-25T10:38:15.8567495Z  * [new tag]             maven/2.22.6              -> maven/2.22.6
+2026-05-25T10:38:15.8567835Z  * [new tag]             maven/2.22.7              -> maven/2.22.7
+2026-05-25T10:38:15.8568485Z  * [new tag]             maven/2.22.8              -> maven/2.22.8
+2026-05-25T10:38:15.8568832Z  * [new tag]             maven/2.23.0              -> maven/2.23.0
+2026-05-25T10:38:15.8569170Z  * [new tag]             maven/2.24.0              -> maven/2.24.0
+2026-05-25T10:38:15.8569514Z  * [new tag]             maven/2.24.1              -> maven/2.24.1
+2026-05-25T10:38:15.8569844Z  * [new tag]             maven/2.25.0              -> maven/2.25.0
+2026-05-25T10:38:15.8570174Z  * [new tag]             maven/2.26.0              -> maven/2.26.0
+2026-05-25T10:38:15.8570512Z  * [new tag]             maven/2.27.0              -> maven/2.27.0
+2026-05-25T10:38:15.8570844Z  * [new tag]             maven/2.27.1              -> maven/2.27.1
+2026-05-25T10:38:15.8571182Z  * [new tag]             maven/2.27.2              -> maven/2.27.2
+2026-05-25T10:38:15.8571519Z  * [new tag]             maven/2.28.0              -> maven/2.28.0
+2026-05-25T10:38:15.8571859Z  * [new tag]             maven/2.29.0              -> maven/2.29.0
+2026-05-25T10:38:15.8572198Z  * [new tag]             maven/2.3.0               -> maven/2.3.0
+2026-05-25T10:38:15.8572536Z  * [new tag]             maven/2.3.1               -> maven/2.3.1
+2026-05-25T10:38:15.8572874Z  * [new tag]             maven/2.30.0              -> maven/2.30.0
+2026-05-25T10:38:15.8573219Z  * [new tag]             maven/2.31.0              -> maven/2.31.0
+2026-05-25T10:38:15.8573559Z  * [new tag]             maven/2.32.0              -> maven/2.32.0
+2026-05-25T10:38:15.8573897Z  * [new tag]             maven/2.33.0              -> maven/2.33.0
+2026-05-25T10:38:15.8574238Z  * [new tag]             maven/2.34.0              -> maven/2.34.0
+2026-05-25T10:38:15.8574571Z  * [new tag]             maven/2.35.0              -> maven/2.35.0
+2026-05-25T10:38:15.8574903Z  * [new tag]             maven/2.36.0              -> maven/2.36.0
+2026-05-25T10:38:15.8575390Z  * [new tag]             maven/2.37.0              -> maven/2.37.0
+2026-05-25T10:38:15.8575739Z  * [new tag]             maven/2.38.0              -> maven/2.38.0
+2026-05-25T10:38:15.8576075Z  * [new tag]             maven/2.39.0              -> maven/2.39.0
+2026-05-25T10:38:15.8576406Z  * [new tag]             maven/2.4.0               -> maven/2.4.0
+2026-05-25T10:38:15.8576748Z  * [new tag]             maven/2.4.1               -> maven/2.4.1
+2026-05-25T10:38:15.8577081Z  * [new tag]             maven/2.4.2               -> maven/2.4.2
+2026-05-25T10:38:15.8577414Z  * [new tag]             maven/2.40.0              -> maven/2.40.0
+2026-05-25T10:38:15.8577769Z  * [new tag]             maven/2.41.0              -> maven/2.41.0
+2026-05-25T10:38:15.8578362Z  * [new tag]             maven/2.41.1              -> maven/2.41.1
+2026-05-25T10:38:15.8578715Z  * [new tag]             maven/2.42.0              -> maven/2.42.0
+2026-05-25T10:38:15.8579050Z  * [new tag]             maven/2.43.0              -> maven/2.43.0
+2026-05-25T10:38:15.8579388Z  * [new tag]             maven/2.44.0              -> maven/2.44.0
+2026-05-25T10:38:15.8579756Z  * [new tag]             maven/2.44.0.BETA1        -> maven/2.44.0.BETA1
+2026-05-25T10:38:15.8580135Z  * [new tag]             maven/2.44.0.BETA2        -> maven/2.44.0.BETA2
+2026-05-25T10:38:15.8580510Z  * [new tag]             maven/2.44.0.BETA3        -> maven/2.44.0.BETA3
+2026-05-25T10:38:15.8581035Z  * [new tag]             maven/2.44.0.BETA4        -> maven/2.44.0.BETA4
+2026-05-25T10:38:15.8581393Z  * [new tag]             maven/2.44.1              -> maven/2.44.1
+2026-05-25T10:38:15.8581731Z  * [new tag]             maven/2.44.2              -> maven/2.44.2
+2026-05-25T10:38:15.8582067Z  * [new tag]             maven/2.44.3              -> maven/2.44.3
+2026-05-25T10:38:15.8582405Z  * [new tag]             maven/2.44.4              -> maven/2.44.4
+2026-05-25T10:38:15.8582741Z  * [new tag]             maven/2.44.5              -> maven/2.44.5
+2026-05-25T10:38:15.8583072Z  * [new tag]             maven/2.45.0              -> maven/2.45.0
+2026-05-25T10:38:15.8583408Z  * [new tag]             maven/2.46.0              -> maven/2.46.0
+2026-05-25T10:38:15.8583741Z  * [new tag]             maven/2.46.1              -> maven/2.46.1
+2026-05-25T10:38:15.8584078Z  * [new tag]             maven/2.5.0               -> maven/2.5.0
+2026-05-25T10:38:15.8584419Z  * [new tag]             maven/2.6.0               -> maven/2.6.0
+2026-05-25T10:38:15.8584750Z  * [new tag]             maven/2.6.1               -> maven/2.6.1
+2026-05-25T10:38:15.8585082Z  * [new tag]             maven/2.7.0               -> maven/2.7.0
+2026-05-25T10:38:15.8585411Z  * [new tag]             maven/2.8.0               -> maven/2.8.0
+2026-05-25T10:38:15.8585744Z  * [new tag]             maven/2.8.1               -> maven/2.8.1
+2026-05-25T10:38:15.8586081Z  * [new tag]             maven/2.9.0               -> maven/2.9.0
+2026-05-25T10:38:15.8586415Z  * [new tag]             maven/3.0.0               -> maven/3.0.0
+2026-05-25T10:38:15.8586749Z  * [new tag]             maven/3.1.0               -> maven/3.1.0
+2026-05-25T10:38:15.8587078Z  * [new tag]             maven/3.2.0               -> maven/3.2.0
+2026-05-25T10:38:15.8587416Z  * [new tag]             maven/3.2.1               -> maven/3.2.1
+2026-05-25T10:38:15.8587785Z  * [new tag]             maven/3.3.0               -> maven/3.3.0
+2026-05-25T10:38:15.8588386Z  * [new tag]             maven/3.4.0               -> maven/3.4.0
+2026-05-25T10:38:15.8588736Z  * [new tag]             maven/3.5.0               -> maven/3.5.0
+2026-05-25T10:38:15.8589073Z  * [new tag]             maven/3.5.1               -> maven/3.5.1
+2026-05-25T10:38:15.8589459Z  * [new tag]             plugin-gradle/6.13.0      -> plugin-gradle/6.13.0
+2026-05-25T10:38:15.8589881Z  * [new tag]             plugin-maven/2.30.0       -> plugin-maven/2.30.0
+2026-05-25T10:38:15.8590264Z  * [new tag]             v1.0                      -> v1.0
+2026-05-25T10:38:15.8590599Z  * [new tag]             v1.1                      -> v1.1
+2026-05-25T10:38:15.8591047Z  * [new tag]             v1.2.0                    -> v1.2.0
+2026-05-25T10:38:15.8591407Z  * [new tag]             v1.3.0                    -> v1.3.0
+2026-05-25T10:38:15.8591729Z  * [new tag]             v1.3.1                    -> v1.3.1
+2026-05-25T10:38:15.8592046Z  * [new tag]             v1.3.2                    -> v1.3.2
+2026-05-25T10:38:15.8592367Z  * [new tag]             v1.3.3                    -> v1.3.3
+2026-05-25T10:38:15.8592682Z  * [new tag]             v2.0.0                    -> v2.0.0
+2026-05-25T10:38:15.8592996Z  * [new tag]             v2.1.0                    -> v2.1.0
+2026-05-25T10:38:15.8593301Z  * [new tag]             v2.2.0                    -> v2.2.0
+2026-05-25T10:38:15.8593609Z  * [new tag]             v2.3.0                    -> v2.3.0
+2026-05-25T10:38:15.8593921Z  * [new tag]             v2.4.0                    -> v2.4.0
+2026-05-25T10:38:15.8594237Z  * [new tag]             v2.4.1                    -> v2.4.1
+2026-05-25T10:38:15.8594642Z  * [new ref]             90a3404d6876bdeec63c1d1be9842bbce2e85d77 -> pull/2935/merge
+2026-05-25T10:38:15.8855909Z ##[endgroup]
+2026-05-25T10:38:15.8856718Z ##[group]Determining the checkout info
+2026-05-25T10:38:15.8858674Z ##[endgroup]
+2026-05-25T10:38:15.8864339Z [command]/usr/bin/git sparse-checkout disable
+2026-05-25T10:38:15.8912849Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-25T10:38:15.8941642Z ##[group]Checking out the ref
+2026-05-25T10:38:15.8945474Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2935/merge
+2026-05-25T10:38:15.9803891Z Note: switching to 'refs/remotes/pull/2935/merge'.
+2026-05-25T10:38:15.9804345Z 
+2026-05-25T10:38:15.9804702Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-05-25T10:38:15.9805261Z changes and commit them, and you can discard any commits you make in this
+2026-05-25T10:38:15.9805803Z state without impacting any branches by switching back to a branch.
+2026-05-25T10:38:15.9806129Z 
+2026-05-25T10:38:15.9806373Z If you want to create a new branch to retain commits you create, you may
+2026-05-25T10:38:15.9806886Z do so (now or later) by using -c with the switch command. Example:
+2026-05-25T10:38:15.9807178Z 
+2026-05-25T10:38:15.9807289Z   git switch -c <new-branch-name>
+2026-05-25T10:38:15.9807483Z 
+2026-05-25T10:38:15.9807590Z Or undo this operation with:
+2026-05-25T10:38:15.9807783Z 
+2026-05-25T10:38:15.9807877Z   git switch -
+2026-05-25T10:38:15.9808361Z 
+2026-05-25T10:38:15.9808606Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-05-25T10:38:15.9808965Z 
+2026-05-25T10:38:15.9809394Z HEAD is now at 90a3404d6 Merge 88b4f02604a955e3a754b89711ee1d618ec23eba into e900e25b26e0ba3abf052956b12a61778e79a343
+2026-05-25T10:38:15.9816889Z ##[endgroup]
+2026-05-25T10:38:15.9866677Z [command]/usr/bin/git log -1 --format=%H
+2026-05-25T10:38:15.9892297Z 90a3404d6876bdeec63c1d1be9842bbce2e85d77
+2026-05-25T10:38:16.0175606Z ##[group]Run actions/setup-java@v5
+2026-05-25T10:38:16.0175901Z with:
+2026-05-25T10:38:16.0176100Z   distribution: temurin
+2026-05-25T10:38:16.0176317Z   java-version: 21
+2026-05-25T10:38:16.0176521Z   java-package: jdk
+2026-05-25T10:38:16.0176739Z   check-latest: false
+2026-05-25T10:38:16.0176952Z   server-id: github
+2026-05-25T10:38:16.0177163Z   server-username: GITHUB_ACTOR
+2026-05-25T10:38:16.0177425Z   server-password: GITHUB_TOKEN
+2026-05-25T10:38:16.0177673Z   overwrite-settings: true
+2026-05-25T10:38:16.0177899Z   job-status: success
+2026-05-25T10:38:16.0180890Z   token: ***
+2026-05-25T10:38:16.0181088Z env:
+2026-05-25T10:38:16.0181266Z   buildcacheuser: 
+2026-05-25T10:38:16.0181470Z   buildcachepass: 
+2026-05-25T10:38:16.0181662Z ##[endgroup]
+2026-05-25T10:38:16.1679439Z ##[group]Installed distributions
+2026-05-25T10:38:16.1884907Z Resolved Java 21.0.11+10 from tool-cache
+2026-05-25T10:38:16.1885483Z Setting Java 21.0.11+10 as the default
+2026-05-25T10:38:16.1903582Z Creating toolchains.xml for JDK version 21 from temurin
+2026-05-25T10:38:16.2026650Z Writing to /home/runner/.m2/toolchains.xml
+2026-05-25T10:38:16.2027404Z 
+2026-05-25T10:38:16.2027646Z Java configuration:
+2026-05-25T10:38:16.2028208Z   Distribution: temurin
+2026-05-25T10:38:16.2028614Z   Version: 21.0.11+10
+2026-05-25T10:38:16.2029159Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-25T10:38:16.2029686Z 
+2026-05-25T10:38:16.2031759Z ##[endgroup]
+2026-05-25T10:38:16.2046038Z Creating settings.xml with server-id: github
+2026-05-25T10:38:16.2048814Z Writing to /home/runner/.m2/settings.xml
+2026-05-25T10:38:16.2286579Z ##[group]Run gradle/actions/setup-gradle@v5
+2026-05-25T10:38:16.2286904Z with:
+2026-05-25T10:38:16.2287108Z   cache-disabled: false
+2026-05-25T10:38:16.2287331Z   cache-read-only: true
+2026-05-25T10:38:16.2287548Z   cache-write-only: false
+2026-05-25T10:38:16.2287805Z   cache-overwrite-existing: false
+2026-05-25T10:38:16.2288434Z   cache-cleanup: on-success
+2026-05-25T10:38:16.2288764Z   gradle-home-cache-includes: caches
+notifications
+
+2026-05-25T10:38:16.2289087Z   add-job-summary: always
+2026-05-25T10:38:16.2289335Z   add-job-summary-as-pr-comment: never
+2026-05-25T10:38:16.2289612Z   dependency-graph: disabled
+2026-05-25T10:38:16.2289916Z   dependency-graph-report-dir: dependency-graph-reports
+2026-05-25T10:38:16.2290278Z   dependency-graph-continue-on-failure: true
+2026-05-25T10:38:16.2290773Z   build-scan-publish: false
+2026-05-25T10:38:16.2291016Z   validate-wrappers: true
+2026-05-25T10:38:16.2291253Z   allow-snapshot-wrappers: false
+2026-05-25T10:38:16.2291562Z   gradle-home-cache-strict-match: false
+2026-05-25T10:38:16.2291841Z   workflow-job-context: null
+2026-05-25T10:38:16.2294619Z   github-token: ***
+2026-05-25T10:38:16.2294821Z env:
+2026-05-25T10:38:16.2294999Z   buildcacheuser: 
+2026-05-25T10:38:16.2295198Z   buildcachepass: 
+2026-05-25T10:38:16.2295520Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-25T10:38:16.2296015Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-25T10:38:16.2296390Z ##[endgroup]
+2026-05-25T10:38:16.7826403Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-05-25T10:38:16.7829199Z ##[group]Restore Gradle state from cache
+2026-05-25T10:38:17.0128991Z Cache hit for restore-key: gradle-home-v1|Linux-X64|sanity-check[a0e2abdda73f2aeb278b9bf3d2f004ac]-e900e25b26e0ba3abf052956b12a61778e79a343
+2026-05-25T10:38:18.2476523Z Received 9539242 of 22122154 (43.1%), 9.1 MBs/sec
+2026-05-25T10:38:18.4365111Z Received 22122154 of 22122154 (100.0%), 17.7 MBs/sec
+2026-05-25T10:38:18.4367128Z Cache Size: ~21 MB (22122154 B)
+2026-05-25T10:38:18.4518890Z [command]/usr/bin/tar -xf /home/runner/work/_temp/90aa4a11-9e2e-4f2f-8f47-9251e5bdb2c8/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:18.8502575Z Cache restored successfully
+2026-05-25T10:38:18.8516874Z Restored cache entry with key gradle-home-v1|Linux-X64|sanity-check[a0e2abdda73f2aeb278b9bf3d2f004ac]-90a3404d6876bdeec63c1d1be9842bbce2e85d77 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 2068ms
+2026-05-25T10:38:19.1127756Z Cache hit for: gradle-transforms-v1-5274637a59b1c47d54782088220a3848
+2026-05-25T10:38:19.1159659Z Cache hit for: gradle-instrumented-jars-v1-57827a98119bc4d63e3bd2297fc44673
+2026-05-25T10:38:19.1165201Z Cache hit for: gradle-generated-gradle-jars-v1-8e79c31f3eb4e570a88142dd102a0a2f
+2026-05-25T10:38:19.1174400Z Cache hit for: gradle-groovy-dsl-v1-e164b39f1f165345c515e2fc34722cb3
+2026-05-25T10:38:19.1229357Z Cache hit for: gradle-generated-gradle-jars-v1-b1c8c91f1defd0ba6d2b2ac7f0e028ec
+2026-05-25T10:38:19.1252946Z Cache hit for: gradle-wrapper-zips-v1-9db0835d029c62b1a3d29bf9e5532cf5
+2026-05-25T10:38:19.1274365Z Cache hit for: gradle-dependencies-v1-2cd392e5a80dd5064f41d043654f2ed6
+2026-05-25T10:38:19.6267852Z Received 26504 of 26504 (100.0%), 0.1 MBs/sec
+2026-05-25T10:38:19.6269039Z Cache Size: ~0 MB (26504 B)
+2026-05-25T10:38:19.6293390Z [command]/usr/bin/tar -xf /home/runner/work/_temp/99ab0f1c-2345-47e0-a709-146b4b311978/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:19.6359730Z Cache restored successfully
+2026-05-25T10:38:19.6363076Z Restored cache entry with key gradle-generated-gradle-jars-v1-b1c8c91f1defd0ba6d2b2ac7f0e028ec to /home/runner/.gradle/caches/9.4.1/generated-gradle-jars/gradle-test-kit-9.4.1.jar in 784ms
+2026-05-25T10:38:19.7624840Z Received 158641 of 158641 (100.0%), 0.3 MBs/sec
+2026-05-25T10:38:19.7625876Z Cache Size: ~0 MB (158641 B)
+2026-05-25T10:38:19.7646296Z [command]/usr/bin/tar -xf /home/runner/work/_temp/bd2c8499-689f-4e20-9594-c1b998edd4b2/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:19.7854186Z Cache restored successfully
+2026-05-25T10:38:19.7856537Z Restored cache entry with key gradle-instrumented-jars-v1-57827a98119bc4d63e3bd2297fc44673 to /home/runner/.gradle/caches/jars-*/*/ in 932ms
+2026-05-25T10:38:19.9225817Z Received 432270 of 432270 (100.0%), 0.7 MBs/sec
+2026-05-25T10:38:19.9226535Z Cache Size: ~0 MB (432270 B)
+2026-05-25T10:38:19.9416672Z [command]/usr/bin/tar -xf /home/runner/work/_temp/74937424-8fde-47e3-b230-451c60c0ce49/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:20.0259470Z Cache restored successfully
+2026-05-25T10:38:20.0260809Z Restored cache entry with key gradle-groovy-dsl-v1-e164b39f1f165345c515e2fc34722cb3 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 1172ms
+2026-05-25T10:38:20.3496509Z Received 12582912 of 137166639 (9.2%), 12.0 MBs/sec
+2026-05-25T10:38:20.3649434Z Received 12582912 of 41895876 (30.0%), 12.0 MBs/sec
+2026-05-25T10:38:20.3742286Z Received 0 of 434671933 (0.0%), 0.0 MBs/sec
+2026-05-25T10:38:20.3880444Z Received 3668 of 29363796 (0.0%), 0.0 MBs/sec
+2026-05-25T10:38:20.6038961Z Received 41895876 of 41895876 (100.0%), 32.2 MBs/sec
+2026-05-25T10:38:20.6041607Z Cache Size: ~40 MB (41895876 B)
+2026-05-25T10:38:20.6146536Z [command]/usr/bin/tar -xf /home/runner/work/_temp/301a3a4b-9b59-4a74-a606-d684502f7504/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:20.7320351Z Received 29363796 of 29363796 (100.0%), 20.8 MBs/sec
+2026-05-25T10:38:20.7323089Z Cache Size: ~28 MB (29363796 B)
+2026-05-25T10:38:20.7961049Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c3c92494-f67d-4cc5-9302-71003567cdd7/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:21.0662615Z Cache restored successfully
+2026-05-25T10:38:21.0878400Z Restored cache entry with key gradle-generated-gradle-jars-v1-8e79c31f3eb4e570a88142dd102a0a2f to /home/runner/.gradle/caches/9.4.1/generated-gradle-jars/gradle-api-9.4.1.jar in 2235ms
+2026-05-25T10:38:21.2763478Z Cache restored successfully
+2026-05-25T10:38:21.2778725Z Restored cache entry with key gradle-transforms-v1-5274637a59b1c47d54782088220a3848 to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 2423ms
+2026-05-25T10:38:21.3496401Z Received 130023424 of 137166639 (94.8%), 62.0 MBs/sec
+2026-05-25T10:38:21.4060992Z Received 104857600 of 434671933 (24.1%), 49.1 MBs/sec
+2026-05-25T10:38:21.5773977Z Received 137166639 of 137166639 (100.0%), 58.7 MBs/sec
+2026-05-25T10:38:21.5808775Z Cache Size: ~131 MB (137166639 B)
+2026-05-25T10:38:21.6278847Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a4b8a612-bd6c-4a48-8c79-4da8470197b8/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:21.8591446Z Cache restored successfully
+2026-05-25T10:38:21.8650704Z Restored cache entry with key gradle-wrapper-zips-v1-9db0835d029c62b1a3d29bf9e5532cf5 to /home/runner/.gradle/wrapper/dists/gradle-9.4.1-bin/arn2x92ynaizyzdaamcbpbhtj in 3011ms
+2026-05-25T10:38:22.4069350Z Received 247463936 of 434671933 (56.9%), 77.7 MBs/sec
+2026-05-25T10:38:23.4149211Z Received 398458880 of 434671933 (91.7%), 94.1 MBs/sec
+2026-05-25T10:38:23.7759523Z Received 434671933 of 434671933 (100.0%), 94.2 MBs/sec
+2026-05-25T10:38:23.7788622Z Cache Size: ~415 MB (434671933 B)
+2026-05-25T10:38:23.7866899Z [command]/usr/bin/tar -xf /home/runner/work/_temp/83ad203e-3df7-4c2e-84b8-d9e4c1fd618f/cache.tzst -P -C /home/runner/work/spotless/spotless --use-compress-program unzstd
+2026-05-25T10:38:24.4473276Z Cache restored successfully
+2026-05-25T10:38:24.4721894Z Restored cache entry with key gradle-dependencies-v1-2cd392e5a80dd5064f41d043654f2ed6 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 5618ms
+2026-05-25T10:38:24.4819294Z ##[endgroup]
+2026-05-25T10:38:24.5137180Z ##[group]All Gradle Wrapper jars are valid
+2026-05-25T10:38:24.5138750Z ✓ Found known Gradle Wrapper JAR files:
+2026-05-25T10:38:24.5139483Z   55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c gradle/wrapper/gradle-wrapper.jar
+2026-05-25T10:38:24.5140407Z ##[endgroup]
+2026-05-25T10:38:24.5359291Z ##[group]Run ./gradlew spotlessCheck
+2026-05-25T10:38:24.5359733Z [36;1m./gradlew spotlessCheck[0m
+2026-05-25T10:38:24.5395979Z shell: /usr/bin/bash -e {0}
+2026-05-25T10:38:24.5396290Z env:
+2026-05-25T10:38:24.5396519Z   buildcacheuser: 
+2026-05-25T10:38:24.5396788Z   buildcachepass: 
+2026-05-25T10:38:24.5397180Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-25T10:38:24.5397739Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-25T10:38:24.5398744Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-05-25T10:38:24.5399114Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-05-25T10:38:24.5399453Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-05-25T10:38:24.5399795Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-05-25T10:38:24.5400279Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-05-25T10:38:24.5400817Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-05-25T10:38:24.5401247Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-05-25T10:38:24.5401564Z ##[endgroup]
+2026-05-25T10:38:25.8506596Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-05-25T10:38:27.6520138Z Parallel Configuration Cache is an incubating feature.
+2026-05-25T10:38:28.8507203Z Calculating task graph as no cached configuration is available for tasks: spotlessCheck
+2026-05-25T10:38:35.3505679Z Type-safe project accessors is an incubating feature.
+2026-05-25T10:39:50.1580129Z > Task :spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.1590961Z > Task :spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.1638731Z > Task :lib:spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.1660366Z > Task :spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.1691883Z > Task :lib:spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.1708678Z > Task :spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.1713881Z > Task :lib:spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.1714924Z > Task :lib:spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.2509669Z > Task :lib-extra:spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.2564501Z > Task :lib-extra:spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.2565303Z > Task :lib-extra:spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.2566092Z > Task :lib-extra:spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.2566804Z > Task :plugin-gradle:spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.2567548Z > Task :plugin-gradle:spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.2568604Z > Task :plugin-gradle:spotlessFreshmark FROM-CACHE
+2026-05-25T10:39:50.2569349Z > Task :plugin-gradle:spotlessFreshmarkCheck UP-TO-DATE
+2026-05-25T10:39:50.2570125Z > Task :plugin-gradle:spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.2570919Z > Task :plugin-gradle:spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.2571649Z > Task :lib-extra:spotlessJava FROM-CACHE
+2026-05-25T10:39:50.2572307Z > Task :lib-extra:spotlessJavaCheck UP-TO-DATE
+2026-05-25T10:39:50.2572929Z > Task :lib-extra:spotlessCheck UP-TO-DATE
+2026-05-25T10:39:50.2573613Z > Task :plugin-maven:spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.2574392Z > Task :plugin-maven:spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.2575144Z > Task :plugin-gradle:spotlessJava FROM-CACHE
+2026-05-25T10:39:50.2575830Z > Task :plugin-maven:spotlessFreshmark FROM-CACHE
+2026-05-25T10:39:50.2576545Z > Task :plugin-gradle:spotlessJavaCheck UP-TO-DATE
+2026-05-25T10:39:50.2577223Z > Task :plugin-gradle:spotlessCheck UP-TO-DATE
+2026-05-25T10:39:50.2577961Z > Task :plugin-maven:spotlessFreshmarkCheck UP-TO-DATE
+2026-05-25T10:39:50.2579116Z > Task :plugin-maven:generateMavenPluginHelpMojoSources SKIPPED
+2026-05-25T10:39:50.2579943Z > Task :plugin-maven:spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.2608375Z > Task :plugin-maven:spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.2609224Z > Task :testlib:spotlessDotfiles FROM-CACHE
+2026-05-25T10:39:50.3504306Z > Task :testlib:spotlessDotfilesCheck UP-TO-DATE
+2026-05-25T10:39:50.3511511Z > Task :testlib:spotlessGroovyGradle FROM-CACHE
+2026-05-25T10:39:50.3512615Z > Task :testlib:spotlessGroovyGradleCheck UP-TO-DATE
+2026-05-25T10:39:50.3513664Z > Task :testlib:spotlessJava FROM-CACHE
+2026-05-25T10:39:50.3514505Z > Task :testlib:spotlessJavaCheck UP-TO-DATE
+2026-05-25T10:39:50.3515370Z > Task :testlib:spotlessCheck UP-TO-DATE
+2026-05-25T10:39:51.2503005Z 
+2026-05-25T10:39:51.2504435Z > Task :spotlessFreshmark
+2026-05-25T10:39:51.2506383Z Could not store entry 967e851a5568a265b287696360bfeb6d in remote build cache: Storing entry at 'https://buildcache.diffplug.com/cache/967e851a5568a265b287696360bfeb6d' response status 403: Forbidden
+2026-05-25T10:39:51.2508478Z 
+2026-05-25T10:39:51.2508702Z > Task :spotlessFreshmarkCheck
+2026-05-25T10:39:51.2509226Z > Task :spotlessCheck
+2026-05-25T10:39:51.9498550Z > Task :plugin-maven:spotlessJava
+2026-05-25T10:39:52.0498482Z > Task :plugin-maven:spotlessJavaCheck FAILED
+2026-05-25T10:39:52.2497899Z > Task :lib:spotlessJava
+2026-05-25T10:39:52.3501068Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1779705511379.json
+2026-05-25T10:39:52.3562808Z 
+2026-05-25T10:39:52.3582293Z FAILURE: Build failed with an exception.
+2026-05-25T10:39:52.3583043Z 39 actionable tasks: 5 executed, 17 from cache, 17 up-to-date
+2026-05-25T10:39:52.3583883Z 
+2026-05-25T10:39:52.3590375Z * What went wrong:
+2026-05-25T10:39:52.3591110Z Execution failed for task ':plugin-maven:spotlessJavaCheck'.
+2026-05-25T10:39:52.3591851Z > The following files had format violations:
+2026-05-25T10:39:52.3592752Z       src/test/java/com/diffplug/spotless/maven/java/ExpandWildcardImportsStepTest.java
+2026-05-25T10:39:52.3593646Z           @@ -32,12 +32,12 @@
+2026-05-25T10:39:52.3594123Z            
+2026-05-25T10:39:52.3595730Z            \t\t//·Create·supporting·classes·in·source·roots·so·JavaParserTypeSolver·can·resolve·them
+2026-05-25T10:39:52.3596915Z            \t\tsetFile("src/main/java/foo/bar/AnotherClassInSamePackage.java")
+2026-05-25T10:39:52.3598013Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3599540Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3600638Z            \t\tsetFile("src/main/java/foo/bar/baz/AnotherImportedClass.java")
+2026-05-25T10:39:52.3601686Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3602791Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3628663Z            \t\t//·Source·for·the·annotation·used·in·the·test·(resolves·via·source·root,·not·JAR)
+2026-05-25T10:39:52.3629858Z            \t\tsetFile("src/main/java/org/example/SomeAnnotation.java")
+2026-05-25T10:39:52.3630630Z           -\t\t\t.toContent("""
+2026-05-25T10:39:52.3631142Z           +\t\t\t\t.toContent("""
+2026-05-25T10:39:52.3631819Z            \t\t\t\t\t\tpackage·org.example;
+2026-05-25T10:39:52.3632387Z            
+2026-05-25T10:39:52.3632982Z            \t\t\t\t\t\tpublic·@interface·SomeAnnotation·{}
+2026-05-25T10:39:52.3633578Z           @@ -70,9 +70,9 @@
+2026-05-25T10:39:52.3634447Z            \t\twritePomWithProjectDeps("<java><expandWildcardImports/></java>",·projectDeps);
+2026-05-25T10:39:52.3635228Z            
+2026-05-25T10:39:52.3635794Z            \t\tsetFile("src/main/java/foo/bar/AnotherClassInSamePackage.java")
+2026-05-25T10:39:52.3636805Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3637981Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3648739Z            \t\tsetFile("src/main/java/foo/bar/baz/AnotherImportedClass.java")
+2026-05-25T10:39:52.3649999Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3651080Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3653054Z            
+2026-05-25T10:39:52.3653969Z            \t\tString·path·=·"src/main/java/foo/bar/JavaClassWithWildcards.java";
+2026-05-25T10:39:52.3655233Z            \t\tsetFile(path).toResource("java/expandwildcardimports/JavaClassWithWildcardsUnformatted.test");
+2026-05-25T10:39:52.3656263Z           @@ -103,9 +103,9 @@
+2026-05-25T10:39:52.3656782Z            
+2026-05-25T10:39:52.3657432Z            \t\t//·Create·supporting·classes·in·source·roots
+2026-05-25T10:39:52.3658550Z            \t\tsetFile("src/main/java/foo/bar/AnotherClassInSamePackage.java")
+2026-05-25T10:39:52.3659870Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3661021Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3662066Z            \t\tsetFile("src/main/java/foo/bar/baz/AnotherImportedClass.java")
+2026-05-25T10:39:52.3663072Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3664125Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3665487Z            \t\t//·SomeAnnotation·comes·from·the·JAR·(transitively·via·POM·dependency),·not·from·source
+2026-05-25T10:39:52.3666409Z            
+2026-05-25T10:39:52.3667173Z            \t\tString·path·=·"src/main/java/foo/bar/JavaClassWithWildcards.java";
+2026-05-25T10:39:52.3667947Z           @@ -173,9 +173,9 @@
+2026-05-25T10:39:52.3669107Z            \t\twritePomWithProjectDeps("<java><expandWildcardImports/></java>",·projectDeps);
+2026-05-25T10:39:52.3669987Z            
+2026-05-25T10:39:52.3670569Z            \t\tsetFile("src/main/java/foo/bar/AnotherClassInSamePackage.java")
+2026-05-25T10:39:52.3671549Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3672638Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherClassInSamePackage.test");
+2026-05-25T10:39:52.3673707Z            \t\tsetFile("src/main/java/foo/bar/baz/AnotherImportedClass.java")
+2026-05-25T10:39:52.3674692Z           -\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3675738Z           +\t\t\t\t.toResource("java/expandwildcardimports/AnotherImportedClass.test");
+2026-05-25T10:39:52.3676559Z       ... (50 more lines that didn't fit)
+2026-05-25T10:39:52.3677187Z   Run './gradlew spotlessApply' to fix all violations.
+2026-05-25T10:39:52.3677638Z 
+2026-05-25T10:39:52.3677802Z * Try:
+2026-05-25T10:39:52.3680050Z > Run with --stacktrace option to get the stack trace.
+2026-05-25T10:39:52.3680822Z > Run with --info or --debug option to get more log output.
+2026-05-25T10:39:52.3681711Z > Get more help at https://help.gradle.org.
+2026-05-25T10:39:52.3682126Z 
+2026-05-25T10:39:52.3682311Z BUILD FAILED in 1m 27s
+2026-05-25T10:39:52.4497212Z 
+2026-05-25T10:39:52.4498228Z Publishing Build Scan to Develocity...
+2026-05-25T10:39:52.7509228Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-scans/__run-1779705511379.json
+2026-05-25T10:39:52.8514518Z https://gradle.com/s/mpxbej6uibnfw
+2026-05-25T10:39:52.8528667Z 
+2026-05-25T10:39:52.8539246Z Configuration cache entry stored.
+2026-05-25T10:39:52.8540240Z The remote build cache was disabled during the build due to errors.
+2026-05-25T10:39:53.3084283Z ##[error]Process completed with exit code 1.
+2026-05-25T10:39:53.3306511Z Post job cleanup.
+2026-05-25T10:39:53.7100431Z In post-action step
+2026-05-25T10:39:53.7111311Z Cache is read-only: will not save state for use in subsequent builds.
+2026-05-25T10:39:53.7117638Z Generating Job Summary
+2026-05-25T10:39:53.7138414Z Completed post-action step
+2026-05-25T10:39:53.7330834Z Post job cleanup.
+2026-05-25T10:39:53.8631746Z Post job cleanup.
+2026-05-25T10:39:53.9463285Z [command]/usr/bin/git version
+2026-05-25T10:39:53.9504256Z git version 2.54.0
+2026-05-25T10:39:53.9548946Z Temporarily overriding HOME='/home/runner/work/_temp/77abaaa5-1c1e-40f4-9b62-8a3dc9208734' before making global git config changes
+2026-05-25T10:39:53.9550634Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-25T10:39:53.9556265Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/spotless/spotless
+2026-05-25T10:39:53.9589053Z Removing SSH command configuration
+2026-05-25T10:39:53.9596938Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-25T10:39:53.9635237Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-25T10:39:53.9887000Z Removing HTTP extra header
+2026-05-25T10:39:53.9890400Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-25T10:39:53.9925445Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-25T10:39:54.0142112Z Removing includeIf entries pointing to credentials config files
+2026-05-25T10:39:54.0148451Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-25T10:39:54.0173589Z includeif.gitdir:/home/runner/work/spotless/spotless/.git.path
+2026-05-25T10:39:54.0174637Z includeif.gitdir:/home/runner/work/spotless/spotless/.git/worktrees/*.path
+2026-05-25T10:39:54.0175557Z includeif.gitdir:/github/workspace/.git.path
+2026-05-25T10:39:54.0176378Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-25T10:39:54.0183328Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/spotless/spotless/.git.path
+2026-05-25T10:39:54.0236926Z /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0247738Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/spotless/spotless/.git.path /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0283747Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/spotless/spotless/.git/worktrees/*.path
+2026-05-25T10:39:54.0305480Z /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0314898Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/spotless/spotless/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0347096Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-05-25T10:39:54.0370352Z /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0380745Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0416338Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-25T10:39:54.0438331Z /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0449868Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config
+2026-05-25T10:39:54.0485213Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-25T10:39:54.0710782Z Removing credentials config '/home/runner/work/_temp/git-credentials-a41df296-8a09-4bb8-9285-67a5414e7a60.config'
+2026-05-25T10:39:54.0854179Z Cleaning up orphan processes
+2026-05-25T10:39:54.1171200Z Terminate orphan process: pid (2443) (java)

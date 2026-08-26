@@ -1,0 +1,31 @@
+﻿2026-05-26T12:26:00.2989464Z Current runner version: '2.334.0'
+2026-05-26T12:26:00.3011170Z ##[group]Runner Image Provisioner
+2026-05-26T12:26:00.3011788Z Hosted Compute Agent
+2026-05-26T12:26:00.3012310Z Version: 20260213.493
+2026-05-26T12:26:00.3012758Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-26T12:26:00.3013355Z Build Date: 2026-02-13T00:28:41Z
+2026-05-26T12:26:00.3013878Z Worker ID: {6611cff9-395d-40cc-be68-2867d9a1882d}
+2026-05-26T12:26:00.3014450Z Azure Region: westcentralus
+2026-05-26T12:26:00.3014919Z ##[endgroup]
+2026-05-26T12:26:00.3015979Z ##[group]Operating System
+2026-05-26T12:26:00.3016483Z Ubuntu
+2026-05-26T12:26:00.3016871Z 24.04.4
+2026-05-26T12:26:00.3017463Z LTS
+2026-05-26T12:26:00.3017823Z ##[endgroup]
+2026-05-26T12:26:00.3018233Z ##[group]Runner Image
+2026-05-26T12:26:00.3018632Z Image: ubuntu-24.04
+2026-05-26T12:26:00.3019104Z Version: 20260518.149.1
+2026-05-26T12:26:00.3020081Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260518.149/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-26T12:26:00.3021199Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260518.149
+2026-05-26T12:26:00.3021894Z ##[endgroup]
+2026-05-26T12:26:00.3022704Z ##[group]GITHUB_TOKEN Permissions
+2026-05-26T12:26:00.3024189Z Contents: read
+2026-05-26T12:26:00.3024613Z Metadata: read
+2026-05-26T12:26:00.3025069Z ##[endgroup]
+2026-05-26T12:26:00.3026782Z Secret source: Actions
+2026-05-26T12:26:00.3027467Z Prepare workflow directory
+2026-05-26T12:26:00.3345514Z Prepare all required actions
+2026-05-26T12:26:00.3394733Z Getting action download info
+2026-05-26T12:26:00.8278489Z Download action repository 'step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5' (SHA:ab7a9404c0f3da075243ca237b5fac12c98deaa5)
+2026-05-26T12:26:01.0537748Z ##[error]An action could not be found at the URI 'https://codeload.github.com/step-security/harden-runner/tar.gz/ab7a9404c0f3da075243ca237b5fac12c98deaa5' (C838:9990D:9A4BB:C6627:6A159158)
+2026-05-26T12:26:01.0560300Z ##[error]Failed to download archive 'https://codeload.github.com/step-security/harden-runner/tar.gz/ab7a9404c0f3da075243ca237b5fac12c98deaa5' after 1 attempts.

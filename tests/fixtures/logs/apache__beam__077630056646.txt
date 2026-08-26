@@ -1,0 +1,843 @@
+﻿2026-05-24T21:47:33.8605212Z Current runner version: '2.334.0'
+2026-05-24T21:47:33.8626322Z ##[group]Runner Image Provisioner
+2026-05-24T21:47:33.8627054Z Hosted Compute Agent
+2026-05-24T21:47:33.8627455Z Version: 20260213.493
+2026-05-24T21:47:33.8627895Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-24T21:47:33.8628414Z Build Date: 2026-02-13T00:28:41Z
+2026-05-24T21:47:33.8628902Z Worker ID: {21f466a6-4149-4dd4-8118-0afee2b7dcd9}
+2026-05-24T21:47:33.8629390Z Azure Region: westus
+2026-05-24T21:47:33.8629866Z ##[endgroup]
+2026-05-24T21:47:33.8630864Z ##[group]Operating System
+2026-05-24T21:47:33.8631348Z Microsoft Windows Server 2025
+2026-05-24T21:47:33.8631807Z 10.0.26100
+2026-05-24T21:47:33.8632145Z Datacenter
+2026-05-24T21:47:33.8632543Z ##[endgroup]
+2026-05-24T21:47:33.8632872Z ##[group]Runner Image
+2026-05-24T21:47:33.8633297Z Image: windows-2025-vs2026
+2026-05-24T21:47:33.8633677Z Version: 20260518.113.1
+2026-05-24T21:47:33.8634868Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260518.113/images/windows/Windows2025-VS2026-Readme.md
+2026-05-24T21:47:33.8636026Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260518.113
+2026-05-24T21:47:33.8636747Z ##[endgroup]
+2026-05-24T21:47:33.8637590Z ##[group]GITHUB_TOKEN Permissions
+2026-05-24T21:47:33.8639052Z Contents: read
+2026-05-24T21:47:33.8639425Z Metadata: read
+2026-05-24T21:47:33.8639793Z Packages: read
+2026-05-24T21:47:33.8640110Z ##[endgroup]
+2026-05-24T21:47:33.8641756Z Secret source: None
+2026-05-24T21:47:33.8642223Z Prepare workflow directory
+2026-05-24T21:47:33.9047194Z Prepare all required actions
+2026-05-24T21:47:33.9086113Z Getting action download info
+2026-05-24T21:47:34.3503568Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-05-24T21:47:34.4351084Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-05-24T21:47:34.7175371Z Complete job name: Java Unit Tests (windows-latest)
+2026-05-24T21:47:34.8759230Z ##[group]Run actions/checkout@v6
+2026-05-24T21:47:34.8760082Z with:
+2026-05-24T21:47:34.8760397Z   persist-credentials: false
+2026-05-24T21:47:34.8760760Z   submodules: recursive
+2026-05-24T21:47:34.8761096Z   repository: apache/beam
+2026-05-24T21:47:34.8761668Z   token: ***
+2026-05-24T21:47:34.8761960Z   ssh-strict: true
+2026-05-24T21:47:34.8762258Z   ssh-user: git
+2026-05-24T21:47:34.8762537Z   clean: true
+2026-05-24T21:47:34.8762846Z   sparse-checkout-cone-mode: true
+2026-05-24T21:47:34.8763238Z   fetch-depth: 1
+2026-05-24T21:47:34.8763528Z   fetch-tags: false
+2026-05-24T21:47:34.8763844Z   show-progress: true
+2026-05-24T21:47:34.8764147Z   lfs: false
+2026-05-24T21:47:34.8764437Z   set-safe-directory: true
+2026-05-24T21:47:34.8764930Z env:
+2026-05-24T21:47:34.8765201Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T21:47:34.8765552Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T21:47:34.8765943Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T21:47:34.8766376Z ##[endgroup]
+2026-05-24T21:47:35.1128958Z Syncing repository: apache/beam
+2026-05-24T21:47:35.1130720Z ##[group]Getting Git version info
+2026-05-24T21:47:35.1131415Z Working directory is 'D:\a\beam\beam'
+2026-05-24T21:47:35.1568357Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-24T21:47:35.5950940Z git version 2.54.0.windows.1
+2026-05-24T21:47:35.5991119Z ##[endgroup]
+2026-05-24T21:47:35.6006711Z Temporarily overriding HOME='D:\a\_temp\89588065-3366-4869-b7d2-774e18a51ea9' before making global git config changes
+2026-05-24T21:47:35.6009045Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-24T21:47:35.6015212Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\beam\beam
+2026-05-24T21:47:35.6264452Z Deleting the contents of 'D:\a\beam\beam'
+2026-05-24T21:47:35.6269261Z ##[group]Initializing the repository
+2026-05-24T21:47:35.6276306Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\beam\beam
+2026-05-24T21:47:35.7329361Z Initialized empty Git repository in D:/a/beam/beam/.git/
+2026-05-24T21:47:35.7370214Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/apache/beam
+2026-05-24T21:47:35.7630182Z ##[endgroup]
+2026-05-24T21:47:35.7631537Z ##[group]Disabling automatic garbage collection
+2026-05-24T21:47:35.7637100Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-05-24T21:47:35.7891873Z ##[endgroup]
+2026-05-24T21:47:35.7893125Z ##[group]Setting up auth
+2026-05-24T21:47:35.7894065Z Removing SSH command configuration
+2026-05-24T21:47:35.7902593Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-24T21:47:35.8180568Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-24T21:47:37.3429311Z Removing HTTP extra header
+2026-05-24T21:47:37.3441174Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-24T21:47:37.3713159Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-24T21:47:37.8208668Z Removing includeIf entries pointing to credentials config files
+2026-05-24T21:47:37.8218418Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:47:37.8476418Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-24T21:47:38.3241668Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-05-24T21:47:38.3497147Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/beam/beam/.git.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:47:38.3739775Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/beam/beam/.git/worktrees/*.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:47:38.4006203Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:47:38.4279468Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:47:38.4575956Z ##[endgroup]
+2026-05-24T21:47:38.4576415Z ##[group]Fetching the repository
+2026-05-24T21:47:38.4589919Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +361f289b7220f77190583ddea51897d4714b9534:refs/remotes/pull/38619/merge
+2026-05-24T21:47:47.1247572Z From https://github.com/apache/beam
+2026-05-24T21:47:47.1248251Z  * [new ref]           361f289b7220f77190583ddea51897d4714b9534 -> pull/38619/merge
+2026-05-24T21:47:47.1437521Z ##[endgroup]
+2026-05-24T21:47:47.1438080Z ##[group]Determining the checkout info
+2026-05-24T21:47:47.1438734Z ##[endgroup]
+2026-05-24T21:47:47.1451843Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-05-24T21:47:47.1765029Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-05-24T21:47:47.2026846Z ##[group]Checking out the ref
+2026-05-24T21:47:47.2034991Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/38619/merge
+2026-05-24T21:47:48.2542419Z Updating files:  20% (3176/15268)
+2026-05-24T21:47:48.2882239Z Updating files:  21% (3207/15268)
+2026-05-24T21:47:48.3249805Z Updating files:  22% (3359/15268)
+2026-05-24T21:47:48.3620007Z Updating files:  23% (3512/15268)
+2026-05-24T21:47:48.3980140Z Updating files:  24% (3665/15268)
+2026-05-24T21:47:48.4260092Z Updating files:  25% (3817/15268)
+2026-05-24T21:47:48.4557461Z Updating files:  26% (3970/15268)
+2026-05-24T21:47:48.5393339Z Updating files:  27% (4123/15268)
+2026-05-24T21:47:48.5702584Z Updating files:  28% (4276/15268)
+2026-05-24T21:47:48.6009758Z Updating files:  29% (4428/15268)
+2026-05-24T21:47:48.6332289Z Updating files:  30% (4581/15268)
+2026-05-24T21:47:48.6681748Z Updating files:  31% (4734/15268)
+2026-05-24T21:47:48.7039211Z Updating files:  32% (4886/15268)
+2026-05-24T21:47:48.7393523Z Updating files:  33% (5039/15268)
+2026-05-24T21:47:48.7729956Z Updating files:  34% (5192/15268)
+2026-05-24T21:47:48.8048681Z Updating files:  35% (5344/15268)
+2026-05-24T21:47:48.8394339Z Updating files:  36% (5497/15268)
+2026-05-24T21:47:48.8736640Z Updating files:  37% (5650/15268)
+2026-05-24T21:47:48.9102716Z Updating files:  38% (5802/15268)
+2026-05-24T21:47:48.9476404Z Updating files:  39% (5955/15268)
+2026-05-24T21:47:48.9799558Z Updating files:  40% (6108/15268)
+2026-05-24T21:47:49.0148789Z Updating files:  41% (6260/15268)
+2026-05-24T21:47:49.0491692Z Updating files:  42% (6413/15268)
+2026-05-24T21:47:49.0831585Z Updating files:  43% (6566/15268)
+2026-05-24T21:47:49.1129721Z Updating files:  44% (6718/15268)
+2026-05-24T21:47:49.4934835Z Updating files:  45% (6871/15268)
+2026-05-24T21:47:49.5040301Z Updating files:  45% (6980/15268)
+2026-05-24T21:47:49.5349500Z Updating files:  46% (7024/15268)
+2026-05-24T21:47:49.5714450Z Updating files:  47% (7176/15268)
+2026-05-24T21:47:49.6027912Z Updating files:  48% (7329/15268)
+2026-05-24T21:47:49.6317115Z Updating files:  49% (7482/15268)
+2026-05-24T21:47:49.6623287Z Updating files:  50% (7634/15268)
+2026-05-24T21:47:49.6941507Z Updating files:  51% (7787/15268)
+2026-05-24T21:47:49.7238724Z Updating files:  52% (7940/15268)
+2026-05-24T21:47:49.7566772Z Updating files:  53% (8093/15268)
+2026-05-24T21:47:49.7915249Z Updating files:  54% (8245/15268)
+2026-05-24T21:47:49.8226554Z Updating files:  55% (8398/15268)
+2026-05-24T21:47:49.8628829Z Updating files:  56% (8551/15268)
+2026-05-24T21:47:49.8964737Z Updating files:  57% (8703/15268)
+2026-05-24T21:47:49.9394739Z Updating files:  58% (8856/15268)
+2026-05-24T21:47:50.0337867Z Updating files:  59% (9009/15268)
+2026-05-24T21:47:50.0635228Z Updating files:  60% (9161/15268)
+2026-05-24T21:47:50.0946267Z Updating files:  61% (9314/15268)
+2026-05-24T21:47:50.1343197Z Updating files:  62% (9467/15268)
+2026-05-24T21:47:50.1701518Z Updating files:  63% (9619/15268)
+2026-05-24T21:47:50.2094996Z Updating files:  64% (9772/15268)
+2026-05-24T21:47:50.2531765Z Updating files:  65% (9925/15268)
+2026-05-24T21:47:50.2660866Z Updating files:  66% (10077/15268)
+2026-05-24T21:47:50.2923730Z Updating files:  66% (10123/15268)
+2026-05-24T21:47:50.3261610Z Updating files:  67% (10230/15268)
+2026-05-24T21:47:50.3596787Z Updating files:  68% (10383/15268)
+2026-05-24T21:47:50.3965459Z Updating files:  69% (10535/15268)
+2026-05-24T21:47:50.4640677Z Updating files:  70% (10688/15268)
+2026-05-24T21:47:50.5083651Z Updating files:  71% (10841/15268)
+2026-05-24T21:47:50.8878767Z Updating files:  72% (10993/15268)
+2026-05-24T21:47:50.9308118Z Updating files:  73% (11146/15268)
+2026-05-24T21:47:50.9654886Z Updating files:  74% (11299/15268)
+2026-05-24T21:47:51.0621651Z Updating files:  75% (11451/15268)
+2026-05-24T21:47:51.0940259Z Updating files:  76% (11604/15268)
+2026-05-24T21:47:51.1178537Z Updating files:  77% (11757/15268)
+2026-05-24T21:47:51.1523239Z Updating files:  78% (11910/15268)
+2026-05-24T21:47:51.1823306Z Updating files:  79% (12062/15268)
+2026-05-24T21:47:51.2079494Z Updating files:  80% (12215/15268)
+2026-05-24T21:47:51.2414446Z Updating files:  81% (12368/15268)
+2026-05-24T21:47:51.2670484Z Updating files:  82% (12520/15268)
+2026-05-24T21:47:51.2756931Z Updating files:  82% (12627/15268)
+2026-05-24T21:47:51.3109076Z Updating files:  83% (12673/15268)
+2026-05-24T21:47:51.3457799Z Updating files:  84% (12826/15268)
+2026-05-24T21:47:51.3903307Z Updating files:  85% (12978/15268)
+2026-05-24T21:47:51.4226700Z Updating files:  86% (13131/15268)
+2026-05-24T21:47:51.4576061Z Updating files:  87% (13284/15268)
+2026-05-24T21:47:51.4912881Z Updating files:  88% (13436/15268)
+2026-05-24T21:47:51.5256099Z Updating files:  89% (13589/15268)
+2026-05-24T21:47:51.5571171Z Updating files:  90% (13742/15268)
+2026-05-24T21:47:51.5836031Z Updating files:  91% (13894/15268)
+2026-05-24T21:47:51.6123727Z Updating files:  92% (14047/15268)
+2026-05-24T21:47:51.6421009Z Updating files:  93% (14200/15268)
+2026-05-24T21:47:51.6732542Z Updating files:  94% (14352/15268)
+2026-05-24T21:47:51.7042753Z Updating files:  95% (14505/15268)
+2026-05-24T21:47:51.8321344Z Updating files:  96% (14658/15268)
+2026-05-24T21:47:52.2909220Z Updating files:  97% (14810/15268)
+2026-05-24T21:47:52.3896818Z Updating files:  97% (14837/15268)
+2026-05-24T21:47:52.5192449Z Updating files:  98% (14963/15268)
+2026-05-24T21:47:52.6742305Z Updating files:  99% (15116/15268)
+2026-05-24T21:47:52.6742702Z Updating files: 100% (15268/15268)
+2026-05-24T21:47:52.6743008Z Updating files: 100% (15268/15268), done.
+2026-05-24T21:47:52.7040956Z Note: switching to 'refs/remotes/pull/38619/merge'.
+2026-05-24T21:47:52.7041276Z 
+2026-05-24T21:47:52.7041488Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-05-24T21:47:52.7042023Z changes and commit them, and you can discard any commits you make in this
+2026-05-24T21:47:52.7042379Z state without impacting any branches by switching back to a branch.
+2026-05-24T21:47:52.7042572Z 
+2026-05-24T21:47:52.7042704Z If you want to create a new branch to retain commits you create, you may
+2026-05-24T21:47:52.7043027Z do so (now or later) by using -c with the switch command. Example:
+2026-05-24T21:47:52.7043481Z 
+2026-05-24T21:47:52.7043555Z   git switch -c <new-branch-name>
+2026-05-24T21:47:52.7043677Z 
+2026-05-24T21:47:52.7043745Z Or undo this operation with:
+2026-05-24T21:47:52.7043867Z 
+2026-05-24T21:47:52.7043921Z   git switch -
+2026-05-24T21:47:52.7044002Z 
+2026-05-24T21:47:52.7044156Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-05-24T21:47:52.7044377Z 
+2026-05-24T21:47:52.7044647Z HEAD is now at 361f289b Merge ecd2dcfc741e9284dbfe90a05791282fd12e6eed into 361c2c473a8eb6ebddfc3211f78553b521fdfa54
+2026-05-24T21:47:52.7245512Z ##[endgroup]
+2026-05-24T21:47:52.7245935Z ##[group]Setting up auth for fetching submodules
+2026-05-24T21:47:52.7257170Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-05-24T21:47:52.7530130Z [command]"C:\Program Files\Git\bin\git.exe" config --global include.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:47:52.7802602Z [command]"C:\Program Files\Git\bin\git.exe" config --global --unset-all url.https://github.com/.insteadOf
+2026-05-24T21:47:52.8069773Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add url.https://github.com/.insteadOf git@github.com:
+2026-05-24T21:47:52.8339593Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add url.https://github.com/.insteadOf org-47359@github.com:
+2026-05-24T21:47:52.8595995Z ##[endgroup]
+2026-05-24T21:47:52.8596286Z ##[group]Fetching submodules
+2026-05-24T21:47:52.8604927Z [command]"C:\Program Files\Git\bin\git.exe" submodule sync --recursive
+2026-05-24T21:47:53.3390976Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 submodule update --init --force --depth=1 --recursive
+2026-05-24T21:47:53.7867920Z Submodule '.github/actions/cancel-workflow-runs' (https://github.com/potiuk/cancel-workflow-runs) registered for path '.github/actions/cancel-workflow-runs'
+2026-05-24T21:47:53.7883756Z Submodule '.github/actions/github-push-action' (https://github.com/ad-m/github-push-action) registered for path '.github/actions/github-push-action'
+2026-05-24T21:47:53.7900526Z Submodule 'website/www/site/themes/docsy' (https://github.com/google/docsy.git) registered for path 'website/www/site/themes/docsy'
+2026-05-24T21:47:53.8106571Z Cloning into 'D:/a/beam/beam/.github/actions/cancel-workflow-runs'...
+2026-05-24T21:47:54.4596728Z Cloning into 'D:/a/beam/beam/.github/actions/github-push-action'...
+2026-05-24T21:47:55.0768549Z Cloning into 'D:/a/beam/beam/website/www/site/themes/docsy'...
+2026-05-24T21:47:57.0465999Z From https://github.com/potiuk/cancel-workflow-runs
+2026-05-24T21:47:57.0466375Z  * branch            953e057dc81d3458935a18d1184c386b0f6b5738 -> FETCH_HEAD
+2026-05-24T21:47:57.0927353Z Submodule path '.github/actions/cancel-workflow-runs': checked out '953e057dc81d3458935a18d1184c386b0f6b5738'
+2026-05-24T21:47:58.2117067Z From https://github.com/ad-m/github-push-action
+2026-05-24T21:47:58.2117480Z  * branch            057a6ba835d986bfe495dd476a6c4db1d5f9503c -> FETCH_HEAD
+2026-05-24T21:47:58.2503218Z Submodule path '.github/actions/github-push-action': checked out '057a6ba835d986bfe495dd476a6c4db1d5f9503c'
+2026-05-24T21:48:00.1879992Z From https://github.com/google/docsy
+2026-05-24T21:48:00.1880376Z  * branch            8b786354829536454688df1e63b9cad792f68562 -> FETCH_HEAD
+2026-05-24T21:48:00.2901156Z Submodule path 'website/www/site/themes/docsy': checked out '8b786354829536454688df1e63b9cad792f68562'
+2026-05-24T21:48:00.3012964Z Submodule 'assets/vendor/Font-Awesome' (https://github.com/FortAwesome/Font-Awesome.git) registered for path 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T21:48:00.3023603Z Submodule 'assets/vendor/bootstrap' (https://github.com/twbs/bootstrap.git) registered for path 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T21:48:00.3275906Z Cloning into 'D:/a/beam/beam/website/www/site/themes/docsy/assets/vendor/Font-Awesome'...
+2026-05-24T21:48:01.4176804Z Cloning into 'D:/a/beam/beam/website/www/site/themes/docsy/assets/vendor/bootstrap'...
+2026-05-24T21:48:04.9409413Z From https://github.com/FortAwesome/Font-Awesome
+2026-05-24T21:48:04.9409784Z  * branch              538a5bc4cf7989821d052e3ff919e2bead07021c -> FETCH_HEAD
+2026-05-24T21:48:06.3020116Z Submodule path 'website/www/site/themes/docsy/assets/vendor/Font-Awesome': checked out '538a5bc4cf7989821d052e3ff919e2bead07021c'
+2026-05-24T21:48:07.9279081Z From https://github.com/twbs/bootstrap
+2026-05-24T21:48:07.9279448Z  * branch            3b558734382ce58b51e5fc676453bfd53bba9201 -> FETCH_HEAD
+2026-05-24T21:48:08.2494317Z Submodule path 'website/www/site/themes/docsy/assets/vendor/bootstrap': checked out '3b558734382ce58b51e5fc676453bfd53bba9201'
+2026-05-24T21:48:08.2713576Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local gc.auto 0"
+2026-05-24T21:48:08.7340291Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T21:48:08.7752108Z Entering '.github/actions/github-push-action'
+2026-05-24T21:48:08.8171874Z Entering 'website/www/site/themes/docsy'
+2026-05-24T21:48:08.8596887Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T21:48:08.9053336Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T21:48:08.9550240Z ##[endgroup]
+2026-05-24T21:48:08.9821447Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-05-24T21:48:09.0056348Z 361f289b7220f77190583ddea51897d4714b9534
+2026-05-24T21:48:09.0095981Z ##[group]Removing auth
+2026-05-24T21:48:09.0096224Z Removing SSH command configuration
+2026-05-24T21:48:09.0108179Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-24T21:48:09.0363630Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-24T21:48:09.4921035Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T21:48:09.5622934Z Entering '.github/actions/github-push-action'
+2026-05-24T21:48:09.6331254Z Entering 'website/www/site/themes/docsy'
+2026-05-24T21:48:09.6951183Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T21:48:09.7662280Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T21:48:09.8431486Z Removing HTTP extra header
+2026-05-24T21:48:09.8440040Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-24T21:48:09.8683621Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-24T21:48:10.3144089Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T21:48:10.3829126Z Entering '.github/actions/github-push-action'
+2026-05-24T21:48:10.4528846Z Entering 'website/www/site/themes/docsy'
+2026-05-24T21:48:10.5216929Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T21:48:10.5880144Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T21:48:10.6587057Z Removing includeIf entries pointing to credentials config files
+2026-05-24T21:48:10.6594098Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:10.6798681Z includeif.gitdir:D:/a/beam/beam/.git.path
+2026-05-24T21:48:10.6799345Z includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path
+2026-05-24T21:48:10.6799613Z includeif.gitdir:/github/workspace/.git.path
+2026-05-24T21:48:10.6799938Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-24T21:48:10.6832956Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/beam/beam/.git.path
+2026-05-24T21:48:10.7033538Z D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.7123099Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/beam/beam/.git.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.7317939Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path
+2026-05-24T21:48:10.7544459Z D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.7584261Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.7834466Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-05-24T21:48:10.8041416Z /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.8072954Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.8322450Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-24T21:48:10.8550105Z /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.8588382Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T21:48:10.8857240Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-24T21:48:11.3285524Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T21:48:11.3549027Z file:D:/a/beam/beam/.git/modules/.github/actions/cancel-workflow-runs/config	remote.origin.url
+2026-05-24T21:48:11.3679103Z Entering '.github/actions/github-push-action'
+2026-05-24T21:48:11.3955198Z file:D:/a/beam/beam/.git/modules/.github/actions/github-push-action/config	remote.origin.url
+2026-05-24T21:48:11.4098495Z Entering 'website/www/site/themes/docsy'
+2026-05-24T21:48:11.4378611Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/config	remote.origin.url
+2026-05-24T21:48:11.4511547Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T21:48:11.4803337Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/Font-Awesome/config	remote.origin.url
+2026-05-24T21:48:11.4958112Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T21:48:11.5231184Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/bootstrap/config	remote.origin.url
+2026-05-24T21:48:11.5470384Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/.github/actions/cancel-workflow-runs/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:11.5734162Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/.github/actions/github-push-action/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:11.6000060Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:11.6256571Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/Font-Awesome/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:11.6513079Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/bootstrap/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T21:48:11.6755721Z Removing credentials config 'D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config'
+2026-05-24T21:48:11.6765377Z ##[endgroup]
+2026-05-24T21:48:11.7156075Z Prepare all required actions
+2026-05-24T21:48:11.7156528Z Getting action download info
+2026-05-24T21:48:11.9320816Z ##[error]The action gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 is not allowed in apache/beam because all actions must be from a repository owned by your enterprise, created by GitHub, or match one of the patterns: 1Password/load-secrets-action/configure@8d0d610af187e78a2772c2d18d627f4c52d3fbfb, 1Password/load-secrets-action/configure@92467eb28f72e8255933372f1e0707c567ce2259, 1Password/load-secrets-action/configure@dafbe7cb03502b260e2b2893c753c352eee545bf, 1Password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb, 1Password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259, 1Password/load-secrets-action@dafbe7cb03502b260e2b2893c753c352eee545bf, AdoptOpenJDK/install-jdk@*, BobAnkh/auto-generate-changelog@*, DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101, DavidAnson/markdownlint-cli2-action@ce4853d43830c74c1753b39f3cf40f71c2031eb9, DavidAnson/markdownlint-cli2-action@ded1f9488f68a970bc66ea5619e13e9b52e601cd, EnricoM...
+2026-05-24T21:48:11.9504305Z ##[group]Run actions/upload-artifact@v7
+2026-05-24T21:48:11.9504584Z with:
+2026-05-24T21:48:11.9504784Z   name: java_unit_tests-sdks-java-core-test-windows-latest
+2026-05-24T21:48:11.9505076Z   path: sdks/java/core/build/reports/tests/test
+2026-05-24T21:48:11.9505289Z   if-no-files-found: warn
+2026-05-24T21:48:11.9505457Z   compression-level: 6
+2026-05-24T21:48:11.9505613Z   overwrite: false
+2026-05-24T21:48:11.9505758Z   include-hidden-files: false
+2026-05-24T21:48:11.9505929Z   archive: true
+2026-05-24T21:48:11.9506053Z env:
+2026-05-24T21:48:11.9506181Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T21:48:11.9506332Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T21:48:11.9506732Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T21:48:11.9506896Z ##[endgroup]
+2026-05-24T21:48:12.1087546Z ##[warning]No files were found with the provided path: sdks/java/core/build/reports/tests/test. No artifacts will be uploaded.
+2026-05-24T21:48:12.1323811Z Prepare all required actions
+2026-05-24T21:48:12.1363731Z ##[group]Run ./.github/actions/gradle-command-self-hosted-action
+2026-05-24T21:48:12.1363987Z with:
+2026-05-24T21:48:12.1364114Z   gradle-command: test
+2026-05-24T21:48:12.1364314Z   arguments: -p sdks/java/harness/
+2026-05-24T21:48:12.1364493Z   max-workers: 8
+2026-05-24T21:48:12.1364623Z env:
+2026-05-24T21:48:12.1364745Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T21:48:12.1364915Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T21:48:12.1365100Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T21:48:12.1365264Z ##[endgroup]
+2026-05-24T21:48:12.1536393Z ##[group]Run # This step is a workaround to avoid a decryption issue of Beam's
+2026-05-24T21:48:12.1536903Z [36;1m# This step is a workaround to avoid a decryption issue of Beam's[0m
+2026-05-24T21:48:12.1537282Z [36;1m# net.linguica.gradle.maven.settings plugin and github's provided maven[0m
+2026-05-24T21:48:12.1537585Z [36;1m# settings.xml file[0m
+2026-05-24T21:48:12.1537820Z [36;1mif [ -f ~/.m2/settings.xml ]; then[0m
+2026-05-24T21:48:12.1538022Z [36;1m  rm ~/.m2/settings.xml[0m
+2026-05-24T21:48:12.1538194Z [36;1mfi[0m
+2026-05-24T21:48:12.1538382Z [36;1m./gradlew test --max-workers=8 --continue --no-daemon \[0m
+2026-05-24T21:48:12.1538763Z [36;1m -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false \[0m
+2026-05-24T21:48:12.1539093Z [36;1m-p sdks/java/harness/[0m
+2026-05-24T21:48:12.1551835Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-05-24T21:48:12.1552127Z env:
+2026-05-24T21:48:12.1552255Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T21:48:12.1552432Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T21:48:12.1552630Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T21:48:12.1552807Z ##[endgroup]
+2026-05-24T21:48:18.1529609Z Downloading https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
+2026-05-24T21:48:23.5417758Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%..............100%
+2026-05-24T21:48:26.5701400Z 
+2026-05-24T21:48:26.5702981Z Welcome to Gradle 8.14.3!
+2026-05-24T21:48:26.5703312Z 
+2026-05-24T21:48:26.5703735Z Here are the highlights of this release:
+2026-05-24T21:48:26.5705016Z  - Java 24 support
+2026-05-24T21:48:26.5705784Z  - GraalVM Native Image toolchain selection
+2026-05-24T21:48:26.5706250Z  - Enhancements to test reporting
+2026-05-24T21:48:26.5706630Z  - Build Authoring improvements
+2026-05-24T21:48:26.5706869Z 
+2026-05-24T21:48:26.5707121Z For more details see https://docs.gradle.org/8.14.3/release-notes.html
+2026-05-24T21:48:26.5707451Z 
+2026-05-24T21:48:26.7656637Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-05-24T21:48:29.9643293Z Daemon will be stopped at the end of the build 
+2026-05-24T21:48:30.3643291Z Configuration on demand is an incubating feature.
+2026-05-24T21:48:49.2788916Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:08.5655899Z 
+2026-05-24T21:49:08.5668789Z > Configure project :buildSrc
+2026-05-24T21:49:08.5669744Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror for buildSrc.
+2026-05-24T21:49:08.9657887Z 
+2026-05-24T21:49:08.9658554Z > Task :buildSrc:compileJava NO-SOURCE
+2026-05-24T21:49:19.4212408Z > Task :buildSrc:compileGroovy
+2026-05-24T21:49:19.4277129Z > Task :buildSrc:pluginDescriptors
+2026-05-24T21:49:19.4277899Z > Task :buildSrc:processResources
+2026-05-24T21:49:19.4284614Z > Task :buildSrc:classes
+2026-05-24T21:49:19.6730527Z > Task :buildSrc:jar
+2026-05-24T21:49:44.3659735Z 
+2026-05-24T21:49:44.3660872Z > Configure project :
+2026-05-24T21:49:44.3661429Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:49.6663498Z w: file:///D:/a/beam/beam/build.gradle.kts:610:17: Name shadowed: content
+2026-05-24T21:49:49.6664509Z w: file:///D:/a/beam/beam/build.gradle.kts:619:50: Name shadowed: line
+2026-05-24T21:49:49.6666357Z w: file:///D:/a/beam/beam/build.gradle.kts:879:7: 'exec(Action<ExecSpec>): ExecResult' is deprecated. This method will be removed in Gradle 9.0. Use ExecOperations.exec(Action) or ProviderFactory.exec(Action) instead.
+2026-05-24T21:49:49.6670253Z w: file:///D:/a/beam/beam/build.gradle.kts:903:7: 'exec(Action<ExecSpec>): ExecResult' is deprecated. This method will be removed in Gradle 9.0. Use ExecOperations.exec(Action) or ProviderFactory.exec(Action) instead.
+2026-05-24T21:49:49.6673073Z w: file:///D:/a/beam/beam/build.gradle.kts:924:7: 'exec(Action<ExecSpec>): ExecResult' is deprecated. This method will be removed in Gradle 9.0. Use ExecOperations.exec(Action) or ProviderFactory.exec(Action) instead.
+2026-05-24T21:49:49.6675132Z w: file:///D:/a/beam/beam/build.gradle.kts:1050:3: Conditional branch result of type Task! is implicitly cast to Any!
+2026-05-24T21:49:49.6676391Z w: file:///D:/a/beam/beam/build.gradle.kts:1052:3: Conditional branch result of type Unit is implicitly cast to Any!
+2026-05-24T21:49:51.8663610Z 
+2026-05-24T21:49:51.8665988Z > Configure project :sdks:java:harness
+2026-05-24T21:49:51.8666925Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:53.9661983Z 
+2026-05-24T21:49:53.9662788Z > Configure project :model:pipeline
+2026-05-24T21:49:53.9663509Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:54.7658930Z 
+2026-05-24T21:49:54.7659942Z > Configure project :sdks:java:core
+2026-05-24T21:49:54.7660972Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:54.9683543Z 
+2026-05-24T21:49:54.9684592Z > Configure project :sdks:java:transform-service
+2026-05-24T21:49:54.9695130Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:49:55.3684229Z 
+2026-05-24T21:49:55.3692773Z > Configure project :sdks:java:transform-service:launcher
+2026-05-24T21:49:55.3697002Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:06.3674764Z 
+2026-05-24T21:50:06.3677327Z > Configure project :model:fn-execution
+2026-05-24T21:50:06.3681791Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:06.5658830Z 
+2026-05-24T21:50:06.5660626Z > Configure project :model:job-management
+2026-05-24T21:50:06.5661362Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:07.3687451Z 
+2026-05-24T21:50:07.3710181Z > Configure project :sdks:java:harness:jmh
+2026-05-24T21:50:07.3710938Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:07.6660724Z 
+2026-05-24T21:50:07.6661325Z > Configure project :runners:core-java
+2026-05-24T21:50:07.6664266Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:18.4662023Z 
+2026-05-24T21:50:18.4663687Z > Configure project :runners:java-fn-execution
+2026-05-24T21:50:18.4664720Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:18.6669323Z 
+2026-05-24T21:50:18.6684949Z > Configure project :sdks:java:testing:test-utils
+2026-05-24T21:50:18.6688792Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T21:50:19.0075427Z 
+2026-05-24T21:50:19.0092726Z > Task :model:job-management:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0096803Z > Task :sdks:java:harness:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0099898Z > Task :model:pipeline:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0105624Z > Task :runners:core-java:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0106257Z > Task :model:fn-execution:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0107806Z > Task :sdks:java:transform-service:launcher:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0108514Z > Task :sdks:java:core:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0109053Z > Task :runners:core-java:processResources NO-SOURCE
+2026-05-24T21:50:19.0109589Z > Task :sdks:java:harness:processResources NO-SOURCE
+2026-05-24T21:50:19.0110153Z > Task :sdks:java:harness:processTestResources NO-SOURCE
+2026-05-24T21:50:19.0110764Z > Task :model:job-management:extractProto
+2026-05-24T21:50:19.0111228Z > Task :model:fn-execution:extractProto
+2026-05-24T21:50:19.0111740Z > Task :sdks:java:transform-service:launcher:processResources
+2026-05-24T21:50:19.0112364Z > Task :runners:java-fn-execution:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0112979Z > Task :sdks:java:harness:jmh:processResources NO-SOURCE
+2026-05-24T21:50:19.0113555Z > Task :runners:java-fn-execution:processResources NO-SOURCE
+2026-05-24T21:50:19.0114147Z > Task :sdks:java:harness:jmh:processTestResources NO-SOURCE
+2026-05-24T21:50:19.0114676Z > Task :model:job-management:processResources
+2026-05-24T21:50:19.0115248Z > Task :sdks:java:testing:test-utils:createCheckerFrameworkManifest
+2026-05-24T21:50:19.0115860Z > Task :sdks:java:testing:test-utils:processResources NO-SOURCE
+2026-05-24T21:50:19.0711815Z > Task :model:fn-execution:processResources
+2026-05-24T21:50:19.5802702Z > Task :spotlessInternalRegisterDependencies
+2026-05-24T21:50:20.1039856Z > Task :model:job-management:spotlessJava
+2026-05-24T21:50:20.1066692Z > Task :model:job-management:spotlessJavaApply
+2026-05-24T21:50:20.1248028Z > Task :model:job-management:spotlessApply
+2026-05-24T21:50:20.1404469Z > Task :model:fn-execution:spotlessJava
+2026-05-24T21:50:20.1415666Z > Task :model:fn-execution:spotlessJavaApply
+2026-05-24T21:50:20.1622293Z > Task :model:fn-execution:spotlessApply
+2026-05-24T21:50:21.6864074Z > Task :sdks:java:transform-service:launcher:spotlessJava
+2026-05-24T21:50:21.8241473Z > Task :sdks:java:transform-service:launcher:spotlessJavaApply
+2026-05-24T21:50:21.8274236Z > Task :sdks:java:transform-service:launcher:spotlessApply
+2026-05-24T21:50:21.8278446Z > Task :model:pipeline:extractIncludeProto
+2026-05-24T21:50:21.8462727Z > Task :model:pipeline:extractProto
+2026-05-24T21:50:22.1990968Z > Task :sdks:java:harness:jmh:spotlessJava
+2026-05-24T21:50:22.2135310Z > Task :sdks:java:harness:jmh:spotlessJavaApply
+2026-05-24T21:50:22.2135781Z > Task :sdks:java:harness:jmh:spotlessApply
+2026-05-24T21:50:22.2136485Z > Task :sdks:java:testing:test-utils:spotlessJava
+2026-05-24T21:50:22.2137071Z > Task :sdks:java:testing:test-utils:spotlessJavaApply
+2026-05-24T21:50:22.2137642Z > Task :sdks:java:testing:test-utils:spotlessApply
+2026-05-24T21:50:25.0255333Z > Task :model:pipeline:generateProto
+2026-05-24T21:50:25.0466546Z > Task :model:pipeline:spotlessJava FROM-CACHE
+2026-05-24T21:50:25.1021653Z > Task :model:pipeline:spotlessJavaApply UP-TO-DATE
+2026-05-24T21:50:25.1039570Z > Task :model:pipeline:spotlessApply UP-TO-DATE
+2026-05-24T21:50:25.4729692Z > Task :runners:java-fn-execution:spotlessJava
+2026-05-24T21:50:25.6140241Z > Task :runners:java-fn-execution:spotlessJavaApply
+2026-05-24T21:50:25.6783037Z > Task :runners:java-fn-execution:spotlessApply
+2026-05-24T21:50:27.0094901Z > Task :sdks:java:core:generateGrammarSource
+2026-05-24T21:50:27.3945554Z > Task :sdks:java:harness:spotlessJava
+2026-05-24T21:50:27.4058629Z > Task :sdks:java:harness:spotlessJavaApply
+2026-05-24T21:50:27.4089615Z > Task :sdks:java:harness:spotlessApply
+2026-05-24T21:50:27.5934738Z > Task :runners:core-java:spotlessJava
+2026-05-24T21:50:27.6196599Z > Task :runners:core-java:spotlessJavaApply
+2026-05-24T21:50:27.6237143Z > Task :runners:core-java:spotlessApply
+2026-05-24T21:50:43.9025953Z > Task :sdks:java:core:spotlessJava
+2026-05-24T21:50:43.9097804Z > Task :sdks:java:core:spotlessJavaApply
+2026-05-24T21:50:43.9150646Z > Task :sdks:java:core:spotlessApply
+2026-05-24T21:50:43.9787703Z > Task :sdks:java:core:processResources
+2026-05-24T21:50:44.1875179Z > Task :sdks:java:core:generateTestGrammarSource NO-SOURCE
+2026-05-24T21:50:44.2078023Z > Task :sdks:java:core:processTestResources
+2026-05-24T21:50:51.0714808Z > Task :sdks:java:transform-service:launcher:compileJava
+2026-05-24T21:50:51.0724065Z > Task :sdks:java:transform-service:launcher:classes
+2026-05-24T21:50:51.0737455Z > Task :sdks:java:transform-service:launcher:jar
+2026-05-24T21:50:54.9674196Z > Task :model:pipeline:compileJava
+2026-05-24T21:50:56.2671201Z > Task :model:pipeline:processResources
+2026-05-24T21:50:56.2672289Z > Task :model:pipeline:classes
+2026-05-24T21:50:56.4669977Z > Task :model:pipeline:jar
+2026-05-24T21:50:57.0024196Z > Task :model:job-management:extractIncludeProto
+2026-05-24T21:50:57.0804792Z > Task :model:fn-execution:extractIncludeProto
+2026-05-24T21:50:57.2673871Z > Task :model:job-management:generateProto
+2026-05-24T21:50:57.3823745Z > Task :model:fn-execution:generateProto
+2026-05-24T21:51:07.6814855Z > Task :model:pipeline:shadowJar
+2026-05-24T21:51:12.0699291Z > Task :model:job-management:compileJava
+2026-05-24T21:51:12.0700064Z > Task :model:job-management:classes
+2026-05-24T21:51:12.1762943Z > Task :model:fn-execution:compileJava
+2026-05-24T21:51:12.1763667Z > Task :model:fn-execution:classes
+2026-05-24T21:51:12.7677007Z > Task :model:job-management:shadowJar
+2026-05-24T21:51:12.9686173Z > Task :model:fn-execution:shadowJar
+2026-05-24T21:51:42.9680496Z > Task :sdks:java:core:compileJava
+2026-05-24T21:53:56.2234021Z Note: Some input files use or override a deprecated API.
+2026-05-24T21:53:56.2762103Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:53:56.3205620Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:53:56.3206679Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:54:10.4717708Z 
+2026-05-24T21:54:10.4718338Z > Task :sdks:java:core:classes
+2026-05-24T21:54:19.5715173Z > Task :sdks:java:core:shadowJar
+2026-05-24T21:54:49.5851098Z > Task :sdks:java:core:compileTestJava
+2026-05-24T21:54:49.6122407Z > Task :sdks:java:testing:test-utils:compileJava
+2026-05-24T21:54:49.6175557Z > Task :runners:core-java:compileJava
+2026-05-24T21:55:04.2770820Z Note: D:\a\beam\beam\sdks\java\testing\test-utils\src\main\java\org\apache\beam\sdk\testutils\publishing\InfluxDBPublisher.java uses or overrides a deprecated API.
+2026-05-24T21:55:04.2771609Z 
+2026-05-24T21:55:04.2835565Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:55:04.2836104Z > Task :sdks:java:testing:test-utils:compileJava
+2026-05-24T21:55:04.2877796Z 
+2026-05-24T21:55:04.2878563Z > Task :sdks:java:testing:test-utils:classes
+2026-05-24T21:55:04.3725737Z > Task :sdks:java:testing:test-utils:jar
+2026-05-24T21:55:27.1767968Z 
+2026-05-24T21:55:27.1966140Z Note: Some input files use or override a deprecated API.
+2026-05-24T21:55:27.1967680Z > Task :runners:core-java:compileJava
+2026-05-24T21:55:27.2068233Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:55:27.2140029Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:55:27.2197825Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:55:27.6965855Z 
+2026-05-24T21:55:27.7023344Z > Task :runners:core-java:classes
+2026-05-24T21:55:27.8748653Z > Task :runners:core-java:jar
+2026-05-24T21:55:44.0989151Z 
+2026-05-24T21:55:44.1025393Z Note: Some input files use or override a deprecated API.
+2026-05-24T21:55:44.1025916Z > Task :sdks:java:core:compileTestJava
+2026-05-24T21:55:44.1043434Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:55:44.1173710Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:55:44.1176414Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:55:48.4740970Z 
+2026-05-24T21:55:48.4742096Z > Task :sdks:java:core:testClasses
+2026-05-24T21:55:54.1742587Z > Task :sdks:java:core:shadowTestJar
+2026-05-24T21:55:57.8732798Z > Task :sdks:java:harness:compileJava
+2026-05-24T21:56:06.6805282Z Note: Some input files use or override a deprecated API.
+2026-05-24T21:56:06.6829646Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:56:06.6830841Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:56:06.6831606Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:56:07.0744197Z 
+2026-05-24T21:56:07.0745237Z > Task :sdks:java:harness:classes
+2026-05-24T21:56:07.0745658Z > Task :sdks:java:harness:jar
+2026-05-24T21:56:08.5746363Z > Task :sdks:java:harness:shadowJar
+2026-05-24T21:56:29.4294758Z 
+2026-05-24T21:56:29.4309697Z Note: Some input files use or override a deprecated API.
+2026-05-24T21:56:29.4310208Z > Task :sdks:java:harness:compileTestJava
+2026-05-24T21:56:29.4345040Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:56:29.4351755Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:56:29.4370699Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:56:30.5746546Z 
+2026-05-24T21:56:30.5747440Z > Task :sdks:java:harness:testClasses
+2026-05-24T21:56:34.0757747Z 
+2026-05-24T21:56:34.0792684Z > Task :runners:java-fn-execution:compileJava
+2026-05-24T21:56:34.0819291Z Note: D:\a\beam\beam\runners\java-fn-execution\src\main\java\org\apache\beam\runners\fnexecution\wire\ByteStringCoder.java uses or overrides a deprecated API.
+2026-05-24T21:56:34.0820948Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T21:56:34.0821534Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T21:56:34.0825901Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:56:34.3739904Z 
+2026-05-24T21:56:34.3741988Z > Task :runners:java-fn-execution:classes
+2026-05-24T21:56:34.3742670Z > Task :runners:java-fn-execution:jar
+2026-05-24T21:56:38.1021601Z Note: D:\a\beam\beam\sdks\java\harness\jmh\src\main\java\org\apache\beam\fn\harness\jmh\ProcessBundleBenchmark.java uses unchecked or unsafe operations.
+2026-05-24T21:56:38.1022389Z 
+2026-05-24T21:56:38.1032445Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T21:56:38.1032940Z > Task :sdks:java:harness:jmh:compileJava
+2026-05-24T21:56:38.3745869Z 
+2026-05-24T21:56:38.3746747Z > Task :sdks:java:harness:jmh:classes
+2026-05-24T21:56:39.4746900Z > Task :sdks:java:harness:jmh:compileTestJava
+2026-05-24T21:56:39.4747652Z > Task :sdks:java:harness:jmh:testClasses
+2026-05-24T21:56:45.9752433Z > Task :sdks:java:harness:shadowTestJar
+2026-05-24T21:56:58.2765519Z > Task :sdks:java:harness:jmh:test
+2026-05-24T21:57:15.9749756Z > Task :sdks:java:harness:test
+2026-05-24T22:03:14.0350230Z 
+2026-05-24T22:03:16.8026756Z MemoryMonitorTest > detectGCThrashing FAILED
+2026-05-24T22:03:16.8027311Z     org.junit.runners.model.TestTimedOutException at MemoryMonitorTest.java:102
+2026-05-24T22:03:17.8195955Z 
+2026-05-24T22:03:17.8203063Z 356 tests completed, 1 failed
+2026-05-24T22:03:19.5887005Z 
+2026-05-24T22:03:19.6102138Z > Task :sdks:java:harness:test FAILED
+2026-05-24T22:03:21.2826301Z 
+2026-05-24T22:03:21.2855671Z [Incubating] Problems report is available at: file:///D:/a/beam/beam/build/reports/problems/problems-report.html
+2026-05-24T22:03:21.6040625Z 
+2026-05-24T22:03:21.6054574Z FAILURE: Build failed with an exception.
+2026-05-24T22:03:21.6054834Z 
+2026-05-24T22:03:21.6054914Z * What went wrong:
+2026-05-24T22:03:21.6055150Z Execution failed for task ':sdks:java:harness:test'.
+2026-05-24T22:03:21.6061971Z > There were failing tests. See the report at: file:///D:/a/beam/beam/sdks/java/harness/build/reports/tests/test/index.html
+2026-05-24T22:03:21.8323457Z 
+2026-05-24T22:03:21.8345768Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-05-24T22:03:21.8369413Z 
+2026-05-24T22:03:21.8400483Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-05-24T22:03:21.8401366Z 
+2026-05-24T22:03:21.8401369Z 
+2026-05-24T22:03:21.8402745Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-05-24T22:03:21.8407899Z BUILD FAILED in 15m 4s
+2026-05-24T22:03:21.8416146Z 78 actionable tasks: 76 executed, 1 from cache, 1 up-to-date
+2026-05-24T22:03:26.6854355Z ##[error]Process completed with exit code 1.
+2026-05-24T22:03:27.8295269Z ##[group]Run actions/upload-artifact@v7
+2026-05-24T22:03:27.8295814Z with:
+2026-05-24T22:03:27.8296167Z   name: java_unit_tests-sdks-java-harness-test-windows-latest
+2026-05-24T22:03:27.8301387Z   path: sdks/java/harness/build/reports/tests/test
+2026-05-24T22:03:27.8301708Z   if-no-files-found: warn
+2026-05-24T22:03:27.8311636Z   compression-level: 6
+2026-05-24T22:03:27.8317752Z   overwrite: false
+2026-05-24T22:03:27.8322326Z   include-hidden-files: false
+2026-05-24T22:03:27.8332875Z   archive: true
+2026-05-24T22:03:27.8333173Z env:
+2026-05-24T22:03:27.8333432Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T22:03:27.8338074Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T22:03:27.8338427Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T22:03:27.8339091Z ##[endgroup]
+2026-05-24T22:03:30.5019863Z With the provided path, there will be 65 files uploaded
+2026-05-24T22:03:30.5119791Z Artifact name is valid!
+2026-05-24T22:03:30.5127355Z Root directory input is valid!
+2026-05-24T22:03:31.1249898Z Uploading artifact: java_unit_tests-sdks-java-harness-test-windows-latest.zip
+2026-05-24T22:03:31.1285299Z Beginning upload of artifact content to blob storage
+2026-05-24T22:03:31.8283351Z Uploaded bytes 88403
+2026-05-24T22:03:31.9498716Z Finished uploading artifact content to blob storage!
+2026-05-24T22:03:32.0052306Z SHA256 digest of uploaded artifact is 7946caebec74fe3660d20be38e85830c7f5c1618c045bb2913d307d5315a5f7d
+2026-05-24T22:03:32.1858361Z Finalizing artifact upload
+2026-05-24T22:03:32.3029809Z Artifact java_unit_tests-sdks-java-harness-test-windows-latest successfully finalized. Artifact ID 7188720283
+2026-05-24T22:03:32.3030554Z Artifact java_unit_tests-sdks-java-harness-test-windows-latest has been successfully uploaded! Final size is 88403 bytes. Artifact ID is 7188720283
+2026-05-24T22:03:32.4816287Z Artifact download URL: https://github.com/apache/beam/actions/runs/26373643475/artifacts/7188720283
+2026-05-24T22:03:32.7714298Z Prepare all required actions
+2026-05-24T22:03:32.9697974Z ##[group]Run ./.github/actions/gradle-command-self-hosted-action
+2026-05-24T22:03:32.9709224Z with:
+2026-05-24T22:03:32.9718791Z   gradle-command: test
+2026-05-24T22:03:32.9719021Z   arguments: -p runners/core-java/
+2026-05-24T22:03:32.9719234Z   max-workers: 8
+2026-05-24T22:03:32.9728901Z env:
+2026-05-24T22:03:32.9729112Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T22:03:32.9740465Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T22:03:32.9740799Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T22:03:32.9741058Z ##[endgroup]
+2026-05-24T22:03:33.1166669Z ##[group]Run # This step is a workaround to avoid a decryption issue of Beam's
+2026-05-24T22:03:33.1176524Z [36;1m# This step is a workaround to avoid a decryption issue of Beam's[0m
+2026-05-24T22:03:33.1177006Z [36;1m# net.linguica.gradle.maven.settings plugin and github's provided maven[0m
+2026-05-24T22:03:33.1180530Z [36;1m# settings.xml file[0m
+2026-05-24T22:03:33.1189872Z [36;1mif [ -f ~/.m2/settings.xml ]; then[0m
+2026-05-24T22:03:33.1190377Z [36;1m  rm ~/.m2/settings.xml[0m
+2026-05-24T22:03:33.1190616Z [36;1mfi[0m
+2026-05-24T22:03:33.1193502Z [36;1m./gradlew test --max-workers=8 --continue --no-daemon \[0m
+2026-05-24T22:03:33.1193947Z [36;1m -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false \[0m
+2026-05-24T22:03:33.1194301Z [36;1m-p runners/core-java/[0m
+2026-05-24T22:03:33.1214434Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-05-24T22:03:33.1214985Z env:
+2026-05-24T22:03:33.1215152Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T22:03:33.1219073Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T22:03:33.1219333Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T22:03:33.1222515Z ##[endgroup]
+2026-05-24T22:03:47.1172492Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-05-24T22:03:55.7282632Z Daemon will be stopped at the end of the build 
+2026-05-24T22:03:57.0147568Z Configuration on demand is an incubating feature.
+2026-05-24T22:04:02.3242647Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:04:40.5161893Z 
+2026-05-24T22:04:40.5169166Z > Configure project :buildSrc
+2026-05-24T22:04:40.5169850Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror for buildSrc.
+2026-05-24T22:04:41.7155267Z 
+2026-05-24T22:04:41.7157590Z > Task :buildSrc:compileJava NO-SOURCE
+2026-05-24T22:04:42.0158610Z > Task :buildSrc:compileGroovy UP-TO-DATE
+2026-05-24T22:04:42.0162524Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-05-24T22:04:42.1162125Z > Task :buildSrc:processResources UP-TO-DATE
+2026-05-24T22:04:42.1162650Z > Task :buildSrc:classes UP-TO-DATE
+2026-05-24T22:04:42.1407649Z > Task :buildSrc:jar UP-TO-DATE
+2026-05-24T22:05:20.5164353Z 
+2026-05-24T22:05:20.5172366Z > Configure project :
+2026-05-24T22:05:20.5177782Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:27.6325446Z 
+2026-05-24T22:05:27.6385406Z > Configure project :runners:core-java
+2026-05-24T22:05:27.6494461Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:29.6170214Z 
+2026-05-24T22:05:29.6171612Z > Configure project :model:pipeline
+2026-05-24T22:05:29.6172300Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:30.3175739Z 
+2026-05-24T22:05:30.3176654Z > Configure project :sdks:java:core
+2026-05-24T22:05:30.3244752Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:30.6175914Z 
+2026-05-24T22:05:30.6176976Z > Configure project :model:job-management
+2026-05-24T22:05:30.6177639Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:30.9176098Z 
+2026-05-24T22:05:30.9209448Z > Configure project :model:fn-execution
+2026-05-24T22:05:30.9225784Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:31.2164803Z 
+2026-05-24T22:05:31.2165832Z > Configure project :sdks:java:transform-service
+2026-05-24T22:05:31.2238037Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:31.5166997Z 
+2026-05-24T22:05:31.5171629Z > Configure project :sdks:java:transform-service:launcher
+2026-05-24T22:05:31.5176239Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-05-24T22:05:34.8174046Z 
+2026-05-24T22:05:34.8175011Z > Task :sdks:java:core:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.8610548Z > Task :runners:core-java:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.8611657Z > Task :model:pipeline:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.9238937Z > Task :model:fn-execution:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.9245006Z > Task :sdks:java:transform-service:launcher:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.9245731Z > Task :model:job-management:createCheckerFrameworkManifest UP-TO-DATE
+2026-05-24T22:05:34.9246380Z > Task :model:fn-execution:extractProto UP-TO-DATE
+2026-05-24T22:05:34.9246840Z > Task :runners:core-java:processResources NO-SOURCE
+2026-05-24T22:05:34.9247267Z > Task :model:job-management:extractProto UP-TO-DATE
+2026-05-24T22:05:34.9247822Z > Task :runners:core-java:processTestResources NO-SOURCE
+2026-05-24T22:05:34.9408120Z > Task :sdks:java:transform-service:launcher:processResources UP-TO-DATE
+2026-05-24T22:05:34.9408789Z > Task :model:fn-execution:processResources UP-TO-DATE
+2026-05-24T22:05:34.9419420Z > Task :model:job-management:processResources UP-TO-DATE
+2026-05-24T22:05:34.9419987Z > Task :sdks:java:core:generateGrammarSource UP-TO-DATE
+2026-05-24T22:05:34.9420469Z > Task :sdks:java:core:processResources UP-TO-DATE
+2026-05-24T22:05:34.9698849Z > Task :sdks:java:core:generateTestGrammarSource NO-SOURCE
+2026-05-24T22:05:34.9700211Z > Task :sdks:java:core:processTestResources UP-TO-DATE
+2026-05-24T22:05:35.0498096Z > Task :model:pipeline:extractIncludeProto UP-TO-DATE
+2026-05-24T22:05:35.0499039Z > Task :model:pipeline:extractProto UP-TO-DATE
+2026-05-24T22:05:35.1167807Z > Task :model:pipeline:generateProto UP-TO-DATE
+2026-05-24T22:05:35.1608224Z > Task :model:pipeline:processResources UP-TO-DATE
+2026-05-24T22:05:38.2317277Z > Task :spotlessInternalRegisterDependencies
+2026-05-24T22:05:38.6179222Z > Task :model:fn-execution:spotlessJava UP-TO-DATE
+2026-05-24T22:05:38.6183203Z > Task :model:pipeline:spotlessJava UP-TO-DATE
+2026-05-24T22:05:38.6604627Z > Task :model:job-management:spotlessJava UP-TO-DATE
+2026-05-24T22:05:38.6608008Z > Task :model:pipeline:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:38.6608562Z > Task :model:fn-execution:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:38.6654496Z > Task :model:fn-execution:spotlessApply UP-TO-DATE
+2026-05-24T22:05:38.6654939Z > Task :model:pipeline:spotlessApply UP-TO-DATE
+2026-05-24T22:05:38.6655390Z > Task :model:job-management:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:38.6777290Z > Task :model:job-management:spotlessApply UP-TO-DATE
+2026-05-24T22:05:38.6777898Z > Task :sdks:java:transform-service:launcher:spotlessJava UP-TO-DATE
+2026-05-24T22:05:38.7146788Z > Task :sdks:java:transform-service:launcher:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:38.7147746Z > Task :sdks:java:transform-service:launcher:spotlessApply UP-TO-DATE
+2026-05-24T22:05:38.7441039Z > Task :runners:core-java:spotlessJava UP-TO-DATE
+2026-05-24T22:05:38.7451503Z > Task :runners:core-java:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:38.7691007Z > Task :runners:core-java:spotlessApply UP-TO-DATE
+2026-05-24T22:05:39.0263972Z > Task :sdks:java:core:spotlessJava UP-TO-DATE
+2026-05-24T22:05:39.0264722Z > Task :sdks:java:core:spotlessJavaApply UP-TO-DATE
+2026-05-24T22:05:39.0266437Z > Task :sdks:java:core:spotlessApply UP-TO-DATE
+2026-05-24T22:05:39.1336406Z > Task :model:pipeline:compileJava UP-TO-DATE
+2026-05-24T22:05:39.1342648Z > Task :sdks:java:transform-service:launcher:compileJava UP-TO-DATE
+2026-05-24T22:05:39.1343622Z > Task :model:pipeline:classes UP-TO-DATE
+2026-05-24T22:05:39.1358677Z > Task :sdks:java:transform-service:launcher:classes UP-TO-DATE
+2026-05-24T22:05:39.1376308Z > Task :sdks:java:transform-service:launcher:jar UP-TO-DATE
+2026-05-24T22:05:39.1379112Z > Task :model:pipeline:jar UP-TO-DATE
+2026-05-24T22:05:39.1380719Z > Task :model:job-management:extractIncludeProto UP-TO-DATE
+2026-05-24T22:05:39.1382297Z > Task :model:fn-execution:extractIncludeProto UP-TO-DATE
+2026-05-24T22:05:39.2306620Z > Task :model:pipeline:shadowJar UP-TO-DATE
+2026-05-24T22:05:39.2307365Z > Task :model:fn-execution:generateProto UP-TO-DATE
+2026-05-24T22:05:39.2314016Z > Task :model:job-management:generateProto UP-TO-DATE
+2026-05-24T22:05:39.2314941Z > Task :model:job-management:compileJava UP-TO-DATE
+2026-05-24T22:05:39.2315485Z > Task :model:job-management:classes UP-TO-DATE
+2026-05-24T22:05:39.2316040Z > Task :model:fn-execution:compileJava UP-TO-DATE
+2026-05-24T22:05:39.2316796Z > Task :model:fn-execution:classes UP-TO-DATE
+2026-05-24T22:05:39.2317435Z > Task :model:fn-execution:shadowJar UP-TO-DATE
+2026-05-24T22:05:39.3251908Z > Task :model:job-management:shadowJar UP-TO-DATE
+2026-05-24T22:05:39.5281774Z > Task :sdks:java:core:compileJava UP-TO-DATE
+2026-05-24T22:05:39.5286421Z > Task :sdks:java:core:classes UP-TO-DATE
+2026-05-24T22:05:39.6181584Z > Task :sdks:java:core:shadowJar UP-TO-DATE
+2026-05-24T22:05:39.6193060Z > Task :runners:core-java:compileJava UP-TO-DATE
+2026-05-24T22:05:39.6205187Z > Task :runners:core-java:classes UP-TO-DATE
+2026-05-24T22:05:39.8168542Z > Task :sdks:java:core:compileTestJava UP-TO-DATE
+2026-05-24T22:05:39.8169477Z > Task :sdks:java:core:testClasses UP-TO-DATE
+2026-05-24T22:05:39.9205576Z > Task :sdks:java:core:shadowTestJar UP-TO-DATE
+2026-05-24T22:05:59.1175012Z 
+2026-05-24T22:05:59.1175709Z > Task :runners:core-java:compileTestJava
+2026-05-24T22:05:59.1177297Z Note: Some input files use or override a deprecated API.
+2026-05-24T22:05:59.1178503Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-24T22:05:59.1179184Z Note: Some input files use unchecked or unsafe operations.
+2026-05-24T22:05:59.1181870Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-24T22:06:00.9180197Z 
+2026-05-24T22:06:00.9183309Z > Task :runners:core-java:testClasses
+2026-05-24T22:06:25.7252155Z > Task :runners:core-java:test
+2026-05-24T22:06:25.7255719Z 
+2026-05-24T22:06:25.7256452Z [Incubating] Problems report is available at: file:///D:/a/beam/beam/build/reports/problems/problems-report.html
+2026-05-24T22:06:25.7257031Z 
+2026-05-24T22:06:25.7257374Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-05-24T22:06:25.7257882Z 
+2026-05-24T22:06:25.7265657Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-05-24T22:06:25.7266863Z 
+2026-05-24T22:06:25.7270268Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-05-24T22:06:25.7291813Z 
+2026-05-24T22:06:25.7292912Z BUILD SUCCESSFUL in 2m 50s
+2026-05-24T22:06:25.7302177Z 55 actionable tasks: 3 executed, 52 up-to-date
+2026-05-24T22:06:25.9165496Z ##[group]Run actions/upload-artifact@v7
+2026-05-24T22:06:25.9165881Z with:
+2026-05-24T22:06:25.9166233Z   name: java_unit_tests-runners-core-java-test-windows-latest
+2026-05-24T22:06:25.9166694Z   path: runners/core-java/build/reports/tests/test
+2026-05-24T22:06:25.9167044Z   if-no-files-found: warn
+2026-05-24T22:06:25.9167227Z   compression-level: 6
+2026-05-24T22:06:25.9167382Z   overwrite: false
+2026-05-24T22:06:25.9167555Z   include-hidden-files: false
+2026-05-24T22:06:25.9167735Z   archive: true
+2026-05-24T22:06:25.9167921Z env:
+2026-05-24T22:06:25.9168400Z   DEVELOCITY_ACCESS_KEY: 
+2026-05-24T22:06:25.9169004Z   GRADLE_ENTERPRISE_CACHE_USERNAME: 
+2026-05-24T22:06:25.9169319Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: 
+2026-05-24T22:06:25.9169630Z ##[endgroup]
+2026-05-24T22:06:26.0889750Z With the provided path, there will be 77 files uploaded
+2026-05-24T22:06:26.0893949Z Artifact name is valid!
+2026-05-24T22:06:26.0894930Z Root directory input is valid!
+2026-05-24T22:06:26.3574145Z Uploading artifact: java_unit_tests-runners-core-java-test-windows-latest.zip
+2026-05-24T22:06:26.3607626Z Beginning upload of artifact content to blob storage
+2026-05-24T22:06:26.8802163Z Uploaded bytes 86810
+2026-05-24T22:06:26.9587999Z Finished uploading artifact content to blob storage!
+2026-05-24T22:06:26.9588789Z SHA256 digest of uploaded artifact is a37863d0fb278b183ad894321b447a3c7f854eb9ad566d677b2ec0e2c98f8c77
+2026-05-24T22:06:26.9589389Z Finalizing artifact upload
+2026-05-24T22:06:27.2722033Z Artifact java_unit_tests-runners-core-java-test-windows-latest successfully finalized. Artifact ID 7188737060
+2026-05-24T22:06:27.2722747Z Artifact java_unit_tests-runners-core-java-test-windows-latest has been successfully uploaded! Final size is 86810 bytes. Artifact ID is 7188737060
+2026-05-24T22:06:27.2729043Z Artifact download URL: https://github.com/apache/beam/actions/runs/26373643475/artifacts/7188737060
+2026-05-24T22:06:27.3199088Z Post job cleanup.
+2026-05-24T22:06:27.4623097Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-24T22:06:27.4970868Z git version 2.54.0.windows.1
+2026-05-24T22:06:27.5024791Z Temporarily overriding HOME='D:\a\_temp\a69369c7-bdce-48bc-b433-2b0744b5ced5' before making global git config changes
+2026-05-24T22:06:27.5025667Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-24T22:06:27.5033466Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\beam\beam
+2026-05-24T22:06:27.5261152Z Removing SSH command configuration
+2026-05-24T22:06:27.5269274Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-24T22:06:27.5506809Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-24T22:06:27.9717306Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T22:06:28.0334784Z Entering '.github/actions/github-push-action'
+2026-05-24T22:06:28.0973047Z Entering 'website/www/site/themes/docsy'
+2026-05-24T22:06:28.1562144Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T22:06:28.2182015Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T22:06:28.2883268Z Removing HTTP extra header
+2026-05-24T22:06:28.2892114Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-24T22:06:28.3125850Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-24T22:06:28.7155972Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T22:06:28.7778236Z Entering '.github/actions/github-push-action'
+2026-05-24T22:06:28.8419266Z Entering 'website/www/site/themes/docsy'
+2026-05-24T22:06:28.9011166Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T22:06:28.9620679Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T22:06:29.0301135Z Removing includeIf entries pointing to credentials config files
+2026-05-24T22:06:29.0311654Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.0508854Z includeif.gitdir:D:/a/beam/beam/.git.path
+2026-05-24T22:06:29.0509290Z includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path
+2026-05-24T22:06:29.0540776Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/beam/beam/.git.path
+2026-05-24T22:06:29.0737222Z D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T22:06:29.0770829Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/beam/beam/.git.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T22:06:29.0994167Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path
+2026-05-24T22:06:29.1187144Z D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T22:06:29.1217361Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/beam/beam/.git/worktrees/*.path D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config
+2026-05-24T22:06:29.1448366Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-24T22:06:29.6342909Z Entering '.github/actions/cancel-workflow-runs'
+2026-05-24T22:06:29.6600224Z file:D:/a/beam/beam/.git/modules/.github/actions/cancel-workflow-runs/config	remote.origin.url
+2026-05-24T22:06:29.6728018Z Entering '.github/actions/github-push-action'
+2026-05-24T22:06:29.6976975Z file:D:/a/beam/beam/.git/modules/.github/actions/github-push-action/config	remote.origin.url
+2026-05-24T22:06:29.7103039Z Entering 'website/www/site/themes/docsy'
+2026-05-24T22:06:29.7356697Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/config	remote.origin.url
+2026-05-24T22:06:29.7472632Z Entering 'website/www/site/themes/docsy/assets/vendor/Font-Awesome'
+2026-05-24T22:06:29.7726341Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/Font-Awesome/config	remote.origin.url
+2026-05-24T22:06:29.7858449Z Entering 'website/www/site/themes/docsy/assets/vendor/bootstrap'
+2026-05-24T22:06:29.8110694Z file:D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/bootstrap/config	remote.origin.url
+2026-05-24T22:06:29.8320852Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/.github/actions/cancel-workflow-runs/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.8546442Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/.github/actions/github-push-action/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.8768072Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.8990405Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/Font-Awesome/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.9209999Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/beam/beam/.git/modules/website/www/site/themes/docsy/modules/assets/vendor/bootstrap/config --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-24T22:06:29.9421706Z Removing credentials config 'D:\a\_temp\git-credentials-948a71ae-592c-4c63-99cc-669fafa9da8b.config'
+2026-05-24T22:06:29.9654906Z Cleaning up orphan processes

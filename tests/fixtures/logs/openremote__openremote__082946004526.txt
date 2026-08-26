@@ -1,0 +1,54 @@
+﻿2026-06-23T11:43:21.5216140Z Current runner version: '2.335.1'
+2026-06-23T11:43:21.5244632Z ##[group]Runner Image Provisioner
+2026-06-23T11:43:21.5245499Z Hosted Compute Agent
+2026-06-23T11:43:21.5246142Z Version: 20260611.554
+2026-06-23T11:43:21.5246820Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-23T11:43:21.5247536Z Build Date: 2026-06-11T21:40:46Z
+2026-06-23T11:43:21.5248307Z Worker ID: {7174d75d-da81-442f-a281-76a8d0485ab0}
+2026-06-23T11:43:21.5249443Z Azure Region: westcentralus
+2026-06-23T11:43:21.5250109Z ##[endgroup]
+2026-06-23T11:43:21.5251896Z ##[group]Operating System
+2026-06-23T11:43:21.5252528Z Ubuntu
+2026-06-23T11:43:21.5253210Z 24.04.4
+2026-06-23T11:43:21.5253759Z LTS
+2026-06-23T11:43:21.5254249Z ##[endgroup]
+2026-06-23T11:43:21.5254891Z ##[group]Runner Image
+2026-06-23T11:43:21.5255498Z Image: ubuntu-24.04
+2026-06-23T11:43:21.5256105Z Version: 20260615.205.1
+2026-06-23T11:43:21.5257368Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260615.205/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-23T11:43:21.5259524Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260615.205
+2026-06-23T11:43:21.5260557Z ##[endgroup]
+2026-06-23T11:43:21.5263366Z ##[group]GITHUB_TOKEN Permissions
+2026-06-23T11:43:21.5265546Z Actions: read
+2026-06-23T11:43:21.5266309Z ArtifactMetadata: read
+2026-06-23T11:43:21.5266913Z Attestations: read
+2026-06-23T11:43:21.5267463Z Checks: read
+2026-06-23T11:43:21.5268072Z CodeQuality: read
+2026-06-23T11:43:21.5268966Z Contents: read
+2026-06-23T11:43:21.5269580Z Deployments: read
+2026-06-23T11:43:21.5270187Z Discussions: read
+2026-06-23T11:43:21.5270747Z Issues: read
+2026-06-23T11:43:21.5271309Z Metadata: read
+2026-06-23T11:43:21.5271834Z Models: read
+2026-06-23T11:43:21.5272342Z Packages: read
+2026-06-23T11:43:21.5273113Z Pages: read
+2026-06-23T11:43:21.5273685Z PullRequests: read
+2026-06-23T11:43:21.5274309Z RepositoryProjects: read
+2026-06-23T11:43:21.5274904Z SecurityEvents: read
+2026-06-23T11:43:21.5275454Z Statuses: read
+2026-06-23T11:43:21.5276106Z VulnerabilityAlerts: read
+2026-06-23T11:43:21.5276745Z ##[endgroup]
+2026-06-23T11:43:21.5279166Z Secret source: Dependabot
+2026-06-23T11:43:21.5279975Z Prepare workflow directory
+2026-06-23T11:43:21.5719571Z Prepare all required actions
+2026-06-23T11:43:21.5819644Z Uses: openremote/openremote/.github/workflows/ui-app-tests.yml@refs/pull/2906/merge (e6a0891983978d4859f92970fb7ccd99666279ed)
+2026-06-23T11:43:21.5825230Z ##[group] Inputs
+2026-06-23T11:43:21.5826347Z   skip: false
+2026-06-23T11:43:21.5827017Z ##[endgroup]
+2026-06-23T11:43:21.5827636Z Complete job name: Test / UI App Tests Status
+2026-06-23T11:43:21.6652985Z ##[group]Run exit 1
+2026-06-23T11:43:21.6653715Z [36;1mexit 1[0m
+2026-06-23T11:43:21.7340235Z shell: /usr/bin/bash -e {0}
+2026-06-23T11:43:21.7341771Z ##[endgroup]
+2026-06-23T11:43:21.7640349Z ##[error]Process completed with exit code 1.
+2026-06-23T11:43:21.7875098Z Cleaning up orphan processes

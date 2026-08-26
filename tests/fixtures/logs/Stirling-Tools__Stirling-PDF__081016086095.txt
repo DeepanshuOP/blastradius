@@ -1,0 +1,609 @@
+﻿2026-06-12T11:16:10.1353357Z Current runner version: '2.333.1'
+2026-06-12T11:16:10.1426355Z Runner name: 'depot-kkxdrhgjkm'
+2026-06-12T11:16:10.1427198Z Runner group name: 'default'
+2026-06-12T11:16:10.1427861Z Machine name: 'depot-machine'
+2026-06-12T11:16:10.1429615Z ##[group]GITHUB_TOKEN Permissions
+2026-06-12T11:16:10.1431154Z Actions: read
+2026-06-12T11:16:10.1431683Z Contents: read
+2026-06-12T11:16:10.1432120Z Metadata: read
+2026-06-12T11:16:10.1432548Z PullRequests: write
+2026-06-12T11:16:10.1432989Z SecurityEvents: write
+2026-06-12T11:16:10.1434789Z ##[endgroup]
+2026-06-12T11:16:10.1435363Z Secret source: Actions
+2026-06-12T11:16:10.1435837Z Prepare workflow directory
+2026-06-12T11:16:10.1705692Z Prepare all required actions
+2026-06-12T11:16:10.1728593Z Getting action download info
+2026-06-12T11:16:10.6770376Z Download action repository 'step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5' (SHA:ab7a9404c0f3da075243ca237b5fac12c98deaa5)
+2026-06-12T11:16:11.4736411Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-06-12T11:16:11.5683999Z Download action repository 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-12T11:16:11.7607763Z Download action repository 'actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae' (SHA:27d5ce7f107fe9357f9df03efb73ab90386fccae)
+2026-06-12T11:16:12.0624669Z Download action repository 'gradle/actions@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e' (SHA:50e97c2cd7a37755bbfafc9c5b7cafaece252f6e)
+2026-06-12T11:16:12.5548625Z Download action repository 'go-task/setup-task@3be4020d41929789a01026e0e427a4321ce0ad44' (SHA:3be4020d41929789a01026e0e427a4321ce0ad44)
+2026-06-12T11:16:12.6665561Z Download action repository 'actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3' (SHA:3a2844b7e9c422d3c10d287c895573f7108da1b3)
+2026-06-12T11:16:12.7713846Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-12T11:16:13.0059116Z Download action repository 'madrapps/jacoco-report@50d3aff4548aa991e6753342d9ba291084e63848' (SHA:50d3aff4548aa991e6753342d9ba291084e63848)
+2026-06-12T11:16:13.2810656Z Uses: Stirling-Tools/Stirling-PDF/.github/workflows/backend-build.yml@refs/pull/6334/merge (f9e4f3e3ce7fad153b3ed596c8ec3b62234a20cd)
+2026-06-12T11:16:13.2813519Z Complete job name: build / build (25, proprietary)
+2026-06-12T11:16:13.3607043Z ##[group]Run step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5
+2026-06-12T11:16:13.3607786Z with:
+2026-06-12T11:16:13.3608037Z   egress-policy: audit
+2026-06-12T11:16:13.3609698Z   token: ***
+2026-06-12T11:16:13.3609906Z   disable-telemetry: false
+2026-06-12T11:16:13.3610120Z   disable-sudo: false
+2026-06-12T11:16:13.3610342Z   disable-sudo-and-containers: false
+2026-06-12T11:16:13.3610582Z   disable-file-monitoring: false
+2026-06-12T11:16:13.3610794Z   use-policy-store: false
+2026-06-12T11:16:13.3611002Z   deploy-on-self-hosted-vm: false
+2026-06-12T11:16:13.3611311Z env:
+2026-06-12T11:16:13.3611583Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:13.3611774Z ##[endgroup]
+2026-06-12T11:16:17.4589342Z [harden-runner] pre-step
+2026-06-12T11:16:17.4591514Z [!] Current Configuration: 
+2026-06-12T11:16:17.4593737Z {"repo":"Stirling-Tools/Stirling-PDF","run_id":"27412209407","correlation_id":"d5459c30-2ccd-4aa3-8665-40421b623fc0","working_directory":"/home/runner/work/Stirling-PDF/Stirling-PDF","api_url":"https://agent.api.stepsecurity.io/v1","telemetry_url":"https://prod.app-api.stepsecurity.io/v1","allowed_endpoints":"","egress_policy":"audit","disable_telemetry":false,"disable_sudo":false,"disable_sudo_and_containers":false,"disable_file_monitoring":false,"private":false,"is_github_hosted":false,"is_debug":false,"one_time_key":"","api_key":"","use_policy_store":false,"deploy_on_self_hosted_vm":false}
+2026-06-12T11:16:17.4595192Z 
+2026-06-12T11:16:17.4595660Z [32mView security insights and recommended policy at:[0m
+2026-06-12T11:16:17.4597235Z https://app.stepsecurity.io/github/Stirling-Tools/Stirling-PDF/actions/runs/27412209407
+2026-06-12T11:16:17.4597699Z RUNNER_NAME: depot-kkxdrhgjkm
+2026-06-12T11:16:17.4598038Z Detected Depot runner environment. Installing agent-bravo.
+2026-06-12T11:16:18.1462041Z Runner IP Address: 100.52.219.222
+2026-06-12T11:16:18.1463662Z Installing Harden Runner bravo agent for third-party runner
+2026-06-12T11:16:18.1464362Z [!] Checking TLS_STATUS: Stirling-Tools
+2026-06-12T11:16:18.3707501Z [!] TLS_NOT_ENABLED: Stirling-Tools
+2026-06-12T11:16:18.3708334Z TLS is not enabled for this organization. Bravo agent installation skipped.
+2026-06-12T11:16:18.3837875Z ##[group]Run step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5
+2026-06-12T11:16:18.3838476Z with:
+2026-06-12T11:16:18.3838696Z   egress-policy: audit
+2026-06-12T11:16:18.3840302Z   token: ***
+2026-06-12T11:16:18.3840474Z   disable-telemetry: false
+2026-06-12T11:16:18.3840652Z   disable-sudo: false
+2026-06-12T11:16:18.3840831Z   disable-sudo-and-containers: false
+2026-06-12T11:16:18.3841053Z   disable-file-monitoring: false
+2026-06-12T11:16:18.3841243Z   use-policy-store: false
+2026-06-12T11:16:18.3841428Z   deploy-on-self-hosted-vm: false
+2026-06-12T11:16:18.3841614Z env:
+2026-06-12T11:16:18.3841867Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:18.3842059Z   STATE_disableSudo: false
+2026-06-12T11:16:18.3842255Z   STATE_disableSudoAndContainers: false
+2026-06-12T11:16:18.3842462Z   STATE_monitorStatusCode: 200
+2026-06-12T11:16:18.3842675Z   STATE_addSummary: false
+2026-06-12T11:16:18.3842893Z   STATE_correlation_id: depot-kkxdrhgjkm
+2026-06-12T11:16:18.3843169Z ##[endgroup]
+2026-06-12T11:16:18.4257895Z [harden-runner] main-step
+2026-06-12T11:16:18.4259360Z [32mView security insights and recommended policy at:[0m
+2026-06-12T11:16:18.4259801Z https://app.stepsecurity.io/github/Stirling-Tools/Stirling-PDF/actions/runs/27412209407
+2026-06-12T11:16:18.4343655Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-06-12T11:16:18.4344139Z with:
+2026-06-12T11:16:18.4344354Z   repository: Stirling-Tools/Stirling-PDF
+2026-06-12T11:16:18.4345952Z   token: ***
+2026-06-12T11:16:18.4346365Z   ssh-strict: true
+2026-06-12T11:16:18.4346544Z   ssh-user: git
+2026-06-12T11:16:18.4346718Z   persist-credentials: true
+2026-06-12T11:16:18.4346909Z   clean: true
+2026-06-12T11:16:18.4347083Z   sparse-checkout-cone-mode: true
+2026-06-12T11:16:18.4347280Z   fetch-depth: 1
+2026-06-12T11:16:18.4347600Z   fetch-tags: false
+2026-06-12T11:16:18.4347782Z   show-progress: true
+2026-06-12T11:16:18.4347948Z   lfs: false
+2026-06-12T11:16:18.4348112Z   submodules: false
+2026-06-12T11:16:18.4348291Z   set-safe-directory: true
+2026-06-12T11:16:18.4348469Z env:
+2026-06-12T11:16:18.4348719Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:18.4348883Z ##[endgroup]
+2026-06-12T11:16:18.4844575Z Syncing repository: Stirling-Tools/Stirling-PDF
+2026-06-12T11:16:18.4846343Z ##[group]Getting Git version info
+2026-06-12T11:16:18.4846715Z Working directory is '/home/runner/work/Stirling-PDF/Stirling-PDF'
+2026-06-12T11:16:18.4847102Z [command]/usr/bin/git version
+2026-06-12T11:16:18.8172990Z git version 2.54.0
+2026-06-12T11:16:18.8185882Z ##[endgroup]
+2026-06-12T11:16:18.8194769Z Temporarily overriding HOME='/home/runner/work/_temp/41cb0b98-9cf3-4a06-8a76-e8816ec4bc54' before making global git config changes
+2026-06-12T11:16:18.8195431Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-12T11:16:18.8198206Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-12T11:16:18.8677346Z Deleting the contents of '/home/runner/work/Stirling-PDF/Stirling-PDF'
+2026-06-12T11:16:18.8679234Z ##[group]Initializing the repository
+2026-06-12T11:16:18.8682058Z [command]/usr/bin/git init /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-12T11:16:18.9171554Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-12T11:16:18.9172307Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-12T11:16:18.9172966Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-12T11:16:18.9173362Z hint: call:
+2026-06-12T11:16:18.9173608Z hint:
+2026-06-12T11:16:18.9173917Z hint: 	git config --global init.defaultBranch <name>
+2026-06-12T11:16:18.9174282Z hint:
+2026-06-12T11:16:18.9174611Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-12T11:16:18.9175103Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-12T11:16:18.9175500Z hint:
+2026-06-12T11:16:18.9175761Z hint: 	git branch -m <name>
+2026-06-12T11:16:18.9176237Z hint:
+2026-06-12T11:16:18.9176588Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-12T11:16:18.9181898Z Initialized empty Git repository in /home/runner/work/Stirling-PDF/Stirling-PDF/.git/
+2026-06-12T11:16:18.9186512Z [command]/usr/bin/git remote add origin https://github.com/Stirling-Tools/Stirling-PDF
+2026-06-12T11:16:18.9237075Z ##[endgroup]
+2026-06-12T11:16:18.9237389Z ##[group]Disabling automatic garbage collection
+2026-06-12T11:16:18.9239314Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-12T11:16:18.9635084Z ##[endgroup]
+2026-06-12T11:16:18.9635406Z ##[group]Setting up auth
+2026-06-12T11:16:18.9635851Z Removing SSH command configuration
+2026-06-12T11:16:18.9639051Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-12T11:16:18.9661966Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-12T11:16:19.3030891Z Removing HTTP extra header
+2026-06-12T11:16:19.3034455Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-12T11:16:19.3049597Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-12T11:16:19.3137062Z Removing includeIf entries pointing to credentials config files
+2026-06-12T11:16:19.3140511Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-12T11:16:19.3153572Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-12T11:16:19.3243590Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-12T11:16:19.3258664Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:16:19.3271256Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:16:19.3294864Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:16:19.3307365Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:16:19.3317187Z ##[endgroup]
+2026-06-12T11:16:19.3317439Z ##[group]Fetching the repository
+2026-06-12T11:16:19.3321914Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f9e4f3e3ce7fad153b3ed596c8ec3b62234a20cd:refs/remotes/pull/6334/merge
+2026-06-12T11:16:20.7376150Z From https://github.com/Stirling-Tools/Stirling-PDF
+2026-06-12T11:16:20.7377206Z  * [new ref]         f9e4f3e3ce7fad153b3ed596c8ec3b62234a20cd -> pull/6334/merge
+2026-06-12T11:16:20.7430658Z ##[endgroup]
+2026-06-12T11:16:20.7431193Z ##[group]Determining the checkout info
+2026-06-12T11:16:20.7431480Z ##[endgroup]
+2026-06-12T11:16:20.7434745Z [command]/usr/bin/git sparse-checkout disable
+2026-06-12T11:16:20.7467569Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-12T11:16:20.7478732Z ##[group]Checking out the ref
+2026-06-12T11:16:20.7481028Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6334/merge
+2026-06-12T11:16:21.3592653Z Note: switching to 'refs/remotes/pull/6334/merge'.
+2026-06-12T11:16:21.3593925Z 
+2026-06-12T11:16:21.3594151Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-12T11:16:21.3594587Z changes and commit them, and you can discard any commits you make in this
+2026-06-12T11:16:21.3594951Z state without impacting any branches by switching back to a branch.
+2026-06-12T11:16:21.3595172Z 
+2026-06-12T11:16:21.3595359Z If you want to create a new branch to retain commits you create, you may
+2026-06-12T11:16:21.3595694Z do so (now or later) by using -c with the switch command. Example:
+2026-06-12T11:16:21.3595928Z 
+2026-06-12T11:16:21.3596158Z   git switch -c <new-branch-name>
+2026-06-12T11:16:21.3596337Z 
+2026-06-12T11:16:21.3596447Z Or undo this operation with:
+2026-06-12T11:16:21.3596704Z 
+2026-06-12T11:16:21.3596810Z   git switch -
+2026-06-12T11:16:21.3596932Z 
+2026-06-12T11:16:21.3597123Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-12T11:16:21.3597379Z 
+2026-06-12T11:16:21.3597700Z HEAD is now at f9e4f3e Merge 4598ae1e8def108669ab387b62329f6133c90d93 into 946c032fb55ae785d151dd26cced91ca3125aa43
+2026-06-12T11:16:21.3605244Z ##[endgroup]
+2026-06-12T11:16:21.3652897Z [command]/usr/bin/git log -1 --format=%H
+2026-06-12T11:16:21.3663536Z f9e4f3e3ce7fad153b3ed596c8ec3b62234a20cd
+2026-06-12T11:16:21.3799541Z ##[group]Run actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+2026-06-12T11:16:21.3799986Z with:
+2026-06-12T11:16:21.3800152Z   java-version: 25
+2026-06-12T11:16:21.3800321Z   distribution: temurin
+2026-06-12T11:16:21.3800478Z   java-package: jdk
+2026-06-12T11:16:21.3800666Z   check-latest: false
+2026-06-12T11:16:21.3800814Z   server-id: github
+2026-06-12T11:16:21.3800965Z   server-username: GITHUB_ACTOR
+2026-06-12T11:16:21.3801138Z   server-password: GITHUB_TOKEN
+2026-06-12T11:16:21.3801310Z   overwrite-settings: true
+2026-06-12T11:16:21.3801480Z   job-status: success
+2026-06-12T11:16:21.3802980Z   token: ***
+2026-06-12T11:16:21.3803121Z env:
+2026-06-12T11:16:21.3803350Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:21.3803506Z ##[endgroup]
+2026-06-12T11:16:21.4589042Z ##[group]Installed distributions
+2026-06-12T11:16:21.4655555Z Resolved Java 25.0.3+9 from tool-cache
+2026-06-12T11:16:21.4656112Z Setting Java 25.0.3+9 as the default
+2026-06-12T11:16:21.4660928Z Creating toolchains.xml for JDK version 25 from temurin
+2026-06-12T11:16:21.4698089Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-12T11:16:21.4698499Z 
+2026-06-12T11:16:21.4698623Z Java configuration:
+2026-06-12T11:16:21.4698866Z   Distribution: temurin
+2026-06-12T11:16:21.4699072Z   Version: 25.0.3+9
+2026-06-12T11:16:21.4699279Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:21.4699466Z 
+2026-06-12T11:16:21.4699645Z ##[endgroup]
+2026-06-12T11:16:21.4712031Z Creating settings.xml with server-id: github
+2026-06-12T11:16:21.4712489Z Overwriting existing file /home/runner/.m2/settings.xml
+2026-06-12T11:16:25.2957398Z ##[group]Run actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+2026-06-12T11:16:25.2958158Z with:
+2026-06-12T11:16:25.2958446Z   path: ~/.gradle/wrapper
+~/.gradle/caches/modules-2/files-2.1
+~/.gradle/caches/modules-2/metadata-2.*
+
+2026-06-12T11:16:25.2958952Z   key: gradle-deps-Linux-jdk-25-faab32b00a855398d0d9fce85c346385d06ab5519b5bb454e23338fa1f19cb4e
+2026-06-12T11:16:25.2959271Z   enableCrossOsArchive: false
+2026-06-12T11:16:25.2959448Z   fail-on-cache-miss: false
+2026-06-12T11:16:25.2959611Z   lookup-only: false
+2026-06-12T11:16:25.2959765Z   save-always: false
+2026-06-12T11:16:25.2960000Z env:
+2026-06-12T11:16:25.2960294Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:25.2960500Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:25.2960796Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:25.2961043Z ##[endgroup]
+2026-06-12T11:16:25.4715885Z Cache hit for: gradle-deps-Linux-jdk-25-faab32b00a855398d0d9fce85c346385d06ab5519b5bb454e23338fa1f19cb4e
+2026-06-12T11:16:26.4225039Z Cache Size: ~358 MB (375377803 B)
+2026-06-12T11:16:26.4264819Z [command]/usr/bin/tar -xf /home/runner/work/_temp/f22a4907-eead-4987-8d2c-c422d4e55bad/cache.tzst -P -C /home/runner/work/Stirling-PDF/Stirling-PDF --use-compress-program unzstd
+2026-06-12T11:16:26.5922564Z Cache restored successfully
+2026-06-12T11:16:26.9854949Z Cache restored from key: gradle-deps-Linux-jdk-25-faab32b00a855398d0d9fce85c346385d06ab5519b5bb454e23338fa1f19cb4e
+2026-06-12T11:16:26.9998630Z ##[group]Run gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
+2026-06-12T11:16:26.9999122Z with:
+2026-06-12T11:16:26.9999292Z   gradle-version: 9.3.1
+2026-06-12T11:16:26.9999497Z   cache-disabled: true
+2026-06-12T11:16:26.9999657Z   cache-provider: enhanced
+2026-06-12T11:16:26.9999823Z   cache-read-only: true
+2026-06-12T11:16:26.9999981Z   cache-write-only: false
+2026-06-12T11:16:27.0000149Z   cache-overwrite-existing: false
+2026-06-12T11:16:27.0000342Z   cache-cleanup: on-success
+2026-06-12T11:16:27.0000537Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-12T11:16:27.0000759Z   add-job-summary: always
+2026-06-12T11:16:27.0000932Z   add-job-summary-as-pr-comment: never
+2026-06-12T11:16:27.0001129Z   dependency-graph: disabled
+2026-06-12T11:16:27.0001329Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-12T11:16:27.0001560Z   dependency-graph-continue-on-failure: true
+2026-06-12T11:16:27.0001760Z   build-scan-publish: false
+2026-06-12T11:16:27.0001951Z   validate-wrappers: true
+2026-06-12T11:16:27.0002128Z   allow-snapshot-wrappers: false
+2026-06-12T11:16:27.0002316Z   gradle-home-cache-strict-match: false
+2026-06-12T11:16:27.0002557Z   workflow-job-context: {
+  "jdk-version": 25,
+  "flavor": "proprietary"
+}
+2026-06-12T11:16:27.0004166Z   github-token: ***
+2026-06-12T11:16:27.0004316Z env:
+2026-06-12T11:16:27.0004552Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:27.0004759Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:27.0005052Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:27.0005288Z ##[endgroup]
+2026-06-12T11:16:29.7318865Z Gradle User Home already exists at /home/runner/.gradle
+2026-06-12T11:16:29.7329221Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-12T11:16:29.7330756Z Cache is disabled: will not restore state from previous builds.
+2026-06-12T11:16:29.7632567Z ##[group]All Gradle Wrapper jars are valid
+2026-06-12T11:16:29.7633833Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-12T11:16:29.7634236Z   b3a875ddc1f044746e1b1a55f645584505f4a10438c1afea9f15e92a7c42ec13 gradle/wrapper/gradle-wrapper.jar
+2026-06-12T11:16:29.7634645Z ##[endgroup]
+2026-06-12T11:16:29.7972754Z ##[group]Provision Gradle 9.3.1
+2026-06-12T11:16:36.0803768Z Downloaded https://services.gradle.org/distributions/gradle-9.3.1-bin.zip to /home/runner/work/_temp/.gradle-actions/gradle-installations/downloads/gradle-9.3.1-bin.zip (size 137037885)
+2026-06-12T11:16:36.0824860Z [command]/usr/bin/unzip -o -q /home/runner/work/_temp/.gradle-actions/gradle-installations/downloads/gradle-9.3.1-bin.zip
+2026-06-12T11:16:36.7813967Z Extracted Gradle 9.3.1 to /home/runner/work/_temp/.gradle-actions/gradle-installations/installs/gradle-9.3.1
+2026-06-12T11:16:36.7815464Z Provisioned Gradle executable /home/runner/work/_temp/.gradle-actions/gradle-installations/installs/gradle-9.3.1/bin/gradle
+2026-06-12T11:16:36.7816468Z ##[endgroup]
+2026-06-12T11:16:36.7911256Z ##[group]Run go-task/setup-task@3be4020d41929789a01026e0e427a4321ce0ad44
+2026-06-12T11:16:36.7911647Z with:
+2026-06-12T11:16:36.7911891Z   version: 3.x
+2026-06-12T11:16:36.7913385Z   repo-token: ***
+2026-06-12T11:16:36.7913536Z   max-retries: 3
+2026-06-12T11:16:36.7913690Z env:
+2026-06-12T11:16:36.7913918Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:36.7914126Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:36.7914416Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:36.7914676Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-12T11:16:36.7914889Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-12T11:16:36.7915080Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-12T11:16:36.7915352Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-12T11:16:36.7915640Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-12T11:16:36.7915876Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-12T11:16:36.7916151Z ##[endgroup]
+2026-06-12T11:16:36.8279777Z (node:2489) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-06-12T11:16:36.8280685Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-12T11:16:37.9966188Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/5c921ff5-265c-4345-a353-b0475fe50c6d -f /home/runner/work/_temp/8e6124e0-b184-44f1-890d-2a779b5fdf3d
+2026-06-12T11:16:38.2539665Z Successfully setup Task version v3.51.1
+2026-06-12T11:16:38.2643307Z ##[group]Run task backend:build:ci
+2026-06-12T11:16:38.2643900Z [36;1mtask backend:build:ci[0m
+2026-06-12T11:16:38.5940546Z shell: /usr/bin/bash -e {0}
+2026-06-12T11:16:38.5941197Z env:
+2026-06-12T11:16:38.5941633Z   DEPOT_TOKEN: ***
+2026-06-12T11:16:38.5941946Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:38.5942372Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:16:38.5942758Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-12T11:16:38.5943048Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-12T11:16:38.5943329Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-12T11:16:38.5943705Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-12T11:16:38.5944110Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-12T11:16:38.5944415Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-12T11:16:38.5944674Z   MAVEN_USER: ***
+2026-06-12T11:16:38.5945070Z   MAVEN_PASSWORD: ***
+2026-06-12T11:16:38.5945283Z   MAVEN_PUBLIC_URL: 
+2026-06-12T11:16:38.5945501Z   STIRLING_FLAVOR: proprietary
+2026-06-12T11:16:38.5945750Z ##[endgroup]
+2026-06-12T11:16:38.6145007Z [32mtask: [backend:build:ci] ./gradlew build -PnoSpotless
+2026-06-12T11:16:38.9112585Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:38.9113582Z [[33mbackend:build:ci[0m] Welcome to Gradle 9.3.1!
+2026-06-12T11:16:38.9113864Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:38.9114259Z [[33mbackend:build:ci[0m] Here are the highlights of this release:
+2026-06-12T11:16:38.9114602Z [[33mbackend:build:ci[0m]  - Test reporting improvements
+2026-06-12T11:16:38.9114884Z [[33mbackend:build:ci[0m]  - Error and warning improvements
+2026-06-12T11:16:38.9115157Z [[33mbackend:build:ci[0m]  - Build authoring improvements
+2026-06-12T11:16:38.9115387Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:38.9115713Z [[33mbackend:build:ci[0m] For more details see https://docs.gradle.org/9.3.1/release-notes.html
+2026-06-12T11:16:38.9116109Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:39.0127459Z [[33mbackend:build:ci[0m] Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-12T11:16:47.4110352Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:47.4111629Z [[33mbackend:build:ci[0m] > Configure project :
+2026-06-12T11:16:47.4112008Z [[33mbackend:build:ci[0m] No custom MAVEN_PUBLIC_URL set, defaulting to Maven Central
+2026-06-12T11:16:47.7108327Z [[33mbackend:build:ci[0m] Writing version.properties to /home/runner/work/Stirling-PDF/Stirling-PDF/app/common/src/main/resources/version.properties
+2026-06-12T11:16:47.8107831Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:47.8108963Z [[33mbackend:build:ci[0m] > Configure project :common
+2026-06-12T11:16:47.8109527Z [[33mbackend:build:ci[0m] JPDFium native platforms: linux-x64, linux-arm64, darwin-x64, darwin-arm64, windows-x64
+2026-06-12T11:16:48.1107438Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:16:48.1108703Z [[33mbackend:build:ci[0m] > Configure project :***-pdf
+2026-06-12T11:16:48.1109143Z [[33mbackend:build:ci[0m] Frontend build disabled - JAR will be backend-only with API landing page
+2026-06-12T11:17:10.7111326Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:10.7132935Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessGradle SKIPPED
+2026-06-12T11:17:10.7152741Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessGradleCheck SKIPPED
+2026-06-12T11:17:10.7160494Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessJava SKIPPED
+2026-06-12T11:17:10.7163081Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessJavaCheck SKIPPED
+2026-06-12T11:17:10.7166622Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessYaml SKIPPED
+2026-06-12T11:17:10.7167039Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessYamlCheck SKIPPED
+2026-06-12T11:17:10.7167412Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessCheck SKIPPED
+2026-06-12T11:17:10.7167959Z [[33mbackend:build:ci[0m] > Task :***-pdf:cleanFrontendAssets UP-TO-DATE
+2026-06-12T11:17:10.8113163Z [[33mbackend:build:ci[0m] > Task :proprietary:processTestResources
+2026-06-12T11:17:10.9107039Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:10.9108216Z [[33mbackend:build:ci[0m] > Task :***-pdf:copyApiLandingPage
+2026-06-12T11:17:10.9109649Z [[33mbackend:build:ci[0m] Copying API landing page to index.html for backend-only mode...
+2026-06-12T11:17:10.9110003Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:10.9110342Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessGradle SKIPPED
+2026-06-12T11:17:10.9110664Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessGradleCheck SKIPPED
+2026-06-12T11:17:10.9110990Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessJava SKIPPED
+2026-06-12T11:17:10.9111296Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessJavaCheck SKIPPED
+2026-06-12T11:17:10.9111597Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessYaml SKIPPED
+2026-06-12T11:17:10.9111905Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessYamlCheck SKIPPED
+2026-06-12T11:17:10.9112213Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessCheck SKIPPED
+2026-06-12T11:17:10.9112507Z [[33mbackend:build:ci[0m] > Task :***-pdf:processTestResources
+2026-06-12T11:17:10.9112784Z [[33mbackend:build:ci[0m] > Task :writeVersion FROM-CACHE
+2026-06-12T11:17:10.9113075Z [[33mbackend:build:ci[0m] > Task :processResources NO-SOURCE
+2026-06-12T11:17:10.9113356Z [[33mbackend:build:ci[0m] > Task :proprietary:processResources
+2026-06-12T11:17:11.0107762Z [[33mbackend:build:ci[0m] > Task :compileRestartHelper FROM-CACHE
+2026-06-12T11:17:11.0108998Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:11.0109428Z [[33mbackend:build:ci[0m] > Task :buildRestartHelper
+2026-06-12T11:17:11.0110108Z [[33mbackend:build:ci[0m] restart-helper.jar created at: /home/runner/work/Stirling-PDF/Stirling-PDF/build/libs/restart-helper.jar
+2026-06-12T11:17:11.0110610Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:11.0117005Z [[33mbackend:build:ci[0m] > Task :spotlessGradle SKIPPED
+2026-06-12T11:17:11.0121449Z [[33mbackend:build:ci[0m] > Task :spotlessGradleCheck SKIPPED
+2026-06-12T11:17:11.0122184Z [[33mbackend:build:ci[0m] > Task :spotlessYaml SKIPPED
+2026-06-12T11:17:11.0122601Z [[33mbackend:build:ci[0m] > Task :spotlessYamlCheck SKIPPED
+2026-06-12T11:17:11.0123040Z [[33mbackend:build:ci[0m] > Task :spotlessCheck SKIPPED
+2026-06-12T11:17:11.0123398Z [[33mbackend:build:ci[0m] > Task :processTestResources NO-SOURCE
+2026-06-12T11:17:11.0123837Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:11.0124147Z [[33mbackend:build:ci[0m] > Task :syncAppVersion
+2026-06-12T11:17:11.0124469Z [[33mbackend:build:ci[0m] Synchronizing application version to 2.12.0
+2026-06-12T11:17:11.2107455Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:11.2108640Z [[33mbackend:build:ci[0m] > Task :***-pdf:processResources
+2026-06-12T11:17:12.2107566Z [[33mbackend:build:ci[0m] > Task :common:compileJava FROM-CACHE
+2026-06-12T11:17:12.2108740Z [[33mbackend:build:ci[0m] > Task :common:processResources
+2026-06-12T11:17:12.2109059Z [[33mbackend:build:ci[0m] > Task :common:classes
+2026-06-12T11:17:12.2109302Z [[33mbackend:build:ci[0m] > Task :common:jar
+2026-06-12T11:17:12.3107486Z [[33mbackend:build:ci[0m] > Task :common:resolveMainClassName
+2026-06-12T11:17:12.3108586Z [[33mbackend:build:ci[0m] > Task :common:bootJar SKIPPED
+2026-06-12T11:17:12.3108878Z [[33mbackend:build:ci[0m] > Task :common:assemble
+2026-06-12T11:17:12.3109154Z [[33mbackend:build:ci[0m] > Task :common:spotlessGradle SKIPPED
+2026-06-12T11:17:12.3109480Z [[33mbackend:build:ci[0m] > Task :common:spotlessGradleCheck SKIPPED
+2026-06-12T11:17:12.3109771Z [[33mbackend:build:ci[0m] > Task :common:spotlessJava SKIPPED
+2026-06-12T11:17:12.3110104Z [[33mbackend:build:ci[0m] > Task :common:spotlessJavaCheck SKIPPED
+2026-06-12T11:17:12.3110388Z [[33mbackend:build:ci[0m] > Task :common:spotlessYaml SKIPPED
+2026-06-12T11:17:12.3110672Z [[33mbackend:build:ci[0m] > Task :common:spotlessYamlCheck SKIPPED
+2026-06-12T11:17:12.3111063Z [[33mbackend:build:ci[0m] > Task :common:spotlessCheck SKIPPED
+2026-06-12T11:17:13.2107834Z [[33mbackend:build:ci[0m] > Task :common:compileTestJava FROM-CACHE
+2026-06-12T11:17:13.2108964Z [[33mbackend:build:ci[0m] > Task :common:processTestResources
+2026-06-12T11:17:13.2109272Z [[33mbackend:build:ci[0m] > Task :common:testClasses
+2026-06-12T11:17:13.6107333Z [[33mbackend:build:ci[0m] > Task :proprietary:compileJava FROM-CACHE
+2026-06-12T11:17:13.6108438Z [[33mbackend:build:ci[0m] > Task :proprietary:classes
+2026-06-12T11:17:13.7107415Z [[33mbackend:build:ci[0m] > Task :proprietary:jar
+2026-06-12T11:17:13.7108575Z [[33mbackend:build:ci[0m] > Task :proprietary:resolveMainClassName
+2026-06-12T11:17:13.7108918Z [[33mbackend:build:ci[0m] > Task :proprietary:bootJar SKIPPED
+2026-06-12T11:17:13.7109234Z [[33mbackend:build:ci[0m] > Task :proprietary:assemble
+2026-06-12T11:17:14.3111087Z [[33mbackend:build:ci[0m] > Task :***-pdf:compileJava FROM-CACHE
+2026-06-12T11:17:14.3112538Z [[33mbackend:build:ci[0m] > Task :***-pdf:classes
+2026-06-12T11:17:14.3113179Z [[33mbackend:build:ci[0m] > Task :***-pdf:jar SKIPPED
+2026-06-12T11:17:14.3113685Z [[33mbackend:build:ci[0m] > Task :compileJava NO-SOURCE
+2026-06-12T11:17:14.3113970Z [[33mbackend:build:ci[0m] > Task :classes UP-TO-DATE
+2026-06-12T11:17:14.3114266Z [[33mbackend:build:ci[0m] > Task :resolveMainClassName
+2026-06-12T11:17:14.3114521Z [[33mbackend:build:ci[0m] > Task :bootJar SKIPPED
+2026-06-12T11:17:14.3114770Z [[33mbackend:build:ci[0m] > Task :jar SKIPPED
+2026-06-12T11:17:14.3115011Z [[33mbackend:build:ci[0m] > Task :assemble UP-TO-DATE
+2026-06-12T11:17:14.3115304Z [[33mbackend:build:ci[0m] > Task :***-pdf:resolveMainClassName
+2026-06-12T11:17:14.3115600Z [[33mbackend:build:ci[0m] > Task :compileTestJava NO-SOURCE
+2026-06-12T11:17:14.3115866Z [[33mbackend:build:ci[0m] > Task :testClasses UP-TO-DATE
+2026-06-12T11:17:14.3116280Z [[33mbackend:build:ci[0m] > Task :test NO-SOURCE
+2026-06-12T11:17:14.3116546Z [[33mbackend:build:ci[0m] > Task :check UP-TO-DATE
+2026-06-12T11:17:15.1108322Z [[33mbackend:build:ci[0m] > Task :common:test FROM-CACHE
+2026-06-12T11:17:15.1109518Z [[33mbackend:build:ci[0m] > Task :common:check UP-TO-DATE
+2026-06-12T11:17:15.7121992Z [[33mbackend:build:ci[0m] > Task :proprietary:compileTestJava FROM-CACHE
+2026-06-12T11:17:15.7123409Z [[33mbackend:build:ci[0m] > Task :proprietary:testClasses
+2026-06-12T11:17:16.1107149Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:16.1108491Z [[33mbackend:build:ci[0m] > Task :common:jacocoTestReport
+2026-06-12T11:17:16.1108840Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:16.1109111Z [[33mbackend:build:ci[0m] ==== JaCoCo Coverage Summary ====
+2026-06-12T11:17:16.1109476Z [[33mbackend:build:ci[0m] Metric      | Coverage | Covered/Total | Status | Target   
+2026-06-12T11:17:16.1109883Z [[33mbackend:build:ci[0m] ------------+----------+---------------+--------+----------
+2026-06-12T11:17:16.1110256Z [[33mbackend:build:ci[0m] LINE        | 44.23%   | 5189/11733    | PASS   | >= 13.00%
+2026-06-12T11:17:16.1110618Z [[33mbackend:build:ci[0m] INSTRUCTION | 47.21%   | 23014/48752   | PASS   | >= 14.00%
+2026-06-12T11:17:16.1110963Z [[33mbackend:build:ci[0m] BRANCH      | 40.00%   | 2410/6025     | PASS   | >= 9.00% 
+2026-06-12T11:17:16.1111299Z [[33mbackend:build:ci[0m] ------------+----------+---------------+--------+----------
+2026-06-12T11:17:16.1111811Z [[33mbackend:build:ci[0m] Detailed HTML report available at: /home/runner/work/Stirling-PDF/Stirling-PDF/app/common/build/reports/jacoco/test/html
+2026-06-12T11:17:16.1112294Z [[33mbackend:build:ci[0m] Great job! All tracked coverage metrics meet their targets.
+2026-06-12T11:17:16.1112613Z [[33mbackend:build:ci[0m] =================================
+2026-06-12T11:17:16.1112854Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:16.1113051Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:16.1113277Z [[33mbackend:build:ci[0m] > Task :common:build
+2026-06-12T11:17:16.5108091Z [[33mbackend:build:ci[0m] > Task :proprietary:test FROM-CACHE
+2026-06-12T11:17:16.5109626Z [[33mbackend:build:ci[0m] > Task :proprietary:check UP-TO-DATE
+2026-06-12T11:17:17.1106382Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:17.1107545Z [[33mbackend:build:ci[0m] > Task :proprietary:jacocoTestReport
+2026-06-12T11:17:17.1107845Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:17.1108081Z [[33mbackend:build:ci[0m] ==== JaCoCo Coverage Summary ====
+2026-06-12T11:17:17.1108401Z [[33mbackend:build:ci[0m] Metric      | Coverage | Covered/Total | Status | Target   
+2026-06-12T11:17:17.1108777Z [[33mbackend:build:ci[0m] ------------+----------+---------------+--------+----------
+2026-06-12T11:17:17.1109127Z [[33mbackend:build:ci[0m] LINE        | 35.92%   | 5659/15754    | PASS   | >= 13.00%
+2026-06-12T11:17:17.1109459Z [[33mbackend:build:ci[0m] INSTRUCTION | 36.32%   | 23399/64419   | PASS   | >= 14.00%
+2026-06-12T11:17:17.1109787Z [[33mbackend:build:ci[0m] BRANCH      | 28.04%   | 1950/6954     | PASS   | >= 9.00% 
+2026-06-12T11:17:17.1110154Z [[33mbackend:build:ci[0m] ------------+----------+---------------+--------+----------
+2026-06-12T11:17:17.1110649Z [[33mbackend:build:ci[0m] Detailed HTML report available at: /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/build/reports/jacoco/test/html
+2026-06-12T11:17:17.1111117Z [[33mbackend:build:ci[0m] Great job! All tracked coverage metrics meet their targets.
+2026-06-12T11:17:17.1111424Z [[33mbackend:build:ci[0m] =================================
+2026-06-12T11:17:17.1111654Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:17.1111838Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:17.1112057Z [[33mbackend:build:ci[0m] > Task :proprietary:build
+2026-06-12T11:17:20.2108191Z [[33mbackend:build:ci[0m] > Task :***-pdf:bootJar
+2026-06-12T11:17:20.2109314Z [[33mbackend:build:ci[0m] > Task :***-pdf:assemble
+2026-06-12T11:17:20.2109570Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:20.2109788Z [[33mbackend:build:ci[0m] > Task :build
+2026-06-12T11:17:20.2110167Z [[33mbackend:build:ci[0m] Delegating to :***-pdf:bootJar
+2026-06-12T11:17:23.5107578Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:23.5108968Z [[33mbackend:build:ci[0m] > Task :***-pdf:compileTestJava
+2026-06-12T11:17:23.5109837Z [[33mbackend:build:ci[0m] Note: /home/runner/work/Stirling-PDF/Stirling-PDF/app/core/src/test/java/***/software/SPDF/controller/api/security/GetInfoOnPDFTest.java uses or overrides a deprecated API.
+2026-06-12T11:17:23.5110596Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:deprecation for details.
+2026-06-12T11:17:23.5112300Z [[33mbackend:build:ci[0m] Note: Some input files use unchecked or unsafe operations.
+2026-06-12T11:17:23.5112655Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:unchecked for details.
+2026-06-12T11:17:27.1106736Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:27.1107879Z [[33mbackend:build:ci[0m] > Task :***-pdf:testClasses
+2026-06-12T11:17:28.7107273Z [[33mbackend:build:ci[0m] OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-12T11:17:40.7106870Z [[33mbackend:build:ci[0m] WARNING: A restricted method in java.lang.System has been called
+2026-06-12T11:17:40.7108918Z [[33mbackend:build:ci[0m] WARNING: java.lang.System::load has been called by ***.software.jpdfium.panama.NativeLoader in an unnamed module (file:/home/runner/.gradle/caches/modules-2/files-2.1/com.***/jpdfium/1.0.2/f6bad10d81e8ac689b289665f1bc576e0dd3ed8d/jpdfium-1.0.2.jar)
+2026-06-12T11:17:40.7109769Z [[33mbackend:build:ci[0m] WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+2026-06-12T11:17:40.7110355Z [[33mbackend:build:ci[0m] WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-06-12T11:17:40.7110693Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:41.1106439Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:41.1107317Z [[33mbackend:build:ci[0m] > Task :***-pdf:test
+2026-06-12T11:17:41.1107575Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:41.2107635Z [[33mbackend:build:ci[0m] UIDataControllerTest > getPipelineData_usesEachSourceFilenameWhenJsonContentIsIdentical() FAILED
+2026-06-12T11:17:41.2108865Z [[33mbackend:build:ci[0m]     java.lang.AssertionError at UIDataControllerTest.java:61
+2026-06-12T11:17:51.0106931Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.0108050Z [[33mbackend:build:ci[0m] 1518 tests completed, 1 failed
+2026-06-12T11:17:51.2106605Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2107814Z [[33mbackend:build:ci[0m] > Task :***-pdf:test FAILED
+2026-06-12T11:17:51.2108314Z [[33mbackend:build:ci[0m] gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1781263002005.json
+2026-06-12T11:17:51.2108714Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2109195Z [[33mbackend:build:ci[0m] [Incubating] Problems report is available at: file:///home/runner/work/Stirling-PDF/Stirling-PDF/build/reports/problems/problems-report.html
+2026-06-12T11:17:51.2109803Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2110089Z [[33mbackend:build:ci[0m] FAILURE: Build failed with an exception.
+2026-06-12T11:17:51.2110408Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2112003Z [[33mbackend:build:ci[0m] * What went wrong:
+2026-06-12T11:17:51.2112350Z [[33mbackend:build:ci[0m] Execution failed for task ':***-pdf:test'.
+2026-06-12T11:17:51.2112851Z [[33mbackend:build:ci[0m] > There were failing tests. See the report at: file:///home/runner/work/Stirling-PDF/Stirling-PDF/app/core/build/reports/tests/test/index.html
+2026-06-12T11:17:51.2113263Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2113455Z [[33mbackend:build:ci[0m] * Try:
+2026-06-12T11:17:51.2113783Z [[33mbackend:build:ci[0m] > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-12T11:17:51.2114097Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2114433Z [[33mbackend:build:ci[0m] Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-06-12T11:17:51.2114758Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2115181Z [[33mbackend:build:ci[0m] You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-12T11:17:51.2115580Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2116153Z [[33mbackend:build:ci[0m] For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-12T11:17:51.2116704Z [[33mbackend:build:ci[0m] 
+2026-06-12T11:17:51.2116917Z [[33mbackend:build:ci[0m] BUILD FAILED in 1m 12s
+2026-06-12T11:17:51.2117225Z [[33mbackend:build:ci[0m] 31 actionable tasks: 21 executed, 9 from cache, 1 up-to-date
+2026-06-12T11:17:51.5188109Z [0m[31mtask: Failed to run task "backend:build:ci": exit status 1
+2026-06-12T11:17:51.5201255Z ##[error]exit status 1
+2026-06-12T11:17:51.5221100Z [0m
+2026-06-12T11:17:51.5225977Z ##[error]Process completed with exit code 201.
+2026-06-12T11:17:51.5263908Z ##[group]Run # Common + core + proprietary always build (proprietary is
+2026-06-12T11:17:51.5264354Z [36;1m# Common + core + proprietary always build (proprietary is[0m
+2026-06-12T11:17:51.5264648Z [36;1m# excluded only at runtime, not from the gradle subproject[0m
+2026-06-12T11:17:51.5264894Z [36;1m# graph). Saas builds add a fourth report dir.[0m
+2026-06-12T11:17:51.5265130Z [36;1mdeclare -a dirs=([0m
+2026-06-12T11:17:51.5265313Z [36;1m  "app/core/build/reports/tests/"[0m
+2026-06-12T11:17:51.5265509Z [36;1m  "app/core/build/test-results/"[0m
+2026-06-12T11:17:51.5265706Z [36;1m  "app/common/build/reports/tests/"[0m
+2026-06-12T11:17:51.5265901Z [36;1m  "app/common/build/test-results/"[0m
+2026-06-12T11:17:51.5266256Z [36;1m  "app/proprietary/build/reports/tests/"[0m
+2026-06-12T11:17:51.5266479Z [36;1m  "app/proprietary/build/test-results/"[0m
+2026-06-12T11:17:51.5266668Z [36;1m)[0m
+2026-06-12T11:17:51.5266820Z [36;1mif [ "proprietary" = "saas" ]; then[0m
+2026-06-12T11:17:51.5267092Z [36;1m  dirs+=("app/saas/build/reports/tests/" "app/saas/build/test-results/")[0m
+2026-06-12T11:17:51.5267344Z [36;1mfi[0m
+2026-06-12T11:17:51.5267490Z [36;1mfor dir in "${dirs[@]}"; do[0m
+2026-06-12T11:17:51.5267669Z [36;1m  if [ ! -d "$dir" ]; then[0m
+2026-06-12T11:17:51.5267842Z [36;1m    echo "Missing $dir"[0m
+2026-06-12T11:17:51.5268009Z [36;1m    exit 1[0m
+2026-06-12T11:17:51.5268159Z [36;1m  fi[0m
+2026-06-12T11:17:51.5268300Z [36;1mdone[0m
+2026-06-12T11:17:51.5288998Z shell: /usr/bin/bash -e {0}
+2026-06-12T11:17:51.5289211Z env:
+2026-06-12T11:17:51.5289474Z   DEPOT_TOKEN: ***
+2026-06-12T11:17:51.5289701Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:17:51.5289995Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:17:51.5290255Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-12T11:17:51.5290456Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-12T11:17:51.5290657Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-12T11:17:51.5290926Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-12T11:17:51.5291212Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-12T11:17:51.5291415Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-12T11:17:51.5291592Z ##[endgroup]
+2026-06-12T11:17:51.5351650Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-12T11:17:51.5352025Z with:
+2026-06-12T11:17:51.5352217Z   name: test-reports-jdk-25-flavor-proprietary
+2026-06-12T11:17:51.5352609Z   path: app/**/build/reports/jacoco/test
+app/**/build/reports/tests/
+app/**/build/test-results/
+app/**/build/reports/problems/
+build/reports/problems/
+
+2026-06-12T11:17:51.5352985Z   retention-days: 3
+2026-06-12T11:17:51.5353173Z   if-no-files-found: warn
+2026-06-12T11:17:51.5353343Z   compression-level: 6
+2026-06-12T11:17:51.5353494Z   overwrite: false
+2026-06-12T11:17:51.5353652Z   include-hidden-files: false
+2026-06-12T11:17:51.5353823Z   archive: true
+2026-06-12T11:17:51.5353964Z env:
+2026-06-12T11:17:51.5354205Z   DEPOT_TOKEN: ***
+2026-06-12T11:17:51.5354408Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:17:51.5354699Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-12T11:17:51.5354976Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-12T11:17:51.5355177Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-12T11:17:51.5355432Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-12T11:17:51.5355702Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-12T11:17:51.5355993Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-12T11:17:51.5356319Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-12T11:17:51.5356496Z ##[endgroup]
+2026-06-12T11:17:51.8195263Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-06-12T11:17:51.8196744Z The least common ancestor is /home/runner/work/Stirling-PDF/Stirling-PDF. This will be the root directory of the artifact
+2026-06-12T11:17:51.8197140Z With the provided path, there will be 2861 files uploaded
+2026-06-12T11:17:51.8197436Z Artifact name is valid!
+2026-06-12T11:17:51.8197603Z Root directory input is valid!
+2026-06-12T11:17:52.1095937Z Uploading artifact: test-reports-jdk-25-flavor-proprietary.zip
+2026-06-12T11:17:52.1116571Z Beginning upload of artifact content to blob storage
+2026-06-12T11:17:52.7477675Z Uploaded bytes 5568938
+2026-06-12T11:17:52.7601418Z Finished uploading artifact content to blob storage!
+2026-06-12T11:17:52.7603121Z SHA256 digest of uploaded artifact is 66936dfd853f7518d70f1031b722635ef5276a1119609f13b57bb04ac30d3dbd
+2026-06-12T11:17:52.7604433Z Finalizing artifact upload
+2026-06-12T11:17:52.9065359Z Artifact test-reports-jdk-25-flavor-proprietary successfully finalized. Artifact ID 7590087964
+2026-06-12T11:17:52.9066234Z Artifact test-reports-jdk-25-flavor-proprietary has been successfully uploaded! Final size is 5568938 bytes. Artifact ID is 7590087964
+2026-06-12T11:17:52.9068425Z Artifact download URL: https://github.com/Stirling-Tools/Stirling-PDF/actions/runs/27412209407/artifacts/7590087964
+2026-06-12T11:17:52.9237766Z Post job cleanup.
+2026-06-12T11:17:53.0583099Z In post-action step
+2026-06-12T11:17:53.0585935Z Cache is disabled: will not restore state from previous builds.
+2026-06-12T11:17:53.0589124Z Generating Job Summary
+2026-06-12T11:17:53.0599053Z Completed post-action step
+2026-06-12T11:17:53.0700289Z Post job cleanup.
+2026-06-12T11:17:53.1391472Z Post job cleanup.
+2026-06-12T11:17:53.1810481Z [command]/usr/bin/git version
+2026-06-12T11:17:53.1830720Z git version 2.54.0
+2026-06-12T11:17:53.1848858Z Temporarily overriding HOME='/home/runner/work/_temp/d7d73b58-6687-4cb4-8d6d-c0861bc84a99' before making global git config changes
+2026-06-12T11:17:53.1849334Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-12T11:17:53.1851727Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-12T11:17:53.1865410Z Removing SSH command configuration
+2026-06-12T11:17:53.1868667Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-12T11:17:53.1883053Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-12T11:17:53.1979621Z Removing HTTP extra header
+2026-06-12T11:17:53.1982017Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-12T11:17:53.1995564Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-12T11:17:53.2088024Z Removing includeIf entries pointing to credentials config files
+2026-06-12T11:17:53.2091399Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-12T11:17:53.2110558Z includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path
+2026-06-12T11:17:53.2110904Z includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path
+2026-06-12T11:17:53.2111229Z includeif.gitdir:/github/workspace/.git.path
+2026-06-12T11:17:53.2111468Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-12T11:17:53.2115243Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path
+2026-06-12T11:17:53.2124252Z /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2129112Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2143255Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path
+2026-06-12T11:17:53.2152365Z /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2156375Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2169976Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-12T11:17:53.2178622Z /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2181708Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2194152Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-12T11:17:53.2202593Z /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2205742Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config
+2026-06-12T11:17:53.2218749Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-12T11:17:53.2308559Z Removing credentials config '/home/runner/work/_temp/git-credentials-e9ebf687-340a-46be-9e12-cae555461a3c.config'
+2026-06-12T11:17:53.2382317Z Post job cleanup.
+2026-06-12T11:17:53.2765714Z [harden-runner] post-step
+2026-06-12T11:18:03.2890454Z timed out
+2026-06-12T11:18:03.2982752Z Cleaning up orphan processes
+2026-06-12T11:18:03.5711319Z Terminate orphan process: pid (2567) (java)

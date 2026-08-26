@@ -1,0 +1,1011 @@
+﻿2026-06-29T16:20:43.2092378Z Current runner version: '2.335.1'
+2026-06-29T16:20:43.2117742Z ##[group]Runner Image Provisioner
+2026-06-29T16:20:43.2118754Z Hosted Compute Agent
+2026-06-29T16:20:43.2119348Z Version: 20260611.554
+2026-06-29T16:20:43.2120109Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-29T16:20:43.2120856Z Build Date: 2026-06-11T21:40:46Z
+2026-06-29T16:20:43.2121530Z Worker ID: {aef0caef-21f5-461f-a9d2-74c4785fcb21}
+2026-06-29T16:20:43.2122613Z Azure Region: westus
+2026-06-29T16:20:43.2123206Z ##[endgroup]
+2026-06-29T16:20:43.2124738Z ##[group]Operating System
+2026-06-29T16:20:43.2125429Z Ubuntu
+2026-06-29T16:20:43.2125933Z 24.04.4
+2026-06-29T16:20:43.2126483Z LTS
+2026-06-29T16:20:43.2126985Z ##[endgroup]
+2026-06-29T16:20:43.2127519Z ##[group]Runner Image
+2026-06-29T16:20:43.2128223Z Image: ubuntu-24.04
+2026-06-29T16:20:43.2128785Z Version: 20260622.220.1
+2026-06-29T16:20:43.2130096Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260622.220/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-29T16:20:43.2131637Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260622.220
+2026-06-29T16:20:43.2132964Z ##[endgroup]
+2026-06-29T16:20:43.2135994Z ##[group]GITHUB_TOKEN Permissions
+2026-06-29T16:20:43.2138417Z Actions: write
+2026-06-29T16:20:43.2139098Z ArtifactMetadata: write
+2026-06-29T16:20:43.2139825Z Attestations: write
+2026-06-29T16:20:43.2140403Z Checks: write
+2026-06-29T16:20:43.2140933Z CodeQuality: write
+2026-06-29T16:20:43.2141549Z Contents: write
+2026-06-29T16:20:43.2142349Z CopilotRequests: write
+2026-06-29T16:20:43.2143024Z Deployments: write
+2026-06-29T16:20:43.2143600Z Discussions: write
+2026-06-29T16:20:43.2144158Z Issues: write
+2026-06-29T16:20:43.2144750Z Metadata: read
+2026-06-29T16:20:43.2145324Z Models: read
+2026-06-29T16:20:43.2146013Z Packages: write
+2026-06-29T16:20:43.2146580Z Pages: write
+2026-06-29T16:20:43.2147115Z PullRequests: write
+2026-06-29T16:20:43.2147739Z RepositoryProjects: write
+2026-06-29T16:20:43.2148437Z SecurityEvents: write
+2026-06-29T16:20:43.2149027Z Statuses: write
+2026-06-29T16:20:43.2149643Z VulnerabilityAlerts: read
+2026-06-29T16:20:43.2150230Z ##[endgroup]
+2026-06-29T16:20:43.2152639Z Secret source: Actions
+2026-06-29T16:20:43.2153411Z Prepare workflow directory
+2026-06-29T16:20:43.2489125Z Prepare all required actions
+2026-06-29T16:20:43.2527051Z Getting action download info
+2026-06-29T16:20:47.0077724Z Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-06-29T16:20:47.0936603Z Download action repository 'actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520' (SHA:1bcf9fb12cf4aa7d266a90ae39939e61372fe520)
+2026-06-29T16:20:47.6558632Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-29T16:20:47.8768768Z Uses: openremote/openremote/.github/workflows/integration-tests.yml@refs/pull/2916/merge (5e12a4bb17afcc6d8dca969d06c692aef4ddd242)
+2026-06-29T16:20:47.8773230Z ##[group] Inputs
+2026-06-29T16:20:47.8774258Z   skip: false
+2026-06-29T16:20:47.8774610Z ##[endgroup]
+2026-06-29T16:20:47.8774966Z Complete job name: Test / Integration Tests
+2026-06-29T16:20:47.9502234Z ##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+2026-06-29T16:20:47.9503121Z with:
+2026-06-29T16:20:47.9503442Z   lfs: true
+2026-06-29T16:20:47.9503775Z   repository: openremote/openremote
+2026-06-29T16:20:47.9507343Z   token: ***
+2026-06-29T16:20:47.9507676Z   ssh-strict: true
+2026-06-29T16:20:47.9508009Z   ssh-user: git
+2026-06-29T16:20:47.9508378Z   persist-credentials: true
+2026-06-29T16:20:47.9508735Z   clean: true
+2026-06-29T16:20:47.9509071Z   sparse-checkout-cone-mode: true
+2026-06-29T16:20:47.9509460Z   fetch-depth: 1
+2026-06-29T16:20:47.9509779Z   fetch-tags: false
+2026-06-29T16:20:47.9510105Z   show-progress: true
+2026-06-29T16:20:47.9510437Z   submodules: false
+2026-06-29T16:20:47.9510771Z   set-safe-directory: true
+2026-06-29T16:20:47.9511145Z   allow-unsafe-pr-checkout: false
+2026-06-29T16:20:47.9512261Z ##[endgroup]
+2026-06-29T16:20:48.0495976Z Syncing repository: openremote/openremote
+2026-06-29T16:20:48.0497710Z ##[group]Getting Git version info
+2026-06-29T16:20:48.0498297Z Working directory is '/home/runner/work/openremote/openremote'
+2026-06-29T16:20:48.0499334Z [command]/usr/bin/git version
+2026-06-29T16:20:48.0559805Z git version 2.54.0
+2026-06-29T16:20:48.0598897Z [command]/usr/bin/git lfs version
+2026-06-29T16:20:48.5467185Z git-lfs/3.7.1 (GitHub; linux amd64; go 1.24.4)
+2026-06-29T16:20:48.5483779Z ##[endgroup]
+2026-06-29T16:20:48.5496581Z Temporarily overriding HOME='/home/runner/work/_temp/43229e61-7504-4e3e-9baa-116433c1c580' before making global git config changes
+2026-06-29T16:20:48.5498310Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-29T16:20:48.5503304Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-06-29T16:20:48.5549875Z Deleting the contents of '/home/runner/work/openremote/openremote'
+2026-06-29T16:20:48.5553580Z ##[group]Determining repository object format
+2026-06-29T16:20:48.5555213Z ##[endgroup]
+2026-06-29T16:20:48.5555875Z ##[group]Initializing the repository
+2026-06-29T16:20:48.5559620Z [command]/usr/bin/git init /home/runner/work/openremote/openremote
+2026-06-29T16:20:48.5668352Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-29T16:20:48.5669298Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-29T16:20:48.5670068Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-29T16:20:48.5670661Z hint: call:
+2026-06-29T16:20:48.5670988Z hint:
+2026-06-29T16:20:48.5671444Z hint: 	git config --global init.defaultBranch <name>
+2026-06-29T16:20:48.5672192Z hint:
+2026-06-29T16:20:48.5672689Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-29T16:20:48.5673440Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-29T16:20:48.5674041Z hint:
+2026-06-29T16:20:48.5674392Z hint: 	git branch -m <name>
+2026-06-29T16:20:48.5674778Z hint:
+2026-06-29T16:20:48.5675286Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-29T16:20:48.5680453Z Initialized empty Git repository in /home/runner/work/openremote/openremote/.git/
+2026-06-29T16:20:48.5689504Z [command]/usr/bin/git remote add origin https://github.com/openremote/openremote
+2026-06-29T16:20:48.5730131Z ##[endgroup]
+2026-06-29T16:20:48.5730813Z ##[group]Disabling automatic garbage collection
+2026-06-29T16:20:48.5734164Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-29T16:20:48.5760140Z ##[endgroup]
+2026-06-29T16:20:48.5761072Z ##[group]Setting up auth
+2026-06-29T16:20:48.5761539Z Removing SSH command configuration
+2026-06-29T16:20:48.5767040Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-29T16:20:48.5803624Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-29T16:20:48.6058284Z Removing HTTP extra header
+2026-06-29T16:20:48.6065935Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-29T16:20:48.6088446Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-29T16:20:48.6318209Z Removing includeIf entries pointing to credentials config files
+2026-06-29T16:20:48.6323462Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-29T16:20:48.6352834Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-29T16:20:48.6570620Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-29T16:20:48.6605375Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:20:48.6636625Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:20:48.6670309Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:20:48.6699496Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:20:48.6725758Z ##[endgroup]
+2026-06-29T16:20:48.6728997Z [command]/usr/bin/git lfs install --local
+2026-06-29T16:20:48.7198023Z Updated Git hooks.
+2026-06-29T16:20:48.7198690Z Git LFS initialized.
+2026-06-29T16:20:48.7210724Z ##[group]Fetching the repository
+2026-06-29T16:20:48.7217826Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5e12a4bb17afcc6d8dca969d06c692aef4ddd242:refs/remotes/pull/2916/merge
+2026-06-29T16:20:50.3737145Z From https://github.com/openremote/openremote
+2026-06-29T16:20:50.3739052Z  * [new ref]         5e12a4bb17afcc6d8dca969d06c692aef4ddd242 -> pull/2916/merge
+2026-06-29T16:20:50.3773456Z ##[endgroup]
+2026-06-29T16:20:50.3774361Z ##[group]Determining the checkout info
+2026-06-29T16:20:50.3775366Z ##[endgroup]
+2026-06-29T16:20:50.3776204Z ##[group]Fetching LFS objects
+2026-06-29T16:20:50.3780676Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/2916/merge
+2026-06-29T16:20:50.4002978Z Fetching reference refs/remotes/pull/2916/merge
+2026-06-29T16:20:54.3502446Z ##[endgroup]
+2026-06-29T16:20:54.3509073Z [command]/usr/bin/git sparse-checkout disable
+2026-06-29T16:20:54.3563602Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-29T16:20:54.3600634Z ##[group]Checking out the ref
+2026-06-29T16:20:54.3619764Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2916/merge
+2026-06-29T16:20:54.6405896Z Note: switching to 'refs/remotes/pull/2916/merge'.
+2026-06-29T16:20:54.6406658Z 
+2026-06-29T16:20:54.6407128Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-29T16:20:54.6408213Z changes and commit them, and you can discard any commits you make in this
+2026-06-29T16:20:54.6409483Z state without impacting any branches by switching back to a branch.
+2026-06-29T16:20:54.6410073Z 
+2026-06-29T16:20:54.6410449Z If you want to create a new branch to retain commits you create, you may
+2026-06-29T16:20:54.6411315Z do so (now or later) by using -c with the switch command. Example:
+2026-06-29T16:20:54.6412581Z 
+2026-06-29T16:20:54.6412911Z   git switch -c <new-branch-name>
+2026-06-29T16:20:54.6413287Z 
+2026-06-29T16:20:54.6413501Z Or undo this operation with:
+2026-06-29T16:20:54.6413906Z 
+2026-06-29T16:20:54.6414521Z   git switch -
+2026-06-29T16:20:54.6414847Z 
+2026-06-29T16:20:54.6415288Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-29T16:20:54.6416103Z 
+2026-06-29T16:20:54.6416981Z HEAD is now at 5e12a4b Merge 6f712fa9f9068a84744ed7ecb22c83603b120e8b into 4311a2f3f91f6ee1a75c4a46c237fd0cca4a4858
+2026-06-29T16:20:54.6789789Z ##[endgroup]
+2026-06-29T16:20:54.6835114Z [command]/usr/bin/git log -1 --format=%H
+2026-06-29T16:20:54.6861454Z 5e12a4bb17afcc6d8dca969d06c692aef4ddd242
+2026-06-29T16:20:54.7133947Z ##[group]Run actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520
+2026-06-29T16:20:54.7134403Z with:
+2026-06-29T16:20:54.7134639Z   distribution: temurin
+2026-06-29T16:20:54.7134909Z   java-version: 21
+2026-06-29T16:20:54.7135125Z   cache: gradle
+2026-06-29T16:20:54.7135533Z   java-package: jdk
+2026-06-29T16:20:54.7135764Z   check-latest: false
+2026-06-29T16:20:54.7135992Z   server-id: github
+2026-06-29T16:20:54.7136221Z   server-username: GITHUB_ACTOR
+2026-06-29T16:20:54.7136495Z   server-password: GITHUB_TOKEN
+2026-06-29T16:20:54.7136756Z   overwrite-settings: true
+2026-06-29T16:20:54.7136999Z   job-status: success
+2026-06-29T16:20:54.7140196Z   token: ***
+2026-06-29T16:20:54.7140415Z ##[endgroup]
+2026-06-29T16:20:54.8602415Z ##[group]Installed distributions
+2026-06-29T16:20:54.8671495Z Resolved Java 21.0.11+10 from tool-cache
+2026-06-29T16:20:54.8672420Z Setting Java 21.0.11+10 as the default
+2026-06-29T16:20:54.8684075Z Creating toolchains.xml for JDK version 21 from temurin
+2026-06-29T16:20:54.8760888Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-29T16:20:54.8761405Z 
+2026-06-29T16:20:54.8761634Z Java configuration:
+2026-06-29T16:20:54.8762316Z   Distribution: temurin
+2026-06-29T16:20:54.8762788Z   Version: 21.0.11+10
+2026-06-29T16:20:54.8763478Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:20:54.8763995Z 
+2026-06-29T16:20:54.8764382Z ##[endgroup]
+2026-06-29T16:20:54.8789442Z Creating settings.xml with server-id: github
+2026-06-29T16:20:54.8789875Z Writing to /home/runner/.m2/settings.xml
+2026-06-29T16:20:55.5945782Z Cache hit for: setup-java-Linux-x64-gradle-f57012da682edd5e34ebe7c8b2b4ca3a23e1357eff6797daa8b94144eb390118
+2026-06-29T16:20:56.8916881Z Received 0 of 467987155 (0.0%), 0.0 MBs/sec
+2026-06-29T16:20:57.8922225Z Received 75497472 of 467987155 (16.1%), 36.0 MBs/sec
+2026-06-29T16:20:58.8973537Z Received 167772160 of 467987155 (35.8%), 53.3 MBs/sec
+2026-06-29T16:20:59.9152837Z Received 268435456 of 467987155 (57.4%), 63.7 MBs/sec
+2026-06-29T16:21:00.9132521Z Received 377487360 of 467987155 (80.7%), 71.7 MBs/sec
+2026-06-29T16:21:01.9140126Z Received 463792851 of 467987155 (99.1%), 73.5 MBs/sec
+2026-06-29T16:21:02.1694364Z Received 467987155 of 467987155 (100.0%), 71.1 MBs/sec
+2026-06-29T16:21:02.1695259Z Cache Size: ~446 MB (467987155 B)
+2026-06-29T16:21:02.1816734Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b0db6541-0621-4443-9df4-459b70ae92f2/cache.tzst -P -C /home/runner/work/openremote/openremote --use-compress-program unzstd
+2026-06-29T16:21:03.8650152Z Cache restored successfully
+2026-06-29T16:21:03.8853291Z Cache restored from key: setup-java-Linux-x64-gradle-f57012da682edd5e34ebe7c8b2b4ca3a23e1357eff6797daa8b94144eb390118
+2026-06-29T16:21:03.9049032Z ##[group]Run docker compose -f profile/dev-testing.yml pull
+2026-06-29T16:21:03.9049587Z [36;1mdocker compose -f profile/dev-testing.yml pull[0m
+2026-06-29T16:21:03.9208182Z shell: /usr/bin/bash -e {0}
+2026-06-29T16:21:03.9208475Z env:
+2026-06-29T16:21:03.9208820Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:21:03.9209379Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:21:03.9209808Z ##[endgroup]
+2026-06-29T16:21:04.5483114Z time="2026-06-29T16:21:04Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-06-29T16:21:04.5587057Z time="2026-06-29T16:21:04Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-06-29T16:21:04.5979657Z  postgresql Pulling 
+2026-06-29T16:21:04.5982416Z  keycloak Pulling 
+2026-06-29T16:21:05.7366632Z  ea29d36b883e Pulling fs layer 
+2026-06-29T16:21:05.7367311Z  a9bb58c3bdd8 Pulling fs layer 
+2026-06-29T16:21:05.7367811Z  393f8747e4b4 Pulling fs layer 
+2026-06-29T16:21:05.7368100Z  20b69ee379c9 Pulling fs layer 
+2026-06-29T16:21:05.7368360Z  34f6e9793683 Pulling fs layer 
+2026-06-29T16:21:05.7368698Z  cc5389c8389e Pulling fs layer 
+2026-06-29T16:21:05.7369076Z  76f9ee5e648e Pulling fs layer 
+2026-06-29T16:21:05.7369324Z  393efe950606 Pulling fs layer 
+2026-06-29T16:21:05.7369591Z  3fdba431f168 Pulling fs layer 
+2026-06-29T16:21:05.7369889Z  bd6208a6da27 Pulling fs layer 
+2026-06-29T16:21:05.7370273Z  34f6e9793683 Waiting 
+2026-06-29T16:21:05.7370783Z  cc5389c8389e Waiting 
+2026-06-29T16:21:05.7371013Z  76f9ee5e648e Waiting 
+2026-06-29T16:21:05.7371431Z  393efe950606 Waiting 
+2026-06-29T16:21:05.7371666Z  3fdba431f168 Waiting 
+2026-06-29T16:21:05.7372239Z  20b69ee379c9 Waiting 
+2026-06-29T16:21:05.7493905Z  cf242d89e8f2 Pulling fs layer 
+2026-06-29T16:21:05.9524813Z  ea29d36b883e Downloading [>                                                  ]  81.28kB/7.221MB
+2026-06-29T16:21:05.9540457Z  a9bb58c3bdd8 Downloading [>                                                  ]  527.6kB/77.15MB
+2026-06-29T16:21:05.9678196Z  393f8747e4b4 Downloading [>                                                  ]  529.6kB/177.9MB
+2026-06-29T16:21:05.9939579Z  ea29d36b883e Verifying Checksum 
+2026-06-29T16:21:05.9941075Z  ea29d36b883e Download complete 
+2026-06-29T16:21:05.9968972Z  ea29d36b883e Extracting [>                                                  ]   98.3kB/7.221MB
+2026-06-29T16:21:06.0554075Z  a9bb58c3bdd8 Downloading [===================>                               ]  29.84MB/77.15MB
+2026-06-29T16:21:06.0693169Z  393f8747e4b4 Downloading [=>                                                 ]   6.32MB/177.9MB
+2026-06-29T16:21:06.1325914Z  ea29d36b883e Extracting [==============>                                    ]  2.064MB/7.221MB
+2026-06-29T16:21:06.1564003Z  a9bb58c3bdd8 Downloading [=====================================>             ]  57.56MB/77.15MB
+2026-06-29T16:21:06.1697904Z  393f8747e4b4 Downloading [===>                                               ]  12.15MB/177.9MB
+2026-06-29T16:21:06.2237145Z  a9bb58c3bdd8 Verifying Checksum 
+2026-06-29T16:21:06.2237892Z  a9bb58c3bdd8 Download complete 
+2026-06-29T16:21:06.2266486Z  20b69ee379c9 Downloading [==================================================>]     551B/551B
+2026-06-29T16:21:06.2269372Z  20b69ee379c9 Verifying Checksum 
+2026-06-29T16:21:06.2270201Z  20b69ee379c9 Download complete 
+2026-06-29T16:21:06.2325722Z  ea29d36b883e Extracting [======================================>            ]  5.505MB/7.221MB
+2026-06-29T16:21:06.2705653Z  393f8747e4b4 Downloading [==========>                                        ]  38.85MB/177.9MB
+2026-06-29T16:21:06.3507454Z  ea29d36b883e Extracting [===============================================>   ]  6.881MB/7.221MB
+2026-06-29T16:21:06.3569990Z  ea29d36b883e Extracting [==================================================>]  7.221MB/7.221MB
+2026-06-29T16:21:06.3711068Z  393f8747e4b4 Downloading [===================>                               ]  69.83MB/177.9MB
+2026-06-29T16:21:06.3730676Z  ea29d36b883e Pull complete 
+2026-06-29T16:21:06.4099978Z  a9bb58c3bdd8 Extracting [>                                                  ]  557.1kB/77.15MB
+2026-06-29T16:21:06.4517843Z  34f6e9793683 Downloading [>                                                  ]   32.1kB/2.419MB
+2026-06-29T16:21:06.4627825Z  cc5389c8389e Downloading [>                                                  ]  238.8kB/23.87MB
+2026-06-29T16:21:06.4740309Z  34f6e9793683 Downloading [==================================================>]  2.419MB/2.419MB
+2026-06-29T16:21:06.4754210Z  34f6e9793683 Verifying Checksum 
+2026-06-29T16:21:06.4763121Z  34f6e9793683 Download complete 
+2026-06-29T16:21:06.4803243Z  393f8747e4b4 Downloading [============================>                      ]  101.4MB/177.9MB
+2026-06-29T16:21:06.5513505Z  cc5389c8389e Verifying Checksum 
+2026-06-29T16:21:06.5514905Z  cc5389c8389e Download complete 
+2026-06-29T16:21:06.5737775Z  393f8747e4b4 Downloading [====================================>              ]  130.8MB/177.9MB
+2026-06-29T16:21:06.5769870Z  a9bb58c3bdd8 Extracting [=>                                                 ]  2.228MB/77.15MB
+2026-06-29T16:21:06.6753927Z  393f8747e4b4 Downloading [=============================================>     ]  162.2MB/177.9MB
+2026-06-29T16:21:06.6777220Z  a9bb58c3bdd8 Extracting [=====>                                             ]  7.799MB/77.15MB
+2026-06-29T16:21:06.7207771Z  76f9ee5e648e Downloading [==================================================>]     163B/163B
+2026-06-29T16:21:06.7208867Z  76f9ee5e648e Verifying Checksum 
+2026-06-29T16:21:06.7209374Z  76f9ee5e648e Download complete 
+2026-06-29T16:21:06.7285321Z  393f8747e4b4 Verifying Checksum 
+2026-06-29T16:21:06.7286015Z  393f8747e4b4 Download complete 
+2026-06-29T16:21:06.7685869Z  393efe950606 Downloading [==================================================>]     146B/146B
+2026-06-29T16:21:06.7686875Z  393efe950606 Verifying Checksum 
+2026-06-29T16:21:06.7687377Z  393efe950606 Download complete 
+2026-06-29T16:21:06.7793637Z  a9bb58c3bdd8 Extracting [=========>                                         ]  15.04MB/77.15MB
+2026-06-29T16:21:06.8831098Z  a9bb58c3bdd8 Extracting [===============>                                   ]  23.95MB/77.15MB
+2026-06-29T16:21:06.9444352Z  3fdba431f168 Downloading [==================================================>]     150B/150B
+2026-06-29T16:21:06.9446556Z  3fdba431f168 Verifying Checksum 
+2026-06-29T16:21:06.9447271Z  3fdba431f168 Download complete 
+2026-06-29T16:21:06.9549186Z  bd6208a6da27 Downloading [==================================================>]     168B/168B
+2026-06-29T16:21:06.9550896Z  bd6208a6da27 Verifying Checksum 
+2026-06-29T16:21:06.9552398Z  bd6208a6da27 Download complete 
+2026-06-29T16:21:06.9893210Z  a9bb58c3bdd8 Extracting [=====================>                             ]  32.87MB/77.15MB
+2026-06-29T16:21:07.0141447Z  cf242d89e8f2 Downloading [>                                                  ]  540.7kB/856.3MB
+2026-06-29T16:21:07.0947669Z  a9bb58c3bdd8 Extracting [=========================>                         ]  40.11MB/77.15MB
+2026-06-29T16:21:07.1163688Z  cf242d89e8f2 Downloading [=>                                                 ]  23.43MB/856.3MB
+2026-06-29T16:21:07.2040838Z  a9bb58c3bdd8 Extracting [=============================>                     ]  45.68MB/77.15MB
+2026-06-29T16:21:07.2168401Z  cf242d89e8f2 Downloading [===>                                               ]  52.77MB/856.3MB
+2026-06-29T16:21:07.3178600Z  a9bb58c3bdd8 Extracting [=================================>                 ]  51.25MB/77.15MB
+2026-06-29T16:21:07.3179639Z  cf242d89e8f2 Downloading [====>                                              ]  85.29MB/856.3MB
+2026-06-29T16:21:07.4193149Z  cf242d89e8f2 Downloading [======>                                            ]  115.7MB/856.3MB
+2026-06-29T16:21:07.4252903Z  a9bb58c3bdd8 Extracting [====================================>              ]  56.26MB/77.15MB
+2026-06-29T16:21:07.5203634Z  cf242d89e8f2 Downloading [========>                                          ]  148.2MB/856.3MB
+2026-06-29T16:21:07.5257259Z  a9bb58c3bdd8 Extracting [========================================>          ]  61.83MB/77.15MB
+2026-06-29T16:21:07.6220930Z  cf242d89e8f2 Downloading [==========>                                        ]  180.7MB/856.3MB
+2026-06-29T16:21:07.6369823Z  a9bb58c3bdd8 Extracting [===========================================>       ]   67.4MB/77.15MB
+2026-06-29T16:21:07.7247073Z  cf242d89e8f2 Downloading [============>                                      ]  213.3MB/856.3MB
+2026-06-29T16:21:07.8257720Z  cf242d89e8f2 Downloading [==============>                                    ]  242.1MB/856.3MB
+2026-06-29T16:21:07.8322465Z  a9bb58c3bdd8 Extracting [=============================================>     ]  70.75MB/77.15MB
+2026-06-29T16:21:07.9267554Z  cf242d89e8f2 Downloading [================>                                  ]  274.1MB/856.3MB
+2026-06-29T16:21:07.9553442Z  a9bb58c3bdd8 Extracting [===============================================>   ]  73.53MB/77.15MB
+2026-06-29T16:21:08.0280010Z  cf242d89e8f2 Downloading [=================>                                 ]  306.7MB/856.3MB
+2026-06-29T16:21:08.0856945Z  a9bb58c3bdd8 Extracting [================================================>  ]  74.09MB/77.15MB
+2026-06-29T16:21:08.1282176Z  cf242d89e8f2 Downloading [===================>                               ]    335MB/856.3MB
+2026-06-29T16:21:08.2300200Z  cf242d89e8f2 Downloading [=====================>                             ]  368.1MB/856.3MB
+2026-06-29T16:21:08.3309878Z  cf242d89e8f2 Downloading [=======================>                           ]  400.1MB/856.3MB
+2026-06-29T16:21:08.4313549Z  cf242d89e8f2 Downloading [=========================>                         ]    430MB/856.3MB
+2026-06-29T16:21:08.5324892Z  cf242d89e8f2 Downloading [==========================>                        ]    462MB/856.3MB
+2026-06-29T16:21:08.6334082Z  cf242d89e8f2 Downloading [===========================>                       ]  475.9MB/856.3MB
+2026-06-29T16:21:08.6436749Z  a9bb58c3bdd8 Extracting [================================================>  ]   75.2MB/77.15MB
+2026-06-29T16:21:08.7179291Z  a9bb58c3bdd8 Extracting [==================================================>]  77.15MB/77.15MB
+2026-06-29T16:21:08.7334832Z  cf242d89e8f2 Downloading [=============================>                     ]  507.8MB/856.3MB
+2026-06-29T16:21:08.8335084Z  cf242d89e8f2 Downloading [===============================>                   ]  541.5MB/856.3MB
+2026-06-29T16:21:08.9348188Z  cf242d89e8f2 Downloading [=================================>                 ]  577.2MB/856.3MB
+2026-06-29T16:21:09.0355035Z  cf242d89e8f2 Downloading [===================================>               ]  609.7MB/856.3MB
+2026-06-29T16:21:09.1379082Z  cf242d89e8f2 Downloading [=====================================>             ]  636.5MB/856.3MB
+2026-06-29T16:21:09.2369032Z  cf242d89e8f2 Downloading [======================================>            ]  662.1MB/856.3MB
+2026-06-29T16:21:09.3398396Z  cf242d89e8f2 Downloading [========================================>          ]  688.2MB/856.3MB
+2026-06-29T16:21:09.4415001Z  cf242d89e8f2 Downloading [=========================================>         ]  717.6MB/856.3MB
+2026-06-29T16:21:09.5432904Z  cf242d89e8f2 Downloading [===========================================>       ]  752.8MB/856.3MB
+2026-06-29T16:21:09.6444097Z  cf242d89e8f2 Downloading [============================================>      ]  757.1MB/856.3MB
+2026-06-29T16:21:09.7438184Z  cf242d89e8f2 Downloading [==============================================>    ]  790.8MB/856.3MB
+2026-06-29T16:21:09.8450389Z  cf242d89e8f2 Downloading [================================================>  ]    826MB/856.3MB
+2026-06-29T16:21:09.9325331Z  cf242d89e8f2 Verifying Checksum 
+2026-06-29T16:21:09.9325918Z  cf242d89e8f2 Download complete 
+2026-06-29T16:21:10.5091271Z  cf242d89e8f2 Extracting [>                                                  ]  557.1kB/856.3MB
+2026-06-29T16:21:10.7333213Z  cf242d89e8f2 Extracting [>                                                  ]  1.671MB/856.3MB
+2026-06-29T16:21:10.8385132Z  cf242d89e8f2 Extracting [>                                                  ]   9.47MB/856.3MB
+2026-06-29T16:21:10.9530137Z  cf242d89e8f2 Extracting [>                                                  ]  16.15MB/856.3MB
+2026-06-29T16:21:11.0543059Z  cf242d89e8f2 Extracting [=>                                                 ]  21.73MB/856.3MB
+2026-06-29T16:21:11.1600585Z  cf242d89e8f2 Extracting [=>                                                 ]  26.18MB/856.3MB
+2026-06-29T16:21:11.2701256Z  cf242d89e8f2 Extracting [=>                                                 ]   31.2MB/856.3MB
+2026-06-29T16:21:11.3702640Z  cf242d89e8f2 Extracting [==>                                                ]  36.77MB/856.3MB
+2026-06-29T16:21:11.4740419Z  cf242d89e8f2 Extracting [==>                                                ]  44.56MB/856.3MB
+2026-06-29T16:21:11.5756523Z  cf242d89e8f2 Extracting [===>                                               ]  53.48MB/856.3MB
+2026-06-29T16:21:11.6786420Z  cf242d89e8f2 Extracting [===>                                               ]  62.39MB/856.3MB
+2026-06-29T16:21:11.7819512Z  cf242d89e8f2 Extracting [====>                                              ]   71.3MB/856.3MB
+2026-06-29T16:21:11.8854995Z  cf242d89e8f2 Extracting [====>                                              ]  80.22MB/856.3MB
+2026-06-29T16:21:11.9878752Z  cf242d89e8f2 Extracting [=====>                                             ]  89.13MB/856.3MB
+2026-06-29T16:21:12.0940227Z  cf242d89e8f2 Extracting [=====>                                             ]  98.04MB/856.3MB
+2026-06-29T16:21:12.1944661Z  cf242d89e8f2 Extracting [======>                                            ]    107MB/856.3MB
+2026-06-29T16:21:12.2954753Z  cf242d89e8f2 Extracting [======>                                            ]  115.9MB/856.3MB
+2026-06-29T16:21:12.3965326Z  cf242d89e8f2 Extracting [=======>                                           ]  124.2MB/856.3MB
+2026-06-29T16:21:12.5037003Z  cf242d89e8f2 Extracting [=======>                                           ]  133.1MB/856.3MB
+2026-06-29T16:21:12.5434988Z  a9bb58c3bdd8 Pull complete 
+2026-06-29T16:21:12.5544839Z  393f8747e4b4 Extracting [>                                                  ]  557.1kB/177.9MB
+2026-06-29T16:21:12.6091695Z  cf242d89e8f2 Extracting [========>                                          ]  141.5MB/856.3MB
+2026-06-29T16:21:12.6561704Z  393f8747e4b4 Extracting [====>                                              ]   15.6MB/177.9MB
+2026-06-29T16:21:12.7134848Z  cf242d89e8f2 Extracting [========>                                          ]  149.8MB/856.3MB
+2026-06-29T16:21:12.7560704Z  393f8747e4b4 Extracting [=======>                                           ]  27.85MB/177.9MB
+2026-06-29T16:21:12.8165065Z  cf242d89e8f2 Extracting [=========>                                         ]  158.2MB/856.3MB
+2026-06-29T16:21:12.8579789Z  393f8747e4b4 Extracting [============>                                      ]  42.89MB/177.9MB
+2026-06-29T16:21:12.9224446Z  cf242d89e8f2 Extracting [=========>                                         ]  164.9MB/856.3MB
+2026-06-29T16:21:12.9607412Z  393f8747e4b4 Extracting [================>                                  ]  58.49MB/177.9MB
+2026-06-29T16:21:13.0335646Z  cf242d89e8f2 Extracting [=========>                                         ]  169.9MB/856.3MB
+2026-06-29T16:21:13.0650823Z  393f8747e4b4 Extracting [==================>                                ]  66.85MB/177.9MB
+2026-06-29T16:21:13.1413395Z  cf242d89e8f2 Extracting [==========>                                        ]  175.5MB/856.3MB
+2026-06-29T16:21:13.1667011Z  393f8747e4b4 Extracting [======================>                            ]   79.1MB/177.9MB
+2026-06-29T16:21:13.2434427Z  cf242d89e8f2 Extracting [==========>                                        ]    181MB/856.3MB
+2026-06-29T16:21:13.2705398Z  393f8747e4b4 Extracting [=========================>                         ]   90.8MB/177.9MB
+2026-06-29T16:21:13.3527051Z  cf242d89e8f2 Extracting [==========>                                        ]  187.7MB/856.3MB
+2026-06-29T16:21:13.3755088Z  393f8747e4b4 Extracting [============================>                      ]  101.9MB/177.9MB
+2026-06-29T16:21:13.4539315Z  cf242d89e8f2 Extracting [===========>                                       ]  194.4MB/856.3MB
+2026-06-29T16:21:13.4794114Z  393f8747e4b4 Extracting [================================>                  ]  114.2MB/177.9MB
+2026-06-29T16:21:13.5594339Z  cf242d89e8f2 Extracting [===========>                                       ]  200.5MB/856.3MB
+2026-06-29T16:21:13.5790418Z  393f8747e4b4 Extracting [====================================>              ]  131.5MB/177.9MB
+2026-06-29T16:21:13.6675595Z  cf242d89e8f2 Extracting [============>                                      ]  207.8MB/856.3MB
+2026-06-29T16:21:13.6804228Z  393f8747e4b4 Extracting [=========================================>         ]  145.9MB/177.9MB
+2026-06-29T16:21:13.7722575Z  cf242d89e8f2 Extracting [============>                                      ]  212.8MB/856.3MB
+2026-06-29T16:21:13.7828865Z  393f8747e4b4 Extracting [============================================>      ]  157.1MB/177.9MB
+2026-06-29T16:21:13.8780928Z  cf242d89e8f2 Extracting [============>                                      ]  218.9MB/856.3MB
+2026-06-29T16:21:13.8854219Z  393f8747e4b4 Extracting [================================================>  ]  172.1MB/177.9MB
+2026-06-29T16:21:13.9405609Z  393f8747e4b4 Extracting [==================================================>]  177.9MB/177.9MB
+2026-06-29T16:21:13.9839998Z  cf242d89e8f2 Extracting [=============>                                     ]  225.1MB/856.3MB
+2026-06-29T16:21:14.1418745Z  cf242d89e8f2 Extracting [=============>                                     ]  233.4MB/856.3MB
+2026-06-29T16:21:14.2447230Z  cf242d89e8f2 Extracting [==============>                                    ]  242.3MB/856.3MB
+2026-06-29T16:21:14.3474499Z  cf242d89e8f2 Extracting [==============>                                    ]  251.2MB/856.3MB
+2026-06-29T16:21:14.4507881Z  cf242d89e8f2 Extracting [===============>                                   ]  260.1MB/856.3MB
+2026-06-29T16:21:14.5522609Z  cf242d89e8f2 Extracting [===============>                                   ]  267.9MB/856.3MB
+2026-06-29T16:21:14.6587472Z  cf242d89e8f2 Extracting [================>                                  ]  276.3MB/856.3MB
+2026-06-29T16:21:14.7612215Z  cf242d89e8f2 Extracting [================>                                  ]  284.7MB/856.3MB
+2026-06-29T16:21:14.8665525Z  cf242d89e8f2 Extracting [=================>                                 ]    293MB/856.3MB
+2026-06-29T16:21:14.9810563Z  cf242d89e8f2 Extracting [=================>                                 ]  300.3MB/856.3MB
+2026-06-29T16:21:15.0907675Z  cf242d89e8f2 Extracting [=================>                                 ]  306.4MB/856.3MB
+2026-06-29T16:21:15.1964757Z  cf242d89e8f2 Extracting [==================>                                ]  310.8MB/856.3MB
+2026-06-29T16:21:15.2982419Z  cf242d89e8f2 Extracting [==================>                                ]  315.9MB/856.3MB
+2026-06-29T16:21:15.4010172Z  cf242d89e8f2 Extracting [==================>                                ]  321.4MB/856.3MB
+2026-06-29T16:21:15.5038320Z  cf242d89e8f2 Extracting [===================>                               ]  329.2MB/856.3MB
+2026-06-29T16:21:15.6070559Z  cf242d89e8f2 Extracting [===================>                               ]  338.7MB/856.3MB
+2026-06-29T16:21:15.6935857Z  393f8747e4b4 Pull complete 
+2026-06-29T16:21:15.6946658Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-06-29T16:21:15.6951126Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-06-29T16:21:15.7107761Z  cf242d89e8f2 Extracting [====================>                              ]  342.6MB/856.3MB
+2026-06-29T16:21:15.8125539Z  cf242d89e8f2 Extracting [====================>                              ]  351.5MB/856.3MB
+2026-06-29T16:21:15.9196452Z  cf242d89e8f2 Extracting [=====================>                             ]    361MB/856.3MB
+2026-06-29T16:21:16.0252395Z  cf242d89e8f2 Extracting [=====================>                             ]  370.4MB/856.3MB
+2026-06-29T16:21:16.1903963Z  cf242d89e8f2 Extracting [======================>                            ]  377.1MB/856.3MB
+2026-06-29T16:21:16.2927170Z  cf242d89e8f2 Extracting [======================>                            ]  386.6MB/856.3MB
+2026-06-29T16:21:16.3896973Z  20b69ee379c9 Pull complete 
+2026-06-29T16:21:16.3915161Z  34f6e9793683 Extracting [>                                                  ]  32.77kB/2.419MB
+2026-06-29T16:21:16.3985435Z  cf242d89e8f2 Extracting [=======================>                           ]  396.1MB/856.3MB
+2026-06-29T16:21:16.4208217Z  34f6e9793683 Extracting [==================================================>]  2.419MB/2.419MB
+2026-06-29T16:21:16.4849054Z  34f6e9793683 Pull complete 
+2026-06-29T16:21:16.5030219Z  cc5389c8389e Extracting [>                                                  ]  262.1kB/23.87MB
+2026-06-29T16:21:16.5039874Z  cf242d89e8f2 Extracting [=======================>                           ]  404.4MB/856.3MB
+2026-06-29T16:21:16.6061154Z  cf242d89e8f2 Extracting [========================>                          ]  413.3MB/856.3MB
+2026-06-29T16:21:16.6116043Z  cc5389c8389e Extracting [==>                                                ]  1.049MB/23.87MB
+2026-06-29T16:21:16.7114497Z  cf242d89e8f2 Extracting [========================>                          ]  421.7MB/856.3MB
+2026-06-29T16:21:16.7117705Z  cc5389c8389e Extracting [===========>                                       ]  5.505MB/23.87MB
+2026-06-29T16:21:16.8164784Z  cf242d89e8f2 Extracting [=========================>                         ]    430MB/856.3MB
+2026-06-29T16:21:16.8965305Z  cc5389c8389e Extracting [==============>                                    ]  7.078MB/23.87MB
+2026-06-29T16:21:16.9228977Z  cf242d89e8f2 Extracting [=========================>                         ]    439MB/856.3MB
+2026-06-29T16:21:16.9994711Z  cc5389c8389e Extracting [==========================>                        ]  12.85MB/23.87MB
+2026-06-29T16:21:17.0277947Z  cf242d89e8f2 Extracting [==========================>                        ]  446.8MB/856.3MB
+2026-06-29T16:21:17.1027038Z  cc5389c8389e Extracting [======================================>            ]  18.61MB/23.87MB
+2026-06-29T16:21:17.1310839Z  cf242d89e8f2 Extracting [==========================>                        ]  454.6MB/856.3MB
+2026-06-29T16:21:17.2373497Z  cf242d89e8f2 Extracting [===========================>                       ]  463.5MB/856.3MB
+2026-06-29T16:21:17.2376421Z  cc5389c8389e Extracting [===========================================>       ]  20.97MB/23.87MB
+2026-06-29T16:21:17.3425870Z  cf242d89e8f2 Extracting [===========================>                       ]  472.4MB/856.3MB
+2026-06-29T16:21:17.4469339Z  cf242d89e8f2 Extracting [============================>                      ]  480.7MB/856.3MB
+2026-06-29T16:21:17.5518392Z  cf242d89e8f2 Extracting [============================>                      ]  489.7MB/856.3MB
+2026-06-29T16:21:17.5680798Z  cc5389c8389e Extracting [==============================================>    ]  22.28MB/23.87MB
+2026-06-29T16:21:17.6577325Z  cf242d89e8f2 Extracting [=============================>                     ]  498.6MB/856.3MB
+2026-06-29T16:21:17.7603792Z  cf242d89e8f2 Extracting [=============================>                     ]  506.9MB/856.3MB
+2026-06-29T16:21:17.8634851Z  cf242d89e8f2 Extracting [==============================>                    ]  515.3MB/856.3MB
+2026-06-29T16:21:17.9225110Z  cc5389c8389e Extracting [===============================================>   ]  22.54MB/23.87MB
+2026-06-29T16:21:17.9711881Z  cf242d89e8f2 Extracting [==============================>                    ]  523.1MB/856.3MB
+2026-06-29T16:21:17.9808070Z  cc5389c8389e Extracting [==================================================>]  23.87MB/23.87MB
+2026-06-29T16:21:18.0729584Z  cf242d89e8f2 Extracting [==============================>                    ]  529.8MB/856.3MB
+2026-06-29T16:21:18.1808316Z  cf242d89e8f2 Extracting [===============================>                   ]  538.7MB/856.3MB
+2026-06-29T16:21:18.2906392Z  cf242d89e8f2 Extracting [===============================>                   ]  544.8MB/856.3MB
+2026-06-29T16:21:18.3946586Z  cf242d89e8f2 Extracting [===============================>                   ]    547MB/856.3MB
+2026-06-29T16:21:18.4978923Z  cf242d89e8f2 Extracting [================================>                  ]  554.3MB/856.3MB
+2026-06-29T16:21:18.5989823Z  cf242d89e8f2 Extracting [================================>                  ]  563.2MB/856.3MB
+2026-06-29T16:21:18.6870640Z  cc5389c8389e Pull complete 
+2026-06-29T16:21:18.6883664Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-06-29T16:21:18.6889472Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-06-29T16:21:18.7272715Z  cf242d89e8f2 Extracting [=================================>                 ]    571MB/856.3MB
+2026-06-29T16:21:18.8405736Z  76f9ee5e648e Pull complete 
+2026-06-29T16:21:18.8425480Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-06-29T16:21:18.8433009Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-06-29T16:21:18.8456071Z  cf242d89e8f2 Extracting [=================================>                 ]  572.1MB/856.3MB
+2026-06-29T16:21:18.8953913Z  393efe950606 Pull complete 
+2026-06-29T16:21:18.8967628Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-06-29T16:21:18.8976338Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-06-29T16:21:18.9075965Z  3fdba431f168 Pull complete 
+2026-06-29T16:21:18.9089174Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-06-29T16:21:18.9092283Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-06-29T16:21:18.9182412Z  bd6208a6da27 Pull complete 
+2026-06-29T16:21:18.9257255Z  keycloak Pulled 
+2026-06-29T16:21:18.9523111Z  cf242d89e8f2 Extracting [=================================>                 ]  578.8MB/856.3MB
+2026-06-29T16:21:19.0530390Z  cf242d89e8f2 Extracting [==================================>                ]  584.4MB/856.3MB
+2026-06-29T16:21:19.1586928Z  cf242d89e8f2 Extracting [==================================>                ]  591.6MB/856.3MB
+2026-06-29T16:21:19.2589884Z  cf242d89e8f2 Extracting [===================================>               ]  599.9MB/856.3MB
+2026-06-29T16:21:19.3648741Z  cf242d89e8f2 Extracting [===================================>               ]  608.9MB/856.3MB
+2026-06-29T16:21:19.4704614Z  cf242d89e8f2 Extracting [====================================>              ]  619.4MB/856.3MB
+2026-06-29T16:21:19.5718988Z  cf242d89e8f2 Extracting [====================================>              ]  627.8MB/856.3MB
+2026-06-29T16:21:19.6772487Z  cf242d89e8f2 Extracting [=====================================>             ]  637.3MB/856.3MB
+2026-06-29T16:21:19.7780393Z  cf242d89e8f2 Extracting [=====================================>             ]  645.6MB/856.3MB
+2026-06-29T16:21:19.8806031Z  cf242d89e8f2 Extracting [======================================>            ]  653.4MB/856.3MB
+2026-06-29T16:21:19.9879887Z  cf242d89e8f2 Extracting [======================================>            ]  658.4MB/856.3MB
+2026-06-29T16:21:20.1035798Z  cf242d89e8f2 Extracting [======================================>            ]  662.3MB/856.3MB
+2026-06-29T16:21:20.2069549Z  cf242d89e8f2 Extracting [======================================>            ]    664MB/856.3MB
+2026-06-29T16:21:20.3608339Z  cf242d89e8f2 Extracting [======================================>            ]  664.6MB/856.3MB
+2026-06-29T16:21:20.5161494Z  cf242d89e8f2 Extracting [======================================>            ]  665.1MB/856.3MB
+2026-06-29T16:21:20.6237467Z  cf242d89e8f2 Extracting [======================================>            ]  666.8MB/856.3MB
+2026-06-29T16:21:20.7433025Z  cf242d89e8f2 Extracting [=======================================>           ]  668.5MB/856.3MB
+2026-06-29T16:21:20.8500422Z  cf242d89e8f2 Extracting [=======================================>           ]  671.8MB/856.3MB
+2026-06-29T16:21:20.9597943Z  cf242d89e8f2 Extracting [=======================================>           ]  676.3MB/856.3MB
+2026-06-29T16:21:21.0682191Z  cf242d89e8f2 Extracting [=======================================>           ]  680.7MB/856.3MB
+2026-06-29T16:21:21.1778521Z  cf242d89e8f2 Extracting [========================================>          ]  685.2MB/856.3MB
+2026-06-29T16:21:21.2886927Z  cf242d89e8f2 Extracting [========================================>          ]  689.6MB/856.3MB
+2026-06-29T16:21:21.3995370Z  cf242d89e8f2 Extracting [========================================>          ]  694.1MB/856.3MB
+2026-06-29T16:21:21.5134433Z  cf242d89e8f2 Extracting [========================================>          ]  698.5MB/856.3MB
+2026-06-29T16:21:21.6140761Z  cf242d89e8f2 Extracting [=========================================>         ]  702.4MB/856.3MB
+2026-06-29T16:21:21.7266127Z  cf242d89e8f2 Extracting [=========================================>         ]  706.9MB/856.3MB
+2026-06-29T16:21:21.8394295Z  cf242d89e8f2 Extracting [=========================================>         ]  711.4MB/856.3MB
+2026-06-29T16:21:21.9413233Z  cf242d89e8f2 Extracting [=========================================>         ]  715.3MB/856.3MB
+2026-06-29T16:21:22.0551464Z  cf242d89e8f2 Extracting [==========================================>        ]  719.7MB/856.3MB
+2026-06-29T16:21:22.1676198Z  cf242d89e8f2 Extracting [==========================================>        ]  724.2MB/856.3MB
+2026-06-29T16:21:22.2700857Z  cf242d89e8f2 Extracting [==========================================>        ]  728.1MB/856.3MB
+2026-06-29T16:21:22.3831798Z  cf242d89e8f2 Extracting [==========================================>        ]  732.5MB/856.3MB
+2026-06-29T16:21:22.4847974Z  cf242d89e8f2 Extracting [===========================================>       ]  736.4MB/856.3MB
+2026-06-29T16:21:22.5951094Z  cf242d89e8f2 Extracting [===========================================>       ]  740.9MB/856.3MB
+2026-06-29T16:21:22.7031565Z  cf242d89e8f2 Extracting [===========================================>       ]  745.3MB/856.3MB
+2026-06-29T16:21:22.8137972Z  cf242d89e8f2 Extracting [===========================================>       ]  749.8MB/856.3MB
+2026-06-29T16:21:22.9237459Z  cf242d89e8f2 Extracting [============================================>      ]  754.3MB/856.3MB
+2026-06-29T16:21:23.0324966Z  cf242d89e8f2 Extracting [============================================>      ]  758.7MB/856.3MB
+2026-06-29T16:21:23.1587245Z  cf242d89e8f2 Extracting [============================================>      ]  761.5MB/856.3MB
+2026-06-29T16:21:23.2936681Z  cf242d89e8f2 Extracting [============================================>      ]  763.2MB/856.3MB
+2026-06-29T16:21:23.4001186Z  cf242d89e8f2 Extracting [============================================>      ]  764.8MB/856.3MB
+2026-06-29T16:21:23.5137038Z  cf242d89e8f2 Extracting [============================================>      ]  765.4MB/856.3MB
+2026-06-29T16:21:23.6213744Z  cf242d89e8f2 Extracting [============================================>      ]  767.1MB/856.3MB
+2026-06-29T16:21:23.7409120Z  cf242d89e8f2 Extracting [============================================>      ]  768.7MB/856.3MB
+2026-06-29T16:21:23.8487887Z  cf242d89e8f2 Extracting [=============================================>     ]  772.1MB/856.3MB
+2026-06-29T16:21:23.9554998Z  cf242d89e8f2 Extracting [=============================================>     ]  776.5MB/856.3MB
+2026-06-29T16:21:24.0644857Z  cf242d89e8f2 Extracting [=============================================>     ]    781MB/856.3MB
+2026-06-29T16:21:24.1752993Z  cf242d89e8f2 Extracting [=============================================>     ]  785.4MB/856.3MB
+2026-06-29T16:21:24.2848322Z  cf242d89e8f2 Extracting [==============================================>    ]  789.9MB/856.3MB
+2026-06-29T16:21:24.3959352Z  cf242d89e8f2 Extracting [==============================================>    ]  794.4MB/856.3MB
+2026-06-29T16:21:24.4965926Z  cf242d89e8f2 Extracting [==============================================>    ]  798.3MB/856.3MB
+2026-06-29T16:21:24.6097262Z  cf242d89e8f2 Extracting [==============================================>    ]  802.7MB/856.3MB
+2026-06-29T16:21:24.7238965Z  cf242d89e8f2 Extracting [===============================================>   ]  807.2MB/856.3MB
+2026-06-29T16:21:24.8265648Z  cf242d89e8f2 Extracting [===============================================>   ]  811.1MB/856.3MB
+2026-06-29T16:21:24.9275078Z  cf242d89e8f2 Extracting [===============================================>   ]    815MB/856.3MB
+2026-06-29T16:21:25.0404429Z  cf242d89e8f2 Extracting [===============================================>   ]  819.4MB/856.3MB
+2026-06-29T16:21:25.1425952Z  cf242d89e8f2 Extracting [================================================>  ]  823.3MB/856.3MB
+2026-06-29T16:21:25.2531880Z  cf242d89e8f2 Extracting [================================================>  ]  827.8MB/856.3MB
+2026-06-29T16:21:25.3604980Z  cf242d89e8f2 Extracting [================================================>  ]  832.2MB/856.3MB
+2026-06-29T16:21:25.4684366Z  cf242d89e8f2 Extracting [================================================>  ]  836.7MB/856.3MB
+2026-06-29T16:21:25.5926771Z  cf242d89e8f2 Extracting [=================================================> ]    840MB/856.3MB
+2026-06-29T16:21:25.7093350Z  cf242d89e8f2 Extracting [=================================================> ]  841.7MB/856.3MB
+2026-06-29T16:21:25.9516620Z  cf242d89e8f2 Extracting [=================================================> ]    854MB/856.3MB
+2026-06-29T16:21:26.2106554Z  cf242d89e8f2 Extracting [=================================================> ]  854.5MB/856.3MB
+2026-06-29T16:21:26.3656061Z  cf242d89e8f2 Extracting [=================================================> ]  855.1MB/856.3MB
+2026-06-29T16:21:26.4692402Z  cf242d89e8f2 Extracting [=================================================> ]  855.6MB/856.3MB
+2026-06-29T16:21:26.6169175Z  cf242d89e8f2 Extracting [=================================================> ]  856.2MB/856.3MB
+2026-06-29T16:21:26.6374477Z  cf242d89e8f2 Extracting [==================================================>]  856.3MB/856.3MB
+2026-06-29T16:21:26.7376006Z  cf242d89e8f2 Pull complete 
+2026-06-29T16:21:26.7435463Z  postgresql Pulled 
+2026-06-29T16:21:26.7531785Z ##[group]Run # Run Integration Tests
+2026-06-29T16:21:26.7532572Z [36;1m# Run Integration Tests[0m
+2026-06-29T16:21:26.7533180Z [36;1m# Make temp dir with 777 mask as docker seems to run as root[0m
+2026-06-29T16:21:26.7533807Z [36;1mmkdir -pm 777 tmp[0m
+2026-06-29T16:21:26.7534205Z [36;1m[0m
+2026-06-29T16:21:26.7534534Z [36;1m# Start the stack[0m
+2026-06-29T16:21:26.7535119Z [36;1mdocker compose -f profile/dev-testing.yml up -d --no-build[0m
+2026-06-29T16:21:26.7535748Z [36;1m[0m
+2026-06-29T16:21:26.7536068Z [36;1m# Run the tests[0m
+2026-06-29T16:21:26.7536464Z [36;1m./gradlew :test:test[0m
+2026-06-29T16:21:26.7578007Z shell: /usr/bin/bash -e {0}
+2026-06-29T16:21:26.7578419Z env:
+2026-06-29T16:21:26.7578940Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:21:26.7579820Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:21:26.7580485Z ##[endgroup]
+2026-06-29T16:21:26.8262362Z time="2026-06-29T16:21:26Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-06-29T16:21:26.8320776Z time="2026-06-29T16:21:26Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-06-29T16:21:26.8605431Z  Network profile_default  Creating
+2026-06-29T16:21:26.8994277Z  Network profile_default  Created
+2026-06-29T16:21:26.9037350Z  Volume "profile_postgresql-data"  Creating
+2026-06-29T16:21:26.9050231Z  Volume "profile_postgresql-data"  Created
+2026-06-29T16:21:26.9055483Z  Container profile-postgresql-1  Creating
+2026-06-29T16:21:30.0528651Z  Container profile-postgresql-1  Created
+2026-06-29T16:21:30.0529563Z  Container profile-keycloak-1  Creating
+2026-06-29T16:21:30.0711250Z  Container profile-keycloak-1  Created
+2026-06-29T16:21:30.0722680Z  Container profile-postgresql-1  Starting
+2026-06-29T16:21:30.3758942Z  Container profile-postgresql-1  Started
+2026-06-29T16:21:30.3759477Z  Container profile-postgresql-1  Waiting
+2026-06-29T16:21:35.8780830Z  Container profile-postgresql-1  Healthy
+2026-06-29T16:21:35.8781321Z  Container profile-keycloak-1  Starting
+2026-06-29T16:21:36.0008881Z  Container profile-keycloak-1  Started
+2026-06-29T16:21:38.7449651Z 
+2026-06-29T16:21:38.7450641Z Welcome to Gradle 9.5.1!
+2026-06-29T16:21:38.7451269Z 
+2026-06-29T16:21:38.7451682Z Here are the highlights of this release:
+2026-06-29T16:21:38.7452940Z  - Task provenance in reports and failure messages
+2026-06-29T16:21:38.7453882Z  - Type-safe accessors for precompiled Kotlin Settings plugins
+2026-06-29T16:21:38.7454559Z 
+2026-06-29T16:21:38.7455108Z For more details see https://docs.gradle.org/9.5.1/release-notes.html
+2026-06-29T16:21:38.7456206Z 
+2026-06-29T16:21:39.1458117Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-29T16:21:51.4510703Z 
+2026-06-29T16:21:51.4563142Z > Configure project :
+2026-06-29T16:21:51.4563766Z Unshallowing repo because the build is being executed on CI
+2026-06-29T16:22:12.9440860Z Unshallowing repo because the build is being executed on CI
+2026-06-29T16:22:14.0437965Z File encryption plugin config found, configuring git pre commit hook and decrypt task dependency
+2026-06-29T16:22:18.6433455Z 
+2026-06-29T16:22:18.6463374Z > Task :manager:setVersionProperties
+2026-06-29T16:22:18.6480347Z > Task :container:processResources
+2026-06-29T16:22:18.6519317Z > Task :model:processResources
+2026-06-29T16:22:18.6535199Z > Task :setup:processIntegrationResources
+2026-06-29T16:22:18.6567377Z > Task :test:processResources
+2026-06-29T16:22:18.6594962Z > Task :manager:processResources
+2026-06-29T16:22:18.7453192Z > Task :agent:processResources
+2026-06-29T16:22:18.7473124Z > Task :test:processTestResources
+2026-06-29T16:22:23.6434569Z > Task :agent:extractIncludeProto
+2026-06-29T16:22:30.1431906Z > Task :agent:generateProto
+2026-06-29T16:22:37.4453107Z > Task :model:compileJava
+2026-06-29T16:22:37.4454231Z > Task :model:classes
+2026-06-29T16:22:37.6431213Z > Task :model:jar
+2026-06-29T16:22:39.6489340Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:138: warning: [removal] PersistenceUnitTransactionType in jakarta.persistence.spi has been deprecated and marked for removal
+2026-06-29T16:22:39.6504005Z         public PersistenceUnitTransactionType getTransactionType() {
+2026-06-29T16:22:39.6504760Z                ^
+2026-06-29T16:22:39.6507920Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:139: warning: [removal] PersistenceUnitTransactionType in jakarta.persistence.spi has been deprecated and marked for removal
+2026-06-29T16:22:39.6511018Z             return PersistenceUnitTransactionType.RESOURCE_LOCAL;
+2026-06-29T16:22:39.6511692Z                    ^
+2026-06-29T16:22:39.6512276Z 
+2026-06-29T16:22:39.6512490Z > Task :container:compileJava
+2026-06-29T16:22:39.7455487Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:597: warning: [deprecation] DATASOURCE in JdbcSettings has been deprecated
+2026-06-29T16:22:39.7473459Z         Object dataSourceProperty = persistenceUnitProperties.get(AvailableSettings.DATASOURCE);
+2026-06-29T16:22:39.7493261Z                                                                                    ^
+2026-06-29T16:22:39.7495932Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceEventInterceptor.java:54: warning: [deprecation] CallbackException in org.hibernate has been deprecated
+2026-06-29T16:22:39.7498887Z         throws CallbackException {
+2026-06-29T16:22:39.7499698Z                ^
+2026-06-29T16:22:39.7502369Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceEventInterceptor.java:69: warning: [deprecation] CallbackException in org.hibernate has been deprecated
+2026-06-29T16:22:39.7505094Z         throws CallbackException {
+2026-06-29T16:22:39.7505735Z                ^
+2026-06-29T16:22:39.9439363Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/web/RealmPathExtractorFilter.java:132: warning: [deprecation] URL(String) in URL has been deprecated
+2026-06-29T16:22:39.9446061Z                     URL url = new URL(original.toString());
+2026-06-29T16:22:39.9470523Z                               ^
+2026-06-29T16:22:40.1436240Z 6 warnings
+2026-06-29T16:22:42.5430450Z 
+2026-06-29T16:22:42.5440092Z > Task :container:compileGroovy NO-SOURCE
+2026-06-29T16:22:42.5440908Z > Task :container:classes
+2026-06-29T16:22:42.6436295Z > Task :container:jar
+2026-06-29T16:23:12.6432195Z > Task :agent:compileJava
+2026-06-29T16:23:14.8448564Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:80: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8483358Z   private static volatile io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-06-29T16:23:14.8484502Z                                                                             ^
+2026-06-29T16:23:14.8487243Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:88: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8490473Z   public static io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-06-29T16:23:14.8491500Z                                                                   ^
+2026-06-29T16:23:14.8494457Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:85: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8497849Z       requestType = ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest.class,
+2026-06-29T16:23:14.8498740Z                                              ^
+2026-06-29T16:23:14.8501414Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:90: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8505255Z     io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest, ttn.lorawan.v3.EndDeviceOuterClass.EndDevice> getProvisionMethod;
+2026-06-29T16:23:14.8506672Z                                                       ^
+2026-06-29T16:23:14.8509334Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:95: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8514908Z               io.grpc.MethodDescriptor.<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest, ttn.lorawan.v3.EndDeviceOuterClass.EndDevice>newBuilder()
+2026-06-29T16:23:14.8516315Z                                                                  ^
+2026-06-29T16:23:14.8518965Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:100: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8522469Z                   ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest.getDefaultInstance()))
+2026-06-29T16:23:14.8523434Z                                            ^
+2026-06-29T16:23:14.8526076Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:552: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8529241Z           serviceImpl.provision((ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest) request,
+2026-06-29T16:23:14.8530226Z                                                           ^
+2026-06-29T16:23:14.8533108Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/source/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:595: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-06-29T16:23:14.8536165Z               ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-06-29T16:23:14.8536872Z                                        ^
+2026-06-29T16:23:15.2431410Z 8 warnings
+2026-06-29T16:23:19.8433511Z 
+2026-06-29T16:23:19.8439046Z > Task :agent:compileGroovy NO-SOURCE
+2026-06-29T16:23:19.8439819Z > Task :agent:classes
+2026-06-29T16:23:21.2432227Z > Task :agent:jar
+2026-06-29T16:23:26.3430514Z 
+2026-06-29T16:23:26.3466011Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/security/ManagerBasicIdentityProvider.java:41: warning: [deprecation] BasicIdentityProvider in org.openremote.container.security.basic has been deprecated
+2026-06-29T16:23:26.3468718Z > Task :manager:compileJava
+2026-06-29T16:23:26.3483101Z public class ManagerBasicIdentityProvider extends BasicIdentityProvider implements ManagerIdentityProvider {
+2026-06-29T16:23:26.3502555Z                                                   ^
+2026-06-29T16:23:26.6442282Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/gateway/GatewayClientConnector.java:335: warning: [deprecation] getSshHostname() in GatewayTunnelStartRequestEvent has been deprecated
+2026-06-29T16:23:26.6474941Z                     tunnelHostname = startRequestEvent.getSshHostname();
+2026-06-29T16:23:26.6512560Z                                                       ^
+2026-06-29T16:23:26.6529384Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/gateway/GatewayClientConnector.java:336: warning: [deprecation] getSshPort() in GatewayTunnelStartRequestEvent has been deprecated
+2026-06-29T16:23:26.6542958Z                     tunnelPort = startRequestEvent.getSshPort();
+2026-06-29T16:23:26.6572295Z                                                   ^
+2026-06-29T16:23:26.7462999Z 3 warnings
+2026-06-29T16:23:29.8432446Z 
+2026-06-29T16:23:29.8461529Z > Task :manager:compileGroovy NO-SOURCE
+2026-06-29T16:23:29.8492706Z > Task :manager:classes
+2026-06-29T16:23:29.9479100Z > Task :manager:jar
+2026-06-29T16:23:32.7433245Z > Task :setup:compileIntegrationJava
+2026-06-29T16:23:32.7433843Z > Task :setup:integrationClasses
+2026-06-29T16:23:33.0438168Z > Task :test:compileJava
+2026-06-29T16:23:40.5443087Z > Task :test:compileGroovy
+2026-06-29T16:23:40.5482607Z > Task :test:classes
+2026-06-29T16:23:45.3431084Z > Task :test:compileTestJava
+2026-06-29T16:24:00.3442483Z > Task :test:compileTestGroovy
+2026-06-29T16:24:00.3447373Z > Task :test:testClasses
+2026-06-29T16:24:02.6432368Z 
+2026-06-29T16:24:02.6436173Z > Task :test:test
+2026-06-29T16:24:02.6436857Z 
+2026-06-29T16:24:07.9464012Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime without timezone as LocalDateTime took: 742ms
+2026-06-29T16:24:08.0434650Z [0K[1morg.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest[m
+2026-06-29T16:24:08.0462525Z 
+2026-06-29T16:24:08.0513863Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime without timezone as LocalDateTime[32m PASSED[m
+2026-06-29T16:24:08.0562913Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime with Z and converts to server timezone took: 123ms
+2026-06-29T16:24:08.0583634Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime with Z and converts to server timezone[32m PASSED[m
+2026-06-29T16:24:08.0647636Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime with explicit numeric offset and converts to server timezone took: 18ms
+2026-06-29T16:24:08.0663784Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime with explicit numeric offset and converts to server timezone[32m PASSED[m
+2026-06-29T16:24:33.7438229Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications as new super user in other realm took: 1467ms
+2026-06-29T16:24:33.7439826Z 
+2026-06-29T16:24:33.7440429Z [0K[1morg.openremote.test.alarm.AlarmResourceTest[m
+2026-06-29T16:24:33.7440906Z 
+2026-06-29T16:24:33.7442515Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', assigneeId '#assigneeId' and '#emailNotifications' emailNotifications as new super user in other realm[m
+2026-06-29T16:24:33.7444535Z 
+2026-06-29T16:24:33.7446043Z [0K[1m    Test [22mshould create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1.4s)[m
+2026-06-29T16:24:34.8432660Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm took: 1065ms
+2026-06-29T16:24:34.8435844Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:35.8432410Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications as new super user in other realm took: 1051ms
+2026-06-29T16:24:35.8435162Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:36.9433996Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications as new super user in other realm took: 1050ms
+2026-06-29T16:24:36.9437050Z [0K[1m    Test [22mshould create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:37.9433337Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm took: 1044ms
+2026-06-29T16:24:37.9436384Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:39.0433733Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications as new super user in other realm took: 1038ms
+2026-06-29T16:24:39.0437700Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:40.1432524Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications as new super user in other realm took: 1118ms
+2026-06-29T16:24:40.1435040Z [0K[1m    Test [22mshould create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications as new super user in other realm[32m PASSED[33m (1.1s)[m
+2026-06-29T16:24:41.1432790Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm took: 1047ms
+2026-06-29T16:24:41.1436665Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:42.2432270Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '1' emailNotifications as new super user in other realm took: 1053ms
+2026-06-29T16:24:42.2434547Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '1' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-06-29T16:24:43.2446944Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications took: 1049ms
+2026-06-29T16:24:43.2450029Z 
+2026-06-29T16:24:43.3431094Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', assigneeId '#assigneeId' and '#emailNotifications' emailNotifications[m
+2026-06-29T16:24:43.3432623Z 
+2026-06-29T16:24:43.3433537Z [0K[1m    Test [22mshould create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:44.3431535Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications took: 1039ms
+2026-06-29T16:24:44.3434590Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:45.3431429Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications took: 1038ms
+2026-06-29T16:24:45.3434584Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:46.4431808Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications took: 1038ms
+2026-06-29T16:24:46.4434560Z [0K[1m    Test [22mshould create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:47.4431685Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications took: 1037ms
+2026-06-29T16:24:47.4434555Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:48.4445056Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications took: 1034ms
+2026-06-29T16:24:48.4448561Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:49.5432363Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications took: 1051ms
+2026-06-29T16:24:49.5435520Z [0K[1m    Test [22mshould create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:50.5431844Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications took: 1042ms
+2026-06-29T16:24:50.5434924Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:51.6445029Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '1' emailNotifications took: 1043ms
+2026-06-29T16:24:51.6494513Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '097e6647-1854-4ebe-8cb3-5d43b41489b1' and '1' emailNotifications[32m PASSED[33m (1s)[m
+2026-06-29T16:24:51.6512331Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Test Alarm', content 'Test Description', severity 'LOW', and source 'MANUAL' took: 35ms
+2026-06-29T16:24:51.6532854Z 
+2026-06-29T16:24:51.6537057Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', and source '#source'[m
+2026-06-29T16:24:51.6551850Z 
+2026-06-29T16:24:51.6553526Z [0K[1m    Test [22mshould create an alarm with title 'Test Alarm', content 'Test Description', severity 'LOW', and source 'MANUAL'[32m PASSED[m
+2026-06-29T16:24:51.7434492Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Another Alarm', content 'Another Description', severity 'MEDIUM', and source 'MANUAL' took: 39ms
+2026-06-29T16:24:51.7436377Z [0K[1m    Test [22mshould create an alarm with title 'Another Alarm', content 'Another Description', severity 'MEDIUM', and source 'MANUAL'[32m PASSED[m
+2026-06-29T16:24:51.7437948Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Critical Alarm', content 'Critical Description', severity 'HIGH', and source 'MANUAL' took: 54ms
+2026-06-29T16:24:51.7463740Z [0K[1m    Test [22mshould create an alarm with title 'Critical Alarm', content 'Critical Description', severity 'HIGH', and source 'MANUAL'[32m PASSED[m
+2026-06-29T16:24:51.8432668Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm with title 'null', content 'Test Description', severity 'LOW', and status 'OPEN' took: 59ms
+2026-06-29T16:24:51.8434253Z 
+2026-06-29T16:24:51.8435590Z [0K[1m  should not create an alarm with title '#title', content '#content', severity '#severity', and status '#status'[m
+2026-06-29T16:24:51.8436650Z 
+2026-06-29T16:24:51.8437841Z [0K[1m    Test [22mshould not create an alarm with title 'null', content 'Test Description', severity 'LOW', and status 'OPEN'[32m PASSED[m
+2026-06-29T16:24:51.8440262Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm with title 'Another Test Alarm', content 'Another Description', severity 'null', and status 'RESOLVED' took: 30ms
+2026-06-29T16:24:51.8443316Z [0K[1m    Test [22mshould not create an alarm with title 'Another Test Alarm', content 'Another Description', severity 'null', and status 'RESOLVED'[32m PASSED[m
+2026-06-29T16:24:51.8445384Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm as regular user took: 29ms
+2026-06-29T16:24:51.8446949Z 
+2026-06-29T16:24:51.8447676Z [0K[1m  Test [22mshould not create an alarm as regular user[32m PASSED[m
+2026-06-29T16:24:52.0431578Z org.openremote.test.alarm.AlarmResourceTest > should return created alarms took: 172ms
+2026-06-29T16:24:52.0435252Z [0K[1m  Test [22mshould return created alarms[32m PASSED[m
+2026-06-29T16:24:52.0436693Z org.openremote.test.alarm.AlarmResourceTest > should not return alarms took: 28ms
+2026-06-29T16:24:52.0437935Z [0K[1m  Test [22mshould not return alarms[32m PASSED[m
+2026-06-29T16:24:52.1432162Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' took: 104ms
+2026-06-29T16:24:52.1433451Z 
+2026-06-29T16:24:52.1434599Z [0K[1m  should update an alarm with title '#title', content '#content', severity '#severity', status '#status' and assigneeId '#assigneeId'[m
+2026-06-29T16:24:52.1435498Z 
+2026-06-29T16:24:52.1436180Z [0K[1m    Test [22mshould update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null'[32m PASSED[m
+2026-06-29T16:24:52.2432253Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' took: 46ms
+2026-06-29T16:24:52.2435263Z [0K[1m    Test [22mshould update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124'[32m PASSED[m
+2026-06-29T16:24:52.3443720Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' as an new super user in other realm took: 74ms
+2026-06-29T16:24:52.3445382Z 
+2026-06-29T16:24:52.3447157Z [0K[1m  should update an alarm with title '#title', content '#content', severity '#severity', status '#status' and assigneeId '#assigneeId' as an new super user in other realm[m
+2026-06-29T16:24:52.3448567Z 
+2026-06-29T16:24:52.3450072Z [0K[1m    Test [22mshould update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' as an new super user in other realm[32m PASSED[m
+2026-06-29T16:24:52.3453244Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' as an new super user in other realm took: 53ms
+2026-06-29T16:24:52.3456948Z [0K[1m    Test [22mshould update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId 'dade6c81-6e5d-4b25-88c4-a8184174b124' as an new super user in other realm[32m PASSED[m
+2026-06-29T16:24:52.4435425Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with id 0 took: 51ms
+2026-06-29T16:24:52.4436915Z 
+2026-06-29T16:24:52.4437853Z [0K[1m  Test [22mshould not update an alarm with id 0[32m PASSED[m
+2026-06-29T16:24:52.4439790Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', and status 'OPEN' took: 34ms
+2026-06-29T16:24:52.4441053Z 
+2026-06-29T16:24:52.4451233Z [0K[1m  should not update an alarm with title '#title', content '#content', severity '#severity', and status '#status'[m
+2026-06-29T16:24:52.4452373Z 
+2026-06-29T16:24:52.4453458Z [0K[1m    Test [22mshould not update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', and status 'OPEN'[32m PASSED[m
+2026-06-29T16:24:52.4455536Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', and status 'CLOSED' took: 30ms
+2026-06-29T16:24:52.4458259Z [0K[1m    Test [22mshould not update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', and status 'CLOSED'[32m PASSED[m
+2026-06-29T16:24:52.5432196Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarm without proper permissions took: 47ms
+2026-06-29T16:24:52.5433014Z 
+2026-06-29T16:24:52.5433736Z [0K[1m  Test [22mshould not delete alarm without proper permissions[32m PASSED[m
+2026-06-29T16:24:52.5434886Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarms without proper permissions took: 55ms
+2026-06-29T16:24:52.5436251Z [0K[1m  Test [22mshould not delete alarms without proper permissions[32m PASSED[m
+2026-06-29T16:24:52.6450055Z org.openremote.test.alarm.AlarmResourceTest > should not bulk delete alarms from another realm took: 102ms
+2026-06-29T16:24:52.6452355Z [0K[1m  Test [22mshould not bulk delete alarms from another realm[32m PASSED[m
+2026-06-29T16:24:52.7447484Z org.openremote.test.alarm.AlarmResourceTest > should not bulk delete any alarms when one alarm belongs to another realm took: 98ms
+2026-06-29T16:24:52.7513543Z [0K[1m  Test [22mshould not bulk delete any alarms when one alarm belongs to another realm[32m PASSED[m
+2026-06-29T16:24:52.8484024Z org.openremote.test.alarm.AlarmResourceTest > should not delete null or empty alarms took: 75ms
+2026-06-29T16:24:52.8485506Z [0K[1m  Test [22mshould not delete null or empty alarms[32m PASSED[m
+2026-06-29T16:24:52.9453473Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarms with invalid ID took: 55ms
+2026-06-29T16:24:52.9473223Z [0K[1m  Test [22mshould not delete alarms with invalid ID[32m PASSED[m
+2026-06-29T16:24:52.9501641Z org.openremote.test.alarm.AlarmResourceTest > should not delete non-existing alarms took: 54ms
+2026-06-29T16:24:52.9527970Z [0K[1m  Test [22mshould not delete non-existing alarms[32m PASSED[m
+2026-06-29T16:24:53.0432559Z org.openremote.test.alarm.AlarmResourceTest > should delete one alarm as admin took: 105ms
+2026-06-29T16:24:53.0433694Z [0K[1m  Test [22mshould delete one alarm as admin[32m PASSED[m
+2026-06-29T16:24:53.1444672Z org.openremote.test.alarm.AlarmResourceTest > should delete one alarm as new super user in other realm took: 77ms
+2026-06-29T16:24:53.1453674Z [0K[1m  Test [22mshould delete one alarm as new super user in other realm[32m PASSED[m
+2026-06-29T16:24:53.2432783Z org.openremote.test.alarm.AlarmResourceTest > should delete multiple alarms as admin took: 57ms
+2026-06-29T16:24:53.2435722Z [0K[1m  Test [22mshould delete multiple alarms as admin[32m PASSED[m
+2026-06-29T16:24:53.2437112Z org.openremote.test.alarm.AlarmResourceTest > should delete multiple alarms as super user in other realm took: 58ms
+2026-06-29T16:24:53.2438244Z [0K[1m  Test [22mshould delete multiple alarms as super user in other realm[32m PASSED[m
+2026-06-29T16:24:53.3431162Z org.openremote.test.alarm.AlarmResourceTest > should get open alarms took: 80ms
+2026-06-29T16:24:53.3432992Z [0K[1m  Test [22mshould get open alarms[32m PASSED[m
+2026-06-29T16:24:53.4431525Z org.openremote.test.alarm.AlarmResourceTest > should be able to link alarms to assets as admin took: 122ms
+2026-06-29T16:24:53.4433492Z [0K[1m  Test [22mshould be able to link alarms to assets as admin[32m PASSED[m
+2026-06-29T16:24:53.5457098Z org.openremote.test.alarm.AlarmResourceTest > should not be able to link alarms without proper permissions took: 35ms
+2026-06-29T16:24:53.5493707Z [0K[1m  Test [22mshould not be able to link alarms without proper permissions[32m PASSED[m
+2026-06-29T16:24:53.6431323Z org.openremote.test.alarm.AlarmResourceTest > should not create invalid alarm links took: 126ms
+2026-06-29T16:24:53.6433390Z [0K[1m  Test [22mshould not create invalid alarm links[32m PASSED[m
+2026-06-29T16:25:20.0440642Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies predicted datapoints when timestamps match took: 26423ms
+2026-06-29T16:25:20.0453069Z 
+2026-06-29T16:25:20.0456433Z [0K[1morg.openremote.test.assets.ApplyPredictedDataPointsServiceTest[m
+2026-06-29T16:25:20.0459506Z 
+2026-06-29T16:25:20.0462920Z [0K[1m  Test [22mApplies predicted datapoints when timestamps match[32m PASSED[31m (26.4s)[m
+2026-06-29T16:25:44.5432291Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies the last past datapoint when current value is older took: 24490ms
+2026-06-29T16:25:44.5473508Z [0K[1m  Test [22mApplies the last past datapoint when current value is older[32m PASSED[31m (24.4s)[m
+2026-06-29T16:26:07.5434797Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Skips past datapoints when current value is newer took: 22966ms
+2026-06-29T16:26:07.5436891Z [0K[1m  Test [22mSkips past datapoints when current value is newer[32m PASSED[31m (22.9s)[m
+2026-06-29T16:26:30.1431036Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when required meta is missing took: 22673ms
+2026-06-29T16:26:30.1433146Z [0K[1m  Test [22mDoes not apply values when required meta is missing[32m PASSED[31m (22.6s)[m
+2026-06-29T16:26:52.8431448Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when only HAS_PREDICTED_DATA_POINTS is set took: 22651ms
+2026-06-29T16:26:52.8434635Z [0K[1m  Test [22mDoes not apply values when only HAS_PREDICTED_DATA_POINTS is set[32m PASSED[31m (22.6s)[m
+2026-06-29T16:27:14.8431854Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when only APPLY_PREDICTED_DATA_POINTS is set took: 21998ms
+2026-06-29T16:27:14.8438151Z [0K[1m  Test [22mDoes not apply values when only APPLY_PREDICTED_DATA_POINTS is set[32m PASSED[31m (21.9s)[m
+2026-06-29T16:27:36.8437183Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies values after adding required meta to existing attribute took: 22044ms
+2026-06-29T16:27:36.8439764Z [0K[1m  Test [22mApplies values after adding required meta to existing attribute[32m PASSED[31m (22s)[m
+2026-06-29T16:27:59.1431605Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values after removing required meta from attribute took: 22233ms
+2026-06-29T16:27:59.1433900Z [0K[1m  Test [22mDoes not apply values after removing required meta from attribute[32m PASSED[31m (22.2s)[m
+2026-06-29T16:28:20.9431065Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not emit attribute events after attribute deletion took: 21832ms
+2026-06-29T16:28:20.9432789Z [0K[1m  Test [22mDoes not emit attribute events after attribute deletion[32m PASSED[31m (21.8s)[m
+2026-06-29T16:28:43.2487938Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not emit attribute events after asset deletion took: 22262ms
+2026-06-29T16:28:43.3431267Z [0K[1m  Test [22mDoes not emit attribute events after asset deletion[31m FAILED[31m (22.2s)[31m
+2026-06-29T16:28:43.3462554Z 
+2026-06-29T16:28:43.3523115Z   Condition not satisfied after 10.00 seconds and 59 attempts
+2026-06-29T16:28:43.3552943Z       at app//spock.util.concurrent.PollingConditions.within(PollingConditions.java:205)
+2026-06-29T16:28:43.3603049Z       at app//spock.util.concurrent.PollingConditions.eventually(PollingConditions.java:157)
+2026-06-29T16:28:43.3633600Z       at org.openremote.test.assets.ApplyPredictedDataPointsServiceTest.Does not emit attribute events after asset deletion(ApplyPredictedDataPointsServiceTest.groovy:585)
+2026-06-29T16:28:43.3662481Z   Caused by: Condition not satisfied:
+2026-06-29T16:28:43.3692352Z   
+2026-06-29T16:28:43.3722388Z   events.isEmpty()
+2026-06-29T16:28:43.3752341Z   |      |
+2026-06-29T16:28:43.3778150Z   |      false
+2026-06-29T16:28:43.3807268Z   [AttributeEvent{timestamp=2026-06-29T16:29:32.591Z, ref=AttributeRef{id='5HuyA3wsHEXSy9sGTQadJT', name='predictedValue10'}, realm=master, source=AssetStorageService, valueType=java.lang.Double}, AttributeEvent{timestamp=2026-06-29T16:28:26.405Z, ref=AttributeRef{id='5HuyA3wsHEXSy9sGTQadJT', name='light1Toggle'}, realm=master, source=AssetStorageService, valueType=java.lang.Boolean}, AttributeEvent{timestamp=2026-06-29T16:28:26.405Z, ref=AttributeRef{id='5HuyA3wsHEXSy9sGTQadJT', name='light1PowerConsumption'}, realm=master, source=AssetStorageService, valueType=java.lang.Double}, AttributeEvent{timestamp=2026-06-29T16:28:26.405Z, ref=AttributeRef{id='5HuyA3wsHEXSy9sGTQadJT', name='light1Color'}, realm=master, source=AssetStorageService, valueType=org.openremote.model.value.impl.ColourRGB}]
+2026-06-29T16:28:43.3814243Z       at org.openremote.test.assets.ApplyPredictedDataPointsServiceTest.Does not emit attribute events after asset deletion_closure23(ApplyPredictedDataPointsServiceTest.groovy:586)
+2026-06-29T16:28:43.3816769Z       at org.openremote.test.assets.ApplyPredictedDataPointsServiceTest.Does not emit attribute events after asset deletion_closure23(ApplyPredictedDataPointsServiceTest.groovy)
+2026-06-29T16:28:43.3818623Z       at app//spock.util.concurrent.PollingConditions.within(PollingConditions.java:185)
+2026-06-29T16:28:43.3819437Z       ... 2 more
+2026-06-29T16:28:43.3820124Z [m
+2026-06-29T16:28:54.3432762Z org.openremote.test.assets.AssetDatapointExportTest > Test CSV export functionality for asset data points took: 11114ms
+2026-06-29T16:28:54.3452586Z 
+2026-06-29T16:28:54.3463542Z [0K[1morg.openremote.test.assets.AssetDatapointExportTest[m
+2026-06-29T16:28:54.3468138Z 
+2026-06-29T16:28:54.3469029Z [0K[1m  Test [22mTest CSV export functionality for asset data points[32m PASSED[31m (11.1s)[m
+2026-06-29T16:29:05.4453737Z org.openremote.test.assets.AssetDatapointExportTest > Export query is not vulnerable to SQL injection via attributeRefs took: 11110ms
+2026-06-29T16:29:05.4463652Z [0K[1m  Test [22mExport query is not vulnerable to SQL injection via attributeRefs[32m PASSED[31m (11.1s)[m
+2026-06-29T16:29:26.6431335Z org.openremote.test.assets.AssetDatapointExportTest > Export query is not vulnerable to SQL injection via REST API took: 21204ms
+2026-06-29T16:29:26.6433563Z [0K[1m  Test [22mExport query is not vulnerable to SQL injection via REST API[32m PASSED[31m (21.2s)[m
+2026-06-29T16:29:48.0447631Z org.openremote.test.assets.AssetDatapointExportTest > Restricted users cannot export datapoints for linked non-restricted attributes took: 21340ms
+2026-06-29T16:29:48.0449595Z [0K[1m  Test [22mRestricted users cannot export datapoints for linked non-restricted attributes[32m PASSED[31m (21.3s)[m
+2026-06-29T16:30:08.9430750Z org.openremote.test.assets.AssetDatapointExportTest > Restricted users cannot get datapoint periods for linked non-restricted attributes took: 20905ms
+2026-06-29T16:30:08.9432807Z [0K[1m  Test [22mRestricted users cannot get datapoint periods for linked non-restricted attributes[32m PASSED[31m (20.9s)[m
+2026-06-29T16:30:21.7430963Z org.openremote.test.assets.AssetDatapointPurgeTest > Test TimescaleDB hypercore compression and purge took: 12828ms
+2026-06-29T16:30:21.7431746Z 
+2026-06-29T16:30:21.7432796Z [0K[1morg.openremote.test.assets.AssetDatapointPurgeTest[m
+2026-06-29T16:30:21.7433278Z 
+2026-06-29T16:30:21.7433922Z [0K[1m  Test [22mTest TimescaleDB hypercore compression and purge[32m PASSED[31m (12.8s)[m
+2026-06-29T16:30:32.6470542Z org.openremote.test.assets.AssetDatapointQueryTest > Test lttb datapoint query took: 10850ms
+2026-06-29T16:30:32.6522535Z 
+2026-06-29T16:30:32.6593454Z [0K[1morg.openremote.test.assets.AssetDatapointQueryTest[m
+2026-06-29T16:30:32.6603679Z 
+2026-06-29T16:30:32.6743426Z [0K[1m  Test [22mTest lttb datapoint query[32m PASSED[31m (10.8s)[m
+2026-06-29T16:30:43.9439202Z org.openremote.test.assets.AssetDatapointQueryTest > Lttb should not accept anything else than boolean and number took: 11354ms
+2026-06-29T16:30:43.9458057Z [0K[1m  Test [22mLttb should not accept anything else than boolean and number[32m PASSED[31m (11.3s)[m
+2026-06-29T16:31:05.2432388Z org.openremote.test.assets.AssetDatapointQueryTest > Interval query should be returned correctly and in chronological order took: 21311ms
+2026-06-29T16:31:05.2435976Z [0K[1m  Test [22mInterval query should be returned correctly and in chronological order[32m PASSED[31m (21.3s)[m
+2026-06-29T16:31:26.4448659Z org.openremote.test.assets.AssetDatapointQueryTest > All query should return the correct data when the maximum is respected took: 21138ms
+2026-06-29T16:31:26.4452635Z [0K[1m  Test [22mAll query should return the correct data when the maximum is respected[32m PASSED[31m (21.1s)[m
+2026-06-29T16:31:48.6444129Z org.openremote.test.assets.AssetDatapointTest > Test number and toggle attribute storage, retrieval and purging took: 22247ms
+2026-06-29T16:31:48.6445115Z 
+2026-06-29T16:31:48.6445731Z [0K[1morg.openremote.test.assets.AssetDatapointTest[m
+2026-06-29T16:31:48.6446205Z 
+2026-06-29T16:31:48.6446930Z [0K[1m  Test [22mTest number and toggle attribute storage, retrieval and purging[32m PASSED[31m (22.2s)[m
+2026-06-29T16:31:59.3443969Z org.openremote.test.assets.AssetDatapointTest > Test anonymous predicted datapoint writes are allowed for public write attributes took: 10689ms
+2026-06-29T16:31:59.3497850Z [0K[1m  Test [22mTest anonymous predicted datapoint writes are allowed for public write attributes[32m PASSED[31m (10.6s)[m
+2026-06-29T16:32:10.5458164Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint writes are denied without WRITE_ATTRIBUTES role took: 11177ms
+2026-06-29T16:32:10.5484704Z [0K[1m  Test [22mTest predicted datapoint writes are denied without WRITE_ATTRIBUTES role[32m PASSED[31m (11.1s)[m
+2026-06-29T16:32:32.1440592Z org.openremote.test.assets.AssetDatapointTest > Test restricted predicted datapoint writes require restricted write meta took: 21596ms
+2026-06-29T16:32:32.1443208Z [0K[1m  Test [22mTest restricted predicted datapoint writes require restricted write meta[32m PASSED[31m (21.5s)[m
+2026-06-29T16:32:54.0438623Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint change events are received via websocket API took: 21894ms
+2026-06-29T16:32:54.0443112Z [0K[1m  Test [22mTest predicted datapoint change events are received via websocket API[32m PASSED[31m (21.8s)[m
+2026-06-29T16:33:15.4431748Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint websocket subscription is denied without READ_ASSETS role took: 21394ms
+2026-06-29T16:33:15.4438835Z [0K[1m  Test [22mTest predicted datapoint websocket subscription is denied without READ_ASSETS role[32m PASSED[31m (21.3s)[m
+2026-06-29T16:33:36.2431695Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint websocket subscription is denied for a different realm took: 20858ms
+2026-06-29T16:33:36.2434370Z [0K[1m  Test [22mTest predicted datapoint websocket subscription is denied for a different realm[32m PASSED[31m (20.8s)[m
+2026-06-29T16:33:58.2444093Z org.openremote.test.assets.AssetDatapointTest > Test restricted user does not receive predicted datapoint events for unlinked assets took: 21984ms
+2026-06-29T16:33:58.2446900Z [0K[1m  Test [22mTest restricted user does not receive predicted datapoint events for unlinked assets[32m PASSED[31m (21.9s)[m
+2026-06-29T16:34:20.3431709Z org.openremote.test.assets.AssetDatapointTest > Test restricted user does not receive predicted datapoint events for non-restricted attributes took: 22132ms
+2026-06-29T16:34:20.3434296Z [0K[1m  Test [22mTest restricted user does not receive predicted datapoint events for non-restricted attributes[32m PASSED[31m (22.1s)[m
+2026-06-29T16:34:42.4431141Z org.openremote.test.assets.AssetIntegrityTest > Test asset changes as superuser took: 22030ms
+2026-06-29T16:34:42.4431893Z 
+2026-06-29T16:34:42.4432720Z [0K[1morg.openremote.test.assets.AssetIntegrityTest[m
+2026-06-29T16:34:42.4433178Z 
+2026-06-29T16:34:42.4433621Z [0K[1m  Test [22mTest asset changes as superuser[32m PASSED[31m (22s)[m
+2026-06-29T16:35:03.8438359Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject unknown child asset ids as superuser took: 21430ms
+2026-06-29T16:35:03.8454219Z [0K[1m  Test [22mBatch parent updates reject unknown child asset ids as superuser[32m PASSED[31m (21.4s)[m
+2026-06-29T16:35:24.8431786Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject unknown parent asset ids as superuser took: 21029ms
+2026-06-29T16:35:24.8434253Z [0K[1m  Test [22mBatch parent updates reject unknown parent asset ids as superuser[32m PASSED[31m (21s)[m
+2026-06-29T16:35:45.5478709Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject self-parent requests as superuser took: 20696ms
+2026-06-29T16:35:45.5514539Z [0K[1m  Test [22mBatch parent updates reject self-parent requests as superuser[32m PASSED[31m (20.6s)[m
+2026-06-29T16:36:07.4465228Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject mixed child realms as superuser took: 21837ms
+2026-06-29T16:36:07.4516722Z [0K[1m  Test [22mBatch parent updates reject mixed child realms as superuser[32m PASSED[31m (21.8s)[m
+2026-06-29T16:36:28.9431190Z org.openremote.test.assets.AssetIntegrityTest > Batch parent update rejects null or empty child lists as superuser took: 21583ms
+2026-06-29T16:36:28.9434051Z [0K[1m  Test [22mBatch parent update rejects null or empty child lists as superuser[32m PASSED[31m (21.5s)[m
+2026-06-29T16:36:50.6431004Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject moving an asset under its own descendant as superuser took: 21675ms
+2026-06-29T16:36:50.6433244Z [0K[1m  Test [22mBatch parent updates reject moving an asset under its own descendant as superuser[32m PASSED[31m (21.6s)[m
+2026-06-29T16:37:11.9431441Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject group child-type mismatches as superuser took: 21246ms
+2026-06-29T16:37:11.9434175Z [0K[1m  Test [22mBatch parent updates reject group child-type mismatches as superuser[32m PASSED[31m (21.2s)[m
+2026-06-29T16:37:33.6431101Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject moving a local asset under a gateway asset as superuser took: 21710ms
+2026-06-29T16:37:33.6434137Z [0K[1m  Test [22mBatch parent updates reject moving a local asset under a gateway asset as superuser[32m PASSED[31m (21.7s)[m
+2026-06-29T16:37:55.0430588Z org.openremote.test.assets.AssetIntegrityTest > Batch parent clear rejects gateway descendant assets as superuser took: 21395ms
+2026-06-29T16:37:55.0432658Z [0K[1m  Test [22mBatch parent clear rejects gateway descendant assets as superuser[32m PASSED[31m (21.3s)[m
+2026-06-29T16:38:16.4430867Z org.openremote.test.assets.AssetIntegrityTest > Test writing attributes with timestamps took: 21402ms
+2026-06-29T16:38:16.4432463Z [0K[1m  Test [22mTest writing attributes with timestamps[32m PASSED[31m (21.4s)[m
+2026-06-29T16:38:38.0431212Z org.openremote.test.assets.AssetPermissionsTest > Access assets as superuser took: 21646ms
+2026-06-29T16:38:38.0432566Z 
+2026-06-29T16:38:38.0433412Z [0K[1morg.openremote.test.assets.AssetPermissionsTest[m
+2026-06-29T16:38:38.0434124Z 
+2026-06-29T16:38:38.0434732Z [0K[1m  Test [22mAccess assets as superuser[32m PASSED[31m (21.6s)[m
+2026-06-29T16:38:59.1430454Z org.openremote.test.assets.AssetPermissionsTest > Access assets as testuser1 took: 21021ms
+2026-06-29T16:38:59.1431684Z [0K[1m  Test [22mAccess assets as testuser1[32m PASSED[31m (21s)[m
+2026-06-29T16:39:20.2453613Z org.openremote.test.assets.AssetPermissionsTest > Access assets as testuser2 took: 21127ms
+2026-06-29T16:39:20.2455533Z [0K[1m  Test [22mAccess assets as testuser2[32m PASSED[31m (21.1s)[m
+2026-06-29T16:39:41.3450736Z org.openremote.test.assets.AssetPermissionsTest > Access assets as restricted testuser3 took: 21177ms
+2026-06-29T16:39:41.3463381Z [0K[1m  Test [22mAccess assets as restricted testuser3[32m PASSED[31m (21.1s)[m
+2026-06-29T16:40:02.4430905Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates within the authenticated realm succeed for testuser1 took: 21055ms
+2026-06-29T16:40:02.4433427Z [0K[1m  Test [22mBatch parent updates within the authenticated realm succeed for testuser1[32m PASSED[31m (21s)[m
+2026-06-29T16:40:23.2431202Z org.openremote.test.assets.AssetPermissionsTest > Batch parent clear across accessible realms succeeds for superuser took: 20765ms
+2026-06-29T16:40:23.2434008Z [0K[1m  Test [22mBatch parent clear across accessible realms succeeds for superuser[32m PASSED[31m (20.7s)[m
+2026-06-29T16:40:33.9454570Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates reject foreign child assets for testuser1 took: 10693ms
+2026-06-29T16:40:33.9459889Z [0K[1m  Test [22mBatch parent updates reject foreign child assets for testuser1[32m PASSED[31m (10.6s)[m
+2026-06-29T16:40:54.8432844Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates reject foreign parents for testuser1 took: 20907ms
+2026-06-29T16:40:54.8457653Z [0K[1m  Test [22mBatch parent updates reject foreign parents for testuser1[32m PASSED[31m (20.9s)[m
+2026-06-29T16:41:15.5436200Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates are forbidden for restricted testuser3 took: 20728ms
+2026-06-29T16:41:15.5471341Z [0K[1m  Test [22mBatch parent updates are forbidden for restricted testuser3[32m PASSED[31m (20.7s)[m
+2026-06-29T16:41:26.3444133Z org.openremote.test.assets.AssetPermissionsTest > Batch parent clear is forbidden for restricted testuser3 took: 10790ms
+2026-06-29T16:41:26.3474207Z [0K[1m  Test [22mBatch parent clear is forbidden for restricted testuser3[32m PASSED[31m (10.7s)[m
+2026-06-29T16:41:39.2602243Z ##[error]The action 'Run integration tests' has timed out after 20 minutes.
+2026-06-29T16:41:39.2678118Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-29T16:41:39.2678554Z with:
+2026-06-29T16:41:39.2678779Z   name: or-integration-test-results
+2026-06-29T16:41:39.2679072Z   path: test/build/reports/tests
+2026-06-29T16:41:39.2679339Z   if-no-files-found: warn
+2026-06-29T16:41:39.2679581Z   compression-level: 6
+2026-06-29T16:41:39.2679821Z   overwrite: false
+2026-06-29T16:41:39.2680053Z   include-hidden-files: false
+2026-06-29T16:41:39.2680301Z   archive: true
+2026-06-29T16:41:39.2680514Z env:
+2026-06-29T16:41:39.2680826Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:41:39.2681345Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:41:39.2681741Z ##[endgroup]
+2026-06-29T16:41:39.4126871Z ##[warning]No files were found with the provided path: test/build/reports/tests. No artifacts will be uploaded.
+2026-06-29T16:41:39.4260933Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-29T16:41:39.4261378Z with:
+2026-06-29T16:41:39.4261603Z   name: or-integration-test-outputs
+2026-06-29T16:41:39.4262696Z   path: test/build/classes/java/main/**
+test/build/classes/java/test/**
+test/build/jacoco/*.exec
+test/build/reports/tests/test/**
+test/build/test-results/test/**
+
+2026-06-29T16:41:39.4263401Z   if-no-files-found: warn
+2026-06-29T16:41:39.4263674Z   compression-level: 6
+2026-06-29T16:41:39.4263903Z   overwrite: false
+2026-06-29T16:41:39.4264131Z   include-hidden-files: false
+2026-06-29T16:41:39.4264380Z   archive: true
+2026-06-29T16:41:39.4264581Z env:
+2026-06-29T16:41:39.4264897Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:41:39.4265408Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-29T16:41:39.4265799Z ##[endgroup]
+2026-06-29T16:41:39.5841255Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-06-29T16:41:39.5847995Z The least common ancestor is /home/runner/work/openremote/openremote/test/build. This will be the root directory of the artifact
+2026-06-29T16:41:39.5848956Z With the provided path, there will be 13 files uploaded
+2026-06-29T16:41:39.5854755Z Artifact name is valid!
+2026-06-29T16:41:39.5856278Z Root directory input is valid!
+2026-06-29T16:41:39.9247697Z Uploading artifact: or-integration-test-outputs.zip
+2026-06-29T16:41:39.9286200Z Beginning upload of artifact content to blob storage
+2026-06-29T16:41:41.0611257Z Uploaded bytes 2491992
+2026-06-29T16:41:41.1364199Z Finished uploading artifact content to blob storage!
+2026-06-29T16:41:41.1365305Z SHA256 digest of uploaded artifact is 9892d61abd5d164dbff8a314cec07f2205628c27202e27ccb86f9f17841398ee
+2026-06-29T16:41:41.1366268Z Finalizing artifact upload
+2026-06-29T16:41:41.5123636Z Artifact or-integration-test-outputs successfully finalized. Artifact ID 7958456699
+2026-06-29T16:41:41.5125323Z Artifact or-integration-test-outputs has been successfully uploaded! Final size is 2491992 bytes. Artifact ID is 7958456699
+2026-06-29T16:41:41.5128417Z Artifact download URL: https://github.com/openremote/openremote/actions/runs/28386638456/artifacts/7958456699
+2026-06-29T16:41:41.5323194Z Post job cleanup.
+2026-06-29T16:41:41.6919012Z Post job cleanup.
+2026-06-29T16:41:41.8128881Z [command]/usr/bin/git version
+2026-06-29T16:41:41.8185383Z git version 2.54.0
+2026-06-29T16:41:41.8237237Z Temporarily overriding HOME='/home/runner/work/_temp/18f77759-9fc6-405c-9081-27e0d2f5eb17' before making global git config changes
+2026-06-29T16:41:41.8238818Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-29T16:41:41.8260608Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-06-29T16:41:41.8344703Z Removing SSH command configuration
+2026-06-29T16:41:41.8399155Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-29T16:41:41.8432519Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-29T16:41:41.8823146Z Removing HTTP extra header
+2026-06-29T16:41:41.8824274Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-29T16:41:41.8840464Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-29T16:41:41.9258980Z Removing includeIf entries pointing to credentials config files
+2026-06-29T16:41:41.9266935Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-29T16:41:41.9305047Z includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-06-29T16:41:41.9308129Z includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-06-29T16:41:41.9309266Z includeif.gitdir:/github/workspace/.git.path
+2026-06-29T16:41:41.9310163Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-29T16:41:41.9318098Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-06-29T16:41:41.9352788Z /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9369346Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9428196Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-06-29T16:41:41.9450684Z /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9471470Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9559744Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-29T16:41:41.9599889Z /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9604779Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9641844Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-29T16:41:41.9659103Z /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9665057Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config
+2026-06-29T16:41:41.9714272Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-29T16:41:41.9962977Z Removing credentials config '/home/runner/work/_temp/git-credentials-1263afb6-5b7e-4fe0-b60b-27c5e9adc46d.config'
+2026-06-29T16:41:42.0145186Z Cleaning up orphan processes
+2026-06-29T16:41:42.0763653Z Terminate orphan process: pid (2848) (java)
+2026-06-29T16:41:42.0787778Z Terminate orphan process: pid (3031) (java)
+2026-06-29T16:41:42.0856241Z Terminate orphan process: pid (4809) (java)
+2026-06-29T16:41:42.0892674Z Terminate orphan process: pid (5262) (java)

@@ -44,6 +44,9 @@
 | **041** | 2026-08-22 | Commit Tasks | Land `docs/TASKS.md` burndown and session record 040 in two commits and push to main | [041-2026-08-22-commit-tasks.md](file:///home/shree/blastradius/docs/session/041-2026-08-22-commit-tasks.md) |
 | **042** | 2026-08-22 | Log Payload Measurement | Measure empirical bytes-per-log from 21 captures, diagnose 4 HTTP 410 items, and evaluate ASSUMED_LOG_MB | [042-2026-08-22-log-payload-measurement.md](file:///home/shree/blastradius/docs/session/042-2026-08-22-log-payload-measurement.md) |
 | **043** | 2026-08-22 | Measured Log Size | Replace ASSUMED_LOG_MB with measured constants and fix run-vs-job unit conversion in `analysis/expiry_cliff.py` | [043-2026-08-22-measured-log-size.md](file:///home/shree/blastradius/docs/session/043-2026-08-22-measured-log-size.md) |
+| **044** | 2026-08-22 | Commit Measured Sizes | Land measured log-size constants and session records 041, 042, 043 in two commits | [044-2026-08-22-commit-measured-sizes.md](file:///home/shree/blastradius/docs/session/044-2026-08-22-commit-measured-sizes.md) |
+| **045** | 2026-08-23 | Log Yield | Implement `analysis/log_yield.py` log yield & test failure classifier, measure 6.38 GB corpus, and commit deliverable | [045-2026-08-23-log-yield.md](file:///home/shree/blastradius/docs/session/045-2026-08-23-log-yield.md) |
+| **046** | 2026-08-25 | T1.1a | Build 40-log fixture corpus with hand-labelled ground truth and verify anomaly hypotheses | [046-2026-08-25-t11a-fixture-corpus.md](file:///home/shree/blastradius/docs/session/046-2026-08-25-t11a-fixture-corpus.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 

@@ -1,0 +1,1096 @@
+﻿2026-07-08T17:40:38.1202581Z Current runner version: '2.335.1'
+2026-07-08T17:40:38.1227790Z ##[group]Runner Image Provisioner
+2026-07-08T17:40:38.1228623Z Hosted Compute Agent
+2026-07-08T17:40:38.1229274Z Version: 20260624.560
+2026-07-08T17:40:38.1229915Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-08T17:40:38.1230621Z Build Date: 2026-06-24T18:26:47Z
+2026-07-08T17:40:38.1231607Z Worker ID: {a9dc93a8-17fa-4f2d-9ee2-ee791ad46d4e}
+2026-07-08T17:40:38.1232338Z Azure Region: westus
+2026-07-08T17:40:38.1232875Z ##[endgroup]
+2026-07-08T17:40:38.1234372Z ##[group]Operating System
+2026-07-08T17:40:38.1234985Z Ubuntu
+2026-07-08T17:40:38.1235571Z 24.04.4
+2026-07-08T17:40:38.1236080Z LTS
+2026-07-08T17:40:38.1236574Z ##[endgroup]
+2026-07-08T17:40:38.1237166Z ##[group]Runner Image
+2026-07-08T17:40:38.1237744Z Image: ubuntu-24.04
+2026-07-08T17:40:38.1238278Z Version: 20260705.232.1
+2026-07-08T17:40:38.1239644Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260705.232/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-08T17:40:38.1241436Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260705.232
+2026-07-08T17:40:38.1242406Z ##[endgroup]
+2026-07-08T17:40:38.1243504Z ##[group]GITHUB_TOKEN Permissions
+2026-07-08T17:40:38.1245340Z Contents: read
+2026-07-08T17:40:38.1245930Z Metadata: read
+2026-07-08T17:40:38.1246546Z ##[endgroup]
+2026-07-08T17:40:38.1248991Z Secret source: None
+2026-07-08T17:40:38.1249862Z Prepare workflow directory
+2026-07-08T17:40:38.1583222Z Prepare all required actions
+2026-07-08T17:40:38.1620556Z Getting action download info
+2026-07-08T17:40:38.5947712Z Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-08T17:40:38.6766550Z Download action repository 'actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287' (SHA:ad2b38190b15e4d6bdf0c97fb4fca8412226d287)
+2026-07-08T17:40:39.2137549Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-07-08T17:40:39.3939879Z Complete job name: JDK 21 ubuntu
+2026-07-08T17:40:39.4655713Z ##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+2026-07-08T17:40:39.4656834Z with:
+2026-07-08T17:40:39.4657309Z   repository: apple/servicetalk
+2026-07-08T17:40:39.4661719Z   token: ***
+2026-07-08T17:40:39.4662195Z   ssh-strict: true
+2026-07-08T17:40:39.4662655Z   ssh-user: git
+2026-07-08T17:40:39.4663130Z   persist-credentials: true
+2026-07-08T17:40:39.4663648Z   clean: true
+2026-07-08T17:40:39.4664113Z   sparse-checkout-cone-mode: true
+2026-07-08T17:40:39.4664660Z   fetch-depth: 1
+2026-07-08T17:40:39.4665172Z   fetch-tags: false
+2026-07-08T17:40:39.4665648Z   show-progress: true
+2026-07-08T17:40:39.4666141Z   lfs: false
+2026-07-08T17:40:39.4666583Z   submodules: false
+2026-07-08T17:40:39.4667064Z   set-safe-directory: true
+2026-07-08T17:40:39.4667591Z   allow-unsafe-pr-checkout: false
+2026-07-08T17:40:39.4668452Z ##[endgroup]
+2026-07-08T17:40:39.5671047Z Syncing repository: apple/servicetalk
+2026-07-08T17:40:39.5673590Z ##[group]Getting Git version info
+2026-07-08T17:40:39.5674673Z Working directory is '/home/runner/work/servicetalk/servicetalk'
+2026-07-08T17:40:39.5676077Z [command]/usr/bin/git version
+2026-07-08T17:40:39.5744450Z git version 2.54.0
+2026-07-08T17:40:39.5766021Z ##[endgroup]
+2026-07-08T17:40:39.5777001Z Temporarily overriding HOME='/home/runner/work/_temp/0b621362-29e8-4a27-bc4d-15cd5de9e7aa' before making global git config changes
+2026-07-08T17:40:39.5780984Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-08T17:40:39.5784407Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/servicetalk/servicetalk
+2026-07-08T17:40:39.5825948Z Deleting the contents of '/home/runner/work/servicetalk/servicetalk'
+2026-07-08T17:40:39.5833255Z ##[group]Determining repository object format
+2026-07-08T17:40:39.5835285Z ##[endgroup]
+2026-07-08T17:40:39.5837223Z ##[group]Initializing the repository
+2026-07-08T17:40:39.5839619Z [command]/usr/bin/git init /home/runner/work/servicetalk/servicetalk
+2026-07-08T17:40:39.5940885Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-08T17:40:39.5942562Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-08T17:40:39.5943839Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-08T17:40:39.5944729Z hint: call:
+2026-07-08T17:40:39.5945675Z hint:
+2026-07-08T17:40:39.5946946Z hint: 	git config --global init.defaultBranch <name>
+2026-07-08T17:40:39.5948574Z hint:
+2026-07-08T17:40:39.5950144Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-08T17:40:39.5952695Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-08T17:40:39.5954535Z hint:
+2026-07-08T17:40:39.5955530Z hint: 	git branch -m <name>
+2026-07-08T17:40:39.5956745Z hint:
+2026-07-08T17:40:39.5958575Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-08T17:40:39.5960934Z Initialized empty Git repository in /home/runner/work/servicetalk/servicetalk/.git/
+2026-07-08T17:40:39.5966220Z [command]/usr/bin/git remote add origin https://github.com/apple/servicetalk
+2026-07-08T17:40:39.6003293Z ##[endgroup]
+2026-07-08T17:40:39.6005894Z ##[group]Disabling automatic garbage collection
+2026-07-08T17:40:39.6008041Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-08T17:40:39.6034846Z ##[endgroup]
+2026-07-08T17:40:39.6036020Z ##[group]Setting up auth
+2026-07-08T17:40:39.6036739Z Removing SSH command configuration
+2026-07-08T17:40:39.6039948Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-08T17:40:39.6071163Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-08T17:40:39.6387318Z Removing HTTP extra header
+2026-07-08T17:40:39.6392174Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-08T17:40:39.6422212Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-08T17:40:39.6630622Z Removing includeIf entries pointing to credentials config files
+2026-07-08T17:40:39.6634735Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-08T17:40:39.6662849Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-08T17:40:39.6883383Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-08T17:40:39.6919953Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:40:39.6947898Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:40:39.6979588Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:40:39.7009545Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:40:39.7038869Z ##[endgroup]
+2026-07-08T17:40:39.7040784Z ##[group]Fetching the repository
+2026-07-08T17:40:39.7046858Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +76dc1c1cfc374c47a42b2c98aca5e36eb357cf37:refs/remotes/pull/3552/merge
+2026-07-08T17:40:40.5007623Z From https://github.com/apple/servicetalk
+2026-07-08T17:40:40.5009225Z  * [new ref]         76dc1c1cfc374c47a42b2c98aca5e36eb357cf37 -> pull/3552/merge
+2026-07-08T17:40:40.5042122Z ##[endgroup]
+2026-07-08T17:40:40.5044551Z ##[group]Determining the checkout info
+2026-07-08T17:40:40.5047151Z ##[endgroup]
+2026-07-08T17:40:40.5048857Z [command]/usr/bin/git sparse-checkout disable
+2026-07-08T17:40:40.5092464Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-08T17:40:40.5119801Z ##[group]Checking out the ref
+2026-07-08T17:40:40.5122311Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/3552/merge
+2026-07-08T17:40:40.7644667Z Note: switching to 'refs/remotes/pull/3552/merge'.
+2026-07-08T17:40:40.7645711Z 
+2026-07-08T17:40:40.7646494Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-08T17:40:40.7648538Z changes and commit them, and you can discard any commits you make in this
+2026-07-08T17:40:40.7650800Z state without impacting any branches by switching back to a branch.
+2026-07-08T17:40:40.7652446Z 
+2026-07-08T17:40:40.7653401Z If you want to create a new branch to retain commits you create, you may
+2026-07-08T17:40:40.7656354Z do so (now or later) by using -c with the switch command. Example:
+2026-07-08T17:40:40.7658228Z 
+2026-07-08T17:40:40.7658982Z   git switch -c <new-branch-name>
+2026-07-08T17:40:40.7660272Z 
+2026-07-08T17:40:40.7661070Z Or undo this operation with:
+2026-07-08T17:40:40.7662550Z 
+2026-07-08T17:40:40.7663269Z   git switch -
+2026-07-08T17:40:40.7664257Z 
+2026-07-08T17:40:40.7665854Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-08T17:40:40.7668175Z 
+2026-07-08T17:40:40.7670665Z HEAD is now at 76dc1c1 Merge 403d4c3e0f73e736fb8c171f7155fb44c6b9b37d into 75b054021562ebd03bfd71e4779ccd78d2ec8df1
+2026-07-08T17:40:40.7677208Z ##[endgroup]
+2026-07-08T17:40:40.7707495Z [command]/usr/bin/git log -1 --format=%H
+2026-07-08T17:40:40.7730986Z 76dc1c1cfc374c47a42b2c98aca5e36eb357cf37
+2026-07-08T17:40:40.8140134Z ##[group]Run actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287
+2026-07-08T17:40:40.8141953Z with:
+2026-07-08T17:40:40.8142777Z   java-version: 21
+17
+
+2026-07-08T17:40:40.8143733Z   distribution: zulu
+2026-07-08T17:40:40.8144658Z   cache: gradle
+2026-07-08T17:40:40.8145534Z   java-package: jdk
+2026-07-08T17:40:40.8146457Z   check-latest: false
+2026-07-08T17:40:40.8147387Z   server-id: github
+2026-07-08T17:40:40.8148333Z   server-username: GITHUB_ACTOR
+2026-07-08T17:40:40.8149450Z   server-password: GITHUB_TOKEN
+2026-07-08T17:40:40.8150550Z   overwrite-settings: true
+2026-07-08T17:40:40.8151698Z   job-status: success
+2026-07-08T17:40:40.8162345Z   token: ***
+2026-07-08T17:40:40.8163200Z ##[endgroup]
+2026-07-08T17:40:40.9668045Z ##[group]Installed distributions
+2026-07-08T17:40:40.9698948Z Trying to resolve the latest version from remote
+2026-07-08T17:40:41.0439347Z Resolved latest version as 21.0.11+10
+2026-07-08T17:40:41.0441942Z Trying to download...
+2026-07-08T17:40:41.0445133Z Downloading Java 21.0.11+10 (Zulu) from https://cdn.azul.com/zulu/bin/zulu21.50.19-ca-crac-jdk21.0.11-linux_x64.tar.gz ...
+2026-07-08T17:40:43.8977145Z Extracting Java archive...
+2026-07-08T17:40:43.9095153Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/2ebde747-c1ff-425e-857b-4cbe17059713 -f /home/runner/work/_temp/facc216d-151f-494c-8a76-8bb6b487dbdf
+2026-07-08T17:40:46.7460078Z Java 21.0.11+10 was downloaded
+2026-07-08T17:40:46.7460514Z Setting Java 21.0.11+10 as the default
+2026-07-08T17:40:46.7473401Z Creating toolchains.xml for JDK version 21 from zulu
+2026-07-08T17:40:46.7562816Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-08T17:40:46.7563521Z 
+2026-07-08T17:40:46.7563781Z Java configuration:
+2026-07-08T17:40:46.7564440Z   Distribution: zulu
+2026-07-08T17:40:46.7565085Z   Version: 21.0.11+10
+2026-07-08T17:40:46.7565870Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:40:46.7567034Z 
+2026-07-08T17:40:46.7591879Z Trying to resolve the latest version from remote
+2026-07-08T17:40:46.7986545Z Resolved latest version as 17.0.19+10
+2026-07-08T17:40:46.7987084Z Trying to download...
+2026-07-08T17:40:46.7987971Z Downloading Java 17.0.19+10 (Zulu) from https://cdn.azul.com/zulu/bin/zulu17.66.19-ca-crac-jdk17.0.19-linux_x64.tar.gz ...
+2026-07-08T17:40:49.7354967Z Extracting Java archive...
+2026-07-08T17:40:49.7483691Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/da3a8f84-d525-4e2f-870a-f2b02666ba8e -f /home/runner/work/_temp/c9f35dea-6cb5-4dcb-91a5-e6827bebb0d2
+2026-07-08T17:40:52.4383329Z Java 17.0.19+10 was downloaded
+2026-07-08T17:40:52.4383914Z Setting Java 17.0.19+10 as the default
+2026-07-08T17:40:52.4392982Z Creating toolchains.xml for JDK version 17 from zulu
+2026-07-08T17:40:52.4457299Z Overwriting existing file /home/runner/.m2/toolchains.xml
+2026-07-08T17:40:52.4458405Z 
+2026-07-08T17:40:52.4458591Z Java configuration:
+2026-07-08T17:40:52.4459043Z   Distribution: zulu
+2026-07-08T17:40:52.4459455Z   Version: 17.0.19+10
+2026-07-08T17:40:52.4459969Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:40:52.4460411Z 
+2026-07-08T17:40:52.4461442Z ##[endgroup]
+2026-07-08T17:40:52.4478099Z Creating settings.xml with server-id: github
+2026-07-08T17:40:52.4478707Z Writing to /home/runner/.m2/settings.xml
+2026-07-08T17:40:53.4355128Z Cache hit for: setup-java-Linux-x64-gradle-3062c3865962ae1196f581b83fff6153314e366ed736e6ecae6005ae6ef350e5
+2026-07-08T17:40:54.7400691Z Received 0 of 323453135 (0.0%), 0.0 MBs/sec
+2026-07-08T17:40:55.7445527Z Received 104857600 of 323453135 (32.4%), 49.9 MBs/sec
+2026-07-08T17:40:56.7432707Z Received 255852544 of 323453135 (79.1%), 81.2 MBs/sec
+2026-07-08T17:40:57.4209646Z Received 323453135 of 323453135 (100.0%), 83.8 MBs/sec
+2026-07-08T17:40:57.4210428Z Cache Size: ~308 MB (323453135 B)
+2026-07-08T17:40:57.4379980Z [command]/usr/bin/tar -xf /home/runner/work/_temp/6ef71105-15c7-4504-8f22-eb2edadd47a2/cache.tzst -P -C /home/runner/work/servicetalk/servicetalk --use-compress-program unzstd
+2026-07-08T17:41:00.6291683Z Cache restored successfully
+2026-07-08T17:41:00.6436103Z Cache restored from key: setup-java-Linux-x64-gradle-3062c3865962ae1196f581b83fff6153314e366ed736e6ecae6005ae6ef350e5
+2026-07-08T17:41:00.6638212Z ##[group]Run echo "Gradle will run on JDK 17:"
+2026-07-08T17:41:00.6638631Z [36;1mecho "Gradle will run on JDK 17:"[0m
+2026-07-08T17:41:00.6638931Z [36;1mjava -version[0m
+2026-07-08T17:41:00.6639213Z [36;1mecho "Tests will run on JDK 21:"[0m
+2026-07-08T17:41:00.6639518Z [36;1mif [ -d "$JAVA_HOME_21_X64" ]; then[0m
+2026-07-08T17:41:00.6639829Z [36;1m  "$JAVA_HOME_21_X64/bin/java" -version[0m
+2026-07-08T17:41:00.6640103Z [36;1mfi[0m
+2026-07-08T17:41:00.6796128Z shell: /usr/bin/bash -e {0}
+2026-07-08T17:41:00.6796395Z env:
+2026-07-08T17:41:00.6796675Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.6797124Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:41:00.6797595Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.6797946Z ##[endgroup]
+2026-07-08T17:41:00.6871931Z Gradle will run on JDK 17:
+2026-07-08T17:41:00.7092045Z openjdk version "17.0.19" 2026-04-21 LTS
+2026-07-08T17:41:00.7092901Z OpenJDK Runtime Environment Zulu17.66+19-CRaC-CA (build 17.0.19+10-LTS)
+2026-07-08T17:41:00.7093915Z OpenJDK 64-Bit Server VM Zulu17.66+19-CRaC-CA (build 17.0.19+10-LTS, mixed mode, sharing)
+2026-07-08T17:41:00.7129636Z Tests will run on JDK 21:
+2026-07-08T17:41:00.7367819Z openjdk version "21.0.11" 2026-04-21 LTS
+2026-07-08T17:41:00.7368846Z OpenJDK Runtime Environment Zulu21.50+19-CRaC-CA (build 21.0.11+10-LTS)
+2026-07-08T17:41:00.7370307Z OpenJDK 64-Bit Server VM Zulu21.50+19-CRaC-CA (build 21.0.11+10-LTS, mixed mode, sharing)
+2026-07-08T17:41:00.7436094Z ##[group]Run echo "TEST_JAVA_VERSION=21" >> "$GITHUB_ENV"
+2026-07-08T17:41:00.7436553Z [36;1mecho "TEST_JAVA_VERSION=21" >> "$GITHUB_ENV"[0m
+2026-07-08T17:41:00.7470313Z shell: /usr/bin/bash -e {0}
+2026-07-08T17:41:00.7470579Z env:
+2026-07-08T17:41:00.7470861Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7471537Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:41:00.7471977Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7472338Z ##[endgroup]
+2026-07-08T17:41:00.7556447Z ##[group]Run chmod +x gradlew
+2026-07-08T17:41:00.7556743Z [36;1mchmod +x gradlew[0m
+2026-07-08T17:41:00.7587071Z shell: /usr/bin/bash -e {0}
+2026-07-08T17:41:00.7587326Z env:
+2026-07-08T17:41:00.7587610Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7588039Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:41:00.7588465Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7588799Z   TEST_JAVA_VERSION: 21
+2026-07-08T17:41:00.7589027Z ##[endgroup]
+2026-07-08T17:41:00.7679355Z ##[group]Run ./gradlew --parallel clean
+2026-07-08T17:41:00.7679698Z [36;1m./gradlew --parallel clean[0m
+2026-07-08T17:41:00.7710970Z shell: /usr/bin/bash -e {0}
+2026-07-08T17:41:00.7711486Z env:
+2026-07-08T17:41:00.7711782Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7712216Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:41:00.7712649Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:00.7713003Z   TEST_JAVA_VERSION: 21
+2026-07-08T17:41:00.7713218Z ##[endgroup]
+2026-07-08T17:41:01.3514877Z 
+2026-07-08T17:41:01.3538355Z Welcome to Gradle 9.5.1!
+2026-07-08T17:41:01.3538986Z 
+2026-07-08T17:41:01.3539431Z Here are the highlights of this release:
+2026-07-08T17:41:01.3540276Z  - Task provenance in reports and failure messages
+2026-07-08T17:41:01.3541525Z  - Type-safe accessors for precompiled Kotlin Settings plugins
+2026-07-08T17:41:01.3542266Z 
+2026-07-08T17:41:01.3542940Z For more details see https://docs.gradle.org/9.5.1/release-notes.html
+2026-07-08T17:41:01.3543708Z 
+2026-07-08T17:41:01.4503881Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-07-08T17:41:02.8508058Z Configuration on demand is an incubating feature.
+2026-07-08T17:41:06.3532551Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-08T17:41:06.7517279Z > Task :buildSrc:compileGroovy FROM-CACHE
+2026-07-08T17:41:06.7551819Z > Task :buildSrc:pluginDescriptors
+2026-07-08T17:41:06.7552579Z > Task :buildSrc:processResources
+2026-07-08T17:41:06.7581922Z > Task :buildSrc:classes
+2026-07-08T17:41:06.9503410Z > Task :buildSrc:jar
+2026-07-08T17:41:08.4504564Z 
+2026-07-08T17:41:08.4505321Z > Configure project :
+2026-07-08T17:41:08.4506481Z This machine doesn't have any pre-configured repositories, will use: MavenRepo, Gradle Central Plugin Repository
+2026-07-08T17:41:16.2534968Z 
+2026-07-08T17:41:16.2544491Z > Task :servicetalk-annotations:clean UP-TO-DATE
+2026-07-08T17:41:16.2545329Z > Task :clean UP-TO-DATE
+2026-07-08T17:41:16.2546102Z > Task :servicetalk-buffer-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2566320Z > Task :servicetalk-benchmarks:clean UP-TO-DATE
+2026-07-08T17:41:16.2567188Z > Task :servicetalk-capacity-limiter-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2611893Z > Task :servicetalk-circuit-breaker-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2675373Z > Task :servicetalk-circuit-breaker-resilience4j:clean UP-TO-DATE
+2026-07-08T17:41:16.2724031Z > Task :servicetalk-bom:clean UP-TO-DATE
+2026-07-08T17:41:16.2745023Z > Task :servicetalk-client-api-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2752250Z > Task :servicetalk-concurrent-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2778675Z > Task :servicetalk-concurrent-api-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2781133Z > Task :servicetalk-concurrent:clean UP-TO-DATE
+2026-07-08T17:41:16.2782536Z > Task :servicetalk-concurrent-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2783528Z > Task :servicetalk-buffer-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.2784913Z > Task :servicetalk-client-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2785876Z > Task :servicetalk-concurrent-reactivestreams:clean UP-TO-DATE
+2026-07-08T17:41:16.2804556Z > Task :servicetalk-concurrent-test-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2808424Z > Task :servicetalk-concurrent-api-test:clean UP-TO-DATE
+2026-07-08T17:41:16.2809525Z > Task :servicetalk-data-jackson-jersey:clean UP-TO-DATE
+2026-07-08T17:41:16.2832183Z > Task :servicetalk-data-jackson-jersey3-jakarta10:clean UP-TO-DATE
+2026-07-08T17:41:16.2834379Z > Task :servicetalk-concurrent-jdkflow:clean UP-TO-DATE
+2026-07-08T17:41:16.2835027Z > Task :servicetalk-data-jackson:clean UP-TO-DATE
+2026-07-08T17:41:16.2835578Z > Task :servicetalk-context-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2838284Z > Task :servicetalk-data-jackson3:clean UP-TO-DATE
+2026-07-08T17:41:16.2881678Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:clean UP-TO-DATE
+2026-07-08T17:41:16.2882691Z > Task :servicetalk-data-protobuf:clean UP-TO-DATE
+2026-07-08T17:41:16.2884157Z > Task :servicetalk-data-jackson-jersey3-jakarta9:clean UP-TO-DATE
+2026-07-08T17:41:16.2885347Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:clean UP-TO-DATE
+2026-07-08T17:41:16.2888981Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:clean UP-TO-DATE
+2026-07-08T17:41:16.2890081Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:clean UP-TO-DATE
+2026-07-08T17:41:16.2891022Z > Task :servicetalk-dependencies:clean UP-TO-DATE
+2026-07-08T17:41:16.2892103Z > Task :servicetalk-dns-discovery-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.2892967Z > Task :servicetalk-data-protobuf-jersey:clean UP-TO-DATE
+2026-07-08T17:41:16.2893791Z > Task :servicetalk-encoding-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.2894615Z > Task :servicetalk-gradle-plugin-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2895413Z > Task :servicetalk-grpc-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2896194Z > Task :servicetalk-encoding-api-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2897034Z > Task :servicetalk-encoding-api:clean UP-TO-DATE
+2026-07-08T17:41:16.2897798Z > Task :servicetalk-grpc-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.2898562Z > Task :servicetalk-grpc-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.3512423Z > Task :servicetalk-grpc-protobuf:clean UP-TO-DATE
+2026-07-08T17:41:16.3565831Z > Task :servicetalk-grpc-health:clean UP-TO-DATE
+2026-07-08T17:41:16.3646742Z > Task :servicetalk-grpc-utils:clean UP-TO-DATE
+2026-07-08T17:41:16.3647677Z > Task :servicetalk-http-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.3648724Z > Task :servicetalk-http-router-jersey:clean UP-TO-DATE
+2026-07-08T17:41:16.3649744Z > Task :servicetalk-http-router-jersey3-jakarta10:clean UP-TO-DATE
+2026-07-08T17:41:16.3650659Z > Task :servicetalk-http-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3651716Z > Task :servicetalk-grpc-protoc:clean UP-TO-DATE
+2026-07-08T17:41:16.3652732Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3653951Z > Task :servicetalk-http-router-jersey3-jakarta9:clean UP-TO-DATE
+2026-07-08T17:41:16.3655089Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3656172Z > Task :servicetalk-http-router-jersey4-jakarta11:clean UP-TO-DATE
+2026-07-08T17:41:16.3657139Z > Task :servicetalk-http-router-predicate:clean UP-TO-DATE
+2026-07-08T17:41:16.3658153Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3659253Z > Task :servicetalk-http-router-jersey-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3660226Z > Task :servicetalk-http-security-jersey:clean UP-TO-DATE
+2026-07-08T17:41:16.3661430Z > Task :servicetalk-http-security-jersey3-jakarta9:clean UP-TO-DATE
+2026-07-08T17:41:16.3663465Z > Task :servicetalk-http-security-jersey3-jakarta10:clean UP-TO-DATE
+2026-07-08T17:41:16.3665910Z > Task :servicetalk-loadbalancer:clean UP-TO-DATE
+2026-07-08T17:41:16.3666850Z > Task :servicetalk-http-security-jersey4-jakarta11:clean UP-TO-DATE
+2026-07-08T17:41:16.3667778Z > Task :servicetalk-log4j2-mdc:clean UP-TO-DATE
+2026-07-08T17:41:16.3668897Z > Task :servicetalk-log4j2-mdc-utils:clean UP-TO-DATE
+2026-07-08T17:41:16.3669687Z > Task :servicetalk-http-utils:clean UP-TO-DATE
+2026-07-08T17:41:16.3670429Z > Task :servicetalk-logging-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3671150Z > Task :servicetalk-oio-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3672281Z > Task :servicetalk-loadbalancer-experimental-provider:clean UP-TO-DATE
+2026-07-08T17:41:16.3673224Z > Task :servicetalk-oio-api-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3674163Z > Task :servicetalk-opentelemetry-asynccontext:clean UP-TO-DATE
+2026-07-08T17:41:16.3675059Z > Task :servicetalk-opentelemetry-http:clean UP-TO-DATE
+2026-07-08T17:41:16.3675881Z > Task :servicetalk-opentracing-http:clean UP-TO-DATE
+2026-07-08T17:41:16.3676748Z > Task :servicetalk-loadbalancer-experimental:clean UP-TO-DATE
+2026-07-08T17:41:16.3677752Z > Task :servicetalk-logging-slf4j-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3678615Z > Task :servicetalk-opentracing-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3679720Z > Task :servicetalk-opentracing-inmemory-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3680688Z > Task :servicetalk-opentracing-zipkin-publisher:clean UP-TO-DATE
+2026-07-08T17:41:16.3681869Z > Task :servicetalk-opentracing-asynccontext:clean UP-TO-DATE
+2026-07-08T17:41:16.3682727Z > Task :servicetalk-router-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3683532Z > Task :servicetalk-router-utils-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3684378Z > Task :servicetalk-opentracing-inmemory:clean UP-TO-DATE
+2026-07-08T17:41:16.3685208Z > Task :servicetalk-serialization-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3685994Z > Task :servicetalk-serializer-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3686779Z > Task :servicetalk-tcp-netty-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3687604Z > Task :servicetalk-serializer-utils:clean UP-TO-DATE
+2026-07-08T17:41:16.3688398Z > Task :servicetalk-opentracing-log4j2:clean UP-TO-DATE
+2026-07-08T17:41:16.3689174Z > Task :servicetalk-transport-api:clean UP-TO-DATE
+2026-07-08T17:41:16.3689942Z > Task :servicetalk-test-resources:clean UP-TO-DATE
+2026-07-08T17:41:16.3690751Z > Task :servicetalk-traffic-resilience-http:clean UP-TO-DATE
+2026-07-08T17:41:16.3691838Z > Task :servicetalk-transport-netty:clean UP-TO-DATE
+2026-07-08T17:41:16.3692917Z > Task :servicetalk-transport-netty-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3694009Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-compression:clean UP-TO-DATE
+2026-07-08T17:41:16.3695024Z > Task :servicetalk-utils-internal:clean UP-TO-DATE
+2026-07-08T17:41:16.3695978Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-errors:clean UP-TO-DATE
+2026-07-08T17:41:16.3697240Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-deadline:clean UP-TO-DATE
+2026-07-08T17:41:16.3698508Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-debugging:clean UP-TO-DATE
+2026-07-08T17:41:16.3699867Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-execution-strategy:clean UP-TO-DATE
+2026-07-08T17:41:16.3701446Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-health:clean UP-TO-DATE
+2026-07-08T17:41:16.3702726Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-keepalive:clean UP-TO-DATE
+2026-07-08T17:41:16.3703993Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-observer:clean UP-TO-DATE
+2026-07-08T17:41:16.3705399Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-request-response-context:clean UP-TO-DATE
+2026-07-08T17:41:16.3706807Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-routeguide:clean UP-TO-DATE
+2026-07-08T17:41:16.3708060Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-helloworld:clean UP-TO-DATE
+2026-07-08T17:41:16.3709300Z > Task :servicetalk-examples:http:servicetalk-examples-http-debugging:clean UP-TO-DATE
+2026-07-08T17:41:16.3710569Z > Task :servicetalk-examples:http:servicetalk-examples-http-compression:clean UP-TO-DATE
+2026-07-08T17:41:16.3712104Z > Task :servicetalk-examples:http:servicetalk-examples-http-files:clean UP-TO-DATE
+2026-07-08T17:41:16.3713591Z > Task :servicetalk-examples:http:servicetalk-examples-http-helloworld:clean UP-TO-DATE
+2026-07-08T17:41:16.3714847Z > Task :servicetalk-examples:http:servicetalk-examples-http-http2:clean UP-TO-DATE
+2026-07-08T17:41:16.3716150Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-protoc-options:clean UP-TO-DATE
+2026-07-08T17:41:16.3717502Z > Task :servicetalk-examples:http:servicetalk-examples-http-loadbalancer:clean UP-TO-DATE
+2026-07-08T17:41:16.3718803Z > Task :servicetalk-examples:http:servicetalk-examples-http-mutual-tls:clean UP-TO-DATE
+2026-07-08T17:41:16.3720187Z > Task :servicetalk-examples:http:servicetalk-examples-http-observer:clean UP-TO-DATE
+2026-07-08T17:41:16.3721744Z > Task :servicetalk-examples:http:servicetalk-examples-http-opentracing:clean UP-TO-DATE
+2026-07-08T17:41:16.3723024Z > Task :servicetalk-examples:http:servicetalk-examples-http-jaxrs:clean UP-TO-DATE
+2026-07-08T17:41:16.3724448Z > Task :servicetalk-examples:http:servicetalk-examples-http-metadata:clean UP-TO-DATE
+2026-07-08T17:41:16.3725709Z > Task :servicetalk-examples:http:servicetalk-examples-http-retry:clean UP-TO-DATE
+2026-07-08T17:41:16.3726988Z > Task :servicetalk-examples:http:servicetalk-examples-http-service-composition:clean UP-TO-DATE
+2026-07-08T17:41:16.3728355Z > Task :servicetalk-examples:http:servicetalk-examples-http-redirects:clean UP-TO-DATE
+2026-07-08T17:41:16.3729653Z > Task :servicetalk-examples:http:servicetalk-examples-http-timeout:clean UP-TO-DATE
+2026-07-08T17:41:16.3731056Z > Task :servicetalk-examples:http:servicetalk-examples-http-traffic-resilience:clean UP-TO-DATE
+2026-07-08T17:41:16.3732720Z > Task :servicetalk-examples:http:servicetalk-examples-http-opentelemetry-tracing:clean UP-TO-DATE
+2026-07-08T17:41:16.3734044Z > Task :servicetalk-examples:http:servicetalk-examples-http-uds:clean UP-TO-DATE
+2026-07-08T17:41:16.3735440Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-json:clean UP-TO-DATE
+2026-07-08T17:41:16.3737116Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-protobuf:clean UP-TO-DATE
+2026-07-08T17:41:16.3738772Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-bytes:clean UP-TO-DATE
+2026-07-08T17:41:16.3739772Z 
+2026-07-08T17:41:16.3740774Z [Incubating] Problems report is available at: file:///home/runner/work/servicetalk/servicetalk/build/reports/problems/problems-report.html
+2026-07-08T17:41:16.3742336Z 
+2026-07-08T17:41:16.3742975Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-07-08T17:41:16.3743817Z 
+2026-07-08T17:41:16.3744722Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-08T17:41:16.3745820Z 
+2026-07-08T17:41:16.3746871Z For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-08T17:41:16.3748112Z 
+2026-07-08T17:41:16.3748431Z BUILD SUCCESSFUL in 15s
+2026-07-08T17:41:16.3749117Z 127 actionable tasks: 3 executed, 1 from cache, 123 up-to-date
+2026-07-08T17:41:16.4460789Z Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html
+2026-07-08T17:41:16.7722880Z ##[group]Run sudo -E env "PATH=$PATH" bash -c "ulimit -l 65536 && ulimit -a && ./gradlew --no-daemon --parallel test"
+2026-07-08T17:41:16.7723681Z [36;1msudo -E env "PATH=$PATH" bash -c "ulimit -l 65536 && ulimit -a && ./gradlew --no-daemon --parallel test"[0m
+2026-07-08T17:41:16.7754972Z shell: /usr/bin/bash -e {0}
+2026-07-08T17:41:16.7755217Z env:
+2026-07-08T17:41:16.7755485Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:16.7755930Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:41:16.7756356Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:41:16.7756880Z   TEST_JAVA_VERSION: 21
+2026-07-08T17:41:16.7757138Z   JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF-8
+2026-07-08T17:41:16.7757414Z ##[endgroup]
+2026-07-08T17:41:16.7883718Z real-time non-blocking time  (microseconds, -R) unlimited
+2026-07-08T17:41:16.7884389Z core file size              (blocks, -c) 0
+2026-07-08T17:41:16.7884970Z data seg size               (kbytes, -d) unlimited
+2026-07-08T17:41:16.7885541Z scheduling priority                 (-e) 0
+2026-07-08T17:41:16.7886076Z file size                   (blocks, -f) unlimited
+2026-07-08T17:41:16.7886638Z pending signals                     (-i) 63882
+2026-07-08T17:41:16.7887262Z max locked memory           (kbytes, -l) 65536
+2026-07-08T17:41:16.7887839Z max memory size             (kbytes, -m) unlimited
+2026-07-08T17:41:16.7888389Z open files                          (-n) 1024
+2026-07-08T17:41:16.7888918Z pipe size                (512 bytes, -p) 8
+2026-07-08T17:41:16.7889457Z POSIX message queues         (bytes, -q) 819200
+2026-07-08T17:41:16.7890008Z real-time priority                  (-r) 0
+2026-07-08T17:41:16.7890504Z stack size                  (kbytes, -s) 8192
+2026-07-08T17:41:16.7891052Z cpu time                   (seconds, -t) unlimited
+2026-07-08T17:41:16.7891862Z max user processes                  (-u) 63882
+2026-07-08T17:41:16.7892314Z virtual memory              (kbytes, -v) unlimited
+2026-07-08T17:41:16.7892640Z file locks                          (-x) unlimited
+2026-07-08T17:41:16.8818614Z Fetching distribution (retrying 2 times, with an initial back off of 500 ms).
+2026-07-08T17:41:16.8819717Z Downloading https://services.gradle.org/distributions/gradle-9.5.1-all.zip
+2026-07-08T17:41:18.6483186Z ......................10%.......................20%.......................30%.......................40%.......................50%.......................60%.......................70%.......................80%.......................90%.......................100%
+2026-07-08T17:41:22.3267006Z 
+2026-07-08T17:41:22.3268754Z Welcome to Gradle 9.5.1!
+2026-07-08T17:41:22.3269491Z 
+2026-07-08T17:41:22.3270349Z Here are the highlights of this release:
+2026-07-08T17:41:22.3272804Z  - Task provenance in reports and failure messages
+2026-07-08T17:41:22.3282097Z  - Type-safe accessors for precompiled Kotlin Settings plugins
+2026-07-08T17:41:22.3283069Z 
+2026-07-08T17:41:22.3283661Z For more details see https://docs.gradle.org/9.5.1/release-notes.html
+2026-07-08T17:41:22.3284390Z 
+2026-07-08T17:41:22.4286439Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-07-08T17:41:23.3284900Z Daemon will be stopped at the end of the build 
+2026-07-08T17:41:23.6260465Z Configuration on demand is an incubating feature.
+2026-07-08T17:41:27.7293826Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-08T17:41:38.8310548Z > Task :buildSrc:compileGroovy UP-TO-DATE
+2026-07-08T17:41:38.8321865Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-07-08T17:41:38.8374917Z > Task :buildSrc:processResources UP-TO-DATE
+2026-07-08T17:41:38.8442029Z > Task :buildSrc:classes UP-TO-DATE
+2026-07-08T17:41:38.8462150Z > Task :buildSrc:jar UP-TO-DATE
+2026-07-08T17:41:44.1267848Z 
+2026-07-08T17:41:44.1292495Z > Configure project :
+2026-07-08T17:41:44.1294163Z This machine doesn't have any pre-configured repositories, will use: MavenRepo, Gradle Central Plugin Repository
+2026-07-08T17:42:16.9268795Z 
+2026-07-08T17:42:16.9302263Z > Task :servicetalk-buffer-api:processResources NO-SOURCE
+2026-07-08T17:42:16.9322538Z > Task :servicetalk-buffer-netty:processResources NO-SOURCE
+2026-07-08T17:42:16.9362046Z > Task :servicetalk-benchmarks:compileJava NO-SOURCE
+2026-07-08T17:42:16.9384140Z > Task :servicetalk-buffer-api:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:16.9385186Z > Task :servicetalk-buffer-netty:processTestResources NO-SOURCE
+2026-07-08T17:42:16.9386030Z > Task :servicetalk-buffer-api:processTestResources NO-SOURCE
+2026-07-08T17:42:16.9387184Z > Task :servicetalk-benchmarks:processResources NO-SOURCE
+2026-07-08T17:42:16.9387884Z > Task :servicetalk-benchmarks:classes UP-TO-DATE
+2026-07-08T17:42:16.9388609Z > Task :servicetalk-utils-internal:processResources NO-SOURCE
+2026-07-08T17:42:16.9389475Z > Task :servicetalk-capacity-limiter-api:processResources NO-SOURCE
+2026-07-08T17:42:16.9390295Z > Task :servicetalk-benchmarks:compileTestJava NO-SOURCE
+2026-07-08T17:42:16.9391114Z > Task :servicetalk-capacity-limiter-api:processTestResources NO-SOURCE
+2026-07-08T17:42:16.9392242Z > Task :servicetalk-benchmarks:processTestResources NO-SOURCE
+2026-07-08T17:42:16.9393208Z > Task :servicetalk-benchmarks:testClasses UP-TO-DATE
+2026-07-08T17:42:16.9420708Z > Task :servicetalk-concurrent:processResources NO-SOURCE
+2026-07-08T17:42:17.0290763Z > Task :servicetalk-concurrent-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.0322955Z > Task :servicetalk-benchmarks:test NO-SOURCE
+2026-07-08T17:42:17.0367233Z > Task :servicetalk-context-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0382359Z > Task :servicetalk-circuit-breaker-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0405137Z > Task :servicetalk-circuit-breaker-api:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0406350Z > Task :servicetalk-circuit-breaker-resilience4j:processResources NO-SOURCE
+2026-07-08T17:42:17.0407481Z > Task :servicetalk-circuit-breaker-resilience4j:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0408488Z > Task :servicetalk-client-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0409406Z > Task :servicetalk-concurrent-internal:processTestFixturesResources
+2026-07-08T17:42:17.0410364Z > Task :servicetalk-test-resources:processResources
+2026-07-08T17:42:17.0411500Z > Task :servicetalk-client-api:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0412528Z > Task :servicetalk-concurrent-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0413535Z > Task :servicetalk-concurrent-test-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.0414645Z > Task :servicetalk-concurrent-api-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.0415666Z > Task :servicetalk-oio-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0416622Z > Task :servicetalk-transport-api:processResources NO-SOURCE
+2026-07-08T17:42:17.0417649Z > Task :servicetalk-client-api-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.0418658Z > Task :servicetalk-concurrent-api:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.0419713Z > Task :servicetalk-client-api-internal:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0472076Z > Task :servicetalk-concurrent-api:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0474599Z > Task :servicetalk-concurrent-api-internal:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0475668Z > Task :servicetalk-concurrent-internal:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0476588Z > Task :servicetalk-concurrent:processTestResources NO-SOURCE
+2026-07-08T17:42:17.0477462Z > Task :servicetalk-concurrent-api-test:processResources NO-SOURCE
+2026-07-08T17:42:17.0478434Z > Task :servicetalk-concurrent-reactivestreams:processResources NO-SOURCE
+2026-07-08T17:42:17.0479396Z > Task :servicetalk-concurrent-jdkflow:processResources NO-SOURCE
+2026-07-08T17:42:17.0480329Z > Task :servicetalk-concurrent-api-test:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1341890Z > Task :servicetalk-concurrent-reactivestreams:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.1384689Z > Task :servicetalk-concurrent-jdkflow:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1442088Z > Task :servicetalk-serializer-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1472939Z > Task :servicetalk-serializer-utils:processResources NO-SOURCE
+2026-07-08T17:42:17.1531984Z > Task :servicetalk-concurrent-reactivestreams:tck NO-SOURCE
+2026-07-08T17:42:17.1575250Z > Task :servicetalk-concurrent-test-internal:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1592098Z > Task :servicetalk-context-api:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1652039Z > Task :servicetalk-concurrent-reactivestreams:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1701897Z > Task :servicetalk-data-jackson:processResources NO-SOURCE
+2026-07-08T17:42:17.1761981Z > Task :servicetalk-serialization-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1762855Z > Task :servicetalk-data-jackson:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1763609Z > Task :servicetalk-data-jackson-jersey:processResources
+2026-07-08T17:42:17.1764388Z > Task :servicetalk-dns-discovery-netty:processResources NO-SOURCE
+2026-07-08T17:42:17.1765174Z > Task :servicetalk-encoding-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1765873Z > Task :servicetalk-http-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1766648Z > Task :servicetalk-encoding-api-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1767603Z > Task :servicetalk-data-jackson-jersey:processTestResources NO-SOURCE
+2026-07-08T17:42:17.1768357Z > Task :servicetalk-http-netty:processResources NO-SOURCE
+2026-07-08T17:42:17.1769235Z > Task :servicetalk-http-router-jersey-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1822006Z > Task :servicetalk-http-netty:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.1876681Z > Task :servicetalk-http-router-jersey:processResources
+2026-07-08T17:42:17.1901996Z > Task :servicetalk-http-router-predicate:processResources NO-SOURCE
+2026-07-08T17:42:17.1902776Z > Task :servicetalk-http-utils:processResources NO-SOURCE
+2026-07-08T17:42:17.1903565Z > Task :servicetalk-http-router-jersey:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.1904324Z > Task :servicetalk-logging-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1905036Z > Task :servicetalk-logging-slf4j-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1905769Z > Task :servicetalk-loadbalancer:processResources NO-SOURCE
+2026-07-08T17:42:17.1906481Z > Task :servicetalk-router-api:processResources NO-SOURCE
+2026-07-08T17:42:17.1907250Z > Task :servicetalk-tcp-netty-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1908135Z > Task :servicetalk-oio-api-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1908998Z > Task :servicetalk-data-jackson-jersey3-jakarta10:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.1909833Z > Task :servicetalk-router-utils-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1910648Z > Task :servicetalk-transport-netty-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.1911792Z > Task :servicetalk-transport-netty-internal:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.1912782Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.1913695Z > Task :servicetalk-http-router-jersey3-jakarta10:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.2307120Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:copySourcesForJersey3
+2026-07-08T17:42:17.2308282Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.2342388Z > Task :servicetalk-data-jackson-jersey3-jakarta9:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.3260321Z > Task :servicetalk-data-jackson-jersey3-jakarta10:copySourcesForJersey3
+2026-07-08T17:42:17.3302279Z > Task :servicetalk-data-jackson-jersey3-jakarta10:processResources
+2026-07-08T17:42:17.3322500Z > Task :servicetalk-data-jackson-jersey3-jakarta10:processTestResources NO-SOURCE
+2026-07-08T17:42:17.3362391Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.3363891Z > Task :servicetalk-data-jackson-jersey3-jakarta9:copySourcesForJersey3
+2026-07-08T17:42:17.3392066Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:copySourcesForJersey3
+2026-07-08T17:42:17.3422085Z > Task :servicetalk-http-router-jersey3-jakarta9:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.3451953Z > Task :servicetalk-data-jackson-jersey3-jakarta9:processResources
+2026-07-08T17:42:17.3453210Z > Task :servicetalk-data-jackson-jersey3-jakarta9:processTestResources NO-SOURCE
+2026-07-08T17:42:17.3482168Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.3511808Z > Task :servicetalk-data-jackson3:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.6292536Z > Task :servicetalk-http-router-jersey3-jakarta10:copySourcesForJersey3
+2026-07-08T17:42:17.6325581Z > Task :servicetalk-http-router-jersey3-jakarta10:processResources
+2026-07-08T17:42:17.6352149Z > Task :servicetalk-http-router-jersey3-jakarta10:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.6353223Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.7272636Z > Task :servicetalk-http-router-jersey3-jakarta9:copySourcesForJersey3
+2026-07-08T17:42:17.7322308Z > Task :servicetalk-http-router-jersey3-jakarta9:processResources
+2026-07-08T17:42:17.7353722Z > Task :servicetalk-http-router-jersey3-jakarta9:processTestFixturesResources NO-SOURCE
+2026-07-08T17:42:17.7392351Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.7412148Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:copySourcesForJersey4
+2026-07-08T17:42:17.7474201Z > Task :servicetalk-http-router-jersey4-jakarta11:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.7531878Z > Task :servicetalk-data-jackson3:copySourcesForJackson3
+2026-07-08T17:42:17.7562086Z > Task :servicetalk-data-jackson3:processResources NO-SOURCE
+2026-07-08T17:42:17.7582192Z > Task :servicetalk-data-jackson3:processTestResources NO-SOURCE
+2026-07-08T17:42:17.7652235Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:processResources NO-SOURCE
+2026-07-08T17:42:17.7706206Z > Task :servicetalk-data-protobuf:protobufDummy UP-TO-DATE
+2026-07-08T17:42:17.7761910Z > Task :servicetalk-data-protobuf:extractProto
+2026-07-08T17:42:17.7851968Z > Task :servicetalk-data-protobuf:processResources NO-SOURCE
+2026-07-08T17:42:17.7891911Z > Task :servicetalk-data-protobuf:extractTestProto
+2026-07-08T17:42:17.7941999Z > Task :servicetalk-data-protobuf:processTestResources
+2026-07-08T17:42:17.7971975Z > Task :servicetalk-data-protobuf-jersey:protobufDummy UP-TO-DATE
+2026-07-08T17:42:17.8295925Z > Task :servicetalk-data-protobuf-jersey:extractProto
+2026-07-08T17:42:17.8321989Z > Task :servicetalk-data-protobuf-jersey:processResources
+2026-07-08T17:42:17.8371787Z > Task :servicetalk-data-protobuf-jersey:extractTestProto
+2026-07-08T17:42:17.8381773Z > Task :servicetalk-data-protobuf-jersey:processTestResources
+2026-07-08T17:42:17.8382641Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:cleanSources UP-TO-DATE
+2026-07-08T17:42:17.9302552Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:copySourcesForJersey3
+2026-07-08T17:42:17.9392278Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:protobufDummy UP-TO-DATE
+2026-07-08T17:42:18.0282859Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:extractProto
+2026-07-08T17:42:18.0289022Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:processResources
+2026-07-08T17:42:18.0314790Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:extractTestProto
+2026-07-08T17:42:18.0352066Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:processTestResources
+2026-07-08T17:42:18.0382006Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:cleanSources UP-TO-DATE
+2026-07-08T17:42:18.0413644Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:copySourcesForJersey4
+2026-07-08T17:42:18.0455174Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:processResources
+2026-07-08T17:42:18.0508753Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:processTestResources NO-SOURCE
+2026-07-08T17:42:18.0522129Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:cleanSources UP-TO-DATE
+2026-07-08T17:42:18.0583475Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:copySourcesForJersey3
+2026-07-08T17:42:18.0629066Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:protobufDummy UP-TO-DATE
+2026-07-08T17:42:18.1272455Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:extractProto
+2026-07-08T17:42:18.1342204Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:processResources
+2026-07-08T17:42:18.1385538Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:extractTestProto
+2026-07-08T17:42:18.1410129Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:processTestResources
+2026-07-08T17:42:18.1415380Z > Task :servicetalk-dns-discovery-netty:processTestResources
+2026-07-08T17:42:18.1422105Z > Task :servicetalk-encoding-api:processTestResources NO-SOURCE
+2026-07-08T17:42:18.1423091Z > Task :servicetalk-encoding-api-internal:processTestResources NO-SOURCE
+2026-07-08T17:42:18.1424089Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:copySourcesForJersey4
+2026-07-08T17:42:18.1425133Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:protobufDummy UP-TO-DATE
+2026-07-08T17:42:18.1426081Z > Task :servicetalk-encoding-netty:processResources NO-SOURCE
+2026-07-08T17:42:18.1426943Z > Task :servicetalk-encoding-netty:processTestResources NO-SOURCE
+2026-07-08T17:42:18.1427817Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:extractProto
+2026-07-08T17:42:18.1428682Z > Task :servicetalk-gradle-plugin-internal:compileJava NO-SOURCE
+2026-07-08T17:42:18.1429587Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:processResources
+2026-07-08T17:42:18.1430510Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:extractTestProto
+2026-07-08T17:42:18.1431658Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:processTestResources
+2026-07-08T17:42:18.1432585Z > Task :servicetalk-grpc-api:processResources NO-SOURCE
+2026-07-08T17:42:18.1433349Z > Task :servicetalk-grpc-api:processTestResources NO-SOURCE
+2026-07-08T17:42:18.1434134Z > Task :servicetalk-grpc-internal:processResources NO-SOURCE
+2026-07-08T17:42:18.1434912Z > Task :servicetalk-grpc-health:protobufDummy UP-TO-DATE
+2026-07-08T17:42:18.2312589Z > Task :servicetalk-grpc-protobuf:protobufDummy UP-TO-DATE
+2026-07-08T17:42:18.2342252Z > Task :servicetalk-grpc-protobuf:extractProto
+2026-07-08T17:42:18.2382012Z > Task :servicetalk-grpc-protobuf:processResources NO-SOURCE
+2026-07-08T17:42:18.2395827Z > Task :servicetalk-grpc-health:extractProto
+2026-07-08T17:42:18.2396500Z > Task :servicetalk-grpc-health:processResources NO-SOURCE
+2026-07-08T17:42:18.2397116Z > Task :servicetalk-annotations:compileJava
+2026-07-08T17:42:18.2397754Z > Task :servicetalk-annotations:processResources NO-SOURCE
+2026-07-08T17:42:18.2398377Z > Task :servicetalk-annotations:classes
+2026-07-08T17:42:18.3262552Z > Task :servicetalk-annotations:jar
+2026-07-08T17:42:18.3292010Z > Task :servicetalk-annotations:compileTestJava NO-SOURCE
+2026-07-08T17:42:18.3315058Z > Task :servicetalk-annotations:processTestResources NO-SOURCE
+2026-07-08T17:42:18.3315972Z > Task :servicetalk-annotations:testClasses UP-TO-DATE
+2026-07-08T17:42:18.3316673Z > Task :servicetalk-annotations:test NO-SOURCE
+2026-07-08T17:42:18.4272252Z > Task :servicetalk-grpc-health:unzipGrpcProtos
+2026-07-08T17:42:18.9272451Z > Task :servicetalk-http-router-jersey4-jakarta11:copySourcesForJersey4
+2026-07-08T17:42:19.1281915Z 
+2026-07-08T17:42:19.1343176Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-context-api/src/main/java/io/servicetalk/context/api/ContextMap.java uses unchecked or unsafe operations.
+2026-07-08T17:42:19.1344878Z > Task :servicetalk-context-api:compileJava
+2026-07-08T17:42:19.1371574Z 
+2026-07-08T17:42:19.1401991Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:42:19.1402652Z > Task :servicetalk-context-api:classes
+2026-07-08T17:42:19.1432192Z > Task :servicetalk-context-api:jar
+2026-07-08T17:42:19.3302527Z > Task :servicetalk-circuit-breaker-api:compileJava
+2026-07-08T17:42:19.3331914Z > Task :servicetalk-circuit-breaker-api:classes
+2026-07-08T17:42:19.4271983Z > Task :servicetalk-circuit-breaker-api:jar
+2026-07-08T17:42:19.4350127Z > Task :servicetalk-circuit-breaker-api:compileTestJava NO-SOURCE
+2026-07-08T17:42:19.4386960Z > Task :servicetalk-circuit-breaker-api:testClasses UP-TO-DATE
+2026-07-08T17:42:19.4452085Z > Task :servicetalk-circuit-breaker-api:test NO-SOURCE
+2026-07-08T17:42:19.4494109Z > Task :servicetalk-concurrent:compileJava
+2026-07-08T17:42:19.4541914Z > Task :servicetalk-concurrent:classes
+2026-07-08T17:42:19.5302237Z > Task :servicetalk-concurrent:jar
+2026-07-08T17:42:19.7282527Z > Task :servicetalk-oio-api:compileJava
+2026-07-08T17:42:19.7312086Z > Task :servicetalk-oio-api:classes
+2026-07-08T17:42:19.7341781Z > Task :servicetalk-oio-api:jar
+2026-07-08T17:42:19.7342615Z > Task :servicetalk-concurrent:compileTestJava NO-SOURCE
+2026-07-08T17:42:19.7343456Z > Task :servicetalk-concurrent:testClasses UP-TO-DATE
+2026-07-08T17:42:19.8261152Z > Task :servicetalk-concurrent:test NO-SOURCE
+2026-07-08T17:42:20.2259678Z > Task :servicetalk-buffer-api:compileJava
+2026-07-08T17:42:20.2291960Z > Task :servicetalk-buffer-api:classes
+2026-07-08T17:42:20.2292861Z > Task :servicetalk-buffer-api:jar
+2026-07-08T17:42:20.6277445Z > Task :servicetalk-buffer-api:compileTestFixturesJava
+2026-07-08T17:42:20.6303657Z > Task :servicetalk-buffer-api:testFixturesClasses
+2026-07-08T17:42:20.6325250Z > Task :servicetalk-buffer-api:testFixturesJar
+2026-07-08T17:42:20.7277101Z > Task :servicetalk-circuit-breaker-resilience4j:compileJava
+2026-07-08T17:42:21.9264677Z > Task :servicetalk-utils-internal:compileJava
+2026-07-08T17:42:23.9273212Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-buffer-netty/src/main/java/io/servicetalk/buffer/netty/UnreleasableReadOnlyByteBufferBuf.java uses or overrides a deprecated API.
+2026-07-08T17:42:23.9274725Z 
+2026-07-08T17:42:23.9302056Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:23.9302694Z > Task :servicetalk-buffer-netty:compileJava
+2026-07-08T17:42:24.0258587Z 
+2026-07-08T17:42:24.0259489Z > Task :servicetalk-buffer-netty:classes
+2026-07-08T17:42:24.0281932Z > Task :servicetalk-buffer-netty:jar
+2026-07-08T17:42:24.3279247Z > Task :servicetalk-test-resources:compileJava
+2026-07-08T17:42:26.6260407Z > Task :servicetalk-gradle-plugin-internal:compileGroovy
+2026-07-08T17:42:26.6301974Z > Task :servicetalk-test-resources:classes
+2026-07-08T17:42:26.6302932Z > Task :servicetalk-test-resources:jar
+2026-07-08T17:42:26.6331858Z > Task :servicetalk-utils-internal:classes
+2026-07-08T17:42:26.6361762Z > Task :servicetalk-utils-internal:jar
+2026-07-08T17:42:27.0265938Z > Task :servicetalk-capacity-limiter-api:compileJava
+2026-07-08T17:42:27.0287165Z > Task :servicetalk-capacity-limiter-api:classes
+2026-07-08T17:42:27.1302193Z > Task :servicetalk-capacity-limiter-api:jar
+2026-07-08T17:42:27.7259407Z > Task :servicetalk-concurrent-internal:compileJava
+2026-07-08T17:42:28.0259729Z > Task :servicetalk-concurrent-internal:compileTestFixturesJava
+2026-07-08T17:42:31.4322464Z > Task :servicetalk-context-api:compileTestJava
+2026-07-08T17:42:31.4371898Z > Task :servicetalk-concurrent-internal:classes
+2026-07-08T17:42:31.4502219Z > Task :servicetalk-concurrent-internal:jar
+2026-07-08T17:42:31.4562374Z > Task :servicetalk-concurrent-internal:testFixturesClasses
+2026-07-08T17:42:31.4655808Z > Task :servicetalk-concurrent-internal:testFixturesJar
+2026-07-08T17:42:31.4712308Z > Task :servicetalk-circuit-breaker-resilience4j:classes
+2026-07-08T17:42:31.5277585Z > Task :servicetalk-circuit-breaker-resilience4j:jar
+2026-07-08T17:42:32.3292447Z > Task :servicetalk-circuit-breaker-resilience4j:compileTestJava
+2026-07-08T17:42:32.3368253Z > Task :servicetalk-circuit-breaker-resilience4j:testClasses
+2026-07-08T17:42:32.5290824Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-buffer-netty/src/test/java/io/servicetalk/buffer/netty/BufferAllocatorsTest.java uses or overrides a deprecated API.
+2026-07-08T17:42:32.5292539Z 
+2026-07-08T17:42:32.5311974Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:32.5314874Z > Task :servicetalk-buffer-netty:compileTestJava
+2026-07-08T17:42:33.1271858Z 
+2026-07-08T17:42:33.1302556Z > Task :servicetalk-buffer-api:compileTestJava
+2026-07-08T17:42:33.1304031Z > Task :servicetalk-buffer-api:testClasses
+2026-07-08T17:42:35.7262174Z > Task :servicetalk-buffer-netty:testClasses
+2026-07-08T17:42:35.7281910Z > Task :servicetalk-capacity-limiter-api:compileTestJava
+2026-07-08T17:42:35.7311857Z > Task :servicetalk-capacity-limiter-api:testClasses
+2026-07-08T17:42:38.8329629Z > Task :servicetalk-circuit-breaker-resilience4j:test
+2026-07-08T17:42:40.7262218Z > Task :servicetalk-buffer-api:test
+2026-07-08T17:42:41.3312284Z > Task :servicetalk-concurrent-test-internal:compileJava
+2026-07-08T17:42:41.3342146Z > Task :servicetalk-concurrent-test-internal:classes
+2026-07-08T17:42:41.3372089Z > Task :servicetalk-concurrent-test-internal:jar
+2026-07-08T17:42:43.2282319Z > Task :servicetalk-concurrent-internal:compileTestJava
+2026-07-08T17:42:43.2364238Z > Task :servicetalk-concurrent-internal:testClasses
+2026-07-08T17:42:44.4286502Z > Task :servicetalk-capacity-limiter-api:test
+2026-07-08T17:42:45.6266262Z > Task :servicetalk-concurrent-test-internal:compileTestJava
+2026-07-08T17:42:45.6290529Z > Task :servicetalk-concurrent-test-internal:testClasses
+2026-07-08T17:42:47.7292744Z > Task :servicetalk-buffer-netty:test
+2026-07-08T17:42:47.7342289Z > Task :servicetalk-context-api:testClasses
+2026-07-08T17:42:49.2272387Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:49.2282281Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:49.2282731Z 
+2026-07-08T17:42:49.2320986Z > Task :servicetalk-concurrent-api:compileJava
+2026-07-08T17:42:50.8332802Z 
+2026-07-08T17:42:50.8375441Z > Task :servicetalk-concurrent-api-internal:compileJava
+2026-07-08T17:42:52.6272450Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:52.6272962Z 
+2026-07-08T17:42:52.6335168Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:52.6335839Z > Task :servicetalk-transport-api:compileJava
+2026-07-08T17:42:52.7281768Z 
+2026-07-08T17:42:52.7342276Z > Task :servicetalk-context-api:test
+2026-07-08T17:42:52.7404499Z > Task :servicetalk-concurrent-api:classes
+2026-07-08T17:42:53.0284023Z > Task :servicetalk-concurrent-api:jar
+2026-07-08T17:42:53.0297063Z > Task :servicetalk-concurrent-api-internal:classes
+2026-07-08T17:42:53.1282323Z > Task :servicetalk-concurrent-api-internal:jar
+2026-07-08T17:42:53.1312029Z > Task :servicetalk-transport-api:classes
+2026-07-08T17:42:53.1322136Z > Task :servicetalk-transport-api:jar
+2026-07-08T17:42:53.6282472Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:53.6282956Z 
+2026-07-08T17:42:53.6302344Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:53.6303037Z > Task :servicetalk-client-api:compileJava
+2026-07-08T17:42:53.6370245Z 
+2026-07-08T17:42:53.6401954Z > Task :servicetalk-client-api:classes
+2026-07-08T17:42:53.7284094Z > Task :servicetalk-client-api:jar
+2026-07-08T17:42:53.7299282Z > Task :servicetalk-concurrent-internal:test
+2026-07-08T17:42:54.1362550Z > Task :servicetalk-concurrent-api:compileTestFixturesJava
+2026-07-08T17:42:54.1426156Z > Task :servicetalk-concurrent-api:testFixturesClasses
+2026-07-08T17:42:54.1451944Z > Task :servicetalk-concurrent-api:testFixturesJar
+2026-07-08T17:42:54.3261432Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:54.3261940Z 
+2026-07-08T17:42:54.3262283Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:54.3323151Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-client-api-internal/src/main/java/io/servicetalk/client/api/internal/partition/PowerSetPartitionMap.java uses unchecked or unsafe operations.
+2026-07-08T17:42:54.3325321Z > Task :servicetalk-client-api-internal:compileJava
+2026-07-08T17:42:54.3372100Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:42:54.3372534Z 
+2026-07-08T17:42:54.3441878Z > Task :servicetalk-client-api-internal:classes
+2026-07-08T17:42:54.3503113Z > Task :servicetalk-client-api-internal:jar
+2026-07-08T17:42:54.9288156Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:54.9392255Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:54.9392703Z 
+2026-07-08T17:42:54.9482832Z > Task :servicetalk-client-api:compileTestJava
+2026-07-08T17:42:54.9581626Z 
+2026-07-08T17:42:54.9622005Z > Task :servicetalk-client-api:testClasses
+2026-07-08T17:42:55.0262385Z > Task :servicetalk-concurrent-test-internal:test
+2026-07-08T17:42:56.2292342Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:42:56.2292823Z 
+2026-07-08T17:42:56.2322482Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:42:56.2323209Z > Task :servicetalk-client-api-internal:compileTestJava
+2026-07-08T17:42:56.2397012Z 
+2026-07-08T17:42:56.2452326Z > Task :servicetalk-client-api-internal:testClasses
+2026-07-08T17:43:00.3298021Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-concurrent-api-internal/src/test/java/io/servicetalk/concurrent/api/internal/AbstractOffloadingTest.java uses unchecked or unsafe operations.
+2026-07-08T17:43:00.3299631Z 
+2026-07-08T17:43:00.3360809Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:00.3361851Z > Task :servicetalk-concurrent-api-internal:compileTestJava
+2026-07-08T17:43:00.5258999Z 
+2026-07-08T17:43:00.5336233Z > Task :servicetalk-concurrent-api-internal:testClasses
+2026-07-08T17:43:03.8288746Z > Task :servicetalk-client-api-internal:test
+2026-07-08T17:43:04.5262535Z > Task :servicetalk-client-api:test
+2026-07-08T17:43:04.6300873Z > Task :servicetalk-concurrent-api-test:compileJava
+2026-07-08T17:43:04.6429744Z > Task :servicetalk-concurrent-api-test:classes
+2026-07-08T17:43:04.6459251Z > Task :servicetalk-concurrent-api-test:jar
+2026-07-08T17:43:04.8292284Z > Task :servicetalk-concurrent-jdkflow:compileJava
+2026-07-08T17:43:04.8380590Z > Task :servicetalk-concurrent-jdkflow:classes
+2026-07-08T17:43:05.5312393Z > Task :servicetalk-concurrent-jdkflow:compileTestJava
+2026-07-08T17:43:05.5342080Z > Task :servicetalk-concurrent-jdkflow:testClasses
+2026-07-08T17:43:07.1287737Z > Task :servicetalk-concurrent-api-test:compileTestJava
+2026-07-08T17:43:07.1362475Z > Task :servicetalk-concurrent-api-test:testClasses
+2026-07-08T17:43:14.1302248Z > Task :servicetalk-concurrent-api-test:test
+2026-07-08T17:43:14.7264568Z > Task :servicetalk-concurrent-reactivestreams:compileJava
+2026-07-08T17:43:14.7324798Z > Task :servicetalk-concurrent-reactivestreams:classes
+2026-07-08T17:43:14.7361984Z > Task :servicetalk-concurrent-reactivestreams:jar
+2026-07-08T17:43:14.7415728Z > Task :servicetalk-concurrent-jdkflow:test
+2026-07-08T17:43:15.0259410Z > Task :servicetalk-serializer-api:compileJava
+2026-07-08T17:43:15.4262517Z > Task :servicetalk-serializer-utils:compileJava
+2026-07-08T17:43:15.4321971Z > Task :servicetalk-serializer-api:classes
+2026-07-08T17:43:15.4362632Z > Task :servicetalk-serializer-api:jar
+2026-07-08T17:43:15.4431985Z > Task :servicetalk-serializer-utils:classes
+2026-07-08T17:43:15.4432626Z > Task :servicetalk-serializer-utils:jar
+2026-07-08T17:43:16.0276139Z > Task :servicetalk-serialization-api:compileJava
+2026-07-08T17:43:17.0309715Z > Task :servicetalk-concurrent-api-internal:test
+2026-07-08T17:43:17.0333890Z > Task :servicetalk-serialization-api:classes
+2026-07-08T17:43:17.0386093Z > Task :servicetalk-serialization-api:jar
+2026-07-08T17:43:17.5292447Z > Task :servicetalk-encoding-api:compileJava
+2026-07-08T17:43:17.7274786Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:17.7275326Z 
+2026-07-08T17:43:17.7332226Z > Task :servicetalk-concurrent-api:compileTestJava
+2026-07-08T17:43:17.8312473Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:17.8312958Z 
+2026-07-08T17:43:17.8332303Z Note: Some input files use unchecked or unsafe operations.
+2026-07-08T17:43:17.8381811Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:17.8382564Z > Task :servicetalk-encoding-api-internal:compileJava
+2026-07-08T17:43:17.8411823Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:17.8480468Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:18.0276846Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:18.0277318Z 
+2026-07-08T17:43:18.0321887Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:18.0322509Z > Task :servicetalk-logging-api:compileJava
+2026-07-08T17:43:18.0391865Z 
+2026-07-08T17:43:18.0474397Z > Task :servicetalk-data-jackson:compileJava
+2026-07-08T17:43:18.2281887Z 
+2026-07-08T17:43:18.2312467Z > Task :servicetalk-oio-api-internal:compileJava
+2026-07-08T17:43:18.3282383Z > Task :servicetalk-data-jackson:classes
+2026-07-08T17:43:18.3341859Z > Task :servicetalk-data-jackson:jar
+2026-07-08T17:43:18.6302188Z > Task :servicetalk-concurrent-api:testClasses
+2026-07-08T17:43:18.9282538Z > Task :servicetalk-data-jackson:compileTestJava
+2026-07-08T17:43:18.9283521Z > Task :servicetalk-data-jackson:testClasses
+2026-07-08T17:43:19.8259344Z > Task :servicetalk-concurrent-reactivestreams:compileTestFixturesJava
+2026-07-08T17:43:19.8263596Z > Task :servicetalk-concurrent-reactivestreams:testFixturesClasses
+2026-07-08T17:43:19.8299815Z > Task :servicetalk-concurrent-reactivestreams:testFixturesJar
+2026-07-08T17:43:24.2352720Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:24.2353421Z 
+2026-07-08T17:43:24.2422663Z > Task :servicetalk-http-api:compileJava
+2026-07-08T17:43:24.2447217Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:25.2258536Z 
+2026-07-08T17:43:25.2259332Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:25.2260225Z > Task :servicetalk-concurrent-reactivestreams:compileTestJava
+2026-07-08T17:43:25.2326200Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:25.6269984Z 
+2026-07-08T17:43:25.6322613Z > Task :servicetalk-concurrent-reactivestreams:testClasses
+2026-07-08T17:43:28.1262448Z > Task :servicetalk-http-router-jersey-internal:compileJava
+2026-07-08T17:43:29.5262481Z > Task :servicetalk-data-jackson:test
+2026-07-08T17:43:29.8285029Z > Task :servicetalk-logging-slf4j-internal:compileJava
+2026-07-08T17:43:30.1272429Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:30.1320599Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:30.1321070Z 
+2026-07-08T17:43:30.1382332Z > Task :servicetalk-data-jackson-jersey:compileJava
+2026-07-08T17:43:30.7263430Z 
+2026-07-08T17:43:30.7293195Z > Task :servicetalk-data-jackson-jersey:classes
+2026-07-08T17:43:30.7382441Z > Task :servicetalk-data-jackson-jersey:jar
+2026-07-08T17:43:30.9262331Z > Task :servicetalk-router-api:compileJava
+2026-07-08T17:43:31.2264303Z > Task :servicetalk-router-utils-internal:compileJava
+2026-07-08T17:43:31.4270737Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-utils/src/main/java/io/servicetalk/http/utils/CacheConnectionHttpLoadBalanceFactory.java uses or overrides a deprecated API.
+2026-07-08T17:43:31.4272963Z 
+2026-07-08T17:43:31.4298074Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:31.4298734Z > Task :servicetalk-http-utils:compileJava
+2026-07-08T17:43:33.0297999Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses or overrides a deprecated API.
+2026-07-08T17:43:33.0299523Z 
+2026-07-08T17:43:33.0402462Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:33.0403217Z > Task :servicetalk-http-router-jersey:compileJava
+2026-07-08T17:43:33.0463348Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses unchecked or unsafe operations.
+2026-07-08T17:43:33.0575039Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:34.3262363Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:34.3262855Z 
+2026-07-08T17:43:34.3284219Z > Task :servicetalk-transport-netty-internal:compileJava
+2026-07-08T17:43:34.3321663Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:34.3353076Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-transport-netty-internal/src/main/java/io/servicetalk/transport/netty/internal/ExecutionContextBuilder.java uses unchecked or unsafe operations.
+2026-07-08T17:43:34.3361946Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:34.8265841Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-loadbalancer/src/main/java/io/servicetalk/loadbalancer/DefaultLoadBalancerBuilder.java uses or overrides a deprecated API.
+2026-07-08T17:43:34.8267412Z 
+2026-07-08T17:43:34.8341940Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:34.8342648Z > Task :servicetalk-loadbalancer:compileJava
+2026-07-08T17:43:34.8394501Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-loadbalancer/src/main/java/io/servicetalk/loadbalancer/DefaultHost.java uses unchecked or unsafe operations.
+2026-07-08T17:43:34.8483661Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:35.1259436Z 
+2026-07-08T17:43:35.1302429Z > Task :servicetalk-concurrent-reactivestreams:test
+2026-07-08T17:43:35.1303405Z > Task :servicetalk-encoding-api:classes
+2026-07-08T17:43:35.1311784Z > Task :servicetalk-encoding-api:jar
+2026-07-08T17:43:35.1342060Z > Task :servicetalk-encoding-api-internal:classes
+2026-07-08T17:43:35.1365830Z > Task :servicetalk-encoding-api-internal:jar
+2026-07-08T17:43:35.1392010Z > Task :servicetalk-http-api:classes
+2026-07-08T17:43:35.3266759Z > Task :servicetalk-http-api:jar
+2026-07-08T17:43:35.3312485Z > Task :servicetalk-http-router-predicate:compileJava
+2026-07-08T17:43:35.8271745Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-transport-netty-internal/src/testFixtures/java/io/servicetalk/transport/netty/internal/EmbeddedDuplexChannel.java uses or overrides a deprecated API.
+2026-07-08T17:43:35.8277126Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:35.8277573Z 
+2026-07-08T17:43:35.8292228Z > Task :servicetalk-transport-netty-internal:compileTestFixturesJava
+2026-07-08T17:43:35.8293606Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:35.8322102Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:35.8322530Z 
+2026-07-08T17:43:35.8346163Z > Task :servicetalk-http-router-jersey:classes
+2026-07-08T17:43:35.8347970Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-tcp-netty-internal/src/main/java/io/servicetalk/tcp/netty/internal/TcpConnector.java uses unchecked or unsafe operations.
+2026-07-08T17:43:35.8353651Z > Task :servicetalk-http-router-jersey:jar
+2026-07-08T17:43:35.8381843Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:35.8396357Z > Task :servicetalk-http-router-jersey-internal:classes
+2026-07-08T17:43:35.8412033Z > Task :servicetalk-http-router-jersey-internal:jar
+2026-07-08T17:43:35.8442080Z > Task :servicetalk-http-router-predicate:classes
+2026-07-08T17:43:35.8471993Z > Task :servicetalk-http-router-predicate:jar
+2026-07-08T17:43:35.8472852Z > Task :servicetalk-http-utils:classes
+2026-07-08T17:43:35.8507740Z 
+2026-07-08T17:43:35.8536641Z > Task :servicetalk-tcp-netty-internal:compileJava
+2026-07-08T17:43:35.8561623Z 
+2026-07-08T17:43:35.8592181Z > Task :servicetalk-loadbalancer:classes
+2026-07-08T17:43:35.9285148Z > Task :servicetalk-http-utils:jar
+2026-07-08T17:43:35.9336074Z > Task :servicetalk-logging-api:classes
+2026-07-08T17:43:35.9391932Z > Task :servicetalk-logging-api:jar
+2026-07-08T17:43:35.9422270Z > Task :servicetalk-logging-slf4j-internal:classes
+2026-07-08T17:43:35.9481992Z > Task :servicetalk-loadbalancer:jar
+2026-07-08T17:43:35.9512076Z > Task :servicetalk-oio-api-internal:classes
+2026-07-08T17:43:35.9536405Z > Task :servicetalk-oio-api-internal:jar
+2026-07-08T17:43:35.9592730Z > Task :servicetalk-router-api:classes
+2026-07-08T17:43:35.9627710Z > Task :servicetalk-logging-slf4j-internal:jar
+2026-07-08T17:43:35.9682172Z > Task :servicetalk-router-utils-internal:classes
+2026-07-08T17:43:35.9731907Z > Task :servicetalk-router-api:jar
+2026-07-08T17:43:35.9792629Z > Task :servicetalk-tcp-netty-internal:classes
+2026-07-08T17:43:35.9851955Z > Task :servicetalk-router-utils-internal:jar
+2026-07-08T17:43:35.9892064Z > Task :servicetalk-transport-netty-internal:classes
+2026-07-08T17:43:36.0292315Z > Task :servicetalk-tcp-netty-internal:jar
+2026-07-08T17:43:36.1258874Z > Task :servicetalk-transport-netty-internal:jar
+2026-07-08T17:43:36.1287507Z > Task :servicetalk-transport-netty-internal:testFixturesClasses
+2026-07-08T17:43:36.1291517Z > Task :servicetalk-transport-netty-internal:testFixturesJar
+2026-07-08T17:43:36.2260156Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:36.2260607Z 
+2026-07-08T17:43:36.2282259Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:36.2283135Z > Task :servicetalk-dns-discovery-netty:compileJava
+2026-07-08T17:43:36.2285049Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-dns-discovery-netty/src/main/java/io/servicetalk/dns/discovery/netty/DefaultDnsClient.java uses unchecked or unsafe operations.
+2026-07-08T17:43:36.2286856Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:36.8271130Z 
+2026-07-08T17:43:36.8348152Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:compileJava
+2026-07-08T17:43:36.8352656Z > Task :servicetalk-dns-discovery-netty:classes
+2026-07-08T17:43:36.9259684Z > Task :servicetalk-dns-discovery-netty:jar
+2026-07-08T17:43:37.1262300Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:compileJava
+2026-07-08T17:43:37.7263700Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-data-jackson-jersey3-jakarta9/src/main/java/io/servicetalk/data/jackson/jersey/JacksonSerializerMessageBodyReaderWriter.java uses or overrides a deprecated API.
+2026-07-08T17:43:37.7265449Z 
+2026-07-08T17:43:37.7332713Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:37.7333522Z > Task :servicetalk-data-jackson-jersey3-jakarta9:compileJava
+2026-07-08T17:43:38.3271098Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-data-jackson-jersey3-jakarta10/src/main/java/io/servicetalk/data/jackson/jersey/JacksonSerializerMessageBodyReaderWriter.java uses or overrides a deprecated API.
+2026-07-08T17:43:38.3272991Z 
+2026-07-08T17:43:38.3294743Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:38.3360099Z > Task :servicetalk-data-jackson-jersey3-jakarta10:compileJava
+2026-07-08T17:43:38.3421735Z 
+2026-07-08T17:43:38.3440790Z > Task :servicetalk-data-jackson-jersey3-jakarta10:classes
+2026-07-08T17:43:38.4263020Z > Task :servicetalk-data-jackson-jersey3-jakarta10:jar
+2026-07-08T17:43:38.4294622Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:classes
+2026-07-08T17:43:38.4347217Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:jar
+2026-07-08T17:43:38.4392567Z > Task :servicetalk-data-jackson-jersey3-jakarta9:classes
+2026-07-08T17:43:38.4423203Z > Task :servicetalk-data-jackson-jersey3-jakarta9:jar
+2026-07-08T17:43:38.5263432Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey3-jakarta10/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses or overrides a deprecated API.
+2026-07-08T17:43:38.5264952Z 
+2026-07-08T17:43:38.5314920Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:38.5315656Z > Task :servicetalk-http-router-jersey3-jakarta10:compileJava
+2026-07-08T17:43:38.5325872Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey3-jakarta10/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses unchecked or unsafe operations.
+2026-07-08T17:43:38.5341622Z 
+2026-07-08T17:43:38.5416122Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:38.5417269Z > Task :servicetalk-http-router-jersey3-jakarta10:classes
+2026-07-08T17:43:38.5441892Z > Task :servicetalk-http-router-jersey3-jakarta10:jar
+2026-07-08T17:43:38.5499757Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:classes
+2026-07-08T17:43:38.6298068Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:jar
+2026-07-08T17:43:39.0283381Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey3-jakarta9/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses or overrides a deprecated API.
+2026-07-08T17:43:39.0284946Z 
+2026-07-08T17:43:39.0312024Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:39.0313133Z > Task :servicetalk-http-router-jersey3-jakarta9:compileJava
+2026-07-08T17:43:39.0343765Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey3-jakarta9/src/main/java/io/servicetalk/http/router/jersey/EndpointEnhancingRequestFilter.java uses unchecked or unsafe operations.
+2026-07-08T17:43:39.0345379Z 
+2026-07-08T17:43:39.0345663Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:39.0349095Z > Task :servicetalk-http-router-jersey3-jakarta9:classes
+2026-07-08T17:43:39.1272869Z > Task :servicetalk-http-router-jersey3-jakarta9:jar
+2026-07-08T17:43:39.3258907Z 
+2026-07-08T17:43:39.3259997Z > Task :servicetalk-http-netty:compileJava
+2026-07-08T17:43:39.3260855Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:39.3261811Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:39.3274071Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-netty/src/main/java/io/servicetalk/http/netty/ServiceTalkHttp2Headers.java uses unchecked or unsafe operations.
+2026-07-08T17:43:39.3276401Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-08T17:43:40.3269498Z 
+2026-07-08T17:43:40.3313475Z > Task :servicetalk-data-jackson3:compileJava
+2026-07-08T17:43:40.3342115Z > Task :servicetalk-data-jackson3:classes
+2026-07-08T17:43:40.3362058Z > Task :servicetalk-data-jackson3:jar
+2026-07-08T17:43:40.5283714Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:compileJava
+2026-07-08T17:43:40.5342801Z > Task :servicetalk-http-netty:compileTestFixturesJava
+2026-07-08T17:43:41.1292513Z > Task :servicetalk-data-jackson3:compileTestJava
+2026-07-08T17:43:41.1343658Z > Task :servicetalk-http-netty:classes
+2026-07-08T17:43:41.2259359Z > Task :servicetalk-http-netty:jar
+2026-07-08T17:43:41.2271719Z > Task :servicetalk-http-netty:testFixturesClasses
+2026-07-08T17:43:41.2301879Z > Task :servicetalk-http-netty:testFixturesJar
+2026-07-08T17:43:41.5285264Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-data-jackson3-jersey4-jakarta11/src/main/java/io/servicetalk/data/jackson/jersey/JacksonSerializerMessageBodyReaderWriter.java uses or overrides a deprecated API.
+2026-07-08T17:43:41.5287015Z 
+2026-07-08T17:43:41.5315972Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:41.5317184Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:compileJava
+2026-07-08T17:43:42.6282943Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:42.6283473Z 
+2026-07-08T17:43:42.6284415Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:42.6312729Z > Task :servicetalk-http-router-jersey3-jakarta10:compileTestFixturesJava
+2026-07-08T17:43:42.7346638Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey/src/testFixtures/java/io/servicetalk/http/router/jersey/AbstractFilterInterceptorTest.java uses or overrides a deprecated API.
+2026-07-08T17:43:42.7348214Z 
+2026-07-08T17:43:42.7350791Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:42.7382250Z > Task :servicetalk-http-router-jersey:compileTestFixturesJava
+2026-07-08T17:43:42.8290190Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-http-router-jersey3-jakarta9/src/testFixtures/java/io/servicetalk/http/router/jersey/AbstractFilterInterceptorTest.java uses or overrides a deprecated API.
+2026-07-08T17:43:42.8292063Z 
+2026-07-08T17:43:42.8292807Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:42.8322167Z > Task :servicetalk-http-router-jersey3-jakarta9:compileTestFixturesJava
+2026-07-08T17:43:42.8351672Z 
+2026-07-08T17:43:42.8377215Z > Task :servicetalk-http-router-jersey3-jakarta10:testFixturesClasses
+2026-07-08T17:43:42.8378447Z > Task :servicetalk-http-router-jersey3-jakarta10:testFixturesJar
+2026-07-08T17:43:43.6262518Z Note: Some input files use or override a deprecated API.
+2026-07-08T17:43:43.6262962Z 
+2026-07-08T17:43:43.6312140Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:43.6312948Z > Task :servicetalk-data-jackson-jersey3-jakarta10:compileTestJava
+2026-07-08T17:43:43.6341928Z 
+2026-07-08T17:43:43.6392883Z > Task :servicetalk-http-router-jersey:testFixturesClasses
+2026-07-08T17:43:43.6432447Z > Task :servicetalk-http-router-jersey:testFixturesJar
+2026-07-08T17:43:43.6522531Z > Task :servicetalk-data-jackson-jersey3-jakarta10:testClasses
+2026-07-08T17:43:44.0272313Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-data-jackson-jersey3-jakarta9/src/test/java/io/servicetalk/data/jackson/jersey/JacksonSerializationExceptionMapperTest.java uses or overrides a deprecated API.
+2026-07-08T17:43:44.0274281Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:44.0281827Z 
+2026-07-08T17:43:44.0362230Z > Task :servicetalk-data-jackson-jersey3-jakarta9:compileTestJava
+2026-07-08T17:43:44.0421704Z 
+2026-07-08T17:43:44.0502637Z > Task :servicetalk-data-jackson-jersey3-jakarta9:testClasses
+2026-07-08T17:43:44.0572379Z > Task :servicetalk-http-router-jersey3-jakarta9:testFixturesClasses
+2026-07-08T17:43:44.1262691Z > Task :servicetalk-http-router-jersey3-jakarta9:testFixturesJar
+2026-07-08T17:43:44.2263487Z Note: /home/runner/work/servicetalk/servicetalk/servicetalk-data-jackson-jersey/src/test/java/io/servicetalk/data/jackson/jersey/JacksonSerializationExceptionMapperTest.java uses or overrides a deprecated API.
+2026-07-08T17:43:44.2265217Z 
+2026-07-08T17:43:44.2322205Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-08T17:43:44.2322978Z > Task :servicetalk-data-jackson-jersey:compileTestJava
+2026-07-08T17:43:44.2374946Z 
+2026-07-08T17:43:44.2438846Z > Task :servicetalk-data-jackson-jersey:testClasses
+2026-07-08T17:43:48.6259014Z > Task :servicetalk-concurrent-api:test
+2026-07-08T17:44:13.6320719Z > Task :servicetalk-data-jackson-jersey3-jakarta10:test
+2026-07-08T17:44:14.1288029Z > Task :servicetalk-data-jackson-jersey3-jakarta9:test
+2026-07-08T17:44:14.2302450Z > Task :servicetalk-data-jackson-jersey:test
+2026-07-08T17:44:30.1262274Z 
+2026-07-08T17:44:30.1402378Z > Task :servicetalk-concurrent-api:test
+2026-07-08T17:44:30.1491770Z 
+2026-07-08T17:44:30.1618876Z PublisherBufferConcurrencyTest > largeRun() FAILED
+2026-07-08T17:44:30.1712464Z     java.util.concurrent.TimeoutException: largeRun() timed out after 30 seconds
+2026-07-08T17:44:30.1798614Z         at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+2026-07-08T17:44:30.1912108Z         at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+2026-07-08T17:44:30.2002443Z         at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+2026-07-08T17:44:30.2062756Z         at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+2026-07-08T17:44:30.2164846Z         at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+2026-07-08T17:45:14.0340636Z 
+2026-07-08T17:45:14.0433504Z 3285 tests completed, 1 failed, 11 skipped
+2026-07-08T17:45:14.4259912Z 
+2026-07-08T17:45:14.4260737Z > Task :servicetalk-concurrent-api:test FAILED
+2026-07-08T17:46:37.3258732Z 
+2026-07-08T17:46:37.3263197Z 
+2026-07-08T17:46:37.3264435Z [Incubating] Problems report is available at: file:///home/runner/work/servicetalk/servicetalk/build/reports/problems/problems-report.html
+2026-07-08T17:46:37.3265911Z FAILURE: Build failed with an exception.
+2026-07-08T17:46:37.3270323Z 
+2026-07-08T17:46:37.3272121Z 
+2026-07-08T17:46:37.3272778Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-07-08T17:46:37.3273727Z * What went wrong:
+2026-07-08T17:46:37.3274061Z 
+2026-07-08T17:46:37.3274476Z Execution failed for task ':servicetalk-concurrent-api:test'.
+2026-07-08T17:46:37.3275773Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-08T17:46:37.3297140Z > There were failing tests. See the report at: file:///home/runner/work/servicetalk/servicetalk/servicetalk-concurrent-api/build/reports/tests/test/index.html
+2026-07-08T17:46:37.3298757Z 
+2026-07-08T17:46:37.3298869Z 
+2026-07-08T17:46:37.3299889Z For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-08T17:46:37.3301446Z * Try:
+2026-07-08T17:46:37.3302165Z 219 actionable tasks: 202 executed, 17 up-to-date
+2026-07-08T17:46:37.3303079Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-07-08T17:46:37.3303894Z 
+2026-07-08T17:46:37.3304214Z BUILD FAILED in 5m 20s
+2026-07-08T17:46:37.6706377Z ##[error]Process completed with exit code 1.
+2026-07-08T17:46:37.6850570Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-07-08T17:46:37.6851001Z with:
+2026-07-08T17:46:37.6851445Z   name: test-results-ubuntu-21
+2026-07-08T17:46:37.6851736Z   path: **/build/test-results/test/TEST-*.xml
+2026-07-08T17:46:37.6852034Z   if-no-files-found: warn
+2026-07-08T17:46:37.6852269Z   compression-level: 6
+2026-07-08T17:46:37.6852500Z   overwrite: false
+2026-07-08T17:46:37.6852718Z   include-hidden-files: false
+2026-07-08T17:46:37.6852953Z   archive: true
+2026-07-08T17:46:37.6853140Z env:
+2026-07-08T17:46:37.6853395Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:46:37.6853819Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Zulu_jdk/21.0.11-10/x64
+2026-07-08T17:46:37.6854245Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-07-08T17:46:37.6854589Z   TEST_JAVA_VERSION: 21
+2026-07-08T17:46:37.6854808Z ##[endgroup]
+2026-07-08T17:46:39.5193713Z With the provided path, there will be 302 files uploaded
+2026-07-08T17:46:39.5199401Z Artifact name is valid!
+2026-07-08T17:46:39.5200390Z Root directory input is valid!
+2026-07-08T17:46:39.8730033Z Uploading artifact: test-results-ubuntu-21.zip
+2026-07-08T17:46:39.8772271Z Beginning upload of artifact content to blob storage
+2026-07-08T17:46:40.7466201Z Uploaded bytes 318589
+2026-07-08T17:46:40.8301075Z Finished uploading artifact content to blob storage!
+2026-07-08T17:46:40.8302399Z SHA256 digest of uploaded artifact is 60c33dfaf6ff4bc2173269c370659045328fae467e39f82214aadf8081a982a5
+2026-07-08T17:46:40.8303246Z Finalizing artifact upload
+2026-07-08T17:46:41.2109914Z Artifact test-results-ubuntu-21 successfully finalized. Artifact ID 8177102647
+2026-07-08T17:46:41.2111163Z Artifact test-results-ubuntu-21 has been successfully uploaded! Final size is 318589 bytes. Artifact ID is 8177102647
+2026-07-08T17:46:41.2115357Z Artifact download URL: https://github.com/apple/servicetalk/actions/runs/28958227558/artifacts/8177102647
+2026-07-08T17:46:41.2361676Z Post job cleanup.
+2026-07-08T17:46:41.3804282Z Post job cleanup.
+2026-07-08T17:46:41.4707238Z [command]/usr/bin/git version
+2026-07-08T17:46:41.4756932Z git version 2.54.0
+2026-07-08T17:46:41.4806504Z Temporarily overriding HOME='/home/runner/work/_temp/18887d59-1b9a-4c52-9a75-0bd5c68ca0fa' before making global git config changes
+2026-07-08T17:46:41.4808113Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-08T17:46:41.4814419Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/servicetalk/servicetalk
+2026-07-08T17:46:41.4849227Z Removing SSH command configuration
+2026-07-08T17:46:41.4857966Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-08T17:46:41.4897444Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-08T17:46:41.5168427Z Removing HTTP extra header
+2026-07-08T17:46:41.5173510Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-08T17:46:41.5206013Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-08T17:46:41.5426558Z Removing includeIf entries pointing to credentials config files
+2026-07-08T17:46:41.5432766Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-08T17:46:41.5460125Z includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path
+2026-07-08T17:46:41.5461177Z includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path
+2026-07-08T17:46:41.5462277Z includeif.gitdir:/github/workspace/.git.path
+2026-07-08T17:46:41.5462975Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-08T17:46:41.5468816Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path
+2026-07-08T17:46:41.5490191Z /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5500340Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5534679Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path
+2026-07-08T17:46:41.5555688Z /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5564592Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5603291Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-08T17:46:41.5624205Z /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5631775Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5661513Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-08T17:46:41.5681808Z /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5689344Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config
+2026-07-08T17:46:41.5720465Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-08T17:46:41.5939364Z Removing credentials config '/home/runner/work/_temp/git-credentials-18a0465b-0054-4db4-ba0d-170e633eec23.config'
+2026-07-08T17:46:41.6087821Z Cleaning up orphan processes
+2026-07-08T17:46:41.6604186Z Terminate orphan process: pid (2438) (java)

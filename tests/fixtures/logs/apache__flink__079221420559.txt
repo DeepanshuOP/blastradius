@@ -1,0 +1,83 @@
+﻿2026-06-03T04:14:22.7607231Z Current runner version: '2.334.0'
+2026-06-03T04:14:22.7631021Z ##[group]Runner Image Provisioner
+2026-06-03T04:14:22.7631952Z Hosted Compute Agent
+2026-06-03T04:14:22.7632640Z Version: 20260520.533
+2026-06-03T04:14:22.7633310Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-03T04:14:22.7634089Z Build Date: 2026-05-20T17:44:04Z
+2026-06-03T04:14:22.7634874Z Worker ID: {d968ffb9-34f3-4e9f-bd7f-0e902c001cfd}
+2026-06-03T04:14:22.7635621Z Azure Region: eastus2
+2026-06-03T04:14:22.7636368Z ##[endgroup]
+2026-06-03T04:14:22.7638207Z ##[group]Operating System
+2026-06-03T04:14:22.7638922Z Ubuntu
+2026-06-03T04:14:22.7639556Z 24.04.4
+2026-06-03T04:14:22.7640091Z LTS
+2026-06-03T04:14:22.7640620Z ##[endgroup]
+2026-06-03T04:14:22.7641265Z ##[group]Runner Image
+2026-06-03T04:14:22.7641929Z Image: ubuntu-24.04
+2026-06-03T04:14:22.7642621Z Version: 20260525.161.1
+2026-06-03T04:14:22.7643878Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-03T04:14:22.7645809Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-03T04:14:22.7647233Z ##[endgroup]
+2026-06-03T04:14:22.7650038Z ##[group]GITHUB_TOKEN Permissions
+2026-06-03T04:14:22.7652588Z Actions: read
+2026-06-03T04:14:22.7653299Z ArtifactMetadata: read
+2026-06-03T04:14:22.7653969Z Attestations: read
+2026-06-03T04:14:22.7654539Z Checks: read
+2026-06-03T04:14:22.7655170Z CodeQuality: read
+2026-06-03T04:14:22.7655744Z Contents: read
+2026-06-03T04:14:22.7656618Z Deployments: read
+2026-06-03T04:14:22.7657278Z Discussions: read
+2026-06-03T04:14:22.7657875Z Issues: read
+2026-06-03T04:14:22.7658510Z Metadata: read
+2026-06-03T04:14:22.7659088Z Models: read
+2026-06-03T04:14:22.7659686Z Packages: read
+2026-06-03T04:14:22.7660391Z Pages: read
+2026-06-03T04:14:22.7660951Z PullRequests: read
+2026-06-03T04:14:22.7661585Z RepositoryProjects: read
+2026-06-03T04:14:22.7662212Z SecurityEvents: read
+2026-06-03T04:14:22.7662800Z Statuses: read
+2026-06-03T04:14:22.7663480Z VulnerabilityAlerts: read
+2026-06-03T04:14:22.7664110Z ##[endgroup]
+2026-06-03T04:14:22.7666920Z Secret source: Actions
+2026-06-03T04:14:22.7667902Z Prepare workflow directory
+2026-06-03T04:14:22.8101175Z Prepare all required actions
+2026-06-03T04:14:22.8137636Z Getting action download info
+2026-06-03T04:14:23.2905863Z Download action repository 'actions/checkout@v5' (SHA:93cb6efe18208431cddfb8368fd83d5badbf9bfd)
+2026-06-03T04:14:23.3812307Z Download action repository 'actions/download-artifact@v5' (SHA:634f93cb2916e3fdff6788551b99b062d0335ce0)
+2026-06-03T04:14:23.7227520Z Uses: apache/flink/.github/workflows/template.flink-ci.yml@refs/heads/release-2.3 (fb6c4c2c774f6dba914ebeeaa1d78ac839b7053c)
+2026-06-03T04:14:23.7232624Z ##[group] Inputs
+2026-06-03T04:14:23.7233248Z   workflow-caller-id: adaptive-scheduler
+2026-06-03T04:14:23.7234149Z   environment: PROFILE="-Penable-adaptive-scheduler -Djdk17 -Pjava17-target"
+2026-06-03T04:14:23.7235522Z   jdk_version: 17
+2026-06-03T04:14:23.7236051Z ##[endgroup]
+2026-06-03T04:14:23.7236880Z Complete job name: AdaptiveScheduler / Test packaging/licensing
+2026-06-03T04:14:23.7733359Z ##[group]Checking docker version
+2026-06-03T04:14:23.7746573Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-06-03T04:14:23.8351769Z '1.48'
+2026-06-03T04:14:23.8368816Z Docker daemon API version: '1.48'
+2026-06-03T04:14:23.8369659Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-06-03T04:14:23.8530277Z '1.48'
+2026-06-03T04:14:23.8543865Z Docker client API version: '1.48'
+2026-06-03T04:14:23.8548964Z ##[endgroup]
+2026-06-03T04:14:23.8552254Z ##[group]Clean up resources from previous jobs
+2026-06-03T04:14:23.8557644Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=6748ec"
+2026-06-03T04:14:23.8693020Z ##[command]/usr/bin/docker network prune --force --filter "label=6748ec"
+2026-06-03T04:14:23.8821696Z ##[endgroup]
+2026-06-03T04:14:23.8822268Z ##[group]Create local container network
+2026-06-03T04:14:23.8832510Z ##[command]/usr/bin/docker network create --label 6748ec github_network_c2c6d945fea341dca9c397b87b601ff8
+2026-06-03T04:14:23.9332480Z 65be4fe9dd4de98398480fa362b9ecee0179cb4d2d1051660c219b014a770f0f
+2026-06-03T04:14:23.9352258Z ##[endgroup]
+2026-06-03T04:14:23.9377822Z ##[group]Starting job container
+2026-06-03T04:14:23.9400649Z ##[command]/usr/bin/docker pull chesnay/flink-ci:java_8_11_17_21_maven_386_jammy
+2026-06-03T04:14:38.9569384Z Error response from daemon: Get "https://registry-1.docker.io/v2/": context deadline exceeded
+2026-06-03T04:14:38.9601515Z ##[warning]Docker pull failed with exit code 1, back off 2.559 seconds before retry.
+2026-06-03T04:14:41.5204804Z ##[command]/usr/bin/docker pull chesnay/flink-ci:java_8_11_17_21_maven_386_jammy
+2026-06-03T04:14:56.5369459Z Error response from daemon: Get "https://registry-1.docker.io/v2/": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+2026-06-03T04:14:56.5385088Z ##[warning]Docker pull failed with exit code 1, back off 1.046 seconds before retry.
+2026-06-03T04:14:57.5857963Z ##[command]/usr/bin/docker pull chesnay/flink-ci:java_8_11_17_21_maven_386_jammy
+2026-06-03T04:15:12.5997475Z Error response from daemon: Get "https://registry-1.docker.io/v2/": context deadline exceeded
+2026-06-03T04:15:12.6102378Z ##[error]Docker pull failed with exit code 1
+2026-06-03T04:15:12.6182663Z Remove container network: github_network_c2c6d945fea341dca9c397b87b601ff8
+2026-06-03T04:15:12.6187182Z ##[command]/usr/bin/docker network rm github_network_c2c6d945fea341dca9c397b87b601ff8
+2026-06-03T04:15:12.7231298Z github_network_c2c6d945fea341dca9c397b87b601ff8
+2026-06-03T04:15:12.7297268Z Cleaning up orphan processes

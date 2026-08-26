@@ -1,0 +1,55 @@
+﻿2026-06-17T03:39:40.9990864Z Current runner version: '2.335.1'
+2026-06-17T03:39:41.0015396Z ##[group]Runner Image Provisioner
+2026-06-17T03:39:41.0016448Z Hosted Compute Agent
+2026-06-17T03:39:41.0017131Z Version: 20260527.539
+2026-06-17T03:39:41.0017768Z Commit: a891dd388383b896fa6ac04a82c0b75cec981078
+2026-06-17T03:39:41.0018580Z Build Date: 2026-05-27T21:39:57Z
+2026-06-17T03:39:41.0019283Z Worker ID: {932f32d6-3450-415a-a89d-ce1911c2272d}
+2026-06-17T03:39:41.0020255Z Azure Region: westus
+2026-06-17T03:39:41.0020874Z ##[endgroup]
+2026-06-17T03:39:41.0022327Z ##[group]Operating System
+2026-06-17T03:39:41.0022949Z Ubuntu
+2026-06-17T03:39:41.0023545Z 24.04.4
+2026-06-17T03:39:41.0024081Z LTS
+2026-06-17T03:39:41.0024621Z ##[endgroup]
+2026-06-17T03:39:41.0025175Z ##[group]Runner Image
+2026-06-17T03:39:41.0025781Z Image: ubuntu-24.04
+2026-06-17T03:39:41.0026394Z Version: 20260607.184.1
+2026-06-17T03:39:41.0027687Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260607.184/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-17T03:39:41.0029295Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260607.184
+2026-06-17T03:39:41.0030491Z ##[endgroup]
+2026-06-17T03:39:41.0031678Z ##[group]GITHUB_TOKEN Permissions
+2026-06-17T03:39:41.0033739Z Contents: read
+2026-06-17T03:39:41.0034430Z Metadata: read
+2026-06-17T03:39:41.0034997Z ##[endgroup]
+2026-06-17T03:39:41.0037044Z Secret source: None
+2026-06-17T03:39:41.0038008Z Prepare workflow directory
+2026-06-17T03:39:41.0367441Z Prepare all required actions
+2026-06-17T03:39:41.0406797Z Getting action download info
+2026-06-17T03:39:41.5633212Z Download action repository 'actions/download-artifact@v8' (SHA:3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c)
+2026-06-17T03:39:42.0329504Z Download action repository 'actions/checkout@v6.0.2' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-06-17T03:39:42.0825869Z Download action repository 'docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5' (SHA:d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5)
+2026-06-17T03:39:42.6125953Z Download action repository 'docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf' (SHA:f9f3042f7e2789586610d6e8b85c8f03e5195baf)
+2026-06-17T03:39:43.2274134Z Download action repository 'test-summary/action@37b508cfee6d4d080eedd00b5bb240a6a784a6a5' (SHA:37b508cfee6d4d080eedd00b5bb240a6a784a6a5)
+2026-06-17T03:39:43.6195650Z Complete job name: compat-terraform
+2026-06-17T03:39:43.7059322Z ##[group]Run actions/download-artifact@v8
+2026-06-17T03:39:43.7060960Z with:
+2026-06-17T03:39:43.7061703Z   name: floci-image
+2026-06-17T03:39:43.7062501Z   path: /tmp
+2026-06-17T03:39:43.7063361Z   merge-multiple: false
+2026-06-17T03:39:43.7064634Z   repository: floci-io/floci
+2026-06-17T03:39:43.7065733Z   run-id: 27303796031
+2026-06-17T03:39:43.7066641Z   skip-decompress: false
+2026-06-17T03:39:43.7067647Z   digest-mismatch: error
+2026-06-17T03:39:43.7068892Z ##[endgroup]
+2026-06-17T03:39:43.8574390Z Downloading single artifact
+2026-06-17T03:39:44.1106065Z ##[error]Unable to download artifact(s): Artifact not found for name: floci-image
+        Please ensure that your artifact is not expired and the artifact was uploaded using a compatible version of toolkit/upload-artifact.
+        For more information, visit the GitHub Artifacts FAQ: https://github.com/actions/toolkit/blob/main/packages/artifact/docs/faq.md
+2026-06-17T03:39:44.1460283Z ##[group]Run docker logs floci
+2026-06-17T03:39:44.1461342Z [36;1mdocker logs floci[0m
+2026-06-17T03:39:44.1624857Z shell: /usr/bin/bash -e {0}
+2026-06-17T03:39:44.1625759Z ##[endgroup]
+2026-06-17T03:39:44.2483511Z Error response from daemon: No such container: floci
+2026-06-17T03:39:44.2495807Z ##[error]Process completed with exit code 1.
+2026-06-17T03:39:44.2600454Z Cleaning up orphan processes
