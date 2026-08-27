@@ -19,7 +19,7 @@ from analysis.select_holdout import SEED
 
 HOLDOUT_DIR = Path("tests/fixtures/holdout")
 LOGS_DIR = Path("tests/fixtures/logs")
-EXPECTED_TEST_IDENTIFIER_COUNT = 4
+EXPECTED_TEST_IDENTIFIER_COUNT = 30
 EXPECTED_TXT_FILE_COUNT = 20
 EXPECTED_SEED = 20260826
 

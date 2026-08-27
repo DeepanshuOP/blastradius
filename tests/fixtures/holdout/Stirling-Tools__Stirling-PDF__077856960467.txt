@@ -1,0 +1,80 @@
+﻿2026-05-26T10:38:25.8366127Z Current runner version: '2.334.0'
+2026-05-26T10:38:25.8392401Z ##[group]Runner Image Provisioner
+2026-05-26T10:38:25.8393326Z Hosted Compute Agent
+2026-05-26T10:38:25.8393933Z Version: 20260213.493
+2026-05-26T10:38:25.8394512Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-26T10:38:25.8395253Z Build Date: 2026-02-13T00:28:41Z
+2026-05-26T10:38:25.8395903Z Worker ID: {188cd2f7-bfcd-40de-8fdb-2900ea9acf30}
+2026-05-26T10:38:25.8396642Z Azure Region: eastus
+2026-05-26T10:38:25.8397446Z ##[endgroup]
+2026-05-26T10:38:25.8399102Z ##[group]Operating System
+2026-05-26T10:38:25.8399732Z Ubuntu
+2026-05-26T10:38:25.8400163Z 24.04.4
+2026-05-26T10:38:25.8400865Z LTS
+2026-05-26T10:38:25.8401302Z ##[endgroup]
+2026-05-26T10:38:25.8401818Z ##[group]Runner Image
+2026-05-26T10:38:25.8402413Z Image: ubuntu-24.04
+2026-05-26T10:38:25.8402955Z Version: 20260518.149.1
+2026-05-26T10:38:25.8404193Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260518.149/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-26T10:38:25.8405683Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260518.149
+2026-05-26T10:38:25.8406566Z ##[endgroup]
+2026-05-26T10:38:25.8407825Z ##[group]GITHUB_TOKEN Permissions
+2026-05-26T10:38:25.8410041Z Contents: read
+2026-05-26T10:38:25.8410605Z Metadata: read
+2026-05-26T10:38:25.8411181Z ##[endgroup]
+2026-05-26T10:38:25.8413933Z Secret source: Actions
+2026-05-26T10:38:25.8415071Z Prepare workflow directory
+2026-05-26T10:38:25.8744269Z Prepare all required actions
+2026-05-26T10:38:25.8838300Z Complete job name: All checks passed
+2026-05-26T10:38:25.9609755Z ##[group]Run ok=true
+2026-05-26T10:38:25.9610364Z [36;1mok=true[0m
+2026-05-26T10:38:25.9610923Z [36;1mwhile IFS='=' read -r name result; do[0m
+2026-05-26T10:38:25.9611709Z [36;1m  [ -z "$name" ] && continue[0m
+2026-05-26T10:38:25.9612281Z [36;1m  case "$result" in[0m
+2026-05-26T10:38:25.9613133Z [36;1m    success|skipped) printf '  %-30s %s\n' "$name" "$result" ;;[0m
+2026-05-26T10:38:25.9614100Z [36;1m    *)               printf '✗ %-30s %s\n' "$name" "$result"; ok=false ;;[0m
+2026-05-26T10:38:25.9614938Z [36;1m  esac[0m
+2026-05-26T10:38:25.9615437Z [36;1mdone <<< "$RESULTS"[0m
+2026-05-26T10:38:25.9616026Z [36;1mif [ "$ok" != "true" ]; then[0m
+2026-05-26T10:38:25.9616617Z [36;1m  echo ""[0m
+2026-05-26T10:38:25.9617384Z [36;1m  echo "One or more required checks failed or were cancelled."[0m
+2026-05-26T10:38:25.9618187Z [36;1m  exit 1[0m
+2026-05-26T10:38:25.9618627Z [36;1mfi[0m
+2026-05-26T10:38:25.9619081Z [36;1mecho ""[0m
+2026-05-26T10:38:25.9619752Z [36;1mecho "All required checks passed."[0m
+2026-05-26T10:38:26.4003449Z shell: /usr/bin/bash -e {0}
+2026-05-26T10:38:26.4005204Z env:
+2026-05-26T10:38:26.4010154Z   RESULTS: files-changed=success
+build=success
+check-generateOpenApiDocs=success
+frontend-validation=success
+playwright-e2e=success
+playwright-e2e-live=success
+playwright-e2e-enterprise=skipped
+check-licence=success
+docker-compose-tests=cancelled
+test-build-docker-images=success
+tauri-build=skipped
+ai-engine=success
+pre-commit=success
+dependency-review=success
+
+2026-05-26T10:38:26.4015218Z ##[endgroup]
+2026-05-26T10:38:26.4219687Z   files-changed                  success
+2026-05-26T10:38:26.4220752Z   build                          success
+2026-05-26T10:38:26.4221747Z   check-generateOpenApiDocs      success
+2026-05-26T10:38:26.4222726Z   frontend-validation            success
+2026-05-26T10:38:26.4223714Z   playwright-e2e                 success
+2026-05-26T10:38:26.4224709Z   playwright-e2e-live            success
+2026-05-26T10:38:26.4225731Z   playwright-e2e-enterprise      skipped
+2026-05-26T10:38:26.4226685Z   check-licence                  success
+2026-05-26T10:38:26.4459755Z ✗ docker-compose-tests           cancelled
+2026-05-26T10:38:26.4460487Z   test-build-docker-images       success
+2026-05-26T10:38:26.4461093Z   tauri-build                    skipped
+2026-05-26T10:38:26.4461698Z   ai-engine                      success
+2026-05-26T10:38:26.4462254Z   pre-commit                     success
+2026-05-26T10:38:26.4463201Z   dependency-review              success
+2026-05-26T10:38:26.4463571Z 
+2026-05-26T10:38:26.4463870Z One or more required checks failed or were cancelled.
+2026-05-26T10:38:26.4480820Z ##[error]Process completed with exit code 1.
+2026-05-26T10:38:26.4598309Z Cleaning up orphan processes

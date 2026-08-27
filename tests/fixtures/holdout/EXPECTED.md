@@ -1,4 +1,4 @@
-# Hand-Labelled Held-Out Fixture Corpus (T1.1c Ground Truth)
+# Hand-Labelled Held-Out Fixture Corpus (T1.1c-v2 Failure-Stratified Ground Truth)
 
 This document contains hand-labelled ground truth test outcome expectations for the 20 held-out raw job logs in `tests/fixtures/holdout/`.
 All labels were identified **by eye directly from raw log text** without consulting or running any BlastRadius extractor or classifier.
@@ -6,228 +6,294 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 
 ---
 
-## 1. castorini__anserini__078093909304.txt
-- **Source Repo:** `castorini/anserini`
-- **Job ID:** `078093909304`
-- **Parent Run ID:** `26516187704`
-- **Fixture Filename:** `castorini__anserini__078093909304.txt`
-- **Build Tool:** Maven/Surefire
+## 1. apache__beam__078088881219.txt
+- **Source Repo:** `apache/beam`
+- **Job ID:** `078088881219`
+- **Parent Run ID:** `26514824726`
+- **Fixture Filename:** `apache__beam__078088881219.txt`
+- **Build Tool:** Pytest (invoked in Python PreCommit 3.10)
 - **Expected Outcomes:**
-  - RAW Summary: `[ERROR]   TopicReaderTest.testMSMARCO_V1:1285 » IO Error downloading topics from https://raw.githubusercontent.com/castorini/anserini-tools/master/topics-and-qrels/topics.msmarco-passage.dev-subset.cosdpr-distil.jsonl.gz`
-  - Canonical `normalize_test_id()`: `io.anserini.search.topicreader.TopicReaderTest#testMSMARCO_V1`
+  - RAW: `FAILED apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml`
+  - Canonical `normalize_test_id()`: `apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml`
 - **Confidence:** CERTAIN
 
 ---
 
-## 2. robo-code__robocode__079375717291.txt
-- **Source Repo:** `robo-code/robocode`
-- **Job ID:** `079375717291`
-- **Parent Run ID:** `26907339540`
+## 2. apache__beam__077874374405.txt
+- **Source Repo:** `apache/beam`
+- **Job ID:** `077874374405`
+- **Parent Run ID:** `26286811087`
+- **Fixture Filename:** `apache__beam__077874374405.txt`
+- **Build Tool:** Pytest (invoked via Gradle Yaml_Xlang_Direct PreCommit)
+- **Expected Outcomes:**
+  - RAW: `FAILED apache_beam/yaml/integration_tests.py::Validate_With_SchemaTest::test_only`
+    - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::Validate_With_SchemaTest::test_only`
+  - RAW: `FAILED apache_beam/yaml/integration_tests.py::Assign_TimestampsTest::test_only`
+    - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::Assign_TimestampsTest::test_only`
+  - RAW: `FAILED apache_beam/yaml/integration_tests.py::Ml_TransformTest::test_only`
+    - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::Ml_TransformTest::test_only`
+  - RAW: `FAILED apache_beam/yaml/integration_tests.py::CreateTest::test_only`
+    - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::CreateTest::test_only`
+- **Confidence:** CERTAIN
+
+---
+
+## 3. floci-io__floci__084186316975.txt
+- **Source Repo:** `floci-io/floci`
+- **Job ID:** `084186316975`
+- **Parent Run ID:** `28319865219`
+- **Fixture Filename:** `floci-io__floci__084186316975.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW Summary: `[ERROR]   Ec2ContainerManagerTest.launchInstanceUserDataStreamToCloudWatch:205`
+  - Canonical `normalize_test_id()`: `io.github.hectorvent.floci.services.ec2.Ec2ContainerManagerTest#launchInstanceUserDataStreamToCloudWatch`
+- **Confidence:** CERTAIN
+
+---
+
+## 4. unicode-org__cldr__083663566205.txt
+- **Source Repo:** `unicode-org/cldr`
+- **Job ID:** `083663566205`
+- **Parent Run ID:** `28238948592`
+- **Fixture Filename:** `unicode-org__cldr__083663566205.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW Summary: `[ERROR]   AppTest.shouldDrive:10`
+  - Canonical `normalize_test_id()`: `org.unicode.cldr.surveydriver.AppTest#shouldDrive`
+- **Confidence:** CERTAIN
+
+---
+
+## 5. unicode-org__cldr__086892997256.txt
+- **Source Repo:** `unicode-org/cldr`
+- **Job ID:** `086892997256`
+- **Parent Run ID:** `29173537567`
+- **Fixture Filename:** `unicode-org__cldr__086892997256.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW Summary: `[ERROR]   AppTest.shouldDrive:10`
+  - Canonical `normalize_test_id()`: `org.unicode.cldr.surveydriver.AppTest#shouldDrive`
+- **Confidence:** CERTAIN
+
+---
+
+## 6. apache__hugegraph__086448298201.txt
+- **Source Repo:** `apache/hugegraph`
+- **Job ID:** `086448298201`
+- **Parent Run ID:** `29116143412`
+- **Fixture Filename:** `apache__hugegraph__086448298201.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW: `[ERROR] testLogin(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.397 s  <<< ERROR!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.AuthTest#testLogin`
+  - RAW: `[ERROR] testLogout(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.48 s  <<< ERROR!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.AuthTest#testLogout`
+  - RAW: `[ERROR] testValidateUserByToken(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.929 s  <<< ERROR!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.AuthTest#testValidateUserByToken`
+- **Confidence:** CERTAIN
+
+---
+
+## 7. apache__hugegraph__085379131609.txt
+- **Source Repo:** `apache/hugegraph`
+- **Job ID:** `085379131609`
+- **Parent Run ID:** `28791463328`
+- **Fixture Filename:** `apache__hugegraph__085379131609.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW: `[ERROR] testTask(org.apache.hugegraph.core.TaskCoreTest)  Time elapsed: 19.582 s  <<< FAILURE!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.TaskCoreTest#testTask`
+  - RAW: `[ERROR] testTaskWithoutResult(org.apache.hugegraph.core.TaskCoreTest)  Time elapsed: 1.77 s  <<< FAILURE!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.TaskCoreTest#testTaskWithoutResult`
+  - RAW: `[ERROR] testDistributedDeleteKeepsTaskResultRecoverable(org.apache.hugegraph.task.TaskAndResultSchedulerTest)  Time elapsed: 0.321 s  <<< FAILURE!`
+    - Canonical `normalize_test_id()`: `org.apache.hugegraph.task.TaskAndResultSchedulerTest#testDistributedDeleteKeepsTaskResultRecoverable`
+- **Confidence:** CERTAIN
+
+---
+
+## 8. airlift__airlift__084082609225.txt
+- **Source Repo:** `airlift/airlift`
+- **Job ID:** `084082609225`
+- **Parent Run ID:** `28380815882`
+- **Fixture Filename:** `airlift__airlift__084082609225.txt`
+- **Build Tool:** Maven/Surefire
+- **Expected Outcomes:**
+  - RAW: `[ERROR] io.airlift.api.maven.tests.OpenApiGenerationTest.testApiIdSupportsLookupSucceeds()[1] -- Time elapsed: 0.364 s <<< FAILURE!`
+    - Canonical `normalize_test_id()`: `io.airlift.api.maven.tests.OpenApiGenerationTest#testApiIdSupportsLookupSucceeds`
+  - RAW: `[ERROR] io.airlift.api.maven.tests.OpenApiGenerationTest.testApiIdSupportsLookupSucceeds()[2] -- Time elapsed: 0.369 s <<< FAILURE!`
+    - Canonical `normalize_test_id()`: `io.airlift.api.maven.tests.OpenApiGenerationTest#testApiIdSupportsLookupSucceeds`
+- **Confidence:** CERTAIN
+
+---
+
+## 9. apache__fineract__081211032591.txt
+- **Source Repo:** `apache/fineract`
+- **Job ID:** `081211032591`
+- **Parent Run ID:** `27472784365`
+- **Fixture Filename:** `apache__fineract__081211032591.txt`
 - **Build Tool:** Gradle
 - **Expected Outcomes:**
-  - RAW: `TestFairPlay > run FAILED`
-  - Canonical `normalize_test_id()`: `net.sf.robocode.test.robots.TestFairPlay#run`
+  - RAW: `Test payCharge_shouldReturnTransactionIdInResult() FAILED`
+    - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#payCharge_shouldReturnTransactionIdInResult`
+  - RAW: `Test holdAmount_shouldUpdateTransactionExternalId() FAILED`
+    - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#holdAmount_shouldUpdateTransactionExternalId`
+  - RAW: `Test postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId() FAILED`
+    - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId`
+  - RAW: `Test releaseAmount_shouldUpdateTransactionExternalId() FAILED`
+    - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#releaseAmount_shouldUpdateTransactionExternalId`
 - **Confidence:** CERTAIN
 
 ---
 
-## 3. graphql-java__graphql-java__078459457993.txt
-- **Source Repo:** `graphql-java/graphql-java`
-- **Job ID:** `078459457993`
-- **Parent Run ID:** `26624936408`
-- **Fixture Filename:** `graphql-java__graphql-java__078459457993.txt`
-- **Build Tool:** GitHub Actions / bash
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `allBuildAndTestSuccessful` failed due to upstream `buildAndTest` job failure; no test runner executed)
-- **Confidence:** CERTAIN
-
----
-
-## 4. igniterealtime__openfire__079332762566.txt
-- **Source Repo:** `igniterealtime/openfire`
-- **Job ID:** `079332762566`
-- **Parent Run ID:** `26895381892`
-- **Fixture Filename:** `igniterealtime__openfire__079332762566.txt`
-- **Build Tool:** Maven
-- **Expected Outcomes:** NO_TEST_OUTCOMES (JSP precompilation maven plugin error `jetty-ee8-jspc-maven-plugin:12.0.35:jspc` on project `xmppserver` during build; aborted before test execution)
-- **Confidence:** CERTAIN
-
----
-
-## 5. higress-group__himarket__078050195307.txt
-- **Source Repo:** `higress-group/himarket`
-- **Job ID:** `078050195307`
-- **Parent Run ID:** `26503611359`
-- **Fixture Filename:** `higress-group__himarket__078050195307.txt`
-- **Build Tool:** GitHub Actions / `actions/github-script`
-- **Expected Outcomes:** NO_TEST_OUTCOMES (PR Validation Summary script failed on `PR Content Check`; no unit or integration tests executed)
-- **Confidence:** CERTAIN
-
----
-
-## 6. nitrite__nitrite-java__084107680035.txt
-- **Source Repo:** `nitrite/nitrite-java`
-- **Job ID:** `084107680035`
-- **Parent Run ID:** `28388037001`
-- **Fixture Filename:** `nitrite__nitrite-java__084107680035.txt`
-- **Build Tool:** Maven / CodeQL autobuild
-- **Expected Outcomes:** NO_TEST_OUTCOMES (CodeQL autobuild invoked maven with `-DskipTests -Dmaven.test.skip.exec`; compilation failed in Kotlin annotation processor `kotlin-maven-plugin:2.4.0:kapt` on `potassium-nitrite`; no test suite executed)
-- **Confidence:** CERTAIN
-
----
-
-## 7. apache__hbase__083114718053.txt
-- **Source Repo:** `apache/hbase`
-- **Job ID:** `083114718053`
-- **Parent Run ID:** `28074123072`
-- **Fixture Filename:** `apache__hbase__083114718053.txt`
-- **Build Tool:** Apache Yetus (Dockerized Maven container)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Yetus summary table reports `| -1 | unit | @@BASE@@/patch-unit-hbase-server.txt |` and `hbase-server in the patch failed.`. Artifact uploaded `yetus-jdk17-hadoop3-unit-check-large-wave-1` (ID 7841001210). Zero individual test method names or failure traces appear in the job log.)
-- **Confidence:** CERTAIN
-
----
-
-## 8. apache__hbase__082913156708.txt
-- **Source Repo:** `apache/hbase`
-- **Job ID:** `082913156708`
-- **Parent Run ID:** `28013827967`
-- **Fixture Filename:** `apache__hbase__082913156708.txt`
-- **Build Tool:** Apache Yetus (Dockerized Maven container)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Yetus summary table reports `| -1 | mvninstall | @@BASE@@/patch-mvninstall-root.txt |` and `| -1 | unit | @@BASE@@/patch-unit-hbase-it.txt |`. Artifact uploaded `yetus-jdk17-hadoop3-unit-check-large-wave-2` (ID 7819127618). Zero individual test method names appear in the job log.)
-- **Confidence:** CERTAIN
-
----
-
-## 9. Stirling-Tools__Stirling-PDF__081674712291.txt
-- **Source Repo:** `Stirling-Tools/Stirling-PDF`
-- **Job ID:** `081674712291`
-- **Parent Run ID:** `27618062997`
-- **Fixture Filename:** `Stirling-Tools__Stirling-PDF__081674712291.txt`
-- **Build Tool:** GitHub Actions / Tauri build reporting step `tauri-build / report`
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Tauri build report step failed on check `if [ "failure" = "success" ]` because preceding matrix builds failed; no test execution occurred in this job)
-- **Confidence:** CERTAIN
-
----
-
-## 10. Stirling-Tools__Stirling-PDF__081853656807.txt
-- **Source Repo:** `Stirling-Tools/Stirling-PDF`
-- **Job ID:** `081853656807`
-- **Parent Run ID:** `27675862403`
-- **Fixture Filename:** `Stirling-Tools__Stirling-PDF__081853656807.txt`
-- **Build Tool:** GitHub Actions / Tauri build reporting step `tauri-build / report`
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Tauri build report step failed on check `if [ "cancelled" = "success" ]` because preceding matrix builds were cancelled; no test execution occurred in this job)
-- **Confidence:** CERTAIN
-
----
-
-## 11. crimera__piko__081451893643.txt
-- **Source Repo:** `crimera/piko`
-- **Job ID:** `081451893643`
-- **Parent Run ID:** `27555116833`
-- **Fixture Filename:** `crimera__piko__081451893643.txt`
-- **Build Tool:** GitHub Actions / GitHub CLI (`gh pr create` / `gh pr edit`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub PR maintenance step `Open pull request` failed running `gh pr edit`; no test execution occurred in this job)
-- **Confidence:** CERTAIN
-
----
-
-## 12. crimera__piko__081577143906.txt
-- **Source Repo:** `crimera/piko`
-- **Job ID:** `081577143906`
-- **Parent Run ID:** `27592873626`
-- **Fixture Filename:** `crimera__piko__081577143906.txt`
-- **Build Tool:** GitHub Actions / GitHub CLI (`gh pr create` / `gh pr edit`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub PR maintenance step `Open pull request` failed running `gh pr edit`; no test execution occurred in this job)
-- **Confidence:** CERTAIN
-
----
-
-## 13. apache__flink__078003756269.txt
-- **Source Repo:** `apache/flink`
-- **Job ID:** `078003756269`
-- **Parent Run ID:** `26488073218`
-- **Fixture Filename:** `apache__flink__078003756269.txt`
-- **Build Tool:** Maven/Surefire
+## 10. diffplug__spotless__079141262640.txt
+- **Source Repo:** `diffplug/spotless`
+- **Job ID:** `079141262640`
+- **Parent Run ID:** `26827354100`
+- **Fixture Filename:** `diffplug__spotless__079141262640.txt`
+- **Build Tool:** Gradle
 - **Expected Outcomes:**
-  - RAW: `May 27 04:04:44 04:04:44.495 [ERROR] org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase.testRuntimeRestApiDocsUpToDate(Path) -- Time elapsed: 2.485 s <<< FAILURE!`
-  - RAW Summary: `May 27 04:04:45 04:04:45.887 [ERROR]   RuntimeOpenRestAPIDocsCompletenessITCase.testRuntimeRestApiDocsUpToDate:73 [Committed rest_v1_dispatcher.yml file is out of date. Please regenerate docs under flink-docs module based on README.md.]`
-  - Canonical `normalize_test_id()`: `org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase#testRuntimeRestApiDocsUpToDate`
+  - RAW: `com.diffplug.gradle.spotless.AsciidocExtensionTest spotlessCheckFailsOnUnformattedThenPassesAfterApply() FAILED (1s)`
+    - Canonical `normalize_test_id()`: `com.diffplug.gradle.spotless.AsciidocExtensionTest#spotlessCheckFailsOnUnformattedThenPassesAfterApply`
+  - RAW: `com.diffplug.gradle.spotless.AsciidocExtensionTest spotlessCheckFailsOnUnformattedThenPassesAfterApply() FAILED (9.1s)`
+    - Canonical `normalize_test_id()`: `com.diffplug.gradle.spotless.AsciidocExtensionTest#spotlessCheckFailsOnUnformattedThenPassesAfterApply`
+  - RAW: `com.diffplug.gradle.spotless.AsciidocExtensionTest spotlessCheckFailsOnUnformattedThenPassesAfterApply() FAILED (9.9s)`
+    - Canonical `normalize_test_id()`: `com.diffplug.gradle.spotless.AsciidocExtensionTest#spotlessCheckFailsOnUnformattedThenPassesAfterApply`
 - **Confidence:** CERTAIN
 
 ---
 
-## 14. apache__flink__080017889012.txt
-- **Source Repo:** `apache/flink`
-- **Job ID:** `080017889012`
-- **Parent Run ID:** `27113488102`
-- **Fixture Filename:** `apache__flink__080017889012.txt`
-- **Build Tool:** Maven/Surefire
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Test harness timed out / hung; watchdog killed process with exit code 143; zero individual test assertion failures or errors reported)
-- **Confidence:** CERTAIN
-
----
-
-## 15. openremote__openremote__086150295955.txt
-- **Source Repo:** `openremote/openremote`
-- **Job ID:** `086150295955`
-- **Parent Run ID:** `29026970986`
-- **Fixture Filename:** `openremote__openremote__086150295955.txt`
-- **Build Tool:** Gradle / Playwright (`:ui:app:manager:npmTest`)
+## 11. apache__fineract__081669730637.txt
+- **Source Repo:** `apache/fineract`
+- **Job ID:** `081669730637`
+- **Parent Run ID:** `27620301526`
+- **Fixture Filename:** `apache__fineract__081669730637.txt`
+- **Build Tool:** Gradle
 - **Expected Outcomes:**
-  - RAW: `[cleanup manager] › test/test.cleanup.ts:32:8 › Delete the "smartcity" realm ───────────────────`
-  - Canonical `normalize_test_id()`: `test/test.cleanup.ts:32:8::Delete the "smartcity" realm`
-- **Confidence:** AMBIGUOUS (JavaScript Playwright browser test invoked through Gradle `:ui:app:manager:npmTest` task)
-
----
-
-## 16. openremote__openremote__085859996738.txt
-- **Source Repo:** `openremote/openremote`
-- **Job ID:** `085859996738`
-- **Parent Run ID:** `28939531248`
-- **Fixture Filename:** `openremote__openremote__085859996738.txt`
-- **Build Tool:** GitHub Actions / Workflow status aggregation step `Test / UI App Tests Status`
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job executed `exit 1` due to upstream test failure; no test runner executed in this job)
+  - RAW: `Test testOriginatorExternalIdsPersistedViaAggregationJobAppearInSnapshotPath() FAILED (2.6s)`
+  - Canonical `normalize_test_id()`: `org.apache.fineract.integrationtests.client.feign.tests.FeignTrialBalanceSummaryReportTest#testOriginatorExternalIdsPersistedViaAggregationJobAppearInSnapshotPath`
 - **Confidence:** CERTAIN
 
 ---
 
-## 17. thealgorithms__java__078736649370.txt
-- **Source Repo:** `thealgorithms/java`
-- **Job ID:** `078736649370`
-- **Parent Run ID:** `26716776074`
-- **Fixture Filename:** `thealgorithms__java__078736649370.txt`
-- **Build Tool:** Maven (`maven-compiler-plugin:3.15.0:compile`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Compilation failure in `com.thealgorithms.simulation.NRobotsCollision`: cannot find symbol `ArrayList`; build failed before test phase executed)
+## 12. nats-io__nats.java__086852684070.txt
+- **Source Repo:** `nats-io/nats.java`
+- **Job ID:** `086852684070`
+- **Parent Run ID:** `29260554335`
+- **Fixture Filename:** `nats-io__nats.java__086852684070.txt`
+- **Build Tool:** Gradle
+- **Expected Outcomes:**
+  - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
+    - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
+  - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
+    - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
+  - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
+    - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
+  - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
+    - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
+  - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
+    - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
 - **Confidence:** CERTAIN
 
 ---
 
-## 18. thealgorithms__java__083289143209.txt
-- **Source Repo:** `thealgorithms/java`
-- **Job ID:** `083289143209`
-- **Parent Run ID:** `28125793500`
-- **Fixture Filename:** `thealgorithms__java__083289143209.txt`
-- **Build Tool:** Infer static analyzer (`run_infer`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Facebook Infer static analysis tool reported 3 `NULLPTR_DEREFERENCE` issues and exited with code 2; no test suite executed)
+## 13. grobidOrg__grobid__082786616906.txt
+- **Source Repo:** `grobidOrg/grobid`
+- **Job ID:** `082786616906`
+- **Parent Run ID:** `27973893779`
+- **Fixture Filename:** `grobidOrg__grobid__082786616906.txt`
+- **Build Tool:** Gradle
+- **Expected Outcomes:**
+  - RAW: `BiblioItemTest > setNormalizedPublicationDate_populatesYearMonthDay_issue15 FAILED`
+    - Canonical `normalize_test_id()`: `org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_populatesYearMonthDay_issue15`
+  - RAW: `BiblioItemTest > setNormalizedPublicationDate_partialDateLeavesMissingFieldsNull_issue15 FAILED`
+    - Canonical `normalize_test_id()`: `org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_partialDateLeavesMissingFieldsNull_issue15`
 - **Confidence:** CERTAIN
 
 ---
 
-## 19. baomidou__mybatis-plus__084724355515.txt
-- **Source Repo:** `baomidou/mybatis-plus`
-- **Job ID:** `084724355515`
-- **Parent Run ID:** `28575925752`
-- **Fixture Filename:** `baomidou__mybatis-plus__084724355515.txt`
-- **Build Tool:** Gradle (`gradle/actions/dependency-submission`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub Action `gradle/actions/dependency-submission` resolved dependencies for submission snapshot; post-step submission failed due to `HttpError: Resource not accessible by integration`; no tests were executed)
+## 14. gurkenlabs__litiengine__079032771640.txt
+- **Source Repo:** `gurkenlabs/litiengine`
+- **Job ID:** `079032771640`
+- **Parent Run ID:** `26808716542`
+- **Fixture Filename:** `gurkenlabs__litiengine__079032771640.txt`
+- **Build Tool:** Gradle
+- **Expected Outcomes:**
+  - RAW: `AlignTests > getClampedLocation_InPoint() FAILED`
+    - Canonical `normalize_test_id()`: `de.gurkenlabs.litiengine.AlignTests#getClampedLocation_InPoint`
+  - RAW: `AlignTests > getClampedLocation_OffPoint() FAILED`
+    - Canonical `normalize_test_id()`: `de.gurkenlabs.litiengine.AlignTests#getClampedLocation_OffPoint`
 - **Confidence:** CERTAIN
 
 ---
 
-## 20. baomidou__mybatis-plus__083974499807.txt
-- **Source Repo:** `baomidou/mybatis-plus`
-- **Job ID:** `083974499807`
-- **Parent Run ID:** `28347771813`
-- **Fixture Filename:** `baomidou__mybatis-plus__083974499807.txt`
-- **Build Tool:** Gradle (`./gradlew build`)
-- **Expected Outcomes:** NO_TEST_OUTCOMES (Gradle build compilation task `:mybatis-plus-core:compileJava` failed resolving dependency `org.springframework:spring-aop:7.0.8` on JVM 8; aborted before testing phase)
+## 15. mcreator__mcreator__081715271356.txt
+- **Source Repo:** `mcreator/mcreator`
+- **Job ID:** `081715271356`
+- **Parent Run ID:** `27633735945`
+- **Fixture Filename:** `mcreator__mcreator__081715271356.txt`
+- **Build Tool:** Gradle
+- **Expected Outcomes:**
+  - RAW: `ReferencesFinderTest > testModElementUsagesSearch() FAILED`
+    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testModElementUsagesSearch`
+  - RAW: `ReferencesFinderTest > testTextureUsagesSearch() FAILED`
+    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testTextureUsagesSearch`
+  - RAW: `ReferencesFinderTest > testStructureUsagesSearch() FAILED`
+    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testStructureUsagesSearch`
+  - RAW: `ReferencesFinderTest > testModelUsagesSearch() FAILED`
+    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testModelUsagesSearch`
+- **Confidence:** CERTAIN
+
+---
+
+## 16. floci-io__floci__079239274562.txt
+- **Source Repo:** `floci-io/floci`
+- **Job ID:** `079239274562`
+- **Parent Run ID:** `26868978269`
+- **Fixture Filename:** `floci-io__floci__079239274562.txt`
+- **Build Tool:** Maven (`maven-compiler-plugin:3.15.0:testCompile`)
+- **Expected Outcomes:** NO_TEST_OUTCOMES (Test compilation failure during `maven-compiler-plugin:3.15.0:testCompile` in `CustomResourceProvisionerTest.java`; aborted before test execution)
+- **Confidence:** CERTAIN
+
+---
+
+## 17. apache__dolphinscheduler__082710858610.txt
+- **Source Repo:** `apache/dolphinscheduler`
+- **Job ID:** `082710858610`
+- **Parent Run ID:** `27951676693`
+- **Fixture Filename:** `apache__dolphinscheduler__082710858610.txt`
+- **Build Tool:** GitHub Actions / Bash
+- **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `E2E-K8S-Result` failed due to upstream `cancelled` status; no test runner executed)
+- **Confidence:** CERTAIN
+
+---
+
+## 18. Stirling-Tools__Stirling-PDF__086823631877.txt
+- **Source Repo:** `Stirling-Tools/Stirling-PDF`
+- **Job ID:** `086823631877`
+- **Parent Run ID:** `29251382303`
+- **Fixture Filename:** `Stirling-Tools__Stirling-PDF__086823631877.txt`
+- **Build Tool:** GitHub Actions / Bash
+- **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `All checks passed` failed due to upstream `frontend-validation` job failure; no test runner executed)
+- **Confidence:** CERTAIN
+
+---
+
+## 19. Stirling-Tools__Stirling-PDF__077856960467.txt
+- **Source Repo:** `Stirling-Tools/Stirling-PDF`
+- **Job ID:** `077856960467`
+- **Parent Run ID:** `26446751991`
+- **Fixture Filename:** `Stirling-Tools__Stirling-PDF__077856960467.txt`
+- **Build Tool:** GitHub Actions / Bash
+- **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `All checks passed` failed due to upstream `docker-compose-tests` cancellation; no test runner executed)
+- **Confidence:** CERTAIN
+
+---
+
+## 20. apache__hbase__081801116210.txt
+- **Source Repo:** `apache/hbase`
+- **Job ID:** `081801116210`
+- **Parent Run ID:** `27629549783`
+- **Fixture Filename:** `apache__hbase__081801116210.txt`
+- **Build Tool:** Apache Yetus (Dockerized container)
+- **Expected Outcomes:** NO_TEST_OUTCOMES (Docker-encapsulated Yetus build; test results uploaded to artifact `yetus-jdk11-hadoop3-unit-check-medium` (ID 7685365255); no individual test traces or test summary lines in runner job log)
 - **Confidence:** CERTAIN

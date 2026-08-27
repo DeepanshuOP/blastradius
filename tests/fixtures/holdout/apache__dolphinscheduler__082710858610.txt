@@ -1,0 +1,58 @@
+﻿2026-06-22T12:26:46.1091203Z Current runner version: '2.335.1'
+2026-06-22T12:26:46.1110779Z ##[group]Runner Image Provisioner
+2026-06-22T12:26:46.1111510Z Hosted Compute Agent
+2026-06-22T12:26:46.1112028Z Version: 20260611.554
+2026-06-22T12:26:46.1112548Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-22T12:26:46.1113192Z Build Date: 2026-06-11T21:40:46Z
+2026-06-22T12:26:46.1113807Z Worker ID: {3de17d96-28b5-4c1f-b20d-fb1feb1c719e}
+2026-06-22T12:26:46.1114411Z Azure Region: westcentralus
+2026-06-22T12:26:46.1114915Z ##[endgroup]
+2026-06-22T12:26:46.1116210Z ##[group]Operating System
+2026-06-22T12:26:46.1116780Z Ubuntu
+2026-06-22T12:26:46.1117246Z 24.04.4
+2026-06-22T12:26:46.1117662Z LTS
+2026-06-22T12:26:46.1118150Z ##[endgroup]
+2026-06-22T12:26:46.1118606Z ##[group]Runner Image
+2026-06-22T12:26:46.1119122Z Image: ubuntu-24.04
+2026-06-22T12:26:46.1119623Z Version: 20260615.205.1
+2026-06-22T12:26:46.1120825Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260615.205/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-22T12:26:46.1122032Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260615.205
+2026-06-22T12:26:46.1122840Z ##[endgroup]
+2026-06-22T12:26:46.1125046Z ##[group]GITHUB_TOKEN Permissions
+2026-06-22T12:26:46.1127250Z Actions: read
+2026-06-22T12:26:46.1127754Z ArtifactMetadata: read
+2026-06-22T12:26:46.1128235Z Attestations: read
+2026-06-22T12:26:46.1128786Z Checks: read
+2026-06-22T12:26:46.1129237Z CodeQuality: read
+2026-06-22T12:26:46.1129716Z Contents: read
+2026-06-22T12:26:46.1130177Z Deployments: read
+2026-06-22T12:26:46.1130755Z Discussions: read
+2026-06-22T12:26:46.1131267Z Issues: read
+2026-06-22T12:26:46.1131704Z Metadata: read
+2026-06-22T12:26:46.1132127Z Models: read
+2026-06-22T12:26:46.1132619Z Packages: read
+2026-06-22T12:26:46.1133162Z Pages: read
+2026-06-22T12:26:46.1133660Z PullRequests: read
+2026-06-22T12:26:46.1134137Z RepositoryProjects: read
+2026-06-22T12:26:46.1134614Z SecurityEvents: read
+2026-06-22T12:26:46.1135138Z Statuses: read
+2026-06-22T12:26:46.1135598Z VulnerabilityAlerts: read
+2026-06-22T12:26:46.1136125Z ##[endgroup]
+2026-06-22T12:26:46.1138013Z Secret source: None
+2026-06-22T12:26:46.1138800Z Prepare workflow directory
+2026-06-22T12:26:46.1394303Z Prepare all required actions
+2026-06-22T12:26:46.1468692Z Complete job name: E2E-K8S-Result
+2026-06-22T12:26:46.2066541Z ##[group]Run if [[ true == 'false' && pull_request == 'pull_request' ]]; then
+2026-06-22T12:26:46.2067524Z [36;1mif [[ true == 'false' && pull_request == 'pull_request' ]]; then[0m
+2026-06-22T12:26:46.2068240Z [36;1m  echo "Skip E2E-K8S!"[0m
+2026-06-22T12:26:46.2068775Z [36;1m  exit 0[0m
+2026-06-22T12:26:46.2069262Z [36;1mfi[0m
+2026-06-22T12:26:46.2069728Z [36;1mif [[ cancelled != 'success' ]]; then[0m
+2026-06-22T12:26:46.2070506Z [36;1m  echo "E2E-K8S Failed!"[0m
+2026-06-22T12:26:46.2071027Z [36;1m  exit -1[0m
+2026-06-22T12:26:46.2071473Z [36;1mfi[0m
+2026-06-22T12:26:46.2899928Z shell: /usr/bin/bash -e {0}
+2026-06-22T12:26:46.2901179Z ##[endgroup]
+2026-06-22T12:26:46.3127750Z E2E-K8S Failed!
+2026-06-22T12:26:46.3146685Z ##[error]Process completed with exit code 255.
+2026-06-22T12:26:46.3310246Z Cleaning up orphan processes

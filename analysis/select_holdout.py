@@ -1,130 +1,239 @@
-"""BlastRadius — Deterministic Holdout Fixture Selection.
+"""BlastRadius — Deterministic Stratified Holdout Fixture Selection (v2).
 
 Per ROADMAP §25.3, §26.1 and AGENTS.md.
-Selects 20 held-out logs from data/raw and writes decompressed .txt files
-to tests/fixtures/holdout/.
-
-Selection rules:
-  (a) EXCLUDE every job_id already in tests/fixtures/logs/.
-  (b) 20 logs, at most 2 per repo, from at least 12 distinct repos.
-  (c) Skip anything over 5 MB compressed.
-  (d) Deliberately include at least 4 logs from repos NOT in original 40.
-  (e) Include at least 4 logs with no test failure at all.
-  (f) Seed the selection and print the seed (integrity invariant 3).
+Selects 20 held-out logs from data/raw with failure stratification:
+- 15 failure-bearing logs (mix of Maven, Gradle, and Pytest harnesses)
+- 5 non-failing logs (NO_SUMMARY or zero failures)
+- Zero overlap with tests/fixtures/logs/ AND v1 tests/fixtures/holdout/
+- At most 2 logs per repository
+- At least 12 distinct repositories
+- At least 4 repositories absent from tests/fixtures/logs/
+- Max compressed size <= 5 MB
+- Deterministic PRNG seeded with constant SEED (20260826)
 """
 
 from __future__ import annotations
 
 import gzip
 import json
+import multiprocessing
 import os
 import pathlib
 import random
 from collections import Counter, defaultdict
 
+from analysis.expected_audit import extract_harness_count
+
 SEED = 20260826
 TARGET_COUNT = 20
+TARGET_FAILING_COUNT = 15
+TARGET_NON_FAILING_COUNT = 5
 MAX_PER_REPO = 2
 MIN_DISTINCT_REPOS = 12
 MIN_NEW_REPOS = 4
 MAX_COMPRESSED_BYTES = 5 * 1024 * 1024
+MAX_FAILURES_PER_LOG = 6
 
 HOLDOUT_DIR = pathlib.Path("tests/fixtures/holdout")
 EXISTING_DIR = pathlib.Path("tests/fixtures/logs")
 RAW_DIR = pathlib.Path("data/raw")
 
 
-def select_holdout_candidates(seed: int = SEED) -> list[pathlib.Path]:
-    """Select 20 candidate logs deterministically using seeded PRNG."""
-    rng = random.Random(seed)
+def _inspect_candidate(path_str: str) -> dict:
+    """Inspect a raw archive and extract harness summary metadata."""
+    p = pathlib.Path(path_str)
+    try:
+        sz = p.stat().st_size
+        if sz > MAX_COMPRESSED_BYTES:
+            return {"status": "oversize", "size": sz, "path": path_str}
+        jid = p.parent.name
+        repo = p.parts[2].replace("__", "/")
+        with gzip.open(p, "rt", encoding="utf-8", errors="replace") as gz:
+            line = gz.readline()
+            if not line:
+                return {"status": "empty", "path": path_str}
+            data = json.loads(line)
+            body = data.get("body", "")
 
-    # 1. Enumerate existing job IDs and repos in tests/fixtures/logs/
-    existing_job_ids = set()
+        cnt, h_type, evid = extract_harness_count(body)
+        return {
+            "status": "ok",
+            "path": path_str,
+            "repo": repo,
+            "job_id": jid,
+            "harness_count": cnt,
+            "harness_type": h_type,
+            "evidence": evid,
+            "compressed_size": sz,
+            "lines": len(body.splitlines()),
+        }
+    except Exception as e:
+        return {"status": "error", "path": path_str, "err": str(e)}
+
+
+def scan_and_measure_pool() -> tuple[list[dict], dict]:
+    """Scan all raw archives in data/raw and return inspected candidate metadata."""
+    raw_files = [str(p) for p in sorted(list(RAW_DIR.glob("*/job/*/*/logs.jsonl.gz")))]
+    cpu_cores = os.cpu_count() or 4
+    with multiprocessing.Pool(processes=cpu_cores) as pool:
+        inspected = pool.map(_inspect_candidate, raw_files, chunksize=50)
+
+    existing_logs_ids = set()
+    if EXISTING_DIR.exists():
+        for p in EXISTING_DIR.glob("*.txt"):
+            parts = p.stem.split("__")
+            if len(parts) >= 3:
+                existing_logs_ids.add(parts[2])
+
+    v1_holdout_ids = {
+        "078093909304", "079375717291", "078459457993", "079332762566",
+        "078050195307", "084107680035", "083114718053", "082913156708",
+        "081674712291", "081853656807", "081451893643", "081577143906",
+        "078003756269", "080017889012", "086150295955", "085859996738",
+        "078736649370", "083289143209", "084724355515", "083974499807",
+    }
+
+    pool_stats = Counter()
+    harness_types = Counter()
+    valid_candidates = []
+
+    for item in inspected:
+        st = item["status"]
+        if st == "oversize":
+            pool_stats["oversize"] += 1
+        elif st == "error":
+            pool_stats["corrupt"] += 1
+        elif st == "empty":
+            pool_stats["empty"] += 1
+        elif st == "ok":
+            cnt = item["harness_count"]
+            ht = item["harness_type"]
+            jid = item["job_id"]
+            if cnt is not None and cnt > 0:
+                pool_stats["failure_bearing"] += 1
+                harness_types[ht] += 1
+            elif cnt == 0:
+                pool_stats["zero_failures"] += 1
+                harness_types[ht] += 1
+            else:
+                pool_stats["no_summary"] += 1
+                harness_types["NO_SUMMARY"] += 1
+
+            if jid not in existing_logs_ids and jid not in v1_holdout_ids:
+                valid_candidates.append(item)
+
+    summary = {
+        "total_files": len(raw_files),
+        "oversize": pool_stats["oversize"],
+        "corrupt": pool_stats["corrupt"],
+        "failure_bearing_total": pool_stats["failure_bearing"],
+        "zero_failures_total": pool_stats["zero_failures"],
+        "no_summary_total": pool_stats["no_summary"],
+        "harness_types": dict(harness_types),
+    }
+    return valid_candidates, summary
+
+
+def select_stratified_holdout(seed: int = SEED) -> list[dict]:
+    """Select 20 candidate logs deterministically with failure stratification."""
+    rng = random.Random(seed)
+    candidates, _ = scan_and_measure_pool()
+
     existing_repos = set()
     if EXISTING_DIR.exists():
-        for p in sorted(EXISTING_DIR.glob("*.txt")):
+        for p in EXISTING_DIR.glob("*.txt"):
             parts = p.stem.split("__")
             if len(parts) >= 3:
                 existing_repos.add(f"{parts[0]}/{parts[1]}")
-                existing_job_ids.add(parts[2])
 
-    # 2. Enumerate candidate raw archives
-    raw_files = sorted(list(RAW_DIR.glob("*/job/*/*/logs.jsonl.gz")))
+    failing_maven = [
+        c for c in candidates
+        if c["harness_count"] is not None
+        and 1 <= c["harness_count"] <= MAX_FAILURES_PER_LOG
+        and "Maven" in c["harness_type"]
+    ]
+    failing_gradle = [
+        c for c in candidates
+        if c["harness_count"] is not None
+        and 1 <= c["harness_count"] <= MAX_FAILURES_PER_LOG
+        and c["harness_type"] == "Gradle"
+    ]
+    failing_pytest = [
+        c for c in candidates
+        if c["harness_count"] is not None
+        and 1 <= c["harness_count"] <= MAX_FAILURES_PER_LOG
+        and c["harness_type"] == "Pytest"
+    ]
+    non_failing = [
+        c for c in candidates
+        if c["harness_count"] is None or c["harness_count"] == 0
+    ]
 
-    candidates_new = defaultdict(list)
-    candidates_orig = defaultdict(list)
-    skipped_oversize = 0
-    skipped_overlap = 0
-    skipped_corrupt = 0
+    for pool in [failing_maven, failing_gradle, failing_pytest, non_failing]:
+        pool.sort(key=lambda x: (x["repo"], x["job_id"]))
+        rng.shuffle(pool)
 
-    for p in raw_files:
-        try:
-            sz = p.stat().st_size
-            if sz > MAX_COMPRESSED_BYTES:
-                skipped_oversize += 1
-                continue
-            job_id = p.parent.name
-            if job_id in existing_job_ids:
-                skipped_overlap += 1
-                continue
-            repo = p.parts[2].replace("__", "/")
-            if repo in existing_repos:
-                candidates_orig[repo].append(p)
-            else:
-                candidates_new[repo].append(p)
-        except Exception:
-            skipped_corrupt += 1
-
-    # 3. Deterministic stratified selection
-    new_repo_keys = sorted(candidates_new.keys())
-    orig_repo_keys = sorted(candidates_orig.keys())
-
-    rng.shuffle(new_repo_keys)
-    rng.shuffle(orig_repo_keys)
-
-    selected: list[pathlib.Path] = []
+    selected: list[dict] = []
     repo_counts = Counter()
 
-    # Pick 6 logs from 6 distinct new repos
-    for r in new_repo_keys:
-        if len([x for x in selected if x.parts[2].replace("__", "/") not in existing_repos]) >= 6:
-            break
-        pool = sorted(candidates_new[r])
-        rng.shuffle(pool)
-        for cand in pool:
+    def try_add(cand: dict) -> bool:
+        r = cand["repo"]
+        if repo_counts[r] < MAX_PER_REPO:
             selected.append(cand)
             repo_counts[r] += 1
-            break
+            return True
+        return False
 
-    # Pick 14 logs from original repos, at most 2 per repo, across distinct repos
-    for r in orig_repo_keys:
+    # 1. 2 Pytest logs
+    for c in failing_pytest:
+        if len([x for x in selected if x["harness_type"] == "Pytest"]) >= 2:
+            break
+        try_add(c)
+
+    # 2. 6 Maven logs
+    for c in failing_maven:
+        if len([x for x in selected if "Maven" in x["harness_type"]]) >= 6:
+            break
+        try_add(c)
+
+    # 3. 7 Gradle logs
+    for c in failing_gradle:
+        if len([x for x in selected if x["harness_type"] == "Gradle"]) >= 7:
+            break
+        try_add(c)
+
+    # 4. Fill failing to 15 if needed
+    all_failing = failing_pytest + failing_maven + failing_gradle
+    for c in all_failing:
+        if len([x for x in selected if x["harness_count"] is not None and x["harness_count"] > 0]) >= TARGET_FAILING_COUNT:
+            break
+        if c not in selected:
+            try_add(c)
+
+    # 5. Pick 5 non-failing logs
+    for c in non_failing:
         if len(selected) >= TARGET_COUNT:
             break
-        pool = sorted(candidates_orig[r])
-        rng.shuffle(pool)
-        take = min(MAX_PER_REPO, len(pool), TARGET_COUNT - len(selected))
-        for cand in pool[:take]:
-            selected.append(cand)
-            repo_counts[r] += 1
-            if len(selected) >= TARGET_COUNT:
-                break
+        if c not in selected:
+            try_add(c)
 
-    # Assert invariant constraints
-    assert len(selected) == TARGET_COUNT, f"Expected {TARGET_COUNT} logs, got {len(selected)}"
+    assert len(selected) == TARGET_COUNT, f"Expected {TARGET_COUNT}, got {len(selected)}"
+    failing_selected = [x for x in selected if x["harness_count"] is not None and x["harness_count"] > 0]
+    assert len(failing_selected) == TARGET_FAILING_COUNT, f"Expected {TARGET_FAILING_COUNT} failing, got {len(failing_selected)}"
     assert len(repo_counts) >= MIN_DISTINCT_REPOS, f"Expected >= {MIN_DISTINCT_REPOS} repos, got {len(repo_counts)}"
-    assert all(c <= MAX_PER_REPO for c in repo_counts.values()), "Exceeded max per repo"
-    new_repo_count = sum(1 for r in repo_counts if r not in existing_repos)
-    assert new_repo_count >= MIN_NEW_REPOS, f"Expected >= {MIN_NEW_REPOS} new repos, got {new_repo_count}"
+    new_repos_count = sum(1 for r in repo_counts if r not in existing_repos)
+    assert new_repos_count >= MIN_NEW_REPOS, f"Expected >= {MIN_NEW_REPOS} new repos, got {new_repos_count}"
 
     return selected
 
 
-def export_holdout_fixtures(selected: list[pathlib.Path], out_dir: pathlib.Path = HOLDOUT_DIR) -> list[pathlib.Path]:
+def export_holdout_fixtures(selected: list[dict], out_dir: pathlib.Path = HOLDOUT_DIR) -> list[pathlib.Path]:
     """Decompress selected raw archives to target directory as .txt files."""
     out_dir.mkdir(parents=True, exist_ok=True)
     exported: list[pathlib.Path] = []
 
-    for p in selected:
+    for item in selected:
+        p = pathlib.Path(item["path"])
         repo_owner_name = p.parts[2]
         job_id = p.parent.name
         out_filename = f"{repo_owner_name}__{job_id}.txt"
@@ -142,15 +251,28 @@ def export_holdout_fixtures(selected: list[pathlib.Path], out_dir: pathlib.Path 
 
 
 def main() -> None:
-    print(f"BlastRadius Holdout Selection — SEED: {SEED}")
-    selected = select_holdout_candidates(SEED)
+    print(f"BlastRadius Stratified Holdout Selection — SEED: {SEED}")
+    _, summary = scan_and_measure_pool()
+    print("=== TOTAL POOL MEASUREMENT ===")
+    print(f"Total logs on disk: {summary['total_files']}")
+    print(f"Oversize (>5MB compressed): {summary['oversize']}")
+    print(f"Corrupt / mid-write: {summary['corrupt']}")
+    print(f"Failure-bearing logs (all): {summary['failure_bearing_total']}")
+    print(f"Zero-failure summary logs: {summary['zero_failures_total']}")
+    print(f"No-summary logs: {summary['no_summary_total']}")
+    print("Harness type breakdown (all logs):")
+    for ht, c in sorted(summary["harness_types"].items(), key=lambda x: -x[1]):
+        print(f"  {ht:<25}: {c}")
+
+    selected = select_stratified_holdout(SEED)
     exported = export_holdout_fixtures(selected)
 
-    print(f"Successfully selected and exported {len(exported)} holdout fixtures to {HOLDOUT_DIR}/:")
-    for i, p in enumerate(exported, 1):
-        sz_kb = p.stat().st_size / 1024
-        line_count = len(p.read_text(encoding="utf-8", errors="replace").splitlines())
-        print(f"  {i:>2}. {p.name:<60} ({line_count:>6} lines, {sz_kb:>6.1f} KB)")
+    print(f"\nSuccessfully selected and exported {len(exported)} holdout fixtures to {HOLDOUT_DIR}/:")
+    for i, s in enumerate(selected, 1):
+        p = pathlib.Path(s["path"])
+        fname = f"{p.parts[2]}__{s['job_id']}.txt"
+        cnt = s["harness_count"] if s["harness_count"] is not None else 0
+        print(f"  {i:>2}. {fname:<55} | {s['repo']:<30} | {s['harness_type']:<17} | fail:{cnt:>2} | lines:{s['lines']:>5}")
 
 
 if __name__ == "__main__":
