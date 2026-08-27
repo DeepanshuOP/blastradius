@@ -313,7 +313,7 @@ def parse_gradle_log_with_stats(
             continue
 
         # 7. Check if line is a standalone class header line (unindented)
-        if not raw_line.startswith(" ") and not raw_line.startswith("\t"):
+        if not line.startswith(" ") and not line.startswith("\t"):
             if stripped not in ("Test", "Tests", "TestCase") and (
                 _JAVA_CLASS_RE.match(stripped) or _BARE_TEST_CLASS_RE.match(stripped)
             ):

@@ -186,3 +186,79 @@ def test_classify_gradle_log():
     status_c, f_ids_c, _ = classify_gradle_log(body_clean)
     assert status_c == "NO_TEST_OUTPUT"
     assert len(f_ids_c) == 0
+
+
+def test_multi_failure_block_timestamped_fineract():
+    """Shape S1 Multi-Failure: All failures under a timestamped class header retain FQCN."""
+    log_chunk = """2026-06-13T18:02:33.4136711Z org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest
+2026-06-13T18:02:33.4137512Z 
+2026-06-13T18:02:33.4138401Z   Test validateTransactionsForTransfer_transactionDateEqualsTransferDate_throwsGeneralPlatformDomainRuleException() PASSED (1.4s)
+2026-06-13T18:02:33.6147199Z   Test payCharge_shouldReturnTransactionIdInResult() FAILED
+2026-06-13T18:02:33.6178954Z 
+2026-06-13T18:02:33.6201776Z   java.lang.NullPointerException: Cannot invoke "org.apache.fineract.organisation.office.domain.Office.getHierarchy()" because the return value of "org.apache.fineract.portfolio.savings.domain.SavingsAccount.office()" is null
+2026-06-13T18:02:33.6237019Z       at org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest.payCharge_shouldReturnTransactionIdInResult(SavingsAccountWritePlatformServiceJpaRepositoryImplTest.java:452)
+2026-06-13T18:02:33.6265734Z 
+2026-06-13T18:02:33.6266862Z   Test validateTransactionsForTransfer_nullTransferDate_doesNotThrowNullPointerException() PASSED
+2026-06-13T18:02:33.7143887Z   Test releaseAmount_shouldThrowNotFoundWhenTransactionDoesNotBelongToSavingsAccount() PASSED
+2026-06-13T18:02:33.7176368Z   Test holdAmount_shouldUpdateTransactionExternalId() FAILED
+2026-06-13T18:02:33.7200315Z 
+2026-06-13T18:02:33.7224757Z   java.lang.NullPointerException: Cannot invoke "org.apache.fineract.organisation.office.domain.Office.getHierarchy()" because the return value of "org.apache.fineract.portfolio.savings.domain.SavingsAccount.office()" is null
+2026-06-13T18:02:33.7256582Z       at org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest.holdAmount_shouldUpdateTransactionExternalId(SavingsAccountWritePlatformServiceJpaRepositoryImplTest.java:282)
+2026-06-13T18:02:33.7273887Z 
+2026-06-13T18:02:33.8147105Z   Test validateTransactionsForTransfer_transactionDateBeforeTransferDate_doesNotThrow() PASSED
+2026-06-13T18:02:33.8166784Z   Test validateTransactionsForTransfer_transactionDateAfterTransferDate_throwsGeneralPlatformDomainRuleException() PASSED
+2026-06-13T18:02:33.8191017Z   Test postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId() FAILED
+2026-06-13T18:02:33.8215386Z 
+2026-06-13T18:02:33.8217138Z   java.lang.NullPointerException: Cannot invoke "org.apache.fineract.organisation.office.domain.Office.getHierarchy()" because the return value of "org.apache.fineract.portfolio.savings.domain.SavingsAccount.office()" is null
+2026-06-13T18:02:33.8220913Z       at org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest.postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId(SavingsAccountWritePlatformServiceJpaRepositoryImplTest.java:390)
+2026-06-13T18:02:33.8232363Z 
+2026-06-13T18:02:33.8239377Z   Test validateTransactionsForTransfer_transactionWithNullDate_doesNotThrow() PASSED
+2026-06-13T18:02:33.8246218Z   Test releaseAmount_shouldUpdateTransactionExternalId() FAILED
+2026-06-13T18:02:33.8274419Z 
+2026-06-13T18:02:33.8306933Z   java.lang.NullPointerException: Cannot invoke "org.apache.fineract.organisation.office.domain.Office.getHierarchy()" because the return value of "org.apache.fineract.portfolio.savings.domain.SavingsAccount.office()" is null
+2026-06-13T18:02:33.8317051Z       at org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest.releaseAmount_shouldUpdateTransactionExternalId(SavingsAccountWritePlatformServiceJpaRepositoryImplTest.java:322)
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 4
+    expected_ids = {
+        "org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#payCharge_shouldReturnTransactionIdInResult()",
+        "org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#holdAmount_shouldUpdateTransactionExternalId()",
+        "org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId()",
+        "org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#releaseAmount_shouldUpdateTransactionExternalId()",
+    }
+    extracted_ids = {o.test_id for o in outcomes}
+    assert extracted_ids == expected_ids
+    for o in outcomes:
+        assert o.status == "fail"
+        assert o.parser_confidence == CONFIDENCE_S1_MULTILINE
+
+
+def test_unindented_non_stacktrace_resets_class_context():
+    """Regression: Genuinely column-0 non-stacktrace line resets current_class via section 7 elif."""
+    log_chunk = """org.example.FirstTest
+  Test testA() FAILED (1.0s)
+Some non-stacktrace text at column 0
+  Test testB() FAILED (1.0s)
+"""
+    outcomes = parse_gradle_log(log_chunk)
+    assert len(outcomes) == 2
+    assert outcomes[0].test_id == "org.example.FirstTest#testA()"
+    assert outcomes[1].test_id == "testB()"
+    assert "org.example.FirstTest" not in outcomes[1].test_id
+
+
+def test_multi_failure_block_untimestamped():
+    """Shape S1 Multi-Failure (Untimestamped): Class context retained across multi-failure block without timestamps."""
+    log_chunk = """org.example.CalculatorTest
+  Test testAdd() FAILED (0.5s)
+  java.lang.AssertionError: expected:<4> but was:<5>
+      at org.example.CalculatorTest.testAdd(CalculatorTest.java:20)
+  Test testSubtract() FAILED (0.2s)
+  java.lang.AssertionError: expected:<1> but was:<0>
+      at org.example.CalculatorTest.testSubtract(CalculatorTest.java:30)
+"""
+    outcomes = parse_gradle_log(log_chunk)
+    assert len(outcomes) == 2
+    assert outcomes[0].test_id == "org.example.CalculatorTest#testAdd()"
+    assert outcomes[1].test_id == "org.example.CalculatorTest#testSubtract()"
+
