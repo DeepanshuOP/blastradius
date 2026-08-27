@@ -57,5 +57,7 @@
 | **054** | 2026-08-26 | T1.1c-v2 Stratified Holdout | Rebuild held-out set with failure stratification (15 failing, 30 IDs, 75% checkable) | [054-2026-08-26-holdout-stratified-rebuild.md](file:///home/shree/blastradius/docs/session/054-2026-08-26-holdout-stratified-rebuild.md) |
 | **055** | 2026-08-26 | Stage 4 Stall Diagnosis | Read-only diagnosis of Stage 4 startup/download stall, disk-cursor reconciliation, §26.1 correction | [055-2026-08-26-stage4-stall-diagnosis.md](file:///home/shree/blastradius/docs/session/055-2026-08-26-stage4-stall-diagnosis.md) |
 | — | 2026-08-26 | T1.1b Gradle Parser | Read failing test names out of Gradle build logs (Terminal B, no session file) | — |
+| **058** | 2026-08-27 | T1.1d Pytest Parser | Rebuild pytest log parser `src/parse/log_pytest.py`, test suite, and 40-row scorecard | [058-2026-08-27-pytest-parser.md](file:///home/shree/blastradius/docs/session/058-2026-08-27-pytest-parser.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
+
