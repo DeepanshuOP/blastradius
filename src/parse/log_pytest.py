@@ -90,6 +90,26 @@ _PROGRESS_LINE_RE = re.compile(
     r"^(\S.*?)\s+(FAILED|ERROR|PASSED|SKIPPED|XFAIL|XPASS)(?:\s+\[\s*\d+%\s*\])?\s*$"
 )
 
+# Pytest-timeout interrupted progress line: node_id +++ Timeout +++
+_PYTEST_TIMEOUT_LINE_RE = re.compile(
+    r"^(\S.*?)\s+\+{3,}\s*Timeout\s*\+{3,}\s*$",
+    re.IGNORECASE,
+)
+
+# Pytest-timeout closing banner line: +++ Timeout +++
+_PYTEST_TIMEOUT_CLOSING_RE = re.compile(
+    r"^\+{3,}\s*Timeout\s*\+{3,}\s*$",
+    re.IGNORECASE,
+)
+
+# Standalone progress status line after timeout stack dump: FAILED/ERROR [ xx%]
+_STANDALONE_PROGRESS_STATUS_RE = re.compile(
+    r"^(FAILED|ERROR)(?:\s+\[\s*\d+%\s*\])?\s*$"
+)
+
+# Major section separator line (e.g. === FAILURES ===, === short test summary info ===)
+_PYTEST_SECTION_HEADER_RE = re.compile(r"^={3,}.*={3,}$")
+
 
 @dataclass
 class PytestParseStats:
@@ -142,11 +162,72 @@ def parse_pytest_log_with_stats(
     """Parse raw pytest log text into canonical TestOutcome records with extraction statistics."""
     stats = PytestParseStats()
     outcomes_dict: dict[str, TestOutcome] = {}
+    pending_timeout_node_id: str | None = None
 
     lines = body.splitlines()
     for raw_line in lines:
         line = _clean_line(raw_line)
         if not line:
+            continue
+
+        # 0a. Closing timeout banner line with no node ID prefix - neither arm nor disarm
+        if _PYTEST_TIMEOUT_CLOSING_RE.match(line):
+            continue
+
+        # 0b. Pytest-timeout interrupted progress line: node_id +++ Timeout +++
+        m_timeout = _PYTEST_TIMEOUT_LINE_RE.match(line)
+        if m_timeout:
+            raw_node_id = m_timeout.group(1).strip()
+            if _is_valid_pytest_node_id(raw_node_id):
+                pending_timeout_node_id = raw_node_id
+                continue
+
+        # 0c. Standalone status marker (e.g. FAILED [ 99%]) following a timeout stack dump
+        m_stand = _STANDALONE_PROGRESS_STATUS_RE.match(line)
+        if m_stand:
+            if pending_timeout_node_id is not None:
+                raw_node_id = pending_timeout_node_id
+                pending_timeout_node_id = None
+                status_tag = m_stand.group(1).upper()
+                status: Literal["fail", "error"] = "fail" if status_tag == "FAILED" else "error"
+                if status == "fail":
+                    stats.progress_fail_count += 1
+                else:
+                    stats.progress_error_count += 1
+
+                if raw_node_id in outcomes_dict:
+                    existing = outcomes_dict[raw_node_id]
+                    stats.dedup_merged_count += 1
+                    outcomes_dict[raw_node_id] = TestOutcome(
+                        test_id=existing.test_id,
+                        parser_confidence=max(existing.parser_confidence, CONFIDENCE_PYTEST_PROGRESS),
+                        run_id=existing.run_id or run_id,
+                        job_id=existing.job_id or job_id,
+                        repo=existing.repo or repo,
+                        head_sha=existing.head_sha or head_sha,
+                        status=existing.status,
+                        duration_s=existing.duration_s,
+                        failure_message=existing.failure_message,
+                        label_source="log",
+                    )
+                else:
+                    outcomes_dict[raw_node_id] = TestOutcome(
+                        test_id=raw_node_id,
+                        parser_confidence=CONFIDENCE_PYTEST_PROGRESS,
+                        run_id=run_id,
+                        job_id=job_id,
+                        repo=repo,
+                        head_sha=head_sha,
+                        status=status,
+                        duration_s=None,
+                        failure_message=None,
+                        label_source="log",
+                    )
+            continue
+
+        # 0d. Disarm pending timeout state on major section headers (e.g. === FAILURES ===)
+        if _PYTEST_SECTION_HEADER_RE.match(line):
+            pending_timeout_node_id = None
             continue
 
         # 1. Try matching short summary lines (FAILED/ERROR node_id - msg)
@@ -163,6 +244,7 @@ def parse_pytest_log_with_stats(
                 continue
 
             if _is_valid_pytest_node_id(raw_node_id):
+                pending_timeout_node_id = None
                 status: Literal["fail", "error"] = "fail" if status_tag == "FAILED" else "error"
                 if status == "fail":
                     stats.summary_fail_count += 1
@@ -204,6 +286,10 @@ def parse_pytest_log_with_stats(
         if m_prog:
             raw_node_id = m_prog.group(1).strip()
             status_tag = m_prog.group(2).upper()
+
+            # If this is a valid pytest node ID, disarm any prior pending timeout
+            if _is_valid_pytest_node_id(raw_node_id):
+                pending_timeout_node_id = None
 
             # XFAIL and XPASS stay NOT-SUPPORTED. Pytest's strict xfail mode
             # (xfail_strict=true) causes unexpected passes (XPASS) to fail the test suite,

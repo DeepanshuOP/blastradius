@@ -225,3 +225,124 @@ def test_classify_pytest_log_contracts():
     status_c, f_ids_c, _ = classify_pytest_log(body_clean)
     assert status_c == "TEST_RAN_CLEAN"
     assert len(f_ids_c) == 0
+
+
+def test_pytest_timeout_interleaved_thread_dump_recovery():
+    """[SYNTHETIC] Pytest-timeout splits node ID and standalone FAILED marker across 52 lines of thread dump."""
+    body = (
+        "2026-05-27T14:20:00.5862110Z apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml +++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "2026-05-27T14:20:00.5864494Z ~~~~~~~~~~~~~~~~~ Stack of Thread-42 (_run) (134578480072384) ~~~~~~~~~~~~~~~~~~\n"
+        "2026-05-27T14:20:00.5866027Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 973, in _bootstrap\n"
+        "2026-05-27T14:20:00.5878960Z     self._bootstrap_inner()\n"
+        "2026-05-27T14:20:00.5880416Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 1016, in _bootstrap_inner\n"
+        "2026-05-27T14:20:00.5881298Z     self.run()\n"
+        "2026-05-27T14:20:00.5882021Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 953, in run\n"
+        "2026-05-27T14:20:00.5882833Z     self._target(*self._args, **self._kwargs)\n"
+        "2026-05-27T14:20:00.5884209Z   File \"/runner/_work/beam/beam/sdks/python/test-suites/tox/py310/build/srcs/sdks/python/target/.tox-py310/py310/lib/python3.10/site-packages/grpc/_channel.py\", line 1905, in _poll_connectivity\n"
+        "2026-05-27T14:20:00.5885616Z     event = channel.watch_connectivity_state(\n"
+        "2026-05-27T14:20:00.5886254Z ~~~~~~~~~~~~~~ Stack of Thread-41 (log_stdout) (134579321349824) ~~~~~~~~~~~~~~~\n"
+        "2026-05-27T14:20:00.5897831Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 973, in _bootstrap\n"
+        "2026-05-27T14:20:00.5898952Z     self._bootstrap_inner()\n"
+        "2026-05-27T14:20:00.5900031Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 1016, in _bootstrap_inner\n"
+        "2026-05-27T14:20:00.5901159Z     self.run()\n"
+        "2026-05-27T14:20:00.5901993Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 953, in run\n"
+        "2026-05-27T14:20:00.5902945Z     self._target(*self._args, **self._kwargs)\n"
+        "2026-05-27T14:20:00.5904706Z   File \"/runner/_work/beam/beam/sdks/python/test-suites/tox/py310/build/srcs/sdks/python/target/.tox-py310/py310/lib/python3.10/site-packages/apache_beam/utils/subprocess_server.py\", line 257, in log_stdout\n"
+        "2026-05-27T14:20:00.5906169Z     line = process.stdout.readline()\n"
+        "2026-05-27T14:20:00.5917720Z ~~~~~~~~~~~~~~~~~~~~~ Stack of Thread-30 (134578236815040) ~~~~~~~~~~~~~~~~~~~~~\n"
+        "2026-05-27T14:20:00.5918888Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 973, in _bootstrap\n"
+        "2026-05-27T14:20:00.5919716Z     self._bootstrap_inner()\n"
+        "2026-05-27T14:20:00.5920519Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 1016, in _bootstrap_inner\n"
+        "2026-05-27T14:20:00.5921323Z     self.run()\n"
+        "2026-05-27T14:20:00.5925704Z   File \"/runner/_work/beam/beam/sdks/python/test-suites/tox/py310/build/srcs/sdks/python/target/.tox-py310/py310/lib/python3.10/site-packages/apache_beam/utils/thread_pool_executor.py\", line 57, in run\n"
+        "2026-05-27T14:20:00.5927506Z     self._wake_semaphore.acquire()\n"
+        "2026-05-27T14:20:00.5938050Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 467, in acquire\n"
+        "2026-05-27T14:20:00.5938982Z     self._cond.wait(timeout)\n"
+        "2026-05-27T14:20:00.5939801Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 320, in wait\n"
+        "2026-05-27T14:20:00.5940584Z     waiter.acquire()\n"
+        "2026-05-27T14:20:00.5941095Z ~~~~~~~~~~~~~~~~~~~~~ Stack of Thread-29 (134578337461952) ~~~~~~~~~~~~~~~~~~~~~\n"
+        "2026-05-27T14:20:00.5942101Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 973, in _bootstrap\n"
+        "2026-05-27T14:20:00.5942969Z     self._bootstrap_inner()\n"
+        "2026-05-27T14:20:00.5943788Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 1016, in _bootstrap_inner\n"
+        "2026-05-27T14:20:00.5944575Z     self.run()\n"
+        "2026-05-27T14:20:00.5946632Z   File \"/runner/_work/beam/beam/sdks/python/test-suites/tox/py310/build/srcs/sdks/python/target/.tox-py310/py310/lib/python3.10/site-packages/apache_beam/utils/thread_pool_executor.py\", line 57, in run\n"
+        "2026-05-27T14:20:00.5959324Z     self._wake_semaphore.acquire()\n"
+        "2026-05-27T14:20:00.5960322Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 467, in acquire\n"
+        "2026-05-27T14:20:00.5961837Z     self._cond.wait(timeout)\n"
+        "2026-05-27T14:20:00.5962980Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 320, in wait\n"
+        "2026-05-27T14:20:00.5963864Z     waiter.acquire()\n"
+        "2026-05-27T14:20:00.5964817Z ~~~~~~~~~~~~~~~~~~~~~ Stack of Thread-20 (134578329069248) ~~~~~~~~~~~~~~~~~~~~~\n"
+        "2026-05-27T14:20:00.5965827Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 973, in _bootstrap\n"
+        "2026-05-27T14:20:00.5966714Z     self._bootstrap_inner()\n"
+        "2026-05-27T14:20:00.5988109Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 1016, in _bootstrap_inner\n"
+        "2026-05-27T14:20:00.5989092Z     self.run()\n"
+        "2026-05-27T14:20:00.5990546Z   File \"/runner/_work/beam/beam/sdks/python/test-suites/tox/py310/build/srcs/sdks/python/target/.tox-py310/py310/lib/python3.10/site-packages/apache_beam/utils/thread_pool_executor.py\", line 57, in run\n"
+        "2026-05-27T14:20:00.5992153Z     self._wake_semaphore.acquire()\n"
+        "2026-05-27T14:20:00.5993125Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 467, in acquire\n"
+        "2026-05-27T14:20:00.5994096Z     self._cond.wait(timeout)\n"
+        "2026-05-27T14:20:00.5994943Z   File \"/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/threading.py\", line 320, in wait\n"
+        "2026-05-27T14:20:00.5995792Z     waiter.acquire()\n"
+        "2026-05-27T14:20:00.5996457Z +++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "2026-05-27T14:20:00.5997495Z FAILED                                                                   [ 99%]\n"
+        "2026-05-27T14:20:47.3858297Z apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_streaming_sentiment_analysis_yaml PASSED [100%]\n"
+    )
+    outcomes, stats = parse_pytest_log_with_stats(body)
+    assert len(outcomes) == 1
+    o = outcomes[0]
+    assert o.test_id == "apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml"
+    assert o.status == "fail"
+    assert o.parser_confidence == CONFIDENCE_PYTEST_PROGRESS
+    assert stats.total_outcomes == 1
+    assert stats.progress_fail_count == 1
+
+
+def test_negative_unrelated_node_id_above_standalone_marker():
+    """[NEGATIVE] Valid node ID 50 lines above standalone FAILED without Timeout banner must NOT be bound."""
+    lines = ["tests/test_foo.py::test_bar PASSED [ 10%]"]
+    for i in range(50):
+        lines.append(f"some log output line {i}")
+    lines.append("FAILED                                                                   [ 99%]")
+    body = "\n".join(lines)
+
+    outcomes, stats = parse_pytest_log_with_stats(body)
+    assert len(outcomes) == 0
+    assert stats.total_outcomes == 0
+    assert stats.progress_fail_count == 0
+
+
+def test_disarm_pending_timeout_on_intervening_progress_line():
+    """[DISARM] Timeout banner arms state, but normal progress line appears before standalone marker."""
+    body = (
+        "tests/test_first.py::test_timeout +++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "some stack dump line 1\n"
+        "tests/test_second.py::test_normal PASSED [ 50%]\n"
+        "some stack dump line 2\n"
+        "FAILED                                                                   [ 99%]\n"
+    )
+    outcomes, stats = parse_pytest_log_with_stats(body)
+    assert len(outcomes) == 0
+    assert stats.total_outcomes == 0
+    assert stats.progress_fail_count == 0
+
+
+def test_closing_timeout_banner_neither_arms_nor_disarms():
+    """[SYNTHETIC] Standalone closing +++ Timeout +++ banner line neither arms nor disarms."""
+    # Sub-case 1: Closing banner alone before standalone marker does not arm
+    body_unarmed = (
+        "+++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "FAILED                                                                   [ 99%]\n"
+    )
+    outcomes_unarmed, _ = parse_pytest_log_with_stats(body_unarmed)
+    assert len(outcomes_unarmed) == 0
+
+    # Sub-case 2: Closing banner between armed node ID and standalone marker does not disarm
+    body_armed = (
+        "tests/test_timed.py::test_fn +++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "stack trace line\n"
+        "+++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++\n"
+        "FAILED                                                                   [ 99%]\n"
+    )
+    outcomes_armed, _ = parse_pytest_log_with_stats(body_armed)
+    assert len(outcomes_armed) == 1
+    assert outcomes_armed[0].test_id == "tests/test_timed.py::test_fn"
+    assert outcomes_armed[0].status == "fail"
