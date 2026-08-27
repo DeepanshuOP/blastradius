@@ -96,6 +96,46 @@ def test_holdout_fixture_17_no_test_output():
     assert len(per_parser_ids["pytest"]) == 0
 
 
+def test_holdout_fixture_14_gradle_bare_class_match():
+    """Fixture 14 (gurkenlabs__litiengine__079032771640.txt): Bare class Gradle failure matches without fabrication."""
+    body = _read_holdout_fixture("gurkenlabs__litiengine__079032771640.txt")
+    union_ids, per_parser_ids = union_extract(body)
+    actual_class, _, _, _ = union_classify(body)
+
+    assert actual_class == "TEST_FAILURE"
+    assert len(per_parser_ids["gradle"]) == 2
+    assert len(per_parser_ids["maven"]) == 0
+    assert len(per_parser_ids["pytest"]) == 0
+
+    norm_extracted = {normalize_comparison_id(x) for x in union_ids}
+    expected_ids = {
+        "AlignTests::getClampedLocation_InPoint",
+        "AlignTests::getClampedLocation_OffPoint",
+    }
+    assert norm_extracted == expected_ids
+
+
+def test_holdout_fixture_15_gradle_bare_class_match():
+    """Fixture 15 (mcreator__mcreator__081715271356.txt): Bare class Gradle failure matches without fabrication."""
+    body = _read_holdout_fixture("mcreator__mcreator__081715271356.txt")
+    union_ids, per_parser_ids = union_extract(body)
+    actual_class, _, _, _ = union_classify(body)
+
+    assert actual_class == "TEST_FAILURE"
+    assert len(per_parser_ids["gradle"]) == 4
+    assert len(per_parser_ids["maven"]) == 0
+    assert len(per_parser_ids["pytest"]) == 0
+
+    norm_extracted = {normalize_comparison_id(x) for x in union_ids}
+    expected_ids = {
+        "ReferencesFinderTest::testModElementUsagesSearch",
+        "ReferencesFinderTest::testModelUsagesSearch",
+        "ReferencesFinderTest::testStructureUsagesSearch",
+        "ReferencesFinderTest::testTextureUsagesSearch",
+    }
+    assert norm_extracted == expected_ids
+
+
 def test_evaluate_holdout_aggregate_metrics():
     """Holdout evaluation report produces verified baseline metrics and zero cross-firing."""
     report = evaluate_holdout()
@@ -103,9 +143,9 @@ def test_evaluate_holdout_aggregate_metrics():
     assert report.total_fixtures == 20
     assert report.total_expected == 30
     assert report.total_extracted == 37
-    assert report.true_positives == 11
-    assert report.false_positives == 26
-    assert report.false_negatives == 19
+    assert report.true_positives == 17
+    assert report.false_positives == 20
+    assert report.false_negatives == 13
     assert report.class_matches == 19
     assert report.cross_firing_count == 0
 

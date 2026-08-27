@@ -59,5 +59,7 @@
 | — | 2026-08-26 | T1.1b Gradle Parser | Read failing test names out of Gradle build logs (Terminal B, no session file) | — |
 | **058** | 2026-08-27 | T1.1d Pytest Parser | Rebuild pytest log parser `src/parse/log_pytest.py`, test suite, and 40-row scorecard | [058-2026-08-27-pytest-parser.md](058-2026-08-27-pytest-parser.md) |
 | **059** | 2026-08-27 | T1.1c Holdout Scoring | Score log parsers against quarantined holdout corpus (29.73% prec, 95% class acc) | [059-2026-08-27-holdout-scoring.md](059-2026-08-27-holdout-scoring.md) |
+| **060** | 2026-08-27 | T1.1c Holdout Audit & D-29 | Audit holdout labels against raw log text, add D-29, re-score holdout (45.95% prec, 56.67% recall) | [060-2026-08-27-holdout-label-audit.md](060-2026-08-27-holdout-label-audit.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
+

@@ -219,9 +219,9 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Build Tool:** Gradle
 - **Expected Outcomes:**
   - RAW: `AlignTests > getClampedLocation_InPoint() FAILED`
-    - Canonical `normalize_test_id()`: `de.gurkenlabs.litiengine.AlignTests#getClampedLocation_InPoint`
+    - Canonical `normalize_test_id()`: `AlignTests#getClampedLocation_InPoint`
   - RAW: `AlignTests > getClampedLocation_OffPoint() FAILED`
-    - Canonical `normalize_test_id()`: `de.gurkenlabs.litiengine.AlignTests#getClampedLocation_OffPoint`
+    - Canonical `normalize_test_id()`: `AlignTests#getClampedLocation_OffPoint`
 - **Confidence:** CERTAIN
 
 ---
@@ -234,13 +234,13 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Build Tool:** Gradle
 - **Expected Outcomes:**
   - RAW: `ReferencesFinderTest > testModElementUsagesSearch() FAILED`
-    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testModElementUsagesSearch`
+    - Canonical `normalize_test_id()`: `ReferencesFinderTest#testModElementUsagesSearch`
   - RAW: `ReferencesFinderTest > testTextureUsagesSearch() FAILED`
-    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testTextureUsagesSearch`
+    - Canonical `normalize_test_id()`: `ReferencesFinderTest#testTextureUsagesSearch`
   - RAW: `ReferencesFinderTest > testStructureUsagesSearch() FAILED`
-    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testStructureUsagesSearch`
+    - Canonical `normalize_test_id()`: `ReferencesFinderTest#testStructureUsagesSearch`
   - RAW: `ReferencesFinderTest > testModelUsagesSearch() FAILED`
-    - Canonical `normalize_test_id()`: `net.mcreator.integration.ReferencesFinderTest#testModelUsagesSearch`
+    - Canonical `normalize_test_id()`: `ReferencesFinderTest#testModelUsagesSearch`
 - **Confidence:** CERTAIN
 
 ---
