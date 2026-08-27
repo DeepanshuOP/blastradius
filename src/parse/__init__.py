@@ -23,6 +23,14 @@ from src.parse.log_pytest import (
     parse_pytest_log,
     parse_pytest_log_with_stats,
 )
+from src.parse.dispatch import (
+    DispatchStats,
+    classify_dispatch_log,
+    classify_log_format,
+    dispatch_parse_log,
+    dispatch_parse_log_with_stats,
+    extract_dispatch_failing_test_ids,
+)
 
 __all__ = [
     "TestOutcome",
@@ -41,4 +49,11 @@ __all__ = [
     "parse_pytest_log_with_stats",
     "extract_pytest_failing_test_ids",
     "classify_pytest_log",
+    "classify_log_format",
+    "DispatchStats",
+    "dispatch_parse_log_with_stats",
+    "dispatch_parse_log",
+    "extract_dispatch_failing_test_ids",
+    "classify_dispatch_log",
 ]
+
