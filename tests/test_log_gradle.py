@@ -262,3 +262,79 @@ def test_multi_failure_block_untimestamped():
     assert outcomes[0].test_id == "org.example.CalculatorTest#testAdd()"
     assert outcomes[1].test_id == "org.example.CalculatorTest#testSubtract()"
 
+
+def test_s1_bare_s3_qualified_deduplication_grobid_real_lines():
+    """(a) S1 bare + S3 class-qualified for the same method in one block emits exactly ONE identifier carrying FQCN."""
+    log_chunk = """2026-06-22T18:21:52.5235288Z org.grobid.core.data.BiblioItemTest
+2026-06-22T18:21:55.1254418Z > Task :grobid-core:test
+2026-06-22T18:21:55.1255540Z   Test setNormalizedPublicationDate_populatesYearMonthDay_issue15 FAILED
+2026-06-22T18:21:55.1258298Z       at org.grobid.core.data.BiblioItemTest.setNormalizedPublicationDate_populatesYearMonthDay_issue15(BiblioItemTest.kt:920)
+2026-06-22T18:21:55.1259942Z BiblioItemTest > setNormalizedPublicationDate_populatesYearMonthDay_issue15 FAILED
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 1
+    assert (
+        outcomes[0].test_id
+        == "org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_populatesYearMonthDay_issue15"
+    )
+    assert stats.s1_count == 1
+    assert stats.s3_count == 1
+    assert stats.total_outcomes == 1
+
+
+def test_stack_frame_suffix_join_nats_real_lines():
+    """(b) Simple class name joins to the FQCN when an 'at' frame matches class AND method."""
+    log_chunk = """2026-07-13T15:07:34.8167072Z KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED
+2026-07-13T15:07:34.8167932Z     java.lang.RuntimeException: java.lang.NullPointerException
+2026-07-13T15:07:34.8170995Z         at io.nats.client.api.KeyValueConfigurationTests.testInstanceMirrorAndSources(KeyValueConfigurationTests.java:116)
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 1
+    assert (
+        outcomes[0].test_id
+        == "io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources()"
+    )
+    assert stats.ambiguous_join_count == 0
+
+
+def test_stack_frame_suffix_join_negative_different_method():
+    """(c) NEGATIVE: join must NOT fire when an 'at' frame matches the class but a DIFFERENT method."""
+    log_chunk = """KeyValueConfigurationTests > testMethodA() FAILED
+    java.lang.RuntimeException: assertion failed
+        at io.nats.client.api.KeyValueConfigurationTests.testMethodB(KeyValueConfigurationTests.java:200)
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 1
+    assert outcomes[0].test_id == "KeyValueConfigurationTests#testMethodA()"
+    assert stats.ambiguous_join_count == 0
+
+
+def test_stack_frame_suffix_join_negative_ambiguous_candidates():
+    """(d) NEGATIVE: two candidate FQCNs with same simple class name and method leave identifier unjoined and increment counter."""
+    log_chunk = """KeyValueConfigurationTests > testDuplicate() FAILED
+    java.lang.RuntimeException: fail
+        at com.foo.api.KeyValueConfigurationTests.testDuplicate(KeyValueConfigurationTests.java:50)
+        at com.bar.api.KeyValueConfigurationTests.testDuplicate(KeyValueConfigurationTests.java:80)
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 1
+    assert outcomes[0].test_id == "KeyValueConfigurationTests#testDuplicate()"
+    assert stats.ambiguous_join_count == 1
+
+
+def test_stack_frame_suffix_join_ignores_framework_frames():
+    """(e) Framework frames (org.junit.Assert, org.hamcrest.MatcherAssert) present in trace do not pollute the join."""
+    log_chunk = """2026-06-22T18:21:55.1259942Z BiblioItemTest > setNormalizedPublicationDate_populatesYearMonthDay_issue15 FAILED
+2026-06-22T18:21:55.1260488Z     java.lang.AssertionError: 
+2026-06-22T18:21:55.1261557Z         at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+2026-06-22T18:21:55.1262067Z         at org.junit.Assert.assertThat(Assert.java:964)
+2026-06-22T18:21:55.1263591Z         at org.grobid.core.data.BiblioItemTest.setNormalizedPublicationDate_populatesYearMonthDay_issue15(BiblioItemTest.kt:920)
+"""
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 1
+    assert (
+        outcomes[0].test_id
+        == "org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_populatesYearMonthDay_issue15"
+    )
+    assert stats.ambiguous_join_count == 0
+

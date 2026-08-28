@@ -120,6 +120,11 @@ _S2_FAIL_RE = re.compile(
 # S3 / S4: Single-line Chevron failure line: "Class > Method FAILED" or "Class > Ctx > Method FAILED"
 _CHEVRON_FAIL_RE = re.compile(r"^(.*?)\s+FAILED(?:\s+\(([\d.]+[mμ]?s)\))?$")
 
+# Java / Kotlin stack trace frame: "    at io.pkg.Class.method(Class.java:123)"
+_AT_FRAME_RE = re.compile(
+    r"^\s*at\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z_$][a-zA-Z0-9_$]*)*)\.([a-zA-Z_$][a-zA-Z0-9_$]*)\("
+)
+
 
 def _parse_duration_s(dur_str: str | None) -> float | None:
     if not dur_str:
@@ -146,6 +151,7 @@ class GradleParseStats:
     s3_count: int = 0
     s4_count: int = 0
     stale_guard_fired_count: int = 0
+    ambiguous_join_count: int = 0
 
 
 def _clean_line(line: str) -> str:
@@ -165,6 +171,7 @@ def parse_gradle_log_with_stats(
     """Parse raw Gradle log text into TestOutcome records and execution statistics."""
     stats = GradleParseStats()
     outcomes_dict: dict[str, TestOutcome] = {}
+    stack_fqcns: dict[tuple[str, str], set[str]] = {}
 
     current_class: str | None = None
     lines_since_class_header: int = 0
@@ -173,6 +180,14 @@ def parse_gradle_log_with_stats(
 
     for line_idx, raw_line in enumerate(lines, start=1):
         line = _clean_line(raw_line)
+
+        # Collect stack trace frames for suffix reconciliation
+        m_at = _AT_FRAME_RE.match(line.strip())
+        if m_at:
+            fqcn = m_at.group(1).strip()
+            meth = m_at.group(2).strip()
+            simple_cls = fqcn.split(".")[-1].split("$")[0]
+            stack_fqcns.setdefault((simple_cls, meth), set()).add(fqcn)
 
         # 1. State machine distance increment & guard check (Amendment 2)
         if current_class is not None:
@@ -325,8 +340,54 @@ def parse_gradle_log_with_stats(
                 current_class = None
                 lines_since_class_header = 0
 
-    stats.total_outcomes = len(outcomes_dict)
-    return list(outcomes_dict.values()), stats
+    # Reconcile outcomes: stack-frame suffix join and bare-method suppression
+    reconciled_outcomes: dict[str, TestOutcome] = {}
+    qualified_methods: set[str] = set()
+
+    # Pass 1: Suffix join on class-qualified outcomes (S2, S3, S4, or S1 with class)
+    for test_id, outcome in outcomes_dict.items():
+        if "#" in test_id:
+            cls_part, meth_part = test_id.split("#", 1)
+            clean_meth = meth_part.rstrip("()")
+            qualified_methods.add(clean_meth)
+            qualified_methods.add(meth_part)
+
+            if "." not in cls_part:
+                simple_cls = cls_part.split("$")[0]
+                candidates = stack_fqcns.get((simple_cls, clean_meth), set())
+                if len(candidates) == 1:
+                    joined_fqcn = next(iter(candidates))
+                    new_test_id = f"{joined_fqcn}#{meth_part}"
+                    reconciled_outcomes[new_test_id] = TestOutcome(
+                        test_id=new_test_id,
+                        parser_confidence=outcome.parser_confidence,
+                        run_id=outcome.run_id,
+                        job_id=outcome.job_id,
+                        repo=outcome.repo,
+                        head_sha=outcome.head_sha,
+                        status=outcome.status,
+                        duration_s=outcome.duration_s,
+                        failure_message=outcome.failure_message,
+                        label_source=outcome.label_source,
+                    )
+                else:
+                    if len(candidates) >= 2:
+                        stats.ambiguous_join_count += 1
+                    reconciled_outcomes[test_id] = outcome
+            else:
+                reconciled_outcomes[test_id] = outcome
+
+    # Pass 2: Bare S1 outcomes (suppress if qualified counterpart exists)
+    for test_id, outcome in outcomes_dict.items():
+        if "#" not in test_id:
+            clean_meth = test_id.rstrip("()")
+            if clean_meth in qualified_methods or test_id in qualified_methods:
+                # Suppress duplicate bare method emission
+                continue
+            reconciled_outcomes[test_id] = outcome
+
+    stats.total_outcomes = len(reconciled_outcomes)
+    return list(reconciled_outcomes.values()), stats
 
 
 def parse_gradle_log(
