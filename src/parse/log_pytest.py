@@ -11,6 +11,9 @@ Supported Pytest Output Forms:
     tests/test_calc.py::test_add[2-3-5] FAILED [ 75%]
     tests/test_service.py::test_init ERROR [ 10%]
     tests/test_mod.py FAILED [ 100%]
+- Pytest-xdist Multi-Worker Progress Lines:
+    [gw0] [ 16%] FAILED apache_beam/runners/dataflow/internal/apiclient_test.py::UtilTest::test_environment_packages_with_hash
+    [gw3] [  4%] ERROR apache_beam/ml/rag/enrichment/milvus_search_it_test.py::TestMilvusSearchEnrichment::test_invalid_query_on_non_existent_collection
 - Summary Lines (Short Test Summary Info):
     FAILED apache_beam/yaml/integration_tests.py::FlattenTest::test_Flatten_ExternalJavaProvider_2 - ValueError: Error applying transform...
     FAILED tests/test_calc.py::test_add[2-3-5] - AssertionError: assert 5 == 6
@@ -64,7 +67,7 @@ _ISO8601_PREFIX_RE = re.compile(
     r"^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?[ \t]?"
 )
 _CHANNEL_PREFIX_RE = re.compile(
-    r"^\[(?:backend:build:ci|Test worker|test worker|daemon|pool-\d+-thread-\d+|main)\]\s*",
+    r"^\[(?:backend:build:ci|Test worker|test worker|daemon|pool-\d+-thread-\d+|main|gw\d+)\]\s*",
     re.IGNORECASE,
 )
 
@@ -88,6 +91,11 @@ _SUMMARY_LINE_RE = re.compile(
 # Progress line: node_id FAILED/ERROR/PASSED/SKIPPED/XFAIL/XPASS [ xx%]
 _PROGRESS_LINE_RE = re.compile(
     r"^(\S.*?)\s+(FAILED|ERROR|PASSED|SKIPPED|XFAIL|XPASS)(?:\s+\[\s*\d+%\s*\])?\s*$"
+)
+
+# Pytest-xdist progress line: [gw0] [ xx%] FAILED/ERROR/PASSED/SKIPPED/XFAIL/XPASS node_id
+_XDIST_PROGRESS_LINE_RE = re.compile(
+    r"^(?:\[gw\d+\]\s*)?(?:\[\s*\d+%\s*\]\s*)?(FAILED|ERROR|PASSED|SKIPPED|XFAIL|XPASS)\s+(\S.*?)\s*$"
 )
 
 # Pytest-timeout interrupted progress line: node_id +++ Timeout +++
@@ -294,6 +302,57 @@ def parse_pytest_log_with_stats(
             # XFAIL and XPASS stay NOT-SUPPORTED. Pytest's strict xfail mode
             # (xfail_strict=true) causes unexpected passes (XPASS) to fail the test suite,
             # making XPASS handling a real gap when strict mode is active.
+            if status_tag in ("PASSED", "SKIPPED", "XFAIL", "XPASS"):
+                continue
+
+            if _is_valid_pytest_node_id(raw_node_id):
+                status: Literal["fail", "error"] = "fail" if status_tag == "FAILED" else "error"
+                if status == "fail":
+                    stats.progress_fail_count += 1
+                else:
+                    stats.progress_error_count += 1
+
+                if raw_node_id in outcomes_dict:
+                    existing = outcomes_dict[raw_node_id]
+                    stats.dedup_merged_count += 1
+                    outcomes_dict[raw_node_id] = TestOutcome(
+                        test_id=existing.test_id,
+                        parser_confidence=max(existing.parser_confidence, CONFIDENCE_PYTEST_PROGRESS),
+                        run_id=existing.run_id or run_id,
+                        job_id=existing.job_id or job_id,
+                        repo=existing.repo or repo,
+                        head_sha=existing.head_sha or head_sha,
+                        status=existing.status,
+                        duration_s=existing.duration_s,
+                        failure_message=existing.failure_message,
+                        label_source="log",
+                    )
+                else:
+                    outcomes_dict[raw_node_id] = TestOutcome(
+                        test_id=raw_node_id,
+                        parser_confidence=CONFIDENCE_PYTEST_PROGRESS,
+                        run_id=run_id,
+                        job_id=job_id,
+                        repo=repo,
+                        head_sha=head_sha,
+                        status=status,
+                        duration_s=None,
+                        failure_message=None,
+                        label_source="log",
+                    )
+                continue
+
+        # 3. Try matching pytest-xdist progress lines ([gw0] [ xx%] FAILED/ERROR node_id)
+        m_xdist = _XDIST_PROGRESS_LINE_RE.match(line)
+        if m_xdist:
+            status_tag = m_xdist.group(1).upper()
+            raw_node_id = m_xdist.group(2).strip()
+
+            # If this is a valid pytest node ID, disarm any prior pending timeout
+            if _is_valid_pytest_node_id(raw_node_id):
+                pending_timeout_node_id = None
+
+            # XFAIL and XPASS stay NOT-SUPPORTED (Amendment 3).
             if status_tag in ("PASSED", "SKIPPED", "XFAIL", "XPASS"):
                 continue
 
