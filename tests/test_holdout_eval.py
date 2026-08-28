@@ -141,25 +141,25 @@ def test_evaluate_holdout_aggregate_metrics():
 
     Note: These assertions are regression FLOORS, not a frozen snapshot, so that
     legitimate parser precision and recall improvements do not fail test suite runs.
-    The floor values below reflect the 26 Aug baseline (TP >= 17, FP <= 20, FN <= 13,
-    class_matches >= 19, precision >= 0.4595, recall >= 0.5667).
+    The floor values below reflect the post-Maven JUnit 4 fix baseline (TP >= 27,
+    FP <= 5, FN <= 3, class_matches >= 20, precision >= 0.8437, recall >= 0.9000).
 
     Measured values as of this commit:
-      TP: 21, FP: 17, FN: 9, class_matches: 20, precision: 0.5526, recall: 0.7000, F1: 0.6176.
+      TP: 27, FP: 5, FN: 3, class_matches: 20, precision: 0.8438, recall: 0.9000, F1: 0.8710.
 
-    The floors are deliberately loose pending the Maven JUnit 4 fix and are to be
-    tightened after it lands.
+    The 5 remaining false positives are Gradle (grobid fixture 13, nats-io fixture 12);
+    the floors will tighten again when those land.
     """
     report = evaluate_holdout()
 
     assert report.total_fixtures == 20
     assert report.total_expected == 30
-    assert report.true_positives >= 17
-    assert report.false_positives <= 20
-    assert report.false_negatives <= 13
-    assert report.class_matches >= 19
-    assert report.precision >= 0.4595
-    assert report.recall >= 0.5667
+    assert report.true_positives >= 27
+    assert report.false_positives <= 5
+    assert report.false_negatives <= 3
+    assert report.class_matches >= 20
+    assert report.precision >= 0.8437
+    assert report.recall >= 0.9000
     assert report.cross_firing_count == 0
 
     # Per-harness counts
