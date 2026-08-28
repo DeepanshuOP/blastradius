@@ -149,9 +149,23 @@ def _parse_github_ts(ts: str) -> datetime:
     return datetime.fromisoformat(ts.replace("Z", "+00:00"))
 
 
-def _load_repos(path: Path, limit: int) -> list[tuple[str, str]]:
+def _load_repos(path: Path, limit: int, lang: str | None = None) -> list[tuple[str, str]]:
     with path.open("r", newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
+    if lang is not None:
+        target_lang = lang.strip().lower()
+        filtered_rows = [
+            r for r in rows if r.get("lang", "").strip().lower() == target_lang
+        ]
+        if not filtered_rows:
+            distinct_langs = sorted({r.get("lang", "").strip() for r in rows if r.get("lang", "").strip()})
+            print(
+                f"[daemon] Error: No repositories found for --lang '{lang}'. "
+                f"Available languages in {path}: {', '.join(distinct_langs) if distinct_langs else 'none'}",
+                file=sys.stderr,
+            )
+            raise SystemExit(1)
+        rows = filtered_rows
     return [(r["owner"], r["repo"]) for r in rows[:limit]]
 
 
@@ -1211,12 +1225,12 @@ def sweep_repo(
         cursor.advance_page(repo_full, page)
 
 
-def dry_run_estimate(repos_path: Path, limit: int) -> int:
+def dry_run_estimate(repos_path: Path, limit: int, lang: str | None = None) -> int:
     """A request-count floor, not a full estimate: one pulls-listing page
     per repo is guaranteed; the true total also depends on further pulls
     pages plus 2 requests per in-window PR, neither knowable without
     actually querying — which --dry-run exists specifically to avoid."""
-    return len(_load_repos(repos_path, limit))
+    return len(_load_repos(repos_path, limit, lang=lang))
 
 
 def _p90(sorted_values: list[float]) -> float:
@@ -1374,6 +1388,7 @@ def run(
     stage: str = DEFAULT_STAGE,
     max_logs: int | None = None,
     skip_expired: bool = True,
+    lang: str | None = None,
 ) -> dict:
     """Run Stage 1 (PR sweep), Stage 2 (run discovery), Stage 3
     (check-run + annotation capture), and/or Stage 4 (job log capture)
@@ -1389,7 +1404,7 @@ def run(
     writes/augments data/raw/RUN_AGES.json; Stage 3 running standalone
     (`--stage 3`, no Stage 2 this invocation) augments a prior invocation's
     file instead of clobbering it."""
-    repos = _load_repos(repos_path, limit)
+    repos = _load_repos(repos_path, limit, lang=lang)
     run_stage1 = stage in ("1", "both", "all")
     run_stage2 = stage in ("2", "both", "all")
     run_stage3 = stage in ("3", "all")
@@ -1549,6 +1564,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repos", type=Path, default=DEFAULT_REPOS_PATH)
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    parser.add_argument("--lang", type=str, default=None)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--stage", choices=("1", "2", "3", "4", "both", "all"), default=DEFAULT_STAGE)
     parser.add_argument("--max-logs", type=int, default=None)
@@ -1601,7 +1617,7 @@ def main(argv: list[str] | None = None, *, lock_path: Path | str | None = None) 
     args = parse_args(argv)
 
     if args.dry_run:
-        estimate = dry_run_estimate(args.repos, args.limit)
+        estimate = dry_run_estimate(args.repos, args.limit, lang=args.lang)
         print(
             f"[dry-run] {estimate} repo(s) selected from {args.repos} (--limit {args.limit}); "
             f"at least {estimate} request(s) required (1 pulls-listing page per repo, minimum). "
@@ -1632,6 +1648,7 @@ def main(argv: list[str] | None = None, *, lock_path: Path | str | None = None) 
             stage=args.stage,
             max_logs=args.max_logs,
             skip_expired=not args.attempt_expired,
+            lang=args.lang,
         )
     except AbortRun as exc:
         print(f"ABORTED: {exc}")

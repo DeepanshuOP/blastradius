@@ -13,6 +13,7 @@ import subprocess
 import sys
 import time
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import pytest
 import requests
@@ -2383,10 +2384,63 @@ def test_parse_args_max_logs_and_attempt_expired():
     assert args_default.attempt_expired is False
     assert (not args_default.attempt_expired) is True
 
-    args_custom = daemon.parse_args(["--max-logs", "50", "--attempt-expired"])
+    args_custom = daemon.parse_args(["--max-logs", "50", "--attempt-expired", "--lang", "Python"])
     assert args_custom.max_logs == 50
     assert args_custom.attempt_expired is True
     assert (not args_custom.attempt_expired) is False
+    assert args_custom.lang == "Python"
+
+
+def test_load_repos_lang_python_filters_correctly():
+    """--lang Python with limit 150 returns 150 Python repos and zero Java repos."""
+    fixture_path = Path("tests/fixtures/sample_frame_repos.csv")
+    repos = daemon._load_repos(fixture_path, limit=150, lang="Python")
+    assert len(repos) == 150
+    assert all(owner.startswith("ownpython") for owner, repo in repos)
+    assert not any(owner.startswith("ownjava") for owner, repo in repos)
+    assert repos[0] == ("ownpython1", "repopython1")
+    assert repos[-1] == ("ownpython150", "repopython150")
+
+
+def test_load_repos_filter_before_slice_ordering():
+    """Filter-before-slice: limit smaller than Java block still returns Python rows when --lang Python given."""
+    fixture_path = Path("tests/fixtures/sample_frame_repos.csv")
+    # CSV has 161 Java rows first. limit=5 is far smaller than the 161-row Java block.
+    # Also verifies case-insensitivity with lowercase 'python'.
+    repos = daemon._load_repos(fixture_path, limit=5, lang="python")
+    assert len(repos) == 5
+    assert repos == [
+        ("ownpython1", "repopython1"),
+        ("ownpython2", "repopython2"),
+        ("ownpython3", "repopython3"),
+        ("ownpython4", "repopython4"),
+        ("ownpython5", "repopython5"),
+    ]
+
+
+def test_load_repos_no_lang_preserves_default_order_and_slice():
+    """No --lang returns rows from top of CSV in original order, preserving default behavior."""
+    fixture_path = Path("tests/fixtures/sample_frame_repos.csv")
+    repos = daemon._load_repos(fixture_path, limit=5, lang=None)
+    assert len(repos) == 5
+    assert repos == [
+        ("ownjava1", "repojava1"),
+        ("ownjava2", "repojava2"),
+        ("ownjava3", "repojava3"),
+        ("ownjava4", "repojava4"),
+        ("ownjava5", "repojava5"),
+    ]
+
+
+def test_load_repos_unmatched_lang_exits_nonzero_with_error(capsys):
+    """Unmatched --lang exits non-zero (SystemExit 1) and prints requested and available languages."""
+    fixture_path = Path("tests/fixtures/sample_frame_repos.csv")
+    with pytest.raises(SystemExit) as exc_info:
+        daemon._load_repos(fixture_path, limit=10, lang="Rust")
+    assert exc_info.value.code == 1
+    err = capsys.readouterr().err
+    assert "Rust" in err
+    assert "Java" in err or "Python" in err
 
 
 @responses.activate
