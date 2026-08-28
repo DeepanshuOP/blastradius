@@ -245,3 +245,105 @@ def test_classify_maven_log_contracts():
     status_s, f_ids_s, _ = classify_maven_log(body_setup)
     assert status_s == "NO_TEST_OUTPUT"
     assert len(f_ids_s) == 0
+
+
+def test_shape_junit4_with_preceding_suite_header():
+    """JUnit 4 shape with FORM B suite header: all test IDs carry true FQCN, suite not in any test_id."""
+    log_text = (
+        "[ERROR] Tests run: 788, Failures: 0, Errors: 3, Skipped: 41, Time elapsed: 685.124 s <<< FAILURE! - in org.apache.hugegraph.core.CoreTestSuite\n"
+        "[ERROR] testValidateUserByToken(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.929 s  <<< ERROR!\n"
+        "[ERROR] testLogin(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.397 s  <<< ERROR!\n"
+        "[ERROR] testLogout(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.48 s  <<< ERROR!\n"
+    )
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 3
+    test_ids = {o.test_id for o in outcomes}
+    expected_ids = {
+        "org.apache.hugegraph.core.AuthTest#testValidateUserByToken",
+        "org.apache.hugegraph.core.AuthTest#testLogin",
+        "org.apache.hugegraph.core.AuthTest#testLogout",
+    }
+    assert test_ids == expected_ids
+    assert not any("CoreTestSuite" in o.test_id for o in outcomes)
+    for o in outcomes:
+        assert o.status == "fail"
+        assert o.parser_confidence == CONFIDENCE_FORM_A_FQCN
+        assert o.duration_s is not None
+    assert stats.form_junit4_count == 3
+    assert stats.form_b_count == 1
+    assert stats.form_d_count == 0
+    assert stats.dropped_class_only_count == 1
+
+
+def test_shape_junit4_with_form_c_summary_dedup():
+    """JUnit 4 failure line + FORM C summary line deduplicate to 1 outcome with FQCN and merged message."""
+    log_text = (
+        "[ERROR] Tests run: 788, Failures: 0, Errors: 3, Skipped: 41, Time elapsed: 685.124 s <<< FAILURE! - in org.apache.hugegraph.core.CoreTestSuite\n"
+        "[ERROR] testLogin(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.397 s  <<< ERROR!\n"
+        "[ERROR] Failures:\n"
+        "[ERROR]   AuthTest.testLogin:1425 » NoSuchMethod 'void com.fasterxml.jackson.core.util.B...\n"
+    )
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 1
+    o = outcomes[0]
+    assert o.test_id == "org.apache.hugegraph.core.AuthTest#testLogin"
+    assert o.status == "fail"
+    assert o.duration_s == 0.397
+    assert o.parser_confidence == CONFIDENCE_FORM_A_FQCN
+    assert o.failure_message is not None
+    assert "NoSuchMethod" in o.failure_message
+    assert stats.form_junit4_count == 1
+    assert stats.form_c_count == 1
+
+
+def test_shape_form_d_regression_without_parenthesised_class():
+    """Genuine FORM D shape (bare methodName with no class in parens) still reconciles with FORM B suite header."""
+    log_text = (
+        "[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.345 s <<< FAILURE! - in org.apache.dolphinscheduler.api.test.cases.tasks.EmrServerlessTaskAPITest\n"
+        "[ERROR] testEmrServerlessSuccessWorkflowInstance  Time elapsed: 0.345 s  <<< FAILURE!\n"
+    )
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 1
+    o = outcomes[0]
+    assert (
+        o.test_id
+        == "org.apache.dolphinscheduler.api.test.cases.tasks.EmrServerlessTaskAPITest#testEmrServerlessSuccessWorkflowInstance"
+    )
+    assert o.status == "fail"
+    assert o.duration_s == 0.345
+    assert o.parser_confidence == CONFIDENCE_FORM_D_JOINED
+    assert stats.form_d_count == 1
+    assert stats.form_junit4_count == 0
+
+
+def test_shape_junit4_multi_class_form_c_reconciliation():
+    """Two distinct classes in JUnit 4 lines: FORM C suffix-join binds each to the correct FQCN."""
+    log_text = (
+        "[ERROR] Tests run: 781, Failures: 3, Errors: 0, Skipped: 42, Time elapsed: 670.883 s <<< FAILURE! - in org.apache.hugegraph.core.CoreTestSuite\n"
+        "[ERROR] testTask(org.apache.hugegraph.core.TaskCoreTest)  Time elapsed: 19.582 s  <<< FAILURE!\n"
+        "[ERROR] testTaskWithoutResult(org.apache.hugegraph.core.TaskCoreTest)  Time elapsed: 1.77 s  <<< FAILURE!\n"
+        "[ERROR] testDistributedDeleteKeepsTaskResultRecoverable(org.apache.hugegraph.task.TaskAndResultSchedulerTest)  Time elapsed: 0.321 s  <<< FAILURE!\n"
+        "[INFO] Results:\n"
+        "[ERROR] Failures:\n"
+        "[ERROR]   TaskCoreTest.testTask:96 expected:<DELETING> but was:<NEW>\n"
+        "[ERROR]   TaskCoreTest.testTaskWithoutResult:185 expected:<\"metadata-result\"> but was:<null>\n"
+        "[ERROR]   TaskAndResultSchedulerTest.testDistributedDeleteKeepsTaskResultRecoverable:122 expected:<DELETING> but was:<SUCCESS>\n"
+    )
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 3
+    test_ids = {o.test_id for o in outcomes}
+    expected_ids = {
+        "org.apache.hugegraph.core.TaskCoreTest#testTask",
+        "org.apache.hugegraph.core.TaskCoreTest#testTaskWithoutResult",
+        "org.apache.hugegraph.task.TaskAndResultSchedulerTest#testDistributedDeleteKeepsTaskResultRecoverable",
+    }
+    assert test_ids == expected_ids
+    assert not any("CoreTestSuite" in o.test_id for o in outcomes)
+    for o in outcomes:
+        assert o.status == "fail"
+        assert o.parser_confidence == CONFIDENCE_FORM_A_FQCN
+        assert o.failure_message is not None
+    assert stats.form_junit4_count == 3
+    assert stats.form_c_count == 3
+    assert stats.form_d_count == 0
+    assert stats.dropped_class_only_count == 1

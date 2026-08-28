@@ -115,6 +115,12 @@ _SUREFIRE_FORM_D = re.compile(
     re.IGNORECASE,
 )
 
+# JUnit 4 Surefire: [ERROR] method(pkg.Class) [idx] -- Time elapsed: ... <<< FAILURE!/ERROR!
+_SUREFIRE_FORM_JUNIT4 = re.compile(
+    r"\[ERROR\]\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\(([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z0-9_$]+)*)\)(?:\[\d+\])?\s+(?:--\s+)?Time elapsed:\s*([0-9.]+\s*[mμ]?s)?.*?(?:<<<\s*(?:FAILURE!|ERROR!))",
+    re.IGNORECASE,
+)
+
 
 def _parse_duration_s(dur_str: str | None) -> float | None:
     if not dur_str:
@@ -140,6 +146,7 @@ class MavenParseStats:
     form_b_count: int = 0
     form_c_count: int = 0
     form_d_count: int = 0
+    form_junit4_count: int = 0
     dropped_class_only_count: int = 0
     ambiguous_join_count: int = 0
 
@@ -354,6 +361,17 @@ def parse_maven_log_with_stats(
             msg = m_c.group(3).strip() if m_c.group(3) else None
             raw_form_c.append((cls_name, method_name, msg))
             stats.form_c_count += 1
+            continue
+
+        # Check JUnit 4 Surefire: [ERROR] method(pkg.Class) Time elapsed: ... <<< FAILURE!/ERROR!
+        m_j4 = _SUREFIRE_FORM_JUNIT4.search(line)
+        if m_j4:
+            method_name = m_j4.group(1).strip()
+            cls_name = m_j4.group(2).strip()
+            dur_str = m_j4.group(3)
+            dur_s = _parse_duration_s(dur_str)
+            raw_form_a.append((cls_name, method_name, dur_s))
+            stats.form_junit4_count += 1
             continue
 
         # Check FORM D: [ERROR] methodName Time elapsed: ... <<< FAILURE!
