@@ -1,0 +1,734 @@
+﻿2026-06-15T15:35:15.6543268Z Current runner version: '2.335.1'
+2026-06-15T15:35:15.6568142Z ##[group]Runner Image Provisioner
+2026-06-15T15:35:15.6569139Z Hosted Compute Agent
+2026-06-15T15:35:15.6570058Z Version: 20260527.539
+2026-06-15T15:35:15.6570779Z Commit: a891dd388383b896fa6ac04a82c0b75cec981078
+2026-06-15T15:35:15.6571540Z Build Date: 2026-05-27T21:39:57Z
+2026-06-15T15:35:15.6572229Z Worker ID: {1c4844e0-1cd1-436f-b877-220226990a7a}
+2026-06-15T15:35:15.6573048Z Azure Region: westcentralus
+2026-06-15T15:35:15.6573676Z ##[endgroup]
+2026-06-15T15:35:15.6575100Z ##[group]Operating System
+2026-06-15T15:35:15.6575753Z Ubuntu
+2026-06-15T15:35:15.6576296Z 24.04.4
+2026-06-15T15:35:15.6576908Z LTS
+2026-06-15T15:35:15.6577475Z ##[endgroup]
+2026-06-15T15:35:15.6578093Z ##[group]Runner Image
+2026-06-15T15:35:15.6578787Z Image: ubuntu-24.04
+2026-06-15T15:35:15.6579587Z Version: 20260607.184.1
+2026-06-15T15:35:15.6580955Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260607.184/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-15T15:35:15.6582570Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260607.184
+2026-06-15T15:35:15.6583662Z ##[endgroup]
+2026-06-15T15:35:15.6586476Z ##[group]GITHUB_TOKEN Permissions
+2026-06-15T15:35:15.6588878Z Actions: read
+2026-06-15T15:35:15.6589713Z ArtifactMetadata: read
+2026-06-15T15:35:15.6590449Z Attestations: read
+2026-06-15T15:35:15.6591043Z Checks: read
+2026-06-15T15:35:15.6591596Z CodeQuality: read
+2026-06-15T15:35:15.6592276Z Contents: read
+2026-06-15T15:35:15.6592882Z Deployments: read
+2026-06-15T15:35:15.6593500Z Discussions: read
+2026-06-15T15:35:15.6594088Z Issues: read
+2026-06-15T15:35:15.6594651Z Metadata: read
+2026-06-15T15:35:15.6595266Z Models: read
+2026-06-15T15:35:15.6595909Z Packages: read
+2026-06-15T15:35:15.6596593Z Pages: read
+2026-06-15T15:35:15.6597169Z PullRequests: read
+2026-06-15T15:35:15.6597770Z RepositoryProjects: read
+2026-06-15T15:35:15.6598443Z SecurityEvents: read
+2026-06-15T15:35:15.6599086Z Statuses: read
+2026-06-15T15:35:15.6599821Z VulnerabilityAlerts: read
+2026-06-15T15:35:15.6600522Z ##[endgroup]
+2026-06-15T15:35:15.6602593Z Secret source: None
+2026-06-15T15:35:15.6603395Z Prepare workflow directory
+2026-06-15T15:35:15.7160977Z Prepare all required actions
+2026-06-15T15:35:15.7199022Z Getting action download info
+2026-06-15T15:35:16.1912838Z Download action repository 'actions/checkout@v6' (SHA:df4cb1c069e1874edd31b4311f1884172cec0e10)
+2026-06-15T15:35:16.8751743Z Download action repository 'spring-io/spring-gradle-build-action@v2' (SHA:5dc041537b92d6cba0deaa625e99242a45e4e22b)
+2026-06-15T15:35:17.1296205Z Download action repository 'actions/upload-artifact@v6' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-06-15T15:35:17.3576581Z Getting action download info
+2026-06-15T15:35:17.5598139Z Download action repository 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-15T15:35:18.5400380Z Download action repository 'gradle/actions@0723195856401067f7a2779048b490ace7a47d7c' (SHA:0723195856401067f7a2779048b490ace7a47d7c)
+2026-06-15T15:35:20.3668484Z Uses: spring-io/spring-github-workflows/.github/workflows/spring-gradle-pull-request-build.yml@refs/tags/v7 (0d3f15bb384839966a1ff5c4383731a2b747f24b)
+2026-06-15T15:35:20.3672766Z ##[group] Inputs
+2026-06-15T15:35:20.3673069Z   runner: ubuntu-latest
+2026-06-15T15:35:20.3673323Z ##[endgroup]
+2026-06-15T15:35:20.3673589Z Complete job name: build-pull-request / build-pr
+2026-06-15T15:35:20.4344446Z ##[group]Run actions/checkout@v6
+2026-06-15T15:35:20.4344983Z with:
+2026-06-15T15:35:20.4345207Z   show-progress: false
+2026-06-15T15:35:20.4345491Z   repository: spring-projects/spring-kafka
+2026-06-15T15:35:20.4348264Z   token: ***
+2026-06-15T15:35:20.4348493Z   ssh-strict: true
+2026-06-15T15:35:20.4348720Z   ssh-user: git
+2026-06-15T15:35:20.4348941Z   persist-credentials: true
+2026-06-15T15:35:20.4349186Z   clean: true
+2026-06-15T15:35:20.4349602Z   sparse-checkout-cone-mode: true
+2026-06-15T15:35:20.4349868Z   fetch-depth: 1
+2026-06-15T15:35:20.4350328Z   fetch-tags: false
+2026-06-15T15:35:20.4350544Z   lfs: false
+2026-06-15T15:35:20.4350746Z   submodules: false
+2026-06-15T15:35:20.4350968Z   set-safe-directory: true
+2026-06-15T15:35:20.4351431Z env:
+2026-06-15T15:35:20.4351642Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:20.4351884Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:20.4352132Z ##[endgroup]
+2026-06-15T15:35:20.5312622Z Syncing repository: spring-projects/spring-kafka
+2026-06-15T15:35:20.5314307Z ##[group]Getting Git version info
+2026-06-15T15:35:20.5314812Z Working directory is '/home/runner/work/spring-kafka/spring-kafka'
+2026-06-15T15:35:20.5315438Z [command]/usr/bin/git version
+2026-06-15T15:35:20.5367346Z git version 2.54.0
+2026-06-15T15:35:20.5389073Z ##[endgroup]
+2026-06-15T15:35:20.5402816Z Temporarily overriding HOME='/home/runner/work/_temp/c12c4e60-2ab5-4b1a-8a63-8104e6844e84' before making global git config changes
+2026-06-15T15:35:20.5403714Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-15T15:35:20.5408189Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/spring-kafka/spring-kafka
+2026-06-15T15:35:20.5450929Z Deleting the contents of '/home/runner/work/spring-kafka/spring-kafka'
+2026-06-15T15:35:20.5454873Z ##[group]Determining repository object format
+2026-06-15T15:35:20.5457038Z ##[endgroup]
+2026-06-15T15:35:20.5457616Z ##[group]Initializing the repository
+2026-06-15T15:35:20.5462667Z [command]/usr/bin/git init /home/runner/work/spring-kafka/spring-kafka
+2026-06-15T15:35:20.5532693Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-15T15:35:20.5533722Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-15T15:35:20.5534567Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-15T15:35:20.5535227Z hint: call:
+2026-06-15T15:35:20.5535525Z hint:
+2026-06-15T15:35:20.5535975Z hint: 	git config --global init.defaultBranch <name>
+2026-06-15T15:35:20.5536483Z hint:
+2026-06-15T15:35:20.5536962Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-15T15:35:20.5537744Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-15T15:35:20.5538371Z hint:
+2026-06-15T15:35:20.5538715Z hint: 	git branch -m <name>
+2026-06-15T15:35:20.5539085Z hint:
+2026-06-15T15:35:20.5539853Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-15T15:35:20.5540838Z Initialized empty Git repository in /home/runner/work/spring-kafka/spring-kafka/.git/
+2026-06-15T15:35:20.5548779Z [command]/usr/bin/git remote add origin https://github.com/spring-projects/spring-kafka
+2026-06-15T15:35:20.5585137Z ##[endgroup]
+2026-06-15T15:35:20.5585723Z ##[group]Disabling automatic garbage collection
+2026-06-15T15:35:20.5590154Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-15T15:35:20.5618562Z ##[endgroup]
+2026-06-15T15:35:20.5619129Z ##[group]Setting up auth
+2026-06-15T15:35:20.5622005Z Removing SSH command configuration
+2026-06-15T15:35:20.5628735Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-15T15:35:20.5661984Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-15T15:35:20.5960640Z Removing HTTP extra header
+2026-06-15T15:35:20.5966326Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-15T15:35:20.5996886Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-15T15:35:20.6221005Z Removing includeIf entries pointing to credentials config files
+2026-06-15T15:35:20.6225980Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-15T15:35:20.6264321Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-15T15:35:20.6505255Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-15T15:35:20.6541242Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git.path /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:35:20.6572427Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:35:20.6605280Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:35:20.6637863Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:35:20.6663942Z ##[endgroup]
+2026-06-15T15:35:20.6664539Z ##[group]Fetching the repository
+2026-06-15T15:35:20.6672692Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +aeffe66510354f61948551811ba3580a9ca030db:refs/remotes/pull/4505/merge
+2026-06-15T15:35:21.8527447Z From https://github.com/spring-projects/spring-kafka
+2026-06-15T15:35:21.8528263Z  * [new ref]         aeffe66510354f61948551811ba3580a9ca030db -> pull/4505/merge
+2026-06-15T15:35:21.8559491Z ##[endgroup]
+2026-06-15T15:35:21.8560079Z ##[group]Determining the checkout info
+2026-06-15T15:35:21.8560908Z ##[endgroup]
+2026-06-15T15:35:21.8566006Z [command]/usr/bin/git sparse-checkout disable
+2026-06-15T15:35:21.8608335Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-15T15:35:21.8636886Z ##[group]Checking out the ref
+2026-06-15T15:35:21.8640386Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/4505/merge
+2026-06-15T15:35:21.9247891Z Note: switching to 'refs/remotes/pull/4505/merge'.
+2026-06-15T15:35:21.9248329Z 
+2026-06-15T15:35:21.9248692Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-15T15:35:21.9249691Z changes and commit them, and you can discard any commits you make in this
+2026-06-15T15:35:21.9250457Z state without impacting any branches by switching back to a branch.
+2026-06-15T15:35:21.9250946Z 
+2026-06-15T15:35:21.9251286Z If you want to create a new branch to retain commits you create, you may
+2026-06-15T15:35:21.9251996Z do so (now or later) by using -c with the switch command. Example:
+2026-06-15T15:35:21.9252432Z 
+2026-06-15T15:35:21.9252592Z   git switch -c <new-branch-name>
+2026-06-15T15:35:21.9252864Z 
+2026-06-15T15:35:21.9253019Z Or undo this operation with:
+2026-06-15T15:35:21.9253258Z 
+2026-06-15T15:35:21.9253372Z   git switch -
+2026-06-15T15:35:21.9253716Z 
+2026-06-15T15:35:21.9253941Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-15T15:35:21.9254247Z 
+2026-06-15T15:35:21.9254602Z HEAD is now at aeffe66 Merge 48d486bc7771c907d81e541bb4c8bf8a85c9093e into 1cecbddf75fa1bcbc0ad1a13e2661430478e0dcc
+2026-06-15T15:35:21.9258790Z ##[endgroup]
+2026-06-15T15:35:21.9307166Z [command]/usr/bin/git log -1 --format=%H
+2026-06-15T15:35:21.9334031Z aeffe66510354f61948551811ba3580a9ca030db
+2026-06-15T15:35:21.9564468Z ##[group]Run spring-io/spring-gradle-build-action@v2
+2026-06-15T15:35:21.9564807Z with:
+2026-06-15T15:35:21.9565015Z   java-version: 24
+2026-06-15T15:35:21.9565231Z   distribution: temurin
+2026-06-15T15:35:21.9565449Z env:
+2026-06-15T15:35:21.9565643Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:21.9565875Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:21.9566104Z ##[endgroup]
+2026-06-15T15:35:21.9720521Z ##[group]Run actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+2026-06-15T15:35:21.9721090Z with:
+2026-06-15T15:35:21.9721295Z   java-version: 24
+2026-06-15T15:35:21.9721514Z   distribution: temurin
+2026-06-15T15:35:21.9721743Z   java-package: jdk
+2026-06-15T15:35:21.9721959Z   check-latest: false
+2026-06-15T15:35:21.9722167Z   server-id: github
+2026-06-15T15:35:21.9722384Z   server-username: GITHUB_ACTOR
+2026-06-15T15:35:21.9722641Z   server-password: GITHUB_TOKEN
+2026-06-15T15:35:21.9722883Z   overwrite-settings: true
+2026-06-15T15:35:21.9723117Z   job-status: success
+2026-06-15T15:35:21.9725797Z   token: ***
+2026-06-15T15:35:21.9726008Z env:
+2026-06-15T15:35:21.9726314Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:21.9726555Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:21.9726773Z ##[endgroup]
+2026-06-15T15:35:22.1207207Z ##[group]Installed distributions
+2026-06-15T15:35:22.1258701Z Trying to resolve the latest version from remote
+2026-06-15T15:35:22.7089930Z Resolved latest version as 24.0.2+12
+2026-06-15T15:35:22.7091132Z Trying to download...
+2026-06-15T15:35:22.7092598Z Downloading Java 24.0.2+12 (Temurin-Hotspot) from https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_x64_linux_hotspot_24.0.2_12.tar.gz ...
+2026-06-15T15:35:23.6719879Z Extracting Java archive...
+2026-06-15T15:35:23.6824565Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1b53ee24-5f65-451b-96fd-374b82229988 -f /home/runner/work/_temp/719ed201-cc93-47f0-bb65-dee2a9a8f6cb
+2026-06-15T15:35:26.1360261Z Java 24.0.2+12 was downloaded
+2026-06-15T15:35:26.1360675Z Setting Java 24.0.2+12 as the default
+2026-06-15T15:35:26.1369855Z Creating toolchains.xml for JDK version 24 from temurin
+2026-06-15T15:35:26.1435845Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-15T15:35:26.1439703Z 
+2026-06-15T15:35:26.1440082Z Java configuration:
+2026-06-15T15:35:26.1440352Z   Distribution: temurin
+2026-06-15T15:35:26.1440670Z   Version: 24.0.2+12
+2026-06-15T15:35:26.1441105Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.1441407Z 
+2026-06-15T15:35:26.1441782Z ##[endgroup]
+2026-06-15T15:35:26.1454167Z Creating settings.xml with server-id: github
+2026-06-15T15:35:26.1454542Z Writing to /home/runner/.m2/settings.xml
+2026-06-15T15:35:26.1617167Z ##[group]Run mkdir -p $HOME/.gradle
+2026-06-15T15:35:26.1617530Z [36;1mmkdir -p $HOME/.gradle[0m
+2026-06-15T15:35:26.1618018Z [36;1mecho 'systemProp.user.name=spring-builds+github' >> $HOME/.gradle/gradle.properties[0m
+2026-06-15T15:35:26.4142519Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-15T15:35:26.4142900Z env:
+2026-06-15T15:35:26.4143119Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:26.4143372Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:26.4143729Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.4144228Z   JAVA_HOME_24_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.4144607Z ##[endgroup]
+2026-06-15T15:35:26.4304074Z ##[group]Run gradle/actions/wrapper-validation@0723195856401067f7a2779048b490ace7a47d7c
+2026-06-15T15:35:26.4304510Z with:
+2026-06-15T15:35:26.4304715Z   min-wrapper-count: 1
+2026-06-15T15:35:26.4304948Z   allow-snapshots: false
+2026-06-15T15:35:26.4305172Z env:
+2026-06-15T15:35:26.4305368Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:26.4305590Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:26.4305914Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.4306596Z   JAVA_HOME_24_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.4306974Z ##[endgroup]
+2026-06-15T15:35:26.7402839Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-15T15:35:26.7403869Z   55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:26.7405174Z   cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8 samples/sample-07/gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:26.7406676Z   2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046 samples/sample-08/gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:26.7674804Z ##[group]Run gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c
+2026-06-15T15:35:26.7675206Z with:
+2026-06-15T15:35:26.7675413Z   cache-disabled: false
+2026-06-15T15:35:26.7675647Z   cache-read-only: true
+2026-06-15T15:35:26.7675869Z   cache-write-only: false
+2026-06-15T15:35:26.7676116Z   cache-overwrite-existing: false
+2026-06-15T15:35:26.7676387Z   cache-cleanup: on-success
+2026-06-15T15:35:26.7676691Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-15T15:35:26.7677024Z   add-job-summary: always
+2026-06-15T15:35:26.7677276Z   add-job-summary-as-pr-comment: never
+2026-06-15T15:35:26.7677564Z   dependency-graph: disabled
+2026-06-15T15:35:26.7677869Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-15T15:35:26.7678234Z   dependency-graph-continue-on-failure: true
+2026-06-15T15:35:26.7678855Z   build-scan-publish: false
+2026-06-15T15:35:26.7679191Z   validate-wrappers: true
+2026-06-15T15:35:26.7680093Z   allow-snapshot-wrappers: false
+2026-06-15T15:35:26.7680428Z   gradle-home-cache-strict-match: false
+2026-06-15T15:35:26.7680709Z   workflow-job-context: null
+2026-06-15T15:35:26.7683774Z   github-token: ***
+2026-06-15T15:35:26.7684075Z env:
+2026-06-15T15:35:26.7684362Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:26.7684623Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:26.7685219Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.7685837Z   JAVA_HOME_24_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:26.7686268Z   GRADLE_ACTION_ID: gradle/actions/wrapper-validation
+2026-06-15T15:35:26.7686570Z ##[endgroup]
+2026-06-15T15:35:27.2106525Z Gradle User Home already exists at /home/runner/.gradle
+2026-06-15T15:35:27.2129944Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-15T15:35:27.2133294Z ##[group]Restore Gradle state from cache
+2026-06-15T15:35:27.4530498Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build-with-gradle[8e8bf4288da2ca75f7bc0cf77fd29417]-1cecbddf75fa1bcbc0ad1a13e2661430478e0dcc
+2026-06-15T15:35:28.6396310Z Received 15815750 of 15815750 (100.0%), 15.8 MBs/sec
+2026-06-15T15:35:28.6397661Z Cache Size: ~15 MB (15815750 B)
+2026-06-15T15:35:28.6425350Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7f5dc830-b624-4e06-a4c7-d559583aa61e/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:28.9861233Z Cache restored successfully
+2026-06-15T15:35:28.9873718Z Restored cache entry with key gradle-home-v1|Linux-X64|build-pr[cb0c7957cee64e7cde1ad8341b873659]-aeffe66510354f61948551811ba3580a9ca030db to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 1773ms
+2026-06-15T15:35:29.2057056Z Cache hit for: gradle-dependencies-v1-b0a7a0adcd59b30f8428109ed7608362
+2026-06-15T15:35:29.2081468Z Cache hit for: gradle-wrapper-zips-v1-9db0835d029c62b1a3d29bf9e5532cf5
+2026-06-15T15:35:29.2141411Z Cache hit for: gradle-instrumented-jars-v1-d9ba8432722f4f9362042794d4f3e49b
+2026-06-15T15:35:29.2152708Z Cache hit for: gradle-transforms-v1-a2a6cd8805a4de9d47021fbc347d002c
+2026-06-15T15:35:29.2195416Z Cache hit for: gradle-groovy-dsl-v1-e9dda56c4dbb81d06a531712b84d8abe
+2026-06-15T15:35:29.3562248Z Received 341568 of 341568 (100.0%), 4.1 MBs/sec
+2026-06-15T15:35:29.3562749Z Cache Size: ~0 MB (341568 B)
+2026-06-15T15:35:29.3628746Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5861244c-76cf-47d2-a5d6-bccc0f1786f9/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:29.4379196Z Cache restored successfully
+2026-06-15T15:35:29.4383795Z Restored cache entry with key gradle-groovy-dsl-v1-e9dda56c4dbb81d06a531712b84d8abe to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 450ms
+2026-06-15T15:35:29.8343727Z Received 135435 of 135435 (100.0%), 0.3 MBs/sec
+2026-06-15T15:35:29.8344326Z Cache Size: ~0 MB (135435 B)
+2026-06-15T15:35:29.8362687Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a79c091b-435c-4b16-a6f2-f5e3b3683b85/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:29.8537768Z Cache restored successfully
+2026-06-15T15:35:29.8539494Z Restored cache entry with key gradle-instrumented-jars-v1-d9ba8432722f4f9362042794d4f3e49b to /home/runner/.gradle/caches/jars-*/*/ in 865ms
+2026-06-15T15:35:30.4182767Z Received 25165824 of 137140559 (18.4%), 23.9 MBs/sec
+2026-06-15T15:35:30.4236740Z Received 16777216 of 329542378 (5.1%), 16.0 MBs/sec
+2026-06-15T15:35:30.4482027Z Received 14896935 of 31674151 (47.0%), 14.2 MBs/sec
+2026-06-15T15:35:31.4165743Z Received 134217728 of 137140559 (97.9%), 63.8 MBs/sec
+2026-06-15T15:35:31.4236163Z Received 121634816 of 329542378 (36.9%), 58.0 MBs/sec
+2026-06-15T15:35:31.4450203Z Received 27479847 of 31674151 (86.8%), 13.1 MBs/sec
+2026-06-15T15:35:31.4583425Z Received 137140559 of 137140559 (100.0%), 63.9 MBs/sec
+2026-06-15T15:35:31.4586718Z Cache Size: ~131 MB (137140559 B)
+2026-06-15T15:35:31.4742680Z [command]/usr/bin/tar -xf /home/runner/work/_temp/32810f18-cb1d-4e81-bda2-a1ef6c15f507/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:31.7186326Z Cache restored successfully
+2026-06-15T15:35:31.7272863Z Restored cache entry with key gradle-wrapper-zips-v1-9db0835d029c62b1a3d29bf9e5532cf5 to /home/runner/.gradle/wrapper/dists/gradle-9.4.1-bin/arn2x92ynaizyzdaamcbpbhtj in 2739ms
+2026-06-15T15:35:32.4255439Z Received 218103808 of 329542378 (66.2%), 69.3 MBs/sec
+2026-06-15T15:35:32.4481440Z Received 27479847 of 31674151 (86.8%), 8.7 MBs/sec
+2026-06-15T15:35:33.4241220Z Received 276824064 of 329542378 (84.0%), 66.0 MBs/sec
+2026-06-15T15:35:33.4500532Z Received 27479847 of 31674151 (86.8%), 6.6 MBs/sec
+2026-06-15T15:35:34.4234168Z Received 325348074 of 329542378 (98.7%), 62.0 MBs/sec
+2026-06-15T15:35:34.4453130Z Received 27479847 of 31674151 (86.8%), 5.2 MBs/sec
+2026-06-15T15:35:34.5234080Z Received 31674151 of 31674151 (100.0%), 5.9 MBs/sec
+2026-06-15T15:35:34.5236497Z Cache Size: ~30 MB (31674151 B)
+2026-06-15T15:35:34.5264995Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a4939aee-d9b1-4320-910a-ad4122819e4a/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:34.8608679Z Cache restored successfully
+2026-06-15T15:35:34.8643710Z Restored cache entry with key gradle-transforms-v1-a2a6cd8805a4de9d47021fbc347d002c to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 5875ms
+2026-06-15T15:35:35.3314323Z Received 329542378 of 329542378 (100.0%), 53.2 MBs/sec
+2026-06-15T15:35:35.3314985Z Cache Size: ~314 MB (329542378 B)
+2026-06-15T15:35:35.3339186Z [command]/usr/bin/tar -xf /home/runner/work/_temp/665a5395-25f4-4bd1-807f-c761a2dd2b5a/cache.tzst -P -C /home/runner/work/spring-kafka/spring-kafka --use-compress-program unzstd
+2026-06-15T15:35:35.8384926Z Cache restored successfully
+2026-06-15T15:35:35.8535783Z Restored cache entry with key gradle-dependencies-v1-b0a7a0adcd59b30f8428109ed7608362 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 6865ms
+2026-06-15T15:35:35.8910282Z ##[endgroup]
+2026-06-15T15:35:35.9221736Z ##[group]All Gradle Wrapper jars are valid
+2026-06-15T15:35:35.9223173Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-15T15:35:35.9224147Z   55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:35.9225864Z   cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8 samples/sample-07/gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:35.9227486Z   2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046 samples/sample-08/gradle/wrapper/gradle-wrapper.jar
+2026-06-15T15:35:35.9228852Z ##[endgroup]
+2026-06-15T15:35:35.9493267Z ##[group]Run ./gradlew check
+2026-06-15T15:35:35.9493607Z [36;1m./gradlew check[0m
+2026-06-15T15:35:35.9527353Z shell: /usr/bin/bash -e {0}
+2026-06-15T15:35:35.9527656Z env:
+2026-06-15T15:35:35.9527904Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:35:35.9528404Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:35:35.9528801Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:35.9529462Z   JAVA_HOME_24_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:35:35.9530081Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-15T15:35:35.9530452Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-15T15:35:35.9530787Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-15T15:35:35.9531135Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-15T15:35:35.9531619Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-15T15:35:35.9532138Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-15T15:35:35.9532545Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-15T15:35:35.9532865Z ##[endgroup]
+2026-06-15T15:35:36.6327263Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-15T15:35:47.3342859Z Parallelism: 4 processors (Runtime), test maxParallelForks=2, Gradle maxWorkers=4
+2026-06-15T15:35:52.0341205Z > Task :spring-kafka-test:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-15T15:35:52.0342524Z > Task :spring-kafka:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-15T15:35:52.0343500Z > Task :spring-kafka-bom:check UP-TO-DATE
+2026-06-15T15:35:52.0344536Z > Task :spring-kafka-docs:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-15T15:35:52.0345455Z > Task :check UP-TO-DATE
+2026-06-15T15:35:52.1345201Z > Task :spring-kafka-test:compileKotlin NO-SOURCE
+2026-06-15T15:35:52.1348225Z > Task :spring-kafka:compileKotlin NO-SOURCE
+2026-06-15T15:35:52.2334636Z > Task :spring-kafka-docs:processResources
+2026-06-15T15:35:52.2360533Z > Task :spring-kafka-docs:processTestResources NO-SOURCE
+2026-06-15T15:35:52.4340684Z > Task :spring-kafka-test:compileJava FROM-CACHE
+2026-06-15T15:35:52.4370322Z > Task :spring-kafka-test:processResources
+2026-06-15T15:35:52.4400201Z > Task :spring-kafka-test:classes
+2026-06-15T15:35:52.9330936Z > Task :spring-kafka-test:jar
+2026-06-15T15:35:53.0331239Z > Task :spring-kafka-test:checkstyleMain FROM-CACHE
+2026-06-15T15:35:53.0358736Z > Task :spring-kafka-test:compileTestKotlin NO-SOURCE
+2026-06-15T15:35:53.2340900Z > Task :spring-kafka-test:compileTestJava FROM-CACHE
+2026-06-15T15:35:53.2440672Z > Task :spring-kafka-test:processTestResources
+2026-06-15T15:35:53.2442414Z > Task :spring-kafka-test:testClasses
+2026-06-15T15:35:53.3339122Z > Task :spring-kafka-test:checkstyleTest FROM-CACHE
+2026-06-15T15:35:53.4324412Z > Task :spring-kafka-test:test FROM-CACHE
+2026-06-15T15:35:53.4343481Z > Task :spring-kafka-test:check UP-TO-DATE
+2026-06-15T15:36:03.9340605Z > Task :spring-kafka:compileJava
+2026-06-15T15:36:03.9341317Z > Task :spring-kafka:processResources
+2026-06-15T15:36:03.9350673Z > Task :spring-kafka:classes
+2026-06-15T15:36:04.3350686Z > Task :spring-kafka:jar
+2026-06-15T15:36:05.6344236Z > Task :spring-kafka:processTestResources
+2026-06-15T15:36:19.7340377Z > Task :spring-kafka-docs:compileKotlin
+2026-06-15T15:36:20.3370650Z > Task :spring-kafka:compileTestKotlin
+2026-06-15T15:36:22.3355181Z > Task :spring-kafka:checkstyleMain
+2026-06-15T15:36:22.8360415Z > Task :spring-kafka-docs:compileJava
+2026-06-15T15:36:22.8420132Z > Task :spring-kafka-docs:classes
+2026-06-15T15:36:22.8480086Z > Task :spring-kafka-docs:jar
+2026-06-15T15:36:22.8509836Z > Task :spring-kafka-docs:compileTestKotlin NO-SOURCE
+2026-06-15T15:36:22.8540041Z > Task :spring-kafka-docs:compileTestJava NO-SOURCE
+2026-06-15T15:36:22.8570063Z > Task :spring-kafka-docs:testClasses UP-TO-DATE
+2026-06-15T15:36:22.8570943Z > Task :spring-kafka-docs:test NO-SOURCE
+2026-06-15T15:36:22.8600153Z > Task :spring-kafka-docs:check UP-TO-DATE
+2026-06-15T15:36:23.3335629Z 
+2026-06-15T15:36:23.3343990Z > Task :spring-kafka:compileTestJava
+2026-06-15T15:36:23.3377788Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/core/DefaultKafkaConsumerFactoryTests.java:118: warning: [unchecked] unchecked conversion
+2026-06-15T15:36:23.3380465Z 						return mock(KafkaConsumer.class);
+2026-06-15T15:36:23.3381180Z 						           ^
+2026-06-15T15:36:23.3381819Z   required: KafkaConsumer<String,String>
+2026-06-15T15:36:23.3382597Z   found:    KafkaConsumer
+2026-06-15T15:36:23.3384204Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/core/DefaultKafkaConsumerFactoryTests.java:146: warning: [unchecked] unchecked conversion
+2026-06-15T15:36:23.3385886Z 						return mock(Consumer.class);
+2026-06-15T15:36:23.3386583Z 						           ^
+2026-06-15T15:36:23.3387209Z   required: Consumer<String,String>
+2026-06-15T15:36:23.3387887Z   found:    Consumer
+2026-06-15T15:36:24.5342359Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:32: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5370123Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5395615Z 		^
+2026-06-15T15:36:24.5421406Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:32: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5446671Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5469886Z 		                                      ^
+2026-06-15T15:36:24.5501584Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:40: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5531132Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5559852Z 		^
+2026-06-15T15:36:24.5600553Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:40: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5630127Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5669903Z 		                                      ^
+2026-06-15T15:36:24.5691751Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:48: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5720138Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5749836Z 		^
+2026-06-15T15:36:24.5781475Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/support/DefaultKafkaHeaderMapperTrustPackagesTests.java:48: warning: [removal] DefaultKafkaHeaderMapper in org.springframework.kafka.support has been deprecated and marked for removal
+2026-06-15T15:36:24.5810101Z 		DefaultKafkaHeaderMapper mapper = new DefaultKafkaHeaderMapper();
+2026-06-15T15:36:24.5839862Z 		                                      ^
+2026-06-15T15:36:27.8325535Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/listener/ShareKafkaMessageListenerContainerUnitTests.java:301: warning: [deprecation] <K,V>ConsumerRecords(Map<TopicPartition,List<ConsumerRecord<K,V>>>) in ConsumerRecords has been deprecated
+2026-06-15T15:36:27.8371944Z 		ConsumerRecords<String, String> records = new ConsumerRecords<>(
+2026-06-15T15:36:27.8390240Z 		                                          ^
+2026-06-15T15:36:27.8400162Z   where K,V are type-variables:
+2026-06-15T15:36:27.8400931Z     K extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8402141Z     V extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8404360Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/listener/ShareKafkaMessageListenerContainerUnitTests.java:310: warning: [deprecation] <K,V>ConsumerRecords(Map<TopicPartition,List<ConsumerRecord<K,V>>>) in ConsumerRecords has been deprecated
+2026-06-15T15:36:27.8406547Z 			return new ConsumerRecords<>(Map.of());
+2026-06-15T15:36:27.8407148Z 			       ^
+2026-06-15T15:36:27.8407650Z   where K,V are type-variables:
+2026-06-15T15:36:27.8408335Z     K extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8409092Z     V extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8411396Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/listener/ShareKafkaMessageListenerContainerUnitTests.java:339: warning: [deprecation] <K,V>ConsumerRecords(Map<TopicPartition,List<ConsumerRecord<K,V>>>) in ConsumerRecords has been deprecated
+2026-06-15T15:36:27.8413584Z 		ConsumerRecords<String, String> records = new ConsumerRecords<>(
+2026-06-15T15:36:27.8423032Z 		                                          ^
+2026-06-15T15:36:27.8423728Z   where K,V are type-variables:
+2026-06-15T15:36:27.8424420Z     K extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8425184Z     V extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8427371Z /home/runner/work/spring-kafka/spring-kafka/spring-kafka/src/test/java/org/springframework/kafka/listener/ShareKafkaMessageListenerContainerUnitTests.java:348: warning: [deprecation] <K,V>ConsumerRecords(Map<TopicPartition,List<ConsumerRecord<K,V>>>) in ConsumerRecords has been deprecated
+2026-06-15T15:36:27.8429750Z 			return new ConsumerRecords<>(Map.of());
+2026-06-15T15:36:27.8430356Z 			       ^
+2026-06-15T15:36:27.8430861Z   where K,V are type-variables:
+2026-06-15T15:36:27.8431532Z     K extends Object declared in class ConsumerRecords
+2026-06-15T15:36:27.8432278Z     V extends Object declared in class ConsumerRecords
+2026-06-15T15:36:29.6340447Z 12 warnings
+2026-06-15T15:36:30.2322283Z 
+2026-06-15T15:36:30.2324291Z > Task :spring-kafka:testClasses
+2026-06-15T15:36:41.6344356Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-15T15:36:41.6391818Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-15T15:36:43.4332065Z WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+2026-06-15T15:36:43.4351258Z WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.apache.kafka.common.utils.ByteBufferUnmapper (file:/home/runner/.gradle/caches/modules-2/files-2.1/org.apache.kafka/kafka-clients/4.2.1/6addc9b1f038d2dde0fc6b34464b1061ec5fb4c1/kafka-clients-4.2.1.jar)
+2026-06-15T15:36:43.4380714Z WARNING: Please consider reporting this to the maintainers of class org.apache.kafka.common.utils.ByteBufferUnmapper
+2026-06-15T15:36:43.4404694Z WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+2026-06-15T15:36:43.6326981Z 
+2026-06-15T15:36:43.6360595Z > Task :spring-kafka:test
+2026-06-15T15:36:43.6390129Z AliasPropertiesTests finished in 8107ms (1 tests)
+2026-06-15T15:36:44.0340078Z 
+2026-06-15T15:36:44.0351310Z > Task :spring-kafka:checkstyleTest
+2026-06-15T15:36:44.6363425Z WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+2026-06-15T15:36:44.6380513Z WARNING: sun.misc.Unsafe::invokeCleaner has been called by org.apache.kafka.common.utils.ByteBufferUnmapper (file:/home/runner/.gradle/caches/modules-2/files-2.1/org.apache.kafka/kafka-clients/4.2.1/6addc9b1f038d2dde0fc6b34464b1061ec5fb4c1/kafka-clients-4.2.1.jar)
+2026-06-15T15:36:44.6383059Z WARNING: Please consider reporting this to the maintainers of class org.apache.kafka.common.utils.ByteBufferUnmapper
+2026-06-15T15:36:44.6384464Z WARNING: sun.misc.Unsafe::invokeCleaner will be removed in a future release
+2026-06-15T15:36:45.7360182Z 
+2026-06-15T15:36:45.7452716Z > Task :spring-kafka:test
+2026-06-15T15:36:45.7530407Z AsyncMonoDefaultErrorHandlerRetryTests finished in 9455ms (1 tests)
+2026-06-15T15:36:45.8343284Z AsyncListenerTests finished in 2253ms (2 tests)
+2026-06-15T15:36:46.0338628Z BackOffFactoryTests finished in 131ms (17 tests)
+2026-06-15T15:36:47.8323200Z BatchListenerConversion2Tests finished in 1871ms (1 tests)
+2026-06-15T15:36:48.0331366Z ContainerFactoryTests finished in 195ms (2 tests)
+2026-06-15T15:36:48.1323021Z KafkaListenerAnnotationBeanPostProcessorTests finished in 64ms (3 tests)
+2026-06-15T15:36:48.6340841Z KafkaListenerEndpointRegistryTests finished in 476ms (15 tests)
+2026-06-15T15:36:49.5360866Z KafkaStreamsCustomizerTests finished in 908ms (1 tests)
+2026-06-15T15:36:50.2323616Z StreamsBuilderFactoryLateConfigTests finished in 680ms (3 tests)
+2026-06-15T15:36:51.8338777Z BatchListenerConversionTests finished in 6887ms (4 tests)
+2026-06-15T15:36:53.1341143Z DefaultKafkaConsumerFactoryTests finished in 2913ms (23 tests)
+2026-06-15T15:37:00.9335792Z DefaultShareConsumerFactoryTests finished in 7458ms (8 tests)
+2026-06-15T15:37:01.1347725Z RoutingKafkaTemplateTests finished in 191ms (2 tests)
+2026-06-15T15:37:01.1348768Z TransactionSynchronizationTests finished in 10ms (2 tests)
+2026-06-15T15:37:01.3340645Z ABSwitchClusterTests finished in 160ms (1 tests)
+2026-06-15T15:37:02.8330688Z AsyncAckAfterHandleTests finished in 1505ms (1 tests)
+2026-06-15T15:37:03.1336419Z CommonDelegatingErrorHandlerTests finished in 315ms (11 tests)
+2026-06-15T15:37:05.9323020Z ConcurrentMessageListenerContainerMockTests finished in 2831ms (28 tests)
+2026-06-15T15:37:05.9323863Z ConsumerAwareRebalanceListenerTests finished in 5ms (3 tests)
+2026-06-15T15:37:06.0323052Z ConsumerSeekAwareTests finished in 86ms (1 tests)
+2026-06-15T15:37:06.6336657Z DeadLetterPublishingRecovererTests finished in 601ms (28 tests)
+2026-06-15T15:37:10.1350975Z EnableKafkaIntegrationTests finished in 18.38s (42 tests)
+2026-06-15T15:37:10.2337961Z KafkaListenerAckModeTests finished in 78ms (3 tests)
+2026-06-15T15:37:10.2406393Z KafkaRuntimeHintsTest finished in 21ms (1 tests)
+2026-06-15T15:37:10.2481459Z RecordMessagingMessageListenerAdapterTests finished in 10ms (2 tests)
+2026-06-15T15:37:10.9340921Z StreamsBuilderFactoryBeanInMemoryStateStoreTests finished in 701ms (1 tests)
+2026-06-15T15:37:12.2326033Z StreamsBuilderFactoryBeanTests finished in 1229ms (5 tests)
+2026-06-15T15:37:13.1354104Z DefaultKafkaProducerFactoryTests finished in 862ms (20 tests)
+2026-06-15T15:37:13.1356357Z DefaultTransactionIdSuffixStrategyTests finished in 9ms (7 tests)
+2026-06-15T15:37:13.3324632Z KafkaAdminBadContextTests finished in 275ms (1 tests)
+2026-06-15T15:37:14.7344086Z KafkaAdminTests finished in 1373ms (12 tests, 11 passed, 1 skipped) — skipped: testAddTopicsAndAddPartitions()
+2026-06-15T15:37:14.7351140Z KafkaSaslHandlerClassloadingTest finished in 4ms (2 tests)
+2026-06-15T15:37:15.7341604Z DefaultErrorHandlerBatchIntegrationTests finished in 8813ms (2 tests)
+2026-06-15T15:37:16.1355243Z DefaultErrorHandlerBatchTests finished in 458ms (6 tests)
+2026-06-15T15:37:18.2325318Z DefaultErrorHandlerNoSeeksBatchAckTests finished in 2066ms (1 tests)
+2026-06-15T15:37:18.4345897Z DefaultErrorHandlerNoSeeksBatchListenerTests finished in 177ms (2 tests)
+2026-06-15T15:37:18.6330930Z DefaultErrorHandlerNoSeeksRecordAckNoResumeContainerPausedTests finished in 212ms (1 tests)
+2026-06-15T15:37:18.8323318Z DefaultErrorHandlerNoSeeksRecordAckNoResumePartitionTests finished in 200ms (1 tests)
+2026-06-15T15:37:19.1323027Z DefaultErrorHandlerNoSeeksRecordAckTests finished in 272ms (2 tests)
+2026-06-15T15:37:19.1339004Z DeliveryAttemptAwareRetryListenerTests finished in 3ms (2 tests)
+2026-06-15T15:37:20.4326385Z ErrorHandlingUtilsTest finished in 1332ms (4 tests)
+2026-06-15T15:37:20.4350546Z FailedRecordProcessorTests finished in 3ms (1 tests)
+2026-06-15T15:37:23.2334380Z KafkaTemplateTests finished in 8325ms (17 tests)
+2026-06-15T15:37:23.9346015Z FallbackBatchErrorHandlerIntegrationTests finished in 3291ms (2 tests)
+2026-06-15T15:37:23.9397427Z HeaderMethodArgumentResolverTests finished in 18ms (1 tests)
+2026-06-15T15:37:24.2335797Z KafkaListenerEndpointRegistryLifecycleTests finished in 314ms (1 tests)
+2026-06-15T15:37:27.8322895Z KafkaTemplateTransactionTests finished in 4407ms (20 tests)
+2026-06-15T15:37:39.1326626Z AbstractConsumerSeekAwareTests finished in 11.36s (3 tests)
+2026-06-15T15:37:40.4322675Z BatchSmartMessageConverterTests finished in 1263ms (2 tests)
+2026-06-15T15:37:40.9326909Z CommitOnAssignmentTests finished in 519ms (5 tests)
+2026-06-15T15:37:41.1322971Z CommonContainerStoppingErrorHandler1Tests finished in 142ms (1 tests)
+2026-06-15T15:37:41.2323145Z CommonContainerStoppingErrorHandler2Tests finished in 126ms (1 tests)
+2026-06-15T15:37:41.3322616Z CommonContainerStoppingErrorHandler3Tests finished in 134ms (1 tests)
+2026-06-15T15:37:41.4326694Z CommonMixedErrorHandlerTests finished in 102ms (1 tests)
+2026-06-15T15:38:17.9352693Z ConcurrentMessageListenerContainerTests finished in 36.32s (13 tests)
+2026-06-15T15:38:17.9363656Z ContainerCustomizationTests finished in 57ms (5 tests)
+2026-06-15T15:38:19.6373377Z ContainerEnforceRebalanceTests finished in 1654ms (1 tests)
+2026-06-15T15:38:26.2330778Z ContainerGroupSequencerTests finished in 6624ms (1 tests)
+2026-06-15T15:38:26.5323218Z ContainerPauseImmediateTests finished in 234ms (1 tests)
+2026-06-15T15:38:27.2322410Z DefaultAfterRollbackProcessorTests finished in 727ms (4 tests)
+2026-06-15T15:38:27.4330844Z DefaultErrorHandlerRecordTests finished in 261ms (7 tests)
+2026-06-15T15:38:27.8322826Z DefaultErrorHandlerSeekAfterCommitExceptionBatchAckTests finished in 355ms (1 tests)
+2026-06-15T15:38:27.9323428Z DefaultErrorHandlerSeekAfterCommitExceptionBatchListenerTests finished in 94ms (1 tests)
+2026-06-15T15:38:28.1354609Z DefaultErrorHandlerSeekAfterCommitExceptionTests finished in 187ms (1 tests)
+2026-06-15T15:38:32.3343080Z DeliveryAttemptAwareRetryListenerIntegrationTests finished in 4266ms (2 tests)
+2026-06-15T15:38:32.4323069Z ErrorHandlingCoverageTests finished in 4ms (1 tests)
+2026-06-15T15:38:33.6328917Z ErrorHandlingDeserializerTests finished in 1263ms (4 tests)
+2026-06-15T15:38:33.6330238Z ExceptionClassifierTests finished in 2ms (2 tests)
+2026-06-15T15:38:33.9323565Z FailedBatchProcessorTests finished in 294ms (3 tests)
+2026-06-15T15:38:34.0326871Z FailedRecordTrackerTests finished in 35ms (8 tests)
+2026-06-15T15:38:34.3322733Z FallbackBatchErrorHandlerTests finished in 395ms (10 tests)
+2026-06-15T15:38:34.5330434Z ListenerContainerPauseServiceTests finished in 194ms (4 tests)
+2026-06-15T15:38:34.6358417Z ListenerErrorHandlerTests finished in 92ms (2 tests)
+2026-06-15T15:38:35.7323072Z ManualImmediateNackBatchTests finished in 1081ms (1 tests)
+2026-06-15T15:38:36.8322143Z ManualNackBatchTests finished in 1072ms (1 tests)
+2026-06-15T15:38:37.9322301Z ManualNackBatchTxTests finished in 1085ms (1 tests)
+2026-06-15T15:38:39.0322448Z ManualNackPauseResumeTests finished in 1076ms (1 tests)
+2026-06-15T15:38:39.2322776Z KafkaMessageListenerContainerTests finished in 1.24 min (80 tests)
+2026-06-15T15:38:40.0332868Z ManualNackRecordTests finished in 1074ms (1 tests)
+2026-06-15T15:38:40.2322353Z ListenerUtilsTests finished in 1025ms (5 tests)
+2026-06-15T15:38:40.5323093Z LoggingErrorHandlerTests finished in 273ms (1 tests)
+2026-06-15T15:38:40.7331270Z ManualAckPartialBatchTests finished in 241ms (1 tests)
+2026-06-15T15:38:40.8352097Z ManualAssignmentInitialSeekTests finished in 93ms (3 tests)
+2026-06-15T15:38:41.1322713Z ManualNackRecordZeroSleepTests finished in 1042ms (1 tests)
+2026-06-15T15:38:41.5341592Z MissingTopicCheckOverrideAdminConfigTests finished in 422ms (2 tests)
+2026-06-15T15:38:41.5346290Z MissingGroupIdTests finished in 320ms (3 tests)
+2026-06-15T15:38:42.0323101Z MissingTopicsTests finished in 299ms (2 tests)
+2026-06-15T15:38:42.1322824Z MockConsumerTests finished in 142ms (1 tests)
+2026-06-15T15:38:42.3323609Z PauseContainerManualAssignmentTests finished in 192ms (1 tests)
+2026-06-15T15:38:44.1322995Z PauseContainerWhileErrorHandlerIsRetryingTests finished in 1731ms (1 tests)
+2026-06-15T15:38:45.1322335Z RemainingRecordsErrorHandlerTests finished in 1034ms (1 tests)
+2026-06-15T15:38:45.3328871Z SeekToCurrentRecovererTests finished in 3719ms (7 tests)
+2026-06-15T15:38:46.1322580Z SeekToCurrentOnErrorBatchModeTXTests finished in 1051ms (1 tests)
+2026-06-15T15:38:47.2322826Z SeekToCurrentOnErrorBatchModeTests finished in 1033ms (1 tests)
+2026-06-15T15:38:48.2323423Z SeekToCurrentOnErrorRecordModeTXTests finished in 1047ms (1 tests)
+2026-06-15T15:38:48.3322862Z SeekToCurrentOnErrorRecordModeTests finished in 94ms (1 tests)
+2026-06-15T15:38:48.3323447Z ShareConsumerRecordRecovererTests finished in 4ms (2 tests)
+2026-06-15T15:38:57.0322541Z ShareKafkaListenerIntegrationTests finished in 11.70s (7 tests)
+2026-06-15T15:38:57.7341306Z ShareKafkaMessageListenerContainerUnitTests finished in 713ms (28 tests)
+2026-06-15T15:38:59.3358318Z SubBatchPerPartitionTests finished in 1525ms (3 tests)
+2026-06-15T15:38:59.4322843Z SubBatchPerPartitionTxRollbackTests finished in 114ms (1 tests)
+2026-06-15T15:38:59.5350734Z SubBatchPerPartitionTxTests finished in 144ms (1 tests)
+2026-06-15T15:39:28.8340857Z TransactionalContainerTests finished in 29.10s (21 tests)
+2026-06-15T15:39:28.9360697Z BatchAdapterConversionErrorsTests finished in 40ms (1 tests)
+2026-06-15T15:39:29.1327697Z BatchMessagingMessageListenerAdapterTests finished in 219ms (3 tests)
+2026-06-15T15:39:29.2322464Z ConvertingMessageListenerTests finished in 117ms (6 tests)
+2026-06-15T15:39:29.6322207Z KafkaBackoffAwareMessageListenerAdapterTests finished in 401ms (7 tests)
+2026-06-15T15:39:29.8332443Z MessagingMessageListenerAdapterTests finished in 190ms (5 tests)
+2026-06-15T15:40:26.9322627Z ShareKafkaMessageListenerContainerIntegrationTests finished in 1.64 min (20 tests)
+2026-06-15T15:40:27.0330623Z TestOOMError finished in 110ms (2 tests)
+2026-06-15T15:40:27.0345650Z BatchListenerWithRecordAdapterTests finished in 24ms (2 tests)
+2026-06-15T15:40:27.1323059Z FilteringAdapterTests finished in 104ms (6 tests)
+2026-06-15T15:40:27.1326820Z CorrelationKeyTests finished in 1ms (1 tests)
+2026-06-15T15:40:57.8326993Z ReplyingKafkaTemplateTests finished in 30.71s (24 tests, 23 passed, 1 skipped) — skipped: testAggregateTimeout()
+2026-06-15T15:41:22.9324222Z AsyncCompletableFutureRetryTopicClassLevelIntegrationTests finished in 25.10s (8 tests)
+2026-06-15T15:41:27.3323098Z 
+2026-06-15T15:41:27.3351164Z AsyncCompletableFutureRetryTopicScenarioTests > oneLongSuccessMsgBetween49ShortFailMsg(TestTopicListener5, MyCustomDltProcessor) FAILED
+2026-06-15T15:41:27.3367382Z     org.opentest4j.AssertionFailedError: 
+2026-06-15T15:41:27.3370814Z     Expecting value to be true but was false
+2026-06-15T15:41:27.3372272Z         at app//org.springframework.kafka.retrytopic.AsyncCompletableFutureRetryTopicScenarioTests.oneLongSuccessMsgBetween49ShortFailMsg(AsyncCompletableFutureRetryTopicScenarioTests.java:495)
+2026-06-15T15:41:28.0352175Z AsyncCompletableFutureRetryTopicScenarioTests finished in 1.97 min (7 tests, 6 passed, 1 failed) — failed: oneLongSuccessMsgBetween49ShortFailMsg(TestTopicListener5, MyCustomDltProcessor)
+2026-06-15T15:41:58.3322494Z AsyncMonoFutureRetryTopicClassLevelIntegrationTests finished in 30.34s (8 tests)
+2026-06-15T15:41:58.3323331Z BackOffValuesGeneratorTests finished in 3ms (3 tests)
+2026-06-15T15:41:58.7357378Z DeadLetterPublishingRecovererFactoryTests finished in 309ms (16 tests)
+2026-06-15T15:41:58.8331957Z DefaultDestinationTopicResolverTests finished in 129ms (29 tests)
+2026-06-15T15:41:58.8364543Z DestinationTopicPropertiesFactoryTests finished in 13ms (12 tests)
+2026-06-15T15:41:59.3329143Z DltStartupTests finished in 513ms (1 tests)
+2026-06-15T15:42:00.6324319Z AsyncMonoRetryTopicComplexScenarioTests finished in 37.69s (1 tests)
+2026-06-15T15:42:08.1322786Z AsyncMonoRetryTopicScenarioTests finished in 7475ms (2 tests)
+2026-06-15T15:42:08.1323932Z CircularDltHandlerTests finished in 22ms (1 tests)
+2026-06-15T15:42:08.2342522Z DefaultDestinationTopicProcessorTests finished in 138ms (4 tests)
+2026-06-15T15:42:14.6322363Z DeliveryHeaderTests finished in 6389ms (1 tests)
+2026-06-15T15:42:15.3371750Z EndpointCustomizerFactoryTests finished in 664ms (6 tests)
+2026-06-15T15:42:29.0322644Z ExistingRetryTopicClassLevelIntegrationTests finished in 13.71s (2 tests)
+2026-06-15T15:42:30.0323838Z ListenerContainerFactoryConfigurerTests finished in 960ms (6 tests)
+2026-06-15T15:42:41.4324007Z ExistingRetryTopicIntegrationTests finished in 42.07s (2 tests)
+2026-06-15T15:42:41.5350751Z ListenerContainerFactoryResolverTests finished in 135ms (18 tests)
+2026-06-15T15:42:44.9322324Z RetryTopicClassLevelExceptionRoutingIntegrationTests finished in 14.90s (5 tests)
+2026-06-15T15:42:46.0326686Z PartitionResolverTests finished in 4481ms (1 tests)
+2026-06-15T15:42:46.0330384Z RetryTopicConfigurationBuilderTests finished in 11ms (9 tests)
+2026-06-15T15:42:46.3325924Z RetryTopicConfigurationProviderTests finished in 255ms (5 tests)
+2026-06-15T15:42:46.3335661Z RetryTopicConstantsTests finished in 1ms (1 tests)
+2026-06-15T15:42:46.3336567Z RetryTopicHeadersTests finished in 1ms (1 tests)
+2026-06-15T15:43:02.0341155Z RetryTopicClassLevelIntegrationTests finished in 17.14s (8 tests)
+2026-06-15T15:43:05.0322863Z RetryTopicConfigurationIntegrationTests finished in 2990ms (1 tests)
+2026-06-15T15:43:09.7322677Z RetryTopicConfigurationManualAssignmentIntegrationTests finished in 4673ms (1 tests)
+2026-06-15T15:43:10.4322420Z RetryTopicConfigurationSupportTests finished in 731ms (8 tests)
+2026-06-15T15:43:10.9335048Z RetryTopicConfigurerTests finished in 516ms (6 tests)
+2026-06-15T15:43:11.8322561Z RetryTopicSameContainerFactoryIntegrationTests finished in 25.51s (2 tests)
+2026-06-15T15:43:11.8323602Z KafkaJaasLoginModuleInitializerTests finished in 25ms (2 tests)
+2026-06-15T15:43:12.5322683Z Configurer1Tests finished in 677ms (1 tests)
+2026-06-15T15:43:13.2337002Z Configurer2Tests finished in 673ms (1 tests)
+2026-06-15T15:43:15.9342291Z KafkaStreamsTests finished in 2713ms (1 tests)
+2026-06-15T15:43:16.0331975Z RecoveringProcessingExceptionHandlerTests finished in 105ms (9 tests)
+2026-06-15T15:43:16.0355771Z MessagingProcessorTests finished in 22ms (1 tests)
+2026-06-15T15:43:16.0370429Z ExceptionMatcherTests finished in 7ms (14 tests)
+2026-06-15T15:43:16.4330746Z JsonKafkaHeaderMapperTests finished in 440ms (22 tests)
+2026-06-15T15:43:16.5330641Z LogIfLevelEnabledTests finished in 13ms (12 tests)
+2026-06-15T15:43:16.5357402Z SimpleKafkaHeaderMapperTests finished in 10ms (10 tests)
+2026-06-15T15:43:16.5380219Z BatchMessageConverterTests finished in 13ms (4 tests)
+2026-06-15T15:43:23.7322266Z BatchIndividualRecordObservationTests finished in 7180ms (2 tests)
+2026-06-15T15:43:23.8323712Z RetryTopicExceptionRoutingIntegrationTests finished in 12.91s (5 tests)
+2026-06-15T15:43:26.7326485Z ObservationIntegrationTests finished in 3050ms (6 tests, 2 passed, 4 skipped) — skipped: [3] ZIPKIN_OTEL; [4] ZIPKIN_BRAVE; [5] WAVEFRONT_OTEL; [6] WAVEFRONT_BRAVE
+2026-06-15T15:43:26.7394652Z DelegatingByTopicSerializationTests finished in 10ms (4 tests)
+2026-06-15T15:43:26.7448980Z JsonSerdeTests finished in 5ms (1 tests)
+2026-06-15T15:43:26.8361684Z StringOrBytesSerializerTests finished in 23ms (1 tests)
+2026-06-15T15:43:26.8431542Z ToStringSerializationTests finished in 43ms (10 tests)
+2026-06-15T15:43:28.3350770Z EnableKafkaKotlinTests finished in 1510ms (4 tests)
+2026-06-15T15:43:28.3370806Z KotlinProducerFactoryTests finished in 2ms (2 tests)
+2026-06-15T15:43:28.3373718Z JacksonJsonDeserializerTests finished in 19ms (2 tests)
+2026-06-15T15:43:28.4322431Z JacksonJsonSerializerTests finished in 19ms (2 tests)
+2026-06-15T15:43:41.2321930Z RetryTopicIntegrationTests finished in 17.35s (8 tests)
+2026-06-15T15:43:41.3322796Z RetryableTopicAnnotationProcessorTests finished in 159ms (20 tests)
+2026-06-15T15:43:46.4322758Z ReusableRetryTopicMultipleDltIntegrationTests finished in 5059ms (3 tests)
+2026-06-15T15:43:46.4324030Z HeaderEnricherProcessorTests finished in 32ms (1 tests)
+2026-06-15T15:43:48.3322485Z KafkaStreamsBranchTests finished in 1896ms (1 tests)
+2026-06-15T15:43:50.6322642Z KafkaStreamsInteractiveQueryServiceTests finished in 2258ms (6 tests)
+2026-06-15T15:43:52.3322280Z KafkaStreamsJsonSerializationTests finished in 1690ms (1 tests)
+2026-06-15T15:43:54.0321825Z RecoveringDeserializationExceptionHandlerTests finished in 1677ms (13 tests)
+2026-06-15T15:43:54.0322739Z RecoveringProductionExceptionHandlerTests finished in 12ms (9 tests)
+2026-06-15T15:43:54.0323604Z DefaultKafkaHeaderMapperTrustPackagesTests finished in 37ms (3 tests)
+2026-06-15T15:43:54.0324773Z ExponentialBackOffWithMaxRetriesTests finished in 2ms (3 tests)
+2026-06-15T15:43:54.3322133Z KafkaStreamBrancherTests finished in 321ms (1 tests)
+2026-06-15T15:43:54.3323078Z LoggingProducerListenerTests finished in 1ms (1 tests)
+2026-06-15T15:43:54.3323863Z TopicPartitionOffsetTests finished in 0ms (2 tests)
+2026-06-15T15:43:54.4322288Z MessagingMessageConverterTests finished in 14ms (8 tests)
+2026-06-15T15:43:54.4323059Z ProjectingMessageConverterTests finished in 35ms (6 tests)
+2026-06-15T15:43:54.4323772Z KafkaListenerObservationTests finished in 5ms (2 tests)
+2026-06-15T15:43:54.5321845Z MicrometerHolderTests finished in 102ms (4 tests)
+2026-06-15T15:43:58.2322090Z MicrometerMetricsTests finished in 3650ms (5 tests)
+2026-06-15T15:44:04.6322011Z ObservationTests finished in 6461ms (10 tests)
+2026-06-15T15:44:04.9322731Z DelegatingSerializationTests finished in 320ms (10 tests)
+2026-06-15T15:44:05.1322250Z JsonSerializationTests finished in 210ms (27 tests)
+2026-06-15T15:44:13.2321835Z RetryingDeserializerTests finished in 8112ms (2 tests)
+2026-06-15T15:44:13.7322788Z SerializationIntegrationTests finished in 283ms (1 tests)
+2026-06-15T15:44:13.7324027Z SerializationUtilsTests finished in 4ms (1 tests)
+2026-06-15T15:44:43.6321623Z EnableKafkaKotlinCoroutinesTests finished in 29.87s (9 tests)
+2026-06-15T15:44:44.1331551Z 
+2026-06-15T15:44:44.1363748Z 1108 tests completed, 1 failed, 6 skipped
+2026-06-15T15:44:45.2324607Z 
+2026-06-15T15:44:45.2350514Z > Task :spring-kafka:test FAILED
+2026-06-15T15:44:45.3321887Z 
+2026-06-15T15:44:45.3340880Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1781537739479.json
+2026-06-15T15:44:45.3342296Z FAILURE: Build failed with an exception.
+2026-06-15T15:44:45.3369818Z 
+2026-06-15T15:44:45.3400247Z * What went wrong:
+2026-06-15T15:44:45.3400556Z 
+2026-06-15T15:44:45.3430111Z Execution failed for task ':spring-kafka:test'.
+2026-06-15T15:44:45.3431271Z [Incubating] Problems report is available at: file:///home/runner/work/spring-kafka/spring-kafka/build/reports/problems/problems-report.html
+2026-06-15T15:44:45.3433309Z > There were failing tests. See the report at: file:///home/runner/work/spring-kafka/spring-kafka/spring-kafka/build/reports/tests/test/index.html
+2026-06-15T15:44:45.3459793Z 
+2026-06-15T15:44:45.3550353Z BUILD FAILED in 9m 9s
+2026-06-15T15:44:45.3550714Z 
+2026-06-15T15:44:45.3551412Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-06-15T15:44:45.3579659Z 
+2026-06-15T15:44:45.3610942Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-15T15:44:45.3630992Z 
+2026-06-15T15:44:45.3660597Z For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-15T15:44:45.3690039Z 21 actionable tasks: 16 executed, 5 from cache
+2026-06-15T15:44:45.9970300Z ##[error]Process completed with exit code 1.
+2026-06-15T15:44:46.0038039Z ##[group]Run actions/upload-artifact@v6
+2026-06-15T15:44:46.0038374Z with:
+2026-06-15T15:44:46.0038608Z   name: test-results
+2026-06-15T15:44:46.0038880Z   path: */build/reports/tests/**/*.*
+2026-06-15T15:44:46.0039181Z   retention-days: 3
+2026-06-15T15:44:46.0039697Z   if-no-files-found: warn
+2026-06-15T15:44:46.0039975Z   compression-level: 6
+2026-06-15T15:44:46.0040232Z   overwrite: false
+2026-06-15T15:44:46.0040486Z   include-hidden-files: false
+2026-06-15T15:44:46.0040975Z env:
+2026-06-15T15:44:46.0041197Z   ARTIFACTORY_USERNAME: 
+2026-06-15T15:44:46.0041466Z   ARTIFACTORY_PASSWORD: 
+2026-06-15T15:44:46.0041846Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:44:46.0042380Z   JAVA_HOME_24_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/24.0.2-12/x64
+2026-06-15T15:44:46.0042840Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-15T15:44:46.0043180Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-15T15:44:46.0043555Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-15T15:44:46.0043896Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-15T15:44:46.0044377Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-15T15:44:46.0044882Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-15T15:44:46.0045241Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-15T15:44:46.0045541Z ##[endgroup]
+2026-06-15T15:44:46.2889145Z With the provided path, there will be 478 files uploaded
+2026-06-15T15:44:46.2894919Z Artifact name is valid!
+2026-06-15T15:44:46.2895470Z Root directory input is valid!
+2026-06-15T15:44:46.6509834Z Beginning upload of artifact content to blob storage
+2026-06-15T15:44:47.4431601Z Uploaded bytes 780174
+2026-06-15T15:44:47.4997956Z Finished uploading artifact content to blob storage!
+2026-06-15T15:44:47.4999106Z SHA256 digest of uploaded artifact zip is 7bef7ea841f2098113d87c4450fafb811720b544c558befbf979f2384f54db53
+2026-06-15T15:44:47.5000319Z Finalizing artifact upload
+2026-06-15T15:44:47.8746347Z Artifact test-results.zip successfully finalized. Artifact ID 7643265995
+2026-06-15T15:44:47.8747428Z Artifact test-results has been successfully uploaded! Final size is 780174 bytes. Artifact ID is 7643265995
+2026-06-15T15:44:47.8752433Z Artifact download URL: https://github.com/spring-projects/spring-kafka/actions/runs/27557590508/artifacts/7643265995
+2026-06-15T15:44:47.8984303Z Post job cleanup.
+2026-06-15T15:44:47.9077122Z Post job cleanup.
+2026-06-15T15:44:48.2642948Z In post-action step
+2026-06-15T15:44:48.2653374Z Cache is read-only: will not save state for use in subsequent builds.
+2026-06-15T15:44:48.2659619Z Generating Job Summary
+2026-06-15T15:44:48.2678443Z Completed post-action step
+2026-06-15T15:44:48.2877640Z Post job cleanup.
+2026-06-15T15:44:48.4230681Z Post job cleanup.
+2026-06-15T15:44:48.5159071Z [command]/usr/bin/git version
+2026-06-15T15:44:48.5201213Z git version 2.54.0
+2026-06-15T15:44:48.5245797Z Temporarily overriding HOME='/home/runner/work/_temp/80417133-13f3-4cf5-8685-a4d7da3eb6dd' before making global git config changes
+2026-06-15T15:44:48.5247128Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-15T15:44:48.5252684Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/spring-kafka/spring-kafka
+2026-06-15T15:44:48.5284330Z Removing SSH command configuration
+2026-06-15T15:44:48.5291945Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-15T15:44:48.5350614Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-15T15:44:48.5590604Z Removing HTTP extra header
+2026-06-15T15:44:48.5595370Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-15T15:44:48.5629772Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-15T15:44:48.5860487Z Removing includeIf entries pointing to credentials config files
+2026-06-15T15:44:48.5866835Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-15T15:44:48.5894836Z includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git.path
+2026-06-15T15:44:48.5895591Z includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git/worktrees/*.path
+2026-06-15T15:44:48.5896585Z includeif.gitdir:/github/workspace/.git.path
+2026-06-15T15:44:48.5897053Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-15T15:44:48.5904072Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git.path
+2026-06-15T15:44:48.5926800Z /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.5938796Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git.path /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.5973866Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git/worktrees/*.path
+2026-06-15T15:44:48.5996686Z /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6005452Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/spring-kafka/spring-kafka/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6037155Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-15T15:44:48.6059606Z /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6068103Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6099668Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-15T15:44:48.6121486Z /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6131575Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config
+2026-06-15T15:44:48.6166871Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-15T15:44:48.6407574Z Removing credentials config '/home/runner/work/_temp/git-credentials-da2bcc25-9b99-4183-b78c-befb9ed7bf9c.config'
+2026-06-15T15:44:48.6570443Z Cleaning up orphan processes
+2026-06-15T15:44:48.6886527Z Terminate orphan process: pid (3085) (java)
+2026-06-15T15:44:48.6916018Z Terminate orphan process: pid (3322) (java)
+2026-06-15T15:44:48.6942115Z Terminate orphan process: pid (3403) (java)

@@ -122,7 +122,9 @@ _CHEVRON_FAIL_RE = re.compile(r"^(.*?)\s+FAILED(?:\s+\(([\d.]+[mμ]?s)\))?$")
 
 # Java / Kotlin stack trace frame: "    at io.pkg.Class.method(Class.java:123)"
 _AT_FRAME_RE = re.compile(
-    r"^\s*at\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z_$][a-zA-Z0-9_$]*)*)\.([a-zA-Z_$][a-zA-Z0-9_$]*)\("
+    r"^\s*at\s+(?:[a-zA-Z0-9_/@.-]+/)?"
+    r"([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z_$][a-zA-Z0-9_$]*)*)"
+    r"\.([^\n(]*[^\s(])\("
 )
 
 
@@ -184,10 +186,11 @@ def parse_gradle_log_with_stats(
         # Collect stack trace frames for suffix reconciliation
         m_at = _AT_FRAME_RE.match(line.strip())
         if m_at:
-            fqcn = m_at.group(1).strip()
             meth = m_at.group(2).strip()
-            simple_cls = fqcn.split(".")[-1].split("$")[0]
-            stack_fqcns.setdefault((simple_cls, meth), set()).add(fqcn)
+            if "/" not in meth and ">" not in meth:
+                fqcn = m_at.group(1).strip()
+                simple_cls = fqcn.split(".")[-1].split("$")[0]
+                stack_fqcns.setdefault((simple_cls, meth), set()).add(fqcn)
 
         # 1. State machine distance increment & guard check (Amendment 2)
         if current_class is not None:
