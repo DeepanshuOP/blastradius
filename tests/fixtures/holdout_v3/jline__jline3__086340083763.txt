@@ -1,0 +1,1245 @@
+﻿2026-07-10T10:22:15.7534726Z Current runner version: '2.335.1'
+2026-07-10T10:22:15.7831587Z ##[group]Runner Image Provisioner
+2026-07-10T10:22:15.7832456Z Hosted Compute Agent
+2026-07-10T10:22:15.7833005Z Version: 20260624.560
+2026-07-10T10:22:15.7833603Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-10T10:22:15.7834303Z Build Date: 2026-06-24T18:26:47Z
+2026-07-10T10:22:15.7834951Z Worker ID: {02e93db8-2fba-4a4c-8f82-8258d5ff937d}
+2026-07-10T10:22:15.7835625Z Azure Region: eastus
+2026-07-10T10:22:15.7836153Z ##[endgroup]
+2026-07-10T10:22:15.7837491Z ##[group]Operating System
+2026-07-10T10:22:15.7838159Z Microsoft Windows Server 2025
+2026-07-10T10:22:15.7838732Z 10.0.26100
+2026-07-10T10:22:15.7839212Z Datacenter
+2026-07-10T10:22:15.7839712Z ##[endgroup]
+2026-07-10T10:22:15.7840217Z ##[group]Runner Image
+2026-07-10T10:22:15.7840825Z Image: windows-2025-vs2026
+2026-07-10T10:22:15.7841380Z Version: 20260628.158.1
+2026-07-10T10:22:15.7843223Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260628.158/images/windows/Windows2025-VS2026-Readme.md
+2026-07-10T10:22:15.7844895Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260628.158
+2026-07-10T10:22:15.7845869Z ##[endgroup]
+2026-07-10T10:22:15.7848792Z ##[group]GITHUB_TOKEN Permissions
+2026-07-10T10:22:15.7851156Z Actions: read
+2026-07-10T10:22:15.7851743Z ArtifactMetadata: read
+2026-07-10T10:22:15.7852360Z Attestations: read
+2026-07-10T10:22:15.7852923Z Checks: read
+2026-07-10T10:22:15.7853404Z CodeQuality: read
+2026-07-10T10:22:15.7853888Z Contents: read
+2026-07-10T10:22:15.7854389Z Deployments: read
+2026-07-10T10:22:15.7854868Z Discussions: read
+2026-07-10T10:22:15.7855379Z Drives: read
+2026-07-10T10:22:15.7855865Z Issues: read
+2026-07-10T10:22:15.7856331Z Metadata: read
+2026-07-10T10:22:15.7856837Z Models: read
+2026-07-10T10:22:15.7857382Z Packages: read
+2026-07-10T10:22:15.7857872Z Pages: read
+2026-07-10T10:22:15.7858362Z PullRequests: read
+2026-07-10T10:22:15.7858913Z RepositoryProjects: read
+2026-07-10T10:22:15.7859475Z SecurityEvents: read
+2026-07-10T10:22:15.7859978Z Statuses: read
+2026-07-10T10:22:15.7860457Z VulnerabilityAlerts: read
+2026-07-10T10:22:15.7861024Z ##[endgroup]
+2026-07-10T10:22:15.7864291Z Secret source: None
+2026-07-10T10:22:15.7865386Z Prepare workflow directory
+2026-07-10T10:22:15.9751690Z Prepare all required actions
+2026-07-10T10:22:15.9792447Z Getting action download info
+2026-07-10T10:22:16.1796947Z Download action repository 'actions/checkout@v7' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-10T10:22:16.4654794Z Download action repository 'actions/setup-java@v5' (SHA:0f481fcb613427c0f801b606911222b5b6f3083a)
+2026-07-10T10:22:17.0051622Z Download action repository 'actions/cache@v6' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+2026-07-10T10:22:18.7748241Z Complete job name: compile (windows-latest, 25)
+2026-07-10T10:22:20.3666649Z ##[group]Run actions/checkout@v7
+2026-07-10T10:22:20.3667482Z with:
+2026-07-10T10:22:20.3667817Z   repository: jline/jline3
+2026-07-10T10:22:20.3671273Z   token: ***
+2026-07-10T10:22:20.3671596Z   ssh-strict: true
+2026-07-10T10:22:20.3671906Z   ssh-user: git
+2026-07-10T10:22:20.3672224Z   persist-credentials: true
+2026-07-10T10:22:20.3672558Z   clean: true
+2026-07-10T10:22:20.3672873Z   sparse-checkout-cone-mode: true
+2026-07-10T10:22:20.3673222Z   fetch-depth: 1
+2026-07-10T10:22:20.3673522Z   fetch-tags: false
+2026-07-10T10:22:20.3673832Z   show-progress: true
+2026-07-10T10:22:20.3674143Z   lfs: false
+2026-07-10T10:22:20.3674423Z   submodules: false
+2026-07-10T10:22:20.3674745Z   set-safe-directory: true
+2026-07-10T10:22:20.3675098Z   allow-unsafe-pr-checkout: false
+2026-07-10T10:22:20.3675724Z ##[endgroup]
+2026-07-10T10:22:20.9399381Z Syncing repository: jline/jline3
+2026-07-10T10:22:20.9401118Z ##[group]Getting Git version info
+2026-07-10T10:22:20.9401564Z Working directory is 'D:\a\jline3\jline3'
+2026-07-10T10:22:21.0370680Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-07-10T10:22:21.4445712Z git version 2.54.0.windows.1
+2026-07-10T10:22:21.4500705Z ##[endgroup]
+2026-07-10T10:22:21.4571110Z Temporarily overriding HOME='D:\a\_temp\d0dc4d45-ec52-4caf-8857-885d860522e4' before making global git config changes
+2026-07-10T10:22:21.4571919Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-10T10:22:21.4572609Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\jline3\jline3
+2026-07-10T10:22:21.5121118Z Deleting the contents of 'D:\a\jline3\jline3'
+2026-07-10T10:22:21.5126862Z ##[group]Determining repository object format
+2026-07-10T10:22:21.5128552Z ##[endgroup]
+2026-07-10T10:22:21.5135877Z ##[group]Initializing the repository
+2026-07-10T10:22:21.5136320Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\jline3\jline3
+2026-07-10T10:22:21.6422539Z Initialized empty Git repository in D:/a/jline3/jline3/.git/
+2026-07-10T10:22:21.6466580Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/jline/jline3
+2026-07-10T10:22:21.7038687Z ##[endgroup]
+2026-07-10T10:22:21.7039352Z ##[group]Disabling automatic garbage collection
+2026-07-10T10:22:21.7048631Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-07-10T10:22:21.7368259Z ##[endgroup]
+2026-07-10T10:22:21.7368900Z ##[group]Setting up auth
+2026-07-10T10:22:21.7369597Z Removing SSH command configuration
+2026-07-10T10:22:21.7380820Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-07-10T10:22:21.7710612Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-07-10T10:22:23.1671180Z Removing HTTP extra header
+2026-07-10T10:22:23.1682094Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-10T10:22:23.1979039Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-07-10T10:22:23.7889787Z Removing includeIf entries pointing to credentials config files
+2026-07-10T10:22:23.7903924Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-10T10:22:23.8220035Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-07-10T10:22:24.3740663Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-07-10T10:22:24.3964810Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/jline3/jline3/.git.path D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:22:24.4246310Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/jline3/jline3/.git/worktrees/*.path D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:22:24.4579276Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:22:24.4870437Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:22:24.5154164Z ##[endgroup]
+2026-07-10T10:22:24.5223996Z ##[group]Fetching the repository
+2026-07-10T10:22:24.5225600Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +87ca64f93adaabc5154b596de76e25dc355f6a73:refs/remotes/pull/2052/merge
+2026-07-10T10:22:25.5938298Z From https://github.com/jline/jline3
+2026-07-10T10:22:25.5939142Z  * [new ref]         87ca64f93adaabc5154b596de76e25dc355f6a73 -> pull/2052/merge
+2026-07-10T10:22:25.6276238Z ##[endgroup]
+2026-07-10T10:22:25.6276901Z ##[group]Determining the checkout info
+2026-07-10T10:22:25.6277665Z ##[endgroup]
+2026-07-10T10:22:25.6287756Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-07-10T10:22:25.6765702Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-07-10T10:22:25.7055487Z ##[group]Checking out the ref
+2026-07-10T10:22:25.7064147Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/2052/merge
+2026-07-10T10:22:26.2415670Z Note: switching to 'refs/remotes/pull/2052/merge'.
+2026-07-10T10:22:26.2416236Z 
+2026-07-10T10:22:26.2416645Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-10T10:22:26.2417444Z changes and commit them, and you can discard any commits you make in this
+2026-07-10T10:22:26.2418210Z state without impacting any branches by switching back to a branch.
+2026-07-10T10:22:26.2418688Z 
+2026-07-10T10:22:26.2419031Z If you want to create a new branch to retain commits you create, you may
+2026-07-10T10:22:26.2419873Z do so (now or later) by using -c with the switch command. Example:
+2026-07-10T10:22:26.2420301Z 
+2026-07-10T10:22:26.2420406Z   git switch -c <new-branch-name>
+2026-07-10T10:22:26.2420637Z 
+2026-07-10T10:22:26.2420736Z Or undo this operation with:
+2026-07-10T10:22:26.2420902Z 
+2026-07-10T10:22:26.2420983Z   git switch -
+2026-07-10T10:22:26.2421104Z 
+2026-07-10T10:22:26.2421312Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-10T10:22:26.2421653Z 
+2026-07-10T10:22:26.2422269Z HEAD is now at 87ca64f Merge 533cadb374d60bc1a7848c8f461dea318bbddcad into 32ba299e52f55d7634206c8502a95ab4ba0c23fd
+2026-07-10T10:22:26.2498022Z ##[endgroup]
+2026-07-10T10:22:26.2871069Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-07-10T10:22:26.3132276Z 87ca64f93adaabc5154b596de76e25dc355f6a73
+2026-07-10T10:22:26.7962426Z ##[group]Run actions/setup-java@v5
+2026-07-10T10:22:26.7962823Z with:
+2026-07-10T10:22:26.7963052Z   java-version: 25
+2026-07-10T10:22:26.7963296Z   distribution: temurin
+2026-07-10T10:22:26.7963553Z   java-package: jdk
+2026-07-10T10:22:26.7963792Z   check-latest: false
+2026-07-10T10:22:26.7964033Z   set-default: true
+2026-07-10T10:22:26.7964268Z   verify-signature: false
+2026-07-10T10:22:26.7964525Z   server-id: github
+2026-07-10T10:22:26.7964762Z   server-username: GITHUB_ACTOR
+2026-07-10T10:22:26.7965099Z   server-password: GITHUB_TOKEN
+2026-07-10T10:22:26.7965430Z   overwrite-settings: true
+2026-07-10T10:22:26.7965682Z   job-status: success
+2026-07-10T10:22:26.7968913Z   token: ***
+2026-07-10T10:22:26.7969150Z   show-download-progress: false
+2026-07-10T10:22:26.7969425Z ##[endgroup]
+2026-07-10T10:22:27.0312724Z ##[group]Installed distributions
+2026-07-10T10:22:27.0615831Z Resolved Java 25.0.3+9.0 from tool-cache
+2026-07-10T10:22:27.0616446Z Setting Java 25.0.3+9.0 as the default
+2026-07-10T10:22:27.0643606Z Creating toolchains.xml for JDK version 25 from temurin
+2026-07-10T10:22:27.0750564Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-07-10T10:22:27.0755199Z 
+2026-07-10T10:22:27.0755376Z Java configuration:
+2026-07-10T10:22:27.0755782Z   Distribution: temurin
+2026-07-10T10:22:27.0756150Z   Version: 25.0.3+9.0
+2026-07-10T10:22:27.0756770Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:27.0757443Z 
+2026-07-10T10:22:27.0757911Z ##[endgroup]
+2026-07-10T10:22:27.0783398Z Creating settings.xml with server-id: github
+2026-07-10T10:22:27.0784006Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-07-10T10:22:27.0786745Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-07-10T10:22:27.9196616Z ##[group]Run actions/cache@v6
+2026-07-10T10:22:27.9196976Z with:
+2026-07-10T10:22:27.9197209Z   path: ~/.m2/repository
+2026-07-10T10:22:27.9197752Z   key: Windows-maven-25-a5b0cce4d621ec91f15f6fe838c94c4fd633ed5536700a6ad5eb12f65966db22
+2026-07-10T10:22:27.9198416Z   restore-keys: Windows-maven-25-
+Windows-maven-
+
+2026-07-10T10:22:27.9198805Z   enableCrossOsArchive: false
+2026-07-10T10:22:27.9199106Z   fail-on-cache-miss: false
+2026-07-10T10:22:27.9199379Z   lookup-only: false
+2026-07-10T10:22:27.9199625Z   save-always: false
+2026-07-10T10:22:27.9199852Z env:
+2026-07-10T10:22:27.9200231Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:27.9200907Z   JAVA_HOME_25_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:27.9201423Z   MAVEN_ARGS: -ntp
+2026-07-10T10:22:27.9201660Z ##[endgroup]
+2026-07-10T10:22:28.4018981Z Cache hit for: Windows-maven-25-a5b0cce4d621ec91f15f6fe838c94c4fd633ed5536700a6ad5eb12f65966db22
+2026-07-10T10:22:29.4843407Z Received 142606336 of 211713441 (67.4%), 134.7 MBs/sec
+2026-07-10T10:22:29.8376588Z Received 211713441 of 211713441 (100.0%), 147.7 MBs/sec
+2026-07-10T10:22:29.8382770Z Cache Size: ~202 MB (211713441 B)
+2026-07-10T10:22:29.8490527Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/881ddb7d-fbbc-4c7c-8ba9-2686363afe92/cache.tzst -P -C D:/a/jline3/jline3 --force-local --use-compress-program "zstd -d"
+2026-07-10T10:22:49.3064125Z Cache restored successfully
+2026-07-10T10:22:49.3321264Z Cache restored from key: Windows-maven-25-a5b0cce4d621ec91f15f6fe838c94c4fd633ed5536700a6ad5eb12f65966db22
+2026-07-10T10:22:49.4602965Z ##[group]Run actions/cache@v6
+2026-07-10T10:22:49.4603273Z with:
+2026-07-10T10:22:49.4603457Z   path: ~/.mvx/tools
+2026-07-10T10:22:49.4603868Z   key: Windows-mvx-tools-fafea87ea81dd5662b0b3a5c50e28c621102c718916e264c1920c47a1ac22045
+2026-07-10T10:22:49.4604353Z   restore-keys: Windows-mvx-tools-
+
+2026-07-10T10:22:49.4604639Z   enableCrossOsArchive: false
+2026-07-10T10:22:49.4604879Z   fail-on-cache-miss: false
+2026-07-10T10:22:49.4605283Z   lookup-only: false
+2026-07-10T10:22:49.4605737Z   save-always: false
+2026-07-10T10:22:49.4605929Z env:
+2026-07-10T10:22:49.4606231Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:49.4606748Z   JAVA_HOME_25_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:49.4607157Z   MAVEN_ARGS: -ntp
+2026-07-10T10:22:49.4607351Z ##[endgroup]
+2026-07-10T10:22:49.7777550Z Cache hit for: Windows-mvx-tools-fafea87ea81dd5662b0b3a5c50e28c621102c718916e264c1920c47a1ac22045
+2026-07-10T10:22:50.5438270Z Received 125033893 of 125033893 (100.0%), 164.9 MBs/sec
+2026-07-10T10:22:50.5442337Z Cache Size: ~119 MB (125033893 B)
+2026-07-10T10:22:50.5502610Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/e8c41916-b8bd-4e97-ba31-3674f3b81bad/cache.tzst -P -C D:/a/jline3/jline3 --force-local --use-compress-program "zstd -d"
+2026-07-10T10:22:59.6253964Z Cache restored successfully
+2026-07-10T10:22:59.6458884Z Cache restored from key: Windows-mvx-tools-fafea87ea81dd5662b0b3a5c50e28c621102c718916e264c1920c47a1ac22045
+2026-07-10T10:22:59.6960169Z ##[group]Run set PATH=%JAVA_HOME%\bin;C:\Windows\System32\WindowsPowerShell\v1.0\
+2026-07-10T10:22:59.6960846Z [36;1mset PATH=%JAVA_HOME%\bin;C:\Windows\System32\WindowsPowerShell\v1.0\[0m
+2026-07-10T10:22:59.6961316Z [36;1mmvx.cmd mvn --no-transfer-progress verify[0m
+2026-07-10T10:22:59.8737610Z shell: C:\Windows\system32\cmd.EXE /D /E:ON /V:OFF /S /C "CALL "{0}""
+2026-07-10T10:22:59.8738028Z env:
+2026-07-10T10:22:59.8738391Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:59.8739001Z   JAVA_HOME_25_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\25.0.3-9.0\x64
+2026-07-10T10:22:59.8739470Z   MAVEN_ARGS: -ntp
+2026-07-10T10:22:59.8739706Z   MVX_USE_SYSTEM_JAVA: true
+2026-07-10T10:22:59.8740191Z   MVX_PARALLEL_DOWNLOADS: 1
+2026-07-10T10:22:59.8740448Z   MVX_DOWNLOAD_TIMEOUT: 300
+2026-07-10T10:22:59.8740697Z   MVX_HTTP_TIMEOUT: 300
+2026-07-10T10:22:59.8740929Z ##[endgroup]
+2026-07-10T10:22:59.9207518Z Resolving latest version...
+2026-07-10T10:23:00.4289845Z Latest version: 0.13.0
+2026-07-10T10:23:00.4306849Z mvx 0.13.0 not found, downloading...
+2026-07-10T10:23:00.4332163Z Downloading mvx 0.13.0 for windows-amd64...
+2026-07-10T10:23:00.4335608Z Downloading from: https://github.com/gnodet/mvx/releases/download/v0.13.0/mvx-windows-amd64.exe
+2026-07-10T10:23:17.3450026Z [INFO] Maveniverse Nisse 0.9.3 loaded
+2026-07-10T10:23:21.2873305Z [INFO] Nisse injecting 23 properties into User Properties
+2026-07-10T10:23:21.2989172Z [INFO] Scanning for projects...
+2026-07-10T10:23:21.4171891Z [WARNING] 
+2026-07-10T10:23:21.4173019Z [WARNING] Some problems were encountered while building the effective model for org.jline:jline-graal:jar:0.1.0-1-SNAPSHOT
+2026-07-10T10:23:21.4175334Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:exec-maven-plugin is missing. @ org.jline:jline-graal:${nisse.jgit.dynamicVersion}, D:\a\jline3\jline3\graal\pom.xml, line 80, column 21
+2026-07-10T10:23:21.4177003Z [WARNING] 
+2026-07-10T10:23:21.4178204Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-07-10T10:23:21.4179280Z [WARNING] 
+2026-07-10T10:23:21.4180185Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-07-10T10:23:21.4190790Z [WARNING] 
+2026-07-10T10:23:21.4229910Z [INFO] Nisse inlining following properties:
+2026-07-10T10:23:21.4230697Z [INFO]  * ${nisse.jgit.dynamicVersion}=0.1.0-1-SNAPSHOT
+2026-07-10T10:23:21.4231320Z [INFO] Checking POMs for inlining:
+2026-07-10T10:23:21.4240820Z [INFO]  * org.jline:jline-parent needs inlining
+2026-07-10T10:23:21.4276077Z [INFO]  * org.jline:jline-native needs inlining
+2026-07-10T10:23:21.4286053Z [INFO]  * org.jline:jline-terminal needs inlining
+2026-07-10T10:23:21.4294274Z [INFO]  * org.jline:jline-terminal-ffm needs inlining
+2026-07-10T10:23:21.4302236Z [INFO]  * org.jline:jline-terminal-jni needs inlining
+2026-07-10T10:23:21.4309907Z [INFO]  * org.jline:jline-reader needs inlining
+2026-07-10T10:23:21.4337071Z [INFO]  * org.jline:jline-shell needs inlining
+2026-07-10T10:23:21.4338090Z [INFO]  * org.jline:jline-style needs inlining
+2026-07-10T10:23:21.4338685Z [INFO]  * org.jline:jline-builtins needs inlining
+2026-07-10T10:23:21.4340237Z [INFO]  * org.jline:jline-console-ui needs inlining
+2026-07-10T10:23:21.4349411Z [INFO]  * org.jline:jline-prompt needs inlining
+2026-07-10T10:23:21.4355311Z [INFO]  * org.jline:jline-console needs inlining
+2026-07-10T10:23:21.4362470Z [INFO]  * org.jline:jline-picocli needs inlining
+2026-07-10T10:23:21.4370666Z [INFO]  * org.jline:jline-groovy needs inlining
+2026-07-10T10:23:21.4381697Z [INFO]  * org.jline:jline-remote-ssh needs inlining
+2026-07-10T10:23:21.4385219Z [INFO]  * org.jline:jline-remote-telnet needs inlining
+2026-07-10T10:23:21.4391541Z [INFO]  * org.jline:jline-demo needs inlining
+2026-07-10T10:23:21.4400725Z [INFO]  * org.jline:jline-graal needs inlining
+2026-07-10T10:23:21.4415378Z [INFO]  * org.jline:jansi-core needs inlining
+2026-07-10T10:23:21.4416642Z [INFO]  * org.jline:jline needs inlining
+2026-07-10T10:23:21.4436579Z [INFO]  * org.jline:jansi needs inlining
+2026-07-10T10:23:21.4583409Z [INFO] Njord 0.7.5 session created
+2026-07-10T10:23:21.4624617Z [INFO] ------------------------------------------------------------------------
+2026-07-10T10:23:21.4637758Z [INFO] Reactor Build Order:
+2026-07-10T10:23:21.4638365Z [INFO] 
+2026-07-10T10:23:21.4639306Z [INFO] JLine                                                              [pom]
+2026-07-10T10:23:21.4640363Z [INFO] JLine Native Library                                               [jar]
+2026-07-10T10:23:21.4641181Z [INFO] JLine Terminal                                                     [jar]
+2026-07-10T10:23:21.4643166Z [INFO] JLine FFM Terminal                                                 [jar]
+2026-07-10T10:23:21.4643959Z [INFO] JLine JNI Terminal                                                 [jar]
+2026-07-10T10:23:21.4644730Z [INFO] JLine Reader                                                       [jar]
+2026-07-10T10:23:21.4645453Z [INFO] JLine Shell                                                        [jar]
+2026-07-10T10:23:21.4646153Z [INFO] JLine Style                                                        [jar]
+2026-07-10T10:23:21.4647572Z [INFO] JLine Builtins                                                     [jar]
+2026-07-10T10:23:21.4648559Z [INFO] JLine Console UI (Deprecated)                                      [jar]
+2026-07-10T10:23:21.4649372Z [INFO] JLine Prompt                                                       [jar]
+2026-07-10T10:23:21.4650407Z [INFO] JLine Console                                                      [jar]
+2026-07-10T10:23:21.4651526Z [INFO] JLine Picocli                                                      [jar]
+2026-07-10T10:23:21.4652278Z [INFO] JLine Groovy                                                       [jar]
+2026-07-10T10:23:21.4653042Z [INFO] JLine Remote SSH                                                   [jar]
+2026-07-10T10:23:21.4653809Z [INFO] JLine Remote Telnet                                                [jar]
+2026-07-10T10:23:21.4654547Z [INFO] JLine Demo                                                         [jar]
+2026-07-10T10:23:21.4655266Z [INFO] JLine Native Demo                                                  [jar]
+2026-07-10T10:23:21.4655984Z [INFO] Jansi Core                                                         [jar]
+2026-07-10T10:23:21.4657171Z [INFO] JLine Bundle                                                       [jar]
+2026-07-10T10:23:21.4658250Z [INFO] Jansi Bundle                                                       [jar]
+2026-07-10T10:23:21.4747893Z [INFO] 
+2026-07-10T10:23:21.4749915Z [INFO] -----------------------< org.jline:jline-parent >-----------------------
+2026-07-10T10:23:21.4751012Z [INFO] Building JLine 0.1.0-1-SNAPSHOT                                   [1/21]
+2026-07-10T10:23:21.4753370Z [INFO]   from .inlined-pom.xml
+2026-07-10T10:23:21.4754745Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-07-10T10:23:21.6161881Z [INFO] 
+2026-07-10T10:23:21.6163139Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-parent ---
+2026-07-10T10:23:21.8527457Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-07-10T10:23:21.8675013Z [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+2026-07-10T10:23:21.8677497Z [INFO] 
+2026-07-10T10:23:21.8678820Z [INFO] --- spotless:3.8.0:check (default) @ jline-parent ---
+2026-07-10T10:23:22.4940588Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:23:22.5255461Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom16377870515537128278.xml
+2026-07-10T10:23:22.8550839Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom16377870515537128278.xml
+2026-07-10T10:23:22.8576433Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:23:22.8578233Z [INFO] 
+2026-07-10T10:23:22.8578807Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-parent ---
+2026-07-10T10:23:23.4569147Z [WARNING] Ignoring project type pom - supportedProjectTypes = [jar, bundle]
+2026-07-10T10:23:23.4570152Z [INFO] 
+2026-07-10T10:23:23.4570861Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-parent ---
+2026-07-10T10:23:23.6176951Z [INFO] No sources to compile
+2026-07-10T10:23:23.6207033Z [INFO] 
+2026-07-10T10:23:23.6207771Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-parent ---
+2026-07-10T10:23:23.8394032Z [INFO] 
+2026-07-10T10:23:23.8394852Z [INFO] -----------------------< org.jline:jline-native >-----------------------
+2026-07-10T10:23:23.8396224Z [INFO] Building JLine Native Library 0.1.0-1-SNAPSHOT                    [2/21]
+2026-07-10T10:23:23.8397023Z [INFO]   from native\.inlined-pom.xml
+2026-07-10T10:23:23.8397688Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:23:23.8982972Z [INFO] 
+2026-07-10T10:23:23.8984205Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-native ---
+2026-07-10T10:23:23.9025114Z [INFO] 
+2026-07-10T10:23:23.9025830Z [INFO] --- spotless:3.8.0:check (default) @ jline-native ---
+2026-07-10T10:23:23.9479500Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:23:24.0417003Z WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+2026-07-10T10:23:24.0419123Z WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.diffplug.spotless.java.ModuleHelper (file:/C:/Users/runneradmin/.m2/repository/com/diffplug/spotless/spotless-lib/4.8.0/spotless-lib-4.8.0.jar)
+2026-07-10T10:23:24.0424712Z WARNING: Please consider reporting this to the maintainers of class com.diffplug.spotless.java.ModuleHelper
+2026-07-10T10:23:24.0434039Z WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+2026-07-10T10:23:25.3498597Z [INFO] Spotless.Java is keeping 8 files clean - 0 needs changes to be clean, 8 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:23:25.3518051Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom15581801553417762751.xml
+2026-07-10T10:23:25.3683746Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom15581801553417762751.xml
+2026-07-10T10:23:25.3685695Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:23:25.3687120Z [INFO] 
+2026-07-10T10:23:25.3687840Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-native ---
+2026-07-10T10:23:25.4414327Z [INFO] Copying 2 resources from src\main\resources to target\classes
+2026-07-10T10:23:25.4612280Z [INFO] Copying 18 resources from src\main\resources to target\classes
+2026-07-10T10:23:25.4802793Z [INFO] The encoding used to copy filtered properties files has not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+2026-07-10T10:23:25.4818091Z [INFO] 
+2026-07-10T10:23:25.4819138Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-native ---
+2026-07-10T10:23:25.5362452Z [INFO] Recompiling the module because of changed source code.
+2026-07-10T10:23:25.5448021Z [INFO] Compiling 6 source files with javac [forked debug release 11] to target\classes
+2026-07-10T10:23:27.1582091Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-10T10:23:27.1635332Z [INFO] 
+2026-07-10T10:23:27.1636814Z [INFO] --- exec:3.6.3:java (generate-graalvm-info) @ jline-native ---
+2026-07-10T10:23:27.3721752Z [INFO] 
+2026-07-10T10:23:27.3722547Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-native ---
+2026-07-10T10:23:27.3764101Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:23:28.2229029Z [INFO] Writing manifest: D:\a\jline3\jline3\native\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:23:28.2250637Z [INFO] 
+2026-07-10T10:23:28.2251493Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-native ---
+2026-07-10T10:23:28.2334456Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\native\src\test\resources
+2026-07-10T10:23:28.2343338Z [INFO] 
+2026-07-10T10:23:28.2344350Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-native ---
+2026-07-10T10:23:28.2520841Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:23:28.2542202Z [INFO] Compiling 2 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:23:29.2371285Z [INFO] 
+2026-07-10T10:23:29.2372176Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-native ---
+2026-07-10T10:23:29.3597194Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:23:29.5836304Z [INFO] 
+2026-07-10T10:23:29.5838081Z [INFO] -------------------------------------------------------
+2026-07-10T10:23:29.5839182Z [INFO]  T E S T S
+2026-07-10T10:23:29.5843033Z [INFO] -------------------------------------------------------
+2026-07-10T10:23:30.6255693Z WARNING: Unknown module: org.jline.terminal specified to --add-opens
+2026-07-10T10:23:31.5219005Z [INFO] Running org.jline.nativ.JLineLibraryTest
+2026-07-10T10:23:31.5675519Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:23:31.5676994Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/classes/)
+2026-07-10T10:23:31.5678594Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:23:31.5679742Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:23:31.5680418Z 
+2026-07-10T10:23:31.6631975Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.112 s -- in org.jline.nativ.JLineLibraryTest
+2026-07-10T10:23:31.6641736Z [INFO] Running org.jline.nativ.JLineNativeLoaderTest
+2026-07-10T10:23:31.8288924Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.138 s -- in org.jline.nativ.JLineNativeLoaderTest
+2026-07-10T10:23:31.8580692Z [INFO] 
+2026-07-10T10:23:31.8581050Z [INFO] Results:
+2026-07-10T10:23:31.8581358Z [INFO] 
+2026-07-10T10:23:31.8587480Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+2026-07-10T10:23:31.8588207Z [INFO] 
+2026-07-10T10:23:31.8720013Z [INFO] 
+2026-07-10T10:23:31.8720763Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-native ---
+2026-07-10T10:23:32.1728114Z [INFO] Building jar: D:\a\jline3\jline3\native\target\jline-native-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:23:32.3670224Z [INFO] 
+2026-07-10T10:23:32.3671062Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-native ---
+2026-07-10T10:23:32.4005582Z [INFO] Building jar: D:\a\jline3\jline3\native\target\jline-native-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:23:32.5044285Z [INFO] 
+2026-07-10T10:23:32.5045266Z [INFO] ----------------------< org.jline:jline-terminal >----------------------
+2026-07-10T10:23:32.5046564Z [INFO] Building JLine Terminal 0.1.0-1-SNAPSHOT                          [3/21]
+2026-07-10T10:23:32.5048869Z [INFO]   from terminal\.inlined-pom.xml
+2026-07-10T10:23:32.5049736Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:23:32.5248296Z [INFO] 
+2026-07-10T10:23:32.5261637Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-terminal ---
+2026-07-10T10:23:32.5272401Z [INFO] 
+2026-07-10T10:23:32.5273340Z [INFO] --- spotless:3.8.0:check (default) @ jline-terminal ---
+2026-07-10T10:23:32.5780634Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:23:35.9171657Z [INFO] Spotless.Java is keeping 138 files clean - 0 needs changes to be clean, 138 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:23:35.9193098Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom9764904254195588023.xml
+2026-07-10T10:23:35.9330770Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom9764904254195588023.xml
+2026-07-10T10:23:35.9337283Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:23:35.9339158Z [INFO] 
+2026-07-10T10:23:35.9339914Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-terminal ---
+2026-07-10T10:23:35.9346857Z [INFO] Copying 24 resources from src\main\resources to target\classes
+2026-07-10T10:23:35.9507865Z [INFO] 
+2026-07-10T10:23:35.9508652Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-terminal ---
+2026-07-10T10:23:36.0034970Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:23:36.0078683Z [INFO] Compiling 93 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:23:39.8464234Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 2 JDK modules [java.base, java.desktop]
+2026-07-10T10:23:39.8529190Z [INFO] 
+2026-07-10T10:23:39.8529763Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-terminal ---
+2026-07-10T10:23:39.8553044Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:23:40.2804627Z [INFO] Writing manifest: D:\a\jline3\jline3\terminal\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:23:40.2820292Z [INFO] 
+2026-07-10T10:23:40.2821402Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-terminal ---
+2026-07-10T10:23:40.2862550Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\terminal\src\test\resources
+2026-07-10T10:23:40.2863508Z [INFO] 
+2026-07-10T10:23:40.2864250Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-terminal ---
+2026-07-10T10:23:40.3117504Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:23:40.3139878Z [INFO] Compiling 45 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:23:43.6012065Z [INFO] 
+2026-07-10T10:23:43.6012656Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-terminal ---
+2026-07-10T10:23:43.6109869Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:23:43.7627274Z [INFO] 
+2026-07-10T10:23:43.7627909Z [INFO] -------------------------------------------------------
+2026-07-10T10:23:43.7628489Z [INFO]  T E S T S
+2026-07-10T10:23:43.7628927Z [INFO] -------------------------------------------------------
+2026-07-10T10:23:44.9830365Z [INFO] Running org.jline.terminal.DumbTerminalWarningTest
+2026-07-10T10:23:45.2818542Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:23:45.2820902Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar)
+2026-07-10T10:23:45.2822737Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:23:45.2823910Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:23:45.2824637Z 
+2026-07-10T10:23:45.3871984Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.389 s -- in org.jline.terminal.DumbTerminalWarningTest
+2026-07-10T10:23:45.4083167Z [INFO] Running org.jline.terminal.EncodingTest
+2026-07-10T10:23:45.7407277Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.364 s -- in org.jline.terminal.EncodingTest
+2026-07-10T10:23:45.7408761Z [INFO] Running org.jline.terminal.impl.AbstractPtyTest
+2026-07-10T10:23:45.7520844Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.jline.terminal.impl.AbstractPtyTest
+2026-07-10T10:23:45.7522557Z [INFO] Running org.jline.terminal.impl.AbstractWindowsTerminalTest
+2026-07-10T10:23:45.8132062Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 s -- in org.jline.terminal.impl.AbstractWindowsTerminalTest
+2026-07-10T10:23:45.8133629Z [INFO] Running org.jline.terminal.impl.ColorParsingTest
+2026-07-10T10:23:45.9125229Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s -- in org.jline.terminal.impl.ColorParsingTest
+2026-07-10T10:23:45.9128087Z [INFO] Running org.jline.terminal.impl.DecModeProbeTest
+2026-07-10T10:23:47.2498901Z [INFO] Tests run: 43, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.334 s -- in org.jline.terminal.impl.DecModeProbeTest
+2026-07-10T10:23:47.2500552Z [INFO] Running org.jline.terminal.impl.DoubleSizeCharactersTest
+2026-07-10T10:23:47.8539694Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.601 s -- in org.jline.terminal.impl.DoubleSizeCharactersTest
+2026-07-10T10:23:47.8541321Z [INFO] Running org.jline.terminal.impl.exec.ExecPtyTest
+2026-07-10T10:23:47.8961366Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in org.jline.terminal.impl.exec.ExecPtyTest
+2026-07-10T10:23:47.8962544Z [INFO] Running org.jline.terminal.impl.GraphemeClusterModeTest
+2026-07-10T10:23:50.8996555Z [INFO] Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.003 s -- in org.jline.terminal.impl.GraphemeClusterModeTest
+2026-07-10T10:23:50.8997849Z [INFO] Running org.jline.terminal.impl.HeldStreamReferenceTest
+2026-07-10T10:23:51.1307763Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.224 s -- in org.jline.terminal.impl.HeldStreamReferenceTest
+2026-07-10T10:23:51.1309368Z [INFO] Running org.jline.terminal.impl.MouseSupportTest
+2026-07-10T10:23:51.1419652Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in org.jline.terminal.impl.MouseSupportTest
+2026-07-10T10:23:51.1421022Z [INFO] Running org.jline.terminal.impl.NullOutputCloseTest
+2026-07-10T10:23:51.2152114Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 s -- in org.jline.terminal.impl.NullOutputCloseTest
+2026-07-10T10:23:51.2153261Z [INFO] Running org.jline.terminal.impl.PosixSysTerminalTest
+2026-07-10T10:23:51.5675452Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.350 s -- in org.jline.terminal.impl.PosixSysTerminalTest
+2026-07-10T10:23:51.5677029Z [INFO] Running org.jline.terminal.impl.PtyInputStreamTest
+2026-07-10T10:23:51.5784267Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in org.jline.terminal.impl.PtyInputStreamTest
+2026-07-10T10:23:51.5785724Z [INFO] Running org.jline.terminal.impl.SignalInterceptionTest
+2026-07-10T10:23:51.7946493Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.216 s -- in org.jline.terminal.impl.SignalInterceptionTest
+2026-07-10T10:23:51.7947902Z [INFO] Running org.jline.terminal.impl.SixelGraphicsTest
+2026-07-10T10:23:53.0987032Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.302 s -- in org.jline.terminal.impl.SixelGraphicsTest
+2026-07-10T10:23:53.0988860Z [INFO] Running org.jline.terminal.impl.StrictCloseTest
+2026-07-10T10:23:53.1996206Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s -- in org.jline.terminal.impl.StrictCloseTest
+2026-07-10T10:23:53.1997420Z [INFO] Running org.jline.terminal.impl.TerminalGraphicsTest
+2026-07-10T10:23:53.6997379Z [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.497 s -- in org.jline.terminal.impl.TerminalGraphicsTest
+2026-07-10T10:23:53.6999293Z [INFO] Running org.jline.terminal.impl.TerminalProbeResponseLeakTest
+2026-07-10T10:23:53.8350954Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.138 s -- in org.jline.terminal.impl.TerminalProbeResponseLeakTest
+2026-07-10T10:23:53.8352326Z [INFO] Running org.jline.terminal.impl.TermiosMappingRoundtripTest
+2026-07-10T10:23:53.8499769Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in org.jline.terminal.impl.TermiosMappingRoundtripTest
+2026-07-10T10:23:53.8501603Z [INFO] Running org.jline.terminal.MultiEncodingTerminalTest
+2026-07-10T10:23:53.9554410Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.104 s -- in org.jline.terminal.MultiEncodingTerminalTest
+2026-07-10T10:23:53.9555955Z [INFO] Running org.jline.terminal.SystemOutCloseTest
+2026-07-10T10:23:53.9973767Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in org.jline.terminal.SystemOutCloseTest
+2026-07-10T10:23:53.9976228Z [INFO] Running org.jline.utils.AttributedCharSequenceTest
+2026-07-10T10:23:54.6007955Z [INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.601 s -- in org.jline.utils.AttributedCharSequenceTest
+2026-07-10T10:23:54.6010192Z [INFO] Running org.jline.utils.AttributedStringBuilderTest
+2026-07-10T10:23:54.6089191Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.jline.utils.AttributedStringBuilderTest
+2026-07-10T10:23:54.6101797Z [INFO] Running org.jline.utils.AttributedStringTest
+2026-07-10T10:23:54.6647873Z [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in org.jline.utils.AttributedStringTest
+2026-07-10T10:23:54.6649775Z [INFO] Running org.jline.utils.AttributedStyleTest
+2026-07-10T10:23:54.6723502Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.jline.utils.AttributedStyleTest
+2026-07-10T10:23:54.6724860Z [INFO] Running org.jline.utils.ByteArrayBuilderTest
+2026-07-10T10:23:54.6931063Z [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.jline.utils.ByteArrayBuilderTest
+2026-07-10T10:23:54.6932177Z [INFO] Running org.jline.utils.ColorPaletteTest
+2026-07-10T10:23:54.7986913Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.106 s -- in org.jline.utils.ColorPaletteTest
+2026-07-10T10:23:54.7988064Z [INFO] Running org.jline.utils.ColorsTest
+2026-07-10T10:23:54.8190183Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in org.jline.utils.ColorsTest
+2026-07-10T10:23:54.8191453Z [INFO] Running org.jline.utils.CursesTest
+2026-07-10T10:23:54.8216887Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.jline.utils.CursesTest
+2026-07-10T10:23:54.8218061Z [INFO] Running org.jline.utils.DisplayBenchmarkTest
+2026-07-10T10:24:00.5071770Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.687 s -- in org.jline.utils.DisplayBenchmarkTest
+2026-07-10T10:24:00.5072902Z [INFO] Running org.jline.utils.DisplayTest
+2026-07-10T10:24:01.7501543Z [INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.235 s -- in org.jline.utils.DisplayTest
+2026-07-10T10:24:01.7504641Z [INFO] Running org.jline.utils.InfoCmpConcurrencyTest
+2026-07-10T10:24:01.8060258Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s -- in org.jline.utils.InfoCmpConcurrencyTest
+2026-07-10T10:24:01.8061287Z [INFO] Running org.jline.utils.InfoCmpTest
+2026-07-10T10:24:01.9902933Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.184 s -- in org.jline.utils.InfoCmpTest
+2026-07-10T10:24:01.9904009Z [INFO] Running org.jline.utils.NonBlockingEncodingTest
+2026-07-10T10:24:03.3441230Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.351 s -- in org.jline.utils.NonBlockingEncodingTest
+2026-07-10T10:24:03.3442907Z [INFO] Running org.jline.utils.NonBlockingTest
+2026-07-10T10:24:05.1854576Z [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.840 s -- in org.jline.utils.NonBlockingTest
+2026-07-10T10:24:05.1855711Z [INFO] Running org.jline.utils.NonCloseableStreamTest
+2026-07-10T10:24:05.1950739Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.jline.utils.NonCloseableStreamTest
+2026-07-10T10:24:05.1961780Z [INFO] Running org.jline.utils.PumpReaderTest
+2026-07-10T10:24:05.1980123Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.jline.utils.PumpReaderTest
+2026-07-10T10:24:05.1981551Z [INFO] Running org.jline.utils.ScreenTerminalTest
+2026-07-10T10:24:05.5037732Z [INFO] Tests run: 50, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.309 s -- in org.jline.utils.ScreenTerminalTest
+2026-07-10T10:24:05.5039082Z [INFO] Running org.jline.utils.StatusTest
+2026-07-10T10:24:06.0763272Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.572 s -- in org.jline.utils.StatusTest
+2026-07-10T10:24:06.0766622Z [INFO] Running org.jline.utils.WCWidthTest
+2026-07-10T10:24:06.3801387Z [INFO] Tests run: 52, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.303 s -- in org.jline.utils.WCWidthTest
+2026-07-10T10:24:06.3802759Z [INFO] Running org.jline.utils.WriterOutputStreamTest
+2026-07-10T10:24:06.3829175Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.jline.utils.WriterOutputStreamTest
+2026-07-10T10:24:06.4018627Z [INFO] 
+2026-07-10T10:24:06.4018973Z [INFO] Results:
+2026-07-10T10:24:06.4019368Z [INFO] 
+2026-07-10T10:24:06.4023779Z [INFO] Tests run: 428, Failures: 0, Errors: 0, Skipped: 0
+2026-07-10T10:24:06.4024357Z [INFO] 
+2026-07-10T10:24:06.4025226Z [WARNING] Corrupted channel by directly writing to native stream in forked JVM 1. See FAQ web page and the dump file D:\a\jline3\jline3\terminal\target\surefire-reports\2026-07-10T10-23-29_342-jvmRun1.dumpstream
+2026-07-10T10:24:06.4047537Z [INFO] 
+2026-07-10T10:24:06.4047970Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-terminal ---
+2026-07-10T10:24:06.5145214Z [INFO] Building jar: D:\a\jline3\jline3\terminal\target\jline-terminal-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:06.5983738Z [INFO] 
+2026-07-10T10:24:06.5984163Z [INFO] --- jar:3.5.0:test-jar (default) @ jline-terminal ---
+2026-07-10T10:24:06.6107923Z [INFO] Building jar: D:\a\jline3\jline3\terminal\target\jline-terminal-0.1.0-1-SNAPSHOT-tests.jar
+2026-07-10T10:24:06.6172566Z [INFO] 
+2026-07-10T10:24:06.6173497Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-terminal ---
+2026-07-10T10:24:06.7212360Z [INFO] Building jar: D:\a\jline3\jline3\terminal\target\jline-terminal-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:06.7629466Z [INFO] 
+2026-07-10T10:24:06.7630313Z [INFO] --------------------< org.jline:jline-terminal-ffm >--------------------
+2026-07-10T10:24:06.7631532Z [INFO] Building JLine FFM Terminal 0.1.0-1-SNAPSHOT                      [4/21]
+2026-07-10T10:24:06.7632793Z [INFO]   from terminal-ffm\.inlined-pom.xml
+2026-07-10T10:24:06.7633632Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:06.7718485Z [INFO] 
+2026-07-10T10:24:06.7719273Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-terminal-ffm ---
+2026-07-10T10:24:06.7731465Z [INFO] 
+2026-07-10T10:24:06.7735366Z [INFO] --- spotless:3.8.0:check (default) @ jline-terminal-ffm ---
+2026-07-10T10:24:06.8086268Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:07.0217846Z [INFO] Spotless.Java is keeping 11 files clean - 0 needs changes to be clean, 11 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:07.0232729Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom17387371973604698275.xml
+2026-07-10T10:24:07.0320912Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom17387371973604698275.xml
+2026-07-10T10:24:07.0395701Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:07.0397308Z [INFO] 
+2026-07-10T10:24:07.0398136Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-terminal-ffm ---
+2026-07-10T10:24:07.0399308Z [INFO] Copying 3 resources from src\main\resources to target\classes
+2026-07-10T10:24:07.0407369Z [INFO] 
+2026-07-10T10:24:07.0408176Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-terminal-ffm ---
+2026-07-10T10:24:07.0603593Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:07.0623694Z [INFO] Compiling 10 source files with javac [forked debug release 22 module-path] to target\classes
+2026-07-10T10:24:09.0776719Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [22] to [22] on 1 JDK modules [java.base]
+2026-07-10T10:24:09.0793878Z [INFO] 
+2026-07-10T10:24:09.0795096Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-terminal-ffm ---
+2026-07-10T10:24:09.0816047Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:09.1661712Z [INFO] Writing manifest: D:\a\jline3\jline3\terminal-ffm\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:09.1667991Z [INFO] 
+2026-07-10T10:24:09.1668915Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-terminal-ffm ---
+2026-07-10T10:24:09.1682581Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\terminal-ffm\src\test\resources
+2026-07-10T10:24:09.1685215Z [INFO] 
+2026-07-10T10:24:09.1686024Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-terminal-ffm ---
+2026-07-10T10:24:09.1805348Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:09.1821260Z [INFO] Compiling 1 source file with javac [forked debug release 22 module-path] to target\test-classes
+2026-07-10T10:24:10.0788108Z [INFO] 
+2026-07-10T10:24:10.0788732Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-terminal-ffm ---
+2026-07-10T10:24:10.0824314Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:10.2208349Z [INFO] 
+2026-07-10T10:24:10.2208923Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:10.2209466Z [INFO]  T E S T S
+2026-07-10T10:24:10.2209901Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:11.0105946Z [INFO] Running org.jline.terminal.impl.ffm.FfmTest
+2026-07-10T10:24:11.3128942Z [WARNING] Tests run: 4, Failures: 0, Errors: 0, Skipped: 3, Time elapsed: 0.299 s -- in org.jline.terminal.impl.ffm.FfmTest
+2026-07-10T10:24:11.3366064Z [INFO] 
+2026-07-10T10:24:11.3366536Z [INFO] Results:
+2026-07-10T10:24:11.3367171Z [INFO] 
+2026-07-10T10:24:11.3367997Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 3
+2026-07-10T10:24:11.3369829Z [INFO] 
+2026-07-10T10:24:11.3395365Z [INFO] 
+2026-07-10T10:24:11.3395874Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-terminal-ffm ---
+2026-07-10T10:24:11.3642893Z [INFO] Building jar: D:\a\jline3\jline3\terminal-ffm\target\jline-terminal-ffm-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:11.3893077Z [INFO] 
+2026-07-10T10:24:11.3893931Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-terminal-ffm ---
+2026-07-10T10:24:11.4090834Z [INFO] Building jar: D:\a\jline3\jline3\terminal-ffm\target\jline-terminal-ffm-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:11.4193753Z [INFO] 
+2026-07-10T10:24:11.4194269Z [INFO] --------------------< org.jline:jline-terminal-jni >--------------------
+2026-07-10T10:24:11.4194809Z [INFO] Building JLine JNI Terminal 0.1.0-1-SNAPSHOT                      [5/21]
+2026-07-10T10:24:11.4195242Z [INFO]   from terminal-jni\.inlined-pom.xml
+2026-07-10T10:24:11.4195620Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:11.4280942Z [INFO] 
+2026-07-10T10:24:11.4281726Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-terminal-jni ---
+2026-07-10T10:24:11.4295293Z [INFO] 
+2026-07-10T10:24:11.4295974Z [INFO] --- spotless:3.8.0:check (default) @ jline-terminal-jni ---
+2026-07-10T10:24:11.4675411Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:11.5620412Z [INFO] Spotless.Java is keeping 12 files clean - 0 needs changes to be clean, 12 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:11.5633931Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom4922938203616668230.xml
+2026-07-10T10:24:11.5698542Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom4922938203616668230.xml
+2026-07-10T10:24:11.5724289Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:11.5733569Z [INFO] 
+2026-07-10T10:24:11.5734654Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-terminal-jni ---
+2026-07-10T10:24:11.5740479Z [INFO] Copying 5 resources from src\main\resources to target\classes
+2026-07-10T10:24:11.5801779Z [INFO] 
+2026-07-10T10:24:11.5802748Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-terminal-jni ---
+2026-07-10T10:24:11.7107251Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:11.7109075Z [INFO] Compiling 11 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:24:13.0615149Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-10T10:24:13.0637411Z [INFO] 
+2026-07-10T10:24:13.0638287Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-terminal-jni ---
+2026-07-10T10:24:13.0679634Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:13.1533960Z [INFO] Writing manifest: D:\a\jline3\jline3\terminal-jni\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:13.1542076Z [INFO] 
+2026-07-10T10:24:13.1543235Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-terminal-jni ---
+2026-07-10T10:24:13.1566747Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\terminal-jni\src\test\resources
+2026-07-10T10:24:13.1567633Z [INFO] 
+2026-07-10T10:24:13.1569730Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-terminal-jni ---
+2026-07-10T10:24:13.1661049Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:13.1672834Z [INFO] Compiling 1 source file with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:24:14.0513473Z [INFO] 
+2026-07-10T10:24:14.0514133Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-terminal-jni ---
+2026-07-10T10:24:14.0549824Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:14.1861648Z [INFO] 
+2026-07-10T10:24:14.1862141Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:14.1862715Z [INFO]  T E S T S
+2026-07-10T10:24:14.1863131Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:14.9804913Z [INFO] Running org.jline.terminal.impl.jni.JniTerminalProviderTest
+2026-07-10T10:24:15.0403566Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:24:15.0405570Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar)
+2026-07-10T10:24:15.0407166Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:24:15.0408266Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:24:15.0408906Z 
+2026-07-10T10:24:15.0865171Z [WARNING] Tests run: 2, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.100 s -- in org.jline.terminal.impl.jni.JniTerminalProviderTest
+2026-07-10T10:24:15.1113579Z [INFO] 
+2026-07-10T10:24:15.1117456Z [INFO] Results:
+2026-07-10T10:24:15.1117951Z [INFO] 
+2026-07-10T10:24:15.1118502Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 1
+2026-07-10T10:24:15.1119470Z [INFO] 
+2026-07-10T10:24:15.1136602Z [INFO] 
+2026-07-10T10:24:15.1137196Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-terminal-jni ---
+2026-07-10T10:24:15.1430331Z [INFO] Building jar: D:\a\jline3\jline3\terminal-jni\target\jline-terminal-jni-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:15.1570820Z [INFO] 
+2026-07-10T10:24:15.1571598Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-terminal-jni ---
+2026-07-10T10:24:15.1812332Z [INFO] Building jar: D:\a\jline3\jline3\terminal-jni\target\jline-terminal-jni-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:15.1930407Z [INFO] 
+2026-07-10T10:24:15.1932274Z [INFO] -----------------------< org.jline:jline-reader >-----------------------
+2026-07-10T10:24:15.1933208Z [INFO] Building JLine Reader 0.1.0-1-SNAPSHOT                            [6/21]
+2026-07-10T10:24:15.1940344Z [INFO]   from reader\.inlined-pom.xml
+2026-07-10T10:24:15.1941389Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:15.2008206Z [INFO] 
+2026-07-10T10:24:15.2009335Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-reader ---
+2026-07-10T10:24:15.2018613Z [INFO] 
+2026-07-10T10:24:15.2019614Z [INFO] --- spotless:3.8.0:check (default) @ jline-reader ---
+2026-07-10T10:24:15.2343345Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:16.7152408Z [INFO] Spotless.Java is keeping 83 files clean - 0 needs changes to be clean, 83 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:16.7197437Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom14578026335153633082.xml
+2026-07-10T10:24:16.7338625Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom14578026335153633082.xml
+2026-07-10T10:24:16.7341031Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:16.7528539Z [INFO] 
+2026-07-10T10:24:16.7529790Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-reader ---
+2026-07-10T10:24:16.7531054Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\reader\src\main\resources
+2026-07-10T10:24:16.7541850Z [INFO] 
+2026-07-10T10:24:16.7542693Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-reader ---
+2026-07-10T10:24:16.7576558Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:16.7585089Z [INFO] Compiling 49 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:24:19.6757543Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-10T10:24:19.6779652Z [INFO] 
+2026-07-10T10:24:19.6780372Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-reader ---
+2026-07-10T10:24:19.6803109Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:19.8573559Z [INFO] Writing manifest: D:\a\jline3\jline3\reader\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:19.8580638Z [INFO] 
+2026-07-10T10:24:19.8581603Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-reader ---
+2026-07-10T10:24:19.8593481Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\reader\src\test\resources
+2026-07-10T10:24:19.8594454Z [INFO] 
+2026-07-10T10:24:19.8595224Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-reader ---
+2026-07-10T10:24:19.8698531Z [WARNING] Can't extract module name from jline-terminal-0.1.0-1-SNAPSHOT-tests.jar: Module 'org.jline.terminal' is already on the module path!
+2026-07-10T10:24:19.8739210Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:19.8754961Z [INFO] Compiling 34 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:24:22.2202801Z [INFO] 
+2026-07-10T10:24:22.2203682Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-reader ---
+2026-07-10T10:24:22.2258360Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:22.3638855Z [WARNING] Exception for 'D:\a\jline3\jline3\terminal\target\jline-terminal-0.1.0-1-SNAPSHOT-tests.jar'.
+2026-07-10T10:24:22.3640070Z java.lang.IllegalStateException: Module 'org.jline.terminal' is already on the module path!
+2026-07-10T10:24:22.3644202Z     at org.codehaus.plexus.languages.java.jpms.LocationManager.resolvePaths (LocationManager.java:267)
+2026-07-10T10:24:22.3645948Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.newStartupConfigWithModularPath (AbstractSurefireMojo.java:1990)
+2026-07-10T10:24:22.3648309Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.createStartupConfiguration (AbstractSurefireMojo.java:1860)
+2026-07-10T10:24:22.3654105Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.createForkStarter (AbstractSurefireMojo.java:2346)
+2026-07-10T10:24:22.3655776Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeProvider (AbstractSurefireMojo.java:1345)
+2026-07-10T10:24:22.3657838Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeAfterPreconditionsChecked (AbstractSurefireMojo.java:1154)
+2026-07-10T10:24:22.3659551Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.execute (AbstractSurefireMojo.java:988)
+2026-07-10T10:24:22.3661628Z     at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
+2026-07-10T10:24:22.3663031Z     at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
+2026-07-10T10:24:22.3664986Z     at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+2026-07-10T10:24:22.3666256Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+2026-07-10T10:24:22.3667456Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+2026-07-10T10:24:22.3668938Z     at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+2026-07-10T10:24:22.3670107Z     at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+2026-07-10T10:24:22.3671468Z     at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+2026-07-10T10:24:22.3672867Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+2026-07-10T10:24:22.3674454Z     at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+2026-07-10T10:24:22.3676034Z     at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+2026-07-10T10:24:22.3677854Z     at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+2026-07-10T10:24:22.3680497Z     at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+2026-07-10T10:24:22.3681927Z     at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+2026-07-10T10:24:22.3682824Z     at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+2026-07-10T10:24:22.3683510Z     at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+2026-07-10T10:24:22.3683972Z     at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
+2026-07-10T10:24:22.3684407Z     at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
+2026-07-10T10:24:22.3684832Z     at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
+2026-07-10T10:24:22.3685397Z     at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:104)
+2026-07-10T10:24:22.3685961Z     at java.lang.reflect.Method.invoke (Method.java:565)
+2026-07-10T10:24:22.3686479Z     at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+2026-07-10T10:24:22.3687103Z     at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+2026-07-10T10:24:22.3687969Z     at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+2026-07-10T10:24:22.3688604Z     at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+2026-07-10T10:24:22.3689367Z [INFO] 
+2026-07-10T10:24:22.3689776Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:22.3690307Z [INFO]  T E S T S
+2026-07-10T10:24:22.3690731Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:23.4684510Z [INFO] Running org.jline.keymap.BindingReaderTest
+2026-07-10T10:24:23.6646739Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.171 s -- in org.jline.keymap.BindingReaderTest
+2026-07-10T10:24:23.6750147Z [INFO] Running org.jline.keymap.KeyMapTest
+2026-07-10T10:24:23.8446061Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.199 s -- in org.jline.keymap.KeyMapTest
+2026-07-10T10:24:23.8447442Z [INFO] Running org.jline.reader.completer.ArgumentCompleterTest
+2026-07-10T10:24:23.9601289Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.112 s -- in org.jline.reader.completer.ArgumentCompleterTest
+2026-07-10T10:24:23.9603018Z [INFO] Running org.jline.reader.completer.DefaultParserTest
+2026-07-10T10:24:23.9985818Z [INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in org.jline.reader.completer.DefaultParserTest
+2026-07-10T10:24:23.9994675Z [INFO] Running org.jline.reader.completer.NullCompleterTest
+2026-07-10T10:24:24.0213706Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in org.jline.reader.completer.NullCompleterTest
+2026-07-10T10:24:24.0215200Z [INFO] Running org.jline.reader.completer.StringsCompleterTest
+2026-07-10T10:24:24.1371872Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.096 s -- in org.jline.reader.completer.StringsCompleterTest
+2026-07-10T10:24:24.1374394Z [INFO] Running org.jline.reader.impl.BufferTest
+2026-07-10T10:24:24.1375970Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.jline.reader.impl.BufferTest
+2026-07-10T10:24:24.1377278Z [INFO] Running org.jline.reader.impl.CandidateCustomSortTest
+2026-07-10T10:24:24.2074432Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.069 s -- in org.jline.reader.impl.CandidateCustomSortTest
+2026-07-10T10:24:24.2076142Z [INFO] Running org.jline.reader.impl.ColonCommandCompletionTest
+2026-07-10T10:24:24.2366773Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in org.jline.reader.impl.ColonCommandCompletionTest
+2026-07-10T10:24:24.2473654Z [INFO] Running org.jline.reader.impl.CompletionMatcherTest
+2026-07-10T10:24:24.2532158Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in org.jline.reader.impl.CompletionMatcherTest
+2026-07-10T10:24:24.2533474Z [INFO] Running org.jline.reader.impl.CompletionTest
+2026-07-10T10:24:24.4036499Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.153 s -- in org.jline.reader.impl.CompletionTest
+2026-07-10T10:24:24.4040995Z [INFO] Running org.jline.reader.impl.CompletionWithCustomMatcherTest
+2026-07-10T10:24:24.4306020Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in org.jline.reader.impl.CompletionWithCustomMatcherTest
+2026-07-10T10:24:24.4307718Z [INFO] Running org.jline.reader.impl.CompletionWithParserTest
+2026-07-10T10:24:24.4437931Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in org.jline.reader.impl.CompletionWithParserTest
+2026-07-10T10:24:24.4450651Z [INFO] Running org.jline.reader.impl.DefaultParserTest
+2026-07-10T10:24:24.4584725Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in org.jline.reader.impl.DefaultParserTest
+2026-07-10T10:24:24.4597872Z [INFO] Running org.jline.reader.impl.DigitArgumentTest
+2026-07-10T10:24:24.7122966Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.239 s -- in org.jline.reader.impl.DigitArgumentTest
+2026-07-10T10:24:24.7125893Z [INFO] Running org.jline.reader.impl.DumbTerminalPasswordTest
+2026-07-10T10:24:24.7744069Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.068 s -- in org.jline.reader.impl.DumbTerminalPasswordTest
+2026-07-10T10:24:24.7745530Z [INFO] Running org.jline.reader.impl.EditLineTest
+2026-07-10T10:24:25.0711190Z [INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.294 s -- in org.jline.reader.impl.EditLineTest
+2026-07-10T10:24:25.0713630Z [INFO] Running org.jline.reader.impl.history.DefaultHistoryInvalidEntriesTest
+2026-07-10T10:24:25.1580287Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:24:25.1612974Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar)
+2026-07-10T10:24:25.1614768Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:24:25.1615959Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:24:25.1616627Z 
+2026-07-10T10:24:25.2609983Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.186 s -- in org.jline.reader.impl.history.DefaultHistoryInvalidEntriesTest
+2026-07-10T10:24:25.2612635Z [INFO] Running org.jline.reader.impl.history.HistoryPersistenceTest
+2026-07-10T10:24:25.3549089Z [WARNING] Tests run: 4, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.098 s -- in org.jline.reader.impl.history.HistoryPersistenceTest
+2026-07-10T10:24:25.3554225Z [INFO] Running org.jline.reader.impl.history.HistoryReaderTest
+2026-07-10T10:24:25.7377023Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.375 s -- in org.jline.reader.impl.history.HistoryReaderTest
+2026-07-10T10:24:25.7378518Z [INFO] Running org.jline.reader.impl.history.HistoryTest
+2026-07-10T10:24:25.8169479Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.060 s -- in org.jline.reader.impl.history.HistoryTest
+2026-07-10T10:24:25.8171101Z [INFO] Running org.jline.reader.impl.HistorySearchTest
+2026-07-10T10:24:25.9519092Z [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.145 s -- in org.jline.reader.impl.HistorySearchTest
+2026-07-10T10:24:25.9520471Z [INFO] Running org.jline.reader.impl.KillRingTest
+2026-07-10T10:24:26.0800188Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.126 s -- in org.jline.reader.impl.KillRingTest
+2026-07-10T10:24:26.0803045Z [INFO] Running org.jline.reader.impl.LineReaderEofTest
+2026-07-10T10:24:26.5103310Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.433 s -- in org.jline.reader.impl.LineReaderEofTest
+2026-07-10T10:24:26.5104555Z [INFO] Running org.jline.reader.impl.LineReaderInterruptTest
+2026-07-10T10:24:26.7249167Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.214 s -- in org.jline.reader.impl.LineReaderInterruptTest
+2026-07-10T10:24:26.7250644Z [INFO] Running org.jline.reader.impl.LineReaderResizeTest
+2026-07-10T10:24:26.7492441Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in org.jline.reader.impl.LineReaderResizeTest
+2026-07-10T10:24:26.7494140Z [INFO] Running org.jline.reader.impl.LineReaderTest
+2026-07-10T10:24:26.9312965Z [WARNING] Tests run: 9, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 0.179 s -- in org.jline.reader.impl.LineReaderTest
+2026-07-10T10:24:26.9315036Z [INFO] Running org.jline.reader.impl.MultiByteCharTest
+2026-07-10T10:24:26.9561406Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in org.jline.reader.impl.MultiByteCharTest
+2026-07-10T10:24:26.9563208Z [INFO] Running org.jline.reader.impl.SystemOptionsTest
+2026-07-10T10:24:26.9925281Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 s -- in org.jline.reader.impl.SystemOptionsTest
+2026-07-10T10:24:26.9926766Z [INFO] Running org.jline.reader.impl.TerminalReaderTest
+2026-07-10T10:24:27.1218225Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.128 s -- in org.jline.reader.impl.TerminalReaderTest
+2026-07-10T10:24:27.1219685Z [INFO] Running org.jline.reader.impl.ViMoveModeTest
+2026-07-10T10:24:27.6707941Z [INFO] Tests run: 38, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.541 s -- in org.jline.reader.impl.ViMoveModeTest
+2026-07-10T10:24:27.6716805Z [INFO] Running org.jline.reader.impl.WidgetTest
+2026-07-10T10:24:27.7134239Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.jline.reader.impl.WidgetTest
+2026-07-10T10:24:27.7139510Z [INFO] Running org.jline.reader.LineReaderBuilderTest
+2026-07-10T10:24:27.7309284Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.037 s -- in org.jline.reader.LineReaderBuilderTest
+2026-07-10T10:24:27.7818702Z [INFO] 
+2026-07-10T10:24:27.7819425Z [INFO] Results:
+2026-07-10T10:24:27.7820013Z [INFO] 
+2026-07-10T10:24:27.7820459Z [INFO] Tests run: 211, Failures: 0, Errors: 0, Skipped: 3
+2026-07-10T10:24:27.7820888Z [INFO] 
+2026-07-10T10:24:27.7843878Z [INFO] 
+2026-07-10T10:24:27.7845515Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-reader ---
+2026-07-10T10:24:27.8313124Z [INFO] Building jar: D:\a\jline3\jline3\reader\target\jline-reader-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:27.8765263Z [INFO] 
+2026-07-10T10:24:27.8766173Z [INFO] --- jar:3.5.0:test-jar (default) @ jline-reader ---
+2026-07-10T10:24:27.8866484Z [INFO] Building jar: D:\a\jline3\jline3\reader\target\jline-reader-0.1.0-1-SNAPSHOT-tests.jar
+2026-07-10T10:24:27.8905249Z [INFO] 
+2026-07-10T10:24:27.8906205Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-reader ---
+2026-07-10T10:24:27.9475485Z [INFO] Building jar: D:\a\jline3\jline3\reader\target\jline-reader-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:27.9623114Z [INFO] 
+2026-07-10T10:24:27.9624133Z [INFO] -----------------------< org.jline:jline-shell >------------------------
+2026-07-10T10:24:27.9625054Z [INFO] Building JLine Shell 0.1.0-1-SNAPSHOT                             [7/21]
+2026-07-10T10:24:27.9625950Z [INFO]   from shell\.inlined-pom.xml
+2026-07-10T10:24:27.9626537Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:27.9757565Z [INFO] 
+2026-07-10T10:24:27.9758320Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-shell ---
+2026-07-10T10:24:27.9771807Z [INFO] 
+2026-07-10T10:24:27.9772494Z [INFO] --- spotless:3.8.0:check (default) @ jline-shell ---
+2026-07-10T10:24:28.0074061Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:28.5618169Z [INFO] Spotless.Java is keeping 69 files clean - 0 needs changes to be clean, 69 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:28.5651660Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom16187574563022532789.xml
+2026-07-10T10:24:28.5767184Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom16187574563022532789.xml
+2026-07-10T10:24:28.5769076Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:28.5775916Z [INFO] 
+2026-07-10T10:24:28.5777641Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-shell ---
+2026-07-10T10:24:28.5820729Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\shell\src\main\resources
+2026-07-10T10:24:28.5821665Z [INFO] 
+2026-07-10T10:24:28.5822264Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-shell ---
+2026-07-10T10:24:28.5947246Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:28.5957241Z [INFO] Compiling 44 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:24:30.8084329Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-10T10:24:30.8104542Z [INFO] 
+2026-07-10T10:24:30.8105433Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-shell ---
+2026-07-10T10:24:30.8138565Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:30.9034809Z [INFO] Writing manifest: D:\a\jline3\jline3\shell\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:30.9044377Z [INFO] 
+2026-07-10T10:24:30.9045180Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-shell ---
+2026-07-10T10:24:30.9062368Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\shell\src\test\resources
+2026-07-10T10:24:30.9063157Z [INFO] 
+2026-07-10T10:24:30.9063825Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-shell ---
+2026-07-10T10:24:30.9223389Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:30.9238441Z [INFO] Compiling 25 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:24:32.8615904Z [INFO] 
+2026-07-10T10:24:32.8616322Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-shell ---
+2026-07-10T10:24:32.8660054Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:33.0141297Z [INFO] 
+2026-07-10T10:24:33.0141795Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:33.0142332Z [INFO]  T E S T S
+2026-07-10T10:24:33.0142621Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:34.0432399Z [INFO] Running org.jline.shell.ArgumentDescriptionTest
+2026-07-10T10:24:34.1396081Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.088 s -- in org.jline.shell.ArgumentDescriptionTest
+2026-07-10T10:24:34.1397301Z [INFO] Running org.jline.shell.CommandDescriptionTest
+2026-07-10T10:24:34.1612294Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in org.jline.shell.CommandDescriptionTest
+2026-07-10T10:24:34.1638374Z [INFO] Running org.jline.shell.CommandLineTest
+2026-07-10T10:24:34.1643991Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.jline.shell.CommandLineTest
+2026-07-10T10:24:34.1645223Z [INFO] Running org.jline.shell.impl.AliasCommandsTest
+2026-07-10T10:24:34.2004227Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in org.jline.shell.impl.AliasCommandsTest
+2026-07-10T10:24:34.2006148Z [INFO] Running org.jline.shell.impl.CommandHighlighterTest
+2026-07-10T10:24:34.2133112Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:24:34.2135535Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar)
+2026-07-10T10:24:34.2137687Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:24:34.2139171Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:24:34.2139856Z 
+2026-07-10T10:24:34.3709466Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.178 s -- in org.jline.shell.impl.CommandHighlighterTest
+2026-07-10T10:24:34.3711114Z [INFO] Running org.jline.shell.impl.DefaultAliasManagerTest
+2026-07-10T10:24:34.4546042Z [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.079 s -- in org.jline.shell.impl.DefaultAliasManagerTest
+2026-07-10T10:24:34.4547709Z [INFO] Running org.jline.shell.impl.DefaultCommandDispatcherTest
+2026-07-10T10:24:34.9489038Z [INFO] Tests run: 35, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.488 s -- in org.jline.shell.impl.DefaultCommandDispatcherTest
+2026-07-10T10:24:34.9490766Z [INFO] Running org.jline.shell.impl.DefaultJobManagerTest
+2026-07-10T10:24:34.9609952Z [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in org.jline.shell.impl.DefaultJobManagerTest
+2026-07-10T10:24:34.9611510Z [INFO] Running org.jline.shell.impl.DefaultLineExpanderTest
+2026-07-10T10:24:35.0064145Z [INFO] Tests run: 32, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in org.jline.shell.impl.DefaultLineExpanderTest
+2026-07-10T10:24:35.0080149Z [INFO] Running org.jline.shell.impl.DefaultScriptRunnerTest
+2026-07-10T10:24:35.1142907Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.101 s -- in org.jline.shell.impl.DefaultScriptRunnerTest
+2026-07-10T10:24:35.1144547Z [INFO] Running org.jline.shell.impl.ExitCommandsTest
+2026-07-10T10:24:35.2322847Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.118 s -- in org.jline.shell.impl.ExitCommandsTest
+2026-07-10T10:24:35.2324647Z [INFO] Running org.jline.shell.impl.HelpCommandsTest
+2026-07-10T10:24:35.3050382Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.067 s -- in org.jline.shell.impl.HelpCommandsTest
+2026-07-10T10:24:35.3052224Z [INFO] Running org.jline.shell.impl.HistoryCommandsTest
+2026-07-10T10:24:35.3843045Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.082 s -- in org.jline.shell.impl.HistoryCommandsTest
+2026-07-10T10:24:35.3844239Z [INFO] Running org.jline.shell.impl.IORedirectionTest
+2026-07-10T10:24:35.5391225Z [INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.153 s -- in org.jline.shell.impl.IORedirectionTest
+2026-07-10T10:24:35.5391910Z [INFO] Running org.jline.shell.impl.OptionCommandsTest
+2026-07-10T10:24:35.6208955Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.081 s -- in org.jline.shell.impl.OptionCommandsTest
+2026-07-10T10:24:35.6210634Z [INFO] Running org.jline.shell.impl.PipelineParserTest
+2026-07-10T10:24:35.6477514Z [INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in org.jline.shell.impl.PipelineParserTest
+2026-07-10T10:24:35.6478855Z [INFO] Running org.jline.shell.impl.SignalHandlingTest
+2026-07-10T10:24:35.7731989Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.125 s -- in org.jline.shell.impl.SignalHandlingTest
+2026-07-10T10:24:35.7732894Z [INFO] Running org.jline.shell.impl.SimpleCommandGroupTest
+2026-07-10T10:24:35.7783861Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.jline.shell.impl.SimpleCommandGroupTest
+2026-07-10T10:24:35.7785248Z [INFO] Running org.jline.shell.impl.SubcommandTest
+2026-07-10T10:24:35.8214877Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.040 s -- in org.jline.shell.impl.SubcommandTest
+2026-07-10T10:24:35.8216295Z [INFO] Running org.jline.shell.impl.VariableCommandsTest
+2026-07-10T10:24:35.8880091Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.067 s -- in org.jline.shell.impl.VariableCommandsTest
+2026-07-10T10:24:35.8881246Z [INFO] Running org.jline.shell.ShellBuilderTest
+2026-07-10T10:24:37.9778171Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.089 s -- in org.jline.shell.ShellBuilderTest
+2026-07-10T10:24:37.9959584Z [INFO] 
+2026-07-10T10:24:37.9959994Z [INFO] Results:
+2026-07-10T10:24:37.9960324Z [INFO] 
+2026-07-10T10:24:37.9960763Z [INFO] Tests run: 230, Failures: 0, Errors: 0, Skipped: 0
+2026-07-10T10:24:37.9961303Z [INFO] 
+2026-07-10T10:24:37.9985724Z [INFO] 
+2026-07-10T10:24:37.9986215Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-shell ---
+2026-07-10T10:24:38.0402435Z [INFO] Building jar: D:\a\jline3\jline3\shell\target\jline-shell-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:38.0700738Z [INFO] 
+2026-07-10T10:24:38.0701283Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-shell ---
+2026-07-10T10:24:38.1167951Z [INFO] Building jar: D:\a\jline3\jline3\shell\target\jline-shell-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:38.1260660Z [INFO] 
+2026-07-10T10:24:38.1261201Z [INFO] -----------------------< org.jline:jline-style >------------------------
+2026-07-10T10:24:38.1263169Z [INFO] Building JLine Style 0.1.0-1-SNAPSHOT                             [8/21]
+2026-07-10T10:24:38.1263922Z [INFO]   from style\.inlined-pom.xml
+2026-07-10T10:24:38.1264537Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:38.1319744Z [INFO] 
+2026-07-10T10:24:38.1320164Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-style ---
+2026-07-10T10:24:38.1328533Z [INFO] 
+2026-07-10T10:24:38.1329264Z [INFO] --- spotless:3.8.0:check (default) @ jline-style ---
+2026-07-10T10:24:38.1645018Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:38.2452322Z [INFO] Spotless.Java is keeping 18 files clean - 0 needs changes to be clean, 18 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:38.2465437Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom16648923868540982838.xml
+2026-07-10T10:24:38.2512157Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom16648923868540982838.xml
+2026-07-10T10:24:38.2514658Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:38.2521324Z [INFO] 
+2026-07-10T10:24:38.2522053Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-style ---
+2026-07-10T10:24:38.2536545Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\style\src\main\resources
+2026-07-10T10:24:38.2537880Z [INFO] 
+2026-07-10T10:24:38.2538833Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-style ---
+2026-07-10T10:24:38.2612782Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:38.2619191Z [INFO] Compiling 13 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:24:39.4950423Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-10T10:24:39.4962488Z [INFO] 
+2026-07-10T10:24:39.4963046Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-style ---
+2026-07-10T10:24:39.4977384Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:39.5450622Z [INFO] Writing manifest: D:\a\jline3\jline3\style\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:39.5456434Z [INFO] 
+2026-07-10T10:24:39.5457480Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-style ---
+2026-07-10T10:24:39.5468495Z [INFO] skip non existing resourceDirectory D:\a\jline3\jline3\style\src\test\resources
+2026-07-10T10:24:39.5469532Z [INFO] 
+2026-07-10T10:24:39.5470321Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-style ---
+2026-07-10T10:24:39.5564861Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:39.5576508Z [INFO] Compiling 5 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:24:40.7148073Z [INFO] 
+2026-07-10T10:24:40.7148564Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-style ---
+2026-07-10T10:24:40.7178397Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:40.8610238Z [INFO] 
+2026-07-10T10:24:40.8611017Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:40.8611557Z [INFO]  T E S T S
+2026-07-10T10:24:40.8611979Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:41.7146596Z [INFO] Running org.jline.style.StyleBundleInvocationHandlerTest
+2026-07-10T10:24:41.8609564Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.136 s -- in org.jline.style.StyleBundleInvocationHandlerTest
+2026-07-10T10:24:41.8611205Z [INFO] Running org.jline.style.StyleExpressionTest
+2026-07-10T10:24:41.9024399Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.035 s -- in org.jline.style.StyleExpressionTest
+2026-07-10T10:24:41.9025961Z [INFO] Running org.jline.style.StyleFactoryTest
+2026-07-10T10:24:41.9338243Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in org.jline.style.StyleFactoryTest
+2026-07-10T10:24:41.9341685Z [INFO] Running org.jline.style.StyleResolverTest
+2026-07-10T10:24:42.0026972Z [INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.088 s -- in org.jline.style.StyleResolverTest
+2026-07-10T10:24:42.0287989Z [INFO] 
+2026-07-10T10:24:42.0288369Z [INFO] Results:
+2026-07-10T10:24:42.0288704Z [INFO] 
+2026-07-10T10:24:42.0289118Z [INFO] Tests run: 49, Failures: 0, Errors: 0, Skipped: 0
+2026-07-10T10:24:42.0290090Z [INFO] 
+2026-07-10T10:24:42.0315460Z [INFO] 
+2026-07-10T10:24:42.0315905Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-style ---
+2026-07-10T10:24:42.0464204Z [INFO] Building jar: D:\a\jline3\jline3\style\target\jline-style-0.1.0-1-SNAPSHOT.jar
+2026-07-10T10:24:42.0545552Z [INFO] 
+2026-07-10T10:24:42.0546462Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-style ---
+2026-07-10T10:24:42.0757604Z [INFO] Building jar: D:\a\jline3\jline3\style\target\jline-style-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-10T10:24:42.0807501Z [INFO] 
+2026-07-10T10:24:42.0808274Z [INFO] ----------------------< org.jline:jline-builtins >----------------------
+2026-07-10T10:24:42.0809307Z [INFO] Building JLine Builtins 0.1.0-1-SNAPSHOT                          [9/21]
+2026-07-10T10:24:42.0810265Z [INFO]   from builtins\.inlined-pom.xml
+2026-07-10T10:24:42.0810907Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-10T10:24:42.1050339Z [INFO] 
+2026-07-10T10:24:42.1051139Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-builtins ---
+2026-07-10T10:24:42.1061709Z [INFO] 
+2026-07-10T10:24:42.1062201Z [INFO] --- spotless:3.8.0:check (default) @ jline-builtins ---
+2026-07-10T10:24:42.1347821Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-10T10:24:43.6107300Z [INFO] Spotless.Java is keeping 57 files clean - 0 needs changes to be clean, 57 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:43.6114191Z [INFO] Sorting file C:\Users\RUNNER~1\AppData\Local\Temp\pom12534910319037149663.xml
+2026-07-10T10:24:43.6188492Z [INFO] Saved sorted pom file to C:\Users\RUNNER~1\AppData\Local\Temp\pom12534910319037149663.xml
+2026-07-10T10:24:43.6191417Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-10T10:24:43.6232009Z [INFO] 
+2026-07-10T10:24:43.6252104Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-builtins ---
+2026-07-10T10:24:43.6265116Z [INFO] Copying 9 resources from src\main\resources to target\classes
+2026-07-10T10:24:43.6313807Z [INFO] 
+2026-07-10T10:24:43.6314567Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-builtins ---
+2026-07-10T10:24:43.6416919Z [WARNING] ***************************************************************************************************************************************************
+2026-07-10T10:24:43.6418743Z [WARNING] * Required filename-based automodules detected: [juniversalchardet-1.0.3.jar]. Please don't publish this project to a public artifact repository! *
+2026-07-10T10:24:43.6420461Z [WARNING] ***************************************************************************************************************************************************
+2026-07-10T10:24:43.6434890Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:43.6445346Z [INFO] Compiling 23 source files with javac [forked debug release 11 module-path] to target\classes
+2026-07-10T10:24:47.2805682Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 4 JDK modules [java.base, java.management, java.desktop, jdk.httpserver]
+2026-07-10T10:24:47.2828965Z [INFO] 
+2026-07-10T10:24:47.2829329Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-builtins ---
+2026-07-10T10:24:47.2847170Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-10T10:24:47.5349593Z [INFO] Writing manifest: D:\a\jline3\jline3\builtins\target\classes\META-INF\MANIFEST.MF
+2026-07-10T10:24:47.5350941Z [INFO] 
+2026-07-10T10:24:47.5351799Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-builtins ---
+2026-07-10T10:24:47.5375092Z [INFO] Copying 9 resources from src\test\resources to target\test-classes
+2026-07-10T10:24:47.5421480Z [INFO] 
+2026-07-10T10:24:47.5422610Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-builtins ---
+2026-07-10T10:24:47.5571665Z [WARNING] Can't extract module name from jline-reader-0.1.0-1-SNAPSHOT-tests.jar: Module 'org.jline.reader' is already on the module path!
+2026-07-10T10:24:47.5606767Z [INFO] Recompiling the module because of changed dependency.
+2026-07-10T10:24:47.5608432Z [WARNING] Can't locate D:\a\jline3\jline3/reader/target/jline-reader-0.1.0-1-SNAPSHOT-tests.jar
+2026-07-10T10:24:47.5623130Z [INFO] Compiling 34 source files with javac [forked debug release 11 module-path] to target\test-classes
+2026-07-10T10:24:50.1013871Z [INFO] 
+2026-07-10T10:24:50.1014466Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-builtins ---
+2026-07-10T10:24:50.1072575Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-10T10:24:50.2548175Z [WARNING] Exception for 'D:\a\jline3\jline3\reader\target\jline-reader-0.1.0-1-SNAPSHOT-tests.jar'.
+2026-07-10T10:24:50.2549939Z java.lang.IllegalStateException: Module 'org.jline.reader' is already on the module path!
+2026-07-10T10:24:50.2551366Z     at org.codehaus.plexus.languages.java.jpms.LocationManager.resolvePaths (LocationManager.java:267)
+2026-07-10T10:24:50.2553144Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.newStartupConfigWithModularPath (AbstractSurefireMojo.java:1990)
+2026-07-10T10:24:50.2555081Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.createStartupConfiguration (AbstractSurefireMojo.java:1860)
+2026-07-10T10:24:50.2556709Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.createForkStarter (AbstractSurefireMojo.java:2346)
+2026-07-10T10:24:50.2558426Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeProvider (AbstractSurefireMojo.java:1345)
+2026-07-10T10:24:50.2561551Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeAfterPreconditionsChecked (AbstractSurefireMojo.java:1154)
+2026-07-10T10:24:50.2564214Z     at org.apache.maven.plugin.surefire.AbstractSurefireMojo.execute (AbstractSurefireMojo.java:988)
+2026-07-10T10:24:50.2565890Z     at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
+2026-07-10T10:24:50.2568486Z     at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
+2026-07-10T10:24:50.2570537Z     at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+2026-07-10T10:24:50.2575748Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+2026-07-10T10:24:50.2576940Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+2026-07-10T10:24:50.2578319Z     at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+2026-07-10T10:24:50.2579400Z     at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+2026-07-10T10:24:50.2580663Z     at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+2026-07-10T10:24:50.2581981Z     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+2026-07-10T10:24:50.2583329Z     at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+2026-07-10T10:24:50.2584965Z     at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+2026-07-10T10:24:50.2586772Z     at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+2026-07-10T10:24:50.2588000Z     at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+2026-07-10T10:24:50.2588611Z     at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+2026-07-10T10:24:50.2589092Z     at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+2026-07-10T10:24:50.2589564Z     at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+2026-07-10T10:24:50.2590004Z     at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
+2026-07-10T10:24:50.2590419Z     at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
+2026-07-10T10:24:50.2590822Z     at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
+2026-07-10T10:24:50.2591856Z     at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:104)
+2026-07-10T10:24:50.2592421Z     at java.lang.reflect.Method.invoke (Method.java:565)
+2026-07-10T10:24:50.2592940Z     at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+2026-07-10T10:24:50.2593577Z     at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+2026-07-10T10:24:50.2594202Z     at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+2026-07-10T10:24:50.2594930Z     at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+2026-07-10T10:24:50.2595587Z [INFO] 
+2026-07-10T10:24:50.2595831Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:50.2596131Z [INFO]  T E S T S
+2026-07-10T10:24:50.2596377Z [INFO] -------------------------------------------------------
+2026-07-10T10:24:51.3410595Z [INFO] Running org.jline.builtins.ClasspathConfigurationPathTest
+2026-07-10T10:24:51.4276379Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 s -- in org.jline.builtins.ClasspathConfigurationPathTest
+2026-07-10T10:24:51.4278196Z [INFO] Running org.jline.builtins.ClasspathResourceUtilTest
+2026-07-10T10:24:51.5539888Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.125 s -- in org.jline.builtins.ClasspathResourceUtilTest
+2026-07-10T10:24:51.5541035Z [INFO] Running org.jline.builtins.CommandsTest
+2026-07-10T10:24:51.5857733Z WARNING: A restricted method in java.lang.System has been called
+2026-07-10T10:24:51.5861978Z WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (file:/D:/a/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar)
+2026-07-10T10:24:51.5863845Z WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+2026-07-10T10:24:51.5865251Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-07-10T10:24:51.5866197Z 
+2026-07-10T10:24:51.7375862Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.181 s -- in org.jline.builtins.CommandsTest
+2026-07-10T10:24:51.7377587Z [INFO] Running org.jline.builtins.CompletersTest
+2026-07-10T10:24:51.7531093Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.jline.builtins.CompletersTest
+2026-07-10T10:24:51.7532753Z [INFO] Running org.jline.builtins.InputRCTest
+2026-07-10T10:24:51.8460270Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.087 s -- in org.jline.builtins.InputRCTest
+2026-07-10T10:24:51.8461672Z [INFO] Running org.jline.builtins.LessTest
+2026-07-10T10:24:51.9999706Z [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.154 s -- in org.jline.builtins.LessTest
+2026-07-10T10:24:52.0001157Z [INFO] Running org.jline.builtins.NanoClasspathConfigTest
+2026-07-10T10:24:52.0155596Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in org.jline.builtins.NanoClasspathConfigTest
+2026-07-10T10:24:52.0168255Z [INFO] Running org.jline.builtins.NanoSuggestionBoxTest
+2026-07-10T10:24:52.0412002Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.jline.builtins.NanoSuggestionBoxTest
+2026-07-10T10:24:52.0413179Z [INFO] Running org.jline.builtins.NanoTest
+2026-07-10T10:24:52.1077427Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.064 s -- in org.jline.builtins.NanoTest
+2026-07-10T10:24:52.1078846Z [INFO] Running org.jline.builtins.NfaMatcherTest
+2026-07-10T10:24:52.1195617Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.jline.builtins.NfaMatcherTest
+2026-07-10T10:24:52.1196895Z [INFO] Running org.jline.builtins.OptionCompleterTest
+2026-07-10T10:24:52.1745544Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.055 s -- in org.jline.builtins.OptionCompleterTest
+2026-07-10T10:24:52.1747188Z [INFO] Running org.jline.builtins.OptionsTest
+2026-07-10T10:24:52.2000811Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in org.jline.builtins.OptionsTest
+2026-07-10T10:24:52.2002263Z [INFO] Running org.jline.builtins.PosixCommandGroupTest
+2026-07-10T10:24:52.3388330Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.136 s -- in org.jline.builtins.PosixCommandGroupTest
+2026-07-10T10:24:52.3390095Z [INFO] Running org.jline.builtins.PosixCommandsSsrfTest
+2026-07-10T10:24:52.9549113Z [ERROR] Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.614 s <<< FAILURE! -- in org.jline.builtins.PosixCommandsSsrfTest
+2026-07-10T10:24:52.9552157Z [ERROR] org.jline.builtins.PosixCommandsSsrfTest.catStillReadsLocalFileJar -- Time elapsed: 0.022 s <<< ERROR!
+2026-07-10T10:24:52.9553666Z org.junit.platform.commons.JUnitException: Failed to close extension context
+2026-07-10T10:24:52.9554735Z 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9555718Z 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9557998Z Caused by: org.junit.jupiter.api.io.TempDirDeletionStrategy$DeletionException: Failed to delete temp directory C:\Users\RUNNER~1\AppData\Local\Temp\junit-56412351488979725. The following paths could not be deleted (see suppressed exceptions for details): <root>, local.jar
+2026-07-10T10:24:52.9561316Z 	Suppressed: java.nio.file.DirectoryNotEmptyException: C:\Users\RUNNER~1\AppData\Local\Temp\junit-56412351488979725
+2026-07-10T10:24:52.9562916Z 		at java.base/sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:266)
+2026-07-10T10:24:52.9564378Z 		at java.base/sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105)
+2026-07-10T10:24:52.9565517Z 		at java.base/java.nio.file.Files.delete(Files.java:1052)
+2026-07-10T10:24:52.9566392Z 		at java.base/java.nio.file.Files.walkFileTree(Files.java:2560)
+2026-07-10T10:24:52.9567300Z 		at java.base/java.nio.file.Files.walkFileTree(Files.java:2609)
+2026-07-10T10:24:52.9568511Z 		at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+2026-07-10T10:24:52.9569619Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9570617Z 		at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:395)
+2026-07-10T10:24:52.9571670Z 		at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+2026-07-10T10:24:52.9572654Z 		at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+2026-07-10T10:24:52.9573718Z 		at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:571)
+2026-07-10T10:24:52.9574979Z 		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+2026-07-10T10:24:52.9576461Z 		at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+2026-07-10T10:24:52.9577831Z 		at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+2026-07-10T10:24:52.9579225Z 		at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+2026-07-10T10:24:52.9580715Z 		at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+2026-07-10T10:24:52.9581684Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9582434Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9583781Z 	Suppressed: java.nio.file.FileSystemException: C:\Users\RUNNER~1\AppData\Local\Temp\junit-56412351488979725\local.jar: The process cannot access the file because it is being used by another process
+2026-07-10T10:24:52.9584784Z 		at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92)
+2026-07-10T10:24:52.9585434Z 		at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+2026-07-10T10:24:52.9586078Z 		at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+2026-07-10T10:24:52.9586944Z 		at java.base/sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:269)
+2026-07-10T10:24:52.9588644Z 		at java.base/sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105)
+2026-07-10T10:24:52.9589795Z 		at java.base/java.nio.file.Files.delete(Files.java:1052)
+2026-07-10T10:24:52.9591253Z 		at java.base/java.nio.file.Files.walkFileTree(Files.java:2543)
+2026-07-10T10:24:52.9592069Z 		at java.base/java.nio.file.Files.walkFileTree(Files.java:2609)
+2026-07-10T10:24:52.9593024Z 		at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+2026-07-10T10:24:52.9593943Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9594810Z 		at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:395)
+2026-07-10T10:24:52.9595762Z 		at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+2026-07-10T10:24:52.9596670Z 		at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+2026-07-10T10:24:52.9597658Z 		at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:571)
+2026-07-10T10:24:52.9599067Z 		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+2026-07-10T10:24:52.9600281Z 		at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+2026-07-10T10:24:52.9601502Z 		at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+2026-07-10T10:24:52.9602681Z 		at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+2026-07-10T10:24:52.9603779Z 		at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+2026-07-10T10:24:52.9604731Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9605512Z 		at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-10T10:24:52.9607165Z 		Suppressed: java.nio.file.FileSystemException: C:\Users\RUNNER~1\AppData\Local\Temp\junit-56412351488979725\local.jar: The process cannot access the file because it is being used by another process
+2026-07-10T10:24:52.9608865Z 			... 21 more
+2026-07-10T10:24:52.9609080Z 
+2026-07-10T10:24:52.9609328Z [INFO] Running org.jline.builtins.PosixCommandsTest
+2026-07-10T10:24:54.6358288Z [WARNING] Tests run: 64, Failures: 0, Errors: 0, Skipped: 19, Time elapsed: 1.680 s -- in org.jline.builtins.PosixCommandsTest
+2026-07-10T10:24:54.6359393Z [INFO] Running org.jline.builtins.SimpleTerminalTest
+2026-07-10T10:24:55.0665588Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.431 s -- in org.jline.builtins.SimpleTerminalTest
+2026-07-10T10:24:55.0667046Z [INFO] Running org.jline.builtins.SortComparatorTest
+2026-07-10T10:24:55.0889222Z [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in org.jline.builtins.SortComparatorTest
+2026-07-10T10:24:55.0890832Z [INFO] Running org.jline.builtins.StylesTest
+2026-07-10T10:24:55.1046239Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.jline.builtins.StylesTest
+2026-07-10T10:24:55.1059890Z [INFO] Running org.jline.builtins.SwingTerminalColorTest
+2026-07-10T10:24:55.1107082Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in org.jline.builtins.SwingTerminalColorTest
+2026-07-10T10:24:55.1119441Z [INFO] Running org.jline.builtins.SwingTerminalEncodingTest
+2026-07-10T10:24:55.1921172Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s -- in org.jline.builtins.SwingTerminalEncodingTest
+2026-07-10T10:24:55.1923839Z [INFO] Running org.jline.builtins.SwingTerminalRenderingTest
+2026-07-10T10:24:55.2040172Z [INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.jline.builtins.SwingTerminalRenderingTest
+2026-07-10T10:24:55.2041957Z [INFO] Running org.jline.builtins.SyntaxHighlighterClasspathTest
+2026-07-10T10:24:55.2279356Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in org.jline.builtins.SyntaxHighlighterClasspathTest
+2026-07-10T10:24:55.2281097Z [INFO] Running org.jline.builtins.SyntaxHighlighterJimFsTest
+2026-07-10T10:24:55.3709802Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 s -- in org.jline.builtins.SyntaxHighlighterJimFsTest
+2026-07-10T10:24:55.3711487Z [INFO] Running org.jline.builtins.SyntaxHighlighterTest
+2026-07-10T10:24:56.1145321Z [WARNING] Tests run: 849, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.719 s -- in org.jline.builtins.SyntaxHighlighterTest
+2026-07-10T10:24:56.1156119Z [INFO] Running org.jline.builtins.TerminalTest
+2026-07-10T10:24:56.8120296Z [INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.720 s -- in org.jline.builtins.TerminalTest
+2026-07-10T10:24:56.8121355Z [INFO] Running org.jline.builtins.TmuxEncodingTest
+2026-07-10T10:24:56.9391470Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.121 s -- in org.jline.builtins.TmuxEncodingTest
+2026-07-10T10:24:56.9392710Z [INFO] Running org.jline.builtins.TmuxTest
+2026-07-10T10:24:56.9471845Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.jline.builtins.TmuxTest
+2026-07-10T10:24:56.9481490Z [INFO] Running org.jline.builtins.TreeCompleterTest
+2026-07-10T10:24:56.9623841Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in org.jline.builtins.TreeCompleterTest
+2026-07-10T10:24:56.9625561Z [INFO] Running org.jline.builtins.Vt100ResponseFeedbackTest
+2026-07-10T10:24:57.0949745Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.135 s -- in org.jline.builtins.Vt100ResponseFeedbackTest
+2026-07-10T10:24:57.0951206Z [INFO] Running org.jline.builtins.WebTerminalIntegrationTest
+2026-07-10T10:24:58.6100197Z [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.512 s -- in org.jline.builtins.WebTerminalIntegrationTest
+2026-07-10T10:24:59.0893799Z [INFO] 
+2026-07-10T10:24:59.0894041Z [INFO] Results:
+2026-07-10T10:24:59.0894376Z [INFO] 
+2026-07-10T10:24:59.0895149Z [ERROR] Errors: 
+2026-07-10T10:24:59.0900953Z [ERROR]   PosixCommandsSsrfTest.catStillReadsLocalFileJar � JUnit Failed to close extension context
+2026-07-10T10:24:59.0902053Z [INFO] 
+2026-07-10T10:24:59.0902414Z [ERROR] Tests run: 1066, Failures: 0, Errors: 1, Skipped: 20
+2026-07-10T10:24:59.0902728Z [INFO] 
+2026-07-10T10:24:59.0940309Z [INFO] ------------------------------------------------------------------------
+2026-07-10T10:24:59.0941520Z [INFO] Reactor Summary for JLine 0.1.0-1-SNAPSHOT:
+2026-07-10T10:24:59.0941823Z [INFO] 
+2026-07-10T10:24:59.0945302Z [INFO] JLine .............................................. SUCCESS [  2.365 s]
+2026-07-10T10:24:59.0946926Z [INFO] JLine Native Library ............................... SUCCESS [  8.665 s]
+2026-07-10T10:24:59.0947940Z [INFO] JLine Terminal ..................................... SUCCESS [ 34.259 s]
+2026-07-10T10:24:59.0949037Z [INFO] JLine FFM Terminal ................................. SUCCESS [  4.656 s]
+2026-07-10T10:24:59.0949872Z [INFO] JLine JNI Terminal ................................. SUCCESS [  3.774 s]
+2026-07-10T10:24:59.0951298Z [INFO] JLine Reader ....................................... SUCCESS [ 12.769 s]
+2026-07-10T10:24:59.0951958Z [INFO] JLine Shell ........................................ SUCCESS [ 10.164 s]
+2026-07-10T10:24:59.0952808Z [INFO] JLine Style ........................................ SUCCESS [  3.955 s]
+2026-07-10T10:24:59.0953601Z [INFO] JLine Builtins ..................................... FAILURE [ 17.013 s]
+2026-07-10T10:24:59.0954862Z [INFO] JLine Console UI (Deprecated) ...................... SKIPPED
+2026-07-10T10:24:59.0955460Z [INFO] JLine Prompt ....................................... SKIPPED
+2026-07-10T10:24:59.0955863Z [INFO] JLine Console ...................................... SKIPPED
+2026-07-10T10:24:59.0956758Z [INFO] JLine Picocli ...................................... SKIPPED
+2026-07-10T10:24:59.0957151Z [INFO] JLine Groovy ....................................... SKIPPED
+2026-07-10T10:24:59.0957699Z [INFO] JLine Remote SSH ................................... SKIPPED
+2026-07-10T10:24:59.0958250Z [INFO] JLine Remote Telnet ................................ SKIPPED
+2026-07-10T10:24:59.0958637Z [INFO] JLine Demo ......................................... SKIPPED
+2026-07-10T10:24:59.0959023Z [INFO] JLine Native Demo .................................. SKIPPED
+2026-07-10T10:24:59.0959398Z [INFO] Jansi Core ......................................... SKIPPED
+2026-07-10T10:24:59.0959770Z [INFO] JLine Bundle ....................................... SKIPPED
+2026-07-10T10:24:59.0960152Z [INFO] Jansi Bundle ....................................... SKIPPED
+2026-07-10T10:24:59.0960555Z [INFO] ------------------------------------------------------------------------
+2026-07-10T10:24:59.0960919Z [INFO] BUILD FAILURE
+2026-07-10T10:24:59.0961224Z [INFO] ------------------------------------------------------------------------
+2026-07-10T10:24:59.0962420Z [INFO] Total time:  01:37 min
+2026-07-10T10:24:59.0962791Z [INFO] Finished at: 2026-07-10T10:24:59Z
+2026-07-10T10:24:59.0963163Z [INFO] ------------------------------------------------------------------------
+2026-07-10T10:24:59.0963577Z [INFO] Nisse property inliner cleanup of 21 inlined POMs
+2026-07-10T10:24:59.0985516Z [INFO] Njord session closed
+2026-07-10T10:24:59.0990880Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project jline-builtins: 
+2026-07-10T10:24:59.0991948Z [ERROR] 
+2026-07-10T10:24:59.0993130Z [ERROR] See D:\a\jline3\jline3\builtins\target\surefire-reports for the individual test results.
+2026-07-10T10:24:59.0993884Z [ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+2026-07-10T10:24:59.0994324Z [ERROR] -> [Help 1]
+2026-07-10T10:24:59.0994528Z [ERROR] 
+2026-07-10T10:24:59.0994849Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-07-10T10:24:59.0995334Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-07-10T10:24:59.0995679Z [ERROR] 
+2026-07-10T10:24:59.0996103Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-07-10T10:24:59.0997046Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+2026-07-10T10:24:59.0997470Z [ERROR] 
+2026-07-10T10:24:59.0997800Z [ERROR] After correcting the problems, you can resume the build with the command
+2026-07-10T10:24:59.0998220Z [ERROR]   mvn <args> -rf :jline-builtins
+2026-07-10T10:24:59.1745380Z Error: exit status 1
+2026-07-10T10:24:59.1745890Z Usage:
+2026-07-10T10:24:59.1746993Z   mvx mvn [args...] [flags]
+2026-07-10T10:24:59.1747274Z 
+2026-07-10T10:24:59.1747354Z Flags:
+2026-07-10T10:24:59.1747659Z   -h, --help   help for mvn
+2026-07-10T10:24:59.1747961Z 
+2026-07-10T10:24:59.1748166Z Global Flags:
+2026-07-10T10:24:59.1748616Z   -q, --quiet     quiet output (errors only)
+2026-07-10T10:24:59.1749194Z   -v, --verbose   verbose output
+2026-07-10T10:24:59.1759332Z 
+2026-07-10T10:24:59.1759786Z Error: exit status 1
+2026-07-10T10:24:59.1816610Z ##[error]Process completed with exit code 1.
+2026-07-10T10:24:59.2041045Z Post job cleanup.
+2026-07-10T10:24:59.3950811Z Post job cleanup.
+2026-07-10T10:24:59.5960954Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-07-10T10:24:59.6225852Z git version 2.54.0.windows.1
+2026-07-10T10:24:59.6292274Z Temporarily overriding HOME='D:\a\_temp\be786d9e-3913-48ae-a298-372b8adcd5a6' before making global git config changes
+2026-07-10T10:24:59.6293344Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-10T10:24:59.6303035Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\jline3\jline3
+2026-07-10T10:24:59.6605581Z Removing SSH command configuration
+2026-07-10T10:24:59.6615591Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-07-10T10:24:59.6916507Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-07-10T10:25:00.2605475Z Removing HTTP extra header
+2026-07-10T10:25:00.2615143Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-10T10:25:00.2916670Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-07-10T10:25:00.8172354Z Removing includeIf entries pointing to credentials config files
+2026-07-10T10:25:00.8183548Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-10T10:25:00.8440445Z includeif.gitdir:D:/a/jline3/jline3/.git.path
+2026-07-10T10:25:00.8441183Z includeif.gitdir:D:/a/jline3/jline3/.git/worktrees/*.path
+2026-07-10T10:25:00.8441673Z includeif.gitdir:/github/workspace/.git.path
+2026-07-10T10:25:00.8442396Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-10T10:25:00.8479321Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/jline3/jline3/.git.path
+2026-07-10T10:25:00.8732385Z D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:00.8773854Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/jline3/jline3/.git.path D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:00.9122478Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/jline3/jline3/.git/worktrees/*.path
+2026-07-10T10:25:00.9372735Z D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:00.9411775Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/jline3/jline3/.git/worktrees/*.path D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:00.9694833Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-10T10:25:00.9941738Z /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:00.9980486Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:01.0272444Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-10T10:25:01.0522153Z /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:01.0562669Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config
+2026-07-10T10:25:01.0862572Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-07-10T10:25:01.6099462Z Removing credentials config 'D:\a\_temp\git-credentials-abd81032-e7d3-4295-97f1-c740dac05f45.config'
+2026-07-10T10:25:01.6294689Z Cleaning up orphan processes

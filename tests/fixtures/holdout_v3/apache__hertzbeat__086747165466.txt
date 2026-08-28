@@ -1,0 +1,1298 @@
+﻿2026-07-13T06:14:08.7024338Z Current runner version: '2.335.1'
+2026-07-13T06:14:08.7052188Z ##[group]Runner Image Provisioner
+2026-07-13T06:14:08.7053144Z Hosted Compute Agent
+2026-07-13T06:14:08.7053843Z Version: 20260624.560
+2026-07-13T06:14:08.7054500Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-13T06:14:08.7055240Z Build Date: 2026-06-24T18:26:47Z
+2026-07-13T06:14:08.7056403Z Worker ID: {a81c3f80-62f1-42fd-871e-5d301e4dd1e3}
+2026-07-13T06:14:08.7057185Z Azure Region: eastus2
+2026-07-13T06:14:08.7057759Z ##[endgroup]
+2026-07-13T06:14:08.7059795Z ##[group]Operating System
+2026-07-13T06:14:08.7060515Z Ubuntu
+2026-07-13T06:14:08.7061301Z 24.04.4
+2026-07-13T06:14:08.7062099Z LTS
+2026-07-13T06:14:08.7062826Z ##[endgroup]
+2026-07-13T06:14:08.7063671Z ##[group]Runner Image
+2026-07-13T06:14:08.7064536Z Image: ubuntu-24.04
+2026-07-13T06:14:08.7065327Z Version: 20260705.232.1
+2026-07-13T06:14:08.7066911Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260705.232/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-13T06:14:08.7068478Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260705.232
+2026-07-13T06:14:08.7069471Z ##[endgroup]
+2026-07-13T06:14:08.7072365Z ##[group]GITHUB_TOKEN Permissions
+2026-07-13T06:14:08.7075018Z Actions: read
+2026-07-13T06:14:08.7075773Z ArtifactMetadata: read
+2026-07-13T06:14:08.7076495Z Attestations: read
+2026-07-13T06:14:08.7077191Z Checks: read
+2026-07-13T06:14:08.7077777Z CodeQuality: read
+2026-07-13T06:14:08.7078407Z Contents: read
+2026-07-13T06:14:08.7078970Z Deployments: read
+2026-07-13T06:14:08.7079595Z Discussions: read
+2026-07-13T06:14:08.7080190Z Drives: read
+2026-07-13T06:14:08.7080710Z Issues: read
+2026-07-13T06:14:08.7081360Z Metadata: read
+2026-07-13T06:14:08.7081909Z Models: read
+2026-07-13T06:14:08.7082565Z Packages: read
+2026-07-13T06:14:08.7083146Z Pages: read
+2026-07-13T06:14:08.7083700Z PullRequests: read
+2026-07-13T06:14:08.7084380Z RepositoryProjects: read
+2026-07-13T06:14:08.7085027Z SecurityEvents: read
+2026-07-13T06:14:08.7085830Z Statuses: read
+2026-07-13T06:14:08.7086512Z VulnerabilityAlerts: read
+2026-07-13T06:14:08.7087122Z ##[endgroup]
+2026-07-13T06:14:08.7089940Z Secret source: None
+2026-07-13T06:14:08.7090952Z Prepare workflow directory
+2026-07-13T06:14:08.7423709Z Prepare all required actions
+2026-07-13T06:14:08.7461842Z Getting action download info
+2026-07-13T06:14:08.9911120Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-07-13T06:14:09.0633003Z Download action repository 'codecov/codecov-action@v4.0.1' (SHA:e0b68c6749509c5f83f984dd99a76a1c1a231044)
+2026-07-13T06:14:09.2545333Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-07-13T06:14:09.4621062Z Complete job name: backend-build
+2026-07-13T06:14:09.5352108Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-13T06:14:09.5361434Z ##[group]Run actions/checkout@v4
+2026-07-13T06:14:09.5362152Z with:
+2026-07-13T06:14:09.5362615Z   repository: apache/hertzbeat
+2026-07-13T06:14:09.5366987Z   token: ***
+2026-07-13T06:14:09.5367439Z   ssh-strict: true
+2026-07-13T06:14:09.5367883Z   ssh-user: git
+2026-07-13T06:14:09.5368330Z   persist-credentials: true
+2026-07-13T06:14:09.5368821Z   clean: true
+2026-07-13T06:14:09.5369287Z   sparse-checkout-cone-mode: true
+2026-07-13T06:14:09.5369814Z   fetch-depth: 1
+2026-07-13T06:14:09.5370241Z   fetch-tags: false
+2026-07-13T06:14:09.5370678Z   show-progress: true
+2026-07-13T06:14:09.5371122Z   lfs: false
+2026-07-13T06:14:09.5371576Z   submodules: false
+2026-07-13T06:14:09.5372029Z   set-safe-directory: true
+2026-07-13T06:14:09.5372757Z ##[endgroup]
+2026-07-13T06:14:09.6384772Z Syncing repository: apache/hertzbeat
+2026-07-13T06:14:09.6386886Z ##[group]Getting Git version info
+2026-07-13T06:14:09.6388097Z Working directory is '/home/runner/work/hertzbeat/hertzbeat'
+2026-07-13T06:14:09.6389258Z [command]/usr/bin/git version
+2026-07-13T06:14:09.6436399Z git version 2.54.0
+2026-07-13T06:14:09.6456936Z ##[endgroup]
+2026-07-13T06:14:09.6471998Z Temporarily overriding HOME='/home/runner/work/_temp/1de98957-9611-4b0d-9aa0-5fb1067ed52e' before making global git config changes
+2026-07-13T06:14:09.6473755Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T06:14:09.6478164Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/hertzbeat/hertzbeat
+2026-07-13T06:14:09.6525366Z Deleting the contents of '/home/runner/work/hertzbeat/hertzbeat'
+2026-07-13T06:14:09.6529900Z ##[group]Initializing the repository
+2026-07-13T06:14:09.6534713Z [command]/usr/bin/git init /home/runner/work/hertzbeat/hertzbeat
+2026-07-13T06:14:09.6626476Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-13T06:14:09.6627623Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-13T06:14:09.6628555Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-13T06:14:09.6629280Z hint: call:
+2026-07-13T06:14:09.6629703Z hint:
+2026-07-13T06:14:09.6630216Z hint: 	git config --global init.defaultBranch <name>
+2026-07-13T06:14:09.6630836Z hint:
+2026-07-13T06:14:09.6631418Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-13T06:14:09.6632347Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-13T06:14:09.6633086Z hint:
+2026-07-13T06:14:09.6633507Z hint: 	git branch -m <name>
+2026-07-13T06:14:09.6633985Z hint:
+2026-07-13T06:14:09.6634610Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-13T06:14:09.6641583Z Initialized empty Git repository in /home/runner/work/hertzbeat/hertzbeat/.git/
+2026-07-13T06:14:09.6652003Z [command]/usr/bin/git remote add origin https://github.com/apache/hertzbeat
+2026-07-13T06:14:09.6697253Z ##[endgroup]
+2026-07-13T06:14:09.6698053Z ##[group]Disabling automatic garbage collection
+2026-07-13T06:14:09.6702549Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-13T06:14:09.6737432Z ##[endgroup]
+2026-07-13T06:14:09.6738180Z ##[group]Setting up auth
+2026-07-13T06:14:09.6746766Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T06:14:09.6786023Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T06:14:09.7133254Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T06:14:09.7171714Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T06:14:09.7434188Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T06:14:09.7470101Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T06:14:09.7741401Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-13T06:14:09.7779557Z ##[endgroup]
+2026-07-13T06:14:09.7780984Z ##[group]Fetching the repository
+2026-07-13T06:14:09.7790007Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +86fb224a8e33c11eb243604bbd9fe40db41740a5:refs/remotes/pull/4192/merge
+2026-07-13T06:14:12.9682214Z From https://github.com/apache/hertzbeat
+2026-07-13T06:14:12.9683696Z  * [new ref]         86fb224a8e33c11eb243604bbd9fe40db41740a5 -> pull/4192/merge
+2026-07-13T06:14:12.9723025Z ##[endgroup]
+2026-07-13T06:14:12.9724210Z ##[group]Determining the checkout info
+2026-07-13T06:14:12.9726219Z ##[endgroup]
+2026-07-13T06:14:12.9736656Z [command]/usr/bin/git sparse-checkout disable
+2026-07-13T06:14:12.9785302Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-13T06:14:12.9821469Z ##[group]Checking out the ref
+2026-07-13T06:14:12.9824760Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/4192/merge
+2026-07-13T06:14:13.8124673Z Note: switching to 'refs/remotes/pull/4192/merge'.
+2026-07-13T06:14:13.8125170Z 
+2026-07-13T06:14:13.8125450Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-13T06:14:13.8126561Z changes and commit them, and you can discard any commits you make in this
+2026-07-13T06:14:13.8127351Z state without impacting any branches by switching back to a branch.
+2026-07-13T06:14:13.8127784Z 
+2026-07-13T06:14:13.8128046Z If you want to create a new branch to retain commits you create, you may
+2026-07-13T06:14:13.8128631Z do so (now or later) by using -c with the switch command. Example:
+2026-07-13T06:14:13.8128963Z 
+2026-07-13T06:14:13.8129120Z   git switch -c <new-branch-name>
+2026-07-13T06:14:13.8129384Z 
+2026-07-13T06:14:13.8129540Z Or undo this operation with:
+2026-07-13T06:14:13.8129748Z 
+2026-07-13T06:14:13.8129879Z   git switch -
+2026-07-13T06:14:13.8130086Z 
+2026-07-13T06:14:13.8130352Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-13T06:14:13.8130741Z 
+2026-07-13T06:14:13.8131150Z HEAD is now at 86fb224 Merge a1cdc03925afcbaf0c457ac51594c70c798200d0 into f69c0f7b101ac0cbe3b631c0e375b8d720743282
+2026-07-13T06:14:13.8186664Z ##[endgroup]
+2026-07-13T06:14:13.8234054Z [command]/usr/bin/git log -1 --format=%H
+2026-07-13T06:14:13.8258739Z 86fb224a8e33c11eb243604bbd9fe40db41740a5
+2026-07-13T06:14:13.8656360Z Prepare all required actions
+2026-07-13T06:14:13.8656950Z Getting action download info
+2026-07-13T06:14:13.9860037Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-07-13T06:14:14.2452448Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-07-13T06:14:14.3672738Z ##[group]Run ./script/ci/github-actions/setup-deps
+2026-07-13T06:14:14.3673156Z ##[endgroup]
+2026-07-13T06:14:14.3862456Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-13T06:14:14.3864493Z ##[group]Run actions/setup-java@v4
+2026-07-13T06:14:14.3864810Z with:
+2026-07-13T06:14:14.3865048Z   distribution: zulu
+2026-07-13T06:14:14.3865391Z   java-version: 25
+2026-07-13T06:14:14.3865815Z   cache: maven
+2026-07-13T06:14:14.3866062Z   java-package: jdk
+2026-07-13T06:14:14.3866322Z   check-latest: false
+2026-07-13T06:14:14.3866577Z   server-id: github
+2026-07-13T06:14:14.3866844Z   server-username: GITHUB_ACTOR
+2026-07-13T06:14:14.3867145Z   server-password: GITHUB_TOKEN
+2026-07-13T06:14:14.3867464Z   overwrite-settings: true
+2026-07-13T06:14:14.3867770Z   job-status: success
+2026-07-13T06:14:14.3870518Z   token: ***
+2026-07-13T06:14:14.3870767Z ##[endgroup]
+2026-07-13T06:14:14.5609829Z ##[group]Installed distributions
+2026-07-13T06:14:14.5650664Z Trying to resolve the latest version from remote
+2026-07-13T06:14:14.5807969Z (node:2296) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-13T06:14:14.5808794Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-13T06:14:14.6616986Z Resolved latest version as 25.0.3+9
+2026-07-13T06:14:14.6617724Z Trying to download...
+2026-07-13T06:14:14.6619258Z Downloading Java 25.0.3+9 (Zulu) from https://cdn.azul.com/zulu/bin/zulu25.34.17-ca-crac-jdk25.0.3-linux_x64.tar.gz ...
+2026-07-13T06:14:17.6830955Z Extracting Java archive...
+2026-07-13T06:14:17.7012254Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/d94f8a35-bf2f-4c43-89cf-7968f3d7bcd2 -f /home/runner/work/_temp/8e9d8e83-c231-4603-9f05-a453ca81b13e
+2026-07-13T06:14:21.0575242Z Java 25.0.3+9 was downloaded
+2026-07-13T06:14:21.0576113Z Setting Java 25.0.3+9 as the default
+2026-07-13T06:14:21.0585897Z Creating toolchains.xml for JDK version 25 from zulu
+2026-07-13T06:14:21.0657070Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-13T06:14:21.0657950Z 
+2026-07-13T06:14:21.0658106Z Java configuration:
+2026-07-13T06:14:21.0658615Z   Distribution: zulu
+2026-07-13T06:14:21.0659042Z   Version: 25.0.3+9
+2026-07-13T06:14:21.0659590Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:21.0660156Z 
+2026-07-13T06:14:21.0661413Z ##[endgroup]
+2026-07-13T06:14:21.0682343Z Creating settings.xml with server-id: github
+2026-07-13T06:14:21.0682920Z Writing to /home/runner/.m2/settings.xml
+2026-07-13T06:14:21.5880181Z Cache hit for: setup-java-Linux-x64-maven-c1954c20227b69e24354a0caa152586a4d04f0f23ec100357131584c28909f05
+2026-07-13T06:14:21.5993209Z (node:2296) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-07-13T06:14:22.6558651Z Received 213909504 of 472265870 (45.3%), 203.8 MBs/sec
+2026-07-13T06:14:23.6565883Z Received 402653184 of 472265870 (85.3%), 191.8 MBs/sec
+2026-07-13T06:14:23.9246930Z Received 472265870 of 472265870 (100.0%), 198.9 MBs/sec
+2026-07-13T06:14:23.9256866Z Cache Size: ~450 MB (472265870 B)
+2026-07-13T06:14:23.9312389Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2e549fe0-a3cd-489a-bff9-ac9904b0e566/cache.tzst -P -C /home/runner/work/hertzbeat/hertzbeat --use-compress-program unzstd
+2026-07-13T06:14:24.7879511Z Cache restored successfully
+2026-07-13T06:14:24.8108006Z Cache restored from key: setup-java-Linux-x64-maven-c1954c20227b69e24354a0caa152586a4d04f0f23ec100357131584c28909f05
+2026-07-13T06:14:24.8352147Z ##[group]Run if [ "${RUNNER_OS}" != "Linux" ] || [ "${RUNNER_ARCH}" != "X64" ]; then
+2026-07-13T06:14:24.8352757Z [36;1mif [ "${RUNNER_OS}" != "Linux" ] || [ "${RUNNER_ARCH}" != "X64" ]; then[0m
+2026-07-13T06:14:24.8353372Z [36;1m  echo "setup-deps currently supports mvnd only on Linux/X64 runners; got ${RUNNER_OS}/${RUNNER_ARCH}" >&2[0m
+2026-07-13T06:14:24.8353885Z [36;1m  exit 1[0m
+2026-07-13T06:14:24.8354098Z [36;1mfi[0m
+2026-07-13T06:14:25.1094267Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-13T06:14:25.1094665Z env:
+2026-07-13T06:14:25.1094970Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.1095414Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.1096152Z ##[endgroup]
+2026-07-13T06:14:25.1237449Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-13T06:14:25.1238646Z ##[group]Run actions/cache@v4
+2026-07-13T06:14:25.1238904Z with:
+2026-07-13T06:14:25.1239108Z   path: ~/.local/mvnd
+2026-07-13T06:14:25.1263883Z   key: mvnd-2.0.0-rc-3-linux-amd64
+2026-07-13T06:14:25.1264228Z   enableCrossOsArchive: false
+2026-07-13T06:14:25.1264495Z   fail-on-cache-miss: false
+2026-07-13T06:14:25.1264733Z   lookup-only: false
+2026-07-13T06:14:25.1264942Z   save-always: false
+2026-07-13T06:14:25.1265156Z env:
+2026-07-13T06:14:25.1265433Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.1266167Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.1266505Z ##[endgroup]
+2026-07-13T06:14:25.2387102Z (node:2321) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-13T06:14:25.2388367Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-13T06:14:25.3166719Z Cache hit for: mvnd-2.0.0-rc-3-linux-amd64
+2026-07-13T06:14:25.3274669Z (node:2321) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-07-13T06:14:25.5344600Z Received 26229517 of 26229517 (100.0%), 134.5 MBs/sec
+2026-07-13T06:14:25.5345199Z Cache Size: ~25 MB (26229517 B)
+2026-07-13T06:14:25.5372689Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d9ebdd4e-b62f-4f4a-b7c6-0c7b3c88d4d8/cache.tzst -P -C /home/runner/work/hertzbeat/hertzbeat --use-compress-program unzstd
+2026-07-13T06:14:25.6262052Z Cache restored successfully
+2026-07-13T06:14:25.6354050Z Cache restored from key: mvnd-2.0.0-rc-3-linux-amd64
+2026-07-13T06:14:25.6496197Z ##[group]Run echo "$HOME/.local/mvnd/bin" >> $GITHUB_PATH
+2026-07-13T06:14:25.6496643Z [36;1mecho "$HOME/.local/mvnd/bin" >> $GITHUB_PATH[0m
+2026-07-13T06:14:25.6497035Z [36;1mecho "MVND_HOME=$HOME/.local/mvnd" >> $GITHUB_ENV[0m
+2026-07-13T06:14:25.6532095Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-13T06:14:25.6532461Z env:
+2026-07-13T06:14:25.6532747Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.6533186Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.6533541Z ##[endgroup]
+2026-07-13T06:14:25.6616971Z ##[group]Run mvnd --version
+2026-07-13T06:14:25.6617279Z [36;1mmvnd --version[0m
+2026-07-13T06:14:25.6647392Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-13T06:14:25.6647744Z env:
+2026-07-13T06:14:25.6648217Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.6648649Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:25.6649027Z   MVND_HOME: /home/runner/.local/mvnd
+2026-07-13T06:14:25.6649309Z ##[endgroup]
+2026-07-13T06:14:25.6862643Z Jul 13, 2026 6:14:25 AM org.jline.utils.Log logr
+2026-07-13T06:14:25.6863728Z WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-07-13T06:14:25.6865055Z [main] WARNING org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-07-13T06:14:25.6891974Z Apache Maven Daemon (mvnd) 2.0.0-rc-3 linux-amd64 native client (f912362c18c9a75faf3e31a4e0e0b921206013b9)
+2026-07-13T06:14:25.6892641Z Terminal: org.jline.terminal.impl.DumbTerminal
+2026-07-13T06:14:26.4195992Z Apache Maven 4.0.0-rc-3 (3952d00ce65df6753b63a51e86b1f626c55a8df2)
+2026-07-13T06:14:26.4196473Z Maven home: /home/runner/.local/mvnd/mvn
+2026-07-13T06:14:26.4197370Z Java version: 25.0.3, vendor: Azul Systems, Inc., runtime: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:26.4198213Z Default locale: en, platform encoding: UTF-8
+2026-07-13T06:14:26.4199007Z OS name: "linux", version: "6.17.0-1018-azure", arch: "amd64", family: "unix"
+2026-07-13T06:14:26.4300426Z ##[group]Run mvnd clean -B package -pl '!hertzbeat-e2e' -Prelease -Dmaven.test.skip=false --file pom.xml
+2026-07-13T06:14:26.4301396Z [36;1mmvnd clean -B package -pl '!hertzbeat-e2e' -Prelease -Dmaven.test.skip=false --file pom.xml[0m
+2026-07-13T06:14:26.4343707Z shell: /usr/bin/bash -e {0}
+2026-07-13T06:14:26.4344133Z env:
+2026-07-13T06:14:26.4344581Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:26.4345269Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Zulu_jdk/25.0.3-9/x64
+2026-07-13T06:14:26.4346066Z   MVND_HOME: /home/runner/.local/mvnd
+2026-07-13T06:14:26.4346478Z ##[endgroup]
+2026-07-13T06:14:26.4551372Z Jul 13, 2026 6:14:26 AM org.jline.utils.Log logr
+2026-07-13T06:14:26.4552416Z WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-07-13T06:14:26.4553827Z [main] WARNING org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-07-13T06:14:27.7731066Z [INFO] Processing build on daemon 6efb1584
+2026-07-13T06:14:27.8307412Z [INFO] Scanning for projects...
+2026-07-13T06:14:28.4763404Z [WARNING] 
+2026-07-13T06:14:28.4808935Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-startup:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4810576Z [WARNING] 
+2026-07-13T06:14:28.4813152Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-manager:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4814486Z [WARNING] 
+2026-07-13T06:14:28.4815870Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-alerter:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4817258Z [WARNING] 
+2026-07-13T06:14:28.4858655Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-common-core:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4866465Z [WARNING] 
+2026-07-13T06:14:28.4868699Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-common-spring:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4873920Z [WARNING] 
+2026-07-13T06:14:28.4888212Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-basic:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4916215Z [WARNING] 
+2026-07-13T06:14:28.4937008Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-common:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4938245Z [WARNING] 
+2026-07-13T06:14:28.4939395Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-collector:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4940653Z [WARNING] 
+2026-07-13T06:14:28.4941870Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-mysql-r2dbc:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.4943113Z [WARNING] 
+2026-07-13T06:14:28.4977081Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-mongodb:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5016391Z [WARNING] 
+2026-07-13T06:14:28.5037499Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-nebulagraph:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5076148Z [WARNING] 
+2026-07-13T06:14:28.5097101Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-rocketmq:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5106141Z [WARNING] 
+2026-07-13T06:14:28.5137780Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-kafka:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5148183Z [WARNING] 
+2026-07-13T06:14:28.5201520Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector:pom:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5245941Z [WARNING] 
+2026-07-13T06:14:28.5247332Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-warehouse:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5248729Z [WARNING] 
+2026-07-13T06:14:28.5249918Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-remoting:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5252294Z [WARNING] 
+2026-07-13T06:14:28.5253789Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-push:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5255474Z [WARNING] 
+2026-07-13T06:14:28.5256678Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-plugin:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5257780Z [WARNING] 
+2026-07-13T06:14:28.5258776Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-grafana:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5259870Z [WARNING] 
+2026-07-13T06:14:28.5260828Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-otel:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5261876Z [WARNING] 
+2026-07-13T06:14:28.5262893Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-common-e2e:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5264019Z [WARNING] 
+2026-07-13T06:14:28.5265022Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-kafka-e2e:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5266326Z [WARNING] 
+2026-07-13T06:14:28.5267397Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-basic-e2e:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5268578Z [WARNING] 
+2026-07-13T06:14:28.5269702Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-collector-mysql-r2dbc-e2e:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5270959Z [WARNING] 
+2026-07-13T06:14:28.5271938Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-log-e2e:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5273070Z [WARNING] 
+2026-07-13T06:14:28.5274145Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-e2e:pom:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5275238Z [WARNING] 
+2026-07-13T06:14:28.5276322Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-base:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5277188Z [WARNING] 
+2026-07-13T06:14:28.5277946Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-log:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5278832Z [WARNING] 
+2026-07-13T06:14:28.5279663Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat-ai:jar:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5280528Z [WARNING] 
+2026-07-13T06:14:28.5281274Z [WARNING] 24 problems were encountered while building the effective model for 'org.apache.hertzbeat:hertzbeat:pom:2.0-SNAPSHOT' (use -e to see details)
+2026-07-13T06:14:28.5282552Z [WARNING] 
+2026-07-13T06:14:28.5282888Z [WARNING] Total model problems reported: 720
+2026-07-13T06:14:28.5283290Z [WARNING] 
+2026-07-13T06:14:28.5283924Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-07-13T06:14:28.5284645Z [WARNING] 
+2026-07-13T06:14:28.5285315Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-07-13T06:14:28.5286419Z [WARNING] 
+2026-07-13T06:14:28.5286753Z [INFO] BuildTimeEventSpy is registered.
+2026-07-13T06:14:28.5287533Z [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:28.5288181Z [INFO] Reactor Build Order:
+2026-07-13T06:14:28.5288534Z [INFO] 
+2026-07-13T06:14:28.5288955Z [INFO] hertzbeat                                                                                                  [pom]
+2026-07-13T06:14:28.5289678Z [INFO] hertzbeat-common-core                                                                                      [jar]
+2026-07-13T06:14:28.5290791Z [INFO] hertzbeat-common-spring                                                                                    [jar]
+2026-07-13T06:14:28.5291605Z [INFO] hertzbeat-base                                                                                             [jar]
+2026-07-13T06:14:28.5292343Z [INFO] hertzbeat-plugin                                                                                           [jar]
+2026-07-13T06:14:28.5293097Z [INFO] hertzbeat-warehouse                                                                                        [jar]
+2026-07-13T06:14:28.5293847Z [INFO] hertzbeat-alerter                                                                                          [jar]
+2026-07-13T06:14:28.5294627Z [INFO] hertzbeat-remoting                                                                                         [jar]
+2026-07-13T06:14:28.5295479Z [INFO] hertzbeat-collector                                                                                        [pom]
+2026-07-13T06:14:28.5296701Z [INFO] hertzbeat-collector-common                                                                                 [jar]
+2026-07-13T06:14:28.5297640Z [INFO] hertzbeat-collector-basic                                                                                  [jar]
+2026-07-13T06:14:28.5298590Z [INFO] hertzbeat-collector-mysql-r2dbc                                                                            [jar]
+2026-07-13T06:14:28.5299526Z [INFO] hertzbeat-collector-kafka                                                                                  [jar]
+2026-07-13T06:14:28.5300409Z [INFO] hertzbeat-collector-mongodb                                                                                [jar]
+2026-07-13T06:14:28.5301350Z [INFO] hertzbeat-collector-nebulagraph                                                                            [jar]
+2026-07-13T06:14:28.5302319Z [INFO] hertzbeat-collector-rocketmq                                                                               [jar]
+2026-07-13T06:14:28.5303256Z [INFO] hertzbeat-collector-collector                                                                              [jar]
+2026-07-13T06:14:28.5304104Z [INFO] hertzbeat-push                                                                                             [jar]
+2026-07-13T06:14:28.5304886Z [INFO] hertzbeat-grafana                                                                                          [jar]
+2026-07-13T06:14:28.5306055Z [INFO] hertzbeat-otel                                                                                             [jar]
+2026-07-13T06:14:28.5306880Z [INFO] hertzbeat-log                                                                                              [jar]
+2026-07-13T06:14:28.5307734Z [INFO] hertzbeat-manager                                                                                          [jar]
+2026-07-13T06:14:28.5308858Z [INFO] hertzbeat-ai                                                                                               [jar]
+2026-07-13T06:14:28.5309727Z [INFO] hertzbeat-startup                                                                                          [jar]
+2026-07-13T06:14:28.5310366Z [INFO] 
+2026-07-13T06:14:28.5310838Z [INFO] Using the SmartBuilder implementation with a thread count of 3
+2026-07-13T06:14:28.5449622Z [hertzbeat] [INFO] 
+2026-07-13T06:14:28.5486507Z [hertzbeat] [INFO] ---------------------------------------< org.apache.hertzbeat:hertzbeat >---------------------------------------
+2026-07-13T06:14:28.5497160Z [hertzbeat] [INFO] Building hertzbeat 2.0-SNAPSHOT                                                                           [7/30]
+2026-07-13T06:14:28.5498191Z [hertzbeat] [INFO]   from pom.xml
+2026-07-13T06:14:28.5499318Z [hertzbeat] [INFO] ----------------------------------------------------[ pom ]-----------------------------------------------------
+2026-07-13T06:14:28.8757135Z [hertzbeat] [INFO] 
+2026-07-13T06:14:28.8762245Z [hertzbeat] [INFO] --- clean:3.5.0:clean (default-clean) @ hertzbeat ---
+2026-07-13T06:14:28.9452674Z [hertzbeat] [INFO] Deleting /home/runner/work/hertzbeat/hertzbeat/target
+2026-07-13T06:14:28.9494226Z [hertzbeat] [INFO] 
+2026-07-13T06:14:28.9518195Z [hertzbeat] [INFO] --- enforcer:3.5.0:enforce (require-java-25) @ hertzbeat ---
+2026-07-13T06:14:29.1549314Z [hertzbeat] [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+2026-07-13T06:14:29.1576678Z [hertzbeat] [INFO] 
+2026-07-13T06:14:29.1606571Z [hertzbeat] [INFO] --- checkstyle:3.3.0:check (validate) @ hertzbeat ---
+2026-07-13T06:14:30.3156674Z [hertzbeat] [INFO] Starting audit...
+2026-07-13T06:14:30.3176961Z Audit done.
+2026-07-13T06:14:30.3201690Z [hertzbeat] [INFO] You have 0 Checkstyle violations.
+2026-07-13T06:14:30.3210057Z [hertzbeat] [INFO] 
+2026-07-13T06:14:30.3226685Z [hertzbeat] [INFO] --- jacoco:0.8.11:prepare-agent (prepare-agent) @ hertzbeat ---
+2026-07-13T06:14:30.4148177Z [hertzbeat] [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.11/org.jacoco.agent-0.8.11-runtime.jar=destfile=/home/runner/work/hertzbeat/hertzbeat/target/jacoco.exec,excludes=net/sf/jsqlparser/parser/**
+2026-07-13T06:14:30.4237023Z [hertzbeat] [INFO] Copying org.apache.hertzbeat:hertzbeat:pom:2.0-SNAPSHOT to project local repository
+2026-07-13T06:14:30.4743258Z [hertzbeat] [INFO] Copying org.apache.hertzbeat:hertzbeat:pom:consumer:2.0-SNAPSHOT to project local repository
+2026-07-13T06:14:30.4790189Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:30.4791169Z [hertzbeat-common-core] [INFO] ---------------------------------< org.apache.hertzbeat:hertzbeat-common-core >---------------------------------
+2026-07-13T06:14:30.4792356Z [hertzbeat-common-core] [INFO] Building hertzbeat-common-core 2.0-SNAPSHOT                                                               [8/30]
+2026-07-13T06:14:30.4793400Z [hertzbeat-common-core] [INFO]   from hertzbeat-common-core/pom.xml
+2026-07-13T06:14:30.4794429Z [hertzbeat-common-core] [INFO] ----------------------------------------------------[ jar ]-----------------------------------------------------
+2026-07-13T06:14:30.8048529Z [hertzbeat-common-core] [WARNING] 1 problem was encountered while building the effective model for 'org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.8.5' during dependency collection step for project (use -X to see details)
+2026-07-13T06:14:30.8327901Z [hertzbeat-common-core] [WARNING] 1 problem was encountered while building the effective model for 'org.springdoc:springdoc-openapi-starter-webmvc-api:jar:2.8.5' during dependency collection step for project (use -X to see details)
+2026-07-13T06:14:30.8594525Z [hertzbeat-common-core] [WARNING] 1 problem was encountered while building the effective model for 'org.springdoc:springdoc-openapi-starter-common:jar:2.8.5' during dependency collection step for project (use -X to see details)
+2026-07-13T06:14:30.9357284Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:30.9386674Z [hertzbeat-common-core] [INFO] --- clean:3.5.0:clean (default-clean) @ hertzbeat-common-core ---
+2026-07-13T06:14:30.9396776Z [hertzbeat-common-core] [INFO] Deleting /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/target
+2026-07-13T06:14:30.9426070Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:30.9438276Z [hertzbeat-common-core] [INFO] --- enforcer:3.5.0:enforce (require-java-25) @ hertzbeat-common-core ---
+2026-07-13T06:14:30.9446536Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:30.9447485Z [hertzbeat-common-core] [INFO] --- checkstyle:3.3.0:check (validate) @ hertzbeat-common-core ---
+2026-07-13T06:14:34.4127977Z [hertzbeat-common-core] [INFO] Starting audit...
+2026-07-13T06:14:34.4134009Z Audit done.
+2026-07-13T06:14:34.4246605Z [hertzbeat-common-core] [INFO] You have 0 Checkstyle violations.
+2026-07-13T06:14:34.4258887Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:34.4260086Z [hertzbeat-common-core] [INFO] --- jacoco:0.8.11:prepare-agent (prepare-agent) @ hertzbeat-common-core ---
+2026-07-13T06:14:34.4270823Z [hertzbeat-common-core] [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.11/org.jacoco.agent-0.8.11-runtime.jar=destfile=/home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/target/jacoco.exec,excludes=net/sf/jsqlparser/parser/**
+2026-07-13T06:14:34.4279888Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:34.4280983Z [hertzbeat-common-core] [INFO] --- resources:3.3.1:resources (default-resources) @ hertzbeat-common-core ---
+2026-07-13T06:14:34.4863557Z [hertzbeat-common-core] [INFO] skip non existing resourceDirectory /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/resources
+2026-07-13T06:14:34.4866121Z [hertzbeat-common-core] [INFO] skip non existing resourceDirectory /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/resources
+2026-07-13T06:14:34.4881552Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:34.4882703Z [hertzbeat-common-core] [INFO] --- compiler:3.15.0:compile (default-compile) @ hertzbeat-common-core ---
+2026-07-13T06:14:34.5943089Z [hertzbeat-common-core] [INFO] Recompiling the module because of changed source code.
+2026-07-13T06:14:34.5993242Z [hertzbeat-common-core] [INFO] Compiling 158 source files with javac [debug parameters release 25] to target/classes
+2026-07-13T06:14:40.1718975Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Metrics.java:[118,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1723364Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Metrics.java:[396,22] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1778835Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Metrics.java:[400,25] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1783720Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/PushProtocol.java:[42,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1788933Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/dto/CollectorInfo.java:[46,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1794021Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/HttpProtocol.java:[59,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1799031Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/HttpProtocol.java:[107,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1804095Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/JmxProtocol.java:[50,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1808985Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/RuntimeParamDefine.java:[44,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1813707Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/RuntimeParamDefine.java:[60,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1818363Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/SshProtocol.java:[77,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1828515Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/SshProtocol.java:[112,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1833371Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Configmap.java:[53,18] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1839113Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/ImapProtocol.java:[56,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1847202Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/KafkaProtocol.java:[62,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1851859Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/Pop3Protocol.java:[52,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1856347Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[57,18] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1861070Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[78,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1865710Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[111,18] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1870169Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[119,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1874555Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[135,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1879280Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[140,21] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1883780Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[145,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1888605Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/Job.java:[150,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1893614Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/NginxProtocol.java:[61,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1898439Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/SnmpProtocol.java:[80,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1903166Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/PrometheusProtocol.java:[58,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1908042Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/JdbcProtocol.java:[82,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1912533Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/SshTunnel.java:[39,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1917049Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/SshTunnel.java:[49,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1921480Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/SshTunnel.java:[54,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1926000Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/SshTunnel.java:[79,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1930569Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/job/protocol/FtpProtocol.java:[72,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+2026-07-13T06:14:40.1934794Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/timer/HashedWheelTimer.java:[260,20] finalize() in java.lang.Object has been deprecated and marked for removal
+2026-07-13T06:14:40.1938185Z [hertzbeat-common-core] [WARNING] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/timer/HashedWheelTimer.java:[262,18] finalize() in java.lang.Object has been deprecated and marked for removal
+2026-07-13T06:14:40.1941265Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/sd/EurekaDiscoveryResponseEntity.java: Some input files use or override a deprecated API.
+2026-07-13T06:14:40.1944011Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/sd/EurekaDiscoveryResponseEntity.java: Recompile with -Xlint:deprecation for details.
+2026-07-13T06:14:40.1947733Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/message/CollectRep.java: /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/message/CollectRep.java uses unchecked or unsafe operations.
+2026-07-13T06:14:40.1951406Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/main/java/org/apache/hertzbeat/common/entity/message/CollectRep.java: Recompile with -Xlint:unchecked for details.
+2026-07-13T06:14:40.1953086Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:40.1954167Z [hertzbeat-common-core] [INFO] --- resources:3.3.1:testResources (default-testResources) @ hertzbeat-common-core ---
+2026-07-13T06:14:40.1956012Z [hertzbeat-common-core] [INFO] skip non existing resourceDirectory /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/test/resources
+2026-07-13T06:14:40.1958009Z [hertzbeat-common-core] [INFO] skip non existing resourceDirectory /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/test/resources-filtered
+2026-07-13T06:14:40.1959402Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:40.1960455Z [hertzbeat-common-core] [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ hertzbeat-common-core ---
+2026-07-13T06:14:40.2036644Z [hertzbeat-common-core] [INFO] Recompiling the module because of changed dependency.
+2026-07-13T06:14:40.2043932Z [hertzbeat-common-core] [INFO] Compiling 69 source files with javac [debug parameters release 25] to target/test-classes
+2026-07-13T06:14:41.4410719Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/test/java/org/apache/hertzbeat/common/util/TimeZoneUtilTest.java: /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/test/java/org/apache/hertzbeat/common/util/TimeZoneUtilTest.java uses or overrides a deprecated API.
+2026-07-13T06:14:41.4427909Z [hertzbeat-common-core] [INFO] /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/src/test/java/org/apache/hertzbeat/common/util/TimeZoneUtilTest.java: Recompile with -Xlint:deprecation for details.
+2026-07-13T06:14:41.4434822Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:41.4459726Z [hertzbeat-common-core] [INFO] --- surefire:3.2.5:test (default-test) @ hertzbeat-common-core ---
+2026-07-13T06:14:41.5956994Z [hertzbeat-common-core] [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-13T06:14:41.6426954Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:41.6432750Z [hertzbeat-common-core] [INFO] -------------------------------------------------------
+2026-07-13T06:14:41.6444854Z [hertzbeat-common-core] [INFO]  T E S T S
+2026-07-13T06:14:41.6467071Z [hertzbeat-common-core] [INFO] -------------------------------------------------------
+2026-07-13T06:14:41.7533303Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: Unknown module: org.apache.arrow.memory.core specified to --add-opens
+2026-07-13T06:14:42.7171597Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.Base64UtilTest
+2026-07-13T06:14:42.8196620Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in org.apache.hertzbeat.common.util.Base64UtilTest
+2026-07-13T06:14:42.8216563Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.TimePeriodUtilTest
+2026-07-13T06:14:42.8488314Z [hertzbeat-common-core] [INFO] [stdout] 06:14:42.835 [main] ERROR org.apache.hertzbeat.common.util.TimePeriodUtil -- tokenTime is invalid
+2026-07-13T06:14:42.8516901Z [hertzbeat-common-core] [INFO] [stdout] 06:14:42.838 [main] ERROR org.apache.hertzbeat.common.util.TimePeriodUtil -- tokenTime is invalid
+2026-07-13T06:14:42.8518763Z [hertzbeat-common-core] [INFO] [stdout] 06:14:42.838 [main] ERROR org.apache.hertzbeat.common.util.TimePeriodUtil -- tokenTime is invalid
+2026-07-13T06:14:42.8757416Z [hertzbeat-common-core] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 s -- in org.apache.hertzbeat.common.util.TimePeriodUtilTest
+2026-07-13T06:14:42.8759579Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.IpDomainUtilTest
+2026-07-13T06:14:43.0137347Z [hertzbeat-common-core] [WARNING] [stderr] Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+2026-07-13T06:14:43.1136507Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: A Java agent has been loaded dynamically (/home/runner/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar)
+2026-07-13T06:14:43.1137804Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+2026-07-13T06:14:43.1138848Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+2026-07-13T06:14:43.1139752Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-07-13T06:14:43.1357147Z [hertzbeat-common-core] [WARNING] [stderr] OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-07-13T06:14:43.7361074Z [hertzbeat-common-core] [INFO] [stdout] 06:14:43.729 [main] WARN org.apache.hertzbeat.common.util.IpDomainUtil -- Test exception
+2026-07-13T06:14:43.7558867Z [hertzbeat-common-core] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.886 s -- in org.apache.hertzbeat.common.util.IpDomainUtilTest
+2026-07-13T06:14:43.7560715Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.SnowFlakeIdGeneratorTest
+2026-07-13T06:14:43.8167486Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in org.apache.hertzbeat.common.util.SnowFlakeIdGeneratorTest
+2026-07-13T06:14:43.8187391Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.CommonUtilTest
+2026-07-13T06:14:43.8708951Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.061 s -- in org.apache.hertzbeat.common.util.CommonUtilTest
+2026-07-13T06:14:43.8716167Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.IntervalExpressionUtilTest
+2026-07-13T06:14:43.8850980Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.hertzbeat.common.util.IntervalExpressionUtilTest
+2026-07-13T06:14:43.8876983Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.ArrowUtilTest
+2026-07-13T06:14:43.9616553Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+2026-07-13T06:14:43.9619902Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/home/runner/.m2/repository/io/netty/netty-common/4.1.117.Final/netty-common-4.1.117.Final.jar)
+2026-07-13T06:14:43.9622545Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+2026-07-13T06:14:43.9624300Z [hertzbeat-common-core] [WARNING] [stderr] WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+2026-07-13T06:14:44.0170941Z [hertzbeat-common-core] [INFO] [stdout] 06:14:43.879 [main] INFO org.apache.arrow.memory.BaseAllocator -- Debug mode disabled. Enable with the VM option -Darrow.memory.debug.allocator=true.
+2026-07-13T06:14:44.0197766Z [hertzbeat-common-core] [INFO] [stdout] 06:14:43.881 [main] INFO org.apache.arrow.memory.DefaultAllocationManagerOption -- allocation manager type not specified, using netty as the default type
+2026-07-13T06:14:44.0207766Z [hertzbeat-common-core] [INFO] [stdout] 06:14:43.885 [main] INFO org.apache.arrow.memory.CheckAllocator -- Using DefaultAllocationManager at memory-netty/18.1.0/arrow-memory-netty-18.1.0.jar!/org/apache/arrow/memory/netty/DefaultAllocationManagerFactory.class
+2026-07-13T06:14:44.4367917Z [hertzbeat-common-core] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.538 s -- in org.apache.hertzbeat.common.util.ArrowUtilTest
+2026-07-13T06:14:44.4406617Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.HertzBeatKeywordsUtilTest
+2026-07-13T06:14:44.4537876Z [hertzbeat-common-core] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.hertzbeat.common.util.HertzBeatKeywordsUtilTest
+2026-07-13T06:14:44.4556558Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.PairTest
+2026-07-13T06:14:44.4578638Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.apache.hertzbeat.common.util.PairTest
+2026-07-13T06:14:44.4596272Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.LogUtilTest
+2026-07-13T06:14:44.6450110Z [hertzbeat-common-core] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.216 s -- in org.apache.hertzbeat.common.util.LogUtilTest
+2026-07-13T06:14:44.6452351Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.BackoffUtilsTest
+2026-07-13T06:14:44.8828030Z [hertzbeat-common-core] [ERROR] Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.231 s <<< FAILURE! -- in org.apache.hertzbeat.common.util.BackoffUtilsTest
+2026-07-13T06:14:44.8830050Z [hertzbeat-common-core] [ERROR] org.apache.hertzbeat.common.util.BackoffUtilsTest.shouldHandleInterruptedException -- Time elapsed: 0.211 s <<< ERROR!
+2026-07-13T06:14:44.8831338Z java.lang.InterruptedException
+2026-07-13T06:14:44.8831862Z 	at java.base/java.lang.Object.wait0(Native Method)
+2026-07-13T06:14:44.8832502Z 	at java.base/java.lang.Object.wait(Object.java:389)
+2026-07-13T06:14:44.8833116Z 	at java.base/java.lang.Thread.join(Thread.java:1887)
+2026-07-13T06:14:44.8833716Z 	at java.base/java.lang.Thread.join(Thread.java:1963)
+2026-07-13T06:14:44.8834800Z 	at org.apache.hertzbeat.common.util.BackoffUtilsTest.shouldHandleInterruptedException(BackoffUtilsTest.java:63)
+2026-07-13T06:14:44.8836349Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.JsonUtilTest
+2026-07-13T06:14:45.0797630Z [hertzbeat-common-core] [INFO] [stdout] 06:14:45.074 [main] ERROR org.apache.hertzbeat.common.util.JsonUtil -- Error reading JSON tree: Unrecognized token 'invalid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+2026-07-13T06:14:45.0889116Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:45.1010138Z [hertzbeat-common-core] [INFO] [stdout] tools.jackson.core.exc.StreamReadException: Unrecognized token 'invalid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+2026-07-13T06:14:45.1108028Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:45.1147158Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.JsonParser._constructReadException(JsonParser.java:1856)
+2026-07-13T06:14:45.1177600Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3130)
+2026-07-13T06:14:45.1216710Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:2075)
+2026-07-13T06:14:45.1251963Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:809)
+2026-07-13T06:14:45.1277118Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:2665)
+2026-07-13T06:14:45.1307113Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:1154)
+2026-07-13T06:14:45.1322630Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.JsonUtil.fromJson(JsonUtil.java:94)
+2026-07-13T06:14:45.1326922Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.JsonUtilTest.testFromJson(JsonUtilTest.java:57)
+2026-07-13T06:14:45.1328574Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-07-13T06:14:45.1417370Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-07-13T06:14:45.1418707Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-07-13T06:14:45.1420373Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-07-13T06:14:45.1422072Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-07-13T06:14:45.1423650Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-07-13T06:14:45.1425487Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-07-13T06:14:45.1430231Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-07-13T06:14:45.1432086Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-07-13T06:14:45.1433897Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-07-13T06:14:45.1436186Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-07-13T06:14:45.1438486Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-07-13T06:14:45.1440665Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-07-13T06:14:45.1442705Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-07-13T06:14:45.1445164Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-07-13T06:14:45.1447267Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-07-13T06:14:45.1449179Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-07-13T06:14:45.1451150Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-07-13T06:14:45.1453074Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-07-13T06:14:45.1455077Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-07-13T06:14:45.1478295Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1480196Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-07-13T06:14:45.1482005Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-07-13T06:14:45.1483692Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-07-13T06:14:45.1485484Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-07-13T06:14:45.1487538Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1489297Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:45.1490844Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:45.1506008Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:45.1507839Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1508984Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:45.1510027Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:45.1510842Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:45.1511967Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:45.1513267Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:45.1514336Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1515380Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:45.1521545Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:45.1523157Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:45.1524991Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1527065Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:45.1528796Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:45.1530158Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:45.1531981Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:45.1534526Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:45.1536682Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1538481Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:45.1540005Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:45.1541561Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:45.1543364Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:45.1545165Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:45.1553133Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:45.1555254Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-07-13T06:14:45.1557669Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-07-13T06:14:45.1559594Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-07-13T06:14:45.1561537Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-07-13T06:14:45.1563492Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-07-13T06:14:45.1564755Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-07-13T06:14:45.1566335Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-07-13T06:14:45.1568245Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-07-13T06:14:45.1570545Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-07-13T06:14:45.1572554Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-07-13T06:14:45.1574222Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-07-13T06:14:45.1575976Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-07-13T06:14:45.1577454Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-07-13T06:14:45.1578971Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:45.1580656Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-07-13T06:14:45.1583078Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-07-13T06:14:45.1585199Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-07-13T06:14:45.1587034Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:45.1588538Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+2026-07-13T06:14:45.1590142Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+2026-07-13T06:14:45.1592006Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+2026-07-13T06:14:45.1593889Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+2026-07-13T06:14:45.1595825Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+2026-07-13T06:14:45.1597340Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+2026-07-13T06:14:45.1598706Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+2026-07-13T06:14:45.1600057Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-07-13T06:14:45.1601461Z [hertzbeat-common-core] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.203 s -- in org.apache.hertzbeat.common.util.JsonUtilTest
+2026-07-13T06:14:45.1602889Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.ExponentialBackoffTest
+2026-07-13T06:14:45.1604294Z [hertzbeat-common-core] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.hertzbeat.common.util.ExponentialBackoffTest
+2026-07-13T06:14:45.1605782Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.StrUtilTest
+2026-07-13T06:14:45.1607102Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.apache.hertzbeat.common.util.StrUtilTest
+2026-07-13T06:14:45.1608396Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.LruHashMapTest
+2026-07-13T06:14:45.1609725Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.apache.hertzbeat.common.util.LruHashMapTest
+2026-07-13T06:14:45.1611244Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.NetworkUtilTest
+2026-07-13T06:14:45.1612568Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.apache.hertzbeat.common.util.NetworkUtilTest
+2026-07-13T06:14:45.1613952Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.ChineseCharacterCheckTest
+2026-07-13T06:14:49.7730667Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.657 s -- in org.apache.hertzbeat.common.util.ChineseCharacterCheckTest
+2026-07-13T06:14:49.7797883Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.StrBufferTest
+2026-07-13T06:14:49.7837722Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in org.apache.hertzbeat.common.util.StrBufferTest
+2026-07-13T06:14:49.7839387Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.AesUtilTest
+2026-07-13T06:14:49.8197460Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.814 [main] WARN org.apache.hertzbeat.common.util.AesUtil -- There has default encode secret encode content, try to decode with default secret key
+2026-07-13T06:14:49.8219182Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.814 [main] ERROR org.apache.hertzbeat.common.util.AesUtil -- aes decode content error: Given final block not properly padded. Such issues can arise if a bad key is used during decryption., please config right common secret key
+2026-07-13T06:14:49.8221823Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.815 [main] WARN org.apache.hertzbeat.common.util.AesUtil -- There has default encode secret encode content, try to decode with default secret key
+2026-07-13T06:14:49.8224302Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.816 [main] ERROR org.apache.hertzbeat.common.util.AesUtil -- aes decode content error: Given final block not properly padded. Such issues can arise if a bad key is used during decryption., please config right common secret key
+2026-07-13T06:14:49.8237049Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.816 [main] WARN org.apache.hertzbeat.common.util.AesUtil -- There has default encode secret encode content, try to decode with default secret key
+2026-07-13T06:14:49.8297561Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.816 [main] ERROR org.apache.hertzbeat.common.util.AesUtil -- aes decode content error: Given final block not properly padded. Such issues can arise if a bad key is used during decryption., please config right common secret key
+2026-07-13T06:14:49.8367468Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.822 [main] WARN org.apache.hertzbeat.common.util.AesUtil -- isCiphertext method error: Given final block not properly padded. Such issues can arise if a bad key is used during decryption.
+2026-07-13T06:14:49.8396727Z [hertzbeat-common-core] [INFO] [stdout] 06:14:49.824 [main] WARN org.apache.hertzbeat.common.util.AesUtil -- There has default encode secret encode content, try to decode with default secret key
+2026-07-13T06:14:49.8398745Z [hertzbeat-common-core] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 s -- in org.apache.hertzbeat.common.util.AesUtilTest
+2026-07-13T06:14:49.8426372Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.JexlTest
+2026-07-13T06:14:50.0566155Z [hertzbeat-common-core] [INFO] Tests run: 45, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.164 s -- in org.apache.hertzbeat.common.util.JexlTest
+2026-07-13T06:14:50.0628572Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.JexlExpressionRunnerTest
+2026-07-13T06:14:50.0656920Z [hertzbeat-common-core] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in org.apache.hertzbeat.common.util.JexlExpressionRunnerTest
+2026-07-13T06:14:50.0691648Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.TimeZoneUtilTest
+2026-07-13T06:14:50.0747251Z [hertzbeat-common-core] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in org.apache.hertzbeat.common.util.TimeZoneUtilTest
+2026-07-13T06:14:50.0776526Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.ProtoJsonUtilTest
+2026-07-13T06:14:50.1857549Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.179 [main] ERROR org.apache.hertzbeat.common.util.ProtoJsonUtil -- Not an int32 value: "not-a-number"
+2026-07-13T06:14:50.1936996Z [hertzbeat-common-core] [INFO] [stdout] com.google.protobuf.InvalidProtocolBufferException: Not an int32 value: "not-a-number"
+2026-07-13T06:14:50.1966749Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.parseInt32(JsonFormat.java:1736)
+2026-07-13T06:14:50.1987026Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.parseFieldValue(JsonFormat.java:1955)
+2026-07-13T06:14:50.1988758Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.mergeField(JsonFormat.java:1646)
+2026-07-13T06:14:50.1990505Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.mergeMessage(JsonFormat.java:1477)
+2026-07-13T06:14:50.1992479Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.merge(JsonFormat.java:1435)
+2026-07-13T06:14:50.1994001Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.merge(JsonFormat.java:1317)
+2026-07-13T06:14:50.1995458Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$Parser.merge(JsonFormat.java:449)
+2026-07-13T06:14:50.1997195Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.ProtoJsonUtil.toProtobuf(ProtoJsonUtil.java:71)
+2026-07-13T06:14:50.1998897Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.ProtoJsonUtilTest.toProtobuf(ProtoJsonUtilTest.java:68)
+2026-07-13T06:14:50.2000745Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-07-13T06:14:50.2002398Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-07-13T06:14:50.2003890Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-07-13T06:14:50.2005832Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-07-13T06:14:50.2007744Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-07-13T06:14:50.2009548Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-07-13T06:14:50.2011600Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-07-13T06:14:50.2013706Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-07-13T06:14:50.2015799Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-07-13T06:14:50.2017839Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-07-13T06:14:50.2020224Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-07-13T06:14:50.2022764Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-07-13T06:14:50.2025368Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-07-13T06:14:50.2027795Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-07-13T06:14:50.2029983Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-07-13T06:14:50.2032174Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-07-13T06:14:50.2034265Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-07-13T06:14:50.2036557Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-07-13T06:14:50.2038924Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-07-13T06:14:50.2041299Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-07-13T06:14:50.2043385Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2045641Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-07-13T06:14:50.2120463Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-07-13T06:14:50.2147086Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-07-13T06:14:50.2180597Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-07-13T06:14:50.2229579Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2256971Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.2274189Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.2276241Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.2278323Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2280287Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.2282160Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.2283655Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.2286081Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.2288535Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.2290863Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2292853Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.2294639Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.2296575Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.2298588Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2300575Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.2302543Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.2304305Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.2306515Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.2308961Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.2310952Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2313067Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.2314868Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.2316775Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.2318801Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.2320752Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.2322642Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.2324946Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-07-13T06:14:50.2327579Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-07-13T06:14:50.2329753Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-07-13T06:14:50.2331935Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-07-13T06:14:50.2334124Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-07-13T06:14:50.2336397Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-07-13T06:14:50.2338645Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-07-13T06:14:50.2340821Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-07-13T06:14:50.2343060Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-07-13T06:14:50.2345248Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-07-13T06:14:50.2347178Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-07-13T06:14:50.2348792Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-07-13T06:14:50.2350399Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-07-13T06:14:50.2352209Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.2354076Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-07-13T06:14:50.2356616Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-07-13T06:14:50.2358909Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-07-13T06:14:50.2360693Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.2362399Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+2026-07-13T06:14:50.2364242Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+2026-07-13T06:14:50.2366409Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+2026-07-13T06:14:50.2368485Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+2026-07-13T06:14:50.2370397Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+2026-07-13T06:14:50.2372054Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+2026-07-13T06:14:50.2373607Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+2026-07-13T06:14:50.2375133Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-07-13T06:14:50.2377113Z [hertzbeat-common-core] [INFO] [stdout] Caused by: java.lang.NumberFormatException: Character n is neither a decimal digit number, decimal point, nor "e" notation exponential mark.
+2026-07-13T06:14:50.2378848Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.math.BigDecimal.<init>(BigDecimal.java:628)
+2026-07-13T06:14:50.2380105Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.math.BigDecimal.<init>(BigDecimal.java:517)
+2026-07-13T06:14:50.2381352Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.math.BigDecimal.<init>(BigDecimal.java:923)
+2026-07-13T06:14:50.2382756Z [hertzbeat-common-core] [INFO] [stdout] 	at com.google.protobuf.util.JsonFormat$ParserImpl.parseInt32(JsonFormat.java:1733)
+2026-07-13T06:14:50.2384185Z [hertzbeat-common-core] [INFO] [stdout] 	... 86 common frames omitted
+2026-07-13T06:14:50.2385470Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.203 [main] ERROR org.apache.hertzbeat.common.util.ProtoJsonUtil -- proto is null
+2026-07-13T06:14:50.2387385Z [hertzbeat-common-core] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.131 s -- in org.apache.hertzbeat.common.util.ProtoJsonUtilTest
+2026-07-13T06:14:50.2388895Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.util.MapCapUtilTest
+2026-07-13T06:14:50.2390335Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.apache.hertzbeat.common.util.MapCapUtilTest
+2026-07-13T06:14:50.2392017Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.serialize.KafkaMetricsDataDeserializerTest
+2026-07-13T06:14:50.5576854Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.339 s -- in org.apache.hertzbeat.common.serialize.KafkaMetricsDataDeserializerTest
+2026-07-13T06:14:50.5588896Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.serialize.KafkaLogEntrySerializerTest
+2026-07-13T06:14:50.5986872Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.596 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntrySerializer -- LogEntry is null for topic: test-topic
+2026-07-13T06:14:50.6099297Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.598 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntrySerializer -- LogEntry is null for topic: test-topic
+2026-07-13T06:14:50.6182702Z [hertzbeat-common-core] [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in org.apache.hertzbeat.common.serialize.KafkaLogEntrySerializerTest
+2026-07-13T06:14:50.6210957Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.serialize.KafkaMetricsDataSerializerTest
+2026-07-13T06:14:50.6307419Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.609 [main] ERROR org.apache.hertzbeat.common.serialize.KafkaMetricsDataSerializer -- metricsData is null
+2026-07-13T06:14:50.6341041Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.apache.hertzbeat.common.serialize.KafkaMetricsDataSerializerTest
+2026-07-13T06:14:50.6376840Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializerTest
+2026-07-13T06:14:50.6406887Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.615 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer -- Empty data received for topic: test-topic
+2026-07-13T06:14:50.6557542Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.648 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer -- Empty data received for topic: test-topic
+2026-07-13T06:14:50.6586538Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.655 [main] ERROR org.apache.hertzbeat.common.util.JsonUtil -- Error parsing JSON to class org.apache.hertzbeat.common.entity.log.LogEntry: Unexpected end-of-input within/between Object entries
+2026-07-13T06:14:50.6616779Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.6636860Z [hertzbeat-common-core] [INFO] [stdout] tools.jackson.core.exc.StreamReadException: Unexpected end-of-input within/between Object entries
+2026-07-13T06:14:50.6646961Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.6676643Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.JsonParser._constructReadException(JsonParser.java:1812)
+2026-07-13T06:14:50.6706771Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._skipAfterComma2(ReaderBasedJsonParser.java:2587)
+2026-07-13T06:14:50.6720129Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._skipComma(ReaderBasedJsonParser.java:2557)
+2026-07-13T06:14:50.6736763Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:720)
+2026-07-13T06:14:50.6766941Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:691)
+2026-07-13T06:14:50.6797126Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1503)
+2026-07-13T06:14:50.6811287Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-07-13T06:14:50.6826898Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-07-13T06:14:50.6857427Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.DeserializationContextExt.readRootValue(DeserializationContextExt.java:266)
+2026-07-13T06:14:50.6886804Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:2639)
+2026-07-13T06:14:50.6906641Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:1544)
+2026-07-13T06:14:50.6916492Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.JsonUtil.fromJson(JsonUtil.java:70)
+2026-07-13T06:14:50.6946925Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer.deserialize(KafkaLogEntryDeserializer.java:46)
+2026-07-13T06:14:50.6977201Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializerTest.testDeserializeWithMalformedJson(KafkaLogEntryDeserializerTest.java:183)
+2026-07-13T06:14:50.6993132Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-07-13T06:14:50.7006514Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-07-13T06:14:50.7036721Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-07-13T06:14:50.7066844Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-07-13T06:14:50.7086675Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-07-13T06:14:50.7096672Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-07-13T06:14:50.7127987Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-07-13T06:14:50.7156839Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-07-13T06:14:50.7158702Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-07-13T06:14:50.7187118Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-07-13T06:14:50.7217239Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-07-13T06:14:50.7247055Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-07-13T06:14:50.7257628Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-07-13T06:14:50.7287018Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-07-13T06:14:50.7306958Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-07-13T06:14:50.7319925Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-07-13T06:14:50.7325124Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-07-13T06:14:50.7327569Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-07-13T06:14:50.7330159Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-07-13T06:14:50.7332493Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-07-13T06:14:50.7334735Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7336783Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-07-13T06:14:50.7338842Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-07-13T06:14:50.7340819Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-07-13T06:14:50.7342811Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-07-13T06:14:50.7344780Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7347202Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7349013Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7350623Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7352427Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7354256Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7356225Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7357583Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.7359484Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.7361831Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.7364037Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7366173Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7367721Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7408238Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7410269Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7412146Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7414221Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7415878Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.7417799Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.7420098Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.7421983Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7423842Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7425661Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7427331Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7429162Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7431013Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7432775Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7434926Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-07-13T06:14:50.7467808Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-07-13T06:14:50.7469908Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-07-13T06:14:50.7471899Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-07-13T06:14:50.7473945Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-07-13T06:14:50.7476322Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-07-13T06:14:50.7478599Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-07-13T06:14:50.7480594Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-07-13T06:14:50.7482676Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-07-13T06:14:50.7484762Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-07-13T06:14:50.7486675Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-07-13T06:14:50.7488161Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-07-13T06:14:50.7489899Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-07-13T06:14:50.7491426Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.7493121Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-07-13T06:14:50.7495200Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-07-13T06:14:50.7512437Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-07-13T06:14:50.7514069Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.7515831Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+2026-07-13T06:14:50.7517429Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+2026-07-13T06:14:50.7519329Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+2026-07-13T06:14:50.7521177Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+2026-07-13T06:14:50.7522891Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+2026-07-13T06:14:50.7524443Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+2026-07-13T06:14:50.7526035Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+2026-07-13T06:14:50.7527362Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-07-13T06:14:50.7529128Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.656 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer -- Failed to deserialize LogEntry from topic: test-topic
+2026-07-13T06:14:50.7531817Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.659 [main] ERROR org.apache.hertzbeat.common.util.JsonUtil -- Error parsing JSON to class org.apache.hertzbeat.common.entity.log.LogEntry: Unrecognized token 'invalid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+2026-07-13T06:14:50.7534325Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.7572699Z [hertzbeat-common-core] [INFO] [stdout] tools.jackson.core.exc.StreamReadException: Unrecognized token 'invalid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+2026-07-13T06:14:50.7574795Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.7576519Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.JsonParser._constructReadException(JsonParser.java:1856)
+2026-07-13T06:14:50.7578081Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3130)
+2026-07-13T06:14:50.7579729Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:2075)
+2026-07-13T06:14:50.7581374Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:809)
+2026-07-13T06:14:50.7583075Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper._initForReading(ObjectMapper.java:2734)
+2026-07-13T06:14:50.7584438Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:2629)
+2026-07-13T06:14:50.7585958Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:1544)
+2026-07-13T06:14:50.7587284Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.JsonUtil.fromJson(JsonUtil.java:70)
+2026-07-13T06:14:50.7588948Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer.deserialize(KafkaLogEntryDeserializer.java:46)
+2026-07-13T06:14:50.7591219Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializerTest.testDeserializeWithInvalidData(KafkaLogEntryDeserializerTest.java:173)
+2026-07-13T06:14:50.7593402Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-07-13T06:14:50.7594880Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-07-13T06:14:50.7615156Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-07-13T06:14:50.7617088Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-07-13T06:14:50.7618803Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-07-13T06:14:50.7620429Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-07-13T06:14:50.7622276Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-07-13T06:14:50.7624231Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-07-13T06:14:50.7626140Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-07-13T06:14:50.7627974Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-07-13T06:14:50.7630120Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-07-13T06:14:50.7632648Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-07-13T06:14:50.7634786Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-07-13T06:14:50.7657880Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-07-13T06:14:50.7659693Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-07-13T06:14:50.7661485Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-07-13T06:14:50.7663288Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-07-13T06:14:50.7665281Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-07-13T06:14:50.7667939Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-07-13T06:14:50.7669981Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-07-13T06:14:50.7671873Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7673703Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-07-13T06:14:50.7675490Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-07-13T06:14:50.7677548Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-07-13T06:14:50.7679496Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-07-13T06:14:50.7681388Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7683413Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7685162Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7687076Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7688827Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7690494Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7692194Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7693574Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.7695479Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.7698221Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.7700066Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7702029Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7703725Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7705365Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7707399Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7709358Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7711344Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7712761Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.7714724Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.7754044Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.7756170Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7757934Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.7759538Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.7761128Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.7762935Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.7764771Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.7766712Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.7768737Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-07-13T06:14:50.7770891Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-07-13T06:14:50.7772717Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-07-13T06:14:50.7774539Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-07-13T06:14:50.7807156Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-07-13T06:14:50.7809633Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-07-13T06:14:50.7811519Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-07-13T06:14:50.7813381Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-07-13T06:14:50.7815344Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-07-13T06:14:50.7817438Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-07-13T06:14:50.7819066Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-07-13T06:14:50.7820528Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-07-13T06:14:50.7822160Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-07-13T06:14:50.7823577Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.7825117Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-07-13T06:14:50.7827326Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-07-13T06:14:50.7829301Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-07-13T06:14:50.7830806Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.7832269Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+2026-07-13T06:14:50.7833801Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+2026-07-13T06:14:50.7881187Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+2026-07-13T06:14:50.7883218Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+2026-07-13T06:14:50.7884915Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+2026-07-13T06:14:50.7886595Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+2026-07-13T06:14:50.7887995Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+2026-07-13T06:14:50.7889370Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-07-13T06:14:50.7891176Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.661 [main] WARN org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializer -- Failed to deserialize LogEntry from topic: test-topic
+2026-07-13T06:14:50.7893297Z [hertzbeat-common-core] [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s -- in org.apache.hertzbeat.common.serialize.KafkaLogEntryDeserializerTest
+2026-07-13T06:14:50.7894951Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.serialize.RedisLogEntryCodecTest
+2026-07-13T06:14:50.7897631Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.678 [main] ERROR org.apache.hertzbeat.common.util.JsonUtil -- Error parsing JSON to class org.apache.hertzbeat.common.entity.log.LogEntry: Unexpected character ('i' (code 105)): was expecting double-quote to start property name
+2026-07-13T06:14:50.7899922Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.7901564Z [hertzbeat-common-core] [INFO] [stdout] tools.jackson.core.exc.StreamReadException: Unexpected character ('i' (code 105)): was expecting double-quote to start property name
+2026-07-13T06:14:50.7903276Z [hertzbeat-common-core] [INFO] [stdout]  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+2026-07-13T06:14:50.7904744Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.JsonParser._constructReadException(JsonParser.java:1856)
+2026-07-13T06:14:50.7936642Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:1049)
+2026-07-13T06:14:50.7938583Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser._handleOddName(ReaderBasedJsonParser.java:1934)
+2026-07-13T06:14:50.7940153Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:738)
+2026-07-13T06:14:50.7941684Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:196)
+2026-07-13T06:14:50.7943420Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.deser.DeserializationContextExt.readRootValue(DeserializationContextExt.java:266)
+2026-07-13T06:14:50.7945002Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:2639)
+2026-07-13T06:14:50.7946475Z [hertzbeat-common-core] [INFO] [stdout] 	at tools.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:1544)
+2026-07-13T06:14:50.7947704Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.util.JsonUtil.fromJson(JsonUtil.java:70)
+2026-07-13T06:14:50.7949162Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.RedisLogEntryCodec.decodeValue(RedisLogEntryCodec.java:46)
+2026-07-13T06:14:50.7951055Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.hertzbeat.common.serialize.RedisLogEntryCodecTest.testDecodeInvalidJson(RedisLogEntryCodecTest.java:158)
+2026-07-13T06:14:50.7952961Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-07-13T06:14:50.7954406Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-07-13T06:14:50.7955911Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-07-13T06:14:50.7957523Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-07-13T06:14:50.7959202Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-07-13T06:14:50.7960786Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-07-13T06:14:50.7962565Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-07-13T06:14:50.7964379Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-07-13T06:14:50.7996508Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-07-13T06:14:50.7998743Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-07-13T06:14:50.8000928Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-07-13T06:14:50.8003193Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-07-13T06:14:50.8005301Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-07-13T06:14:50.8007534Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-07-13T06:14:50.8009602Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-07-13T06:14:50.8011763Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-07-13T06:14:50.8013649Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-07-13T06:14:50.8015688Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-07-13T06:14:50.8017652Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-07-13T06:14:50.8019702Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-07-13T06:14:50.8021637Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8023559Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-07-13T06:14:50.8056115Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-07-13T06:14:50.8058288Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-07-13T06:14:50.8060189Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-07-13T06:14:50.8062135Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8064028Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.8065881Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.8067492Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.8069344Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8071166Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.8073183Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.8074568Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.8076608Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.8078848Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.8080683Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8082502Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.8084122Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.8116417Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.8118436Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8120277Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.8121993Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.8123343Z [hertzbeat-common-core] [INFO] [stdout] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-07-13T06:14:50.8125257Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-07-13T06:14:50.8127683Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-07-13T06:14:50.8129455Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8131258Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-07-13T06:14:50.8132872Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-07-13T06:14:50.8134481Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-07-13T06:14:50.8136449Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-07-13T06:14:50.8138258Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-07-13T06:14:50.8139980Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-07-13T06:14:50.8142102Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-07-13T06:14:50.8144443Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-07-13T06:14:50.8176918Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-07-13T06:14:50.8179281Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-07-13T06:14:50.8181371Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-07-13T06:14:50.8183436Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-07-13T06:14:50.8185331Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-07-13T06:14:50.8187445Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-07-13T06:14:50.8189520Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-07-13T06:14:50.8191763Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-07-13T06:14:50.8193472Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-07-13T06:14:50.8194970Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-07-13T06:14:50.8196588Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-07-13T06:14:50.8198133Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.8199841Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-07-13T06:14:50.8202092Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-07-13T06:14:50.8204223Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-07-13T06:14:50.8219419Z [hertzbeat-common-core] [INFO] [stdout] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-07-13T06:14:50.8221080Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+2026-07-13T06:14:50.8222793Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+2026-07-13T06:14:50.8224745Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+2026-07-13T06:14:50.8226882Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+2026-07-13T06:14:50.8228584Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+2026-07-13T06:14:50.8230097Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+2026-07-13T06:14:50.8231508Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+2026-07-13T06:14:50.8232851Z [hertzbeat-common-core] [INFO] [stdout] 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-07-13T06:14:50.8234589Z [hertzbeat-common-core] [INFO] [stdout] 06:14:50.678 [main] ERROR org.apache.hertzbeat.common.serialize.RedisLogEntryCodec -- Failed to decode LogEntry from JSON
+2026-07-13T06:14:50.8236709Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.apache.hertzbeat.common.serialize.RedisLogEntryCodecTest
+2026-07-13T06:14:50.8238037Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.message.CollectRepTest
+2026-07-13T06:14:50.8239099Z [hertzbeat-common-core] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.087 s -- in org.apache.hertzbeat.common.entity.message.CollectRepTest
+2026-07-13T06:14:50.8240049Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.NginxProtocolTest
+2026-07-13T06:14:50.8241013Z [hertzbeat-common-core] [INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in org.apache.hertzbeat.common.entity.job.protocol.NginxProtocolTest
+2026-07-13T06:14:50.8242015Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.WebsocketProtocolTest
+2026-07-13T06:14:50.8243013Z [hertzbeat-common-core] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.apache.hertzbeat.common.entity.job.protocol.WebsocketProtocolTest
+2026-07-13T06:14:50.8244138Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.JdbcProtocolTest
+2026-07-13T06:14:50.8439739Z [hertzbeat-common-core] [INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.apache.hertzbeat.common.entity.job.protocol.JdbcProtocolTest
+2026-07-13T06:14:50.8457515Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.NgqlProtocolTest
+2026-07-13T06:14:50.8516283Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.apache.hertzbeat.common.entity.job.protocol.NgqlProtocolTest
+2026-07-13T06:14:50.8550546Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.ZookeeperSdProtocolTest
+2026-07-13T06:14:50.8557778Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.hertzbeat.common.entity.job.protocol.ZookeeperSdProtocolTest
+2026-07-13T06:14:50.8559724Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.PushProtocolTest
+2026-07-13T06:14:50.8767677Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.apache.hertzbeat.common.entity.job.protocol.PushProtocolTest
+2026-07-13T06:14:50.8808580Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.SnmpProtocolTest
+2026-07-13T06:14:50.8810351Z [hertzbeat-common-core] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.hertzbeat.common.entity.job.protocol.SnmpProtocolTest
+2026-07-13T06:14:50.8889098Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.UdpProtocolTest
+2026-07-13T06:14:50.9009101Z [hertzbeat-common-core] [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.apache.hertzbeat.common.entity.job.protocol.UdpProtocolTest
+2026-07-13T06:14:50.9027191Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.DnsSdProtocolTest
+2026-07-13T06:14:50.9173730Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in org.apache.hertzbeat.common.entity.job.protocol.DnsSdProtocolTest
+2026-07-13T06:14:50.9197117Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.RedfishProtocolTest
+2026-07-13T06:14:50.9322518Z [hertzbeat-common-core] [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in org.apache.hertzbeat.common.entity.job.protocol.RedfishProtocolTest
+2026-07-13T06:14:50.9323939Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.HttpProtocolTest
+2026-07-13T06:14:50.9647890Z [hertzbeat-common-core] [INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in org.apache.hertzbeat.common.entity.job.protocol.HttpProtocolTest
+2026-07-13T06:14:50.9677073Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.PlcProtocolTest
+2026-07-13T06:14:50.9800082Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.apache.hertzbeat.common.entity.job.protocol.PlcProtocolTest
+2026-07-13T06:14:50.9831171Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.ModbusProtocolTest
+2026-07-13T06:14:50.9877104Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.apache.hertzbeat.common.entity.job.protocol.ModbusProtocolTest
+2026-07-13T06:14:50.9904263Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.RegistryProtocolTest
+2026-07-13T06:14:50.9967148Z [hertzbeat-common-core] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.apache.hertzbeat.common.entity.job.protocol.RegistryProtocolTest
+2026-07-13T06:14:50.9996576Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.EurekaSdProtocolTest
+2026-07-13T06:14:51.0087540Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.hertzbeat.common.entity.job.protocol.EurekaSdProtocolTest
+2026-07-13T06:14:51.0114236Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.HttpSdProtocolTest
+2026-07-13T06:14:51.0116243Z [hertzbeat-common-core] [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.apache.hertzbeat.common.entity.job.protocol.HttpSdProtocolTest
+2026-07-13T06:14:51.0118010Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.MemcachedProtocolTest
+2026-07-13T06:14:51.0227493Z [hertzbeat-common-core] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in org.apache.hertzbeat.common.entity.job.protocol.MemcachedProtocolTest
+2026-07-13T06:14:51.0229403Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.FtpProtocolTest
+2026-07-13T06:14:51.0307372Z [hertzbeat-common-core] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.apache.hertzbeat.common.entity.job.protocol.FtpProtocolTest
+2026-07-13T06:14:51.0356880Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.IpmiProtocolTest
+2026-07-13T06:14:51.0406564Z [hertzbeat-common-core] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.hertzbeat.common.entity.job.protocol.IpmiProtocolTest
+2026-07-13T06:14:51.0408271Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.ImapProtocolTest
+2026-07-13T06:14:51.0409893Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in org.apache.hertzbeat.common.entity.job.protocol.ImapProtocolTest
+2026-07-13T06:14:51.0411494Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.RedisProtocolTest
+2026-07-13T06:14:51.0551173Z [hertzbeat-common-core] [INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.apache.hertzbeat.common.entity.job.protocol.RedisProtocolTest
+2026-07-13T06:14:51.0577032Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.SshProtocolTest
+2026-07-13T06:14:51.0654964Z [hertzbeat-common-core] [INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.apache.hertzbeat.common.entity.job.protocol.SshProtocolTest
+2026-07-13T06:14:51.0667363Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.NtpProtocolTest
+2026-07-13T06:14:51.0696741Z [hertzbeat-common-core] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.hertzbeat.common.entity.job.protocol.NtpProtocolTest
+2026-07-13T06:14:51.0709527Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.NebulaGraphProtocolTest
+2026-07-13T06:14:51.0827333Z [hertzbeat-common-core] [INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.apache.hertzbeat.common.entity.job.protocol.NebulaGraphProtocolTest
+2026-07-13T06:14:51.0829235Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.MqttProtocolTest
+2026-07-13T06:14:51.0917153Z [hertzbeat-common-core] [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in org.apache.hertzbeat.common.entity.job.protocol.MqttProtocolTest
+2026-07-13T06:14:51.0986919Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.S7ProtocolTest
+2026-07-13T06:14:51.1017535Z [hertzbeat-common-core] [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.hertzbeat.common.entity.job.protocol.S7ProtocolTest
+2026-07-13T06:14:51.1046855Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.RocketmqProtocolTest
+2026-07-13T06:14:51.1077225Z [hertzbeat-common-core] [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.hertzbeat.common.entity.job.protocol.RocketmqProtocolTest
+2026-07-13T06:14:51.1106703Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.KafkaProtocolTest
+2026-07-13T06:14:51.1139854Z [hertzbeat-common-core] [INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.apache.hertzbeat.common.entity.job.protocol.KafkaProtocolTest
+2026-07-13T06:14:51.1166644Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.SmtpProtocolTest
+2026-07-13T06:14:51.1197081Z [hertzbeat-common-core] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in org.apache.hertzbeat.common.entity.job.protocol.SmtpProtocolTest
+2026-07-13T06:14:51.1226811Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.TelnetProtocolTest
+2026-07-13T06:14:51.1351182Z [hertzbeat-common-core] [INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.apache.hertzbeat.common.entity.job.protocol.TelnetProtocolTest
+2026-07-13T06:14:51.1368620Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.IcmpProtocolTest
+2026-07-13T06:14:51.1457138Z [hertzbeat-common-core] [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.hertzbeat.common.entity.job.protocol.IcmpProtocolTest
+2026-07-13T06:14:51.1466645Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.MongodbProtocolTest
+2026-07-13T06:14:51.1513903Z [hertzbeat-common-core] [INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.hertzbeat.common.entity.job.protocol.MongodbProtocolTest
+2026-07-13T06:14:51.1532574Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.ScriptProtocolTest
+2026-07-13T06:14:51.1692062Z [hertzbeat-common-core] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in org.apache.hertzbeat.common.entity.job.protocol.ScriptProtocolTest
+2026-07-13T06:14:51.1696611Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.PrometheusProtocolTest
+2026-07-13T06:14:51.1866825Z [hertzbeat-common-core] [INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in org.apache.hertzbeat.common.entity.job.protocol.PrometheusProtocolTest
+2026-07-13T06:14:51.1870415Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.job.protocol.JmxProtocolTest
+2026-07-13T06:14:51.1987098Z [hertzbeat-common-core] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in org.apache.hertzbeat.common.entity.job.protocol.JmxProtocolTest
+2026-07-13T06:14:51.2026586Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.entity.plugin.PluginContextTest
+2026-07-13T06:14:51.2174890Z [hertzbeat-common-core] [INFO] [stdout] 06:14:51.216 [main] WARN org.apache.hertzbeat.common.entity.plugin.PluginContext -- int parameter type conversion error paramName:host value:127.0.0.1 defaultValue:100
+2026-07-13T06:14:51.2248166Z [hertzbeat-common-core] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in org.apache.hertzbeat.common.entity.plugin.PluginContextTest
+2026-07-13T06:14:51.2266751Z [hertzbeat-common-core] [INFO] Running org.apache.hertzbeat.common.concurrent.ManagedExecutorsTest
+2026-07-13T06:14:51.6524299Z [hertzbeat-common-core] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.430 s -- in org.apache.hertzbeat.common.concurrent.ManagedExecutorsTest
+2026-07-13T06:14:51.6525762Z [hertzbeat-common-core] [INFO] Running org.apache.arrow.vector.table.ArrowTableTest
+2026-07-13T06:14:51.6677960Z [hertzbeat-common-core] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in org.apache.arrow.vector.table.ArrowTableTest
+2026-07-13T06:14:51.6938952Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:51.6939482Z [hertzbeat-common-core] [INFO] Results:
+2026-07-13T06:14:51.6939947Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:51.6940402Z [hertzbeat-common-core] [ERROR] Errors: 
+2026-07-13T06:14:51.6941852Z [hertzbeat-common-core] [ERROR]   BackoffUtilsTest.shouldHandleInterruptedException:63->Object.wait:389->Object.wait0:-2 » Interrupted
+2026-07-13T06:14:51.6942948Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:51.6943605Z [hertzbeat-common-core] [ERROR] Tests run: 583, Failures: 0, Errors: 1, Skipped: 0
+2026-07-13T06:14:51.6944298Z [hertzbeat-common-core] [INFO] 
+2026-07-13T06:14:51.6988220Z [hertzbeat-collector] [INFO] 
+2026-07-13T06:14:51.6988819Z [hertzbeat-remoting] [INFO] 
+2026-07-13T06:14:51.6989286Z [hertzbeat-common-spring] [INFO] 
+2026-07-13T06:14:51.6990135Z [hertzbeat-collector] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.6991376Z [hertzbeat-remoting] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.6992458Z [hertzbeat-common-spring] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.6993353Z [hertzbeat-remoting] [INFO] Skipping hertzbeat-remoting
+2026-07-13T06:14:51.6994006Z [hertzbeat-collector] [INFO] Skipping hertzbeat-collector
+2026-07-13T06:14:51.6994723Z [hertzbeat-common-spring] [INFO] Skipping hertzbeat-common-spring
+2026-07-13T06:14:51.6995811Z [hertzbeat-remoting] [INFO] hertzbeat-remoting was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.6997024Z [hertzbeat-remoting] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7006822Z [hertzbeat-collector] [INFO] hertzbeat-collector was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7029769Z [hertzbeat-collector] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7031577Z [hertzbeat-common-spring] [INFO] hertzbeat-common-spring was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7066575Z [hertzbeat-common-spring] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7076341Z [hertzbeat-collector-common] [INFO] 
+2026-07-13T06:14:51.7094534Z [hertzbeat-collector-common] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7096247Z [hertzbeat-collector-common] [INFO] Skipping hertzbeat-collector-common
+2026-07-13T06:14:51.7097678Z [hertzbeat-collector-common] [INFO] hertzbeat-collector-common was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7126569Z [hertzbeat-collector-common] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7129732Z [hertzbeat-plugin] [INFO] 
+2026-07-13T06:14:51.7130819Z [hertzbeat-plugin] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7131980Z [hertzbeat-plugin] [INFO] Skipping hertzbeat-plugin
+2026-07-13T06:14:51.7133054Z [hertzbeat-plugin] [INFO] hertzbeat-plugin was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7134455Z [hertzbeat-plugin] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7136073Z [hertzbeat-collector-rocketmq] [INFO] 
+2026-07-13T06:14:51.7137225Z [hertzbeat-collector-rocketmq] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7138623Z [hertzbeat-collector-rocketmq] [INFO] Skipping hertzbeat-collector-rocketmq
+2026-07-13T06:14:51.7140065Z [hertzbeat-collector-rocketmq] [INFO] hertzbeat-collector-rocketmq was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7141725Z [hertzbeat-collector-rocketmq] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7142805Z [hertzbeat-warehouse] [INFO] 
+2026-07-13T06:14:51.7143780Z [hertzbeat-warehouse] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7144901Z [hertzbeat-warehouse] [INFO] Skipping hertzbeat-warehouse
+2026-07-13T06:14:51.7146196Z [hertzbeat-warehouse] [INFO] hertzbeat-warehouse was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7147623Z [hertzbeat-warehouse] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7148786Z [hertzbeat-collector-nebulagraph] [INFO] 
+2026-07-13T06:14:51.7149975Z [hertzbeat-collector-nebulagraph] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7151354Z [hertzbeat-collector-nebulagraph] [INFO] Skipping hertzbeat-collector-nebulagraph
+2026-07-13T06:14:51.7152742Z [hertzbeat-collector-nebulagraph] [INFO] hertzbeat-collector-nebulagraph was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7154375Z [hertzbeat-collector-nebulagraph] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7155811Z [hertzbeat-collector-mysql-r2dbc] [INFO] 
+2026-07-13T06:14:51.7157177Z [hertzbeat-collector-mysql-r2dbc] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7158742Z [hertzbeat-collector-mysql-r2dbc] [INFO] Skipping hertzbeat-collector-mysql-r2dbc
+2026-07-13T06:14:51.7160109Z [hertzbeat-collector-mysql-r2dbc] [INFO] hertzbeat-collector-mysql-r2dbc was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7161823Z [hertzbeat-collector-mysql-r2dbc] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7162995Z [hertzbeat-collector-mongodb] [INFO] 
+2026-07-13T06:14:51.7164112Z [hertzbeat-collector-mongodb] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7165877Z [hertzbeat-collector-mongodb] [INFO] Skipping hertzbeat-collector-mongodb
+2026-07-13T06:14:51.7167170Z [hertzbeat-collector-mongodb] [INFO] hertzbeat-collector-mongodb was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7168671Z [hertzbeat-collector-mongodb] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7169739Z [hertzbeat-collector-kafka] [INFO] 
+2026-07-13T06:14:51.7170718Z [hertzbeat-collector-kafka] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7172172Z [hertzbeat-collector-kafka] [INFO] Skipping hertzbeat-collector-kafka
+2026-07-13T06:14:51.7173454Z [hertzbeat-collector-kafka] [INFO] hertzbeat-collector-kafka was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7174988Z [hertzbeat-collector-kafka] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7176619Z [hertzbeat-collector-basic] [INFO] 
+2026-07-13T06:14:51.7177617Z [hertzbeat-collector-basic] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7178839Z [hertzbeat-collector-basic] [INFO] Skipping hertzbeat-collector-basic
+2026-07-13T06:14:51.7180037Z [hertzbeat-collector-basic] [INFO] hertzbeat-collector-basic was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7181478Z [hertzbeat-collector-basic] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7182573Z [hertzbeat-base] [INFO] 
+2026-07-13T06:14:51.7183433Z [hertzbeat-base] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7184353Z [hertzbeat-base] [INFO] Skipping hertzbeat-base
+2026-07-13T06:14:51.7185204Z [hertzbeat-base] [INFO] hertzbeat-base was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7186670Z [hertzbeat-base] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7187587Z [hertzbeat-push] [INFO] 
+2026-07-13T06:14:51.7188092Z [hertzbeat-otel] [INFO] 
+2026-07-13T06:14:51.7188580Z [hertzbeat-log] [INFO] 
+2026-07-13T06:14:51.7189404Z [hertzbeat-otel] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7190370Z [hertzbeat-otel] [INFO] Skipping hertzbeat-otel
+2026-07-13T06:14:51.7191238Z [hertzbeat-otel] [INFO] hertzbeat-otel was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7192454Z [hertzbeat-log] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7193388Z [hertzbeat-log] [INFO] Skipping hertzbeat-log
+2026-07-13T06:14:51.7194267Z [hertzbeat-log] [INFO] hertzbeat-log was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7195791Z [hertzbeat-otel] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7196964Z [hertzbeat-log] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7197807Z [hertzbeat-grafana] [INFO] 
+2026-07-13T06:14:51.7198365Z [hertzbeat-collector-collector] [INFO] 
+2026-07-13T06:14:51.7199291Z [hertzbeat-grafana] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7200285Z [hertzbeat-grafana] [INFO] Skipping hertzbeat-grafana
+2026-07-13T06:14:51.7201203Z [hertzbeat-grafana] [INFO] hertzbeat-grafana was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7202706Z [hertzbeat-collector-collector] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7204281Z [hertzbeat-grafana] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7205473Z [hertzbeat-collector-collector] [INFO] Skipping hertzbeat-collector-collector
+2026-07-13T06:14:51.7207002Z [hertzbeat-collector-collector] [INFO] hertzbeat-collector-collector was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7208057Z [hertzbeat-alerter] [INFO] 
+2026-07-13T06:14:51.7208976Z [hertzbeat-collector-collector] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7210291Z [hertzbeat-alerter] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7211292Z [hertzbeat-alerter] [INFO] Skipping hertzbeat-alerter
+2026-07-13T06:14:51.7212432Z [hertzbeat-alerter] [INFO] hertzbeat-alerter was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7213639Z [hertzbeat-alerter] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7214837Z [hertzbeat-push] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7216155Z [hertzbeat-push] [INFO] Skipping hertzbeat-push
+2026-07-13T06:14:51.7217020Z [hertzbeat-push] [INFO] hertzbeat-push was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7218165Z [hertzbeat-push] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7219151Z [hertzbeat-manager] [INFO] 
+2026-07-13T06:14:51.7220027Z [hertzbeat-manager] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7221074Z [hertzbeat-manager] [INFO] Skipping hertzbeat-manager
+2026-07-13T06:14:51.7222062Z [hertzbeat-manager] [INFO] hertzbeat-manager was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7223264Z [hertzbeat-manager] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7224189Z [hertzbeat-ai] [INFO] 
+2026-07-13T06:14:51.7225033Z [hertzbeat-ai] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7226161Z [hertzbeat-ai] [INFO] Skipping hertzbeat-ai
+2026-07-13T06:14:51.7227052Z [hertzbeat-ai] [INFO] hertzbeat-ai was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7228224Z [hertzbeat-ai] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7229109Z [hertzbeat-startup] [INFO] 
+2026-07-13T06:14:51.7229948Z [hertzbeat-startup] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7230944Z [hertzbeat-startup] [INFO] Skipping hertzbeat-startup
+2026-07-13T06:14:51.7231894Z [hertzbeat-startup] [INFO] hertzbeat-startup was not built because a module it depends on failed to build.
+2026-07-13T06:14:51.7233108Z [hertzbeat-startup] [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7234274Z [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7235153Z [INFO] Reactor Summary for hertzbeat 2.0-SNAPSHOT:
+2026-07-13T06:14:51.7235900Z [INFO] 
+2026-07-13T06:14:51.7236781Z [INFO] hertzbeat .................................................................................. SUCCESS [  1.877 s]
+2026-07-13T06:14:51.7237875Z [INFO] hertzbeat-common-core ...................................................................... FAILURE [ 21.219 s]
+2026-07-13T06:14:51.7238972Z [INFO] hertzbeat-common-spring .................................................................... SKIPPED
+2026-07-13T06:14:51.7240002Z [INFO] hertzbeat-base ............................................................................. SKIPPED
+2026-07-13T06:14:51.7240976Z [INFO] hertzbeat-plugin ........................................................................... SKIPPED
+2026-07-13T06:14:51.7241961Z [INFO] hertzbeat-warehouse ........................................................................ SKIPPED
+2026-07-13T06:14:51.7242942Z [INFO] hertzbeat-alerter .......................................................................... SKIPPED
+2026-07-13T06:14:51.7243931Z [INFO] hertzbeat-remoting ......................................................................... SKIPPED
+2026-07-13T06:14:51.7245077Z [INFO] hertzbeat-collector ........................................................................ SKIPPED
+2026-07-13T06:14:51.7246437Z [INFO] hertzbeat-collector-common ................................................................. SKIPPED
+2026-07-13T06:14:51.7247525Z [INFO] hertzbeat-collector-basic .................................................................. SKIPPED
+2026-07-13T06:14:51.7248683Z [INFO] hertzbeat-collector-mysql-r2dbc ............................................................ SKIPPED
+2026-07-13T06:14:51.7249741Z [INFO] hertzbeat-collector-kafka .................................................................. SKIPPED
+2026-07-13T06:14:51.7250780Z [INFO] hertzbeat-collector-mongodb ................................................................ SKIPPED
+2026-07-13T06:14:51.7251857Z [INFO] hertzbeat-collector-nebulagraph ............................................................ SKIPPED
+2026-07-13T06:14:51.7252948Z [INFO] hertzbeat-collector-rocketmq ............................................................... SKIPPED
+2026-07-13T06:14:51.7254015Z [INFO] hertzbeat-collector-collector .............................................................. SKIPPED
+2026-07-13T06:14:51.7255039Z [INFO] hertzbeat-push ............................................................................. SKIPPED
+2026-07-13T06:14:51.7256163Z [INFO] hertzbeat-grafana .......................................................................... SKIPPED
+2026-07-13T06:14:51.7257157Z [INFO] hertzbeat-otel ............................................................................. SKIPPED
+2026-07-13T06:14:51.7258138Z [INFO] hertzbeat-log .............................................................................. SKIPPED
+2026-07-13T06:14:51.7259122Z [INFO] hertzbeat-manager .......................................................................... SKIPPED
+2026-07-13T06:14:51.7260113Z [INFO] hertzbeat-ai ............................................................................... SKIPPED
+2026-07-13T06:14:51.7261129Z [INFO] hertzbeat-startup .......................................................................... SKIPPED
+2026-07-13T06:14:51.7262118Z [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7262930Z [INFO] BUILD FAILURE
+2026-07-13T06:14:51.7263649Z [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7264486Z [INFO] Total time:  23.935 s (Wall Clock)
+2026-07-13T06:14:51.7265223Z [INFO] Finished at: 2026-07-13T06:14:51Z
+2026-07-13T06:14:51.7266203Z [INFO] ----------------------------------------------------------------------------------------------------------------
+2026-07-13T06:14:51.7267547Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project hertzbeat-common-core: 
+2026-07-13T06:14:51.7268542Z [ERROR] 
+2026-07-13T06:14:51.7269662Z [ERROR] Please refer to /home/runner/work/hertzbeat/hertzbeat/hertzbeat-common-core/target/surefire-reports for the individual test results.
+2026-07-13T06:14:51.7271009Z [ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+2026-07-13T06:14:51.7271994Z [ERROR] -> [Help 1]
+2026-07-13T06:14:51.7272498Z [ERROR] 
+2026-07-13T06:14:51.7273111Z [ERROR] To see the full stack trace of the errors, re-run Maven with the '-e' switch
+2026-07-13T06:14:51.7273969Z [ERROR] Re-run Maven using the '-X' switch to enable verbose output
+2026-07-13T06:14:51.7274677Z [ERROR] 
+2026-07-13T06:14:51.7275479Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-07-13T06:14:51.7276789Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+2026-07-13T06:14:51.7277576Z [ERROR] 
+2026-07-13T06:14:51.7278250Z [ERROR] After correcting the problems, you can resume the build with the command
+2026-07-13T06:14:51.7279213Z [ERROR]   mvn [args] -r
+2026-07-13T06:14:51.7311461Z ##[error]Process completed with exit code 1.
+2026-07-13T06:14:51.7467612Z Post job cleanup.
+2026-07-13T06:14:51.7554026Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-13T06:14:51.7556117Z Post job cleanup.
+2026-07-13T06:14:51.9394829Z (node:2556) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-07-13T06:14:51.9395887Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-13T06:14:51.9561049Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-13T06:14:51.9562259Z Post job cleanup.
+2026-07-13T06:14:52.0446303Z [command]/usr/bin/git version
+2026-07-13T06:14:52.0518803Z git version 2.54.0
+2026-07-13T06:14:52.0556459Z Temporarily overriding HOME='/home/runner/work/_temp/e889aa44-eaec-49a7-8113-5e5443074728' before making global git config changes
+2026-07-13T06:14:52.0557640Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T06:14:52.0561994Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/hertzbeat/hertzbeat
+2026-07-13T06:14:52.0604990Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T06:14:52.0641094Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T06:14:52.0892790Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T06:14:52.0921342Z http.https://github.com/.extraheader
+2026-07-13T06:14:52.0932005Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-07-13T06:14:52.0965888Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T06:14:52.1211038Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T06:14:52.1243904Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T06:14:52.1701899Z Cleaning up orphan processes
+2026-07-13T06:14:52.2003670Z Terminate orphan process: pid (2350) (java)
+2026-07-13T06:14:52.2015854Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache@v4, actions/checkout@v4, actions/setup-java@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,416 @@
+﻿2026-06-02T08:56:02.4414465Z Current runner version: '2.334.0'
+2026-06-02T08:56:02.4439242Z ##[group]Runner Image Provisioner
+2026-06-02T08:56:02.4440210Z Hosted Compute Agent
+2026-06-02T08:56:02.4440954Z Version: 20260520.533
+2026-06-02T08:56:02.4441594Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-02T08:56:02.4442367Z Build Date: 2026-05-20T17:44:04Z
+2026-06-02T08:56:02.4443508Z Worker ID: {e216caf1-d9e9-458e-9fda-a518256662ef}
+2026-06-02T08:56:02.4444269Z Azure Region: westus
+2026-06-02T08:56:02.4445034Z ##[endgroup]
+2026-06-02T08:56:02.4446555Z ##[group]Operating System
+2026-06-02T08:56:02.4447192Z Ubuntu
+2026-06-02T08:56:02.4447823Z 24.04.4
+2026-06-02T08:56:02.4448402Z LTS
+2026-06-02T08:56:02.4449081Z ##[endgroup]
+2026-06-02T08:56:02.4449668Z ##[group]Runner Image
+2026-06-02T08:56:02.4450296Z Image: ubuntu-24.04
+2026-06-02T08:56:02.4450952Z Version: 20260525.161.1
+2026-06-02T08:56:02.4452184Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-02T08:56:02.4454036Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-02T08:56:02.4455020Z ##[endgroup]
+2026-06-02T08:56:02.4457951Z ##[group]GITHUB_TOKEN Permissions
+2026-06-02T08:56:02.4460142Z Actions: write
+2026-06-02T08:56:02.4460889Z ArtifactMetadata: write
+2026-06-02T08:56:02.4461534Z Attestations: write
+2026-06-02T08:56:02.4462148Z Checks: write
+2026-06-02T08:56:02.4463129Z CodeQuality: write
+2026-06-02T08:56:02.4463818Z Contents: write
+2026-06-02T08:56:02.4464484Z Deployments: write
+2026-06-02T08:56:02.4465062Z Discussions: write
+2026-06-02T08:56:02.4465626Z Issues: write
+2026-06-02T08:56:02.4466284Z Metadata: read
+2026-06-02T08:56:02.4466881Z Models: read
+2026-06-02T08:56:02.4467466Z Packages: write
+2026-06-02T08:56:02.4468166Z Pages: write
+2026-06-02T08:56:02.4468733Z PullRequests: write
+2026-06-02T08:56:02.4469409Z RepositoryProjects: write
+2026-06-02T08:56:02.4470075Z SecurityEvents: write
+2026-06-02T08:56:02.4470712Z Statuses: write
+2026-06-02T08:56:02.4471324Z VulnerabilityAlerts: read
+2026-06-02T08:56:02.4471929Z ##[endgroup]
+2026-06-02T08:56:02.4474464Z Secret source: Actions
+2026-06-02T08:56:02.4475281Z Prepare workflow directory
+2026-06-02T08:56:02.4885915Z Prepare all required actions
+2026-06-02T08:56:02.4925716Z Getting action download info
+2026-06-02T08:56:03.0454934Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-06-02T08:56:03.1870833Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-02T08:56:03.8382641Z Complete job name: FIDO MDS Integration Test
+2026-06-02T08:56:03.9137271Z ##[group]Run actions/checkout@v6
+2026-06-02T08:56:03.9138236Z with:
+2026-06-02T08:56:03.9138746Z   repository: webauthn4j/webauthn4j
+2026-06-02T08:56:03.9143518Z   token: ***
+2026-06-02T08:56:03.9144014Z   ssh-strict: true
+2026-06-02T08:56:03.9144498Z   ssh-user: git
+2026-06-02T08:56:03.9145014Z   persist-credentials: true
+2026-06-02T08:56:03.9145551Z   clean: true
+2026-06-02T08:56:03.9146067Z   sparse-checkout-cone-mode: true
+2026-06-02T08:56:03.9146646Z   fetch-depth: 1
+2026-06-02T08:56:03.9147123Z   fetch-tags: false
+2026-06-02T08:56:03.9147602Z   show-progress: true
+2026-06-02T08:56:03.9148089Z   lfs: false
+2026-06-02T08:56:03.9148548Z   submodules: false
+2026-06-02T08:56:03.9149048Z   set-safe-directory: true
+2026-06-02T08:56:03.9149865Z env:
+2026-06-02T08:56:03.9150328Z   JAVA_VERSION: 17
+2026-06-02T08:56:03.9150799Z ##[endgroup]
+2026-06-02T08:56:04.0136740Z Syncing repository: webauthn4j/webauthn4j
+2026-06-02T08:56:04.0138949Z ##[group]Getting Git version info
+2026-06-02T08:56:04.0139891Z Working directory is '/home/runner/work/webauthn4j/webauthn4j'
+2026-06-02T08:56:04.0141023Z [command]/usr/bin/git version
+2026-06-02T08:56:04.0228095Z git version 2.54.0
+2026-06-02T08:56:04.0251814Z ##[endgroup]
+2026-06-02T08:56:04.0269388Z Temporarily overriding HOME='/home/runner/work/_temp/7a337d6a-8e40-4f21-bebe-3d5f78576a59' before making global git config changes
+2026-06-02T08:56:04.0272600Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-02T08:56:04.0275742Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/webauthn4j/webauthn4j
+2026-06-02T08:56:04.0324521Z Deleting the contents of '/home/runner/work/webauthn4j/webauthn4j'
+2026-06-02T08:56:04.0328499Z ##[group]Initializing the repository
+2026-06-02T08:56:04.0332988Z [command]/usr/bin/git init /home/runner/work/webauthn4j/webauthn4j
+2026-06-02T08:56:04.0434675Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-02T08:56:04.0436946Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-02T08:56:04.0438750Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-02T08:56:04.0440120Z hint: call:
+2026-06-02T08:56:04.0441224Z hint:
+2026-06-02T08:56:04.0442539Z hint: 	git config --global init.defaultBranch <name>
+2026-06-02T08:56:04.0444139Z hint:
+2026-06-02T08:56:04.0445616Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-02T08:56:04.0447392Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-02T08:56:04.0448715Z hint:
+2026-06-02T08:56:04.0449889Z hint: 	git branch -m <name>
+2026-06-02T08:56:04.0451098Z hint:
+2026-06-02T08:56:04.0452634Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-02T08:56:04.0454876Z Initialized empty Git repository in /home/runner/work/webauthn4j/webauthn4j/.git/
+2026-06-02T08:56:04.0458569Z [command]/usr/bin/git remote add origin https://github.com/webauthn4j/webauthn4j
+2026-06-02T08:56:04.0494169Z ##[endgroup]
+2026-06-02T08:56:04.0495042Z ##[group]Disabling automatic garbage collection
+2026-06-02T08:56:04.0498289Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-02T08:56:04.0526993Z ##[endgroup]
+2026-06-02T08:56:04.0528073Z ##[group]Setting up auth
+2026-06-02T08:56:04.0528738Z Removing SSH command configuration
+2026-06-02T08:56:04.0535801Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-02T08:56:04.0568807Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-02T08:56:04.0902599Z Removing HTTP extra header
+2026-06-02T08:56:04.0908497Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-02T08:56:04.0940390Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-02T08:56:04.1190325Z Removing includeIf entries pointing to credentials config files
+2026-06-02T08:56:04.1191529Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-02T08:56:04.1220848Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-02T08:56:04.1443062Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-02T08:56:04.1479575Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git.path /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:04.1509862Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:04.1543455Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:04.1573964Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:04.1603872Z ##[endgroup]
+2026-06-02T08:56:04.1604854Z ##[group]Fetching the repository
+2026-06-02T08:56:04.1611648Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +36bbe29f19cfa40c12eb1c44d2fd2e489c4afbe2:refs/remotes/pull/1360/merge
+2026-06-02T08:56:05.4829823Z From https://github.com/webauthn4j/webauthn4j
+2026-06-02T08:56:05.4833269Z  * [new ref]         36bbe29f19cfa40c12eb1c44d2fd2e489c4afbe2 -> pull/1360/merge
+2026-06-02T08:56:05.4870139Z ##[endgroup]
+2026-06-02T08:56:05.4871929Z ##[group]Determining the checkout info
+2026-06-02T08:56:05.4873912Z ##[endgroup]
+2026-06-02T08:56:05.4876639Z [command]/usr/bin/git sparse-checkout disable
+2026-06-02T08:56:05.4921678Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-02T08:56:05.4951881Z ##[group]Checking out the ref
+2026-06-02T08:56:05.4954642Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1360/merge
+2026-06-02T08:56:05.6466520Z Note: switching to 'refs/remotes/pull/1360/merge'.
+2026-06-02T08:56:05.6468307Z 
+2026-06-02T08:56:05.6469446Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-02T08:56:05.6471374Z changes and commit them, and you can discard any commits you make in this
+2026-06-02T08:56:05.6473697Z state without impacting any branches by switching back to a branch.
+2026-06-02T08:56:05.6474884Z 
+2026-06-02T08:56:05.6475846Z If you want to create a new branch to retain commits you create, you may
+2026-06-02T08:56:05.6478953Z do so (now or later) by using -c with the switch command. Example:
+2026-06-02T08:56:05.6480728Z 
+2026-06-02T08:56:05.6481668Z   git switch -c <new-branch-name>
+2026-06-02T08:56:05.6483199Z 
+2026-06-02T08:56:05.6484154Z Or undo this operation with:
+2026-06-02T08:56:05.6485317Z 
+2026-06-02T08:56:05.6486222Z   git switch -
+2026-06-02T08:56:05.6487247Z 
+2026-06-02T08:56:05.6489000Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-02T08:56:05.6491274Z 
+2026-06-02T08:56:05.6494014Z HEAD is now at 36bbe29 Merge 69eb0b4a77c95d11f47b57d426ad52e4a3215b43 into 0151436ba2184b934ebfa67bb9edaf00b5e1ce48
+2026-06-02T08:56:05.6500790Z ##[endgroup]
+2026-06-02T08:56:05.6531391Z [command]/usr/bin/git log -1 --format=%H
+2026-06-02T08:56:05.6557227Z 36bbe29f19cfa40c12eb1c44d2fd2e489c4afbe2
+2026-06-02T08:56:05.7077672Z ##[group]Run actions/setup-java@v5
+2026-06-02T08:56:05.7078836Z with:
+2026-06-02T08:56:05.7079671Z   distribution: temurin
+2026-06-02T08:56:05.7080652Z   java-version: 17
+2026-06-02T08:56:05.7081545Z   cache: gradle
+2026-06-02T08:56:05.7082429Z   java-package: jdk
+2026-06-02T08:56:05.7083779Z   check-latest: false
+2026-06-02T08:56:05.7084729Z   server-id: github
+2026-06-02T08:56:05.7085669Z   server-username: GITHUB_ACTOR
+2026-06-02T08:56:05.7086804Z   server-password: GITHUB_TOKEN
+2026-06-02T08:56:05.7087923Z   overwrite-settings: true
+2026-06-02T08:56:05.7088969Z   job-status: success
+2026-06-02T08:56:05.7100333Z   token: ***
+2026-06-02T08:56:05.7101191Z env:
+2026-06-02T08:56:05.7101998Z   JAVA_VERSION: 17
+2026-06-02T08:56:05.7103014Z ##[endgroup]
+2026-06-02T08:56:05.8706532Z ##[group]Installed distributions
+2026-06-02T08:56:05.8767658Z Resolved Java 17.0.19+10 from tool-cache
+2026-06-02T08:56:05.8769151Z Setting Java 17.0.19+10 as the default
+2026-06-02T08:56:05.8779801Z Creating toolchains.xml for JDK version 17 from temurin
+2026-06-02T08:56:05.8864191Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-02T08:56:05.8865597Z 
+2026-06-02T08:56:05.8866221Z Java configuration:
+2026-06-02T08:56:05.8867667Z   Distribution: temurin
+2026-06-02T08:56:05.8869062Z   Version: 17.0.19+10
+2026-06-02T08:56:05.8870402Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-02T08:56:05.8871593Z 
+2026-06-02T08:56:05.8872610Z ##[endgroup]
+2026-06-02T08:56:05.8890721Z Creating settings.xml with server-id: github
+2026-06-02T08:56:05.8892417Z Writing to /home/runner/.m2/settings.xml
+2026-06-02T08:56:06.4506318Z Cache hit for: setup-java-Linux-x64-gradle-bd4e0fdcd5f43c32054f0d57c8f67b104cdf8415efbb2cc600279bb2e2a475ed
+2026-06-02T08:56:07.7760687Z Received 0 of 446037673 (0.0%), 0.0 MBs/sec
+2026-06-02T08:56:08.7773578Z Received 109051904 of 446037673 (24.4%), 52.0 MBs/sec
+2026-06-02T08:56:09.7794623Z Received 264241152 of 446037673 (59.2%), 83.9 MBs/sec
+2026-06-02T08:56:10.7782569Z Received 402653184 of 446037673 (90.3%), 96.0 MBs/sec
+2026-06-02T08:56:11.5845883Z Received 446037673 of 446037673 (100.0%), 88.5 MBs/sec
+2026-06-02T08:56:11.5846863Z Cache Size: ~425 MB (446037673 B)
+2026-06-02T08:56:11.5964447Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b9357674-babf-4e79-9a13-02a0a601f97e/cache.tzst -P -C /home/runner/work/webauthn4j/webauthn4j --use-compress-program unzstd
+2026-06-02T08:56:13.3958686Z Cache restored successfully
+2026-06-02T08:56:13.4149005Z Cache restored from key: setup-java-Linux-x64-gradle-bd4e0fdcd5f43c32054f0d57c8f67b104cdf8415efbb2cc600279bb2e2a475ed
+2026-06-02T08:56:13.4339519Z ##[group]Run ./gradlew :integration-tests:fido-mds-integration:check
+2026-06-02T08:56:13.4340123Z [36;1m./gradlew :integration-tests:fido-mds-integration:check[0m
+2026-06-02T08:56:13.4373338Z shell: /usr/bin/bash -e {0}
+2026-06-02T08:56:13.4373618Z env:
+2026-06-02T08:56:13.4373835Z   JAVA_VERSION: 17
+2026-06-02T08:56:13.4374181Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-02T08:56:13.4374714Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-02T08:56:13.4375104Z ##[endgroup]
+2026-06-02T08:56:16.7361342Z 
+2026-06-02T08:56:16.7370173Z Welcome to Gradle 9.4.1!
+2026-06-02T08:56:16.7370978Z 
+2026-06-02T08:56:16.7371547Z Here are the highlights of this release:
+2026-06-02T08:56:16.7372506Z  - Java 26 support
+2026-06-02T08:56:16.7373540Z  - Non-class-based JVM tests
+2026-06-02T08:56:16.7374304Z  - Enhanced console progress bar
+2026-06-02T08:56:16.7374891Z 
+2026-06-02T08:56:16.7375726Z For more details see https://docs.gradle.org/9.4.1/release-notes.html
+2026-06-02T08:56:16.7376570Z 
+2026-06-02T08:56:17.1277543Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-02T08:56:25.7354515Z > Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-02T08:56:26.2281935Z > Task :buildSrc:pluginDescriptors
+2026-06-02T08:56:26.2294133Z > Task :buildSrc:processResources NO-SOURCE
+2026-06-02T08:56:31.9284280Z > Task :buildSrc:compileKotlin
+2026-06-02T08:56:32.0334104Z > Task :buildSrc:compileJava NO-SOURCE
+2026-06-02T08:56:32.0346637Z > Task :buildSrc:compileGroovy NO-SOURCE
+2026-06-02T08:56:32.0347824Z > Task :buildSrc:classes UP-TO-DATE
+2026-06-02T08:56:32.0348445Z 
+2026-06-02T08:56:32.0348855Z > Task :buildSrc:jar
+2026-06-02T08:56:32.0349772Z :jar: No valid plugin descriptors were found in META-INF/gradle-plugins
+2026-06-02T08:56:32.3278518Z 
+2026-06-02T08:56:32.3288621Z > Task :maven-central-publish-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-02T08:56:32.4284146Z > Task :maven-central-publish-plugin:pluginDescriptors
+2026-06-02T08:56:32.5283859Z > Task :maven-central-publish-plugin:processResources
+2026-06-02T08:56:35.5288217Z > Task :maven-central-publish-plugin:compileKotlin
+2026-06-02T08:56:35.5304125Z > Task :maven-central-publish-plugin:compileJava NO-SOURCE
+2026-06-02T08:56:35.5305136Z > Task :maven-central-publish-plugin:classes
+2026-06-02T08:56:35.6277305Z > Task :maven-central-publish-plugin:jar
+2026-06-02T08:56:47.0347156Z Note: Some input files use or override a deprecated API.
+2026-06-02T08:56:47.0347888Z Note: Recompile with -Xlint:deprecation for details.
+2026-06-02T08:56:47.0348245Z 
+2026-06-02T08:56:47.0348439Z > Task :webauthn4j-core:compileJava
+2026-06-02T08:56:47.2275319Z 
+2026-06-02T08:56:47.2308569Z > Task :webauthn4j-core:processResources NO-SOURCE
+2026-06-02T08:56:47.2313808Z > Task :webauthn4j-core:classes
+2026-06-02T08:56:47.3275915Z > Task :webauthn4j-core:jar
+2026-06-02T08:56:48.0275261Z 
+2026-06-02T08:56:48.0303994Z Note: Some input files use or override a deprecated API.
+2026-06-02T08:56:48.0304626Z > Task :webauthn4j-core-async:compileJava
+2026-06-02T08:56:48.0304975Z 
+2026-06-02T08:56:48.0305872Z Note: Recompile with -Xlint:deprecation for details.
+2026-06-02T08:56:48.0333606Z > Task :webauthn4j-core-async:processResources NO-SOURCE
+2026-06-02T08:56:48.0363275Z > Task :webauthn4j-core-async:classes
+2026-06-02T08:56:48.0363890Z > Task :webauthn4j-core-async:jar
+2026-06-02T08:56:48.4283961Z > Task :webauthn4j-metadata:compileJava
+2026-06-02T08:56:48.4285019Z > Task :webauthn4j-metadata:processResources NO-SOURCE
+2026-06-02T08:56:48.4285642Z > Task :webauthn4j-metadata:classes
+2026-06-02T08:56:48.4286138Z > Task :webauthn4j-metadata:jar
+2026-06-02T08:56:48.7298295Z > Task :webauthn4j-metadata-async:compileJava
+2026-06-02T08:56:48.7299541Z > Task :webauthn4j-metadata-async:processResources NO-SOURCE
+2026-06-02T08:56:48.7300555Z > Task :webauthn4j-metadata-async:classes
+2026-06-02T08:56:48.7301378Z > Task :webauthn4j-metadata-async:jar
+2026-06-02T08:56:48.7302965Z > Task :integration-tests:fido-mds-integration:compileJava NO-SOURCE
+2026-06-02T08:56:48.7304078Z > Task :integration-tests:fido-mds-integration:processResources NO-SOURCE
+2026-06-02T08:56:48.7305174Z > Task :integration-tests:fido-mds-integration:classes UP-TO-DATE
+2026-06-02T08:56:49.1277389Z > Task :integration-tests:fido-mds-integration:compileTestJava
+2026-06-02T08:56:49.1283470Z > Task :integration-tests:fido-mds-integration:processTestResources
+2026-06-02T08:56:49.1323651Z > Task :integration-tests:fido-mds-integration:testClasses
+2026-06-02T08:56:54.4277139Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-02T08:56:57.0333983Z 
+2026-06-02T08:56:57.0366584Z > Task :integration-tests:fido-mds-integration:test
+2026-06-02T08:56:57.0443241Z 
+2026-06-02T08:56:57.0484422Z FidoMDS3MetadataBLOBIntegrationTest > async_test() FAILED
+2026-06-02T08:56:57.0513096Z     java.util.concurrent.ExecutionException: tools.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `com.webauthn4j.metadata.data.toc.AuthenticatorStatus` from String "FIDO_CERTIFIED_L3plus": not one of the values accepted for Enum class: [NOT_FIDO_CERTIFIED, FIDO_CERTIFIED_L3_PLUS, FIDO_CERTIFIED_L2_PLUS, FIDO_CERTIFIED_L1_PLUS, USER_KEY_PHYSICAL_COMPROMISE, FIDO_CERTIFIED_L2, FIDO_CERTIFIED_L3, UPDATE_AVAILABLE, FIDO_CERTIFIED, USER_VERIFICATION_BYPASS, REVOKED, USER_KEY_REMOTE_COMPROMISE, ATTESTATION_KEY_COMPROMISE, SELF_ASSERTION_SUBMITTED, FIDO_CERTIFIED_L1]
+2026-06-02T08:56:57.0536036Z      at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN] (through reference chain: com.webauthn4j.metadata.data.MetadataBLOBPayload["entries"]->java.util.ArrayList[100]->com.webauthn4j.metadata.data.MetadataBLOBPayloadEntry["statusReports"]->java.util.ArrayList[0]->com.webauthn4j.metadata.data.toc.StatusReport["status"])
+2026-06-02T08:56:57.0603833Z         at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:396)
+2026-06-02T08:56:57.0605485Z         at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2073)
+2026-06-02T08:56:57.0634187Z         at com.webauthn4j.metadata.FidoMDS3MetadataBLOBIntegrationTest.async_test(FidoMDS3MetadataBLOBIntegrationTest.java:104)
+2026-06-02T08:56:57.0663117Z 
+2026-06-02T08:56:57.0663537Z         Caused by:
+2026-06-02T08:56:57.0696585Z         tools.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `com.webauthn4j.metadata.data.toc.AuthenticatorStatus` from String "FIDO_CERTIFIED_L3plus": not one of the values accepted for Enum class: [NOT_FIDO_CERTIFIED, FIDO_CERTIFIED_L3_PLUS, FIDO_CERTIFIED_L2_PLUS, FIDO_CERTIFIED_L1_PLUS, USER_KEY_PHYSICAL_COMPROMISE, FIDO_CERTIFIED_L2, FIDO_CERTIFIED_L3, UPDATE_AVAILABLE, FIDO_CERTIFIED, USER_VERIFICATION_BYPASS, REVOKED, USER_KEY_REMOTE_COMPROMISE, ATTESTATION_KEY_COMPROMISE, SELF_ASSERTION_SUBMITTED, FIDO_CERTIFIED_L1]
+2026-06-02T08:56:57.0726053Z          at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN] (through reference chain: com.webauthn4j.metadata.data.MetadataBLOBPayload["entries"]->java.util.ArrayList[100]->com.webauthn4j.metadata.data.MetadataBLOBPayloadEntry["statusReports"]->java.util.ArrayList[0]->com.webauthn4j.metadata.data.toc.StatusReport["status"])
+2026-06-02T08:56:57.0744030Z             at app//tools.jackson.databind.exc.InvalidFormatException.from(InvalidFormatException.java:37)
+2026-06-02T08:56:57.0784175Z             at app//tools.jackson.databind.DeserializationContext.weirdStringException(DeserializationContext.java:2063)
+2026-06-02T08:56:57.0786084Z             at app//tools.jackson.databind.DeserializationContext.handleWeirdStringValue(DeserializationContext.java:1354)
+2026-06-02T08:56:57.0813869Z             at app//tools.jackson.databind.deser.jdk.EnumDeserializer._deserializeAltString(EnumDeserializer.java:371)
+2026-06-02T08:56:57.0843401Z             at app//tools.jackson.databind.deser.jdk.EnumDeserializer._fromString(EnumDeserializer.java:230)
+2026-06-02T08:56:57.0873644Z             at app//tools.jackson.databind.deser.jdk.EnumDeserializer.deserialize(EnumDeserializer.java:195)
+2026-06-02T08:56:57.0893847Z             at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.0923939Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.0953982Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.0994071Z             at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.1013994Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.1043851Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.1074000Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeNoNullChecks(CollectionDeserializer.java:580)
+2026-06-02T08:56:57.1104006Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeFromArray(CollectionDeserializer.java:389)
+2026-06-02T08:56:57.1133919Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:279)
+2026-06-02T08:56:57.1173827Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:30)
+2026-06-02T08:56:57.1203875Z             at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.1213971Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.1244131Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.1274606Z             at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.1313977Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.1343832Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.1367389Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeNoNullChecks(CollectionDeserializer.java:580)
+2026-06-02T08:56:57.1394622Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeFromArray(CollectionDeserializer.java:389)
+2026-06-02T08:56:57.1427482Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:279)
+2026-06-02T08:56:57.1454021Z             at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:30)
+2026-06-02T08:56:57.1455732Z             at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.1457028Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.1458312Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.1459714Z             at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.1461234Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.1463513Z             at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.1509215Z             at app//tools.jackson.databind.deser.DeserializationContextExt.readRootValue(DeserializationContextExt.java:266)
+2026-06-02T08:56:57.1513521Z             at app//tools.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:2639)
+2026-06-02T08:56:57.1514609Z             at app//tools.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:1544)
+2026-06-02T08:56:57.1515694Z             at app//com.webauthn4j.data.jws.JWSFactory.parse(JWSFactory.java:92)
+2026-06-02T08:56:57.1516862Z             at app//com.webauthn4j.metadata.data.MetadataBLOBFactory.parse(MetadataBLOBFactory.java:34)
+2026-06-02T08:56:57.1518610Z             at app//com.webauthn4j.async.metadata.FidoMDS3MetadataBLOBAsyncProvider.lambda$doProvide$0(FidoMDS3MetadataBLOBAsyncProvider.java:87)
+2026-06-02T08:56:57.1520344Z             at java.base@17.0.19/java.util.concurrent.CompletableFuture.uniApplyNow(CompletableFuture.java:684)
+2026-06-02T08:56:57.1521723Z             at java.base@17.0.19/java.util.concurrent.CompletableFuture.uniApplyStage(CompletableFuture.java:662)
+2026-06-02T08:56:57.1523312Z             at java.base@17.0.19/java.util.concurrent.CompletableFuture.thenApply(CompletableFuture.java:2168)
+2026-06-02T08:56:57.1524613Z             at java.base@17.0.19/java.util.concurrent.CompletableFuture.thenApply(CompletableFuture.java:144)
+2026-06-02T08:56:57.1526311Z             at app//com.webauthn4j.async.metadata.FidoMDS3MetadataBLOBAsyncProvider.doProvide(FidoMDS3MetadataBLOBAsyncProvider.java:85)
+2026-06-02T08:56:57.1528262Z             at app//com.webauthn4j.async.metadata.CachingMetadataBLOBAsyncProvider.provide(CachingMetadataBLOBAsyncProvider.java:49)
+2026-06-02T08:56:57.1529476Z             ... 1 more
+2026-06-02T08:56:57.2275618Z 
+2026-06-02T08:56:57.2284666Z FidoMDS3MetadataBLOBIntegrationTest > sync_test() FAILED
+2026-06-02T08:56:57.2289311Z     tools.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `com.webauthn4j.metadata.data.toc.AuthenticatorStatus` from String "FIDO_CERTIFIED_L3plus": not one of the values accepted for Enum class: [NOT_FIDO_CERTIFIED, FIDO_CERTIFIED_L3_PLUS, FIDO_CERTIFIED_L2_PLUS, FIDO_CERTIFIED_L1_PLUS, USER_KEY_PHYSICAL_COMPROMISE, FIDO_CERTIFIED_L2, FIDO_CERTIFIED_L3, UPDATE_AVAILABLE, FIDO_CERTIFIED, USER_VERIFICATION_BYPASS, REVOKED, USER_KEY_REMOTE_COMPROMISE, ATTESTATION_KEY_COMPROMISE, SELF_ASSERTION_SUBMITTED, FIDO_CERTIFIED_L1]
+2026-06-02T08:56:57.2296132Z      at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN] (through reference chain: com.webauthn4j.metadata.data.MetadataBLOBPayload["entries"]->java.util.ArrayList[100]->com.webauthn4j.metadata.data.MetadataBLOBPayloadEntry["statusReports"]->java.util.ArrayList[0]->com.webauthn4j.metadata.data.toc.StatusReport["status"])
+2026-06-02T08:56:57.2299814Z         at app//tools.jackson.databind.exc.InvalidFormatException.from(InvalidFormatException.java:37)
+2026-06-02T08:56:57.2302131Z         at app//tools.jackson.databind.DeserializationContext.weirdStringException(DeserializationContext.java:2063)
+2026-06-02T08:56:57.2304260Z         at app//tools.jackson.databind.DeserializationContext.handleWeirdStringValue(DeserializationContext.java:1354)
+2026-06-02T08:56:57.2306119Z         at app//tools.jackson.databind.deser.jdk.EnumDeserializer._deserializeAltString(EnumDeserializer.java:371)
+2026-06-02T08:56:57.2307817Z         at app//tools.jackson.databind.deser.jdk.EnumDeserializer._fromString(EnumDeserializer.java:230)
+2026-06-02T08:56:57.2309441Z         at app//tools.jackson.databind.deser.jdk.EnumDeserializer.deserialize(EnumDeserializer.java:195)
+2026-06-02T08:56:57.2311164Z         at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.2313519Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.2315551Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.2317738Z         at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.2322315Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.2324426Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.2326383Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeNoNullChecks(CollectionDeserializer.java:580)
+2026-06-02T08:56:57.2328415Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeFromArray(CollectionDeserializer.java:389)
+2026-06-02T08:56:57.2330345Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:279)
+2026-06-02T08:56:57.2332287Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:30)
+2026-06-02T08:56:57.2334299Z         at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.2336125Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.2338167Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.2340420Z         at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.2342601Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.2344552Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.2346535Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeNoNullChecks(CollectionDeserializer.java:580)
+2026-06-02T08:56:57.2348513Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer._deserializeFromArray(CollectionDeserializer.java:389)
+2026-06-02T08:56:57.2350460Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:279)
+2026-06-02T08:56:57.2352552Z         at app//tools.jackson.databind.deser.jdk.CollectionDeserializer.deserialize(CollectionDeserializer.java:30)
+2026-06-02T08:56:57.2354659Z         at app//tools.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:569)
+2026-06-02T08:56:57.2356323Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeWithErrorWrapping(BeanDeserializer.java:865)
+2026-06-02T08:56:57.2358262Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:723)
+2026-06-02T08:56:57.2360188Z         at app//tools.jackson.databind.deser.bean.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+2026-06-02T08:56:57.2362058Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:598)
+2026-06-02T08:56:57.2364007Z         at app//tools.jackson.databind.deser.bean.BeanDeserializer.deserialize(BeanDeserializer.java:200)
+2026-06-02T08:56:57.2365860Z         at app//tools.jackson.databind.deser.DeserializationContextExt.readRootValue(DeserializationContextExt.java:266)
+2026-06-02T08:56:57.2367604Z         at app//tools.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:2639)
+2026-06-02T08:56:57.2368937Z         at app//tools.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:1544)
+2026-06-02T08:56:57.2370330Z         at app//com.webauthn4j.data.jws.JWSFactory.parse(JWSFactory.java:92)
+2026-06-02T08:56:57.2371591Z         at app//com.webauthn4j.metadata.data.MetadataBLOBFactory.parse(MetadataBLOBFactory.java:34)
+2026-06-02T08:56:57.2373527Z         at app//com.webauthn4j.metadata.FidoMDS3MetadataBLOBProvider.doProvide(FidoMDS3MetadataBLOBProvider.java:85)
+2026-06-02T08:56:57.2375962Z         at app//com.webauthn4j.metadata.CachingMetadataBLOBProvider.refresh(CachingMetadataBLOBProvider.java:48)
+2026-06-02T08:56:57.2378278Z         at app//com.webauthn4j.metadata.CachingMetadataBLOBProvider.provide(CachingMetadataBLOBProvider.java:34)
+2026-06-02T08:56:57.2380363Z         at app//com.webauthn4j.metadata.FidoMDS3MetadataBLOBIntegrationTest.sync_test(FidoMDS3MetadataBLOBIntegrationTest.java:75)
+2026-06-02T08:56:57.3274858Z 
+2026-06-02T08:56:57.3276552Z 2 tests completed, 2 failed
+2026-06-02T08:56:57.4293208Z 
+2026-06-02T08:56:57.4293231Z 
+2026-06-02T08:56:57.4323844Z FAILURE: Build failed with an exception.
+2026-06-02T08:56:57.4324596Z > Task :integration-tests:fido-mds-integration:test FAILED
+2026-06-02T08:56:57.4333170Z 
+2026-06-02T08:56:57.4362556Z * What went wrong:
+2026-06-02T08:56:57.4363027Z 
+2026-06-02T08:56:57.4377069Z Execution failed for task ':integration-tests:fido-mds-integration:test'.
+2026-06-02T08:56:57.4378535Z [Incubating] Problems report is available at: file:///home/runner/work/webauthn4j/webauthn4j/build/reports/problems/problems-report.html
+2026-06-02T08:56:57.4410404Z > There were failing tests. See the report at: file:///home/runner/work/webauthn4j/webauthn4j/integration-tests/fido-mds-integration/build/reports/tests/test/index.html
+2026-06-02T08:56:57.4412034Z 
+2026-06-02T08:56:57.4412624Z 
+2026-06-02T08:56:57.4413126Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-06-02T08:56:57.4414647Z * Try:
+2026-06-02T08:56:57.4415245Z 
+2026-06-02T08:56:57.4415850Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-02T08:56:57.4417982Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-02T08:56:57.4419179Z 
+2026-06-02T08:56:57.4419187Z 
+2026-06-02T08:56:57.4419546Z BUILD FAILED in 43s
+2026-06-02T08:56:57.4420778Z For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-02T08:56:57.4422260Z 18 actionable tasks: 18 executed
+2026-06-02T08:56:57.9048382Z ##[error]Process completed with exit code 1.
+2026-06-02T08:56:57.9161098Z Post job cleanup.
+2026-06-02T08:56:58.0548694Z Post job cleanup.
+2026-06-02T08:56:58.1373135Z [command]/usr/bin/git version
+2026-06-02T08:56:58.1442517Z git version 2.54.0
+2026-06-02T08:56:58.1482042Z Temporarily overriding HOME='/home/runner/work/_temp/c9e23ca4-f16c-4122-aa64-542e108529e6' before making global git config changes
+2026-06-02T08:56:58.1483376Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-02T08:56:58.1487931Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/webauthn4j/webauthn4j
+2026-06-02T08:56:58.1519161Z Removing SSH command configuration
+2026-06-02T08:56:58.1525685Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-02T08:56:58.1560931Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-02T08:56:58.1789364Z Removing HTTP extra header
+2026-06-02T08:56:58.1794161Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-02T08:56:58.1827289Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-02T08:56:58.2055088Z Removing includeIf entries pointing to credentials config files
+2026-06-02T08:56:58.2060586Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-02T08:56:58.2084668Z includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git.path
+2026-06-02T08:56:58.2085616Z includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git/worktrees/*.path
+2026-06-02T08:56:58.2086388Z includeif.gitdir:/github/workspace/.git.path
+2026-06-02T08:56:58.2087008Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-02T08:56:58.2095270Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git.path
+2026-06-02T08:56:58.2115953Z /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2127091Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git.path /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2161514Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git/worktrees/*.path
+2026-06-02T08:56:58.2182948Z /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2192092Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/webauthn4j/webauthn4j/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2222964Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-02T08:56:58.2243522Z /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2251099Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2281610Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-02T08:56:58.2302535Z /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2313677Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config
+2026-06-02T08:56:58.2345973Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-02T08:56:58.2567800Z Removing credentials config '/home/runner/work/_temp/git-credentials-08cffd63-81ee-4703-b551-d58e30088767.config'
+2026-06-02T08:56:58.2707471Z Cleaning up orphan processes
+2026-06-02T08:56:58.3017318Z Terminate orphan process: pid (2346) (java)
+2026-06-02T08:56:58.3052491Z Terminate orphan process: pid (2412) (java)

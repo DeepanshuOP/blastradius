@@ -1,0 +1,1230 @@
+﻿2026-06-03T17:57:52.0892020Z Current runner version: '2.334.0'
+2026-06-03T17:57:52.0914318Z ##[group]Runner Image Provisioner
+2026-06-03T17:57:52.0915026Z Hosted Compute Agent
+2026-06-03T17:57:52.0915458Z Version: 20260520.533
+2026-06-03T17:57:52.0915911Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-03T17:57:52.0916467Z Build Date: 2026-05-20T17:44:04Z
+2026-06-03T17:57:52.0916986Z Worker ID: {caec5050-764b-4a11-b962-24a534904858}
+2026-06-03T17:57:52.0917513Z Azure Region: westus
+2026-06-03T17:57:52.0917940Z ##[endgroup]
+2026-06-03T17:57:52.0918922Z ##[group]Operating System
+2026-06-03T17:57:52.0919415Z Microsoft Windows Server 2025
+2026-06-03T17:57:52.0919868Z 10.0.26100
+2026-06-03T17:57:52.0920241Z Datacenter
+2026-06-03T17:57:52.0920642Z ##[endgroup]
+2026-06-03T17:57:52.0921069Z ##[group]Runner Image
+2026-06-03T17:57:52.0921517Z Image: windows-2025-vs2026
+2026-06-03T17:57:52.0921957Z Version: 20260525.121.1
+2026-06-03T17:57:52.0923200Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260525.121/images/windows/Windows2025-VS2026-Readme.md
+2026-06-03T17:57:52.0924400Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260525.121
+2026-06-03T17:57:52.0925564Z ##[endgroup]
+2026-06-03T17:57:52.0927782Z ##[group]GITHUB_TOKEN Permissions
+2026-06-03T17:57:52.0929527Z Actions: write
+2026-06-03T17:57:52.0929972Z ArtifactMetadata: write
+2026-06-03T17:57:52.0930400Z Attestations: write
+2026-06-03T17:57:52.0930830Z Checks: write
+2026-06-03T17:57:52.0931225Z CodeQuality: write
+2026-06-03T17:57:52.0931652Z Contents: write
+2026-06-03T17:57:52.0932070Z Deployments: write
+2026-06-03T17:57:52.0932494Z Discussions: write
+2026-06-03T17:57:52.0932915Z Issues: write
+2026-06-03T17:57:52.0933303Z Metadata: read
+2026-06-03T17:57:52.0933685Z Models: read
+2026-06-03T17:57:52.0934076Z Packages: write
+2026-06-03T17:57:52.0934529Z Pages: write
+2026-06-03T17:57:52.0934923Z PullRequests: write
+2026-06-03T17:57:52.0935366Z RepositoryProjects: write
+2026-06-03T17:57:52.0935814Z SecurityEvents: write
+2026-06-03T17:57:52.0936246Z Statuses: write
+2026-06-03T17:57:52.0936648Z VulnerabilityAlerts: read
+2026-06-03T17:57:52.0937074Z ##[endgroup]
+2026-06-03T17:57:52.0938869Z Secret source: Actions
+2026-06-03T17:57:52.0939394Z Prepare workflow directory
+2026-06-03T17:57:52.1218765Z Prepare all required actions
+2026-06-03T17:57:52.1250953Z Getting action download info
+2026-06-03T17:57:52.6286847Z Download action repository 'actions/checkout@v6' (SHA:df4cb1c069e1874edd31b4311f1884172cec0e10)
+2026-06-03T17:57:53.0228379Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-03T17:57:53.8472315Z Complete job name: build (17)
+2026-06-03T17:57:53.9545456Z ##[group]Run actions/checkout@v6
+2026-06-03T17:57:53.9546728Z with:
+2026-06-03T17:57:53.9547361Z   path: tika build dir
+2026-06-03T17:57:53.9548043Z   repository: apache/tika
+2026-06-03T17:57:53.9554581Z   token: ***
+2026-06-03T17:57:53.9555192Z   ssh-strict: true
+2026-06-03T17:57:53.9555839Z   ssh-user: git
+2026-06-03T17:57:53.9556479Z   persist-credentials: true
+2026-06-03T17:57:53.9557189Z   clean: true
+2026-06-03T17:57:53.9557829Z   sparse-checkout-cone-mode: true
+2026-06-03T17:57:53.9558571Z   fetch-depth: 1
+2026-06-03T17:57:53.9559207Z   fetch-tags: false
+2026-06-03T17:57:53.9559846Z   show-progress: true
+2026-06-03T17:57:53.9560478Z   lfs: false
+2026-06-03T17:57:53.9561069Z   submodules: false
+2026-06-03T17:57:53.9561706Z   set-safe-directory: true
+2026-06-03T17:57:53.9562755Z ##[endgroup]
+2026-06-03T17:57:54.0847644Z Syncing repository: apache/tika
+2026-06-03T17:57:54.0850582Z ##[group]Getting Git version info
+2026-06-03T17:57:54.0852051Z Working directory is 'D:\a\tika\tika\tika build dir'
+2026-06-03T17:57:54.1435109Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-03T17:57:54.5207063Z git version 2.54.0.windows.1
+2026-06-03T17:57:54.5248374Z ##[endgroup]
+2026-06-03T17:57:54.5265922Z Temporarily overriding HOME='D:\a\_temp\6636ec51-6422-4ac9-9bbe-f92ea622f0c6' before making global git config changes
+2026-06-03T17:57:54.5271013Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-03T17:57:54.5275152Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory "D:\a\tika\tika\tika build dir"
+2026-06-03T17:57:54.5525678Z ##[group]Determining repository object format
+2026-06-03T17:57:54.5527828Z ##[endgroup]
+2026-06-03T17:57:54.5529228Z ##[group]Initializing the repository
+2026-06-03T17:57:54.5536319Z [command]"C:\Program Files\Git\bin\git.exe" init "D:\a\tika\tika\tika build dir"
+2026-06-03T17:57:54.6211691Z Initialized empty Git repository in D:/a/tika/tika/tika build dir/.git/
+2026-06-03T17:57:54.6256169Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/apache/tika
+2026-06-03T17:57:54.6540421Z ##[endgroup]
+2026-06-03T17:57:54.6542147Z ##[group]Disabling automatic garbage collection
+2026-06-03T17:57:54.6549403Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-06-03T17:57:54.6853350Z ##[endgroup]
+2026-06-03T17:57:54.6854747Z ##[group]Setting up auth
+2026-06-03T17:57:54.6855813Z Removing SSH command configuration
+2026-06-03T17:57:54.6864816Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-03T17:57:54.7122917Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-03T17:57:58.4594836Z Removing HTTP extra header
+2026-06-03T17:57:58.4606340Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-03T17:57:58.4886697Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-03T17:57:59.0933485Z Removing includeIf entries pointing to credentials config files
+2026-06-03T17:57:59.0946454Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-03T17:57:59.1251487Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-03T17:57:59.6190401Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-06-03T17:57:59.6461779Z [command]"C:\Program Files\Git\bin\git.exe" config --local "includeIf.gitdir:D:/a/tika/tika/tika build dir/.git.path" D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T17:57:59.6721422Z [command]"C:\Program Files\Git\bin\git.exe" config --local "includeIf.gitdir:D:/a/tika/tika/tika build dir/.git/worktrees/*.path" D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T17:57:59.6982113Z [command]"C:\Program Files\Git\bin\git.exe" config --local "includeIf.gitdir:/github/workspace/tika build dir/.git.path" /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T17:57:59.7265995Z [command]"C:\Program Files\Git\bin\git.exe" config --local "includeIf.gitdir:/github/workspace/tika build dir/.git/worktrees/*.path" /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T17:57:59.7544915Z ##[endgroup]
+2026-06-03T17:57:59.7545545Z ##[group]Fetching the repository
+2026-06-03T17:57:59.7557679Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +de79c062525d9f350a01a01aed634bcae41dfe37:refs/remotes/pull/2865/merge
+2026-06-03T17:58:06.1390977Z From https://github.com/apache/tika
+2026-06-03T17:58:06.1392262Z  * [new ref]         de79c062525d9f350a01a01aed634bcae41dfe37 -> pull/2865/merge
+2026-06-03T17:58:06.1769357Z ##[endgroup]
+2026-06-03T17:58:06.1769893Z ##[group]Determining the checkout info
+2026-06-03T17:58:06.1772882Z ##[endgroup]
+2026-06-03T17:58:06.1781101Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-06-03T17:58:06.2088083Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-06-03T17:58:06.2355414Z ##[group]Checking out the ref
+2026-06-03T17:58:06.2363729Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/2865/merge
+2026-06-03T17:58:07.3027702Z Updating files:  31% (1383/4355)
+2026-06-03T17:58:07.3892466Z Updating files:  32% (1394/4355)
+2026-06-03T17:58:07.5203097Z Updating files:  33% (1438/4355)
+2026-06-03T17:58:07.9314940Z Updating files:  34% (1481/4355)
+2026-06-03T17:58:07.9807626Z Updating files:  35% (1525/4355)
+2026-06-03T17:58:08.0289206Z Updating files:  36% (1568/4355)
+2026-06-03T17:58:08.1099524Z Updating files:  37% (1612/4355)
+2026-06-03T17:58:08.1407244Z Updating files:  38% (1655/4355)
+2026-06-03T17:58:08.1634300Z Updating files:  39% (1699/4355)
+2026-06-03T17:58:08.1750296Z Updating files:  40% (1742/4355)
+2026-06-03T17:58:08.1944831Z Updating files:  41% (1786/4355)
+2026-06-03T17:58:08.2048845Z Updating files:  42% (1830/4355)
+2026-06-03T17:58:08.2245930Z Updating files:  43% (1873/4355)
+2026-06-03T17:58:08.2395122Z Updating files:  44% (1917/4355)
+2026-06-03T17:58:08.2557857Z Updating files:  45% (1960/4355)
+2026-06-03T17:58:08.2696111Z Updating files:  46% (2004/4355)
+2026-06-03T17:58:08.2986760Z Updating files:  46% (2018/4355)
+2026-06-03T17:58:08.3373309Z Updating files:  47% (2047/4355)
+2026-06-03T17:58:08.3683638Z Updating files:  48% (2091/4355)
+2026-06-03T17:58:08.4634485Z Updating files:  49% (2134/4355)
+2026-06-03T17:58:08.4939678Z Updating files:  50% (2178/4355)
+2026-06-03T17:58:08.5245878Z Updating files:  51% (2222/4355)
+2026-06-03T17:58:08.5557042Z Updating files:  52% (2265/4355)
+2026-06-03T17:58:08.5947335Z Updating files:  53% (2309/4355)
+2026-06-03T17:58:08.6120107Z Updating files:  54% (2352/4355)
+2026-06-03T17:58:08.6235688Z Updating files:  55% (2396/4355)
+2026-06-03T17:58:08.6333598Z Updating files:  56% (2439/4355)
+2026-06-03T17:58:08.6444882Z Updating files:  57% (2483/4355)
+2026-06-03T17:58:08.6542324Z Updating files:  58% (2526/4355)
+2026-06-03T17:58:08.6672400Z Updating files:  59% (2570/4355)
+2026-06-03T17:58:08.6798562Z Updating files:  60% (2613/4355)
+2026-06-03T17:58:08.7094206Z Updating files:  61% (2657/4355)
+2026-06-03T17:58:08.7264324Z Updating files:  62% (2701/4355)
+2026-06-03T17:58:08.7566117Z Updating files:  63% (2744/4355)
+2026-06-03T17:58:08.7906442Z Updating files:  64% (2788/4355)
+2026-06-03T17:58:08.8044235Z Updating files:  65% (2831/4355)
+2026-06-03T17:58:08.8250227Z Updating files:  66% (2875/4355)
+2026-06-03T17:58:08.8546404Z Updating files:  67% (2918/4355)
+2026-06-03T17:58:08.8835788Z Updating files:  68% (2962/4355)
+2026-06-03T17:58:08.9065414Z Updating files:  69% (3005/4355)
+2026-06-03T17:58:08.9251885Z Updating files:  70% (3049/4355)
+2026-06-03T17:58:08.9549337Z Updating files:  71% (3093/4355)
+2026-06-03T17:58:08.9855689Z Updating files:  72% (3136/4355)
+2026-06-03T17:58:09.5189508Z Updating files:  73% (3180/4355)
+2026-06-03T17:58:09.5592623Z Updating files:  73% (3193/4355)
+2026-06-03T17:58:09.5893536Z Updating files:  74% (3223/4355)
+2026-06-03T17:58:09.6195509Z Updating files:  75% (3267/4355)
+2026-06-03T17:58:09.6486016Z Updating files:  76% (3310/4355)
+2026-06-03T17:58:09.6681689Z Updating files:  77% (3354/4355)
+2026-06-03T17:58:09.6930624Z Updating files:  78% (3397/4355)
+2026-06-03T17:58:09.7246219Z Updating files:  79% (3441/4355)
+2026-06-03T17:58:09.7578876Z Updating files:  80% (3484/4355)
+2026-06-03T17:58:09.7889570Z Updating files:  81% (3528/4355)
+2026-06-03T17:58:09.8160562Z Updating files:  82% (3572/4355)
+2026-06-03T17:58:09.8330667Z Updating files:  83% (3615/4355)
+2026-06-03T17:58:09.8655563Z Updating files:  84% (3659/4355)
+2026-06-03T17:58:09.9004716Z Updating files:  85% (3702/4355)
+2026-06-03T17:58:09.9405327Z Updating files:  86% (3746/4355)
+2026-06-03T17:58:09.9775814Z Updating files:  87% (3789/4355)
+2026-06-03T17:58:10.0122199Z Updating files:  88% (3833/4355)
+2026-06-03T17:58:10.0443647Z Updating files:  89% (3876/4355)
+2026-06-03T17:58:10.0673210Z Updating files:  90% (3920/4355)
+2026-06-03T17:58:10.0862519Z Updating files:  91% (3964/4355)
+2026-06-03T17:58:10.0961744Z Updating files:  92% (4007/4355)
+2026-06-03T17:58:10.1069784Z Updating files:  93% (4051/4355)
+2026-06-03T17:58:10.1209520Z Updating files:  94% (4094/4355)
+2026-06-03T17:58:10.1319175Z Updating files:  95% (4138/4355)
+2026-06-03T17:58:10.1410612Z Updating files:  96% (4181/4355)
+2026-06-03T17:58:10.1500094Z Updating files:  97% (4225/4355)
+2026-06-03T17:58:10.1733825Z Updating files:  98% (4268/4355)
+2026-06-03T17:58:10.1851090Z Updating files:  99% (4312/4355)
+2026-06-03T17:58:10.1851692Z Updating files: 100% (4355/4355)
+2026-06-03T17:58:10.1851993Z Updating files: 100% (4355/4355), done.
+2026-06-03T17:58:10.1998817Z Note: switching to 'refs/remotes/pull/2865/merge'.
+2026-06-03T17:58:10.1999403Z 
+2026-06-03T17:58:10.2005028Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-03T17:58:10.2005899Z changes and commit them, and you can discard any commits you make in this
+2026-06-03T17:58:10.2006623Z state without impacting any branches by switching back to a branch.
+2026-06-03T17:58:10.2007174Z 
+2026-06-03T17:58:10.2007518Z If you want to create a new branch to retain commits you create, you may
+2026-06-03T17:58:10.2008222Z do so (now or later) by using -c with the switch command. Example:
+2026-06-03T17:58:10.2008664Z 
+2026-06-03T17:58:10.2008904Z   git switch -c <new-branch-name>
+2026-06-03T17:58:10.2009224Z 
+2026-06-03T17:58:10.2009445Z Or undo this operation with:
+2026-06-03T17:58:10.2009758Z 
+2026-06-03T17:58:10.2009985Z   git switch -
+2026-06-03T17:58:10.2010236Z 
+2026-06-03T17:58:10.2010608Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-03T17:58:10.2010990Z 
+2026-06-03T17:58:10.2011422Z HEAD is now at de79c06 Merge 5671f691f7deb564b78f63171464ba0ffce22b2a into 681f9e85d0a5a6afc83e601145e3bfae0116217c
+2026-06-03T17:58:10.2247511Z ##[endgroup]
+2026-06-03T17:58:10.2522724Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-06-03T17:58:10.2735127Z de79c062525d9f350a01a01aed634bcae41dfe37
+2026-06-03T17:58:10.3153674Z ##[group]Run actions/setup-java@v5
+2026-06-03T17:58:10.3153933Z with:
+2026-06-03T17:58:10.3154096Z   distribution: temurin
+2026-06-03T17:58:10.3154265Z   java-version: 17
+2026-06-03T17:58:10.3154411Z   cache: maven
+2026-06-03T17:58:10.3154564Z   java-package: jdk
+2026-06-03T17:58:10.3154716Z   check-latest: false
+2026-06-03T17:58:10.3154866Z   server-id: github
+2026-06-03T17:58:10.3155014Z   server-username: GITHUB_ACTOR
+2026-06-03T17:58:10.3155212Z   server-password: GITHUB_TOKEN
+2026-06-03T17:58:10.3155394Z   overwrite-settings: true
+2026-06-03T17:58:10.3155559Z   job-status: success
+2026-06-03T17:58:10.3157771Z   token: ***
+2026-06-03T17:58:10.3157927Z ##[endgroup]
+2026-06-03T17:58:10.5073328Z ##[group]Installed distributions
+2026-06-03T17:58:10.5122717Z Resolved Java 17.0.19+10 from tool-cache
+2026-06-03T17:58:10.5123068Z Setting Java 17.0.19+10 as the default
+2026-06-03T17:58:10.5145280Z Creating toolchains.xml for JDK version 17 from temurin
+2026-06-03T17:58:10.5242715Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-06-03T17:58:10.5246532Z 
+2026-06-03T17:58:10.5246719Z Java configuration:
+2026-06-03T17:58:10.5246960Z   Distribution: temurin
+2026-06-03T17:58:10.5247201Z   Version: 17.0.19+10
+2026-06-03T17:58:10.5247579Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64
+2026-06-03T17:58:10.5247943Z 
+2026-06-03T17:58:10.5248317Z ##[endgroup]
+2026-06-03T17:58:10.5262620Z Creating settings.xml with server-id: github
+2026-06-03T17:58:10.5263632Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-06-03T17:58:15.4831405Z Cache hit for: setup-java-Windows-x64-maven-6e1a210eba5a592d916adfdee81eda872193fea6722af0e7e3b7c1bfd9ddb2a4
+2026-06-03T17:58:16.8138096Z Received 20971520 of 1348275307 (1.6%), 19.9 MBs/sec
+2026-06-03T17:58:18.0168852Z Received 134217728 of 1348275307 (10.0%), 58.0 MBs/sec
+2026-06-03T17:58:19.0285496Z Received 264241152 of 1348275307 (19.6%), 78.3 MBs/sec
+2026-06-03T17:58:20.0298985Z Received 335544320 of 1348275307 (24.9%), 75.8 MBs/sec
+2026-06-03T17:58:21.0317701Z Received 406847488 of 1348275307 (30.2%), 74.3 MBs/sec
+2026-06-03T17:58:22.4406099Z Received 536870912 of 1348275307 (39.8%), 77.2 MBs/sec
+2026-06-03T17:58:23.4488381Z Received 662700032 of 1348275307 (49.2%), 82.7 MBs/sec
+2026-06-03T17:58:24.4489133Z Received 704643072 of 1348275307 (52.3%), 77.8 MBs/sec
+2026-06-03T17:58:25.6086923Z Received 805306368 of 1348275307 (59.7%), 78.4 MBs/sec
+2026-06-03T17:58:26.6115926Z Received 931135488 of 1348275307 (69.1%), 82.2 MBs/sec
+2026-06-03T17:58:27.6148084Z Received 985661440 of 1348275307 (73.1%), 79.6 MBs/sec
+2026-06-03T17:58:28.6617970Z Received 1073741824 of 1348275307 (79.6%), 79.7 MBs/sec
+2026-06-03T17:58:29.6606069Z Received 1182793728 of 1348275307 (87.7%), 81.4 MBs/sec
+2026-06-03T17:58:30.6622477Z Received 1203765248 of 1348275307 (89.3%), 77.3 MBs/sec
+2026-06-03T17:58:31.6620706Z Received 1228931072 of 1348275307 (91.1%), 73.9 MBs/sec
+2026-06-03T17:58:32.6629605Z Received 1337982976 of 1348275307 (99.2%), 75.7 MBs/sec
+2026-06-03T17:58:33.4302599Z Received 1348275307 of 1348275307 (100.0%), 73.0 MBs/sec
+2026-06-03T17:58:33.4304548Z Cache Size: ~1286 MB (1348275307 B)
+2026-06-03T17:58:33.4336752Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/b2785fee-5ee2-4f84-8c19-79999676d5a8/cache.tzst -P -C D:/a/tika/tika --force-local --use-compress-program "zstd -d"
+2026-06-03T17:58:56.5826560Z Cache restored successfully
+2026-06-03T17:58:56.6767650Z Cache restored from key: setup-java-Windows-x64-maven-6e1a210eba5a592d916adfdee81eda872193fea6722af0e7e3b7c1bfd9ddb2a4
+2026-06-03T17:58:56.7067445Z ##[group]Run mvn clean test install javadoc:aggregate -Pci -Pe2e -B "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+2026-06-03T17:58:56.7068511Z [36;1mmvn clean test install javadoc:aggregate -Pci -Pe2e -B "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"[0m
+2026-06-03T17:58:56.8089838Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-06-03T17:58:56.8090148Z env:
+2026-06-03T17:58:56.8090418Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64
+2026-06-03T17:58:56.8090831Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64
+2026-06-03T17:58:56.8091140Z ##[endgroup]
+2026-06-03T17:59:21.6126944Z [INFO] Maveniverse Nisse 0.9.2 loaded
+2026-06-03T17:59:26.4738888Z [INFO] Nisse injecting 29 properties into User Properties
+2026-06-03T17:59:26.4856905Z [INFO] Scanning for projects...
+2026-06-03T17:59:27.8838903Z [WARNING] 
+2026-06-03T17:59:27.8842272Z [WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT
+2026-06-03T17:59:27.8843629Z [WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, D:\a\tika\tika\tika build dir\tika-parent\pom.xml, line 34, column 12
+2026-06-03T17:59:27.8844532Z [WARNING] 
+2026-06-03T17:59:27.8845130Z [WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika:pom:4.0.0-SNAPSHOT
+2026-06-03T17:59:27.8846370Z [WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, D:\a\tika\tika\tika build dir\tika-parent\pom.xml, line 34, column 12
+2026-06-03T17:59:27.8847241Z [WARNING] 
+2026-06-03T17:59:27.8847741Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-06-03T17:59:27.8849610Z [WARNING] 
+2026-06-03T17:59:27.8850112Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-06-03T17:59:27.8850679Z [WARNING] 
+2026-06-03T17:59:27.8983993Z [INFO] No need for inlining
+2026-06-03T17:59:27.9238318Z [INFO] ------------------------------------------------------------------------
+2026-06-03T17:59:27.9240479Z [INFO] Reactor Build Order:
+2026-06-03T17:59:27.9242008Z [INFO] 
+2026-06-03T17:59:27.9252142Z [INFO] Apache Tika parent                                                 [pom]
+2026-06-03T17:59:27.9252726Z [INFO] Apache Tika BOM                                                    [pom]
+2026-06-03T17:59:27.9253283Z [INFO] Apache Tika Annotation Processor                                   [jar]
+2026-06-03T17:59:27.9253824Z [INFO] Apache Tika core                                                [bundle]
+2026-06-03T17:59:27.9254791Z [INFO] Apache Tika serialization                                          [jar]
+2026-06-03T17:59:27.9255950Z [INFO] Apache Tika plugins core                                           [jar]
+2026-06-03T17:59:27.9256541Z [INFO] Apache Tika parser modules                                         [pom]
+2026-06-03T17:59:27.9257352Z [INFO] Apache Tika standard parser modules and package                    [pom]
+2026-06-03T17:59:27.9260720Z [INFO] Apache Tika standard parser modules                                [pom]
+2026-06-03T17:59:27.9261621Z [INFO] Apache Tika ZIP commons                                            [jar]
+2026-06-03T17:59:27.9270456Z [INFO] Apache Tika Apple parser module                                    [jar]
+2026-06-03T17:59:27.9271411Z [INFO] Apache Tika audiovideo parser module                               [jar]
+2026-06-03T17:59:27.9272222Z [INFO] Apache Tika Encoding Detectors                                     [pom]
+2026-06-03T17:59:27.9272823Z [INFO] Apache Tika HTML encoding detector                                 [jar]
+2026-06-03T17:59:27.9277425Z [INFO] Apache Tika ML                                                     [pom]
+2026-06-03T17:59:27.9278411Z [INFO] Apache Tika ML core (no Tika dependencies)                         [jar]
+2026-06-03T17:59:27.9279186Z [INFO] Apache Tika ML charset encoding detector                           [jar]
+2026-06-03T17:59:27.9283962Z [INFO] Apache Tika juniversalchardet encoding detector                    [jar]
+2026-06-03T17:59:27.9285118Z [INFO] Apache Tika ICU4J encoding detector (vendored)                     [jar]
+2026-06-03T17:59:27.9285718Z [INFO] Apache Tika text parser module                                     [jar]
+2026-06-03T17:59:27.9286248Z [INFO] Apache Tika html parser module                                     [jar]
+2026-06-03T17:59:27.9286787Z [INFO] Apache Tika XML parser module                                      [jar]
+2026-06-03T17:59:27.9287350Z [INFO] Apache Tika mail commons                                           [jar]
+2026-06-03T17:59:27.9292488Z [INFO] Apache Tika XMP commons                                            [jar]
+2026-06-03T17:59:27.9293169Z [INFO] Apache Tika image parser module                                    [jar]
+2026-06-03T17:59:27.9293786Z [INFO] Apache Tika OCR parser module                                      [jar]
+2026-06-03T17:59:27.9294368Z [INFO] Apache Tika mail parser module                                     [jar]
+2026-06-03T17:59:27.9295266Z [INFO] Apache Tika Microsoft parser module                                [jar]
+2026-06-03T17:59:27.9295822Z [INFO] Apache Tika cad parser module                                      [jar]
+2026-06-03T17:59:27.9296363Z [INFO] Apache Tika code parser module                                     [jar]
+2026-06-03T17:59:27.9297158Z [INFO] Apache Tika crypto parser module                                   [jar]
+2026-06-03T17:59:27.9297732Z [INFO] Apache Tika digest commons                                         [jar]
+2026-06-03T17:59:27.9298577Z [INFO] Apache Tika font parser module                                     [jar]
+2026-06-03T17:59:27.9299193Z [INFO] Apache Tika miscellaneous office format parser module              [jar]
+2026-06-03T17:59:27.9299789Z [INFO] Apache Tika news parser module                                     [jar]
+2026-06-03T17:59:27.9300368Z [INFO] Apache Tika PDF parser module                                      [jar]
+2026-06-03T17:59:27.9300948Z [INFO] Apache Tika package parser module                                  [jar]
+2026-06-03T17:59:27.9302039Z [INFO] Apache Tika WARC parser module                                     [jar]
+2026-06-03T17:59:27.9302651Z [INFO] Apache Tika standard parser package                                [pom]
+2026-06-03T17:59:27.9303217Z [INFO] Apache Tika Detectors                                              [pom]
+2026-06-03T17:59:27.9303736Z [INFO] Apache Tika Siegfried wrapper                                      [jar]
+2026-06-03T17:59:27.9304280Z [INFO] Apache Tika magika wrapper                                         [jar]
+2026-06-03T17:59:27.9305146Z [INFO] Apache Tika ML charset detector � training and evaluation tools    [jar]
+2026-06-03T17:59:27.9305827Z [INFO] Apache Tika ML junk detector � runtime and training tools          [jar]
+2026-06-03T17:59:27.9306391Z [INFO] Apache Tika JDK HTTP client                                        [jar]
+2026-06-03T17:59:27.9306927Z [INFO] Apache Tika jdbc parser commons                                    [jar]
+2026-06-03T17:59:27.9307525Z [INFO] Apache Tika handlers                                               [pom]
+2026-06-03T17:59:27.9308074Z [INFO] tika-handler-boilerpipe                                            [jar]
+2026-06-03T17:59:27.9308639Z [INFO] Apache Tika language detection                                     [pom]
+2026-06-03T17:59:27.9309286Z [INFO] Apache Tika langdetect (charsoup core � no Tika dependencies)      [jar]
+2026-06-03T17:59:27.9309881Z [INFO] Apache Tika langdetect test commons                                [jar]
+2026-06-03T17:59:27.9318948Z [INFO] Apache Tika OpenNLP langdetect                                     [jar]
+2026-06-03T17:59:27.9319617Z [INFO] Apache Tika Optimaize langdetect                                   [jar]
+2026-06-03T17:59:27.9320195Z [INFO] Apache Tika langdetect (built-in charsoup)                         [jar]
+2026-06-03T17:59:27.9320736Z [INFO] Apache Tika standard parser integration tests                      [jar]
+2026-06-03T17:59:27.9321270Z [INFO] Apache Tika extended parsers                                       [pom]
+2026-06-03T17:59:27.9321793Z [INFO] Apache Tika sqlite3 parser module                                  [jar]
+2026-06-03T17:59:27.9322331Z [INFO] Apache Tika scientific parser module                               [jar]
+2026-06-03T17:59:27.9325632Z [INFO] Apache Tika OCR encode parser module                               [jar]
+2026-06-03T17:59:27.9340311Z [INFO] Apache Tika sqlite3 parser package                                 [jar]
+2026-06-03T17:59:27.9341058Z [INFO] Apache Tika scientific parser package                              [jar]
+2026-06-03T17:59:27.9341999Z [INFO] Apache Tika extended parser integration tests                      [jar]
+2026-06-03T17:59:27.9342638Z [INFO] Apache Tika machine learning (ml) parsers                          [pom]
+2026-06-03T17:59:27.9343263Z [INFO] Apache Tika natural language process module                        [jar]
+2026-06-03T17:59:27.9345403Z [INFO] Apache Tika natural language processing package                    [jar]
+2026-06-03T17:59:27.9346103Z [INFO] Apache Tika inference module                                       [jar]
+2026-06-03T17:59:27.9346657Z [INFO] Apache Tika VLM module                                             [jar]
+2026-06-03T17:59:27.9347130Z [INFO] Apache Tika Tess4J OCR parser module                               [jar]
+2026-06-03T17:59:27.9347582Z [INFO] Apache Tika transcribe aws                                      [bundle]
+2026-06-03T17:59:27.9348085Z [INFO] Apache Tika bundles module                                         [pom]
+2026-06-03T17:59:27.9351974Z [INFO] Apache Tika OSGi standard bundle                                [bundle]
+2026-06-03T17:59:27.9352553Z [INFO] Apache Tika XMP                                                 [bundle]
+2026-06-03T17:59:27.9353110Z [INFO] Apache Tika Lingo24 langdetect                                     [jar]
+2026-06-03T17:59:27.9353709Z [INFO] Apache Tika MIT Lincoln Labs langdetect                            [jar]
+2026-06-03T17:59:27.9354291Z [INFO] Apache Tika pipes                                                  [pom]
+2026-06-03T17:59:27.9355666Z [INFO] Apache Tika pipes api                                              [jar]
+2026-06-03T17:59:27.9356297Z [INFO] Apache Tika Pipes iterators - base                                 [jar]
+2026-06-03T17:59:27.9357087Z [INFO] Apache Tika pipes core                                             [jar]
+2026-06-03T17:59:27.9357692Z [INFO] Apache Tika httpclient commons                                     [jar]
+2026-06-03T17:59:27.9358307Z [INFO] Apache Tika Pipes Reporter - base                                  [jar]
+2026-06-03T17:59:27.9358877Z [INFO] Apache Tika Plugins                                                [pom]
+2026-06-03T17:59:27.9359444Z [INFO] Apache Tika Pipes Atlassian JWT                                    [jar]
+2026-06-03T17:59:27.9360024Z [INFO] Apache Tika Pipes Azure Blob                                       [jar]
+2026-06-03T17:59:27.9360577Z [INFO] Apache Tika Pipes CSV                                              [jar]
+2026-06-03T17:59:27.9361129Z [INFO] Apache Tika Pipes File System                                      [jar]
+2026-06-03T17:59:27.9361682Z [INFO] Apache Tika Pipes GCS                                              [jar]
+2026-06-03T17:59:27.9362237Z [INFO] Apache Tika Pipes Google Drive                                     [jar]
+2026-06-03T17:59:27.9362797Z [INFO] Apache Tika Pipes HTTP                                             [jar]
+2026-06-03T17:59:27.9363353Z [INFO] Apache Tika Pipes JDBC                                             [jar]
+2026-06-03T17:59:27.9364160Z [INFO] Apache Tika Pipes JSON                                             [jar]
+2026-06-03T17:59:27.9364728Z [INFO] Apache Tika Pipes Kafka                                            [jar]
+2026-06-03T17:59:27.9365300Z [INFO] Apache Tika Pipes Microsoft Graph                                  [jar]
+2026-06-03T17:59:27.9365900Z [INFO] Apache Tika Pipes Elasticsearch                                    [jar]
+2026-06-03T17:59:27.9366488Z [INFO] Apache Tika Pipes OpenSearch                                       [jar]
+2026-06-03T17:59:27.9367042Z [INFO] Apache Tika Pipes S3                                               [jar]
+2026-06-03T17:59:27.9367600Z [INFO] Apache Tika Pipes Apache Solr                                      [jar]
+2026-06-03T17:59:27.9368174Z [INFO] Apache Tika Pipes Config Store Ignite                              [jar]
+2026-06-03T17:59:27.9370470Z [INFO] Apache Tika eval module                                            [pom]
+2026-06-03T17:59:27.9371080Z [INFO] Apache Tika eval core                                              [jar]
+2026-06-03T17:59:27.9371676Z [INFO] Apache Tika pipes fork parser                                      [jar]
+2026-06-03T17:59:27.9372248Z [INFO] Apache Tika Async CLI                                              [jar]
+2026-06-03T17:59:27.9372826Z [INFO] Apache Tika pipes core integration tests                           [jar]
+2026-06-03T17:59:27.9373409Z [INFO] Apache Tika pipes gRPC server                                      [jar]
+2026-06-03T17:59:27.9377093Z [INFO] Apache Tika application                                            [jar]
+2026-06-03T17:59:27.9377770Z [INFO] Apache Tika translate                                           [bundle]
+2026-06-03T17:59:27.9378358Z [INFO] Apache Tika server module                                          [pom]
+2026-06-03T17:59:27.9378930Z [INFO] Apache Tika server core                                            [jar]
+2026-06-03T17:59:27.9379715Z [INFO] Apache Tika standard server                                        [jar]
+2026-06-03T17:59:27.9380254Z [INFO] Apache Tika server client                                          [jar]
+2026-06-03T17:59:27.9380830Z [INFO] Apache Tika integration tests                                      [pom]
+2026-06-03T17:59:27.9381468Z [INFO] Apache Tika Elasticsearch integration tests                        [jar]
+2026-06-03T17:59:27.9382123Z [INFO] Apache Tika OpenSearch integration tests                           [jar]
+2026-06-03T17:59:27.9382761Z [INFO] Apache Tika Apache Solr integration tests                          [jar]
+2026-06-03T17:59:27.9383377Z [INFO] Apache Tika S3 pipes integration tests                             [jar]
+2026-06-03T17:59:27.9383967Z [INFO] Apache Tika Kafka pipes integration tests                          [jar]
+2026-06-03T17:59:27.9384567Z [INFO] tika-resource-loading-tests                                        [jar]
+2026-06-03T17:59:27.9385153Z [INFO] tika-woodstox-tests                                                [jar]
+2026-06-03T17:59:27.9385726Z [INFO] Apache Tika eval application                                       [jar]
+2026-06-03T17:59:27.9386293Z [INFO] Apache Tika examples                                               [jar]
+2026-06-03T17:59:27.9386858Z [INFO] Apache Tika Java-7 Components                                   [bundle]
+2026-06-03T17:59:27.9387442Z [INFO] Apache Tika End-to-End Tests                                       [pom]
+2026-06-03T17:59:27.9388017Z [INFO] Apache Tika gRPC End-to-End Tests                                  [jar]
+2026-06-03T17:59:27.9388597Z [INFO] Apache Tika E2E Tests: REST Server                                 [jar]
+2026-06-03T17:59:27.9389124Z [INFO] Apache Tika                                                        [pom]
+2026-06-03T17:59:28.0186906Z [INFO] 
+2026-06-03T17:59:28.0187536Z [INFO] --------------------< org.apache.tika:tika-parent >---------------------
+2026-06-03T17:59:28.0189031Z [INFO] Building Apache Tika parent 4.0.0-SNAPSHOT                       [1/124]
+2026-06-03T17:59:28.0190671Z [INFO]   from tika-parent\pom.xml
+2026-06-03T17:59:28.0191303Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-06-03T17:59:28.1569451Z [INFO] 
+2026-06-03T17:59:28.1574454Z [INFO] --- clean:3.5.0:clean (default-clean) @ tika-parent ---
+2026-06-03T17:59:30.7095641Z [INFO] 
+2026-06-03T17:59:30.7096116Z [INFO] --- flatten:1.7.3:clean (flatten.clean) @ tika-parent ---
+2026-06-03T17:59:30.7698809Z [INFO] 
+2026-06-03T17:59:30.7699820Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-parent ---
+2026-06-03T17:59:30.8970971Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-06-03T17:59:30.8971581Z [INFO] 
+2026-06-03T17:59:30.8971968Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-parent ---
+2026-06-03T17:59:30.9092923Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+2026-06-03T17:59:30.9093764Z [INFO] 
+2026-06-03T17:59:30.9094263Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-parent ---
+2026-06-03T17:59:30.9293160Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:30.9313157Z [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-06-03T17:59:30.9314252Z [INFO] 
+2026-06-03T17:59:30.9316114Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-parent ---
+2026-06-03T17:59:30.9500218Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:30.9500844Z [INFO] 
+2026-06-03T17:59:30.9506210Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-parent ---
+2026-06-03T17:59:30.9553923Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:30.9554721Z [INFO] 
+2026-06-03T17:59:30.9555209Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-parent ---
+2026-06-03T17:59:31.0111940Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-parent\\target\\jacoco.exec"
+2026-06-03T17:59:31.0113467Z [INFO] 
+2026-06-03T17:59:31.0114210Z [INFO] --- spotless:3.6.0:check (default) @ tika-parent ---
+2026-06-03T17:59:31.3428902Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-03T17:59:31.3584976Z [INFO] 
+2026-06-03T17:59:31.3585768Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-parent ---
+2026-06-03T17:59:31.5603789Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:31.6489980Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:31.7079349Z [INFO] 
+2026-06-03T17:59:31.7080082Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-parent ---
+2026-06-03T17:59:31.7126488Z [INFO] Generating flattened POM of project org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT...
+2026-06-03T17:59:31.7894071Z [INFO] 
+2026-06-03T17:59:31.7902898Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-parent ---
+2026-06-03T17:59:33.8877784Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:33.8880196Z [INFO] 
+2026-06-03T17:59:33.8886080Z [INFO] --- jacoco:0.8.14:report (report) @ tika-parent ---
+2026-06-03T17:59:33.8930091Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-06-03T17:59:33.8951478Z [INFO] 
+2026-06-03T17:59:33.8955570Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-parent ---
+2026-06-03T17:59:33.8956170Z [INFO] 
+2026-06-03T17:59:33.8956592Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-parent ---
+2026-06-03T17:59:33.8962424Z [INFO] 
+2026-06-03T17:59:33.8973728Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-parent ---
+2026-06-03T17:59:33.8987956Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:33.8988802Z [INFO] 
+2026-06-03T17:59:33.8990664Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-parent ---
+2026-06-03T17:59:33.9041507Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:33.9043067Z [INFO] 
+2026-06-03T17:59:33.9050801Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-parent ---
+2026-06-03T17:59:33.9112706Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:33.9113295Z [INFO] 
+2026-06-03T17:59:33.9113660Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-parent ---
+2026-06-03T17:59:33.9115385Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-parent\\target\\jacoco.exec"
+2026-06-03T17:59:33.9116571Z [INFO] 
+2026-06-03T17:59:33.9116893Z [INFO] --- spotless:3.6.0:check (default) @ tika-parent ---
+2026-06-03T17:59:33.9298029Z [INFO] 
+2026-06-03T17:59:33.9299590Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-parent ---
+2026-06-03T17:59:33.9317730Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:33.9366997Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:33.9475277Z [INFO] 
+2026-06-03T17:59:33.9485700Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-parent ---
+2026-06-03T17:59:33.9497563Z [INFO] Generating flattened POM of project org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT...
+2026-06-03T17:59:33.9799008Z [INFO] 
+2026-06-03T17:59:33.9799488Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-parent ---
+2026-06-03T17:59:34.0108140Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:34.0108736Z [INFO] 
+2026-06-03T17:59:34.0109126Z [INFO] --- jacoco:0.8.14:report (report) @ tika-parent ---
+2026-06-03T17:59:34.0121194Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-06-03T17:59:34.0122143Z [INFO] 
+2026-06-03T17:59:34.0122556Z [INFO] --- ossindex:3.2.0:audit (audit-dependencies) @ tika-parent ---
+2026-06-03T17:59:34.1754079Z [INFO] Skipping; POM module
+2026-06-03T17:59:34.1754663Z [INFO] 
+2026-06-03T17:59:34.1755059Z [INFO] --- forbiddenapis:3.10:check (default) @ tika-parent ---
+2026-06-03T17:59:34.1887052Z [INFO] Skipping execution for packaging "pom"
+2026-06-03T17:59:34.1887986Z [INFO] 
+2026-06-03T17:59:34.1888372Z [INFO] --- forbiddenapis:3.10:testCheck (default) @ tika-parent ---
+2026-06-03T17:59:34.1891006Z [INFO] Skipping execution for packaging "pom"
+2026-06-03T17:59:34.1892138Z [INFO] 
+2026-06-03T17:59:34.1894365Z [INFO] --- install:3.1.4:install (default-install) @ tika-parent ---
+2026-06-03T17:59:34.2143661Z [INFO] Installing D:\a\tika\tika\tika build dir\tika-parent\.flattened-pom.xml to C:\Users\runneradmin\.m2\repository\org\apache\tika\tika-parent\4.0.0-SNAPSHOT\tika-parent-4.0.0-SNAPSHOT.pom
+2026-06-03T17:59:34.2277363Z [INFO] 
+2026-06-03T17:59:34.2279324Z [INFO] ----------------------< org.apache.tika:tika-bom >----------------------
+2026-06-03T17:59:34.2280212Z [INFO] Building Apache Tika BOM 4.0.0-SNAPSHOT                          [2/124]
+2026-06-03T17:59:34.2281690Z [INFO]   from tika-bom\pom.xml
+2026-06-03T17:59:34.2282117Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-06-03T17:59:34.2352924Z [INFO] 
+2026-06-03T17:59:34.2353537Z [INFO] --- clean:3.5.0:clean (default-clean) @ tika-bom ---
+2026-06-03T17:59:34.2361450Z [INFO] 
+2026-06-03T17:59:34.2361940Z [INFO] --- flatten:1.7.3:clean (flatten.clean) @ tika-bom ---
+2026-06-03T17:59:34.2366856Z [INFO] 
+2026-06-03T17:59:34.2367436Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-bom ---
+2026-06-03T17:59:34.2372617Z [INFO] 
+2026-06-03T17:59:34.2385692Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-bom ---
+2026-06-03T17:59:34.2390704Z [INFO] 
+2026-06-03T17:59:34.2391787Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-bom ---
+2026-06-03T17:59:34.2398130Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:34.2398847Z [INFO] 
+2026-06-03T17:59:34.2400988Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-bom ---
+2026-06-03T17:59:34.2449069Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.2449834Z [INFO] 
+2026-06-03T17:59:34.2450339Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-bom ---
+2026-06-03T17:59:34.2477642Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.2478260Z [INFO] 
+2026-06-03T17:59:34.2503697Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-bom ---
+2026-06-03T17:59:34.2505866Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-bom\\target\\jacoco.exec"
+2026-06-03T17:59:34.2507269Z [INFO] 
+2026-06-03T17:59:34.2507700Z [INFO] --- spotless:3.6.0:check (default) @ tika-bom ---
+2026-06-03T17:59:34.2582011Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-03T17:59:34.2589300Z [INFO] 
+2026-06-03T17:59:34.2590035Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-bom ---
+2026-06-03T17:59:34.2602344Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:34.2633659Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:34.2708937Z [INFO] 
+2026-06-03T17:59:34.2718316Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-bom ---
+2026-06-03T17:59:34.2719099Z [INFO] Generating flattened POM of project org.apache.tika:tika-bom:pom:4.0.0-SNAPSHOT...
+2026-06-03T17:59:34.2958739Z [INFO] 
+2026-06-03T17:59:34.2959397Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-bom ---
+2026-06-03T17:59:34.3268153Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:34.3268840Z [INFO] 
+2026-06-03T17:59:34.3269360Z [INFO] --- jacoco:0.8.14:report (report) @ tika-bom ---
+2026-06-03T17:59:34.3274003Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-06-03T17:59:34.3274606Z [INFO] 
+2026-06-03T17:59:34.3276799Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-bom ---
+2026-06-03T17:59:34.3291531Z [INFO] 
+2026-06-03T17:59:34.3292447Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-bom ---
+2026-06-03T17:59:34.3300730Z [INFO] 
+2026-06-03T17:59:34.3303402Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-bom ---
+2026-06-03T17:59:34.3322427Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:34.3323187Z [INFO] 
+2026-06-03T17:59:34.3323707Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-bom ---
+2026-06-03T17:59:34.3362100Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.3368600Z [INFO] 
+2026-06-03T17:59:34.3392682Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-bom ---
+2026-06-03T17:59:34.3400525Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.3403020Z [INFO] 
+2026-06-03T17:59:34.3403828Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-bom ---
+2026-06-03T17:59:34.3413664Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-bom\\target\\jacoco.exec"
+2026-06-03T17:59:34.3415018Z [INFO] 
+2026-06-03T17:59:34.3415458Z [INFO] --- spotless:3.6.0:check (default) @ tika-bom ---
+2026-06-03T17:59:34.3540891Z [INFO] 
+2026-06-03T17:59:34.3541640Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-bom ---
+2026-06-03T17:59:34.3551840Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:34.3587912Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:34.3646581Z [INFO] 
+2026-06-03T17:59:34.3657047Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-bom ---
+2026-06-03T17:59:34.3658993Z [INFO] Generating flattened POM of project org.apache.tika:tika-bom:pom:4.0.0-SNAPSHOT...
+2026-06-03T17:59:34.3894517Z [INFO] 
+2026-06-03T17:59:34.3895117Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-bom ---
+2026-06-03T17:59:34.4543769Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:34.4547486Z [INFO] 
+2026-06-03T17:59:34.4548046Z [INFO] --- jacoco:0.8.14:report (report) @ tika-bom ---
+2026-06-03T17:59:34.4577306Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-06-03T17:59:34.4584236Z [INFO] 
+2026-06-03T17:59:34.4588993Z [INFO] --- ossindex:3.2.0:audit (audit-dependencies) @ tika-bom ---
+2026-06-03T17:59:34.4597042Z [INFO] Skipping; POM module
+2026-06-03T17:59:34.4607179Z [INFO] 
+2026-06-03T17:59:34.4614978Z [INFO] --- forbiddenapis:3.10:check (default) @ tika-bom ---
+2026-06-03T17:59:34.4618930Z [INFO] Skipping execution for packaging "pom"
+2026-06-03T17:59:34.4620177Z [INFO] 
+2026-06-03T17:59:34.4620550Z [INFO] --- forbiddenapis:3.10:testCheck (default) @ tika-bom ---
+2026-06-03T17:59:34.4621048Z [INFO] Skipping execution for packaging "pom"
+2026-06-03T17:59:34.4621416Z [INFO] 
+2026-06-03T17:59:34.4630861Z [INFO] --- install:3.1.4:install (default-install) @ tika-bom ---
+2026-06-03T17:59:34.4635764Z [INFO] Installing D:\a\tika\tika\tika build dir\tika-bom\.flattened-pom.xml to C:\Users\runneradmin\.m2\repository\org\apache\tika\tika-bom\4.0.0-SNAPSHOT\tika-bom-4.0.0-SNAPSHOT.pom
+2026-06-03T17:59:34.4686078Z [INFO] 
+2026-06-03T17:59:34.4691147Z [INFO] -------------< org.apache.tika:tika-annotation-processor >--------------
+2026-06-03T17:59:34.4701028Z [INFO] Building Apache Tika Annotation Processor 4.0.0-SNAPSHOT         [3/124]
+2026-06-03T17:59:34.4707759Z [INFO]   from tika-annotation-processor\pom.xml
+2026-06-03T17:59:34.4708534Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-06-03T17:59:34.5058522Z [INFO] 
+2026-06-03T17:59:34.5061976Z [INFO] --- clean:3.5.0:clean (default-clean) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5231163Z [INFO] 
+2026-06-03T17:59:34.5231703Z [INFO] --- flatten:1.7.3:clean (flatten.clean) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5232197Z [INFO] 
+2026-06-03T17:59:34.5232633Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5242752Z [INFO] 
+2026-06-03T17:59:34.5245646Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5256837Z [INFO] 
+2026-06-03T17:59:34.5258455Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5301469Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:34.5302558Z [INFO] 
+2026-06-03T17:59:34.5307399Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5344440Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.5360003Z [INFO] 
+2026-06-03T17:59:34.5383830Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5420918Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:34.5421514Z [INFO] 
+2026-06-03T17:59:34.5421937Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5423287Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-annotation-processor\\target\\jacoco.exec"
+2026-06-03T17:59:34.5425031Z [INFO] 
+2026-06-03T17:59:34.5425432Z [INFO] --- spotless:3.6.0:check (default) @ tika-annotation-processor ---
+2026-06-03T17:59:34.5522582Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-03T17:59:36.8398613Z [INFO] Spotless.Java is keeping 4 files clean - 0 needs changes to be clean, 4 were already clean, 0 were skipped because caching determined they were already clean
+2026-06-03T17:59:36.8399581Z [INFO] 
+2026-06-03T17:59:36.8400113Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-annotation-processor ---
+2026-06-03T17:59:36.8412856Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:36.8463198Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:36.8514383Z [INFO] 
+2026-06-03T17:59:36.8515131Z [INFO] --- resources:3.5.0:resources (default-resources) @ tika-annotation-processor ---
+2026-06-03T17:59:36.8972220Z [INFO] Copying 1 resource from src\main\resources to target\classes
+2026-06-03T17:59:36.9029903Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\classes
+2026-06-03T17:59:36.9039133Z [INFO] 
+2026-06-03T17:59:36.9042095Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-annotation-processor ---
+2026-06-03T17:59:36.9044931Z [INFO] Generating flattened POM of project org.apache.tika:tika-annotation-processor:jar:4.0.0-SNAPSHOT...
+2026-06-03T17:59:36.9268204Z [INFO] 
+2026-06-03T17:59:36.9268728Z [INFO] --- compiler:3.15.0:compile (default-compile) @ tika-annotation-processor ---
+2026-06-03T17:59:37.0108311Z [INFO] Recompiling the module because of changed source code.
+2026-06-03T17:59:37.0214085Z [INFO] Compiling 3 source files with javac [debug deprecation release 17] to target\classes
+2026-06-03T17:59:38.3649126Z [INFO] 
+2026-06-03T17:59:38.3649857Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-annotation-processor ---
+2026-06-03T17:59:39.0109482Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:39.0111951Z [INFO] 
+2026-06-03T17:59:39.0112877Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ tika-annotation-processor ---
+2026-06-03T17:59:39.0135705Z [INFO] skip non existing resourceDirectory D:\a\tika\tika\tika build dir\tika-annotation-processor\src\test\resources
+2026-06-03T17:59:39.0141163Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\test-classes
+2026-06-03T17:59:39.0155420Z [INFO] 
+2026-06-03T17:59:39.0156039Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ tika-annotation-processor ---
+2026-06-03T17:59:39.0235424Z [INFO] Recompiling the module because of changed dependency.
+2026-06-03T17:59:39.0241016Z [INFO] Compiling 1 source file with javac [debug deprecation release 17] to target\test-classes
+2026-06-03T17:59:39.1645630Z [INFO] 
+2026-06-03T17:59:39.1646330Z [INFO] --- surefire:3.5.6:test (default-test) @ tika-annotation-processor ---
+2026-06-03T17:59:39.2634479Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-06-03T17:59:39.3041892Z [INFO] 
+2026-06-03T17:59:39.3042491Z [INFO] -------------------------------------------------------
+2026-06-03T17:59:39.3042987Z [INFO]  T E S T S
+2026-06-03T17:59:39.3043363Z [INFO] -------------------------------------------------------
+2026-06-03T17:59:43.7420974Z [INFO] Running org.apache.tika.annotation.KebabCaseConverterTest
+2026-06-03T17:59:43.9479859Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.145 s -- in org.apache.tika.annotation.KebabCaseConverterTest
+2026-06-03T17:59:43.9814366Z [INFO] 
+2026-06-03T17:59:43.9814637Z [INFO] Results:
+2026-06-03T17:59:43.9814869Z [INFO] 
+2026-06-03T17:59:43.9819986Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+2026-06-03T17:59:43.9820428Z [INFO] 
+2026-06-03T17:59:43.9855370Z [INFO] 
+2026-06-03T17:59:43.9856198Z [INFO] --- jacoco:0.8.14:report (report) @ tika-annotation-processor ---
+2026-06-03T17:59:43.9880235Z [INFO] Loading execution data file D:\a\tika\tika\tika build dir\tika-annotation-processor\target\jacoco.exec
+2026-06-03T17:59:44.0698496Z [INFO] Analyzed bundle 'Apache Tika Annotation Processor' with 2 classes
+2026-06-03T17:59:44.1203807Z [INFO] 
+2026-06-03T17:59:44.1204435Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1237863Z [INFO] 
+2026-06-03T17:59:44.1239037Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1239829Z [INFO] 
+2026-06-03T17:59:44.1240382Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1252479Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:44.1253291Z [INFO] 
+2026-06-03T17:59:44.1255673Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1284804Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:44.1289010Z [INFO] 
+2026-06-03T17:59:44.1293835Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1351656Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:44.1392202Z [INFO] 
+2026-06-03T17:59:44.1404372Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1405996Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-annotation-processor\\target\\jacoco.exec"
+2026-06-03T17:59:44.1407252Z [INFO] 
+2026-06-03T17:59:44.1407631Z [INFO] --- spotless:3.6.0:check (default) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1458802Z [INFO] Spotless.Java is keeping 4 files clean - 0 needs changes to be clean, 0 were already clean, 4 were skipped because caching determined they were already clean
+2026-06-03T17:59:44.1460084Z [INFO] 
+2026-06-03T17:59:44.1460659Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1475861Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:44.1508077Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:44.1566757Z [INFO] 
+2026-06-03T17:59:44.1568373Z [INFO] --- resources:3.5.0:resources (default-resources) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1576179Z [INFO] Copying 1 resource from src\main\resources to target\classes
+2026-06-03T17:59:44.1584178Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\classes
+2026-06-03T17:59:44.1597166Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\classes
+2026-06-03T17:59:44.1606579Z [INFO] 
+2026-06-03T17:59:44.1607097Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1613577Z [INFO] Generating flattened POM of project org.apache.tika:tika-annotation-processor:jar:4.0.0-SNAPSHOT...
+2026-06-03T17:59:44.1845895Z [INFO] 
+2026-06-03T17:59:44.1846630Z [INFO] --- compiler:3.15.0:compile (default-compile) @ tika-annotation-processor ---
+2026-06-03T17:59:44.1951276Z [INFO] Nothing to compile - all classes are up to date.
+2026-06-03T17:59:44.1961654Z [INFO] 
+2026-06-03T17:59:44.1962215Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-annotation-processor ---
+2026-06-03T17:59:44.2178239Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:44.2179198Z [INFO] 
+2026-06-03T17:59:44.2179993Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ tika-annotation-processor ---
+2026-06-03T17:59:44.2180992Z [INFO] skip non existing resourceDirectory D:\a\tika\tika\tika build dir\tika-annotation-processor\src\test\resources
+2026-06-03T17:59:44.2181965Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\test-classes
+2026-06-03T17:59:44.2194722Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\test-classes
+2026-06-03T17:59:44.2203488Z [INFO] 
+2026-06-03T17:59:44.2204098Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ tika-annotation-processor ---
+2026-06-03T17:59:44.2237922Z [INFO] Recompiling the module because of changed dependency.
+2026-06-03T17:59:44.2256318Z [INFO] Compiling 1 source file with javac [debug deprecation release 17] to target\test-classes
+2026-06-03T17:59:44.3075777Z [INFO] 
+2026-06-03T17:59:44.3076475Z [INFO] --- surefire:3.5.6:test (default-test) @ tika-annotation-processor ---
+2026-06-03T17:59:44.3097344Z [INFO] Skipping execution of surefire because it has already been run for this configuration
+2026-06-03T17:59:44.3098112Z [INFO] 
+2026-06-03T17:59:44.3098635Z [INFO] --- jacoco:0.8.14:report (report) @ tika-annotation-processor ---
+2026-06-03T17:59:44.3104542Z [INFO] Loading execution data file D:\a\tika\tika\tika build dir\tika-annotation-processor\target\jacoco.exec
+2026-06-03T17:59:44.3235242Z [INFO] Analyzed bundle 'Apache Tika Annotation Processor' with 2 classes
+2026-06-03T17:59:44.3472232Z [INFO] 
+2026-06-03T17:59:44.3472914Z [INFO] --- jar:3.5.0:jar (default-jar) @ tika-annotation-processor ---
+2026-06-03T17:59:44.5413215Z [INFO] Building jar: D:\a\tika\tika\tika build dir\tika-annotation-processor\target\tika-annotation-processor-4.0.0-SNAPSHOT.jar
+2026-06-03T17:59:44.6111266Z [INFO] 
+2026-06-03T17:59:44.6112229Z [INFO] --- ossindex:3.2.0:audit (audit-dependencies) @ tika-annotation-processor ---
+2026-06-03T17:59:44.6135186Z [INFO] Skipping; configured
+2026-06-03T17:59:44.6135728Z [INFO] 
+2026-06-03T17:59:44.6136308Z [INFO] --- forbiddenapis:3.10:check (default) @ tika-annotation-processor ---
+2026-06-03T17:59:44.6458746Z [INFO] Scanning for classes to check...
+2026-06-03T17:59:44.6492288Z [INFO] Reading bundled API signatures: jdk-unsafe-17
+2026-06-03T17:59:44.9423210Z [INFO] Reading bundled API signatures: jdk-deprecated-17
+2026-06-03T17:59:46.3308985Z [INFO] Reading bundled API signatures: jdk-non-portable
+2026-06-03T17:59:46.3309622Z [INFO] Reading bundled API signatures: jdk-internal-17
+2026-06-03T17:59:46.3317019Z [INFO] Reading bundled API signatures: commons-io-unsafe-2.11.0
+2026-06-03T17:59:46.3340087Z [INFO] Loading classes to check...
+2026-06-03T17:59:46.3343777Z [INFO] Scanning classes for violations...
+2026-06-03T17:59:46.3611387Z [INFO] Scanned 3 class file(s) for forbidden API invocations (in 1.71s), 0 error(s).
+2026-06-03T17:59:46.3611963Z [INFO] 
+2026-06-03T17:59:46.3612406Z [INFO] --- forbiddenapis:3.10:testCheck (default) @ tika-annotation-processor ---
+2026-06-03T17:59:46.3625335Z [INFO] Scanning for classes to check...
+2026-06-03T17:59:46.3633531Z [INFO] Reading bundled API signatures: jdk-unsafe-17
+2026-06-03T17:59:46.3721047Z [INFO] Reading bundled API signatures: jdk-deprecated-17
+2026-06-03T17:59:46.3921669Z [INFO] Reading bundled API signatures: jdk-non-portable
+2026-06-03T17:59:46.3928444Z [INFO] Reading bundled API signatures: jdk-internal-17
+2026-06-03T17:59:46.3932513Z [INFO] Reading bundled API signatures: commons-io-unsafe-2.11.0
+2026-06-03T17:59:46.3955484Z [INFO] Loading classes to check...
+2026-06-03T17:59:46.3956854Z [INFO] Scanning classes for violations...
+2026-06-03T17:59:46.3990092Z [INFO] Scanned 1 class file(s) for forbidden API invocations (in 0.04s), 0 error(s).
+2026-06-03T17:59:46.3991128Z [INFO] 
+2026-06-03T17:59:46.3991565Z [INFO] --- install:3.1.4:install (default-install) @ tika-annotation-processor ---
+2026-06-03T17:59:46.4006963Z [INFO] Installing D:\a\tika\tika\tika build dir\tika-annotation-processor\.flattened-pom.xml to C:\Users\runneradmin\.m2\repository\org\apache\tika\tika-annotation-processor\4.0.0-SNAPSHOT\tika-annotation-processor-4.0.0-SNAPSHOT.pom
+2026-06-03T17:59:46.4026469Z [INFO] Installing D:\a\tika\tika\tika build dir\tika-annotation-processor\target\tika-annotation-processor-4.0.0-SNAPSHOT.jar to C:\Users\runneradmin\.m2\repository\org\apache\tika\tika-annotation-processor\4.0.0-SNAPSHOT\tika-annotation-processor-4.0.0-SNAPSHOT.jar
+2026-06-03T17:59:46.4071524Z [INFO] 
+2026-06-03T17:59:46.4074808Z [INFO] ---------------------< org.apache.tika:tika-core >----------------------
+2026-06-03T17:59:46.4075756Z [INFO] Building Apache Tika core 4.0.0-SNAPSHOT                         [4/124]
+2026-06-03T17:59:46.4076417Z [INFO]   from tika-core\pom.xml
+2026-06-03T17:59:46.4076973Z [INFO] -------------------------------[ bundle ]-------------------------------
+2026-06-03T17:59:46.4616007Z [INFO] 
+2026-06-03T17:59:46.4616522Z [INFO] --- clean:3.5.0:clean (default-clean) @ tika-core ---
+2026-06-03T17:59:46.4735323Z [INFO] 
+2026-06-03T17:59:46.4735815Z [INFO] --- flatten:1.7.3:clean (flatten.clean) @ tika-core ---
+2026-06-03T17:59:46.4991072Z [INFO] 
+2026-06-03T17:59:46.4991772Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-core ---
+2026-06-03T17:59:46.5727044Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-06-03T17:59:46.5727883Z [INFO] 
+2026-06-03T17:59:46.5728448Z [INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-core ---
+2026-06-03T17:59:46.5902917Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+2026-06-03T17:59:46.5903778Z [INFO] 
+2026-06-03T17:59:46.5904274Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-core ---
+2026-06-03T17:59:46.5946043Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+2026-06-03T17:59:46.5947269Z [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-06-03T17:59:46.5953865Z [INFO] 
+2026-06-03T17:59:46.5954463Z [INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-core ---
+2026-06-03T17:59:46.6193249Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:46.6194536Z [INFO] 
+2026-06-03T17:59:46.6195133Z [INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-core ---
+2026-06-03T17:59:46.6211329Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+2026-06-03T17:59:46.6212040Z [INFO] 
+2026-06-03T17:59:46.6212450Z [INFO] --- checkstyle:3.6.0:check (validate) @ tika-core ---
+2026-06-03T17:59:50.3426564Z [INFO] You have 0 Checkstyle violations.
+2026-06-03T17:59:50.3433993Z [INFO] 
+2026-06-03T17:59:50.3448023Z [INFO] --- jacoco:0.8.14:prepare-agent (default) @ tika-core ---
+2026-06-03T17:59:50.3721045Z [INFO] surefireArgLine set to "-javaagent:C:\\Users\\runneradmin\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.14\\org.jacoco.agent-0.8.14-runtime.jar=destfile=D:\\a\\tika\\tika\\tika build dir\\tika-core\\target\\jacoco.exec"
+2026-06-03T17:59:50.3723795Z [INFO] 
+2026-06-03T17:59:50.3724182Z [INFO] --- spotless:3.6.0:check (default) @ tika-core ---
+2026-06-03T17:59:50.4976733Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-03T17:59:51.4737082Z [INFO] Spotless.Java is keeping 371 files clean - 0 needs changes to be clean, 371 were already clean, 0 were skipped because caching determined they were already clean
+2026-06-03T17:59:51.4782816Z [INFO] 
+2026-06-03T17:59:51.4785433Z [INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-core ---
+2026-06-03T17:59:51.6405373Z [INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+2026-06-03T17:59:51.7157982Z [INFO] Copying 3 resources from 1 bundle.
+2026-06-03T17:59:51.7695725Z [INFO] Copying appended resource: META-INF/LICENSE
+2026-06-03T17:59:51.7730542Z [INFO] 
+2026-06-03T17:59:51.7731122Z [INFO] --- resources:3.5.0:resources (default-resources) @ tika-core ---
+2026-06-03T17:59:51.8103129Z [INFO] Copying 4 resources from src\main\resources to target\classes
+2026-06-03T17:59:51.8171389Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\classes
+2026-06-03T17:59:51.8186284Z [INFO] 
+2026-06-03T17:59:51.8186779Z [INFO] --- flatten:1.7.3:flatten (flatten) @ tika-core ---
+2026-06-03T17:59:51.8269673Z [INFO] Generating flattened POM of project org.apache.tika:tika-core:bundle:4.0.0-SNAPSHOT...
+2026-06-03T17:59:51.8585167Z [INFO] 
+2026-06-03T17:59:51.8585814Z [INFO] --- compiler:3.15.0:compile (default-compile) @ tika-core ---
+2026-06-03T17:59:51.9430155Z [INFO] Recompiling the module because of changed dependency.
+2026-06-03T17:59:51.9516345Z [INFO] Compiling 312 source files with javac [debug deprecation release 17] to target\classes
+2026-06-03T17:59:54.7192082Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7194000Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7195900Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7200319Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7201956Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7203561Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7205197Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7206787Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7209435Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7211033Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7212581Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7214202Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7215660Z [INFO] Processing @TikaComponent: org.apache.tika.config.EmbeddedLimits -> embedded-limits (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7217244Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/EmbeddedLimits.java:[71,8] Class org.apache.tika.config.EmbeddedLimits is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7219079Z [INFO] Processing @TikaComponent: org.apache.tika.config.OutputLimits -> output-limits (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7224968Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/OutputLimits.java:[65,8] Class org.apache.tika.config.OutputLimits is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7226598Z [INFO] Processing @TikaComponent: org.apache.tika.config.TimeoutLimits -> timeout-limits (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7253845Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/TimeoutLimits.java:[54,8] Class org.apache.tika.config.TimeoutLimits is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7255408Z [INFO] Processing @TikaComponent: org.apache.tika.detect.BOMDetector -> bom-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7256810Z [INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.BOMDetector
+2026-06-03T17:59:54.7257915Z [INFO] Processing @TikaComponent: org.apache.tika.detect.DefaultDetector -> default-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7278319Z [INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.DefaultDetector
+2026-06-03T17:59:54.7281290Z [INFO] Processing @TikaComponent: org.apache.tika.detect.EmptyDetector -> empty-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7282392Z [INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.EmptyDetector
+2026-06-03T17:59:54.7283577Z [INFO] Processing @TikaComponent: org.apache.tika.detect.FileCommandDetector -> file-command-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7284765Z [INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.FileCommandDetector
+2026-06-03T17:59:54.7285889Z [INFO] Processing @TikaComponent: org.apache.tika.detect.MagicDetector -> magic-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7286994Z [INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.MagicDetector
+2026-06-03T17:59:54.7288205Z [INFO] Processing @TikaComponent: org.apache.tika.detect.MetadataCharsetDetector -> metadata-charset-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7289520Z [INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.MetadataCharsetDetector
+2026-06-03T17:59:54.7291167Z [INFO] Processing @TikaComponent: org.apache.tika.detect.OverrideEncodingDetector -> override-encoding-detector (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7292526Z [INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.OverrideEncodingDetector
+2026-06-03T17:59:54.7294139Z [INFO] Processing @TikaComponent: org.apache.tika.extractor.SkipEmbeddedDocumentSelector -> skip-embedded-document-selector (SPI: true, contextKey: org.apache.tika.extractor.DocumentSelector, defaultFor: null)
+2026-06-03T17:59:54.7296318Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/extractor/SkipEmbeddedDocumentSelector.java:[30,8] Class org.apache.tika.extractor.SkipEmbeddedDocumentSelector is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7301792Z [INFO] Processing @TikaComponent: org.apache.tika.extractor.StandardExtractorFactory -> standard-extractor-factory (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7303514Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/extractor/StandardExtractorFactory.java:[28,8] Class org.apache.tika.extractor.StandardExtractorFactory is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7305046Z [INFO] Processing @TikaComponent: org.apache.tika.io.SpoolingStrategy -> spooling-strategy (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7306403Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/io/SpoolingStrategy.java:[47,8] Class org.apache.tika.io.SpoolingStrategy is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7323711Z [INFO] Processing @TikaComponent: org.apache.tika.language.translate.DefaultTranslator -> default-translator (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7326654Z [INFO] Auto-detected contextKey=org.apache.tika.language.translate.Translator for org.apache.tika.language.translate.DefaultTranslator
+2026-06-03T17:59:54.7328170Z [INFO] Processing @TikaComponent: org.apache.tika.language.translate.EmptyTranslator -> empty-translator (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7329349Z [INFO] Auto-detected contextKey=org.apache.tika.language.translate.Translator for org.apache.tika.language.translate.EmptyTranslator
+2026-06-03T17:59:54.7330642Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.CaptureGroupMetadataFilter -> capture-group-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7332018Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.CaptureGroupMetadataFilter
+2026-06-03T17:59:54.7333487Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.ClearByAttachmentTypeMetadataFilter -> clear-by-attachment-type-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7335022Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.ClearByAttachmentTypeMetadataFilter
+2026-06-03T17:59:54.7336442Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.DateNormalizingMetadataFilter -> date-normalizing-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7338097Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.DateNormalizingMetadataFilter
+2026-06-03T17:59:54.7339459Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.ExcludeFieldMetadataFilter -> exclude-field-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7367302Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.ExcludeFieldMetadataFilter
+2026-06-03T17:59:54.7403617Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.FieldNameMappingFilter -> field-name-mapping-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7405290Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.FieldNameMappingFilter
+2026-06-03T17:59:54.7410860Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.GeoPointMetadataFilter -> geo-point-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7423318Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.GeoPointMetadataFilter
+2026-06-03T17:59:54.7429747Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.IncludeFieldMetadataFilter -> include-field-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7436289Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.IncludeFieldMetadataFilter
+2026-06-03T17:59:54.7441440Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.NoOpFilter -> no-op-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7444082Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.NoOpFilter
+2026-06-03T17:59:54.7473322Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.RemoveByMimeMetadataFilter -> remove-by-mime-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7477638Z [INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.RemoveByMimeMetadataFilter
+2026-06-03T17:59:54.7479549Z [INFO] Processing @TikaComponent: org.apache.tika.metadata.writefilter.StandardMetadataLimiterFactory -> standard-metadata-limiter-factory (SPI: true, contextKey: org.apache.tika.metadata.writefilter.MetadataWriteLimiterFactory, defaultFor: null)
+2026-06-03T17:59:54.7482388Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/metadata/writefilter/StandardMetadataLimiterFactory.java:[50,8] Class org.apache.tika.metadata.writefilter.StandardMetadataLimiterFactory is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7484237Z [INFO] Processing @TikaComponent: org.apache.tika.mime.MimeTypes -> mime-types (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7485189Z [INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.mime.MimeTypes
+2026-06-03T17:59:54.7495257Z [INFO] Processing @TikaComponent: org.apache.tika.parser.AutoDetectParserConfig -> auto-detect-parser-config (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7497320Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/parser/AutoDetectParserConfig.java:[38,8] Class org.apache.tika.parser.AutoDetectParserConfig is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7498981Z [INFO] Processing @TikaComponent: org.apache.tika.parser.DefaultParser -> default-parser (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7500067Z [INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.DefaultParser
+2026-06-03T17:59:54.7501095Z [INFO] Processing @TikaComponent: org.apache.tika.parser.EmptyParser -> empty-parser (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7502089Z [INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.EmptyParser
+2026-06-03T17:59:54.7503058Z [INFO] Processing @TikaComponent: org.apache.tika.parser.ErrorParser -> error-parser (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7504039Z [INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.ErrorParser
+2026-06-03T17:59:54.7505104Z [INFO] Processing @TikaComponent: org.apache.tika.parser.RegexCaptureParser -> regex-capture-parser (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7506506Z [INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.RegexCaptureParser
+2026-06-03T17:59:54.7509183Z [INFO] Processing @TikaComponent: org.apache.tika.parser.SimplePasswordProvider -> simple-password-provider (SPI: true, contextKey: org.apache.tika.parser.PasswordProvider, defaultFor: null)
+2026-06-03T17:59:54.7511143Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/parser/SimplePasswordProvider.java:[38,8] Class org.apache.tika.parser.SimplePasswordProvider is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7512827Z [INFO] Processing @TikaComponent: org.apache.tika.parser.external.ExternalParser -> external-parser (SPI: true, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7513982Z [INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.external.ExternalParser
+2026-06-03T17:59:54.7515385Z [INFO] Processing @TikaComponent: org.apache.tika.sax.BasicContentHandlerFactory -> basic-content-handler-factory (SPI: true, contextKey: null, defaultFor: org.apache.tika.sax.ContentHandlerFactory)
+2026-06-03T17:59:54.7517557Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/BasicContentHandlerFactory.java:[40,8] Class org.apache.tika.sax.BasicContentHandlerFactory is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7519183Z [INFO] Processing @TikaComponent: org.apache.tika.sax.SAXOutputConfig -> sax-output-config (SPI: false, contextKey: null, defaultFor: null)
+2026-06-03T17:59:54.7520643Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/SAXOutputConfig.java:[31,8] Class org.apache.tika.sax.SAXOutputConfig is a parse-context component, adding to parse-context.idx
+2026-06-03T17:59:54.7522310Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7524087Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7525660Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7530753Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7532484Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7534113Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7535754Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7537564Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7539152Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7540732Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7542341Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7544206Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7545532Z [INFO] Generated SPI file: META-INF/services/org.apache.tika.language.translate.Translator with 2 implementations
+2026-06-03T17:59:54.7546477Z [INFO] Generated SPI file: META-INF/services/org.apache.tika.parser.Parser with 1 implementations
+2026-06-03T17:59:54.7547438Z [INFO] Generated SPI file: META-INF/services/org.apache.tika.metadata.filter.MetadataFilter with 9 implementations
+2026-06-03T17:59:54.7548329Z [INFO] Generated index file: META-INF/tika/encoding-detectors.idx with 3 components
+2026-06-03T17:59:54.7549018Z [INFO] Generated index file: META-INF/tika/translators.idx with 2 components
+2026-06-03T17:59:54.7549688Z [INFO] Generated index file: META-INF/tika/metadata-filters.idx with 9 components
+2026-06-03T17:59:54.7550380Z [INFO] Generated index file: META-INF/tika/parse-context.idx with 11 components
+2026-06-03T17:59:54.7550992Z [INFO] Generated index file: META-INF/tika/parsers.idx with 5 components
+2026-06-03T17:59:54.7551597Z [INFO] Generated index file: META-INF/tika/detectors.idx with 5 components
+2026-06-03T17:59:54.7552739Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7554442Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7556308Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7558840Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7560511Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7562118Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7563732Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7565306Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7566897Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7568482Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7570072Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7571708Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+2026-06-03T17:59:54.7573430Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/detect/DefaultDetector.java:[122,37] org.apache.tika.detect.OverrideDetector in org.apache.tika.detect has been deprecated
+2026-06-03T17:59:54.7575827Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/mime/ProbabilisticMimeDetectionSelector.java:[164,36] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+2026-06-03T17:59:54.7578004Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/detect/XmlRootExtractor.java:[46,43] UnsynchronizedByteArrayInputStream(byte[]) in org.apache.commons.io.input.UnsynchronizedByteArrayInputStream has been deprecated
+2026-06-03T17:59:54.7580337Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/mime/MimeTypesReader.java:[257,32] UnsynchronizedByteArrayInputStream(byte[]) in org.apache.commons.io.input.UnsynchronizedByteArrayInputStream has been deprecated
+2026-06-03T17:59:54.7582458Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/sax/RecursiveParserWrapperHandler.java:[159,48] TIKA_CONTENT_HANDLER in org.apache.tika.metadata.TikaCoreProperties has been deprecated
+2026-06-03T17:59:54.7584135Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/ServiceLoader.java: Some input files use unchecked or unsafe operations.
+2026-06-03T17:59:54.7585484Z [INFO] /D:/a/tika/tika/tika build dir/tika-core/src/main/java/org/apache/tika/config/ServiceLoader.java: Recompile with -Xlint:unchecked for details.
+2026-06-03T17:59:54.7586287Z [INFO] 
+2026-06-03T17:59:54.7586687Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ tika-core ---
+2026-06-03T17:59:54.7587314Z [INFO] Copying 56 resources from src\test\resources to target\test-classes
+2026-06-03T17:59:54.7673764Z [INFO] Copying 3 resources from target\maven-shared-archive-resources to target\test-classes
+2026-06-03T17:59:54.7688326Z [INFO] 
+2026-06-03T17:59:54.7688925Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ tika-core ---
+2026-06-03T17:59:54.7805776Z [INFO] Recompiling the module because of changed dependency.
+2026-06-03T17:59:54.7835666Z [INFO] Compiling 64 source files with javac [debug deprecation release 17] to target\test-classes
+2026-06-03T17:59:56.1541987Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/test/java/org/apache/tika/mime/MimeTypesReaderTest.java:[296,37] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+2026-06-03T17:59:56.1544068Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/test/java/org/apache/tika/mime/MimeTypesReaderTest.java:[304,37] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+2026-06-03T17:59:56.1546712Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/test/java/org/apache/tika/parser/ParserDecoratorTest.java:[117,28] withFallbacks(java.util.Collection<? extends org.apache.tika.parser.Parser>,java.util.Set<org.apache.tika.mime.MediaType>) in org.apache.tika.parser.ParserDecorator has been deprecated
+2026-06-03T17:59:56.1549120Z [WARNING] /D:/a/tika/tika/tika build dir/tika-core/src/test/java/org/apache/tika/utils/ServiceLoaderUtilsTest.java:[45,48] org.apache.tika.detect.OverrideDetector in org.apache.tika.detect has been deprecated
+2026-06-03T17:59:56.1550417Z [INFO] 
+2026-06-03T17:59:56.1550856Z [INFO] --- surefire:3.5.6:test (default-test) @ tika-core ---
+2026-06-03T17:59:56.2397582Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-06-03T17:59:56.2734161Z [INFO] 
+2026-06-03T17:59:56.2734611Z [INFO] -------------------------------------------------------
+2026-06-03T17:59:56.2735016Z [INFO]  T E S T S
+2026-06-03T17:59:56.2735321Z [INFO] -------------------------------------------------------
+2026-06-03T17:59:58.0506667Z [INFO] Running org.apache.tika.config.ParseContextConfigTest
+2026-06-03T17:59:58.2024142Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.126 s -- in org.apache.tika.config.ParseContextConfigTest
+2026-06-03T17:59:58.2025659Z [INFO] Running org.apache.tika.config.TikaProgressTrackerTest
+2026-06-03T17:59:58.3297076Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.159 s -- in org.apache.tika.config.TikaProgressTrackerTest
+2026-06-03T17:59:58.3297986Z [INFO] Running org.apache.tika.detect.BOMDetectorTest
+2026-06-03T17:59:59.5914474Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.253 s -- in org.apache.tika.detect.BOMDetectorTest
+2026-06-03T17:59:59.5915548Z [INFO] Running org.apache.tika.detect.FileCommandDetectorTest
+2026-06-03T18:00:00.7335089Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.140 s -- in org.apache.tika.detect.FileCommandDetectorTest
+2026-06-03T18:00:00.7346136Z [INFO] Running org.apache.tika.detect.MagicDetectorTest
+2026-06-03T18:00:00.8510299Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.110 s -- in org.apache.tika.detect.MagicDetectorTest
+2026-06-03T18:00:00.8515254Z [INFO] Running org.apache.tika.detect.MimeDetectionWithNNTest
+2026-06-03T18:00:00.9738145Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.115 s -- in org.apache.tika.detect.MimeDetectionWithNNTest
+2026-06-03T18:00:00.9739473Z [INFO] Running org.apache.tika.detect.NameDetectorTest
+2026-06-03T18:00:00.9837603Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.apache.tika.detect.NameDetectorTest
+2026-06-03T18:00:00.9842251Z [INFO] Running org.apache.tika.detect.TextDetectorTest
+2026-06-03T18:00:00.9963661Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.apache.tika.detect.TextDetectorTest
+2026-06-03T18:00:00.9978684Z [INFO] Running org.apache.tika.detect.TypeDetectorTest
+2026-06-03T18:00:01.0449395Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.apache.tika.detect.TypeDetectorTest
+2026-06-03T18:00:01.0584457Z [INFO] Running org.apache.tika.detect.ZeroSizeFileDetectorTest
+2026-06-03T18:00:01.0590199Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.tika.detect.ZeroSizeFileDetectorTest
+2026-06-03T18:00:01.0600787Z [INFO] Running org.apache.tika.io.EndianUtilsTest
+2026-06-03T18:00:01.0615996Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.037 s -- in org.apache.tika.io.EndianUtilsTest
+2026-06-03T18:00:01.0639455Z [INFO] Running org.apache.tika.io.FilenameUtilsTest
+2026-06-03T18:00:01.1171264Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.044 s -- in org.apache.tika.io.FilenameUtilsTest
+2026-06-03T18:00:01.1176193Z [INFO] Running org.apache.tika.io.LookaheadInputStreamTest
+2026-06-03T18:00:01.1356511Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in org.apache.tika.io.LookaheadInputStreamTest
+2026-06-03T18:00:01.1360460Z [INFO] Running org.apache.tika.io.TailStreamTest
+2026-06-03T18:00:01.1837812Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in org.apache.tika.io.TailStreamTest
+2026-06-03T18:00:01.2002322Z [INFO] Running org.apache.tika.io.TemporaryResourcesTest
+2026-06-03T18:00:01.2003360Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.io.TemporaryResourcesTest
+2026-06-03T18:00:01.2004110Z [INFO] Running org.apache.tika.io.TikaInputStreamTest
+2026-06-03T18:00:03.4972313Z [WARNING] Tests run: 102, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 2.303 s -- in org.apache.tika.io.TikaInputStreamTest
+2026-06-03T18:00:03.4973479Z [INFO] Running org.apache.tika.language.detect.LanguageNamesTest
+2026-06-03T18:00:03.4974389Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.apache.tika.language.detect.LanguageNamesTest
+2026-06-03T18:00:03.4976711Z [INFO] Running org.apache.tika.metadata.TestMetadata
+2026-06-03T18:00:03.7165893Z [INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.207 s -- in org.apache.tika.metadata.TestMetadata
+2026-06-03T18:00:03.7260408Z [INFO] Running org.apache.tika.metadata.TestPageAnchoring
+2026-06-03T18:00:03.7597210Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in org.apache.tika.metadata.TestPageAnchoring
+2026-06-03T18:00:03.7598250Z [INFO] Running org.apache.tika.mime.CustomReaderTest
+2026-06-03T18:00:03.7599128Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.apache.tika.mime.CustomReaderTest
+2026-06-03T18:00:03.7640192Z [INFO] Running org.apache.tika.mime.MediaTypeTest
+2026-06-03T18:00:03.8191855Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in org.apache.tika.mime.MediaTypeTest
+2026-06-03T18:00:03.8205916Z [INFO] Running org.apache.tika.mime.MimeDetectionTest
+2026-06-03T18:00:04.1602621Z [ERROR] Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.341 s <<< FAILURE! -- in org.apache.tika.mime.MimeDetectionTest
+2026-06-03T18:00:04.1603944Z [ERROR] org.apache.tika.mime.MimeDetectionTest.testDetection -- Time elapsed: 0.070 s <<< FAILURE!
+2026-06-03T18:00:04.1605002Z org.opentest4j.AssertionFailedError: Test stream: [test-android-binary.xml] is null! ==> expected: not <null>
+2026-06-03T18:00:04.1605915Z 	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:345)
+2026-06-03T18:00:04.1606709Z 	at org.apache.tika.mime.MimeDetectionTest.testStream(MimeDetectionTest.java:199)
+2026-06-03T18:00:04.1607524Z 	at org.apache.tika.mime.MimeDetectionTest.testFile(MimeDetectionTest.java:193)
+2026-06-03T18:00:04.1608341Z 	at org.apache.tika.mime.MimeDetectionTest.testDetection(MimeDetectionTest.java:92)
+2026-06-03T18:00:04.1608864Z 
+2026-06-03T18:00:04.1609174Z [INFO] Running org.apache.tika.mime.MimeTypesReaderTest
+2026-06-03T18:00:04.3545454Z [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.193 s -- in org.apache.tika.mime.MimeTypesReaderTest
+2026-06-03T18:00:04.3567355Z [INFO] Running org.apache.tika.mime.PatternsTest
+2026-06-03T18:00:04.3569529Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.mime.PatternsTest
+2026-06-03T18:00:04.3570529Z [INFO] Running org.apache.tika.mime.ProbabilisticMimeDetectionTest
+2026-06-03T18:00:04.5315293Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.164 s -- in org.apache.tika.mime.ProbabilisticMimeDetectionTest
+2026-06-03T18:00:04.5317076Z [INFO] Running org.apache.tika.mime.RFC822DetectionTest
+2026-06-03T18:00:04.5317963Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.apache.tika.mime.RFC822DetectionTest
+2026-06-03T18:00:04.5318815Z [INFO] Running org.apache.tika.parser.CompositeParserTest
+2026-06-03T18:00:04.5422846Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in org.apache.tika.parser.CompositeParserTest
+2026-06-03T18:00:04.5423647Z [INFO] Running org.apache.tika.parser.mock.MockParserTest
+2026-06-03T18:00:04.7364011Z INFO  [pool-5-thread-1] 18:00:04,584 com.martensigwart.fakeload.DefaultFakeLoadExecutor FakeLoad execution started
+2026-06-03T18:00:04.7369692Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in org.apache.tika.parser.mock.MockParserTest
+2026-06-03T18:00:04.7373516Z INFO  [pool-7-thread-1] 18:00:04,715 com.martensigwart.fakeload.DefaultFakeLoadExecutor FakeLoad execution finished
+2026-06-03T18:00:04.7374365Z [INFO] Running org.apache.tika.parser.multiple.MultipleParserTest
+2026-06-03T18:00:04.8007810Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in org.apache.tika.parser.multiple.MultipleParserTest
+2026-06-03T18:00:04.8014959Z [INFO] Running org.apache.tika.parser.ParseContextTest
+2026-06-03T18:00:04.8036839Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in org.apache.tika.parser.ParseContextTest
+2026-06-03T18:00:04.8038216Z [INFO] Running org.apache.tika.parser.ParserDecoratorTest
+2026-06-03T18:00:04.8151980Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.tika.parser.ParserDecoratorTest
+2026-06-03T18:00:04.8152890Z [INFO] Running org.apache.tika.parser.RegexCaptureParserTest
+2026-06-03T18:00:04.8305538Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in org.apache.tika.parser.RegexCaptureParserTest
+2026-06-03T18:00:04.8307146Z [INFO] Running org.apache.tika.sax.BasicContentHandlerFactoryTest
+2026-06-03T18:00:04.8558914Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in org.apache.tika.sax.BasicContentHandlerFactoryTest
+2026-06-03T18:00:04.8675394Z [INFO] Running org.apache.tika.sax.BodyContentHandlerTest
+2026-06-03T18:00:04.8861357Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.apache.tika.sax.BodyContentHandlerTest
+2026-06-03T18:00:04.9022204Z [INFO] Running org.apache.tika.sax.CustomErrorHandlerTest
+2026-06-03T18:00:04.9065929Z [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 s -- in org.apache.tika.sax.CustomErrorHandlerTest
+2026-06-03T18:00:04.9066776Z [INFO] Running org.apache.tika.sax.LinkContentHandlerTest
+2026-06-03T18:00:04.9067564Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.tika.sax.LinkContentHandlerTest
+2026-06-03T18:00:04.9068345Z [INFO] Running org.apache.tika.sax.OfflineContentHandlerTest
+2026-06-03T18:00:04.9072087Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.sax.OfflineContentHandlerTest
+2026-06-03T18:00:04.9178523Z [INFO] Running org.apache.tika.sax.RichTextContentHandlerTest
+2026-06-03T18:00:04.9221882Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.sax.RichTextContentHandlerTest
+2026-06-03T18:00:04.9411673Z [INFO] Running org.apache.tika.sax.SafeContentHandlerTest
+2026-06-03T18:00:04.9490186Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.sax.SafeContentHandlerTest
+2026-06-03T18:00:04.9491140Z [INFO] Running org.apache.tika.sax.SecureContentHandlerTest
+2026-06-03T18:00:05.1633788Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.278 s -- in org.apache.tika.sax.SecureContentHandlerTest
+2026-06-03T18:00:05.1634939Z [INFO] Running org.apache.tika.sax.SerializerTest
+2026-06-03T18:00:05.1661417Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in org.apache.tika.sax.SerializerTest
+2026-06-03T18:00:05.1662379Z [INFO] Running org.apache.tika.sax.ToMarkdownContentHandlerTest
+2026-06-03T18:00:05.2171663Z [INFO] Tests run: 57, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.047 s -- in org.apache.tika.sax.ToMarkdownContentHandlerTest
+2026-06-03T18:00:05.2188639Z [INFO] Running org.apache.tika.sax.XHTMLBalancingHandlerTest
+2026-06-03T18:00:05.2205354Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.tika.sax.XHTMLBalancingHandlerTest
+2026-06-03T18:00:05.2206468Z [INFO] Running org.apache.tika.sax.XHTMLContentHandlerTest
+2026-06-03T18:00:05.2319272Z [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.apache.tika.sax.XHTMLContentHandlerTest
+2026-06-03T18:00:05.2321161Z [INFO] Running org.apache.tika.sax.xpath.XPathParserTest
+2026-06-03T18:00:05.2368597Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.apache.tika.sax.xpath.XPathParserTest
+2026-06-03T18:00:05.2369593Z [INFO] Running org.apache.tika.TikaDetectionTest
+2026-06-03T18:00:05.2482730Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.apache.tika.TikaDetectionTest
+2026-06-03T18:00:05.2483531Z [INFO] Running org.apache.tika.utils.CharsetUtilsTest
+2026-06-03T18:00:05.5354797Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.285 s -- in org.apache.tika.utils.CharsetUtilsTest
+2026-06-03T18:00:05.5355734Z [INFO] Running org.apache.tika.utils.ConcurrentUtilsTest
+2026-06-03T18:00:05.5412791Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.apache.tika.utils.ConcurrentUtilsTest
+2026-06-03T18:00:05.5414250Z [INFO] Running org.apache.tika.utils.RegexUtilsTest
+2026-06-03T18:00:05.5467880Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.apache.tika.utils.RegexUtilsTest
+2026-06-03T18:00:05.5471734Z [INFO] Running org.apache.tika.utils.ServiceLoaderUtilsTest
+2026-06-03T18:00:05.5498166Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.apache.tika.utils.ServiceLoaderUtilsTest
+2026-06-03T18:00:05.5499282Z [INFO] Running org.apache.tika.utils.XMLReaderUtilsTest
+2026-06-03T18:00:05.8773238Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.324 s -- in org.apache.tika.utils.XMLReaderUtilsTest
+2026-06-03T18:00:05.9832215Z [INFO] 
+2026-06-03T18:00:05.9903958Z [INFO] Results:
+2026-06-03T18:00:05.9904660Z [INFO] 
+2026-06-03T18:00:05.9905038Z [ERROR] Failures: 
+2026-06-03T18:00:05.9906218Z [ERROR]   MimeDetectionTest.testDetection:92->testFile:193->testStream:199 Test stream: [test-android-binary.xml] is null! ==> expected: not <null>
+2026-06-03T18:00:05.9908698Z [INFO] 
+2026-06-03T18:00:05.9909394Z [ERROR] Tests run: 397, Failures: 1, Errors: 0, Skipped: 2
+2026-06-03T18:00:05.9910205Z [INFO] 
+2026-06-03T18:00:05.9910417Z [INFO] 
+2026-06-03T18:00:05.9910728Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:05.9911189Z [INFO] Skipping Apache Tika
+2026-06-03T18:00:05.9911623Z [INFO] This project has been banned from the build due to previous failures.
+2026-06-03T18:00:05.9912172Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:05.9912645Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:05.9913072Z [INFO] Reactor Summary for Apache Tika 4.0.0-SNAPSHOT:
+2026-06-03T18:00:05.9913668Z [INFO] 
+2026-06-03T18:00:05.9913993Z [INFO] Apache Tika parent ................................. SUCCESS [  6.208 s]
+2026-06-03T18:00:05.9915619Z [INFO] Apache Tika BOM .................................... SUCCESS [  0.241 s]
+2026-06-03T18:00:05.9916319Z [INFO] Apache Tika Annotation Processor ................... SUCCESS [ 11.939 s]
+2026-06-03T18:00:05.9916823Z [INFO] Apache Tika core ................................... FAILURE [ 19.582 s]
+2026-06-03T18:00:05.9917279Z [INFO] Apache Tika serialization .......................... SKIPPED
+2026-06-03T18:00:05.9917718Z [INFO] Apache Tika plugins core ........................... SKIPPED
+2026-06-03T18:00:05.9918144Z [INFO] Apache Tika parser modules ......................... SKIPPED
+2026-06-03T18:00:05.9918559Z [INFO] Apache Tika standard parser modules and package .... SKIPPED
+2026-06-03T18:00:05.9918993Z [INFO] Apache Tika standard parser modules ................ SKIPPED
+2026-06-03T18:00:05.9919424Z [INFO] Apache Tika ZIP commons ............................ SKIPPED
+2026-06-03T18:00:05.9920069Z [INFO] Apache Tika Apple parser module .................... SKIPPED
+2026-06-03T18:00:05.9920655Z [INFO] Apache Tika audiovideo parser module ............... SKIPPED
+2026-06-03T18:00:05.9921196Z [INFO] Apache Tika Encoding Detectors ..................... SKIPPED
+2026-06-03T18:00:05.9921698Z [INFO] Apache Tika HTML encoding detector ................. SKIPPED
+2026-06-03T18:00:05.9922224Z [INFO] Apache Tika ML ..................................... SKIPPED
+2026-06-03T18:00:05.9922722Z [INFO] Apache Tika ML core (no Tika dependencies) ......... SKIPPED
+2026-06-03T18:00:05.9923256Z [INFO] Apache Tika ML charset encoding detector ........... SKIPPED
+2026-06-03T18:00:05.9923775Z [INFO] Apache Tika juniversalchardet encoding detector .... SKIPPED
+2026-06-03T18:00:05.9924304Z [INFO] Apache Tika ICU4J encoding detector (vendored) ..... SKIPPED
+2026-06-03T18:00:05.9925091Z [INFO] Apache Tika text parser module ..................... SKIPPED
+2026-06-03T18:00:05.9925598Z [INFO] Apache Tika html parser module ..................... SKIPPED
+2026-06-03T18:00:05.9926089Z [INFO] Apache Tika XML parser module ...................... SKIPPED
+2026-06-03T18:00:05.9926574Z [INFO] Apache Tika mail commons ........................... SKIPPED
+2026-06-03T18:00:05.9927064Z [INFO] Apache Tika XMP commons ............................ SKIPPED
+2026-06-03T18:00:05.9927558Z [INFO] Apache Tika image parser module .................... SKIPPED
+2026-06-03T18:00:05.9928056Z [INFO] Apache Tika OCR parser module ...................... SKIPPED
+2026-06-03T18:00:05.9928554Z [INFO] Apache Tika mail parser module ..................... SKIPPED
+2026-06-03T18:00:05.9929062Z [INFO] Apache Tika Microsoft parser module ................ SKIPPED
+2026-06-03T18:00:05.9929557Z [INFO] Apache Tika cad parser module ...................... SKIPPED
+2026-06-03T18:00:05.9930059Z [INFO] Apache Tika code parser module ..................... SKIPPED
+2026-06-03T18:00:05.9930571Z [INFO] Apache Tika crypto parser module ................... SKIPPED
+2026-06-03T18:00:05.9931329Z [INFO] Apache Tika digest commons ......................... SKIPPED
+2026-06-03T18:00:05.9931828Z [INFO] Apache Tika font parser module ..................... SKIPPED
+2026-06-03T18:00:05.9932342Z [INFO] Apache Tika miscellaneous office format parser module SKIPPED
+2026-06-03T18:00:05.9932876Z [INFO] Apache Tika news parser module ..................... SKIPPED
+2026-06-03T18:00:05.9933372Z [INFO] Apache Tika PDF parser module ...................... SKIPPED
+2026-06-03T18:00:05.9933875Z [INFO] Apache Tika package parser module .................. SKIPPED
+2026-06-03T18:00:05.9934378Z [INFO] Apache Tika WARC parser module ..................... SKIPPED
+2026-06-03T18:00:05.9934873Z [INFO] Apache Tika standard parser package ................ SKIPPED
+2026-06-03T18:00:05.9935361Z [INFO] Apache Tika Detectors .............................. SKIPPED
+2026-06-03T18:00:05.9935866Z [INFO] Apache Tika Siegfried wrapper ...................... SKIPPED
+2026-06-03T18:00:05.9936508Z [INFO] Apache Tika magika wrapper ......................... SKIPPED
+2026-06-03T18:00:05.9937391Z [INFO] Apache Tika ML charset detector � training and evaluation tools SKIPPED
+2026-06-03T18:00:05.9938087Z [INFO] Apache Tika ML junk detector � runtime and training tools SKIPPED
+2026-06-03T18:00:05.9938623Z [INFO] Apache Tika JDK HTTP client ........................ SKIPPED
+2026-06-03T18:00:05.9939127Z [INFO] Apache Tika jdbc parser commons .................... SKIPPED
+2026-06-03T18:00:05.9939621Z [INFO] Apache Tika handlers ............................... SKIPPED
+2026-06-03T18:00:05.9940122Z [INFO] tika-handler-boilerpipe ............................ SKIPPED
+2026-06-03T18:00:05.9940623Z [INFO] Apache Tika language detection ..................... SKIPPED
+2026-06-03T18:00:05.9941267Z [INFO] Apache Tika langdetect (charsoup core � no Tika dependencies) SKIPPED
+2026-06-03T18:00:05.9941838Z [INFO] Apache Tika langdetect test commons ................ SKIPPED
+2026-06-03T18:00:05.9944368Z [INFO] Apache Tika OpenNLP langdetect ..................... SKIPPED
+2026-06-03T18:00:05.9944868Z [INFO] Apache Tika Optimaize langdetect ................... SKIPPED
+2026-06-03T18:00:05.9945365Z [INFO] Apache Tika langdetect (built-in charsoup) ......... SKIPPED
+2026-06-03T18:00:05.9946153Z [INFO] Apache Tika standard parser integration tests ...... SKIPPED
+2026-06-03T18:00:05.9946645Z [INFO] Apache Tika extended parsers ....................... SKIPPED
+2026-06-03T18:00:05.9947102Z [INFO] Apache Tika sqlite3 parser module .................. SKIPPED
+2026-06-03T18:00:05.9947559Z [INFO] Apache Tika scientific parser module ............... SKIPPED
+2026-06-03T18:00:05.9948008Z [INFO] Apache Tika OCR encode parser module ............... SKIPPED
+2026-06-03T18:00:05.9948462Z [INFO] Apache Tika sqlite3 parser package ................. SKIPPED
+2026-06-03T18:00:05.9948963Z [INFO] Apache Tika scientific parser package .............. SKIPPED
+2026-06-03T18:00:05.9954314Z [INFO] Apache Tika extended parser integration tests ...... SKIPPED
+2026-06-03T18:00:05.9954914Z [INFO] Apache Tika machine learning (ml) parsers .......... SKIPPED
+2026-06-03T18:00:05.9955438Z [INFO] Apache Tika natural language process module ........ SKIPPED
+2026-06-03T18:00:05.9956458Z [INFO] Apache Tika natural language processing package .... SKIPPED
+2026-06-03T18:00:05.9957531Z [INFO] Apache Tika inference module ....................... SKIPPED
+2026-06-03T18:00:05.9958529Z [INFO] Apache Tika VLM module ............................. SKIPPED
+2026-06-03T18:00:05.9959456Z [INFO] Apache Tika Tess4J OCR parser module ............... SKIPPED
+2026-06-03T18:00:05.9959963Z [INFO] Apache Tika transcribe aws ......................... SKIPPED
+2026-06-03T18:00:05.9960422Z [INFO] Apache Tika bundles module ......................... SKIPPED
+2026-06-03T18:00:05.9960839Z [INFO] Apache Tika OSGi standard bundle ................... SKIPPED
+2026-06-03T18:00:05.9961263Z [INFO] Apache Tika XMP .................................... SKIPPED
+2026-06-03T18:00:05.9961694Z [INFO] Apache Tika Lingo24 langdetect ..................... SKIPPED
+2026-06-03T18:00:05.9962138Z [INFO] Apache Tika MIT Lincoln Labs langdetect ............ SKIPPED
+2026-06-03T18:00:05.9962579Z [INFO] Apache Tika pipes .................................. SKIPPED
+2026-06-03T18:00:05.9963019Z [INFO] Apache Tika pipes api .............................. SKIPPED
+2026-06-03T18:00:05.9963466Z [INFO] Apache Tika Pipes iterators - base ................. SKIPPED
+2026-06-03T18:00:05.9963920Z [INFO] Apache Tika pipes core ............................. SKIPPED
+2026-06-03T18:00:05.9964344Z [INFO] Apache Tika httpclient commons ..................... SKIPPED
+2026-06-03T18:00:05.9964811Z [INFO] Apache Tika Pipes Reporter - base .................. SKIPPED
+2026-06-03T18:00:05.9965270Z [INFO] Apache Tika Plugins ................................ SKIPPED
+2026-06-03T18:00:05.9965731Z [INFO] Apache Tika Pipes Atlassian JWT .................... SKIPPED
+2026-06-03T18:00:05.9966355Z [INFO] Apache Tika Pipes Azure Blob ....................... SKIPPED
+2026-06-03T18:00:05.9966814Z [INFO] Apache Tika Pipes CSV .............................. SKIPPED
+2026-06-03T18:00:05.9967278Z [INFO] Apache Tika Pipes File System ...................... SKIPPED
+2026-06-03T18:00:05.9967913Z [INFO] Apache Tika Pipes GCS .............................. SKIPPED
+2026-06-03T18:00:05.9968361Z [INFO] Apache Tika Pipes Google Drive ..................... SKIPPED
+2026-06-03T18:00:05.9968794Z [INFO] Apache Tika Pipes HTTP ............................. SKIPPED
+2026-06-03T18:00:05.9969234Z [INFO] Apache Tika Pipes JDBC ............................. SKIPPED
+2026-06-03T18:00:05.9969702Z [INFO] Apache Tika Pipes JSON ............................. SKIPPED
+2026-06-03T18:00:05.9973705Z [INFO] Apache Tika Pipes Kafka ............................ SKIPPED
+2026-06-03T18:00:05.9974553Z [INFO] Apache Tika Pipes Microsoft Graph .................. SKIPPED
+2026-06-03T18:00:05.9975084Z [INFO] Apache Tika Pipes Elasticsearch .................... SKIPPED
+2026-06-03T18:00:05.9975790Z [INFO] Apache Tika Pipes OpenSearch ....................... SKIPPED
+2026-06-03T18:00:05.9976283Z [INFO] Apache Tika Pipes S3 ............................... SKIPPED
+2026-06-03T18:00:05.9976770Z [INFO] Apache Tika Pipes Apache Solr ...................... SKIPPED
+2026-06-03T18:00:05.9977275Z [INFO] Apache Tika Pipes Config Store Ignite .............. SKIPPED
+2026-06-03T18:00:05.9977757Z [INFO] Apache Tika eval module ............................ SKIPPED
+2026-06-03T18:00:05.9978248Z [INFO] Apache Tika eval core .............................. SKIPPED
+2026-06-03T18:00:05.9978740Z [INFO] Apache Tika pipes fork parser ...................... SKIPPED
+2026-06-03T18:00:05.9979224Z [INFO] Apache Tika Async CLI .............................. SKIPPED
+2026-06-03T18:00:05.9983700Z [INFO] Apache Tika pipes core integration tests ........... SKIPPED
+2026-06-03T18:00:05.9984276Z [INFO] Apache Tika pipes gRPC server ...................... SKIPPED
+2026-06-03T18:00:05.9984965Z [INFO] Apache Tika application ............................ SKIPPED
+2026-06-03T18:00:05.9985343Z [INFO] Apache Tika translate .............................. SKIPPED
+2026-06-03T18:00:05.9985642Z [INFO] Apache Tika server module .......................... SKIPPED
+2026-06-03T18:00:05.9986025Z [INFO] Apache Tika server core ............................ SKIPPED
+2026-06-03T18:00:05.9986410Z [INFO] Apache Tika standard server ........................ SKIPPED
+2026-06-03T18:00:05.9986703Z [INFO] Apache Tika server client .......................... SKIPPED
+2026-06-03T18:00:05.9987002Z [INFO] Apache Tika integration tests ...................... SKIPPED
+2026-06-03T18:00:05.9987301Z [INFO] Apache Tika Elasticsearch integration tests ........ SKIPPED
+2026-06-03T18:00:05.9987597Z [INFO] Apache Tika OpenSearch integration tests ........... SKIPPED
+2026-06-03T18:00:05.9987899Z [INFO] Apache Tika Apache Solr integration tests .......... SKIPPED
+2026-06-03T18:00:05.9988352Z [INFO] Apache Tika S3 pipes integration tests ............. SKIPPED
+2026-06-03T18:00:05.9988862Z [INFO] Apache Tika Kafka pipes integration tests .......... SKIPPED
+2026-06-03T18:00:05.9989383Z [INFO] tika-resource-loading-tests ........................ SKIPPED
+2026-06-03T18:00:05.9989882Z [INFO] tika-woodstox-tests ................................ SKIPPED
+2026-06-03T18:00:05.9990379Z [INFO] Apache Tika eval application ....................... SKIPPED
+2026-06-03T18:00:05.9990874Z [INFO] Apache Tika examples ............................... SKIPPED
+2026-06-03T18:00:05.9991955Z [INFO] Apache Tika Java-7 Components ...................... SKIPPED
+2026-06-03T18:00:05.9992695Z [INFO] Apache Tika End-to-End Tests ....................... SKIPPED
+2026-06-03T18:00:05.9993259Z [INFO] Apache Tika gRPC End-to-End Tests .................. SKIPPED
+2026-06-03T18:00:05.9994226Z [INFO] Apache Tika E2E Tests: REST Server ................. SKIPPED
+2026-06-03T18:00:05.9996087Z [INFO] Apache Tika ........................................ SKIPPED
+2026-06-03T18:00:05.9997118Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:05.9997630Z [INFO] BUILD FAILURE
+2026-06-03T18:00:05.9997989Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:05.9998432Z [INFO] Total time:  39.512 s
+2026-06-03T18:00:05.9998725Z [INFO] Finished at: 2026-06-03T18:00:05Z
+2026-06-03T18:00:05.9999170Z [INFO] ------------------------------------------------------------------------
+2026-06-03T18:00:06.0000119Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project tika-core: There are test failures.
+2026-06-03T18:00:06.0000927Z [ERROR] 
+2026-06-03T18:00:06.0001444Z [ERROR] See D:\a\tika\tika\tika build dir\tika-core\target\surefire-reports for the individual test results.
+2026-06-03T18:00:06.0002267Z [ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+2026-06-03T18:00:06.0002794Z [ERROR] -> [Help 1]
+2026-06-03T18:00:06.0003040Z [ERROR] 
+2026-06-03T18:00:06.0003431Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-06-03T18:00:06.0004273Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-06-03T18:00:06.0004703Z [ERROR] 
+2026-06-03T18:00:06.0005434Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-06-03T18:00:06.0006256Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+2026-06-03T18:00:06.0006766Z [ERROR] 
+2026-06-03T18:00:06.0007159Z [ERROR] After correcting the problems, you can resume the build with the command
+2026-06-03T18:00:06.0007675Z [ERROR]   mvn <args> -rf :tika-core
+2026-06-03T18:00:06.5781855Z ##[error]Process completed with exit code 1.
+2026-06-03T18:00:06.5942618Z Post job cleanup.
+2026-06-03T18:00:06.7390409Z Post job cleanup.
+2026-06-03T18:00:06.8707399Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-03T18:00:06.8934280Z git version 2.54.0.windows.1
+2026-06-03T18:00:06.9000511Z Temporarily overriding HOME='D:\a\_temp\13017887-790d-4756-8c6d-f749a6b12e86' before making global git config changes
+2026-06-03T18:00:06.9001402Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-03T18:00:06.9012461Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory "D:\a\tika\tika\tika build dir"
+2026-06-03T18:00:06.9286583Z Removing SSH command configuration
+2026-06-03T18:00:06.9296665Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-03T18:00:06.9579174Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-03T18:00:07.4507537Z Removing HTTP extra header
+2026-06-03T18:00:07.4516317Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-03T18:00:07.4788360Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-03T18:00:07.9118530Z Removing includeIf entries pointing to credentials config files
+2026-06-03T18:00:07.9129242Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-03T18:00:07.9339638Z includeif.gitdir:D:/a/tika/tika/tika build dir/.git.path
+2026-06-03T18:00:07.9340088Z includeif.gitdir:D:/a/tika/tika/tika build dir/.git/worktrees/*.path
+2026-06-03T18:00:07.9340433Z includeif.gitdir:/github/workspace/tika build dir/.git.path
+2026-06-03T18:00:07.9340804Z includeif.gitdir:/github/workspace/tika build dir/.git/worktrees/*.path
+2026-06-03T18:00:07.9374109Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all "includeif.gitdir:D:/a/tika/tika/tika build dir/.git.path"
+2026-06-03T18:00:07.9585681Z D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:07.9623293Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset "includeif.gitdir:D:/a/tika/tika/tika build dir/.git.path" D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:07.9886759Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all "includeif.gitdir:D:/a/tika/tika/tika build dir/.git/worktrees/*.path"
+2026-06-03T18:00:08.0113903Z D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.0156649Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset "includeif.gitdir:D:/a/tika/tika/tika build dir/.git/worktrees/*.path" D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.0432015Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all "includeif.gitdir:/github/workspace/tika build dir/.git.path"
+2026-06-03T18:00:08.0664069Z /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.0703104Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset "includeif.gitdir:/github/workspace/tika build dir/.git.path" /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.0973237Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all "includeif.gitdir:/github/workspace/tika build dir/.git/worktrees/*.path"
+2026-06-03T18:00:08.1201990Z /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.1244623Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset "includeif.gitdir:/github/workspace/tika build dir/.git/worktrees/*.path" /github/runner_temp/git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config
+2026-06-03T18:00:08.1513014Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-03T18:00:08.6616967Z Removing credentials config 'D:\a\_temp\git-credentials-af8b812e-d494-4470-aa6b-fbab4f94135d.config'
+2026-06-03T18:00:08.6793035Z Cleaning up orphan processes

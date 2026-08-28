@@ -1,0 +1,244 @@
+﻿2026-06-03T16:37:26.5566391Z Current runner version: '2.334.0'
+2026-06-03T16:37:26.5591679Z ##[group]Runner Image Provisioner
+2026-06-03T16:37:26.5592466Z Hosted Compute Agent
+2026-06-03T16:37:26.5593080Z Version: 20260520.533
+2026-06-03T16:37:26.5593660Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-03T16:37:26.5594330Z Build Date: 2026-05-20T17:44:04Z
+2026-06-03T16:37:26.5595014Z Worker ID: {24bf51d8-a133-458c-9204-451953b96373}
+2026-06-03T16:37:26.5595665Z Azure Region: westus3
+2026-06-03T16:37:26.5596176Z ##[endgroup]
+2026-06-03T16:37:26.5597636Z ##[group]Operating System
+2026-06-03T16:37:26.5598537Z Microsoft Windows Server 2025
+2026-06-03T16:37:26.5599202Z 10.0.26100
+2026-06-03T16:37:26.5599680Z Datacenter
+2026-06-03T16:37:26.5600142Z ##[endgroup]
+2026-06-03T16:37:26.5600675Z ##[group]Runner Image
+2026-06-03T16:37:26.5601207Z Image: windows-2025
+2026-06-03T16:37:26.5601725Z Version: 20260525.149.1
+2026-06-03T16:37:26.5603554Z Included Software: https://github.com/actions/runner-images/blob/win25/20260525.149/images/windows/Windows2025-Readme.md
+2026-06-03T16:37:26.5605006Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260525.149
+2026-06-03T16:37:26.5605969Z ##[endgroup]
+2026-06-03T16:37:26.5608735Z ##[group]GITHUB_TOKEN Permissions
+2026-06-03T16:37:26.5610785Z Actions: read
+2026-06-03T16:37:26.5611361Z ArtifactMetadata: read
+2026-06-03T16:37:26.5611907Z Attestations: read
+2026-06-03T16:37:26.5612399Z Checks: read
+2026-06-03T16:37:26.5612905Z CodeQuality: read
+2026-06-03T16:37:26.5613393Z Contents: read
+2026-06-03T16:37:26.5613865Z Deployments: read
+2026-06-03T16:37:26.5614417Z Discussions: read
+2026-06-03T16:37:26.5614900Z Issues: read
+2026-06-03T16:37:26.5615362Z Metadata: read
+2026-06-03T16:37:26.5615850Z Models: read
+2026-06-03T16:37:26.5616343Z Packages: read
+2026-06-03T16:37:26.5616923Z Pages: read
+2026-06-03T16:37:26.5617405Z PullRequests: read
+2026-06-03T16:37:26.5618117Z RepositoryProjects: read
+2026-06-03T16:37:26.5618702Z SecurityEvents: read
+2026-06-03T16:37:26.5619228Z Statuses: read
+2026-06-03T16:37:26.5619750Z VulnerabilityAlerts: read
+2026-06-03T16:37:26.5620310Z ##[endgroup]
+2026-06-03T16:37:26.5622979Z Secret source: Dependabot
+2026-06-03T16:37:26.5623787Z Prepare workflow directory
+2026-06-03T16:37:26.6049510Z Prepare all required actions
+2026-06-03T16:37:26.6087839Z Getting action download info
+2026-06-03T16:37:27.2525948Z Download action repository 'actions/checkout@v6' (SHA:df4cb1c069e1874edd31b4311f1884172cec0e10)
+2026-06-03T16:37:27.9145819Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-03T16:37:28.8098113Z Download action repository 'actions/cache@v5' (SHA:27d5ce7f107fe9357f9df03efb73ab90386fccae)
+2026-06-03T16:37:28.9436931Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-03T16:37:29.1826360Z Complete job name: Build Openfire from source (windows-latest, 21, zulu)
+2026-06-03T16:37:29.3355094Z ##[group]Run actions/checkout@v6
+2026-06-03T16:37:29.3356194Z with:
+2026-06-03T16:37:29.3356485Z   repository: igniterealtime/Openfire
+2026-06-03T16:37:29.3360194Z   token: ***
+2026-06-03T16:37:29.3360451Z   ssh-strict: true
+2026-06-03T16:37:29.3360767Z   ssh-user: git
+2026-06-03T16:37:29.3361124Z   persist-credentials: true
+2026-06-03T16:37:29.3361408Z   clean: true
+2026-06-03T16:37:29.3361662Z   sparse-checkout-cone-mode: true
+2026-06-03T16:37:29.3361971Z   fetch-depth: 1
+2026-06-03T16:37:29.3362229Z   fetch-tags: false
+2026-06-03T16:37:29.3362555Z   show-progress: true
+2026-06-03T16:37:29.3362885Z   lfs: false
+2026-06-03T16:37:29.3363109Z   submodules: false
+2026-06-03T16:37:29.3363359Z   set-safe-directory: true
+2026-06-03T16:37:29.3363895Z env:
+2026-06-03T16:37:29.3364137Z   CI: true
+2026-06-03T16:37:29.3364365Z   REGISTRY: ghcr.io
+2026-06-03T16:37:29.3364620Z   IMAGE_NAME: openfire
+2026-06-03T16:37:29.3364952Z ##[endgroup]
+2026-06-03T16:37:29.4995477Z Syncing repository: igniterealtime/Openfire
+2026-06-03T16:37:29.4999925Z ##[group]Getting Git version info
+2026-06-03T16:37:29.5000323Z Working directory is 'D:\a\Openfire\Openfire'
+2026-06-03T16:37:29.5798948Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-03T16:37:30.1727714Z git version 2.54.0.windows.1
+2026-06-03T16:37:30.1784035Z ##[endgroup]
+2026-06-03T16:37:30.1804628Z Temporarily overriding HOME='D:\a\_temp\80aa26e1-4f0f-4961-8724-d6280b5264d9' before making global git config changes
+2026-06-03T16:37:30.1805442Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-03T16:37:30.1815288Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Openfire\Openfire
+2026-06-03T16:37:30.2807081Z Deleting the contents of 'D:\a\Openfire\Openfire'
+2026-06-03T16:37:30.2813514Z ##[group]Determining repository object format
+2026-06-03T16:37:30.2816476Z ##[endgroup]
+2026-06-03T16:37:30.2817052Z ##[group]Initializing the repository
+2026-06-03T16:37:30.2826133Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Openfire\Openfire
+2026-06-03T16:37:30.3688017Z Initialized empty Git repository in D:/a/Openfire/Openfire/.git/
+2026-06-03T16:37:30.3754375Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/igniterealtime/Openfire
+2026-06-03T16:37:30.4615182Z ##[endgroup]
+2026-06-03T16:37:30.4616008Z ##[group]Disabling automatic garbage collection
+2026-06-03T16:37:30.4626919Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-06-03T16:37:30.5036795Z ##[endgroup]
+2026-06-03T16:37:30.5037532Z ##[group]Setting up auth
+2026-06-03T16:37:30.5038663Z Removing SSH command configuration
+2026-06-03T16:37:30.5053152Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-03T16:37:30.5491968Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-03T16:37:32.5981432Z Removing HTTP extra header
+2026-06-03T16:37:32.5997590Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-03T16:37:32.6404173Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-03T16:37:33.2074167Z Removing includeIf entries pointing to credentials config files
+2026-06-03T16:37:33.2088567Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-03T16:37:33.2414971Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-03T16:37:33.8105410Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-06-03T16:37:33.8445728Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Openfire/Openfire/.git.path D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:33.8775085Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Openfire/Openfire/.git/worktrees/*.path D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:33.9092868Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:33.9400030Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:33.9726692Z ##[endgroup]
+2026-06-03T16:37:33.9727254Z ##[group]Fetching the repository
+2026-06-03T16:37:33.9744291Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fe51d8e1487a2248c70b849b4714d395f68dd313:refs/remotes/pull/3372/merge
+2026-06-03T16:37:36.6686154Z From https://github.com/igniterealtime/Openfire
+2026-06-03T16:37:36.6687050Z  * [new ref]         fe51d8e1487a2248c70b849b4714d395f68dd313 -> pull/3372/merge
+2026-06-03T16:37:36.7131880Z ##[endgroup]
+2026-06-03T16:37:36.7132490Z ##[group]Determining the checkout info
+2026-06-03T16:37:36.7133131Z ##[endgroup]
+2026-06-03T16:37:36.7147346Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-06-03T16:37:36.7508162Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-06-03T16:37:36.7829701Z ##[group]Checking out the ref
+2026-06-03T16:37:36.7839942Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/3372/merge
+2026-06-03T16:37:37.3823459Z Note: switching to 'refs/remotes/pull/3372/merge'.
+2026-06-03T16:37:37.3823957Z 
+2026-06-03T16:37:37.3824267Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-03T16:37:37.3825065Z changes and commit them, and you can discard any commits you make in this
+2026-06-03T16:37:37.3825828Z state without impacting any branches by switching back to a branch.
+2026-06-03T16:37:37.3826288Z 
+2026-06-03T16:37:37.3826627Z If you want to create a new branch to retain commits you create, you may
+2026-06-03T16:37:37.3827353Z do so (now or later) by using -c with the switch command. Example:
+2026-06-03T16:37:37.3827779Z 
+2026-06-03T16:37:37.3827935Z   git switch -c <new-branch-name>
+2026-06-03T16:37:37.3828258Z 
+2026-06-03T16:37:37.3828398Z Or undo this operation with:
+2026-06-03T16:37:37.3828627Z 
+2026-06-03T16:37:37.3828748Z   git switch -
+2026-06-03T16:37:37.3828967Z 
+2026-06-03T16:37:37.3829312Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-03T16:37:37.3829819Z 
+2026-06-03T16:37:37.3830442Z HEAD is now at fe51d8e Merge bebbdbf893d38ce3cdda2bceae817abf2b0a5126 into 7292b0d6d12eb6b5e88b88ec109c25cf060eec22
+2026-06-03T16:37:37.3927715Z ##[endgroup]
+2026-06-03T16:37:37.4265412Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-06-03T16:37:37.4551654Z fe51d8e1487a2248c70b849b4714d395f68dd313
+2026-06-03T16:37:37.5036525Z ##[group]Run actions/setup-java@v5
+2026-06-03T16:37:37.5036904Z with:
+2026-06-03T16:37:37.5037124Z   java-version: 21
+2026-06-03T16:37:37.5037329Z   distribution: zulu
+2026-06-03T16:37:37.5037531Z   cache: maven
+2026-06-03T16:37:37.5037727Z   java-package: jdk
+2026-06-03T16:37:37.5037924Z   check-latest: false
+2026-06-03T16:37:37.5038121Z   server-id: github
+2026-06-03T16:37:37.5038316Z   server-username: GITHUB_ACTOR
+2026-06-03T16:37:37.5038556Z   server-password: GITHUB_TOKEN
+2026-06-03T16:37:37.5038792Z   overwrite-settings: true
+2026-06-03T16:37:37.5039062Z   job-status: success
+2026-06-03T16:37:37.5041979Z   token: ***
+2026-06-03T16:37:37.5042162Z env:
+2026-06-03T16:37:37.5042330Z   CI: true
+2026-06-03T16:37:37.5042507Z   REGISTRY: ghcr.io
+2026-06-03T16:37:37.5042708Z   IMAGE_NAME: openfire
+2026-06-03T16:37:37.5042912Z ##[endgroup]
+2026-06-03T16:37:37.7052179Z ##[group]Installed distributions
+2026-06-03T16:37:37.7080181Z Trying to resolve the latest version from remote
+2026-06-03T16:37:37.8610024Z Resolved latest version as 21.0.11+10
+2026-06-03T16:37:37.8610941Z Trying to download...
+2026-06-03T16:37:37.8612069Z Downloading Java 21.0.11+10 (Zulu) from https://cdn.azul.com/zulu/bin/zulu21.50.19-ca-crac-jdk21.0.11-win_x64.zip ...
+2026-06-03T16:37:42.4164772Z Extracting Java archive...
+2026-06-03T16:37:42.4833989Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command "$ErrorActionPreference = 'Stop' ; try { Add-Type -AssemblyName System.IO.Compression.ZipFile } catch { } ; try { [System.IO.Compression.ZipFile]::ExtractToDirectory('D:\a\_temp\ec90e857-5cc4-4331-b609-846521ebdef8.zip', 'D:\a\_temp\46469064-2c8a-440b-b1b8-abbcc9b5cdb0', $true) } catch { if (($_.Exception.GetType().FullName -eq 'System.Management.Automation.MethodException') -or ($_.Exception.GetType().FullName -eq 'System.Management.Automation.RuntimeException') ){ Expand-Archive -LiteralPath 'D:\a\_temp\ec90e857-5cc4-4331-b609-846521ebdef8.zip' -DestinationPath 'D:\a\_temp\46469064-2c8a-440b-b1b8-abbcc9b5cdb0' -Force } else { throw $_ } } ;"
+2026-06-03T16:37:52.2666601Z Java 21.0.11+10 was downloaded
+2026-06-03T16:37:52.2667038Z Setting Java 21.0.11+10 as the default
+2026-06-03T16:37:52.2690387Z Creating toolchains.xml for JDK version 21 from zulu
+2026-06-03T16:37:52.2768323Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-06-03T16:37:52.2772304Z 
+2026-06-03T16:37:52.2772741Z Java configuration:
+2026-06-03T16:37:52.2773107Z   Distribution: zulu
+2026-06-03T16:37:52.2773480Z   Version: 21.0.11+10
+2026-06-03T16:37:52.2773942Z   Path: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.11-10\x64
+2026-06-03T16:37:52.2774361Z 
+2026-06-03T16:37:52.2775197Z ##[endgroup]
+2026-06-03T16:37:52.2788534Z Creating settings.xml with server-id: github
+2026-06-03T16:37:52.2791837Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-06-03T16:37:53.0195514Z maven cache is not found
+2026-06-03T16:37:53.1649091Z ##[group]Run actions/cache@v5
+2026-06-03T16:37:53.1649440Z with:
+2026-06-03T16:37:53.1649629Z   path: ~/.m2/wrapper
+2026-06-03T16:37:53.1650060Z   key: Windows-mvn-wrapper-9eb0a1463a76edd453f782bddf3b27ba278e1cedadcc400218ce338828663898
+2026-06-03T16:37:53.1650567Z   restore-keys: Windows-mvn-wrapper-
+
+2026-06-03T16:37:53.1650847Z   enableCrossOsArchive: false
+2026-06-03T16:37:53.1651081Z   fail-on-cache-miss: false
+2026-06-03T16:37:53.1651295Z   lookup-only: false
+2026-06-03T16:37:53.1651490Z   save-always: false
+2026-06-03T16:37:53.1651667Z env:
+2026-06-03T16:37:53.1651857Z   CI: true
+2026-06-03T16:37:53.1652029Z   REGISTRY: ghcr.io
+2026-06-03T16:37:53.1652221Z   IMAGE_NAME: openfire
+2026-06-03T16:37:53.1652519Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.11-10\x64
+2026-06-03T16:37:53.1652947Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.11-10\x64
+2026-06-03T16:37:53.1653276Z ##[endgroup]
+2026-06-03T16:37:53.7456525Z ##[group]Run actions/upload-artifact@v7
+2026-06-03T16:37:53.7456878Z with:
+2026-06-03T16:37:53.7457164Z   name: Openfire Build Java 21 zulu on Windows JUnit Test reports
+2026-06-03T16:37:53.7457538Z   path: xmppserver/target/surefire-reports
+2026-06-03T16:37:53.7457814Z   if-no-files-found: warn
+2026-06-03T16:37:53.7458032Z   compression-level: 6
+2026-06-03T16:37:53.7458231Z   overwrite: false
+2026-06-03T16:37:53.7458432Z   include-hidden-files: false
+2026-06-03T16:37:53.7458654Z   archive: true
+2026-06-03T16:37:53.7458830Z env:
+2026-06-03T16:37:53.7458991Z   CI: true
+2026-06-03T16:37:53.7459157Z   REGISTRY: ghcr.io
+2026-06-03T16:37:53.7459392Z   IMAGE_NAME: openfire
+2026-06-03T16:37:53.7459700Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.11-10\x64
+2026-06-03T16:37:53.7460156Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.11-10\x64
+2026-06-03T16:37:53.7460499Z ##[endgroup]
+2026-06-03T16:37:53.9451308Z ##[warning]No files were found with the provided path: xmppserver/target/surefire-reports. No artifacts will be uploaded.
+2026-06-03T16:37:53.9837836Z Post job cleanup.
+2026-06-03T16:37:54.2129441Z Post job cleanup.
+2026-06-03T16:37:54.4377759Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-03T16:37:54.4764741Z git version 2.54.0.windows.1
+2026-06-03T16:37:54.4831704Z Temporarily overriding HOME='D:\a\_temp\e9906523-fb6f-420f-b3c5-ef491652b5cd' before making global git config changes
+2026-06-03T16:37:54.4834204Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-03T16:37:54.4845576Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Openfire\Openfire
+2026-06-03T16:37:54.5199998Z Removing SSH command configuration
+2026-06-03T16:37:54.5215183Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-03T16:37:54.5579659Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-03T16:37:55.1216804Z Removing HTTP extra header
+2026-06-03T16:37:55.1241967Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-03T16:37:55.1629652Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-03T16:37:55.7787635Z Removing includeIf entries pointing to credentials config files
+2026-06-03T16:37:55.7804074Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-03T16:37:55.8103392Z includeif.gitdir:D:/a/Openfire/Openfire/.git.path
+2026-06-03T16:37:55.8104910Z includeif.gitdir:D:/a/Openfire/Openfire/.git/worktrees/*.path
+2026-06-03T16:37:55.8106003Z includeif.gitdir:/github/workspace/.git.path
+2026-06-03T16:37:55.8107016Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-03T16:37:55.8155520Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Openfire/Openfire/.git.path
+2026-06-03T16:37:55.8459143Z D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:55.8514889Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Openfire/Openfire/.git.path D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:55.8867560Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Openfire/Openfire/.git/worktrees/*.path
+2026-06-03T16:37:55.9204925Z D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:55.9258275Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Openfire/Openfire/.git/worktrees/*.path D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:55.9621005Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-03T16:37:55.9922602Z /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:55.9979790Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:56.0359620Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-03T16:37:56.0681622Z /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:56.0729508Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config
+2026-06-03T16:37:56.1055586Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-03T16:37:56.6725011Z Removing credentials config 'D:\a\_temp\git-credentials-9d245c57-9c63-42cf-b221-2059fe340cf6.config'
+2026-06-03T16:37:56.6932709Z Cleaning up orphan processes

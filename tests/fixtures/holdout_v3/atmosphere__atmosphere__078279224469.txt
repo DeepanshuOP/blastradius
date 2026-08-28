@@ -1,0 +1,724 @@
+﻿2026-05-28T11:29:27.4989120Z Current runner version: '2.334.0'
+2026-05-28T11:29:27.5025461Z ##[group]Runner Image Provisioner
+2026-05-28T11:29:27.5027489Z Hosted Compute Agent
+2026-05-28T11:29:27.5028410Z Version: 20260520.533
+2026-05-28T11:29:27.5029362Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-05-28T11:29:27.5030649Z Build Date: 2026-05-20T17:44:04Z
+2026-05-28T11:29:27.5031743Z Worker ID: {de7c662c-e060-4581-8ddf-e5f8cb5d52b2}
+2026-05-28T11:29:27.5032989Z Azure Region: eastus2
+2026-05-28T11:29:27.5034041Z ##[endgroup]
+2026-05-28T11:29:27.5036993Z ##[group]Operating System
+2026-05-28T11:29:27.5038137Z Ubuntu
+2026-05-28T11:29:27.5038939Z 24.04.4
+2026-05-28T11:29:27.5039858Z LTS
+2026-05-28T11:29:27.5040779Z ##[endgroup]
+2026-05-28T11:29:27.5041657Z ##[group]Runner Image
+2026-05-28T11:29:27.5042716Z Image: ubuntu-24.04
+2026-05-28T11:29:27.5043595Z Version: 20260525.161.1
+2026-05-28T11:29:27.5045735Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-28T11:29:27.5048562Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-05-28T11:29:27.5050323Z ##[endgroup]
+2026-05-28T11:29:27.5055066Z ##[group]GITHUB_TOKEN Permissions
+2026-05-28T11:29:27.5058700Z Actions: read
+2026-05-28T11:29:27.5059704Z ArtifactMetadata: read
+2026-05-28T11:29:27.5060716Z Attestations: read
+2026-05-28T11:29:27.5061686Z Checks: read
+2026-05-28T11:29:27.5062561Z CodeQuality: read
+2026-05-28T11:29:27.5063579Z Contents: read
+2026-05-28T11:29:27.5064468Z Deployments: read
+2026-05-28T11:29:27.5065330Z Discussions: read
+2026-05-28T11:29:27.5066492Z Issues: read
+2026-05-28T11:29:27.5067317Z Metadata: read
+2026-05-28T11:29:27.5068207Z Models: read
+2026-05-28T11:29:27.5069064Z Packages: read
+2026-05-28T11:29:27.5070060Z Pages: read
+2026-05-28T11:29:27.5070994Z PullRequests: read
+2026-05-28T11:29:27.5071975Z RepositoryProjects: read
+2026-05-28T11:29:27.5073042Z SecurityEvents: read
+2026-05-28T11:29:27.5073981Z Statuses: read
+2026-05-28T11:29:27.5074846Z VulnerabilityAlerts: read
+2026-05-28T11:29:27.5075888Z ##[endgroup]
+2026-05-28T11:29:27.5079110Z Secret source: Dependabot
+2026-05-28T11:29:27.5080765Z Prepare workflow directory
+2026-05-28T11:29:27.5542715Z Prepare all required actions
+2026-05-28T11:29:27.5595551Z Getting action download info
+2026-05-28T11:29:28.0629346Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-05-28T11:29:28.2105499Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-05-28T11:29:28.5229852Z Download action repository 'actions/download-artifact@v8' (SHA:3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c)
+2026-05-28T11:29:28.7648059Z Download action repository 'actions/setup-node@v6' (SHA:48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e)
+2026-05-28T11:29:28.8836725Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-28T11:29:29.0228779Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-05-28T11:29:29.2807204Z Complete job name: E2E — gap-admin-smoke (SB3)
+2026-05-28T11:29:29.3721678Z ##[group]Run actions/checkout@v6
+2026-05-28T11:29:29.3723132Z with:
+2026-05-28T11:29:29.3724293Z   repository: Atmosphere/atmosphere
+2026-05-28T11:29:29.3734059Z   token: ***
+2026-05-28T11:29:29.3735126Z   ssh-strict: true
+2026-05-28T11:29:29.3736104Z   ssh-user: git
+2026-05-28T11:29:29.3737181Z   persist-credentials: true
+2026-05-28T11:29:29.3738339Z   clean: true
+2026-05-28T11:29:29.3739343Z   sparse-checkout-cone-mode: true
+2026-05-28T11:29:29.3809858Z   fetch-depth: 1
+2026-05-28T11:29:29.3810895Z   fetch-tags: false
+2026-05-28T11:29:29.3811834Z   show-progress: true
+2026-05-28T11:29:29.3812835Z   lfs: false
+2026-05-28T11:29:29.3813655Z   submodules: false
+2026-05-28T11:29:29.3814572Z   set-safe-directory: true
+2026-05-28T11:29:29.3816609Z ##[endgroup]
+2026-05-28T11:29:29.4869908Z Syncing repository: Atmosphere/atmosphere
+2026-05-28T11:29:29.4872490Z ##[group]Getting Git version info
+2026-05-28T11:29:29.4874237Z Working directory is '/home/runner/work/atmosphere/atmosphere'
+2026-05-28T11:29:29.4876241Z [command]/usr/bin/git version
+2026-05-28T11:29:29.4929759Z git version 2.54.0
+2026-05-28T11:29:29.4953483Z ##[endgroup]
+2026-05-28T11:29:29.4969315Z Temporarily overriding HOME='/home/runner/work/_temp/d159cabe-4f4f-41ee-9cbf-635937426c0c' before making global git config changes
+2026-05-28T11:29:29.4973947Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-28T11:29:29.4977639Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/atmosphere/atmosphere
+2026-05-28T11:29:29.5028315Z Deleting the contents of '/home/runner/work/atmosphere/atmosphere'
+2026-05-28T11:29:29.5033745Z ##[group]Initializing the repository
+2026-05-28T11:29:29.5039996Z [command]/usr/bin/git init /home/runner/work/atmosphere/atmosphere
+2026-05-28T11:29:29.5142355Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-28T11:29:29.5145316Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-28T11:29:29.5147999Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-28T11:29:29.5149877Z hint: call:
+2026-05-28T11:29:29.5150770Z hint:
+2026-05-28T11:29:29.5151791Z hint: 	git config --global init.defaultBranch <name>
+2026-05-28T11:29:29.5153033Z hint:
+2026-05-28T11:29:29.5154167Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-28T11:29:29.5156027Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-28T11:29:29.5158150Z hint:
+2026-05-28T11:29:29.5159074Z hint: 	git branch -m <name>
+2026-05-28T11:29:29.5160027Z hint:
+2026-05-28T11:29:29.5161265Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-28T11:29:29.5163763Z Initialized empty Git repository in /home/runner/work/atmosphere/atmosphere/.git/
+2026-05-28T11:29:29.5168926Z [command]/usr/bin/git remote add origin https://github.com/Atmosphere/atmosphere
+2026-05-28T11:29:29.5215773Z ##[endgroup]
+2026-05-28T11:29:29.5217577Z ##[group]Disabling automatic garbage collection
+2026-05-28T11:29:29.5220504Z [command]/usr/bin/git config --local gc.auto 0
+2026-05-28T11:29:29.5257361Z ##[endgroup]
+2026-05-28T11:29:29.5259049Z ##[group]Setting up auth
+2026-05-28T11:29:29.5260140Z Removing SSH command configuration
+2026-05-28T11:29:29.5266460Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-28T11:29:29.5308227Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-28T11:29:29.5671541Z Removing HTTP extra header
+2026-05-28T11:29:29.5680883Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-28T11:29:29.5720406Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-28T11:29:29.5968346Z Removing includeIf entries pointing to credentials config files
+2026-05-28T11:29:29.5974999Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-28T11:29:29.6011020Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-28T11:29:29.6250175Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-28T11:29:29.6287855Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/atmosphere/atmosphere/.git.path /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:29:29.6319613Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/atmosphere/atmosphere/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:29:29.6354138Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:29:29.6385004Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:29:29.6418454Z ##[endgroup]
+2026-05-28T11:29:29.6420580Z ##[group]Fetching the repository
+2026-05-28T11:29:29.6430201Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +572c96943872e57ca80ece41fdf41de35155fcf1:refs/remotes/origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.1478560Z From https://github.com/Atmosphere/atmosphere
+2026-05-28T11:29:30.1481580Z  * [new ref]         572c96943872e57ca80ece41fdf41de35155fcf1 -> origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.1523223Z [command]/usr/bin/git branch --list --remote origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.1552541Z   origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.1560895Z [command]/usr/bin/git rev-parse refs/remotes/origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.1585378Z 572c96943872e57ca80ece41fdf41de35155fcf1
+2026-05-28T11:29:30.1593232Z ##[endgroup]
+2026-05-28T11:29:30.1595670Z ##[group]Determining the checkout info
+2026-05-28T11:29:30.1598823Z ##[endgroup]
+2026-05-28T11:29:30.1600577Z [command]/usr/bin/git sparse-checkout disable
+2026-05-28T11:29:30.1642677Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-28T11:29:30.1670526Z ##[group]Checking out the ref
+2026-05-28T11:29:30.1674586Z [command]/usr/bin/git checkout --progress --force -B dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426 refs/remotes/origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426
+2026-05-28T11:29:30.4186058Z Switched to a new branch 'dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426'
+2026-05-28T11:29:30.4192311Z branch 'dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426' set up to track 'origin/dependabot/maven/samples/quarkus-ai-chat/maven-a1e06ff426'.
+2026-05-28T11:29:30.4206041Z ##[endgroup]
+2026-05-28T11:29:30.4255550Z [command]/usr/bin/git log -1 --format=%H
+2026-05-28T11:29:30.4282134Z 572c96943872e57ca80ece41fdf41de35155fcf1
+2026-05-28T11:29:30.4651415Z ##[group]Run actions/setup-java@v5
+2026-05-28T11:29:30.4652463Z with:
+2026-05-28T11:29:30.4653260Z   java-version: 21
+2026-05-28T11:29:30.4654135Z   distribution: temurin
+2026-05-28T11:29:30.4655024Z   cache: maven
+2026-05-28T11:29:30.4655851Z   java-package: jdk
+2026-05-28T11:29:30.4656863Z   check-latest: false
+2026-05-28T11:29:30.4657754Z   server-id: github
+2026-05-28T11:29:30.4658668Z   server-username: GITHUB_ACTOR
+2026-05-28T11:29:30.4659668Z   server-password: GITHUB_TOKEN
+2026-05-28T11:29:30.4660677Z   overwrite-settings: true
+2026-05-28T11:29:30.4661607Z   job-status: success
+2026-05-28T11:29:30.4670700Z   token: ***
+2026-05-28T11:29:30.4671514Z ##[endgroup]
+2026-05-28T11:29:30.6208496Z ##[group]Installed distributions
+2026-05-28T11:29:30.6341220Z Resolved Java 21.0.11+10 from tool-cache
+2026-05-28T11:29:30.6342699Z Setting Java 21.0.11+10 as the default
+2026-05-28T11:29:30.6355774Z Creating toolchains.xml for JDK version 21 from temurin
+2026-05-28T11:29:30.6478523Z Writing to /home/runner/.m2/toolchains.xml
+2026-05-28T11:29:30.6491805Z 
+2026-05-28T11:29:30.6492705Z Java configuration:
+2026-05-28T11:29:30.6493950Z   Distribution: temurin
+2026-05-28T11:29:30.6495472Z   Version: 21.0.11+10
+2026-05-28T11:29:30.6499219Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:29:30.6518206Z 
+2026-05-28T11:29:30.6549962Z ##[endgroup]
+2026-05-28T11:29:30.6589203Z Creating settings.xml with server-id: github
+2026-05-28T11:29:30.6591354Z Writing to /home/runner/.m2/settings.xml
+2026-05-28T11:29:31.2932196Z Cache hit for: setup-java-Linux-x64-maven-06ae93769c48abc14f71b54ffc489f13dc80c9ee79f1ae73d3bf7e7151ee3bf2
+2026-05-28T11:29:32.3504718Z Received 268435456 of 326968267 (82.1%), 255.7 MBs/sec
+2026-05-28T11:29:32.5618785Z Received 326968267 of 326968267 (100.0%), 257.3 MBs/sec
+2026-05-28T11:29:32.5619474Z Cache Size: ~312 MB (326968267 B)
+2026-05-28T11:29:32.5751959Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c4800017-6e46-4844-abe0-765f98aa6207/cache.tzst -P -C /home/runner/work/atmosphere/atmosphere --use-compress-program unzstd
+2026-05-28T11:29:33.2258975Z Cache restored successfully
+2026-05-28T11:29:33.2425644Z Cache restored from key: setup-java-Linux-x64-maven-06ae93769c48abc14f71b54ffc489f13dc80c9ee79f1ae73d3bf7e7151ee3bf2
+2026-05-28T11:29:33.2704258Z ##[group]Run actions/download-artifact@v8
+2026-05-28T11:29:33.2704621Z with:
+2026-05-28T11:29:33.2704878Z   name: build-targets-sb3
+2026-05-28T11:29:33.2705155Z   merge-multiple: false
+2026-05-28T11:29:33.2705426Z   repository: Atmosphere/atmosphere
+2026-05-28T11:29:33.2705720Z   run-id: 26571138839
+2026-05-28T11:29:33.2705976Z   skip-decompress: false
+2026-05-28T11:29:33.2706232Z   digest-mismatch: error
+2026-05-28T11:29:33.2706767Z env:
+2026-05-28T11:29:33.2707131Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:29:33.2707656Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:29:33.2708071Z ##[endgroup]
+2026-05-28T11:29:33.4099600Z Downloading single artifact
+2026-05-28T11:29:33.5052342Z Preparing to download the following artifacts:
+2026-05-28T11:29:33.5053635Z - build-targets-sb3 (ID: 7264436980, Size: 1492935366, Expected Digest: sha256:88a1ed272b81bbeb96e0e0d5bbde5bce031eab54ebefbe51d56d7a3a52112d44)
+2026-05-28T11:29:33.6322186Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/2731e087-a91d-4440-89e2-6a6c4cdcc203/workflow-job-run-73ca6548-ee39-5ddc-924f-861c593e379c/artifacts/241fc3011ed45f5fd60bdb588057ae4bf970f9326790744550e9e40e051d04d6.zip
+2026-05-28T11:29:33.6323644Z Starting download of artifact to: /home/runner/work/atmosphere/atmosphere
+2026-05-28T11:29:33.7108319Z (node:2304) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-05-28T11:29:33.7109903Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-05-28T11:29:48.4711662Z SHA256 digest of downloaded artifact is 88a1ed272b81bbeb96e0e0d5bbde5bce031eab54ebefbe51d56d7a3a52112d44
+2026-05-28T11:29:48.4712717Z Artifact download completed successfully.
+2026-05-28T11:29:48.4713218Z Total of 1 artifact(s) downloaded
+2026-05-28T11:29:48.4727802Z Download artifact has finished successfully
+2026-05-28T11:29:48.4871040Z ##[group]Run tar xzmf build-targets-sb3.tar.gz
+2026-05-28T11:29:48.4871616Z [36;1mtar xzmf build-targets-sb3.tar.gz[0m
+2026-05-28T11:29:48.4872069Z [36;1m# Restore atmosphere SNAPSHOT artifacts to local Maven repo[0m
+2026-05-28T11:29:48.4872539Z [36;1mif [ -d .m2/repository/org/atmosphere ]; then[0m
+2026-05-28T11:29:48.4872911Z [36;1m  mkdir -p ~/.m2/repository/org[0m
+2026-05-28T11:29:48.4873298Z [36;1m  cp -r .m2/repository/org/atmosphere ~/.m2/repository/org/[0m
+2026-05-28T11:29:48.4900860Z [36;1m  rm -rf .m2[0m
+2026-05-28T11:29:48.4901215Z [36;1mfi[0m
+2026-05-28T11:29:48.4934045Z shell: /usr/bin/bash -e {0}
+2026-05-28T11:29:48.4934359Z env:
+2026-05-28T11:29:48.4934721Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:29:48.4935261Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:29:48.4935683Z ##[endgroup]
+2026-05-28T11:30:01.2997714Z ##[group]Run actions/setup-node@v6
+2026-05-28T11:30:01.2998043Z with:
+2026-05-28T11:30:01.2998280Z   node-version: 22
+2026-05-28T11:30:01.2998745Z   cache: npm
+2026-05-28T11:30:01.2999090Z   cache-dependency-path: modules/integration-tests/package-lock.json
+2026-05-28T11:30:01.2999506Z   check-latest: false
+2026-05-28T11:30:01.3002296Z   token: ***
+2026-05-28T11:30:01.3002547Z   package-manager-cache: true
+2026-05-28T11:30:01.3002826Z env:
+2026-05-28T11:30:01.3003155Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:01.3003675Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:01.3004074Z ##[endgroup]
+2026-05-28T11:30:01.4564441Z Found in cache @ /opt/hostedtoolcache/node/22.22.3/x64
+2026-05-28T11:30:01.4568523Z ##[group]Environment details
+2026-05-28T11:30:03.7324146Z node: v22.22.3
+2026-05-28T11:30:03.7324560Z npm: 10.9.8
+2026-05-28T11:30:03.7324913Z yarn: 1.22.22
+2026-05-28T11:30:03.7326810Z ##[endgroup]
+2026-05-28T11:30:03.7344025Z [command]/opt/hostedtoolcache/node/22.22.3/x64/bin/npm config get cache
+2026-05-28T11:30:03.9587899Z /home/runner/.npm
+2026-05-28T11:30:04.0456466Z Cache hit for: node-cache-Linux-x64-npm-80ee1c09dbdaea55d3b0e7161562f3e189611b1e64bb2e2aa53366b43b0332a4
+2026-05-28T11:30:04.2093845Z Received 5134219 of 5134219 (100.0%), 39.2 MBs/sec
+2026-05-28T11:30:04.2094459Z Cache Size: ~5 MB (5134219 B)
+2026-05-28T11:30:04.2119823Z [command]/usr/bin/tar -xf /home/runner/work/_temp/f291d5f4-0c68-4e1b-a4f4-4de932e5702f/cache.tzst -P -C /home/runner/work/atmosphere/atmosphere --use-compress-program unzstd
+2026-05-28T11:30:04.2327538Z Cache restored successfully
+2026-05-28T11:30:04.2334614Z Cache restored from key: node-cache-Linux-x64-npm-80ee1c09dbdaea55d3b0e7161562f3e189611b1e64bb2e2aa53366b43b0332a4
+2026-05-28T11:30:04.3065313Z ##[group]Run actions/cache@v4
+2026-05-28T11:30:04.3065652Z with:
+2026-05-28T11:30:04.3065904Z   path: ~/.cache/ms-playwright
+2026-05-28T11:30:04.3066739Z   key: playwright-Linux-80ee1c09dbdaea55d3b0e7161562f3e189611b1e64bb2e2aa53366b43b0332a4
+2026-05-28T11:30:04.3067273Z   enableCrossOsArchive: false
+2026-05-28T11:30:04.3067605Z   fail-on-cache-miss: false
+2026-05-28T11:30:04.3067883Z   lookup-only: false
+2026-05-28T11:30:04.3068154Z   save-always: false
+2026-05-28T11:30:04.3068391Z env:
+2026-05-28T11:30:04.3068741Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:04.3069272Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:04.3069690Z ##[endgroup]
+2026-05-28T11:30:04.5454389Z Cache hit for: playwright-Linux-80ee1c09dbdaea55d3b0e7161562f3e189611b1e64bb2e2aa53366b43b0332a4
+2026-05-28T11:30:05.5889010Z Received 261223911 of 261223911 (100.0%), 246.2 MBs/sec
+2026-05-28T11:30:05.5891289Z Cache Size: ~249 MB (261223911 B)
+2026-05-28T11:30:05.5932960Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d7cfc2f0-2c1b-4a30-a74d-a30fb4b01f9c/cache.tzst -P -C /home/runner/work/atmosphere/atmosphere --use-compress-program unzstd
+2026-05-28T11:30:06.5599804Z Cache restored successfully
+2026-05-28T11:30:06.5816956Z Cache restored from key: playwright-Linux-80ee1c09dbdaea55d3b0e7161562f3e189611b1e64bb2e2aa53366b43b0332a4
+2026-05-28T11:30:06.5961853Z ##[group]Run npm ci
+2026-05-28T11:30:06.5962169Z [36;1mnpm ci[0m
+2026-05-28T11:30:06.6084933Z shell: /usr/bin/bash -e {0}
+2026-05-28T11:30:06.6085256Z env:
+2026-05-28T11:30:06.6085622Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:06.6086193Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:06.6086915Z ##[endgroup]
+2026-05-28T11:30:09.0901004Z 
+2026-05-28T11:30:09.0902125Z added 42 packages, and audited 43 packages in 2s
+2026-05-28T11:30:09.0902492Z 
+2026-05-28T11:30:09.0902693Z 3 packages are looking for funding
+2026-05-28T11:30:09.0903231Z   run `npm fund` for details
+2026-05-28T11:30:09.0928495Z 
+2026-05-28T11:30:09.0928923Z 1 moderate severity vulnerability
+2026-05-28T11:30:09.0929277Z 
+2026-05-28T11:30:09.0929604Z To address all issues, run:
+2026-05-28T11:30:09.0930050Z   npm audit fix
+2026-05-28T11:30:09.0930526Z 
+2026-05-28T11:30:09.0930671Z Run `npm audit` for details.
+2026-05-28T11:30:09.1400730Z ##[group]Run # On cache hit, install only system deps (apt); skip the browser
+2026-05-28T11:30:09.1401328Z [36;1m# On cache hit, install only system deps (apt); skip the browser[0m
+2026-05-28T11:30:09.1401837Z [36;1m# binaries. The apt step hits packages.microsoft.com which has a[0m
+2026-05-28T11:30:09.1402347Z [36;1m# history of 403 flakes — retry 3x with exponential backoff. On[0m
+2026-05-28T11:30:09.1402861Z [36;1m# cache miss, install browsers + system deps with the same retry.[0m
+2026-05-28T11:30:09.1403274Z [36;1mif [ "true" = "true" ]; then[0m
+2026-05-28T11:30:09.1403632Z [36;1m  cmd="npx playwright install-deps chromium"[0m
+2026-05-28T11:30:09.1403974Z [36;1melse[0m
+2026-05-28T11:30:09.1404308Z [36;1m  cmd="npx playwright install --with-deps chromium"[0m
+2026-05-28T11:30:09.1404676Z [36;1mfi[0m
+2026-05-28T11:30:09.1404924Z [36;1mfor attempt in 1 2 3; do[0m
+2026-05-28T11:30:09.1405243Z [36;1m  if $cmd; then[0m
+2026-05-28T11:30:09.1405535Z [36;1m    break[0m
+2026-05-28T11:30:09.1405791Z [36;1m  fi[0m
+2026-05-28T11:30:09.1406046Z [36;1m  if [ "$attempt" = "3" ]; then[0m
+2026-05-28T11:30:09.1406651Z [36;1m    echo "playwright install failed after 3 attempts" >&2[0m
+2026-05-28T11:30:09.1407035Z [36;1m    exit 1[0m
+2026-05-28T11:30:09.1407286Z [36;1m  fi[0m
+2026-05-28T11:30:09.1407695Z [36;1m  echo "playwright install attempt $attempt failed, retrying in ${attempt}0s..." >&2[0m
+2026-05-28T11:30:09.1408193Z [36;1m  sleep "${attempt}0"[0m
+2026-05-28T11:30:09.1408479Z [36;1mdone[0m
+2026-05-28T11:30:09.1437629Z shell: /usr/bin/bash -e {0}
+2026-05-28T11:30:09.1437935Z env:
+2026-05-28T11:30:09.1438318Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:09.1438887Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:09.1439314Z ##[endgroup]
+2026-05-28T11:30:10.1320967Z Installing dependencies...
+2026-05-28T11:30:10.1395143Z Switching to root user to install dependencies...
+2026-05-28T11:30:10.2631802Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-05-28T11:30:10.3041992Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-05-28T11:30:10.3043150Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2026-05-28T11:30:10.3044528Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-05-28T11:30:10.3089561Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-05-28T11:30:10.3137958Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-05-28T11:30:10.3186867Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-05-28T11:30:10.3261178Z Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [1825 B]
+2026-05-28T11:30:10.5166230Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [158 kB]
+2026-05-28T11:30:10.5593781Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.6 kB]
+2026-05-28T11:30:10.5617547Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2016 kB]
+2026-05-28T11:30:10.5696019Z Get:21 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [130 kB]
+2026-05-28T11:30:10.5745252Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [356 kB]
+2026-05-28T11:30:10.5769894Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [178 kB]
+2026-05-28T11:30:10.5781799Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1693 kB]
+2026-05-28T11:30:10.5888858Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [330 kB]
+2026-05-28T11:30:10.5927726Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
+2026-05-28T11:30:10.5997925Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3210 kB]
+2026-05-28T11:30:10.6158253Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [742 kB]
+2026-05-28T11:30:10.6167380Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [11.1 kB]
+2026-05-28T11:30:10.6178677Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-05-28T11:30:10.6668648Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5764 B]
+2026-05-28T11:30:10.6670354Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+2026-05-28T11:30:10.6682989Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1704 kB]
+2026-05-28T11:30:10.6775890Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [268 kB]
+2026-05-28T11:30:10.6807573Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [42.4 kB]
+2026-05-28T11:30:10.6831750Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1192 kB]
+2026-05-28T11:30:10.6869344Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [230 kB]
+2026-05-28T11:30:10.6888421Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.3 kB]
+2026-05-28T11:30:10.6902926Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [3006 kB]
+2026-05-28T11:30:10.7050661Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [698 kB]
+2026-05-28T11:30:10.7091852Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [9000 B]
+2026-05-28T11:30:10.7392609Z Get:33 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1215 B]
+2026-05-28T11:30:18.0907021Z Fetched 16.8 MB in 2s (8188 kB/s)
+2026-05-28T11:30:18.8815565Z Reading package lists...
+2026-05-28T11:30:18.9085683Z Reading package lists...
+2026-05-28T11:30:19.1096092Z Building dependency tree...
+2026-05-28T11:30:19.1102925Z Reading state information...
+2026-05-28T11:30:19.2810444Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.2).
+2026-05-28T11:30:19.2811193Z libasound2t64 set to manually installed.
+2026-05-28T11:30:19.2811897Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-05-28T11:30:19.2812615Z libatk-bridge2.0-0t64 set to manually installed.
+2026-05-28T11:30:19.2813332Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-05-28T11:30:19.2813978Z libatk1.0-0t64 set to manually installed.
+2026-05-28T11:30:19.2814673Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-05-28T11:30:19.2815344Z libatspi2.0-0t64 set to manually installed.
+2026-05-28T11:30:19.2815984Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-05-28T11:30:19.2817056Z libcairo2 set to manually installed.
+2026-05-28T11:30:19.2817797Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.9).
+2026-05-28T11:30:19.2818584Z libcups2t64 set to manually installed.
+2026-05-28T11:30:19.2819350Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-05-28T11:30:19.2820280Z libdbus-1-3 set to manually installed.
+2026-05-28T11:30:19.2820857Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.1).
+2026-05-28T11:30:19.2821303Z libdrm2 set to manually installed.
+2026-05-28T11:30:19.2821909Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.1).
+2026-05-28T11:30:19.2822474Z libgbm1 set to manually installed.
+2026-05-28T11:30:19.2822929Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.8).
+2026-05-28T11:30:19.2823381Z libglib2.0-0t64 set to manually installed.
+2026-05-28T11:30:19.2823852Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-05-28T11:30:19.2824296Z libnspr4 set to manually installed.
+2026-05-28T11:30:19.2824734Z libnss3 is already the newest version (2:3.98-1ubuntu0.1).
+2026-05-28T11:30:19.2825429Z libnss3 set to manually installed.
+2026-05-28T11:30:19.2826602Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-05-28T11:30:19.2827366Z libpango-1.0-0 set to manually installed.
+2026-05-28T11:30:19.2828049Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2026-05-28T11:30:19.2828692Z libx11-6 set to manually installed.
+2026-05-28T11:30:19.2829343Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-05-28T11:30:19.2829993Z libxcb1 set to manually installed.
+2026-05-28T11:30:19.2830750Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-05-28T11:30:19.2831511Z libxcomposite1 set to manually installed.
+2026-05-28T11:30:19.2832274Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-05-28T11:30:19.2832958Z libxdamage1 set to manually installed.
+2026-05-28T11:30:19.2833671Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-05-28T11:30:19.2834347Z libxext6 set to manually installed.
+2026-05-28T11:30:19.2835051Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-05-28T11:30:19.2835787Z libxfixes3 set to manually installed.
+2026-05-28T11:30:19.2836768Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-05-28T11:30:19.2837505Z libxkbcommon0 set to manually installed.
+2026-05-28T11:30:19.2838257Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-05-28T11:30:19.2838971Z libxrandr2 set to manually installed.
+2026-05-28T11:30:19.2839713Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2026-05-28T11:30:19.2840681Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-05-28T11:30:19.2841690Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-05-28T11:30:19.2842474Z libfontconfig1 set to manually installed.
+2026-05-28T11:30:19.2843283Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
+2026-05-28T11:30:19.2844047Z libfreetype6 set to manually installed.
+2026-05-28T11:30:19.2844777Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-05-28T11:30:19.2845559Z fonts-liberation set to manually installed.
+2026-05-28T11:30:19.2846515Z The following additional packages will be installed:
+2026-05-28T11:30:19.2847169Z   xfonts-encodings xfonts-utils
+2026-05-28T11:30:19.2847527Z Recommended packages:
+2026-05-28T11:30:19.2847851Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-05-28T11:30:19.3173851Z The following NEW packages will be installed:
+2026-05-28T11:30:19.3174867Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-05-28T11:30:19.3182032Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-05-28T11:30:19.3182767Z   xfonts-utils
+2026-05-28T11:30:19.3370763Z 0 upgraded, 9 newly installed, 0 to remove and 6 not upgraded.
+2026-05-28T11:30:19.3371525Z Need to get 21.1 MB of archives.
+2026-05-28T11:30:19.3372301Z After this operation, 79.5 MB of additional disk space will be used.
+2026-05-28T11:30:19.3373191Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-05-28T11:30:19.3598830Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-05-28T11:30:19.3998355Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-05-28T11:30:19.5270967Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-05-28T11:30:19.5311994Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-05-28T11:30:19.5903440Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-05-28T11:30:19.7840330Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-05-28T11:30:19.8034831Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-05-28T11:30:19.8087122Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-05-28T11:30:19.8218371Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-05-28T11:30:20.1083711Z Fetched 21.1 MB in 1s (41.9 MB/s)
+2026-05-28T11:30:20.1604964Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-05-28T11:30:20.2271561Z (Reading database ... 
+2026-05-28T11:30:20.2271974Z (Reading database ... 5%
+2026-05-28T11:30:20.2272308Z (Reading database ... 10%
+2026-05-28T11:30:20.2272611Z (Reading database ... 15%
+2026-05-28T11:30:20.2272896Z (Reading database ... 20%
+2026-05-28T11:30:20.2273179Z (Reading database ... 25%
+2026-05-28T11:30:20.2273460Z (Reading database ... 30%
+2026-05-28T11:30:20.2273741Z (Reading database ... 35%
+2026-05-28T11:30:20.2274044Z (Reading database ... 40%
+2026-05-28T11:30:20.2274340Z (Reading database ... 45%
+2026-05-28T11:30:20.2274615Z (Reading database ... 50%
+2026-05-28T11:30:20.2587182Z (Reading database ... 55%
+2026-05-28T11:30:20.6297048Z (Reading database ... 60%
+2026-05-28T11:30:20.8964229Z (Reading database ... 65%
+2026-05-28T11:30:21.1215240Z (Reading database ... 70%
+2026-05-28T11:30:21.3367932Z (Reading database ... 75%
+2026-05-28T11:30:21.6535914Z (Reading database ... 80%
+2026-05-28T11:30:22.0642514Z (Reading database ... 85%
+2026-05-28T11:30:22.3982587Z (Reading database ... 90%
+2026-05-28T11:30:22.8834977Z (Reading database ... 95%
+2026-05-28T11:30:22.8835421Z (Reading database ... 100%
+2026-05-28T11:30:22.8835938Z (Reading database ... 202271 files and directories currently installed.)
+2026-05-28T11:30:22.8884955Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-05-28T11:30:22.8979168Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-05-28T11:30:23.1352727Z Selecting previously unselected package fonts-freefont-ttf.
+2026-05-28T11:30:23.1487440Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-05-28T11:30:23.1504752Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-05-28T11:30:23.2389440Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-05-28T11:30:23.2524065Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-05-28T11:30:23.2531197Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-05-28T11:30:23.2778843Z Selecting previously unselected package fonts-unifont.
+2026-05-28T11:30:23.2912460Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-05-28T11:30:23.2921443Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-05-28T11:30:23.4023328Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-05-28T11:30:23.4161435Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-05-28T11:30:23.4595138Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-05-28T11:30:23.9293442Z Selecting previously unselected package xfonts-encodings.
+2026-05-28T11:30:23.9429179Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-05-28T11:30:23.9436405Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-05-28T11:30:23.9766975Z Selecting previously unselected package xfonts-utils.
+2026-05-28T11:30:23.9899263Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-05-28T11:30:23.9906028Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-05-28T11:30:24.0574067Z Selecting previously unselected package xfonts-cyrillic.
+2026-05-28T11:30:24.0709874Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-05-28T11:30:24.0717935Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-05-28T11:30:24.1061632Z Selecting previously unselected package xfonts-scalable.
+2026-05-28T11:30:24.1196641Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-05-28T11:30:24.1204159Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-05-28T11:30:24.1621604Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-05-28T11:30:24.1740487Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-05-28T11:30:24.1758294Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-05-28T11:30:24.1777693Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-05-28T11:30:24.1794249Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-05-28T11:30:24.1862754Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-05-28T11:30:24.1878113Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-05-28T11:30:24.1901068Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-05-28T11:30:24.1944675Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-05-28T11:30:24.2245143Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-05-28T11:30:24.2576148Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-05-28T11:30:24.2633193Z Not building database; man-db/auto-update is not 'true'.
+2026-05-28T11:30:24.2647423Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-05-28T11:30:25.3456495Z 
+2026-05-28T11:30:25.3457344Z Running kernel seems to be up-to-date.
+2026-05-28T11:30:25.3457721Z 
+2026-05-28T11:30:25.3457953Z No services need to be restarted.
+2026-05-28T11:30:25.3467124Z 
+2026-05-28T11:30:25.3467415Z No containers need to be restarted.
+2026-05-28T11:30:25.3467747Z 
+2026-05-28T11:30:25.3468079Z No user sessions are running outdated binaries.
+2026-05-28T11:30:25.3468429Z 
+2026-05-28T11:30:25.3468804Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-05-28T11:30:26.3358748Z ##[group]Run PROJECTS=$(echo "console-http-check,sample-matrix-smoke" | sed 's/,/ --project=/g')
+2026-05-28T11:30:26.3359545Z [36;1mPROJECTS=$(echo "console-http-check,sample-matrix-smoke" | sed 's/,/ --project=/g')[0m
+2026-05-28T11:30:26.3360184Z [36;1m# Tolerate "No tests found" when SMOKE_ONLY filters out every test in a group.[0m
+2026-05-28T11:30:26.3360815Z [36;1m# Playwright exits 1 with stderr "Error: No tests found" — treat as success on PRs.[0m
+2026-05-28T11:30:26.3361280Z [36;1mset +e[0m
+2026-05-28T11:30:26.3361701Z [36;1moutput=$(npx playwright test --project=$PROJECTS --reporter=list,github 2>&1)[0m
+2026-05-28T11:30:26.3362158Z [36;1mcode=$?[0m
+2026-05-28T11:30:26.3362415Z [36;1mecho "$output"[0m
+2026-05-28T11:30:26.3362822Z [36;1mif [ "$code" -ne 0 ] && echo "$output" | grep -q "Error: No tests found"; then[0m
+2026-05-28T11:30:26.3363403Z [36;1m  echo "::notice::Group 'gap-admin-smoke' has no @smoke tests — skipping (PR CI)"[0m
+2026-05-28T11:30:26.3363903Z [36;1m  exit 0[0m
+2026-05-28T11:30:26.3364152Z [36;1mfi[0m
+2026-05-28T11:30:26.3364398Z [36;1mexit $code[0m
+2026-05-28T11:30:26.3393274Z shell: /usr/bin/bash -e {0}
+2026-05-28T11:30:26.3393582Z env:
+2026-05-28T11:30:26.3393952Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:26.3394514Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:30:26.3394941Z   LLM_MODE: fake
+2026-05-28T11:30:26.3395194Z   SMOKE_ONLY: 
+2026-05-28T11:30:26.3395448Z   INCLUDE_FLAKY: false
+2026-05-28T11:30:26.3395736Z ##[endgroup]
+2026-05-28T11:35:51.0281824Z 
+2026-05-28T11:35:51.0282547Z Running 38 tests using 1 worker
+2026-05-28T11:35:51.0282887Z 
+2026-05-28T11:35:51.0284529Z   ✓   1 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-chat › /atmosphere/console/ returns 200 (33ms)
+2026-05-28T11:35:51.0286836Z   ✓   2 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-chat › console response is HTML (12ms)
+2026-05-28T11:35:51.0288036Z   ✓   3 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-durable-sessions › /atmosphere/console/ returns 200 (21ms)
+2026-05-28T11:35:51.0289251Z   ✓   4 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-durable-sessions › console response is HTML (9ms)
+2026-05-28T11:35:51.0290569Z   ✓   5 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-otel-chat › /atmosphere/console/ returns 200 (12ms)
+2026-05-28T11:35:51.0292760Z   ✓   6 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-otel-chat › console response is HTML (5ms)
+2026-05-28T11:35:51.0294693Z   ✓   7 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-mcp-server › /atmosphere/console/ returns 200 (9ms)
+2026-05-28T11:35:51.0296682Z   ✓   8 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-mcp-server › console response is HTML (17ms)
+2026-05-28T11:35:51.0298411Z   ✓   9 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-ai-tools › /atmosphere/console/ returns 200 (19ms)
+2026-05-28T11:35:51.0300160Z   ✓  10 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-ai-tools › console response is HTML (10ms)
+2026-05-28T11:35:51.0301912Z   ✓  11 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-rag-chat › /atmosphere/console/ returns 200 (6ms)
+2026-05-28T11:35:51.0303694Z   ✓  12 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-rag-chat › console response is HTML (4ms)
+2026-05-28T11:35:51.0305570Z   ✓  13 [console-http-check] › e2e/console-http-check.spec.ts:39:9 › Console HTTP — spring-boot-dentist-agent › /atmosphere/console/ returns 200 (7ms)
+2026-05-28T11:35:51.0307775Z   ✓  14 [console-http-check] › e2e/console-http-check.spec.ts:44:9 › Console HTTP — spring-boot-dentist-agent › console response is HTML (5ms)
+2026-05-28T11:35:51.0308886Z   ✓  15 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — chat › starts and responds to HTTP (14ms)
+2026-05-28T11:35:51.0310444Z   ✓  16 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-chat › starts and responds to HTTP (27ms)
+2026-05-28T11:35:51.0312145Z   ✓  17 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — embedded-jetty-chat › starts and responds to HTTP (18ms)
+2026-05-28T11:35:51.0313639Z   ✓  18 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-chat › starts and responds to HTTP (6ms)
+2026-05-28T11:35:51.0314701Z   ✓  19 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-ai-chat › starts and responds to HTTP (12ms)
+2026-05-28T11:35:51.0315799Z   ✓  20 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-mcp-server › starts and responds to HTTP (14ms)
+2026-05-28T11:35:51.0317423Z   ✓  21 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-ai-classroom › starts and responds to HTTP (28ms)
+2026-05-28T11:35:51.0318568Z   ✓  22 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-durable-sessions › starts and responds to HTTP (11ms)
+2026-05-28T11:35:51.0319703Z   ✓  23 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-reattach-harness › starts and responds to HTTP (7ms)
+2026-05-28T11:35:51.0320827Z   ✓  24 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-otel-chat › starts and responds to HTTP (20ms)
+2026-05-28T11:35:51.0321895Z   ✓  25 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-ai-tools › starts and responds to HTTP (25ms)
+2026-05-28T11:35:51.0322970Z   ✓  26 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-rag-chat › starts and responds to HTTP (13ms)
+2026-05-28T11:35:51.0324014Z   ✓  27 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-a2a-agent › starts and responds to HTTP (9ms)
+2026-05-28T11:35:51.0325103Z   ✓  28 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-agui-chat › starts and responds to HTTP (24ms)
+2026-05-28T11:35:51.0326420Z   ✓  29 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-multi-agent-startup-team › starts and responds to HTTP (25ms)
+2026-05-28T11:35:51.0328144Z   ✓  30 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-dentist-agent › starts and responds to HTTP (12ms)
+2026-05-28T11:35:51.0329323Z   ✓  31 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-orchestration-demo › starts and responds to HTTP (11ms)
+2026-05-28T11:35:51.0330493Z   ✓  32 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-channels-chat › starts and responds to HTTP (18ms)
+2026-05-28T11:35:51.0331599Z   ✓  33 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-coding-agent › starts and responds to HTTP (6ms)
+2026-05-28T11:35:51.0332733Z   ✓  34 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-guarded-email-agent › starts and responds to HTTP (11ms)
+2026-05-28T11:35:51.0333888Z   ✓  35 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-personal-assistant › starts and responds to HTTP (14ms)
+2026-05-28T11:35:51.0334638Z === Server output for quarkus-ai-chat ===
+2026-05-28T11:35:51.0334976Z a:86)
+2026-05-28T11:35:51.0335472Z 	at io.quarkus.bootstrap.runner.QuarkusEntryPoint.main(QuarkusEntryPoint.java:37)
+2026-05-28T11:35:51.0336605Z Caused by: java.lang.NoClassDefFoundError: io/opentelemetry/common/impl/ApiUsageLogger
+2026-05-28T11:35:51.0337267Z 	at io.opentelemetry.api.trace.Span.fromContextOrNull(Span.java:60)
+2026-05-28T11:35:51.0338234Z 	at io.quarkus.micrometer.runtime.export.exemplars.OpentelemetryExemplarSamplerProvider$1.get(OpentelemetryExemplarSamplerProvider.java:36)
+2026-05-28T11:35:51.0339483Z 	at io.quarkus.micrometer.runtime.export.exemplars.OpentelemetryExemplarSamplerProvider$1.isSampled(OpentelemetryExemplarSamplerProvider.java:32)
+2026-05-28T11:35:51.0340514Z 	at io.prometheus.client.exemplars.DefaultExemplarSampler.doSample(DefaultExemplarSampler.java:46)
+2026-05-28T11:35:51.0341340Z 	at io.prometheus.client.exemplars.DefaultExemplarSampler.sample(DefaultExemplarSampler.java:34)
+2026-05-28T11:35:51.0342099Z 	at io.micrometer.prometheus.PrometheusCounter.updateExemplar(PrometheusCounter.java:80)
+2026-05-28T11:35:51.0342806Z 	at io.micrometer.prometheus.PrometheusCounter.increment(PrometheusCounter.java:60)
+2026-05-28T11:35:51.0343541Z 	at io.micrometer.core.instrument.composite.CompositeCounter.increment(CompositeCounter.java:32)
+2026-05-28T11:35:51.0344216Z 	at io.micrometer.core.instrument.Counter.increment(Counter.java:39)
+2026-05-28T11:35:51.0344843Z 	at io.quarkus.micrometer.runtime.binder.JVMInfoBinder.bindTo(JVMInfoBinder.java:17)
+2026-05-28T11:35:51.0345626Z 	at io.quarkus.micrometer.runtime.MicrometerRecorder.configureRegistries(MicrometerRecorder.java:138)
+2026-05-28T11:35:51.0346632Z 	at io.quarkus.runner.recorded.MicrometerProcessor$configureRegistry478634845.deploy_0(Unknown Source)
+2026-05-28T11:35:51.0347427Z 	at io.quarkus.runner.recorded.MicrometerProcessor$configureRegistry478634845.deploy(Unknown Source)
+2026-05-28T11:35:51.0347947Z 	... 9 more
+2026-05-28T11:35:51.0348466Z Caused by: java.lang.ClassNotFoundException: io.opentelemetry.common.impl.ApiUsageLogger
+2026-05-28T11:35:51.0349193Z 	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+2026-05-28T11:35:51.0349930Z 	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+2026-05-28T11:35:51.0350573Z 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+2026-05-28T11:35:51.0351206Z 	at io.quarkus.bootstrap.runner.RunnerClassLoader.loadClass(RunnerClassLoader.java:135)
+2026-05-28T11:35:51.0351904Z 	at io.quarkus.bootstrap.runner.RunnerClassLoader.loadClass(RunnerClassLoader.java:86)
+2026-05-28T11:35:51.0352382Z 	... 22 more
+2026-05-28T11:35:51.0352522Z 
+2026-05-28T11:35:51.0352529Z 
+2026-05-28T11:35:51.0353142Z   ✘  36 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP (0ms)
+2026-05-28T11:35:51.0353981Z === Server output for quarkus-ai-chat ===
+2026-05-28T11:35:51.0354302Z a:86)
+2026-05-28T11:35:51.0354744Z 	at io.quarkus.bootstrap.runner.QuarkusEntryPoint.main(QuarkusEntryPoint.java:37)
+2026-05-28T11:35:51.0355617Z Caused by: java.lang.NoClassDefFoundError: io/opentelemetry/common/impl/ApiUsageLogger
+2026-05-28T11:35:51.0356468Z 	at io.opentelemetry.api.trace.Span.fromContextOrNull(Span.java:60)
+2026-05-28T11:35:51.0357448Z 	at io.quarkus.micrometer.runtime.export.exemplars.OpentelemetryExemplarSamplerProvider$1.get(OpentelemetryExemplarSamplerProvider.java:36)
+2026-05-28T11:35:51.0358687Z 	at io.quarkus.micrometer.runtime.export.exemplars.OpentelemetryExemplarSamplerProvider$1.isSampled(OpentelemetryExemplarSamplerProvider.java:32)
+2026-05-28T11:35:51.0359712Z 	at io.prometheus.client.exemplars.DefaultExemplarSampler.doSample(DefaultExemplarSampler.java:46)
+2026-05-28T11:35:51.0360534Z 	at io.prometheus.client.exemplars.DefaultExemplarSampler.sample(DefaultExemplarSampler.java:34)
+2026-05-28T11:35:51.0361318Z 	at io.micrometer.prometheus.PrometheusCounter.updateExemplar(PrometheusCounter.java:80)
+2026-05-28T11:35:51.0362021Z 	at io.micrometer.prometheus.PrometheusCounter.increment(PrometheusCounter.java:60)
+2026-05-28T11:35:51.0362773Z 	at io.micrometer.core.instrument.composite.CompositeCounter.increment(CompositeCounter.java:32)
+2026-05-28T11:35:51.0363601Z 	at io.micrometer.core.instrument.Counter.increment(Counter.java:39)
+2026-05-28T11:35:51.0364249Z 	at io.quarkus.micrometer.runtime.binder.JVMInfoBinder.bindTo(JVMInfoBinder.java:17)
+2026-05-28T11:35:51.0365027Z 	at io.quarkus.micrometer.runtime.MicrometerRecorder.configureRegistries(MicrometerRecorder.java:138)
+2026-05-28T11:35:51.0365862Z 	at io.quarkus.runner.recorded.MicrometerProcessor$configureRegistry478634845.deploy_0(Unknown Source)
+2026-05-28T11:35:51.0367108Z 	at io.quarkus.runner.recorded.MicrometerProcessor$configureRegistry478634845.deploy(Unknown Source)
+2026-05-28T11:35:51.0367647Z 	... 9 more
+2026-05-28T11:35:51.0368181Z Caused by: java.lang.ClassNotFoundException: io.opentelemetry.common.impl.ApiUsageLogger
+2026-05-28T11:35:51.0368939Z 	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+2026-05-28T11:35:51.0369681Z 	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+2026-05-28T11:35:51.0370312Z 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+2026-05-28T11:35:51.0370931Z 	at io.quarkus.bootstrap.runner.RunnerClassLoader.loadClass(RunnerClassLoader.java:135)
+2026-05-28T11:35:51.0371634Z 	at io.quarkus.bootstrap.runner.RunnerClassLoader.loadClass(RunnerClassLoader.java:86)
+2026-05-28T11:35:51.0372105Z 	... 22 more
+2026-05-28T11:35:51.0372244Z 
+2026-05-28T11:35:51.0372251Z 
+2026-05-28T11:35:51.0372925Z   ✘  37 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP (retry #1) (0ms)
+2026-05-28T11:35:51.0374100Z   ✓  38 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-checkpoint-agent › starts and responds to HTTP (40ms)
+2026-05-28T11:35:51.0375259Z   ✓  39 [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — spring-boot-ms-governance-chat › starts and responds to HTTP (14ms)
+2026-05-28T11:35:51.0375800Z 
+2026-05-28T11:35:51.0375806Z 
+2026-05-28T11:35:51.0376593Z   1) [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP 
+2026-05-28T11:35:51.0377071Z 
+2026-05-28T11:35:51.0377372Z     Error: Failed to start quarkus-ai-chat: Error: Port 18810 not ready after 90000ms
+2026-05-28T11:35:51.0377707Z 
+2026-05-28T11:35:51.0377864Z        at fixtures/sample-server.ts:404
+2026-05-28T11:35:51.0378077Z 
+2026-05-28T11:35:51.0378226Z       402 |     proc.kill('SIGTERM');
+2026-05-28T11:35:51.0378761Z       403 |     console.error(`=== Server output for ${config.name} ===\n${output.slice(-2000)}`);
+2026-05-28T11:35:51.0379521Z     > 404 |     throw new Error(`Failed to start ${config.name}: ${e}`);
+2026-05-28T11:35:51.0379910Z           |           ^
+2026-05-28T11:35:51.0380170Z       405 |   }
+2026-05-28T11:35:51.0380402Z       406 |
+2026-05-28T11:35:51.0380726Z       407 |   return new SampleServer(proc, config, output);
+2026-05-28T11:35:51.0381468Z         at startSample (/home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/fixtures/sample-server.ts:404:11)
+2026-05-28T11:35:51.0382379Z         at /home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/sample-matrix-smoke.spec.ts:23:16
+2026-05-28T11:35:51.0382820Z 
+2026-05-28T11:35:51.0383225Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2026-05-28T11:35:51.0383534Z 
+2026-05-28T11:35:51.0383825Z     Error: Failed to start quarkus-ai-chat: Error: Port 18810 not ready after 90000ms
+2026-05-28T11:35:51.0384154Z 
+2026-05-28T11:35:51.0384304Z        at fixtures/sample-server.ts:404
+2026-05-28T11:35:51.0384521Z 
+2026-05-28T11:35:51.0384663Z       402 |     proc.kill('SIGTERM');
+2026-05-28T11:35:51.0385165Z       403 |     console.error(`=== Server output for ${config.name} ===\n${output.slice(-2000)}`);
+2026-05-28T11:35:51.0385729Z     > 404 |     throw new Error(`Failed to start ${config.name}: ${e}`);
+2026-05-28T11:35:51.0386109Z           |           ^
+2026-05-28T11:35:51.0386573Z       405 |   }
+2026-05-28T11:35:51.0386953Z       406 |
+2026-05-28T11:35:51.0387292Z       407 |   return new SampleServer(proc, config, output);
+2026-05-28T11:35:51.0388008Z         at startSample (/home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/fixtures/sample-server.ts:404:11)
+2026-05-28T11:35:51.0388909Z         at /home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/sample-matrix-smoke.spec.ts:23:16
+2026-05-28T11:35:51.0389351Z 
+2026-05-28T11:35:51.0389789Z     attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+2026-05-28T11:35:51.0390652Z     test-results/sample-matrix-smoke-Matrix-2abca-starts-and-responds-to-HTTP-sample-matrix-smoke-retry1/trace.zip
+2026-05-28T11:35:51.0391276Z     Usage:
+2026-05-28T11:35:51.0391411Z 
+2026-05-28T11:35:51.0392013Z         npx playwright show-trace test-results/sample-matrix-smoke-Matrix-2abca-starts-and-responds-to-HTTP-sample-matrix-smoke-retry1/trace.zip
+2026-05-28T11:35:51.0392624Z 
+2026-05-28T11:35:51.0393003Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-05-28T11:35:51.0393301Z 
+2026-05-28T11:35:51.0393408Z   1 failed
+2026-05-28T11:35:51.0394077Z     [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP 
+2026-05-28T11:35:51.0394673Z   37 passed (5.4m)
+2026-05-28T11:35:51.0420445Z ##[error]  1) [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP 
+    Error: Failed to start quarkus-ai-chat: Error: Port 18810 not ready after 90000ms
+
+       at fixtures/sample-server.ts:404
+
+      402 |     proc.kill('SIGTERM');
+      403 |     console.error(`=== Server output for ${config.name} ===\n${output.slice(-2000)}`);
+    > 404 |     throw new Error(`Failed to start ${config.name}: ${e}`);
+          |           ^
+      405 |   }
+      406 |
+      407 |   return new SampleServer(proc, config, output);
+        at startSample (/home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/fixtures/sample-server.ts:404:11)
+        at /home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/sample-matrix-smoke.spec.ts:23:16
+2026-05-28T11:35:51.0437375Z ##[error]  1) [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP 
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+    Error: Failed to start quarkus-ai-chat: Error: Port 18810 not ready after 90000ms
+
+       at fixtures/sample-server.ts:404
+
+      402 |     proc.kill('SIGTERM');
+      403 |     console.error(`=== Server output for ${config.name} ===\n${output.slice(-2000)}`);
+    > 404 |     throw new Error(`Failed to start ${config.name}: ${e}`);
+          |           ^
+      405 |   }
+      406 |
+      407 |   return new SampleServer(proc, config, output);
+        at startSample (/home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/fixtures/sample-server.ts:404:11)
+        at /home/runner/work/atmosphere/atmosphere/modules/integration-tests/e2e/sample-matrix-smoke.spec.ts:23:16
+2026-05-28T11:35:51.0443168Z ##[notice]  1 failed
+    [sample-matrix-smoke] › e2e/sample-matrix-smoke.spec.ts:30:9 › Matrix Smoke — quarkus-ai-chat › starts and responds to HTTP 
+  37 passed (5.4m)
+2026-05-28T11:35:51.0445823Z ##[error]Process completed with exit code 1.
+2026-05-28T11:35:51.0525544Z ##[group]Run actions/upload-artifact@v7
+2026-05-28T11:35:51.0525890Z with:
+2026-05-28T11:35:51.0526195Z   name: playwright-report-gap-admin-smoke-sb3
+2026-05-28T11:35:51.0526886Z   path: modules/integration-tests/playwright-report/
+2026-05-28T11:35:51.0527272Z   retention-days: 14
+2026-05-28T11:35:51.0527547Z   if-no-files-found: warn
+2026-05-28T11:35:51.0527833Z   compression-level: 6
+2026-05-28T11:35:51.0528103Z   overwrite: false
+2026-05-28T11:35:51.0528364Z   include-hidden-files: false
+2026-05-28T11:35:51.0528653Z   archive: true
+2026-05-28T11:35:51.0528893Z env:
+2026-05-28T11:35:51.0529242Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:35:51.0529806Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-05-28T11:35:51.0530257Z ##[endgroup]
+2026-05-28T11:35:51.1925590Z ##[warning]No files were found with the provided path: modules/integration-tests/playwright-report/. No artifacts will be uploaded.
+2026-05-28T11:35:51.2090035Z Post job cleanup.
+2026-05-28T11:35:51.3665956Z Post job cleanup.
+2026-05-28T11:35:51.4533441Z [command]/usr/bin/git version
+2026-05-28T11:35:51.4572710Z git version 2.54.0
+2026-05-28T11:35:51.4611937Z Temporarily overriding HOME='/home/runner/work/_temp/b44d65ba-78e4-42c5-bffa-9f285a32eee3' before making global git config changes
+2026-05-28T11:35:51.4612859Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-28T11:35:51.4617708Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/atmosphere/atmosphere
+2026-05-28T11:35:51.4653901Z Removing SSH command configuration
+2026-05-28T11:35:51.4661164Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-28T11:35:51.4699468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-28T11:35:51.4980466Z Removing HTTP extra header
+2026-05-28T11:35:51.4986140Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-28T11:35:51.5024398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-28T11:35:51.5267368Z Removing includeIf entries pointing to credentials config files
+2026-05-28T11:35:51.5275539Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-28T11:35:51.5305963Z includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git.path
+2026-05-28T11:35:51.5307237Z includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git/worktrees/*.path
+2026-05-28T11:35:51.5308123Z includeif.gitdir:/github/workspace/.git.path
+2026-05-28T11:35:51.5308911Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-28T11:35:51.5317038Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git.path
+2026-05-28T11:35:51.5341226Z /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5352498Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git.path /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5391023Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git/worktrees/*.path
+2026-05-28T11:35:51.5418765Z /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5429503Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/atmosphere/atmosphere/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5463529Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-05-28T11:35:51.5488700Z /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5496475Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5531763Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-05-28T11:35:51.5554778Z /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5564350Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config
+2026-05-28T11:35:51.5603713Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-28T11:35:51.5871380Z Removing credentials config '/home/runner/work/_temp/git-credentials-96c708e4-bc28-492e-8024-3a325c8a12f8.config'
+2026-05-28T11:35:51.6034526Z Cleaning up orphan processes
+2026-05-28T11:35:51.6374042Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/cache@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
