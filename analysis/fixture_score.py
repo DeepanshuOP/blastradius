@@ -14,6 +14,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
+from src.parse.dispatch import (
+    classify_dispatch_log,
+    extract_dispatch_failing_test_ids,
+)
+
 FIXTURES_DIR = Path("tests/fixtures/logs")
 EXPECTED_MD = FIXTURES_DIR / "EXPECTED.md"
 
@@ -129,27 +134,10 @@ def score_corpus(
     expected_md: Path = EXPECTED_MD,
 ) -> Report:
     """Score an injected classifier and extractor against the fixture corpus."""
-    if classify_fn is None and extract_fn is None:
-        from analysis.log_yield import (
-            CLEAN_KEYWORDS,
-            FAIL_KEYWORDS,
-            PATTERNS,
-            TRUNCATION_PATTERN,
-            extract_failing_test_ids,
-        )
-
-        def default_classify(body: str) -> tuple[str, set[str], bool]:
-            is_truncated = bool(TRUNCATION_PATTERN.search(body))
-            if any(k in body for k in FAIL_KEYWORDS) and PATTERNS["TEST_FAILURE"].search(body):
-                failing_ids = extract_failing_test_ids(body)
-                return "TEST_FAILURE", failing_ids, is_truncated
-            elif any(k in body for k in CLEAN_KEYWORDS) and PATTERNS["TEST_RAN_CLEAN"].search(body):
-                return "TEST_RAN_CLEAN", set(), is_truncated
-            else:
-                return "NO_TEST_OUTPUT", set(), is_truncated
-
-        classify_fn = default_classify
-        extract_fn = extract_failing_test_ids
+    if classify_fn is None:
+        classify_fn = classify_dispatch_log
+    if extract_fn is None:
+        extract_fn = extract_dispatch_failing_test_ids
 
     expected_data = parse_expected(expected_md)
     scores: list[FixtureScore] = []
