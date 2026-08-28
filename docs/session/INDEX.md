@@ -60,6 +60,8 @@
 | **058** | 2026-08-27 | T1.1d Pytest Parser | Rebuild pytest log parser `src/parse/log_pytest.py`, test suite, and 40-row scorecard | [058-2026-08-27-pytest-parser.md](058-2026-08-27-pytest-parser.md) |
 | **059** | 2026-08-27 | T1.1c Holdout Scoring | Score log parsers against quarantined holdout corpus (29.73% prec, 95% class acc) | [059-2026-08-27-holdout-scoring.md](059-2026-08-27-holdout-scoring.md) |
 | **060** | 2026-08-27 | T1.1c Holdout Audit & D-29 | Audit holdout labels against raw log text, add D-29, re-score holdout (45.95% prec, 56.67% recall) | [060-2026-08-27-holdout-label-audit.md](060-2026-08-27-holdout-label-audit.md) |
+| **061** | 2026-08-28 | T1.1 Dev Corpus Dispatch Scoring | Switch `analysis/fixture_score.py` default classifier & extractor to parser dispatch, split None checks, and add test suite (46 TP / 0 FP / 0 FN) | [061-2026-08-28-fixture-score-dispatch.md](061-2026-08-28-fixture-score-dispatch.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
+
 
