@@ -453,7 +453,8 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Build Tool:** Gradle (`:sirix-core:test`)
 - **Expected Outcomes:**
   - RAW: `LinuxMemorySegmentAllocatorTest > testAllocateMaximumSize() FAILED`
-  - Canonical `normalize_test_id()`: `LinuxMemorySegmentAllocatorTest#testAllocateMaximumSize`
+  - Canonical `normalize_test_id()`: `io.sirix.cache.LinuxMemorySegmentAllocatorTest#testAllocateMaximumSize`
+  - Note: Amended on 2026-08-28 under D-27. Line 10409 contains `at io.sirix.cache.LinuxMemorySegmentAllocatorTest.testAllocateMaximumSize(LinuxMemorySegmentAllocatorTest.java:102)`; prior bare label under-specified by dropping the package present in the log.
 - **Confidence:** CERTAIN
 
 ---
