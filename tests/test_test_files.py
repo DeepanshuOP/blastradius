@@ -65,12 +65,26 @@ def test_resolve_ambiguous():
     assert res.path is None
     assert res.candidates_considered == 2
 
-def test_resolve_unqualified():
+def test_resolve_bare_class_exact():
     repo_root = Path("data/clones/apache__fineract")
     tid = TestId(lang="java", raw="", canonical="FeignExceptionTest#foo",
                  params=None, class_name="FeignExceptionTest", method_name="foo", path=None)
     res = resolve_test_file(tid, repo_root)
-    assert res.status == "unqualified"
+    assert res.status == "exact"
+    assert res.confidence == 0.5
+    assert res.path == "fineract-client-feign/src/test/java/org/apache/fineract/client/feign/FeignExceptionTest.java"
+
+def test_resolve_bare_class_ambiguous():
+    """Derive expectations:
+    git -C data/clones/apache__beam ls-tree -r HEAD --name-only | grep /TestUtils.java$
+    Returns 5 distinct paths.
+    """
+    repo_root = Path("data/clones/apache__beam")
+    tid = TestId(lang="java", raw="", canonical="TestUtils#foo",
+                 params=None, class_name="TestUtils", method_name="foo", path=None)
+    res = resolve_test_file(tid, repo_root)
+    assert res.status == "ambiguous"
+    assert res.candidates_considered == 5
     assert res.path is None
 
 def test_resolve_not_found():

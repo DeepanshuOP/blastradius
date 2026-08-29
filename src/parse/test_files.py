@@ -30,31 +30,45 @@ def resolve_test_file(test_id: TestId, repo_root: Path, _tree_cache: Optional[se
         tree = _tree_cache
         
     if test_id.lang in ("java", "kotlin", "groovy", "scala"):
-        if not test_id.class_name or '.' not in test_id.class_name:
+        if not test_id.class_name:
             return FileResolution(path=None, status="unqualified", candidates_considered=0, confidence=0.0)
             
         # Handle nested classes: Outer$Inner lives in Outer
         base_class = test_id.class_name.split('$')[0]
-        rel_path = base_class.replace('.', '/')
         
         candidates = []
-        # Support Java, Kotlin, Groovy
-        for ext in ['.java', '.kt', '.groovy']:
-            target_suffix = f"/{rel_path}{ext}"
-            for line in tree:
-                if line.endswith(target_suffix):
-                    candidates.append(line)
-                elif line == f"{rel_path}{ext}":
-                    candidates.append(line)
-                    
+        confidence = 1.0
+        
+        if '.' in test_id.class_name:
+            # Fully qualified path
+            rel_path = base_class.replace('.', '/')
+            for ext in ['.java', '.kt', '.groovy', '.scala']:
+                target_suffix = f"/{rel_path}{ext}"
+                for line in tree:
+                    if line.endswith(target_suffix) or line == f"{rel_path}{ext}":
+                        candidates.append(line)
+        else:
+            # Unqualified bare class name
+            for ext in ['.java', '.kt', '.groovy', '.scala']:
+                target_filename = f"{base_class}{ext}"
+                target_suffix = f"/{target_filename}"
+                for line in tree:
+                    if line.endswith(target_suffix) or line == target_filename:
+                        candidates.append(line)
+            confidence = 0.5  # lower confidence for unqualified
+            
         candidates = list(set(candidates))
         
         if len(candidates) == 1:
-            return FileResolution(path=candidates[0], status="exact", candidates_considered=1, confidence=1.0)
+            return FileResolution(path=candidates[0], status="exact", candidates_considered=1, confidence=confidence)
         elif len(candidates) > 1:
             return FileResolution(path=None, status="ambiguous", candidates_considered=len(candidates), confidence=0.0)
         else:
-            return FileResolution(path=None, status="not_found", candidates_considered=0, confidence=0.0)
+            if not ('.' in test_id.class_name):
+                return FileResolution(path=None, status="not_found", candidates_considered=0, confidence=0.0)
+            else:
+                return FileResolution(path=None, status="not_found", candidates_considered=0, confidence=0.0)
+
             
     elif test_id.lang == "python":
         if not test_id.path:
