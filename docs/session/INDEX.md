@@ -61,7 +61,10 @@
 | **059** | 2026-08-27 | T1.1c Holdout Scoring | Score log parsers against quarantined holdout corpus (29.73% prec, 95% class acc) | [059-2026-08-27-holdout-scoring.md](059-2026-08-27-holdout-scoring.md) |
 | **060** | 2026-08-27 | T1.1c Holdout Audit & D-29 | Audit holdout labels against raw log text, add D-29, re-score holdout (45.95% prec, 56.67% recall) | [060-2026-08-27-holdout-label-audit.md](060-2026-08-27-holdout-label-audit.md) |
 | **061** | 2026-08-28 | T1.1 Dev Corpus Dispatch Scoring | Switch `analysis/fixture_score.py` default classifier & extractor to parser dispatch, split None checks, and add test suite (46 TP / 0 FP / 0 FN) | [061-2026-08-28-fixture-score-dispatch.md](061-2026-08-28-fixture-score-dispatch.md) |
+| **062** | 2026-08-28 | T1.1f Gradle Frame Suffix Join | Accept classloader/module prefixes and Spock method names with spaces in `_AT_FRAME_RE` | [062-2026-08-28-gradle-at-frames.md](062-2026-08-28-gradle-at-frames.md) |
+| **063** | 2026-08-29 | T1.1 Full Corpus Parse | Full corpus log parsing across 12,072 logs, extracting 20,535 test failure outcomes with Gate 1.5 readiness metrics | [063-2026-08-29-corpus-parse.md](063-2026-08-29-corpus-parse.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
+
 
 
