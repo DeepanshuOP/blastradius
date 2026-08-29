@@ -1034,6 +1034,99 @@ def _build_log_worklist(
     return items
 
 
+
+def capture_branch_runs(
+    repos: list[dict],
+    *,
+    pool: TokenPool,
+    store: RawStore,
+    governor: TransientGovernor,
+    limit: int | None = None
+) -> dict:
+    from src.harvest.frame import _classify_failure, AbortRun
+    import requests
+    import time
+    
+    stats = {
+        "n_repos": 0,
+        "n_branches": 0,
+        "n_captured": 0,
+        "n_failed": 0,
+        "n_transient": 0,
+    }
+    
+    worklist = []
+    
+    for row in repos:
+        repo_full = row["name"]
+        owner, name = repo_full.split("/")
+        repo_dir = store._root / f"{owner}__{name}" / "sha"
+        if not repo_dir.exists():
+            continue
+            
+        base_refs = set()
+        for shard in repo_dir.iterdir():
+            if not shard.is_dir(): continue
+            for sha_dir in shard.iterdir():
+                if not sha_dir.is_dir(): continue
+                runs_file = sha_dir / "runs.jsonl.gz"
+                if not runs_file.exists(): continue
+                
+                try:
+                    import gzip, json
+                    with gzip.open(runs_file, 'rt') as f:
+                        for line in f:
+                            data = json.loads(line)
+                            if 'body' in data and data['body']:
+                                body = json.loads(data['body'])
+                                for r in body.get('workflow_runs', []):
+                                    for pr in r.get('pull_requests', []):
+                                        if 'base' in pr and 'ref' in pr['base']:
+                                            base_refs.add(pr['base']['ref'])
+                except Exception:
+                    pass
+                    
+        for ref in base_refs:
+            if not store.exists(repo_full, "branch_runs", ref):
+                worklist.append((repo_full, ref))
+                
+    stats["n_branches"] = len(worklist)
+    print(f"[stage5] discovered {len(worklist)} branch queries needed across {len(repos)} repos")
+    
+    if limit is not None:
+        worklist = worklist[:limit]
+        
+    for repo_full, ref in worklist:
+        if governor.should_abort():
+            raise AbortRun("too many transient errors in stage 5")
+            
+        url = f"https://api.github.com/repos/{repo_full}/actions/runs"
+        try:
+            resp = get_with_backoff(url, params={"branch": ref, "per_page": 100}, pool=pool)
+            
+            import json, datetime
+            record = {
+                "url": url,
+                "status": resp.status_code,
+                "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "body": resp.text
+            }
+            from src.harvest.rawstore import RawRecord
+            rr = RawRecord(**record)
+            store.write_records(repo_full, "branch_runs", ref, [rr])
+            stats["n_captured"] += 1
+            
+        except Exception as exc:
+            bucket, _status, _cls = _classify_failure(exc)
+            if bucket == "terminal":
+                stats["n_failed"] += 1
+            else:
+                stats["n_transient"] += 1
+                governor.record_transient()
+                
+    return stats
+
+
 def capture_job_logs(
     repo_fulls: list[str],
     *,
@@ -1409,6 +1502,7 @@ def run(
     run_stage2 = stage in ("2", "both", "all")
     run_stage3 = stage in ("3", "all")
     run_stage4 = stage in ("4", "all")
+    run_stage5 = stage in ("5", "all")
     governor = TransientGovernor(pool)
 
     total = {
@@ -1424,6 +1518,7 @@ def run(
         "n_checkruns_discovered": 0,
         "n_annotations_captured": 0,
         "n_transient_stage3": 0,
+        "n_transient_stage5": 0,
         "n_logs_captured": 0,
         "total_log_bytes": 0,
     }
@@ -1517,6 +1612,20 @@ def run(
                 f"{overall['n_runs_over_90d_recovered_via_annotations']}"
             )
 
+    
+    stage5_stats = None
+    if run_stage5:
+        stage5_stats = capture_branch_runs(
+            repos, pool=pool, store=store, governor=governor, limit=limit
+        )
+        print(
+            f"STAGE5: worklist={stage5_stats['n_branches']} "
+            f"captured={stage5_stats['n_captured']} "
+            f"failed={stage5_stats['n_failed']} "
+            f"transient={stage5_stats['n_transient']}"
+        )
+        total["n_transient_stage5"] += stage5_stats["n_transient"]
+
     stage4_stats = None
     if run_stage4:
         repo_fulls = [f"{owner}/{repo}" for owner, repo in repos]
@@ -1566,7 +1675,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     parser.add_argument("--lang", type=str, default=None)
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--stage", choices=("1", "2", "3", "4", "both", "all"), default=DEFAULT_STAGE)
+    parser.add_argument("--stage", choices=("1", "2", "3", "4", "5", "both", "all"), default=DEFAULT_STAGE)
     parser.add_argument("--max-logs", type=int, default=None)
     parser.add_argument("--attempt-expired", action="store_true")
     return parser.parse_args(argv)

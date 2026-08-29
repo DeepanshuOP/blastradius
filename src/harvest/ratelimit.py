@@ -189,7 +189,17 @@ def _log(entry: dict, log_path: Path) -> None:
         fh.write(json.dumps(entry) + "\n")
 
 
+
+class TransferDeadlineExceeded(requests.exceptions.RequestException):
+    pass
+class ByteCeilingExceeded(requests.exceptions.RequestException):
+    pass
+
+TRANSFER_DEADLINE_SECONDS = 29704
+BYTE_CEILING = 15 * 1024 * 1024
+
 def get_with_backoff(
+
     url: str,
     params: dict | None = None,
     *,
@@ -205,8 +215,22 @@ def get_with_backoff(
 
         try:
             response = requests.get(
-                url, params=params, headers=headers, timeout=TIMEOUT
+                url, params=params, headers=headers, timeout=TIMEOUT, stream=True
             )
+            
+            body = b""
+            for chunk in response.iter_content(chunk_size=65536):
+                body += chunk
+                if len(body) > 15 * 1024 * 1024:
+                    response.close()
+                    raise ByteCeilingExceeded("Response exceeded 15 MB")
+                if time.monotonic() - start > 29704:
+                    response.close()
+                    raise TransferDeadlineExceeded("Transfer took longer than 29704s")
+            
+            response._content = body
+            response._content_consumed = True
+            
         except requests.exceptions.RequestException as exc:
             # Broadened from (ConnectionError, Timeout): any RequestException
             # raised by requests.get() itself — InvalidHeader, a broken

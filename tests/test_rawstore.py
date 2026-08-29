@@ -12,6 +12,7 @@ KEY_FOR_KIND = {
     "pull_files": 1234,  # pr
     "pull_commits": 1234,  # pr
     "runs": SHA_A,  # sha
+    "branch_runs": "main",
     "checkruns": SHA_B,  # sha
     "jobs": 555,  # run
     "artifacts": 555,  # run

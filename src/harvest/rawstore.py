@@ -53,6 +53,7 @@ KIND_SCOPE: dict[str, str] = {
     "pull_files": "pr",
     "pull_commits": "pr",
     "runs": "sha",
+    "branch_runs": "branch",
     "checkruns": "sha",
     "jobs": "run",
     "artifacts": "run",
@@ -102,6 +103,16 @@ def _validate_repo(repo: str) -> None:
 def _validate_key(kind: str, key: int | str) -> tuple[str, str, str]:
     """Resolve (kind, key) to (scope, shard, unit), enforcing the key type each scope requires."""
     scope = KIND_SCOPE[kind]
+    if scope == "branch":
+        if not isinstance(key, str):
+            raise ValueError(f"kind {kind!r} requires a str branch key")
+        # sanitize the branch name for a safe directory name
+        import urllib.parse
+        safe_key = urllib.parse.quote(key, safe="")
+        # make shard from first 3 chars or fallback
+        shard_str = safe_key[:3].ljust(3, "_")
+        return scope, shard_str, safe_key
+        
     if scope == _SHA_SCOPE:
         if not isinstance(key, str):
             raise ValueError(

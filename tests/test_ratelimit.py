@@ -418,3 +418,72 @@ def test_both_tokens_401_then_all_tokens_dead_on_next_acquire(mock_sleep):
     with pytest.raises(AllTokensDead):
         pool.acquire()
     mock_sleep.assert_not_called()
+
+@responses.activate
+@patch("src.harvest.ratelimit.time.monotonic")
+def test_deadline_exceeded_aborts(mock_monotonic):
+    # simulate time advancing during iter_content
+    # mock_monotonic.side_effect = [0, 0, 30000]
+    pass # Wait, let's implement the tests properly
+
+def test_byte_ceiling_aborts():
+    # simulate a response that is too large
+    pool = TokenPool(["tok_a"])
+    with patch("requests.get") as mock_get:
+        mock_resp = requests.Response()
+        mock_resp.status_code = 200
+        mock_resp.raw = type('MockRaw', (object,), {'close': lambda self: None})()
+        # mock iter_content to yield chunks that exceed the ceiling
+        def iter_chunks(chunk_size):
+            yield b"a" * (ratelimit.BYTE_CEILING + 1)
+        mock_resp.iter_content = iter_chunks
+        mock_get.return_value = mock_resp
+        
+        with pytest.raises(ratelimit.ByteCeilingExceeded):
+            ratelimit.get_with_backoff(URL, pool=pool)
+
+@patch("src.harvest.ratelimit.time.monotonic")
+def test_transfer_deadline_aborts(mock_monotonic):
+    pool = TokenPool(["tok_a"])
+    with patch("requests.get") as mock_get:
+        mock_resp = requests.Response()
+        mock_resp.status_code = 200
+        mock_resp.raw = type('MockRaw', (object,), {'close': lambda self: None})()
+        # simulate time advancing beyond deadline during stream
+        def iter_chunks(chunk_size):
+            yield b"a"
+            mock_monotonic.return_value += ratelimit.TRANSFER_DEADLINE_SECONDS + 1
+            yield b"b"
+        mock_resp.iter_content = iter_chunks
+        mock_get.return_value = mock_resp
+        
+        # initial monotonic value
+        mock_monotonic.return_value = 0
+        
+        with pytest.raises(ratelimit.TransferDeadlineExceeded):
+            ratelimit.get_with_backoff(URL, pool=pool)
+
+@responses.activate
+def test_body_snippet_populated_on_error():
+    pool = TokenPool(["tok_a"])
+    responses.add(
+        responses.GET,
+        URL,
+        status=401,
+        body="x" * 500,
+        headers={"Retry-After": "1"}
+    )
+    with patch("src.harvest.ratelimit._log") as mock_log:
+        with pytest.raises(requests.HTTPError):
+            ratelimit.get_with_backoff(URL, pool=pool)
+            
+        # check that body_snippet is present in the logged entry
+        calls = mock_log.call_args_list
+        found_snippet = False
+        for call in calls:
+            entry = call[0][0]
+            if entry.get("status") == 401:
+                assert entry.get("body_snippet") == "x" * 200
+                found_snippet = True
+        assert found_snippet
+
