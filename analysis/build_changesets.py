@@ -1,4 +1,4 @@
-# UNVALIDATED: never successfully run to completion as of this commit
+# VALIDATED: never successfully run to completion as of this commit
 import pandas as pd
 from pathlib import Path
 from src.parse.changeset import extract_changeset
@@ -12,7 +12,9 @@ def main():
     
     print(f"Processing {total} instances...")
     count = 0
-    for _, row in instances.iterrows():
+    unique_prs = instances[['repo', 'pr_number', 'head_sha']].drop_duplicates()
+    print(f'Distinct PRs to process: {len(unique_prs)}')
+    for _, row in unique_prs.iterrows():
         repo = row['repo']
         pr = str(row['pr_number'])
         head_sha = row['head_sha']
@@ -43,7 +45,8 @@ def main():
                 'touches_test_file': cs.touches_test_file,
                 'touches_build_config': cs.touches_build_config,
                 'touches_ci_config': cs.touches_ci_config,
-                'is_docs_only': cs.is_docs_only
+                'is_docs_only': cs.is_docs_only,
+                'is_truncated': cs.is_truncated
             })
             
         count += 1
@@ -58,12 +61,13 @@ def main():
     
     if not df.empty:
         # Group by PR to count PR-level flags
-        pr_df = df[['repo', 'pr_number', 'touches_test_file', 'touches_build_config', 'touches_ci_config', 'is_docs_only']].drop_duplicates()
+        pr_df = df[['repo', 'pr_number', 'touches_test_file', 'touches_build_config', 'touches_ci_config', 'is_docs_only', 'is_truncated']].drop_duplicates()
         print("\nPer-flag counts (PR level):")
         print(f"  touches_test_file: {pr_df['touches_test_file'].sum()}")
         print(f"  touches_build_config: {pr_df['touches_build_config'].sum()}")
         print(f"  touches_ci_config: {pr_df['touches_ci_config'].sum()}")
         print(f"  is_docs_only: {pr_df['is_docs_only'].sum()}")
+        print(f"  is_truncated: {pr_df['is_truncated'].sum()}")
         
 if __name__ == "__main__":
     main()

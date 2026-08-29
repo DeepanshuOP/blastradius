@@ -22,14 +22,22 @@ def main():
     for repo in cloned_repos:
         repo_root = clones_dir / repo.replace('/', '__')
         try:
-            trees[repo] = _get_git_tree(repo_root)
+            tree_paths = _get_git_tree(repo_root)
         except subprocess.CalledProcessError:
-            trees[repo] = set()
+            tree_paths = set()
+        tree_idx = {}
+        for p in tree_paths:
+            basename = p.split("/")[-1]
+            if basename not in tree_idx:
+                tree_idx[basename] = []
+            tree_idx[basename].append(p)
+        trees[repo] = tree_idx
             
     paths = []
     statuses = []
     candidates_considered = []
     
+    ambiguous_samples = []
     for idx, row in df_cloned.iterrows():
         repo = row['repo']
         tid_raw = row['test_id']

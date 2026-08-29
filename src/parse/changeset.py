@@ -24,6 +24,7 @@ class Changeset:
     touches_build_config: bool
     touches_ci_config: bool
     is_docs_only: bool
+    is_truncated: bool
     
     is_formatting_only: Optional[bool] = None
     is_dependency_bump: Optional[bool] = None
@@ -105,6 +106,7 @@ def extract_changeset(repo: str, pr_number: str, head_sha: str, raw_dir: Path = 
         touches_build_config=touches_build,
         touches_ci_config=touches_ci,
         is_docs_only=all_docs,
+        is_truncated=(len(files) >= 300),
         is_formatting_only=None,
         is_dependency_bump=None
     )
