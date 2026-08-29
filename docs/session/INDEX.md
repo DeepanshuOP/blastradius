@@ -63,6 +63,7 @@
 | **061** | 2026-08-28 | T1.1 Dev Corpus Dispatch Scoring | Switch `analysis/fixture_score.py` default classifier & extractor to parser dispatch, split None checks, and add test suite (46 TP / 0 FP / 0 FN) | [061-2026-08-28-fixture-score-dispatch.md](061-2026-08-28-fixture-score-dispatch.md) |
 | **062** | 2026-08-28 | T1.1f Gradle Frame Suffix Join | Accept classloader/module prefixes and Spock method names with spaces in `_AT_FRAME_RE` | [062-2026-08-28-gradle-at-frames.md](062-2026-08-28-gradle-at-frames.md) |
 | **063** | 2026-08-29 | T1.1 Full Corpus Parse | Full corpus log parsing across 12,072 logs, extracting 20,535 test failure outcomes with Gate 1.5 readiness metrics | [063-2026-08-29-corpus-parse.md](063-2026-08-29-corpus-parse.md) |
+| **064** | 2026-08-29 | T1.3a Base-Run Resolution | Base-run resolution algorithm, outcomes-instances join test, Invariant 6 enforcement, and full failed-run evaluation | [064-2026-08-29-base-run-resolution.md](064-2026-08-29-base-run-resolution.md) |
 
 *Note: Sequence number 011 is deliberately unused.*
 
