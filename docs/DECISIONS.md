@@ -42,3 +42,19 @@
 - **D-17** — someone adds "just one" LLM call for convenience. Any number touched by it is unpublishable.
 - **D-09** — someone writes a second normalizer that is independently correct but disagrees on one Unicode edge case. Bindings drop silently.
 - **D-05 / scope** — someone implements documented-but-deferred node types because Part IV describes them. Part IV is a spec, not a work order.
+
+### D-34: Base resolution via commit graph and branch-run index
+**Context**: We need to resolve base runs for PR failure instances. Keying on `run.pull_requests[].base.sha` was disqualified because it was only present on 10.27% of failed runs, and where both were present, it disagreed with `pr.base.sha` 45.20% of the time. (Measured: `uv run python patch3.py` in Phase 001).
+**Decision**: Resolve base runs by walking the real commit graph from the blobless clone (`git rev-list --parents --all`), looking up ancestors in a branch-run index. 
+- `base_ref` is used for branch queries because it is a branch name and does not move.
+- We support an `exact_green` status: if the matched base run has `conclusion == "success"`, we resolve it but it yields an empty `T_base_fail`. This is NOT the invariant-6 trap because it is based on the *observation of a real run*.
+- We cap the ancestor walk at a depth of 10 to limit unbounded resolution times.
+- Logs that expired under the 90-day retention window result in HTTP 410s; these are an attrition number (T0.7) and not an error.
+
+### D-35: run_attempt semantics
+**Context**: 1,659 failed runs (13.19%) have `run_attempt > 1`, with a max of 28. (Measured via `cat << 'EOF' > /tmp/run_attempts.py ...`)
+**Decision**: A label refers to the attempt explicitly captured in the raw API. The raw runs payload captures the specific attempt's status and conclusion.
+
+### D-36: Transfer deadline and byte ceiling
+**Context**: Log downloads can hang indefinitely if the connection stalls.
+**Decision**: We enforce a wall-clock deadline of 29,704s and a byte ceiling of 15MB. The `p1 = 707 bytes/s` throughput floor across all files was derived using the command: `uv run python scratch/phase2b.py` (which read `requests.jsonl` durations and sizes).

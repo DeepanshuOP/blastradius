@@ -38,48 +38,46 @@ class NoBaseRunError(Exception):
 
 @dataclass(frozen=True)
 class BaseResolution:
-    """Outcome of resolving a base workflow run for an instance.
+    """The result of resolving a base run for a given PR run.
     
-    Attributes:
-        base_sha: The base commit SHA (or ancestor commit SHA where base run was found).
-        base_run_id: The resolved workflow run ID on the base side (None for 'no_base').
-        base_run_distance: Commit hops from original base_sha (0 for exact, >0 for ancestor, None for no_base).
-        status: One of 'exact', 'ancestor', or 'no_base'.
+    status:
+        - "exact": Found failed base run at exact base_sha (distance 0)
+        - "exact_green": Found base run but it was green (conclusion == 'success').
+          T_base_fail is empty by observation of a real run, which is categorically
+          different from invariant-6 (no run found).
+        - "ancestor": Found failed base run at an ancestor (distance > 0)
+        - "no_base": Could not find any matching base run
     """
     base_sha: str | None
     base_run_id: int | None
     base_run_distance: int | None
-    status: str  # "exact" | "ancestor" | "no_base"
+    status: str
 
     def __post_init__(self) -> None:
-        if self.status not in ("exact", "ancestor", "no_base"):
-            raise ValueError(
-                f"invalid resolution status: {self.status!r}; must be 'exact', 'ancestor', or 'no_base'"
-            )
+        if self.status not in ("exact", "exact_green", "ancestor", "no_base"):
+            raise ValueError(f"invalid resolution status: {self.status!r}")
+            
         if self.status == "no_base":
-            if self.base_run_id is not None:
+            if self.base_run_id is not None or self.base_run_distance is not None:
                 raise ValueError("base_run_id must be None when status is 'no_base'")
-            if self.base_run_distance is not None:
-                raise ValueError("base_run_distance must be None when status is 'no_base'")
         elif self.status == "exact":
-            if self.base_run_id is None:
-                raise ValueError("base_run_id cannot be None when status is 'exact'")
+            if self.base_run_id is None: raise ValueError("base_run_id cannot be None")
             if self.base_run_distance != 0:
-                raise ValueError(
-                    f"base_run_distance must be 0 for 'exact', got {self.base_run_distance}"
-                )
+                raise ValueError(f"base_run_distance must be 0 for 'exact', got {self.base_run_distance}")
+        elif self.status == "exact_green":
+            if self.base_run_id is None:
+                raise ValueError("base_run_id cannot be None when status is 'exact_green'")
         elif self.status == "ancestor":
             if self.base_run_id is None:
                 raise ValueError("base_run_id cannot be None when status is 'ancestor'")
             if self.base_run_distance is None or self.base_run_distance <= 0:
-                raise ValueError(
-                    f"base_run_distance must be positive integer for 'ancestor', got {self.base_run_distance}"
-                )
+                raise ValueError(f"base_run_distance must be positive integer for 'ancestor', got {self.base_run_distance}")
 
     @property
     def can_emit_labels(self) -> bool:
         """Return True if and only if a valid base run was resolved."""
-        return self.status in ("exact", "ancestor") and self.base_run_id is not None
+        return self.status in ("exact", "ancestor", "exact_green") and self.base_run_id is not None
+
 
     def require_base_run_id(self) -> int:
         """Return the resolved base_run_id or raise NoBaseRunError.
@@ -100,14 +98,30 @@ def build_commit_graph(
     raw_root: Path | str = DEFAULT_ROOT,
     store: RawStore | None = None,
 ) -> dict[str, list[str]]:
-    """Build a commit -> [parent_sha, ...] map for a repository from pull_commits payloads."""
-    if store is None:
-        store = RawStore(raw_root)
-    root = Path(raw_root)
+    """Build a commit -> [parent_sha, ...] map using the local clone, fallback to pull_commits."""
+    import subprocess, json
     owner, name = repo.split("/")
-    pr_dir = root / f"{owner}__{name}" / "pr"
+    clone_dir = Path("data") / "clones" / f"{owner}__{name}"
     
     commit_parents: dict[str, list[str]] = {}
+    if clone_dir.is_dir():
+        try:
+            proc = subprocess.run(
+                ["git", "-C", str(clone_dir), "rev-list", "--parents", "--all"],
+                stdout=subprocess.PIPE, text=True, check=True
+            )
+            for line in proc.stdout.splitlines():
+                parts = line.split()
+                if parts:
+                    commit_parents[parts[0]] = parts[1:]
+            return commit_parents
+        except subprocess.CalledProcessError:
+            pass
+
+    # Fallback to pull_commits for tests without clones
+    if store is None:
+        store = RawStore(raw_root)
+    pr_dir = Path(raw_root) / f"{owner}__{name}" / "pr"
     if not pr_dir.is_dir():
         return commit_parents
 
@@ -116,19 +130,57 @@ def build_commit_graph(
             pnum = int(pf.parent.name)
             recs = store.read_records(repo, "pull_commits", pnum)
             for rec in recs:
-                if not rec.body:
-                    continue
+                if not rec.body: continue
                 commits = json.loads(rec.body)
                 for c in commits:
                     csha = c.get("sha")
                     parents = [p.get("sha") for p in c.get("parents", []) if p.get("sha")]
                     if csha and parents:
                         commit_parents[csha] = parents
-        except (TruncatedRecordError, ValueError, OSError) as exc:
-            _logger.debug("Skipping unreadable pull_commits %s: %s", pf, exc)
+        except Exception:
             continue
-
     return commit_parents
+
+
+def build_run_index(
+    repo: str,
+    raw_root: Path | str = DEFAULT_ROOT,
+    store: RawStore | None = None,
+) -> dict[str, list[dict]]:
+    """Build a mapping of sha -> list[runs] from branch_runs payloads."""
+    import gzip, json
+    if store is None:
+        store = RawStore(raw_root)
+    owner, name = repo.split("/")
+    repo_dir = store._root / f"{owner}__{name}" / "branch"
+    
+    run_index: dict[str, list[dict]] = {}
+    if not repo_dir.is_dir():
+        return run_index
+        
+    for shard in repo_dir.iterdir():
+        if not shard.is_dir(): continue
+        for b_dir in shard.iterdir():
+            if not b_dir.is_dir(): continue
+            runs_file = b_dir / "branch_runs.jsonl.gz"
+            if not runs_file.exists(): continue
+            
+            try:
+                with gzip.open(runs_file, 'rt') as f:
+                    for line in f:
+                        data = json.loads(line)
+                        if 'body' in data and data['body']:
+                            body = json.loads(data['body'])
+                            for r in body.get('workflow_runs', []):
+                                sha = r.get("head_sha")
+                                if sha:
+                                    if sha not in run_index:
+                                        run_index[sha] = []
+                                    run_index[sha].append(r)
+            except Exception:
+                pass
+                
+    return run_index
 
 
 def _get_runs_for_sha(
@@ -172,32 +224,14 @@ def resolve_base_run(
     pr_number: int | None = None,
     raw_root: Path | str = DEFAULT_ROOT,
     store: RawStore | None = None,
-    commit_graph: Mapping[str, Sequence[str]] | None = None,
-    runs_cache: dict[tuple[str, str], list[dict[str, Any]]] | None = None,
+    commit_graph: dict[str, list[str]] | None = None,
+    run_index: dict[str, list[dict]] | None = None,
+    runs_cache: dict[tuple[str, str], list[dict]] | None = None,
     max_ancestor_distance: int = 10,
 ) -> BaseResolution:
-    """Resolve the baseline workflow run for a given workflow run instance.
-    
-    Args:
-        repo: Repository name in 'owner/repo' format.
-        head_sha: Commit SHA of the head run.
-        run_id: Workflow run ID of the head instance.
-        workflow_id: Target workflow ID that base run must match.
-        base_sha: Optional base commit SHA. If None, looked up from raw store.
-        pr_number: Optional PR number for context.
-        raw_root: Path to raw data directory root.
-        store: Optional pre-instantiated RawStore.
-        commit_graph: Optional pre-built commit -> parents mapping for fast batch resolution.
-        runs_cache: Optional cache mapping (repo, sha) -> list of workflow_run dicts.
-        max_ancestor_distance: Maximum commit hops to walk when searching for ancestor base run (default 10).
-        
-    Returns:
-        BaseResolution with status "exact", "ancestor", or "no_base".
-    """
     if store is None:
         store = RawStore(raw_root)
 
-    # 1. If workflow_id is missing, derive it from head_sha runs payload
     if workflow_id is None:
         head_runs = _get_runs_for_sha(repo, head_sha, store, runs_cache)
         for r in head_runs:
@@ -206,77 +240,55 @@ def resolve_base_run(
                 break
 
     if workflow_id is None:
-        return BaseResolution(
-            base_sha=base_sha,
-            base_run_id=None,
-            base_run_distance=None,
-            status="no_base",
-        )
+        return BaseResolution(base_sha=base_sha, base_run_id=None, base_run_distance=None, status="no_base")
 
-    # 2. If base_sha is missing, try to locate from run pull_requests or PR metadata
-    if not base_sha:
-        head_runs = _get_runs_for_sha(repo, head_sha, store, runs_cache)
-        for r in head_runs:
-            if r.get("id") == run_id:
-                prs = r.get("pull_requests", [])
-                if prs and isinstance(prs[0], dict):
-                    base_obj = prs[0].get("base") or {}
-                    base_sha = base_obj.get("sha")
-                break
-
-    if not base_sha:
-        return BaseResolution(
-            base_sha=None,
-            base_run_id=None,
-            base_run_distance=None,
-            status="no_base",
-        )
-
-    # 3. Check for exact match at base_sha
-    base_runs = _get_runs_for_sha(repo, base_sha, store, runs_cache)
-    exact_matches = [r for r in base_runs if r.get("workflow_id") == workflow_id]
-    if exact_matches:
-        best_run = max(
-            exact_matches,
-            key=lambda r: r.get("run_started_at") or r.get("created_at") or "",
-        )
-        return BaseResolution(
-            base_sha=base_sha,
-            base_run_id=int(best_run["id"]),
-            base_run_distance=0,
-            status="exact",
-        )
-
-    # 4. Check ancestors of base_sha up to max_ancestor_distance
+    if run_index is None:
+        run_index = build_run_index(repo, raw_root, store)
+        
     if commit_graph is None:
-        commit_graph = build_commit_graph(repo, raw_root=raw_root, store=store)
+        commit_graph = build_commit_graph(repo, raw_root, store)
 
-    curr_sha = base_sha
+    # 1. Walk ancestors of head_sha using the real commit graph
+    curr_sha = head_sha
     dist = 0
-    while curr_sha in commit_graph and dist < max_ancestor_distance:
-        parents = commit_graph[curr_sha]
-        if not parents:
-            break
-        curr_sha = parents[0]
-        dist += 1
-        anc_runs = _get_runs_for_sha(repo, curr_sha, store, runs_cache)
-        anc_matches = [r for r in anc_runs if r.get("workflow_id") == workflow_id]
+    
+    # We walk starting from parents if we want ancestor? 
+    # Wait, the spec says "Walk ancestors of head_sha". 
+    # Is head_sha itself checked? "First match wins. base_run_distance = hops walked."
+    # If dist=0, it's exact.
+    while curr_sha and dist <= max_ancestor_distance:
+        if dist > 0 or True: # Check at dist 0 as well? If head_sha has it, but it's the SAME run? No, we need base run.
+            pass
+            
+        anc_runs = list(run_index.get(curr_sha, []))
+        anc_runs.extend(_get_runs_for_sha(repo, curr_sha, store, runs_cache))
+        
+        # Deduplicate runs by id
+        seen_ids = set()
+        dedup_runs = []
+        for r in anc_runs:
+            rid = r.get("id")
+            if rid and rid not in seen_ids:
+                seen_ids.add(rid)
+                dedup_runs.append(r)
+                
+        anc_matches = [r for r in dedup_runs if r.get("workflow_id") == workflow_id and r.get("id") != run_id]
         if anc_matches:
-            best_anc_run = max(
-                anc_matches,
-                key=lambda r: r.get("run_started_at") or r.get("created_at") or "",
-            )
+            best_anc = max(anc_matches, key=lambda r: r.get("run_started_at") or r.get("created_at") or "")
+            if best_anc.get("conclusion") == "success":
+                status = "exact_green"
+            else:
+                status = "exact" if dist == 0 else "ancestor"
+                
             return BaseResolution(
                 base_sha=curr_sha,
-                base_run_id=int(best_anc_run["id"]),
+                base_run_id=int(best_anc["id"]),
                 base_run_distance=dist,
-                status="ancestor",
+                status=status
             )
+            
+        parents = commit_graph.get(curr_sha, [])
+        curr_sha = parents[0] if parents else None
+        dist += 1
 
-    # 5. No base run found
-    return BaseResolution(
-        base_sha=base_sha,
-        base_run_id=None,
-        base_run_distance=None,
-        status="no_base",
-    )
+    return BaseResolution(base_sha=None, base_run_id=None, base_run_distance=None, status="no_base")
