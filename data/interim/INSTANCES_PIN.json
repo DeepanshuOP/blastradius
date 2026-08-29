@@ -1,0 +1,40 @@
+{
+  "as_of": "2026-08-28T21:36:57Z",
+  "per_kind_file_counts": {
+    "pulls": 196,
+    "pull_files": 15894,
+    "pull_commits": 15919,
+    "runs": 52949,
+    "jobs": 164707,
+    "checkruns": 3849,
+    "annotations": 16240,
+    "logs": 12072
+  },
+  "total_files_scanned": 233771,
+  "total_files_skipped": 0,
+  "total_instances_written": 164739,
+  "git_head_sha": "f521f2b93516c503920c117188e157cf9722c642",
+  "run_start_utc": "2026-08-29T14:14:58.625693+00:00",
+  "run_end_utc": "2026-08-29T14:18:37.038980+00:00",
+  "unpopulated_fields": [
+    "base_run_id",
+    "base_run_distance",
+    "changed_files",
+    "changed_symbols",
+    "n_files_changed",
+    "n_lines_changed",
+    "touches_test_file",
+    "touches_build_config",
+    "touches_ci_config",
+    "is_dependency_bump",
+    "is_docs_only",
+    "is_formatting_only",
+    "frontier_truncated",
+    "is_default_branch",
+    "graph_sha",
+    "parse_failure_rate",
+    "frame_version",
+    "actual_changed_files"
+  ],
+  "completed_at_resolved_via": "cursor.db capture_unit table lookup on (repo, kind, unit_key) with status='complete' and completed_at <= as_of"
+}
