@@ -1036,16 +1036,18 @@ def _build_log_worklist(
 
 
 def capture_branch_runs(
-    repos: list[dict],
+    repos: list[tuple[str, str]],
     *,
     pool: TokenPool,
     store: RawStore,
+    cursor: CursorStore,
     governor: TransientGovernor,
-    limit: int | None = None
+    limit: int | None = None,
+    max_pages: int = 100
 ) -> dict:
-    from src.harvest.frame import _classify_failure, AbortRun
-    import requests
+    from src.harvest.frame import _classify_failure
     import time
+    import datetime
     
     stats = {
         "n_repos": 0,
@@ -1053,18 +1055,20 @@ def capture_branch_runs(
         "n_captured": 0,
         "n_failed": 0,
         "n_transient": 0,
+        "n_pages_fetched": 0,
     }
     
     worklist = []
     
-    for row in repos:
-        repo_full = row["name"]
-        owner, name = repo_full.split("/")
+    for owner, name in repos:
+        repo_full = f"{owner}/{name}"
         repo_dir = store._root / f"{owner}__{name}" / "sha"
         if not repo_dir.exists():
             continue
             
         base_refs = set()
+        oldest_failed_run = None
+        
         for shard in repo_dir.iterdir():
             if not shard.is_dir(): continue
             for sha_dir in shard.iterdir():
@@ -1080,6 +1084,10 @@ def capture_branch_runs(
                             if 'body' in data and data['body']:
                                 body = json.loads(data['body'])
                                 for r in body.get('workflow_runs', []):
+                                    started = r.get('run_started_at') or r.get('created_at')
+                                    if started:
+                                        if oldest_failed_run is None or started < oldest_failed_run:
+                                            oldest_failed_run = started
                                     for pr in r.get('pull_requests', []):
                                         if 'base' in pr and 'ref' in pr['base']:
                                             base_refs.add(pr['base']['ref'])
@@ -1087,8 +1095,8 @@ def capture_branch_runs(
                     pass
                     
         for ref in base_refs:
-            if not store.exists(repo_full, "branch_runs", ref):
-                worklist.append((repo_full, ref))
+            if not cursor.is_captured(repo_full, "branch_runs", ref):
+                worklist.append((repo_full, ref, oldest_failed_run))
                 
     stats["n_branches"] = len(worklist)
     print(f"[stage5] discovered {len(worklist)} branch queries needed across {len(repos)} repos")
@@ -1096,35 +1104,68 @@ def capture_branch_runs(
     if limit is not None:
         worklist = worklist[:limit]
         
-    for repo_full, ref in worklist:
-        if governor.should_abort():
-            raise AbortRun("too many transient errors in stage 5")
+    for idx, (repo_full, ref, oldest_failed) in enumerate(worklist):
+        if idx > 0 and idx % 100 == 0:
+            elapsed = 0 # Not tracked precisely here, but we can print progress
+            print(f"Heartbeat: {idx}/{len(worklist)} units processed...")
             
-        url = f"https://api.github.com/repos/{repo_full}/actions/runs"
-        try:
-            resp = get_with_backoff(url, params={"branch": ref, "per_page": 100}, pool=pool)
-            
-            import json, datetime
-            record = {
-                "url": url,
-                "status": resp.status_code,
-                "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                "body": resp.text
-            }
-            from src.harvest.rawstore import RawRecord
-            rr = RawRecord(**record)
-            store.write_records(repo_full, "branch_runs", ref, [rr])
-            stats["n_captured"] += 1
-            
-        except Exception as exc:
-            bucket, _status, _cls = _classify_failure(exc)
-            if bucket == "terminal":
-                stats["n_failed"] += 1
-            else:
-                stats["n_transient"] += 1
-                governor.record_transient()
+        cursor.mark_unit_started(repo_full, "branch_runs", ref)
+        
+        from src.harvest.ratelimit import get_with_backoff
+        from src.harvest.rawstore import RawRecord
+        import json
+        
+        page = 1
+        fetched_all_needed = False
+        all_records = []
+        terminal_failure = False
+        
+        while page <= max_pages and not fetched_all_needed:
+            url = f"https://api.github.com/repos/{repo_full}/actions/runs"
+            try:
+                resp = get_with_backoff(url, params={"branch": ref, "per_page": 100, "page": page}, pool=pool)
+                record = {
+                    "url": url,
+                    "status": resp.status_code,
+                    "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "etag": None,
+                    "body": resp.content
+                }
+                rr = RawRecord(**record)
+                all_records.append(rr)
+                stats["n_pages_fetched"] += 1
                 
+                # Check the oldest run in this page
+                body_json = json.loads(resp.text)
+                runs = body_json.get('workflow_runs', [])
+                if not runs or len(runs) < 100:
+                    fetched_all_needed = True # No more runs or last page
+                
+                oldest_in_page = min((r.get('run_started_at') or r.get('created_at') for r in runs if (r.get('run_started_at') or r.get('created_at'))), default=None)
+                if oldest_in_page and oldest_failed and oldest_in_page < oldest_failed:
+                    fetched_all_needed = True
+                    
+            except Exception as exc:
+                bucket, detail, status_code = _classify_failure(exc)
+                if bucket == "terminal":
+                    cursor.mark_unit_failed(repo_full, "branch_runs", ref, status_code, detail)
+                    stats["n_failed"] += 1
+                    terminal_failure = True
+                else:
+                    stats["n_transient"] += 1
+                    governor.record_transient(status=status_code, token_idx=getattr(pool, 'last_used_index', 0))
+                break # Exit pagination on failure
+                
+            page += 1
+            
+        if not terminal_failure and all_records:
+            store.write_records(repo_full, "branch_runs", ref, all_records)
+            cursor.mark_unit_complete(repo_full, "branch_runs", ref)
+            stats["n_captured"] += 1
+            governor.record_success()
+            
     return stats
+
 
 
 def capture_job_logs(
@@ -1616,7 +1657,7 @@ def run(
     stage5_stats = None
     if run_stage5:
         stage5_stats = capture_branch_runs(
-            repos, pool=pool, store=store, governor=governor, limit=limit
+            repos, pool=pool, store=store, cursor=cursor, governor=governor, limit=limit
         )
         print(
             f"STAGE5: worklist={stage5_stats['n_branches']} "

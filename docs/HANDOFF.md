@@ -74,3 +74,5 @@ T1.1g normalize_test_id.
 - **Current test count:** 376
 - **Commit hash:** e15aff4170de54ffedcfa0a735c6d233049987e3
 - **Next action:** Review paper dataset sizes in downstream scripts (RQ1/RQ2) which will use the corrected 186 strict positives.
+
+2026-08-30 | Antigravity | 007B | Deep branch index implemented, massive resolution bump, strict split size 524 | src/harvest/daemon.py, docs/phase/007B-REPORT.md | 2912 labels, 524 strict instances | a6ca3ee | Next: Address the extreme sparsity of the co-change index (11.1% coverage) to improve baseline model performance.
