@@ -45,21 +45,20 @@ def extract_changeset(repo: str, pr_number: str, head_sha: str, raw_dir: Path = 
     if not data:
         return None
         
-    # The body might be a JSON string if wrapped by RawStore or an array of dicts
-    # The RawStore wrapper stores it in `body`
-    if 'body' in data[0]:
-        body_str = data[0]['body']
-        try:
-            files_data = json.loads(body_str)
-        except json.JSONDecodeError:
-            return None
-    elif isinstance(data[0], list):
-        # Already an array of dicts
-        files_data = data[0]
-    else:
-        files_data = data
-        
-    if not isinstance(files_data, list):
+    files_data = []
+    for row in data:
+        if 'body' in row:
+            try:
+                page_data = json.loads(row['body'])
+                if isinstance(page_data, list):
+                    files_data.extend(page_data)
+            except: pass
+        elif isinstance(row, list):
+            files_data.extend(row)
+        else:
+            files_data.append(row)
+            
+    if not files_data:
         return None
         
     files = []

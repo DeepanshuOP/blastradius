@@ -1,0 +1,117 @@
+import pandas as pd
+import numpy as np
+
+def compute_labels(res_df, instances_df, head_parsed, base_parsed):
+    # Filter head_parsed and base_parsed to only those in res_df
+    
+    # 1. T_head_fail
+    head_fail = head_parsed.groupby(['run_id', 'test_id']).size().reset_index(name='n_legs_head')
+    
+    # 2. T_base_fail
+    base_fail = base_parsed.groupby(['run_id', 'test_id']).size().reset_index(name='n_legs_base')
+    
+    runs_with_base_outcomes = set(base_parsed['run_id'].unique())
+    
+    valid_runs = []
+    no_output_count = 0
+    
+    # Invariant 6: status == 'no_base' -> emit NO labels.
+    
+    for _, row in res_df.iterrows():
+        r_id = row['run_id']
+        status = row['status']
+        if status == 'no_base':
+            continue
+        elif status == 'exact_green':
+            valid_runs.append(r_id)
+        elif status in ['exact', 'ancestor', 'branch_prior']:
+            if r_id in runs_with_base_outcomes:
+                valid_runs.append(r_id)
+            else:
+                no_output_count += 1
+                
+    valid_runs_set = set(valid_runs)
+    
+    # Assert Invariant 6: no run with status 'no_base' is in valid_runs
+    no_base_runs = set(res_df[res_df['status'] == 'no_base']['run_id'])
+    assert len(no_base_runs.intersection(valid_runs_set)) == 0, "Invariant 6 violated: no_base run in valid_runs"
+    
+    head_labels = head_fail[head_fail['run_id'].isin(valid_runs_set)].copy()
+    
+    # Split: ALL
+    all_labels = head_labels[['run_id', 'test_id']].copy()
+    all_labels['split'] = 'all'
+    
+    # Split: RELAXED
+    base_fail_set = set(zip(base_fail['run_id'], base_fail['test_id']))
+    
+    if len(head_labels) > 0:
+        head_labels['in_base'] = head_labels.apply(lambda x: (x['run_id'], x['test_id']) in base_fail_set, axis=1)
+    else:
+        head_labels['in_base'] = False
+
+    relaxed_labels = head_labels[~head_labels['in_base']][['run_id', 'test_id']].copy()
+    relaxed_labels['split'] = 'relaxed'
+    
+    # Flaky detection
+    # df with head_sha
+    df = pd.merge(res_df, instances_df[['run_id', 'head_sha']], on='run_id', how='left')
+    runs_per_sha = df.groupby('head_sha')['run_id'].nunique().reset_index(name='n_runs_for_sha')
+    head_fail_with_sha = pd.merge(head_fail, df[['run_id', 'head_sha']], on='run_id', how='inner')
+    fails_per_sha_test = head_fail_with_sha.groupby(['head_sha', 'test_id'])['run_id'].nunique().reset_index(name='n_fail_runs')
+    flips = pd.merge(fails_per_sha_test, runs_per_sha, on='head_sha')
+    flips['is_flip'] = flips['n_fail_runs'] < flips['n_runs_for_sha']
+    
+    flip_count = flips['is_flip'].sum()
+    flip_rate = flip_count / len(flips) if len(flips) > 0 else 0
+    
+    flaky_pairs = set(zip(flips[flips['is_flip']]['head_sha'], flips[flips['is_flip']]['test_id']))
+    
+    # Split: STRICT
+    def is_flaky(row):
+        run_id = row['run_id']
+        test_id = row['test_id']
+        # get head_sha for this run
+        shas = df[df['run_id'] == run_id]['head_sha']
+        if len(shas) == 0: return False
+        return (shas.iloc[0], test_id) in flaky_pairs
+
+    if len(relaxed_labels) > 0:
+        strict_mask = ~relaxed_labels.apply(is_flaky, axis=1)
+        strict_labels = relaxed_labels[strict_mask][['run_id', 'test_id']].copy()
+    else:
+        strict_labels = relaxed_labels.copy()
+    strict_labels['split'] = 'strict'
+    
+    outcomes = pd.concat([all_labels, relaxed_labels, strict_labels])
+    
+    return outcomes, {
+        "no_output_count": no_output_count,
+        "flip_count": flip_count,
+        "flip_rate": flip_rate,
+        "n_matrix_legs_handled": head_parsed['run_id'].duplicated(keep=False).sum() # approximate
+    }
+
+if __name__ == '__main__':
+    res = pd.read_parquet('data/interim/base_resolution_new.parquet')
+    instances = pd.read_parquet('data/interim/instances_raw.parquet')
+    head_parsed = pd.read_parquet('data/interim/parsed_outcomes.parquet')
+    base_parsed = pd.read_parquet('data/interim/base_outcomes.parquet')
+    
+    outcomes, stats = compute_labels(res, instances, head_parsed, base_parsed)
+    outcomes.to_parquet('data/interim/outcomes.parquet')
+    
+    print("Done writing data/interim/outcomes.parquet")
+    print(f"NO_TEST_OUTPUT base runs omitted: {stats['no_output_count']}")
+    print(f"Matrix leg rows unioned: {stats['n_matrix_legs_handled']}")
+    print(f"Same-SHA flips detected: {stats['flip_count']} (Rate: {stats['flip_rate']:.2%})")
+    
+    for split in ['all', 'relaxed', 'strict']:
+        split_df = outcomes[outcomes['split'] == split]
+        instances_cnt = split_df['run_id'].nunique()
+        labels_cnt = len(split_df)
+        distinct_tests = split_df['test_id'].nunique()
+        print(f"Split {split}: {instances_cnt} instances, {labels_cnt} labels, {distinct_tests} distinct tests")
+        
+    positives = outcomes[outcomes['split'] == 'strict']['run_id'].nunique()
+    print(f"Gate 1 Positives: {positives} / 5000 (Met? {'Yes' if positives >= 5000 else 'No'})")

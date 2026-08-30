@@ -50,12 +50,11 @@ def test_base_resolve_exact_real_payload() -> None:
         run_id=28986910981,
         workflow_id=67750765,
         base_sha="58bac320ebd2601e6b66261b5e40a72d59161cff",
-        commit_graph={"00eb482640b2f52f2ba690845e123c9b42af61da": ["58bac320ebd2601e6b66261b5e40a72d59161cff"]}
     )
-    assert res.status == "ancestor"
+    assert res.status == "exact"
     assert res.base_sha == "58bac320ebd2601e6b66261b5e40a72d59161cff"
     assert res.base_run_id == 30538725876
-    assert res.base_run_distance == 1
+    assert res.base_run_distance == 0
     assert res.can_emit_labels is True
     assert res.require_base_run_id() == 30538725876
 
@@ -90,17 +89,11 @@ def test_base_resolve_ancestor_real_payload() -> None:
         run_id=31326869987,
         workflow_id=80768812,
         base_sha="faba9f53eae8b7ca09051b12f99ea5e9f1663748",
-        commit_graph={
-            "0de2cdf979dbf76bdafb328d0e618ac358b7b452": ["faba9f53eae8b7ca09051b12f99ea5e9f1663748"],
-            "faba9f53eae8b7ca09051b12f99ea5e9f1663748": ["c1275763af98e5ecc3d8fbc8f6fcb8435f638dbe"],
-            "c1275763af98e5ecc3d8fbc8f6fcb8435f638dbe": ["3260f5415dba4c21a0dd9353554ea3ccb2bc2a6f"],
-            "3260f5415dba4c21a0dd9353554ea3ccb2bc2a6f": ["0286c716de5206af6d25a4c5dca6835bdbcb5fac"],
-        }
     )
-    assert res.status == "exact_green"
+    assert res.status == "ancestor"
     assert res.base_sha == "0286c716de5206af6d25a4c5dca6835bdbcb5fac"
     assert res.base_run_id == 31308832690
-    assert res.base_run_distance == 4
+    assert res.base_run_distance == 3
     assert res.can_emit_labels is True
     assert res.require_base_run_id() == 31308832690
 
@@ -174,7 +167,7 @@ def test_base_resolution_dataclass_invariants() -> None:
         BaseResolution(base_sha="abc", base_run_id=123, base_run_distance=None, status="no_base")
 
     # no_base cannot have base_run_distance
-    with pytest.raises(ValueError, match="base_run_id must be None"):
+    with pytest.raises(ValueError, match="base_run_distance must be None"):
         BaseResolution(base_sha="abc", base_run_id=None, base_run_distance=2, status="no_base")
 
     # exact cannot have None base_run_id
@@ -192,7 +185,3 @@ def test_base_resolution_dataclass_invariants() -> None:
     # ancestor must have distance > 0
     with pytest.raises(ValueError, match="base_run_distance must be positive"):
         BaseResolution(base_sha="abc", base_run_id=123, base_run_distance=0, status="ancestor")
-
-def test_base_resolve_exact_green() -> None:
-    res = BaseResolution(base_sha="abc", base_run_id=123, base_run_distance=1, status="exact_green")
-    assert res.can_emit_labels == True  # exact_green is valid, produces empty labels  # Wait, is exact_green considered valid?

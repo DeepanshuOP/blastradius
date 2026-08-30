@@ -44,7 +44,11 @@ check-log-isolation:
 
 tables:
 	mkdir -p paper/generated
+	uv run python analysis/fixture_score.py
+	uv run python analysis/holdout_eval.py
+	uv run python analysis/binding_report.py
 	uv run python analysis/attrition_funnel.py
+	uv run python analysis/rq1_divergence.py
 	uv run python analysis/expiry_cliff.py
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py
