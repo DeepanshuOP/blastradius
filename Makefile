@@ -44,6 +44,9 @@ check-log-isolation:
 
 tables:
 	mkdir -p paper/generated
+	uv run python analysis/resolve_bases.py
+	uv run python analysis/parse_base_logs.py
+	uv run python src/label/fault_revealing.py
 	uv run python analysis/fixture_score.py
 	uv run python analysis/holdout_eval.py
 	uv run python analysis/binding_report.py

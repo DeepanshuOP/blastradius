@@ -67,27 +67,39 @@ def main():
     inst_with_label = strict['run_id'].nunique()
     
     steps = [
-        ("repos in frame", repos_in_frame),
-        ("repos swept", repos_swept),
-        ("PRs discovered", prs_discovered),
-        ("runs discovered", runs_discovered),
-        ("failed runs", failed_runs),
-        ("logs captured", logs_captured),
-        ("logs not expired", logs_not_expired),
-        ("logs parsed", logs_parsed),
-        ("logs with test output", logs_with_test_output),
-        ("instances with resolved base", inst_resolved),
-        ("instances with a known base failure set", inst_known_base),
-        ("instances with >=1 fault-revealing label", inst_with_label)
+        ("repos in frame", repos_in_frame, "repos", None),
+        ("repos swept", repos_swept, "repos", "repos in frame"),
+        ("PRs discovered", prs_discovered, "PRs", None),
+        ("runs discovered", runs_discovered, "runs", "PRs discovered"),
+        ("failed runs", failed_runs, "runs", "runs discovered"),
+        ("logs captured", logs_captured, "logs", None),
+        ("logs not expired", logs_not_expired, "logs", "logs captured"),
+        ("logs parsed", logs_parsed, "logs", "logs not expired"),
+        ("logs with test output", logs_with_test_output, "logs", "logs parsed"),
+        ("instances with resolved base", inst_resolved, "instances", "failed runs"),
+        ("instances with a known base failure set", inst_known_base, "instances", "instances with resolved base"),
+        ("instances with >=1 fault-revealing label", inst_with_label, "instances", "instances with a known base failure set")
     ]
     
-    print(f"{'Pipeline Step':<45} | {'Count':>10} | {'Survival %':>10}")
-    print("-" * 70)
-    for i, (name, count) in enumerate(steps):
-        pct = 100.0
-        if i > 0 and steps[i-1][1] > 0:
-            pct = count / steps[i-1][1] * 100
-        print(f"{name:<45} | {count:10,d} | {pct:9.2f}%")
+    print(f"{'Pipeline Step':<45} | {'Count':>10} | {'Survival/Ratio':>25}")
+    print("-" * 85)
+    
+    # lookup map
+    counts = {name: count for name, count, _, _ in steps}
+    units = {name: unit for name, _, unit, _ in steps}
+    
+    for name, count, unit, denom_name in steps:
+        if denom_name is None:
+            print(f"{name:<45} | {count:10,d} | {'-':>25}")
+        else:
+            denom_count = counts[denom_name]
+            denom_unit = units[denom_name]
+            if unit == denom_unit:
+                pct = (count / denom_count * 100) if denom_count > 0 else 0
+                print(f"{name:<45} | {count:10,d} | {pct:24.2f}%")
+            else:
+                ratio = f"{count} {unit} / {denom_count} {denom_unit}"
+                print(f"{name:<45} | {count:10,d} | {ratio:>25}")
 
 if __name__ == '__main__':
     main()

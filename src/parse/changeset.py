@@ -56,7 +56,8 @@ def extract_changeset(repo: str, pr_number: str, head_sha: str, raw_dir: Path = 
         elif isinstance(row, list):
             files_data.extend(row)
         else:
-            files_data.append(row)
+            if not row.get('_footer'):
+                files_data.append(row)
             
     if not files_data:
         return None

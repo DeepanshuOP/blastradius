@@ -66,3 +66,11 @@ T1.1g normalize_test_id.
 
 
 
+- 2026-08-29 · Antigravity · Phase 006A Base Repair · Fixed test expectations and daemon bugs, successfully queried and populated Stage 5 branch_runs, rewrote BaseResolution with strict time-ordering (O(N log N) branch_prior) to classify 12,581 failed runs, ran network sweep for missing base-side logs and parsed outcomes into base_outcomes.parquet to compute real BR-Bench size · touched src/harvest/cursor.py, src/harvest/daemon.py, src/label/base_resolve.py, tests/test_base_resolve.py, docs/session/067*, docs/session/INDEX.md, docs/HANDOFF.md · 7 base_resolve tests passing · uncommitted · Next: Operator authorization to commit Phase 006A and proceed to parser optimization or next phase.
+
+### 2026-08-30 (Gemini 3.1 Pro) — 007-A
+- **Outcome:** Cleaned up the root directory by deleting 50+ ad-hoc scripts, promoted load-bearing data generation scripts to `analysis/`, wired them into `make tables`, fixed the 43% flip rate bug, and restored the true strict split size to 186.
+- **Files touched:** `Makefile`, `docs/HANDOFF.md`, `docs/session/INDEX.md`, `src/label/fault_revealing.py`, `src/parse/changeset.py`, `tests/test_fault_revealing.py`, `analysis/attrition_funnel.py`, `analysis/fetch_base_logs.py`, `analysis/parse_base_logs.py`, `analysis/resolve_bases.py`, `src/harvest/migrations.py`, `tests/test_promoted.py`, and 57 untracked scripts deleted.
+- **Current test count:** 376
+- **Commit hash:** e15aff4170de54ffedcfa0a735c6d233049987e3
+- **Next action:** Review paper dataset sizes in downstream scripts (RQ1/RQ2) which will use the corrected 186 strict positives.

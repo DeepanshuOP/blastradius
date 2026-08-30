@@ -55,11 +55,11 @@ def compute_labels(res_df, instances_df, head_parsed, base_parsed):
     
     # Flaky detection
     # df with head_sha
-    df = pd.merge(res_df, instances_df[['run_id', 'head_sha']], on='run_id', how='left')
-    runs_per_sha = df.groupby('head_sha')['run_id'].nunique().reset_index(name='n_runs_for_sha')
-    head_fail_with_sha = pd.merge(head_fail, df[['run_id', 'head_sha']], on='run_id', how='inner')
-    fails_per_sha_test = head_fail_with_sha.groupby(['head_sha', 'test_id'])['run_id'].nunique().reset_index(name='n_fail_runs')
-    flips = pd.merge(fails_per_sha_test, runs_per_sha, on='head_sha')
+    df = pd.merge(res_df, instances_df[['run_id', 'head_sha', 'workflow_id']], on='run_id', how='left')
+    runs_per_sha = df.groupby(['head_sha', 'workflow_id'])['run_id'].nunique().reset_index(name='n_runs_for_sha')
+    head_fail_with_sha = pd.merge(head_fail, df[['run_id', 'head_sha', 'workflow_id']], on='run_id', how='inner')
+    fails_per_sha_test = head_fail_with_sha.groupby(['head_sha', 'workflow_id', 'test_id'])['run_id'].nunique().reset_index(name='n_fail_runs')
+    flips = pd.merge(fails_per_sha_test, runs_per_sha, on=['head_sha', 'workflow_id'])
     flips['is_flip'] = flips['n_fail_runs'] < flips['n_runs_for_sha']
     
     flip_count = flips['is_flip'].sum()
