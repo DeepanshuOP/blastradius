@@ -81,7 +81,8 @@ CREATE TABLE IF NOT EXISTS capture_unit (
     repo          TEXT NOT NULL,
     kind          TEXT NOT NULL CHECK (kind IN (
                       'pulls', 'pull_files', 'pull_commits', 'runs',
-                      'jobs', 'checkruns', 'annotations', 'artifacts', 'logs'
+                      'jobs', 'checkruns', 'annotations', 'artifacts', 'logs',
+                      'branch_runs'
                   )),
     unit_key      TEXT NOT NULL,
     status        TEXT NOT NULL CHECK (status IN (

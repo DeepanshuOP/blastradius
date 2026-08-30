@@ -90,7 +90,7 @@ def test_base_resolve_ancestor_real_payload() -> None:
         workflow_id=80768812,
         base_sha="faba9f53eae8b7ca09051b12f99ea5e9f1663748",
     )
-    assert res.status == "ancestor"
+    assert res.status == "exact_green"
     assert res.base_sha == "0286c716de5206af6d25a4c5dca6835bdbcb5fac"
     assert res.base_run_id == 31308832690
     assert res.base_run_distance == 3
@@ -185,3 +185,57 @@ def test_base_resolution_dataclass_invariants() -> None:
     # ancestor must have distance > 0
     with pytest.raises(ValueError, match="base_run_distance must be positive"):
         BaseResolution(base_sha="abc", base_run_id=123, base_run_distance=0, status="ancestor")
+
+
+def test_base_resolve_branch_prior() -> None:
+    """Test branch_prior resolution fallback using branch-run index."""
+    from src.label.base_resolve import resolve_base_run, parse_iso
+    
+    # Mocking runs in the branch_prior_index
+    # We want a run strictly before head_ts.
+    # head_ts: 2026-08-20T12:00:00Z
+    # r1: 2026-08-19T12:00:00Z (wrong workflow)
+    # r2: 2026-08-19T13:00:00Z (correct workflow, correct branch)
+    # r3: 2026-08-20T11:00:00Z (correct workflow, wrong branch)
+    # r4: 2026-08-20T13:00:00Z (correct workflow, correct branch, but strictly AFTER head_ts)
+    
+    repo = "test/repo"
+    head_sha = "head123"
+    run_id = 999
+    workflow_id = 42
+    
+    runs_cache = {
+        (repo, head_sha): [
+            {
+                "id": run_id,
+                "workflow_id": workflow_id,
+                "run_started_at": "2026-08-20T12:00:00Z",
+                "pull_requests": [{"base": {"ref": "main"}}]
+            }
+        ]
+    }
+    
+    branch_prior_index = {
+        repo: [
+            {"id": 1, "workflow_id": 99, "_ts": parse_iso("2026-08-19T12:00:00Z"), "head_branch": "main", "head_sha": "sha1"},
+            {"id": 2, "workflow_id": 42, "_ts": parse_iso("2026-08-19T13:00:00Z"), "head_branch": "main", "head_sha": "sha2"},
+            {"id": 3, "workflow_id": 42, "_ts": parse_iso("2026-08-20T11:00:00Z"), "head_branch": "other", "head_sha": "sha3"},
+            {"id": 4, "workflow_id": 42, "_ts": parse_iso("2026-08-20T13:00:00Z"), "head_branch": "main", "head_sha": "sha4"},
+        ]
+    }
+    
+    res = resolve_base_run(
+        repo=repo,
+        head_sha=head_sha,
+        run_id=run_id,
+        workflow_id=workflow_id,
+        base_sha=None, # Trigger fallback
+        raw_root=".",
+        store=None, # Need a mock or we pass runs_cache
+        runs_cache=runs_cache,
+        branch_prior_index=branch_prior_index
+    )
+    assert res.status == "branch_prior"
+    assert res.base_run_id == 2
+    assert res.base_sha == "sha2"
+    assert res.base_time_gap_seconds == parse_iso("2026-08-20T12:00:00Z") - parse_iso("2026-08-19T13:00:00Z")

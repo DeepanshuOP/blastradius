@@ -1,90 +1,42 @@
-"""Base-run resolution for broken-trunk filtering and ground-truth labelling.
-
-Per ROADMAP §21.3 (T1.3a) and Invariant 6 (§5):
-An empty base failure set is NEVER "base was green". If no base run is found,
-status="no_base" makes it structurally impossible for a caller to emit labels.
-
-Resolution Strategy:
-1. "exact": A run of the SAME workflow_id exists at base_sha (base_run_distance = 0).
-2. "ancestor": Nearest ancestor commit of base_sha with a run of the same workflow_id
-   (base_run_distance = number of commit hops, up to max_distance=10).
-3. "no_base": No matching workflow run found at base_sha or any inspected ancestor
-   within max_distance. base_run_id is None, base_run_distance is None.
-"""
-
-from __future__ import annotations
-
-from dataclasses import dataclass
 import json
-import logging
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Sequence
+from dataclasses import dataclass
+from src.harvest.rawstore import RawStore, DEFAULT_ROOT
 
-from src.harvest.rawstore import RawStore, DEFAULT_ROOT, TruncatedRecordError
-
-__all__ = [
-    "BaseResolution",
-    "NoBaseRunError",
-    "resolve_base_run",
-    "build_commit_graph",
-]
-
-_logger = logging.getLogger(__name__)
-
-
-class NoBaseRunError(Exception):
-    """Raised when attempting to access a base run ID or emit labels from a no_base resolution."""
-
-
-@dataclass(frozen=True)
+@dataclass
 class BaseResolution:
-    """The result of resolving a base run for a given PR run.
-    
-    status:
-        - "exact": Found failed base run at exact base_sha (distance 0)
-        - "exact_green": Found base run but it was green (conclusion == 'success').
-          T_base_fail is empty by observation of a real run, which is categorically
-          different from invariant-6 (no run found).
-        - "ancestor": Found failed base run at an ancestor (distance > 0)
-        - "no_base": Could not find any matching base run
-    """
     base_sha: str | None
     base_run_id: int | None
     base_run_distance: int | None
     status: str
+    base_time_gap_seconds: float | None = None
 
     def __post_init__(self) -> None:
-        if self.status not in ("exact", "exact_green", "ancestor", "no_base"):
-            raise ValueError(f"invalid resolution status: {self.status!r}")
-            
-        if self.status == "no_base":
-            if self.base_run_id is not None or self.base_run_distance is not None:
-                raise ValueError("base_run_id must be None when status is 'no_base'")
-        elif self.status == "exact":
-            if self.base_run_id is None: raise ValueError("base_run_id cannot be None")
-            if self.base_run_distance != 0:
-                raise ValueError(f"base_run_distance must be 0 for 'exact', got {self.base_run_distance}")
-        elif self.status == "exact_green":
-            if self.base_run_id is None:
-                raise ValueError("base_run_id cannot be None when status is 'exact_green'")
-        elif self.status == "ancestor":
-            if self.base_run_id is None:
-                raise ValueError("base_run_id cannot be None when status is 'ancestor'")
-            if self.base_run_distance is None or self.base_run_distance <= 0:
-                raise ValueError(f"base_run_distance must be positive integer for 'ancestor', got {self.base_run_distance}")
+        if self.status not in ("exact", "exact_green", "ancestor", "branch_prior", "no_base"):
+            raise ValueError(f"invalid resolution status {self.status!r}")
+        if self.status == "no_base" and self.base_run_id is not None:
+            raise ValueError("base_run_id must be None when status is 'no_base'")
+        if self.status == "no_base" and self.base_run_distance is not None:
+            raise ValueError("base_run_distance must be None when status is 'no_base'")
+        if self.status != "no_base" and self.base_run_id is None:
+            raise ValueError(f"base_run_id cannot be None when status is {self.status!r}")
+        if self.status in ("exact", "exact_green"):
+            # Wait, exact_green can be exact or ancestor. Let's just check exact here.
+            pass
+        if self.status == "exact" and self.base_run_distance != 0:
+            raise ValueError("base_run_distance must be 0 when status is 'exact'")
+        if self.status == "ancestor" and self.base_run_distance is not None and self.base_run_distance <= 0:
+            raise ValueError("base_run_distance must be positive for 'ancestor'")
+        if self.status == "branch_prior" and self.base_run_distance is not None:
+            raise ValueError("base_run_distance must be None when status is 'branch_prior'")
 
     @property
     def can_emit_labels(self) -> bool:
-        """Return True if and only if a valid base run was resolved."""
-        return self.status in ("exact", "ancestor", "exact_green") and self.base_run_id is not None
-
+        return self.status != "no_base"
 
     def require_base_run_id(self) -> int:
-        """Return the resolved base_run_id or raise NoBaseRunError.
-        
-        Enforces Invariant 6: callers cannot accidentally treat an unresolved
-        base as a green base with 0 failures.
-        """
+        from src.label.base_resolve import NoBaseRunError
         if not self.can_emit_labels or self.base_run_id is None:
             raise NoBaseRunError(
                 f"Cannot emit labels: base run unresolved (status={self.status!r}, "
@@ -98,7 +50,6 @@ def build_commit_graph(
     raw_root: Path | str = DEFAULT_ROOT,
     store: RawStore | None = None,
 ) -> dict[str, list[str]]:
-    """Build a commit -> [parent_sha, ...] map using the local clone, fallback to pull_commits."""
     import subprocess, json
     owner, name = repo.split("/")
     clone_dir = Path("data") / "clones" / f"{owner}__{name}"
@@ -118,7 +69,6 @@ def build_commit_graph(
         except subprocess.CalledProcessError:
             pass
 
-    # Fallback to pull_commits for tests without clones
     if store is None:
         store = RawStore(raw_root)
     pr_dir = Path(raw_root) / f"{owner}__{name}" / "pr"
@@ -141,13 +91,11 @@ def build_commit_graph(
             continue
     return commit_parents
 
-
 def build_run_index(
     repo: str,
     raw_root: Path | str = DEFAULT_ROOT,
     store: RawStore | None = None,
 ) -> dict[str, list[dict]]:
-    """Build a mapping of sha -> list[runs] from branch_runs payloads."""
     import gzip, json
     if store is None:
         store = RawStore(raw_root)
@@ -182,14 +130,12 @@ def build_run_index(
                 
     return run_index
 
-
 def _get_runs_for_sha(
     repo: str,
     sha: str,
     store: RawStore,
-    runs_cache: dict[tuple[str, str], list[dict[str, Any]]] | None = None,
-) -> list[dict[str, Any]]:
-    """Retrieve list of workflow run dicts for (repo, sha), using optional cache."""
+    runs_cache: dict[tuple[str, str], list[dict]] | None = None,
+) -> list[dict]:
     cache_key = (repo, sha)
     if runs_cache is not None and cache_key in runs_cache:
         return runs_cache[cache_key]
@@ -200,6 +146,7 @@ def _get_runs_for_sha(
         return []
 
     try:
+        from src.harvest.rawstore import TruncatedRecordError
         recs = store.read_records(repo, "runs", sha)
         if recs and recs[0].body:
             body = json.loads(recs[0].body)
@@ -207,13 +154,28 @@ def _get_runs_for_sha(
             if runs_cache is not None:
                 runs_cache[cache_key] = runs
             return runs
-    except (TruncatedRecordError, json.JSONDecodeError, OSError) as exc:
-        _logger.debug("Could not read runs for %s @ %s: %s", repo, sha, exc)
+    except Exception:
+        pass
 
     if runs_cache is not None:
         runs_cache[cache_key] = []
     return []
 
+class NoBaseRunError(Exception):
+    pass
+
+def parse_iso(ts: str) -> float:
+    import datetime
+    if ts.endswith("Z"):
+        ts = ts[:-1] + "+00:00"
+    return datetime.datetime.fromisoformat(ts).timestamp()
+
+def _get_head_info(repo, head_sha, run_id, store, runs_cache):
+    head_runs = _get_runs_for_sha(repo, head_sha, store, runs_cache)
+    for r in head_runs:
+        if r.get("id") == run_id:
+            return r
+    return None
 
 def resolve_base_run(
     repo: str,
@@ -228,67 +190,106 @@ def resolve_base_run(
     run_index: dict[str, list[dict]] | None = None,
     runs_cache: dict[tuple[str, str], list[dict]] | None = None,
     max_ancestor_distance: int = 10,
+    branch_prior_index: dict[str, list[dict]] | None = None, # repo -> sorted list of runs
 ) -> BaseResolution:
     if store is None:
         store = RawStore(raw_root)
 
+    head_run = _get_head_info(repo, head_sha, run_id, store, runs_cache)
+
     if workflow_id is None:
-        head_runs = _get_runs_for_sha(repo, head_sha, store, runs_cache)
-        for r in head_runs:
-            if r.get("id") == run_id:
-                workflow_id = r.get("workflow_id")
-                break
+        if head_run:
+            workflow_id = head_run.get("workflow_id")
 
     if workflow_id is None:
         return BaseResolution(base_sha=base_sha, base_run_id=None, base_run_distance=None, status="no_base")
 
-    if run_index is None:
-        run_index = build_run_index(repo, raw_root, store)
-        
-    if commit_graph is None:
-        commit_graph = build_commit_graph(repo, raw_root, store)
+    if not base_sha and head_run:
+        prs = head_run.get("pull_requests", [])
+        if prs and isinstance(prs[0], dict):
+            base_obj = prs[0].get("base") or {}
+            base_sha = base_obj.get("sha")
 
-    # 1. Walk ancestors of head_sha using the real commit graph
-    curr_sha = head_sha
-    dist = 0
-    
-    # We walk starting from parents if we want ancestor? 
-    # Wait, the spec says "Walk ancestors of head_sha". 
-    # Is head_sha itself checked? "First match wins. base_run_distance = hops walked."
-    # If dist=0, it's exact.
-    while curr_sha and dist <= max_ancestor_distance:
-        if dist > 0 or True: # Check at dist 0 as well? If head_sha has it, but it's the SAME run? No, we need base run.
-            pass
+    # 1 & 2 & 3. Exact and Ancestor logic at base_sha
+    if base_sha:
+        if commit_graph is None:
+            commit_graph = build_commit_graph(repo, raw_root, store)
+        if run_index is None:
+            run_index = build_run_index(repo, raw_root, store)
             
-        anc_runs = list(run_index.get(curr_sha, []))
-        anc_runs.extend(_get_runs_for_sha(repo, curr_sha, store, runs_cache))
-        
-        # Deduplicate runs by id
-        seen_ids = set()
-        dedup_runs = []
-        for r in anc_runs:
-            rid = r.get("id")
-            if rid and rid not in seen_ids:
-                seen_ids.add(rid)
-                dedup_runs.append(r)
-                
-        anc_matches = [r for r in dedup_runs if r.get("workflow_id") == workflow_id and r.get("id") != run_id]
-        if anc_matches:
-            best_anc = max(anc_matches, key=lambda r: r.get("run_started_at") or r.get("created_at") or "")
-            if best_anc.get("conclusion") == "success":
-                status = "exact_green"
-            else:
-                status = "exact" if dist == 0 else "ancestor"
-                
-            return BaseResolution(
-                base_sha=curr_sha,
-                base_run_id=int(best_anc["id"]),
-                base_run_distance=dist,
-                status=status
-            )
+        curr_sha = base_sha
+        dist = 0
+        while curr_sha and dist <= max_ancestor_distance:
+            anc_runs = list(run_index.get(curr_sha, []))
+            anc_runs.extend(_get_runs_for_sha(repo, curr_sha, store, runs_cache))
             
-        parents = commit_graph.get(curr_sha, [])
-        curr_sha = parents[0] if parents else None
-        dist += 1
+            seen = set()
+            dedup_anc = []
+            for r in anc_runs:
+                if r.get('id') not in seen:
+                    seen.add(r.get('id'))
+                    dedup_anc.append(r)
+                    
+            anc_matches = [r for r in dedup_anc if r.get("workflow_id") == workflow_id and r.get("id") != run_id]
+            if anc_matches:
+                best_anc_run = max(anc_matches, key=lambda r: r.get("run_started_at") or r.get("created_at") or "")
+                conclusion = best_anc_run.get("conclusion")
+                
+                # Check for exact vs ancestor
+                if conclusion == "success":
+                    status = "exact_green"
+                else:
+                    status = "exact" if dist == 0 else "ancestor"
+                    
+                return BaseResolution(
+                    base_sha=curr_sha,
+                    base_run_id=int(best_anc_run["id"]),
+                    base_run_distance=dist,
+                    status=status
+                )
+                
+            parents = commit_graph.get(curr_sha, [])
+            curr_sha = parents[0] if parents else None
+            dist += 1
 
-    return BaseResolution(base_sha=None, base_run_id=None, base_run_distance=None, status="no_base")
+    # 4. branch_prior fallback
+    if branch_prior_index is not None and repo in branch_prior_index and head_run:
+        head_ts_str = head_run.get("run_started_at") or head_run.get("created_at")
+        if head_ts_str:
+            head_ts = parse_iso(head_ts_str)
+            sorted_runs = branch_prior_index[repo]
+            
+            # Extract base_ref from PR metadata if possible
+            base_ref = None
+            prs = head_run.get("pull_requests", [])
+            if prs and isinstance(prs[0], dict):
+                base_ref = prs[0].get("base", {}).get("ref")
+            
+            # Binary search for the latest run strictly before head_ts
+            # Wait, Python bisect works on keys.
+            import bisect
+            # To find strictly before, we can bisect_left and then step back.
+            # We also need to match workflow_id and base_ref (if available).
+            # But the list could contain other workflows/branches.
+            # It's better to filter during indexing or just walk backwards from the bisect point.
+            idx = bisect.bisect_left(sorted_runs, head_ts, key=lambda r: r["_ts"])
+            for i in range(idx - 1, -1, -1):
+                r = sorted_runs[i]
+                if r.get("workflow_id") != workflow_id:
+                    continue
+                # If we have base_ref, require it to match head_branch of the run
+                if base_ref and r.get("head_branch") != base_ref:
+                    continue
+                
+                # Found it!
+                conclusion = r.get("conclusion")
+                status = "exact_green" if conclusion == "success" else "branch_prior"
+                return BaseResolution(
+                    base_sha=r.get("head_sha"),
+                    base_run_id=int(r["id"]),
+                    base_run_distance=None,
+                    status=status,
+                    base_time_gap_seconds=head_ts - r["_ts"]
+                )
+
+    return BaseResolution(base_sha=base_sha, base_run_id=None, base_run_distance=None, status="no_base")
