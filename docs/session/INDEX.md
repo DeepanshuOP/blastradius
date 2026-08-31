@@ -71,3 +71,4 @@
 
 | **067** | 2026-08-29 | PHASE 006-A | Repair Stage 5, Time-Ordered Base Resolution, Base Log Parsing | [067-2026-08-29-006a-repair-stage5-and-base-resolution.md](067-2026-08-29-006a-repair-stage5-and-base-resolution.md) |
 | **068** | 2026-08-30 | PHASE 007-A | Make the dataset regenerable | [068-2026-08-30-007-a-regenerable-dataset.md](068-2026-08-30-007-a-regenerable-dataset.md) |
+- [070-2026-08-31-011-A-targeted-base-resolution.md](070-2026-08-31-011-A-targeted-base-resolution.md): Phase 011-A targeted base resolution with instance-weighting completed.
