@@ -86,3 +86,8 @@ data/ are the only permitted sources. If you cannot answer from them, say so.
 Session reports are `docs/session/NNN-YYYY-MM-DD-<taskid>-<slug>.md`, where
 NNN is the next unused three-digit sequence number. Check the existing highest
 number before writing. Update docs/session/INDEX.md in the same step.
+
+## Delegation and Tool Usage
+- Never spawn a subagent, never delegate to a background or parallel agent session.
+  Every command runs in the foreground and you read its output in the same step.
+- Never write a file with a heredoc (cat << EOF). Use your file-write tool.

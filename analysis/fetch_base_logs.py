@@ -22,6 +22,16 @@ def run(as_of: str = None, limit: int = None):
     
     run_to_repo = target_df.dropna(subset=['base_run_id']).set_index('base_run_id')['repo'].to_dict()
     
+    df_inst = pd.read_parquet('data/interim/instances_raw.parquet')
+    df = df.merge(df_inst[['run_id', 'repo', 'run_started_at']], on=['run_id', 'repo'], how='left')
+    
+    # Calculate base run age in days relative to now
+    import datetime
+    now = datetime.datetime.now(datetime.timezone.utc)
+    df['base_age_days'] = df.apply(lambda row: (now - pd.to_datetime(row['run_started_at'], utc=True)).total_seconds() / 86400 if pd.notnull(row['run_started_at']) else 0, axis=1)
+    
+    age_map = dict(zip(df['base_run_id'].dropna().astype(int), df['base_age_days']))
+    
     stats = {
         'requests': 0,
         'jobs_fetched': 0,
@@ -29,8 +39,10 @@ def run(as_of: str = None, limit: int = None):
         '404': 0,
         '410': 0,
         '429': 0,
-        'err': 0
+        'err': 0,
+        '410_ages': []
     }
+
     
     start = time.time()
     
@@ -44,7 +56,7 @@ def run(as_of: str = None, limit: int = None):
             resp = get_with_backoff(jobs_url, params={"per_page": 100}, pool=pool)
             stats['requests'] += 1
             if resp.status_code == 404: stats['404'] += 1; continue
-            elif resp.status_code == 410: stats['410'] += 1; continue
+            elif resp.status_code == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0)); continue
             elif resp.status_code == 429: stats['429'] += 1; continue
             
             jobs = resp.json().get("jobs", [])
@@ -74,7 +86,7 @@ def run(as_of: str = None, limit: int = None):
                 stats['requests'] += 1
                 
                 if log_resp.status_code == 404: stats['404'] += 1
-                elif log_resp.status_code == 410: stats['410'] += 1
+                elif log_resp.status_code == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0))
                 elif log_resp.status_code == 429: stats['429'] += 1
                 elif log_resp.status_code == 200:
                     rr = RawRecord(
@@ -105,3 +117,13 @@ if __name__ == "__main__":
     parser.add_argument("--limit", type=int, help="Limit number of runs")
     args = parser.parse_args()
     run(as_of=args.as_of, limit=args.limit)
+
+    if stats["410_ages"]:
+        ages = pd.Series(stats["410_ages"])
+        print("\\n410 Ages:")
+        print(f"min: {ages.min():.1f}d")
+        print(f"median: {ages.median():.1f}d")
+        print(f"max: {ages.max():.1f}d")
+        print("Buckets:")
+        print(pd.cut(ages, bins=[0, 30, 60, 90, 120, 365, 1000]).value_counts().sort_index())
+
