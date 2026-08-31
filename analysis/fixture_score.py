@@ -40,27 +40,30 @@ def parse_expected(expected_path: Path = EXPECTED_MD) -> dict[str, dict]:
         num = int(num_str.strip())
         fname = fname_raw.strip()
 
+        # Parse Expected Class
+        class_m = re.search(r"-\s+\**Expected Class:\**\s*([A-Z_]+)", body)
+        if not class_m:
+            raise ValueError(f"Missing or unparseable Expected Class in fixture {num}: {fname}")
+        expected_class = class_m.group(1)
+
         # Parse Expected Outcomes
         outcomes_m = re.search(
-            r"-\s+\*\*Expected Outcomes:\*\*(.*?)(?=\n-\s+\*\*Confidence:|\Z)",
+            r"-\s+\**Expected Outcomes:\**(.*?)(?=\n-\s+\**(?:Expected Class|Confidence):|\Z)",
             body,
             re.DOTALL,
         )
         outcomes_text = outcomes_m.group(1).strip() if outcomes_m else ""
 
-        if "NO_TEST_OUTCOMES" in outcomes_text:
+        if expected_class in ("TEST_RAN_CLEAN", "NO_TEST_OUTPUT"):
             expected_ids = set()
-            if "passed clean" in outcomes_text.lower():
-                expected_class = "TEST_RAN_CLEAN"
-            else:
-                expected_class = "NO_TEST_OUTPUT"
-        else:
+        elif expected_class == "TEST_FAILURE":
             canons = re.findall(
                 r"Canonical `normalize_test_id\(\)`:\s*`([^`]+)`",
                 outcomes_text,
             )
             expected_ids = set(canons)
-            expected_class = "TEST_FAILURE"
+        else:
+            raise ValueError(f"Unknown Expected Class {expected_class} in fixture {num}: {fname}")
 
         conf_m = re.search(r"-\s+\*\*Confidence:\*\*\s*([A-Z]+)", body)
         confidence = conf_m.group(1).strip() if conf_m else "CERTAIN"

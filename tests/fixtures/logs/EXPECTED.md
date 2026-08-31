@@ -12,6 +12,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__beam__077621011187.txt`
 - **Build Tool:** GitHub Actions / Gradle
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Runner failed to set up Gradle action `gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab9`; aborted before task execution)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -25,6 +26,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Expected Outcomes:**
   - RAW: `MemoryMonitorTest > detectGCThrashing FAILED`
   - Canonical `normalize_test_id()`: `MemoryMonitorTest#detectGCThrashing`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -36,6 +38,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__beam__082575659629.txt`
 - **Build Tool:** Gradle / Python sdist
 - **Expected Outcomes:** NO_TEST_OUTCOMES (`> Task :sdks:python:sdist FAILED` due to `yaml.parser.ParserError` in `sdks/standard_external_transforms.yaml`; no test suite executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -63,6 +66,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::MongodbTest::test_WriteToMongoDB_ExternalJavaProvider_1`
   - RAW: `apache_beam/yaml/integration_tests.py::Iceberg_Add_Files_BatchTest::test_only FAILED`
     - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::Iceberg_Add_Files_BatchTest::test_only`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -78,6 +82,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `ProberTests#CheckGrafanaStalenessAlerts`
   - RAW: `ProberTests > PingGrafanaHttpApi FAILED`
     - Canonical `normalize_test_id()`: `ProberTests#PingGrafanaHttpApi`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -92,6 +97,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `testEmrServerlessSuccessWorkflowInstance  Time elapsed: 0.345 s  <<< FAILURE!` (in `org.apache.dolphinscheduler.api.test.cases.tasks.EmrServerlessTaskAPITest`)
   - RAW Summary: `[ERROR]   EmrServerlessTaskAPITest.testEmrServerlessSuccessWorkflowInstance:115 expected: <true> but was: <false>`
   - Canonical `normalize_test_id()`: `org.apache.dolphinscheduler.api.test.cases.tasks.EmrServerlessTaskAPITest#testEmrServerlessSuccessWorkflowInstance`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -103,6 +109,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__fineract__080132127199.txt`
 - **Build Tool:** Gradle
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Docker container build task failed: `> Task :fineract-provider:jibDockerBuild FAILED`; no test tasks executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -117,6 +124,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `  Test testLoanCOBPartitioningQuery() FAILED (3.1s)`
   - Enclosing Class (preceding line 12906): `org.apache.fineract.integrationtests.cob.CobPartitioningTest`
   - Canonical `normalize_test_id()`: `org.apache.fineract.integrationtests.cob.CobPartitioningTest#testLoanCOBPartitioningQuery` (if multiline context tracked) or unresolvable bare method name if parsed line-by-line.
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** AMBIGUOUS (Gradle outputs class names on separate lines above individual test methods; the failure line itself contains only the method name, making single-line regex extractors lose class scoping).
 
 ---
@@ -128,6 +136,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__flink__079221420559.txt`
 - **Build Tool:** Maven / Docker CI
 - **Expected Outcomes:** NO_TEST_OUTCOMES (CI infrastructure failure: `##[error]Docker pull failed with exit code 1`; job aborted before build/test step)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -146,6 +155,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW Summary: `Jun 06 04:33:52 04:33:52.032 [ERROR]   IPv6HostnamesITCase.testClusterWithIPv6host:123 » Runtime Failed to fetch next result`
   - Canonical `normalize_test_id()`: `org.apache.flink.test.runtime.IPv6HostnamesITCase#testClusterWithIPv6host`
   - Note: Ground-truth omission identified by harness-count audit on 2026-08-26 (lines 7291, 7292, 7784, 7786), not by initial hand-labelling pass.
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -157,6 +167,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__hbase__078892029185.txt`
 - **Build Tool:** Apache Yetus (Dockerized Maven container)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Yetus summary table reports `| -1 | unit | 66m 7s | hbase-server in the patch failed.` and points to artifact `/yetus-jdk17-hadoop3-unit-check/output/patch-unit-hbase-server.txt`. No individual test class or method names appear anywhere in the job log.)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -168,6 +179,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__hbase__082907939305.txt`
 - **Build Tool:** Apache Yetus (Dockerized Maven container)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Yetus summary table reports `| -1 | mvninstall | 3m 26s | root in the patch failed.` and `| -1 | unit | 0m 21s | hbase-it in the patch failed.`. Result files are saved to `patch-mvninstall-root.txt` and `patch-unit-hbase-it.txt`. No test names appear in the job log.)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -179,6 +191,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__hbase__083382132597.txt`
 - **Build Tool:** Apache Yetus (Dockerized Maven container)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Workflow cancelled / aborted early during Yetus container initialization; no test execution occurred.)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -190,6 +203,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__hbase__084057821217.txt`
 - **Build Tool:** Apache Yetus (Dockerized Maven container)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Yetus summary table reports `| -1 | unit | 74m 55s | hbase-server in the patch failed.` with artifact path `output/patch-unit-hbase-server.txt`. No individual test class or method names appear in the job log.)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -201,6 +215,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `apache__zeppelin__079328560137.txt`
 - **Build Tool:** Maven
 - **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub Actions runner cancelled / failed during environment setup before test execution)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -215,6 +230,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `[ERROR] org.apache.zeppelin.integration.AuthenticationIT.testSimpleAuthentication -- Time elapsed: 46.44 s <<< ERROR!`
   - RAW Summary: `[ERROR]   AuthenticationIT.testSimpleAuthentication:96->AbstractZeppelinIT.authenticationUser:60->AbstractZeppelinIT.clickableWait:181 » Timeout Expected condition failed...`
   - Canonical `normalize_test_id()`: `org.apache.zeppelin.integration.AuthenticationIT#testSimpleAuthentication`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -226,6 +242,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `airlift__airlift__081878478589.txt`
 - **Build Tool:** Maven
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Maven dependency resolution/network error during compilation; build aborted before testing phase)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -240,6 +257,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `[ERROR] io.airlift.api.maven.tests.OpenApiGenerationTest.testApiIdSupportsLookupSucceeds()[1] -- Time elapsed: 0.250 s <<< FAILURE!`
   - RAW: `[ERROR] io.airlift.api.maven.tests.OpenApiGenerationTest.testApiIdSupportsLookupSucceeds()[2] -- Time elapsed: 0.259 s <<< FAILURE!`
   - Canonical `normalize_test_id()`: `io.airlift.api.maven.tests.OpenApiGenerationTest#testApiIdSupportsLookupSucceeds`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -253,6 +271,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Expected Outcomes:**
   - RAW: `PublisherBufferConcurrencyTest > largeRun() FAILED`
   - Canonical `normalize_test_id()`: `PublisherBufferConcurrencyTest#largeRun`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -266,6 +285,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Expected Outcomes:**
   - RAW: `GeneratePomTest > test() FAILED`
   - Canonical `normalize_test_id()`: `GeneratePomTest#test`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -277,6 +297,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `crimera__piko__083277376521.txt`
 - **Build Tool:** GitHub Actions
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Workflow setup failure: `##[error]Unable to resolve action actions/setup-java@v6, unable to find version v6`. This is the smallest log in the corpus: 1.16 KB compressed.)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -288,6 +309,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `diffplug__spotless__077697425370.txt`
 - **Build Tool:** Gradle
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Code formatting check failure: `> Task :plugin-maven:spotlessJavaCheck FAILED`; no test tasks executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -305,6 +327,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `com.diffplug.spotless.rdf.RdfFormatterTest#blankNodeOrderingIsNotStableInCoolRdfFormatter_2_0_0`
   - RAW: `com.diffplug.spotless.rdf.RdfFormatterTest testCoolRdfFormatter_2_0_0_style01() FAILED`
     - Canonical `normalize_test_id()`: `com.diffplug.spotless.rdf.RdfFormatterTest#testCoolRdfFormatter_2_0_0_style01`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -316,6 +339,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `floci-io__floci__081814559712.txt`
 - **Build Tool:** GitHub Actions
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Artifact download failure: `##[error]Unable to download artifact(s): Artifact not found for name: floci-dist`)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -327,6 +351,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `floci-io__floci__082492942956.txt`
 - **Build Tool:** Bash / Git hook
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Conventional commits check script failed on non-conforming commit title; no test suite run)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -341,6 +366,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `[ERROR] io.github.hectorvent.floci.services.ec2.Ec2ContainerManagerTest.launchInstanceUserDataStreamToCloudWatch -- Time elapsed: 2.755 s <<< FAILURE!`
   - RAW Summary: `[ERROR]   Ec2ContainerManagerTest.launchInstanceUserDataStreamToCloudWatch:205`
   - Canonical `normalize_test_id()`: `io.github.hectorvent.floci.services.ec2.Ec2ContainerManagerTest#launchInstanceUserDataStreamToCloudWatch`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -352,6 +378,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `grobidOrg__grobid__085264981989.txt`
 - **Build Tool:** Gradle
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Code formatting check failure: `> Task :grobid-core:spotlessJavaCheck FAILED`; no test tasks executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -363,6 +390,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `jhipster__prettier-java__084966237571.txt`
 - **Build Tool:** npm / Prettier
 - **Expected Outcomes:** NO_TEST_OUTCOMES (JavaScript prettier formatting check failure; no test suite run)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -374,6 +402,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `openremote__openremote__082946004526.txt`
 - **Build Tool:** GitHub Actions
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Repository checkout / auth error before build start)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -388,6 +417,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `  Test Does not emit attribute events after asset deletion FAILED (22.2s)`
   - Preceding Context: `org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not emit attribute events after asset deletion took: 22262ms`
   - Canonical `normalize_test_id()`: `org.openremote.test.assets.ApplyPredictedDataPointsServiceTest#Does not emit attribute events after asset deletion`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** AMBIGUOUS (Spock narrative feature method names with spaces do not match standard Java identifier token rules and require special unquoted handling).
 
 ---
@@ -399,6 +429,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `opentripplanner__opentripplanner__077860984374.txt`
 - **Build Tool:** GitHub Actions
 - **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub Action download failure: `##[error]Failed to download archive 'https://codeload.github.com/actions/setup-java/zip/...'`)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -418,6 +449,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#arriveBySearchDropsOffOutsideNoDropOffZone`
   - RAW: `[ERROR]   ScooterRentalGeofencingTest.forwardAndArriveByBothFindPath:112->runSearch:639 » IllegalArgument Unexpected non-empty arriveByDestinationZones when arriveBy is false`
     - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#forwardAndArriveByBothFindPath`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -441,6 +473,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `io.sirix.cli.NativeImageSmokeTest#Sequence operations`
   - RAW: `io.sirix.cli.NativeImageSmokeTest > Basic arithmetic query FAILED`
     - Canonical `normalize_test_id()`: `io.sirix.cli.NativeImageSmokeTest#Basic arithmetic query`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** AMBIGUOUS (Test method names are Kotlin backticked descriptive strings containing spaces).
 
 ---
@@ -455,6 +488,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `LinuxMemorySegmentAllocatorTest > testAllocateMaximumSize() FAILED`
   - Canonical `normalize_test_id()`: `io.sirix.cache.LinuxMemorySegmentAllocatorTest#testAllocateMaximumSize`
   - Note: Amended on 2026-08-28 under D-27. Line 10409 contains `at io.sirix.cache.LinuxMemorySegmentAllocatorTest.testAllocateMaximumSize(LinuxMemorySegmentAllocatorTest.java:102)`; prior bare label under-specified by dropping the package present in the log.
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -466,6 +500,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `spiculedata__saiku__080014373865.txt`
 - **Build Tool:** Maven
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Maven build failed during packaging/assembly phase with `[INFO] BUILD FAILURE`; all unit tests executed in earlier modules passed clean with 0 failures)
+- **Expected Class:** TEST_RAN_CLEAN
 - **Confidence:** CERTAIN
 
 ---
@@ -493,6 +528,7 @@ All labels were identified **by eye directly from raw log text** before writing 
     - Canonical `normalize_test_id()`: `org.saiku.service.olap.ai.ask.OpenAINlAskProviderTest#systemPromptKeepsGuardrailWordingVerbatim`
   - RAW: `[ERROR] org.saiku.service.olap.ai.ask.OpenAINlAskProviderTest.parseToolResponseDegradesWhenToolCallsExcludeEmitQuery -- Time elapsed: 0 s <<< FAILURE!`
     - Canonical `normalize_test_id()`: `org.saiku.service.olap.ai.ask.OpenAINlAskProviderTest#parseToolResponseDegradesWhenToolCallsExcludeEmitQuery`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -504,6 +540,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Fixture Filename:** `Stirling-Tools__Stirling-PDF__077860967858.txt`
 - **Build Tool:** GitHub Actions
 - **Expected Outcomes:** NO_TEST_OUTCOMES (GitHub Action download failure: `##[error]Failed to download archive 'https://codeload.github.com/step-security/harden-runner/zip/...'`)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -517,6 +554,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Expected Outcomes:**
   - RAW: `UIDataControllerTest > getPipelineData_usesEachSourceFilenameWhenJsonContentIsIdentical() FAILED`
   - Canonical `normalize_test_id()`: `UIDataControllerTest#getPipelineData_usesEachSourceFilenameWhenJsonContentIsIdentical`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -530,6 +568,7 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Expected Outcomes:**
   - RAW: `WebMvcConfig > addResourceHandlers > registers all five resource handler groups FAILED`
   - Canonical `normalize_test_id()`: `WebMvcConfig#registers all five resource handler groups`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** AMBIGUOUS (Hierarchical 3-segment Gradle test name `Class > Context > Method` with space-delimited narrative assertion text).
 
 ---
@@ -545,6 +584,7 @@ All labels were identified **by eye directly from raw log text** before writing 
   - RAW: `[ERROR] com.thealgorithms.dynamicprogramming.LongestPalindromicSubsequenceTest.testLpsKnownCases(String, String)[5] -- Time elapsed: 0.001 s <<< FAILURE!`
   - RAW Summary: `[ERROR]   LongestPalindromicSubsequenceTest.testLpsKnownCases:21 expected: <BABCBAB> but was: <BACBCAB>`
   - Canonical `normalize_test_id()`: `com.thealgorithms.dynamicprogramming.LongestPalindromicSubsequenceTest#testLpsKnownCases`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---

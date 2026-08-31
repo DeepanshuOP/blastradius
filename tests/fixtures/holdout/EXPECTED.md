@@ -15,6 +15,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Expected Outcomes:**
   - RAW: `FAILED apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml`
   - Canonical `normalize_test_id()`: `apache_beam/yaml/examples/testing/examples_test.py::MLTest::test_ml_preprocessing_yaml`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -34,6 +35,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::Ml_TransformTest::test_only`
   - RAW: `FAILED apache_beam/yaml/integration_tests.py::CreateTest::test_only`
     - Canonical `normalize_test_id()`: `apache_beam/yaml/integration_tests.py::CreateTest::test_only`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -47,6 +49,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Expected Outcomes:**
   - RAW Summary: `[ERROR]   Ec2ContainerManagerTest.launchInstanceUserDataStreamToCloudWatch:205`
   - Canonical `normalize_test_id()`: `io.github.hectorvent.floci.services.ec2.Ec2ContainerManagerTest#launchInstanceUserDataStreamToCloudWatch`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -60,6 +63,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Expected Outcomes:**
   - RAW Summary: `[ERROR]   AppTest.shouldDrive:10`
   - Canonical `normalize_test_id()`: `org.unicode.cldr.surveydriver.AppTest#shouldDrive`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -73,6 +77,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Expected Outcomes:**
   - RAW Summary: `[ERROR]   AppTest.shouldDrive:10`
   - Canonical `normalize_test_id()`: `org.unicode.cldr.surveydriver.AppTest#shouldDrive`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -90,6 +95,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.AuthTest#testLogout`
   - RAW: `[ERROR] testValidateUserByToken(org.apache.hugegraph.core.AuthTest)  Time elapsed: 0.929 s  <<< ERROR!`
     - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.AuthTest#testValidateUserByToken`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -107,6 +113,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `org.apache.hugegraph.core.TaskCoreTest#testTaskWithoutResult`
   - RAW: `[ERROR] testDistributedDeleteKeepsTaskResultRecoverable(org.apache.hugegraph.task.TaskAndResultSchedulerTest)  Time elapsed: 0.321 s  <<< FAILURE!`
     - Canonical `normalize_test_id()`: `org.apache.hugegraph.task.TaskAndResultSchedulerTest#testDistributedDeleteKeepsTaskResultRecoverable`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -122,6 +129,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `io.airlift.api.maven.tests.OpenApiGenerationTest#testApiIdSupportsLookupSucceeds`
   - RAW: `[ERROR] io.airlift.api.maven.tests.OpenApiGenerationTest.testApiIdSupportsLookupSucceeds()[2] -- Time elapsed: 0.369 s <<< FAILURE!`
     - Canonical `normalize_test_id()`: `io.airlift.api.maven.tests.OpenApiGenerationTest#testApiIdSupportsLookupSucceeds`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -141,6 +149,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#postInterest_shouldValidateRequestAndUpdateManualInterestPostingExternalId`
   - RAW: `Test releaseAmount_shouldUpdateTransactionExternalId() FAILED`
     - Canonical `normalize_test_id()`: `org.apache.fineract.portfolio.savings.service.SavingsAccountWritePlatformServiceJpaRepositoryImplTest#releaseAmount_shouldUpdateTransactionExternalId`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -158,6 +167,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `com.diffplug.gradle.spotless.AsciidocExtensionTest#spotlessCheckFailsOnUnformattedThenPassesAfterApply`
   - RAW: `com.diffplug.gradle.spotless.AsciidocExtensionTest spotlessCheckFailsOnUnformattedThenPassesAfterApply() FAILED (9.9s)`
     - Canonical `normalize_test_id()`: `com.diffplug.gradle.spotless.AsciidocExtensionTest#spotlessCheckFailsOnUnformattedThenPassesAfterApply`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -171,6 +181,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Expected Outcomes:**
   - RAW: `Test testOriginatorExternalIdsPersistedViaAggregationJobAppearInSnapshotPath() FAILED (2.6s)`
   - Canonical `normalize_test_id()`: `org.apache.fineract.integrationtests.client.feign.tests.FeignTrialBalanceSummaryReportTest#testOriginatorExternalIdsPersistedViaAggregationJobAppearInSnapshotPath`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -192,6 +203,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
   - RAW: `KeyValueConfigurationTests > testInstanceMirrorAndSources() FAILED`
     - Canonical `normalize_test_id()`: `io.nats.client.api.KeyValueConfigurationTests#testInstanceMirrorAndSources`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -207,6 +219,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_populatesYearMonthDay_issue15`
   - RAW: `BiblioItemTest > setNormalizedPublicationDate_partialDateLeavesMissingFieldsNull_issue15 FAILED`
     - Canonical `normalize_test_id()`: `org.grobid.core.data.BiblioItemTest#setNormalizedPublicationDate_partialDateLeavesMissingFieldsNull_issue15`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -222,6 +235,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `AlignTests#getClampedLocation_InPoint`
   - RAW: `AlignTests > getClampedLocation_OffPoint() FAILED`
     - Canonical `normalize_test_id()`: `AlignTests#getClampedLocation_OffPoint`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -241,6 +255,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
     - Canonical `normalize_test_id()`: `ReferencesFinderTest#testStructureUsagesSearch`
   - RAW: `ReferencesFinderTest > testModelUsagesSearch() FAILED`
     - Canonical `normalize_test_id()`: `ReferencesFinderTest#testModelUsagesSearch`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -252,6 +267,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Fixture Filename:** `floci-io__floci__079239274562.txt`
 - **Build Tool:** Maven (`maven-compiler-plugin:3.15.0:testCompile`)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Test compilation failure during `maven-compiler-plugin:3.15.0:testCompile` in `CustomResourceProvisionerTest.java`; aborted before test execution)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -263,6 +279,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Fixture Filename:** `apache__dolphinscheduler__082710858610.txt`
 - **Build Tool:** GitHub Actions / Bash
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `E2E-K8S-Result` failed due to upstream `cancelled` status; no test runner executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -274,6 +291,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Fixture Filename:** `Stirling-Tools__Stirling-PDF__086823631877.txt`
 - **Build Tool:** GitHub Actions / Bash
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `All checks passed` failed due to upstream `frontend-validation` job failure; no test runner executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -285,6 +303,7 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Fixture Filename:** `Stirling-Tools__Stirling-PDF__077856960467.txt`
 - **Build Tool:** GitHub Actions / Bash
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Aggregator job check `All checks passed` failed due to upstream `docker-compose-tests` cancellation; no test runner executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -296,4 +315,5 @@ Per ROADMAP §25.3, §26.1 and AGENTS.md, this held-out set is set aside untouch
 - **Fixture Filename:** `apache__hbase__081801116210.txt`
 - **Build Tool:** Apache Yetus (Dockerized container)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Docker-encapsulated Yetus build; test results uploaded to artifact `yetus-jdk11-hadoop3-unit-check-medium` (ID 7685365255); no individual test traces or test summary lines in runner job log)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN

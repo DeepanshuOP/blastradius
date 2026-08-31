@@ -43,6 +43,13 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 
 # PARTITION A: Core Fixtures (Zero Repository Overlap)
 
+
+### Amendments (D-27)
+- **Fixture 4 (apache/streampark)**: Amended expected outcomes from TEST_FAILURE to NO_TEST_OUTPUT. Justifying grep: `grep "Timed out waiting for container port to open" tests/fixtures/holdout_v3/apache__streampark__086548451141.txt`
+- **Fixture 20 (apache/hertzbeat)**: Added explicit Expected Class TEST_RAN_CLEAN. Justifying grep: `grep "Tests run: 242" tests/fixtures/holdout_v3/apache__hertzbeat__089678606855.txt`
+- **Fixture 23 (oracle/opengrok)**: Added explicit Expected Class TEST_RAN_CLEAN. Justifying grep: `grep "Tests run: 286" tests/fixtures/holdout_v3/oracle__opengrok__083435392401.txt`
+- **Fixture 15 (graphql-java)**: NO CHANGE. Per D-32 the existing label is correct.
+
 ## 1. apache__tika__079360406349.txt
 - **Source Repo:** `apache/tika`
 - **Job ID:** `079360406349`
@@ -52,6 +59,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 969: `[ERROR] org.apache.tika.mime.MimeDetectionTest.testDetection -- Time elapsed: 0.070 s <<< FAILURE!` (Stack frame Line 974: `at org.apache.tika.mime.MimeDetectionTest.testDetection(MimeDetectionTest.java:92)`)
   - Canonical `normalize_test_id()`: `org.apache.tika.mime.MimeDetectionTest#testDetection`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -65,6 +73,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 14312: `[ERROR] org.apache.tika.pipes.filesystem.HandlerTypeTest.typedDocumentContractOverLiveServer -- Time elapsed: 0.512 s <<< FAILURE!` (Stack frame Line 14315: `at org.apache.tika.pipes.filesystem.HandlerTypeTest.typedDocumentContractOverLiveServer(HandlerTypeTest.java:395)`)
   - Canonical `normalize_test_id()`: `org.apache.tika.pipes.filesystem.HandlerTypeTest#typedDocumentContractOverLiveServer`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -84,6 +93,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `org.apache.streampark.common.util.DateUtilsTest#getTimeShouldReturnMilliseconds`
   - RAW Line 533: `[ERROR] minuteOfDayShouldReturnCorrectMinute  Time elapsed: 0.001 s  <<< FAILURE!` (Stack frame Line 535: `at org.apache.streampark.common.util.DateUtilsTest.minuteOfDayShouldReturnCorrectMinute(DateUtilsTest.java:69)`)
     - Canonical `normalize_test_id()`: `org.apache.streampark.common.util.DateUtilsTest#minuteOfDayShouldReturnCorrectMinute`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -94,9 +104,8 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Parent Run ID:** `29153580437`
 - **Fixture Filename:** `apache__streampark__086548451141.txt`
 - **Build Tool:** Maven/Surefire
-- **Expected Outcomes:**
-  - RAW Line 4539: `[ERROR] org.apache.streampark.e2e.cases.FlinkSQL120OnYarnTest  Time elapsed: 119.609 s  <<< ERROR!` (Class-level container init failure, Surefire summary line 4538: `in org.apache.streampark.e2e.cases.FlinkSQL120OnYarnTest`)
-  - Canonical `normalize_test_id()`: `org.apache.streampark.e2e.cases.FlinkSQL120OnYarnTest`
+- **Expected Outcomes:** NO_TEST_OUTCOMES (container-startup timeout during class initialisation; no test method ever ran)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -110,6 +119,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 3382: `[ERROR] org.apache.atlas.discovery.AtlasDiscoveryServiceTest.setup  Time elapsed: 115.952 s  <<< FAILURE!` (Stack frame Line 3384: `at org.apache.atlas.discovery.AtlasDiscoveryServiceTest.setup(AtlasDiscoveryServiceTest.java:99)`)
   - Canonical `normalize_test_id()`: `org.apache.atlas.discovery.AtlasDiscoveryServiceTest#setup`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -123,6 +133,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 1064: `[ERROR] org.jline.builtins.PosixCommandsSsrfTest.catStillReadsLocalFileJar -- Time elapsed: 0.022 s <<< ERROR!` (Surefire summary line 1063: `in org.jline.builtins.PosixCommandsSsrfTest`)
   - Canonical `normalize_test_id()`: `org.jline.builtins.PosixCommandsSsrfTest#catStillReadsLocalFileJar`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -138,6 +149,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `org.jivesoftware.openfire.net.SASLAuthenticationTest#shouldGenerateAnonymousAuthTokenForClientWhenUsernameIsNullWithSasl2AndBind2`
   - RAW Line 1261: `[ERROR] org.jivesoftware.openfire.net.SASLAuthenticationTest.shouldGenerateUserAuthTokenForClientWhenUsernameIsProvidedWithSasl2AndBind2 -- Time elapsed: 0.016 s <<< FAILURE!` (Stack frame Line 1265: `at org.jivesoftware.openfire.net.SASLAuthenticationTest.shouldGenerateUserAuthTokenForClientWhenUsernameIsProvidedWithSasl2AndBind2(SASLAuthenticationTest.java:509)`)
     - Canonical `normalize_test_id()`: `org.jivesoftware.openfire.net.SASLAuthenticationTest#shouldGenerateUserAuthTokenForClientWhenUsernameIsProvidedWithSasl2AndBind2`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -151,6 +163,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 928: `[ERROR] io.anserini.reproduce.ReproduceFromPrebuiltIndexesTest.testCacmEndToEnd -- Time elapsed: 6.276 s <<< FAILURE!` (Surefire summary line 927: `in io.anserini.reproduce.ReproduceFromPrebuiltIndexesTest`)
   - Canonical `normalize_test_id()`: `io.anserini.reproduce.ReproduceFromPrebuiltIndexesTest#testCacmEndToEnd`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -168,6 +181,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `io.anserini.search.SearchHnswDenseVectorsTest#testBasicCosDprSpecifyTopicsAsSymbol`
   - RAW Line 872: `[ERROR] io.anserini.search.SearchFlatDenseVectorsTest.testBasicCosDprSpecifyTopicsAsSymbol -- Time elapsed: 0.464 s <<< FAILURE!` (Stack frame Line 878: `at io.anserini.search.SearchFlatDenseVectorsTest.testBasicCosDprSpecifyTopicsAsSymbol(SearchFlatDenseVectorsTest.java:410)`)
     - Canonical `normalize_test_id()`: `io.anserini.search.SearchFlatDenseVectorsTest#testBasicCosDprSpecifyTopicsAsSymbol`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -181,6 +195,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 505: `[hertzbeat-common-core] [ERROR] org.apache.hertzbeat.common.util.BackoffUtilsTest.shouldHandleInterruptedException -- Time elapsed: 0.211 s <<< ERROR!` (Surefire summary line 504: `in org.apache.hertzbeat.common.util.BackoffUtilsTest`)
   - Canonical `normalize_test_id()`: `org.apache.hertzbeat.common.util.BackoffUtilsTest#shouldHandleInterruptedException`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -198,6 +213,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `CampaignPropertiesDialogTest#predefinedPropertiesComboBox_twoFiles`
   - RAW Line 693: `CampaignPropertiesDialogTest > importPredefinedButton() FAILED` (No FQCN stack frame; D-29 governs)
     - Canonical `normalize_test_id()`: `CampaignPropertiesDialogTest#importPredefinedButton`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -211,6 +227,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 523: `TestCustomEvents > run FAILED` (No FQCN stack frame; D-29 governs)
   - Canonical `normalize_test_id()`: `TestCustomEvents#run`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -228,6 +245,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `CampaignPropertiesDialogTest#predefinedPropertiesComboBox_twoFiles`
   - RAW Line 687: `CampaignPropertiesDialogTest > importPredefinedButton() FAILED` (No FQCN stack frame; D-29 governs)
     - Canonical `normalize_test_id()`: `CampaignPropertiesDialogTest#importPredefinedButton`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -243,6 +261,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `com.webauthn4j.metadata.FidoMDS3MetadataBLOBIntegrationTest#async_test`
   - RAW Line 312: `FidoMDS3MetadataBLOBIntegrationTest > sync_test() FAILED` (Stack frame Line 355: `at app//com.webauthn4j.metadata.FidoMDS3MetadataBLOBIntegrationTest.sync_test(FidoMDS3MetadataBLOBIntegrationTest.java:75)`)
     - Canonical `normalize_test_id()`: `com.webauthn4j.metadata.FidoMDS3MetadataBLOBIntegrationTest#sync_test`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -256,6 +275,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 12148: `SUSchemaRoundTripTest > GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: #scenario > GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: directives on every schema kind FAILED` (Stack frame Line 12154: `at graphql.schema.universe.SUSchemaRoundTripTest.GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: #scenario(SUSchemaRoundTripTest.groovy:17)`)
   - Canonical `normalize_test_id()`: `graphql.schema.universe.SUSchemaRoundTripTest#GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: #scenario`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -269,6 +289,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 2368: `Issue3434 > allow printing of union types FAILED` (Stack frame Line 2382: `at graphql.Issue3434.allow printing of union types(Issue3434.groovy:20)`)
   - Canonical `normalize_test_id()`: `graphql.Issue3434#allow printing of union types`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -282,6 +303,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 518: `TestFairPlay > run FAILED` (No FQCN stack frame; D-29 governs)
   - Canonical `normalize_test_id()`: `TestFairPlay#run`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -299,6 +321,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `com.webauthn4j.metadata.data.statement.AuthenticatorGetInfoTest#options_old_format_deserialization_test`
   - RAW Line 2782: `AuthenticatorGetInfoTest > options_oldFormat_roundTrip_test() FAILED` (Stack frame Line 2788: `at com.webauthn4j.metadata.data.statement.AuthenticatorGetInfoTest.options_oldFormat_roundTrip_test(AuthenticatorGetInfoTest.java:167)`)
     - Canonical `normalize_test_id()`: `com.webauthn4j.metadata.data.statement.AuthenticatorGetInfoTest#options_oldFormat_roundTrip_test`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -310,6 +333,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `atmosphere__atmosphere__078279224469.txt`
 - **Build Tool:** Playwright / Node
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Playwright TypeScript matrix failure in `e2e/sample-matrix-smoke.spec.ts`; no Java test runner executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -321,6 +345,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `apache__hertzbeat__089678606855.txt`
 - **Build Tool:** Maven/Surefire
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Clean Maven test execution with 0 failures / 0 errors reported in all modules; job failure occurred in post-packaging / Docker push step)
+- **Expected Class:** TEST_RAN_CLEAN
 - **Confidence:** CERTAIN
 
 ---
@@ -332,6 +357,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `atmosphere__atmosphere__089421932457.txt`
 - **Build Tool:** Maven (`./mvnw clean install -DskipTests`)
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Maven build invoked with `-DskipTests -Dgpg.skip=true`; aborted during compile/packaging before test execution)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -343,6 +369,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `jline__jline3__094582811397.txt`
 - **Build Tool:** Maven
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Build aborted during early verification / setup before Surefire test execution)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -354,6 +381,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `oracle__opengrok__083435392401.txt`
 - **Build Tool:** Maven/Surefire
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Clean test run reporting 286 tests run with 0 failures and 0 errors; job failure occurred due to unhandled thread leak in test cleanup)
+- **Expected Class:** TEST_RAN_CLEAN
 - **Confidence:** CERTAIN
 
 ---
@@ -365,6 +393,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `nitrite__nitrite-java__081478189534.txt`
 - **Build Tool:** GitHub CodeQL Autobuild
 - **Expected Outcomes:** NO_TEST_OUTCOMES (CodeQL autobuild failed during project structure analysis; no test harness executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -376,6 +405,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `igniterealtime__openfire__079333905347.txt`
 - **Build Tool:** GitHub Actions / Bash
 - **Expected Outcomes:** NO_TEST_OUTCOMES (Workflow cancelled or skipped at actions/cache step; no test runner executed)
+- **Expected Class:** NO_TEST_OUTPUT
 - **Confidence:** CERTAIN
 
 ---
@@ -401,6 +431,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `apache_beam/ml/inference/agent_development_kit_test.py::TestLocalModelIntegration::test_validation_fails_with_remote_model_and_local_configured`
   - RAW Line 2714: `FAILED apache_beam/ml/inference/agent_development_kit_test.py::TestLoadModel::test_load_model_calls_factory_with_model`
     - Canonical `normalize_test_id()`: `apache_beam/ml/inference/agent_development_kit_test.py::TestLoadModel::test_load_model_calls_factory_with_model`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -424,6 +455,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `apache_beam/ml/inference/agent_development_kit_test.py::TestLocalModelIntegration::test_validation_fails_with_remote_model_and_local_configured`
   - RAW Line 2736: `FAILED apache_beam/ml/inference/agent_development_kit_test.py::TestLoadModel::test_load_model_calls_factory_with_model`
     - Canonical `normalize_test_id()`: `apache_beam/ml/inference/agent_development_kit_test.py::TestLoadModel::test_load_model_calls_factory_with_model`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -437,6 +469,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 4206: `FAILED apache_beam/ml/rag/ingestion/qdrant_it_test.py::TestQdrantIngestion::test_write_dense_embeddings_only`
   - Canonical `normalize_test_id()`: `apache_beam/ml/rag/ingestion/qdrant_it_test.py::TestQdrantIngestion::test_write_dense_embeddings_only`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -450,6 +483,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Expected Outcomes:**
   - RAW Line 4221: `FAILED apache_beam/transforms/util_test.py::BatchElementsTest::test_constant_batch_no_metrics`
   - Canonical `normalize_test_id()`: `apache_beam/transforms/util_test.py::BatchElementsTest::test_constant_batch_no_metrics`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
@@ -465,4 +499,5 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
     - Canonical `normalize_test_id()`: `apache_beam/transforms/async_dofn_test.py::AsyncTest_0::test_reset_state_concurrent_teardown`
   - RAW Line 4308: `FAILED apache_beam/transforms/async_dofn_test.py::AsyncTest_1::test_reset_state_concurrent_teardown`
     - Canonical `normalize_test_id()`: `apache_beam/transforms/async_dofn_test.py::AsyncTest_1::test_reset_state_concurrent_teardown`
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN

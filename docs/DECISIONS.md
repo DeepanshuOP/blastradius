@@ -58,3 +58,11 @@
 ### D-36: Transfer deadline and byte ceiling
 **Context**: Log downloads can hang indefinitely if the connection stalls.
 **Decision**: We enforce a wall-clock deadline of 29,704s and a byte ceiling of 15MB. The `p1 = 707 bytes/s` throughput floor across all files was derived using the command: `uv run python scratch/phase2b.py` (which read `requests.jsonl` durations and sizes).
+
+## D-32 — Parameterisation
+
+The canonical `test_id` is the SELECTABLE UNIT: the method, or for Spock the feature method. The iteration or parameter set lives in `TestId.params`, never in the canonical id. A pytest `[2-3-5]`, a JUnit `[1]` and a Spock `@Unroll` iteration are the same construct.
+
+**Consequence:** for holdout_v3 fixture 15 (graphql-java), the hand label naming the feature template `#scenario` was CORRECT and the parser emitting the leaf iteration `directives on every schema kind` was wrong. This overturns the session-060 audit verdict on that fixture.
+
+**Limitation (Accepted):** The canonical id casefolds the Python path component, which is lossy on a case-sensitive filesystem. Accepted because two Python test files in one repo differing only in case is close to nonexistent.

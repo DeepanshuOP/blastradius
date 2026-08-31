@@ -24,7 +24,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] Parser suite: JUnit XML + pytest, precision number on the 40-log fixture set
 - [ ] `normalize_test_id()` with contract test passing
 - [ ] Labelling engine v0 on ≥20 repos
-- [ ] Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
+- [ ] (CUT - Roadmap Phase removed) Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
 - [ ] Architecture diagram + literature positioning
 - [ ] Scope-drift conversation with the guide — **done, not pending**
 
@@ -45,9 +45,9 @@ Must exist — see ROADMAP §39.1:
 - [x] `T0.3a` SQLite cursor store + resume logic
 - [x] `T0.3b` PR + commits + runs capture loop → gzipped JSONL
 - [x] `T0.3c` Check-run annotations capture (priority: persists >90d)
-- [ ] `T0.3d` Artifact capture with name/size filter
-- [ ] `T0.3e` Job-log capture, failures prioritised
-- [ ] `T0.3f` SIGTERM flush + daily MANIFEST.json
+- [x] `T0.3d` Artifact capture with name/size filter
+- [x] `T0.3e` Job-log capture, failures prioritised
+- [x] `T0.3f` SIGTERM flush + daily MANIFEST.json
 - [ ] `T0.3g` Deploy as cron daemon in WSL2 + redundant GHA scheduled harvester
 - [ ] `T0.3h` `[v2]` Lift `_parse_ci` + `_path_match` from graphify `prs.py`
 - [ ] `T0.4a` Directory contract + CHECKSUMS
@@ -58,24 +58,24 @@ Must exist — see ROADMAP §39.1:
 - [x] `T0.8` `[new]` Frame freeze + version tag before Phase 1
 
 ### Weeks 1–4 — Corpus & Ground Truth (Aug 10–Sep 6)
-- [ ] `T1.1a` Build 40-log fixture corpus with hand-labelled expected output
-- [ ] `T1.1b` `annotations.py` parser
-- [ ] `T1.1c` `junit_xml.py` parser (Surefire + pytest)
-- [ ] `T1.1d` `log_pytest.py` parser
-- [ ] `T1.1e` `log_maven.py` parser
-- [ ] `T1.1f` `log_gradle.py` parser
-- [ ] `T1.1g` `normalize_test_id()` extending graphify `ids.py` + contract test ⭐
+- [x] `T1.1a` Build 40-log fixture corpus with hand-labelled expected output
+- [x] `T1.1b` `annotations.py` parser
+- [x] `T1.1c` `junit_xml.py` parser (Surefire + pytest)
+- [x] `T1.1d` `log_pytest.py` parser
+- [x] `T1.1e` `log_maven.py` parser
+- [x] `T1.1f` `log_gradle.py` parser
+- [x] `T1.1g` `normalize_test_id()` extending graphify `ids.py` + contract test ⭐
 - [ ] `T1.1h` `resolve_test_file()` + binding-rate report ⭐
 - [ ] `T1.1i` Per-parser coverage + precision report
 - [ ] `T1.2a` Changed-file extraction with hunks
 - [ ] `T1.2b` tree-sitter symbol-level change extraction
 - [ ] `T1.2c` Change taxonomy flags (full taxonomy §18.2)
-- [ ] `T1.3a` Base-run resolution with `base_run_distance` ⭐
-- [ ] `T1.3b` Fault-revealing set computation (broken-trunk filter) ⭐
+- [x] `T1.3a` Base-run resolution with `base_run_distance` ⭐
+- [x] `T1.3b` Fault-revealing set computation (broken-trunk filter) ⭐
 - [ ] `T1.3c` Same-SHA flip detection
 - [ ] `T1.3d` Rolling flip-rate flakiness scoring
-- [ ] `T1.3e` Three splits: strict / permissive / raw
-- [ ] `T1.3f` Emit `instances.parquet` + `outcomes.parquet`
+- [x] `T1.3e` Three splits: strict / permissive / raw
+- [x] `T1.3f` Emit `instances.parquet` + `outcomes.parquet`
 - [ ] `T1.4a` PyDriller co-change mining
 - [ ] `T1.4b` Evolutionary coupling (support/confidence/lift)
 - [ ] `T1.5a` Docker re-execution harness
@@ -90,32 +90,32 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T1.9` `[new]` Label-provenance tiers mirroring graphify confidence vocabulary
 
 ### Weeks 3–7 — Graph Layer (Aug 24–Sep 20)
-- [ ] `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
-- [ ] `T2.1b` Strip LLM pass and non-code extractors
-- [ ] `T2.1c` Pin versions; re-run their test suite
-- [ ] `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
-- [ ] `T2.2a` `git worktree` commit-pinned checkout manager
-- [ ] `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
-- [ ] `T2.2c` Incremental rebuild via content hashing ⭐
-- [ ] `T2.2d` Graph validation + parse-failure-rate gate
-- [ ] `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
-- [ ] `T2.2f` `[new]` Snapshot + delta storage and `graph_index.parquet` (§19.3)
-- [ ] `T2.3a` Node type classification (test/source/config/build)
-- [ ] `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
-- [ ] `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
-- [ ] `T2.3d` Extended edge-type schema (§16.3)
-- [ ] `T2.3e` `[new]` Binding-rate report + dashboard tile ⭐ (**Gate 1.5**)
-- [ ] `T2.4a` `co_changes` weighted edges
-- [ ] `T2.4b` `co_fails` edges
-- [ ] `T2.4c` Node attributes (churn, complexity, age, failure rate)
-- [ ] `T2.5a` Query API primitives (§20.1 Q1–Q10)
-- [ ] `T2.5b` DuckDB feature cache + benchmark
-- [ ] `T2.6` `[v2]` SCIP precision tier on the Java subset (RQ5, optional)
-- [ ] `T2.7` `[v2]` `manifest_ingest` package layer + `depends_on` edges
-- [ ] `T2.8` `[new]` Phantom-edge rate measurement, 100 hand-checked edges/language
-- [ ] `T2.9` `[new]` Graph-quality dashboard tiles (binding / parse-fail / orphan / phantom)
-- [ ] `T2.10` `[new]` Node identity map (`identity_map.parquet`, §16.5)
-- [ ] `T2.11` `[new]` Dynamic-boundary flagging (§17.3)
+- [ ] (CUT) `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
+- [ ] (CUT) `T2.1b` Strip LLM pass and non-code extractors
+- [ ] (CUT) `T2.1c` Pin versions; re-run their test suite
+- [ ] (CUT) `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
+- [ ] (CUT) `T2.2a` `git worktree` commit-pinned checkout manager
+- [ ] (CUT) (CUT - Roadmap Phase removed) `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
+- [ ] (CUT) `T2.2c` Incremental rebuild via content hashing ⭐
+- [ ] (CUT) (CUT - Roadmap Phase removed) `T2.2d` Graph validation + parse-failure-rate gate
+- [ ] (CUT) `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
+- [ ] (CUT) `T2.2f` `[new]` Snapshot + delta storage and `graph_index.parquet` (§19.3)
+- [ ] (CUT) `T2.3a` Node type classification (test/source/config/build)
+- [ ] (CUT) `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
+- [ ] (CUT) `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
+- [ ] (CUT) `T2.3d` Extended edge-type schema (§16.3)
+- [ ] (CUT) `T2.3e` `[new]` Binding-rate report + dashboard tile ⭐ (**Gate 1.5**)
+- [ ] (CUT) `T2.4a` `co_changes` weighted edges
+- [ ] (CUT) `T2.4b` `co_fails` edges
+- [ ] (CUT) `T2.4c` Node attributes (churn, complexity, age, failure rate)
+- [ ] (CUT) `T2.5a` Query API primitives (§20.1 Q1–Q10)
+- [ ] (CUT) `T2.5b` DuckDB feature cache + benchmark
+- [ ] (CUT) `T2.6` `[v2]` SCIP precision tier on the Java subset (RQ5, optional)
+- [ ] (CUT) `T2.7` `[v2]` `manifest_ingest` package layer + `depends_on` edges
+- [ ] (CUT) `T2.8` `[new]` Phantom-edge rate measurement, 100 hand-checked edges/language
+- [ ] (CUT) `T2.9` `[new]` Graph-quality dashboard tiles (binding / parse-fail / orphan / phantom)
+- [ ] (CUT) `T2.10` `[new]` Node identity map (`identity_map.parquet`, §16.5)
+- [ ] (CUT) `T2.11` `[new]` Dynamic-boundary flagging (§17.3)
 
 ### Weeks 6–10 — Measurement (Sep 14–Oct 11)
 - [ ] `T3.1` Retest-all baseline
@@ -145,35 +145,35 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T3.14` `[v2]` Flakiness-split sensitivity (RQ11)
 
 ### Weeks 8–12 — Predictor (Sep 28–Oct 25)
-- [ ] `T4.1a` Graph feature extraction
-- [ ] `T4.1b` Change feature extraction
-- [ ] `T4.1c` Test-history feature extraction
-- [ ] `T4.1d` Cross features + leakage audit ⭐
-- [ ] `T4.1e` `[new]` Dynamic-boundary features
-- [ ] `T4.2a` LightGBM lambdarank + Optuna sweep
-- [ ] `T4.2b` SHAP attribution
-- [ ] `T4.3a` PyG heterogeneous graph construction
-- [ ] `T4.3b` Neighbour-sampled R-GCN training loop
-- [ ] `T4.3c` Focal loss + early stopping on Recall@20%
-- [ ] `T4.4` (optional) Claude re-ranker over top-50
-- [ ] `T4.5a` 5-seed runs, mean ± std
-- [ ] `T4.5b` Ablation table (graph/history/change/all)
-- [ ] `T4.5c` Learning curve vs training-set size
-- [ ] `T4.5d` Cross-project LOPO evaluation
-- [ ] `T4.6` `[v2]` Calibration: reliability diagram, Brier, cost-optimal threshold (RQ7)
-- [ ] `T4.7` `[new]` Written leakage audit + CI assertion ⭐
-- [ ] `T4.8` `[new]` File-level prediction head (§18.8)
+- [ ] (CUT) (CUT - Roadmap Phase removed) `T4.1a` Graph feature extraction
+- [ ] (CUT) `T4.1b` Change feature extraction
+- [ ] (CUT) `T4.1c` Test-history feature extraction
+- [ ] (CUT) `T4.1d` Cross features + leakage audit ⭐
+- [ ] (CUT) `T4.1e` `[new]` Dynamic-boundary features
+- [ ] (CUT) `T4.2a` LightGBM lambdarank + Optuna sweep
+- [ ] (CUT) `T4.2b` SHAP attribution
+- [ ] (CUT) (CUT - Roadmap Phase removed) `T4.3a` PyG heterogeneous graph construction
+- [ ] (CUT) `T4.3b` Neighbour-sampled R-GCN training loop
+- [ ] (CUT) `T4.3c` Focal loss + early stopping on Recall@20%
+- [ ] (CUT) `T4.4` (optional) Claude re-ranker over top-50
+- [ ] (CUT) `T4.5a` 5-seed runs, mean ± std
+- [ ] (CUT) `T4.5b` Ablation table (graph/history/change/all)
+- [ ] (CUT) `T4.5c` Learning curve vs training-set size
+- [ ] (CUT) `T4.5d` Cross-project LOPO evaluation
+- [ ] (CUT) `T4.6` `[v2]` Calibration: reliability diagram, Brier, cost-optimal threshold (RQ7)
+- [ ] (CUT) `T4.7` `[new]` Written leakage audit + CI assertion ⭐
+- [ ] (CUT) (CUT - Roadmap Phase removed) `T4.8` `[new]` File-level prediction head (§18.8)
 
 ### Weeks 10–13 — Tool & Demo (Oct 12–Nov 2)
-- [ ] `T5.1` `blastradius` CLI (init/predict/explain/serve/gaps)
+- [ ] (CUT - Roadmap Phase removed) `T5.1` `blastradius` CLI (init/predict/explain/serve/gaps)
 - [ ] `T5.2` FastAPI service + OpenAPI + caching layers (§20.2)
 - [ ] `T5.3a` Next.js shell + PR URL input
-- [ ] `T5.3b` Interactive graph with impact highlighting + hairball controls (§20.3)
+- [ ] (CUT - Roadmap Phase removed) `T5.3b` Interactive graph with impact highlighting + hairball controls (§20.3)
 - [ ] `T5.3c` Cost-saved panel
 - [ ] `T5.3d` Four-way comparison panel (co-change / reachability / model / truth) ⭐
 - [ ] `T5.3e` Vercel deploy with pre-computed examples
 - [ ] `T5.4` GitHub Action + marketplace listing
-- [ ] `T5.5` MCP `predict_blast_radius` tool in the fork's `serve.py`
+- [ ] (CUT - Roadmap Phase removed) `T5.5` MCP `predict_blast_radius` tool in the fork's `serve.py`
 - [ ] `T5.6a` Dockerfile + compose
 - [ ] `T5.6b` `make all` mini-corpus reproduction <15 min
 - [ ] `T5.6c` `REPRODUCE.md`

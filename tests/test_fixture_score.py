@@ -77,3 +77,40 @@ def test_score_corpus_split_check_extract_fn_only() -> None:
     assert s35.expected_class == "TEST_RAN_CLEAN"
     assert s35.actual_class == "TEST_RAN_CLEAN"
     assert s35.class_correct is True
+import pytest
+from analysis.fixture_score import parse_expected
+from pathlib import Path
+import tempfile
+
+def test_parse_expected_raises_on_missing_class():
+    with tempfile.TemporaryDirectory() as td:
+        p = Path(td) / "EXPECTED.md"
+        p.write_text("""## 1. test.txt
+- **Expected Outcomes:** NO_TEST_OUTCOMES
+- **Confidence:** CERTAIN
+""")
+        with pytest.raises(ValueError, match="Missing or unparseable Expected Class"):
+            parse_expected(p)
+
+def test_parse_expected_raises_on_invalid_class():
+    with tempfile.TemporaryDirectory() as td:
+        p = Path(td) / "EXPECTED.md"
+        p.write_text("""## 1. test.txt
+- **Expected Class:** INVALID_CLASS
+- **Expected Outcomes:** NO_TEST_OUTCOMES
+- **Confidence:** CERTAIN
+""")
+        with pytest.raises(ValueError, match="Unknown Expected Class"):
+            parse_expected(p)
+
+def test_parse_expected_valid_label_parses():
+    with tempfile.TemporaryDirectory() as td:
+        p = Path(td) / "EXPECTED.md"
+        p.write_text("""## 1. test.txt
+- **Expected Class:** TEST_RAN_CLEAN
+- **Expected Outcomes:** NO_TEST_OUTCOMES (passed clean)
+- **Confidence:** CERTAIN
+""")
+        res = parse_expected(p)
+        assert res["test.txt"]["expected_class"] == "TEST_RAN_CLEAN"
+        assert res["test.txt"]["expected_ids"] == set()
