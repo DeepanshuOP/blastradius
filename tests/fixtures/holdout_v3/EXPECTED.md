@@ -105,7 +105,7 @@ Per ROADMAP §25.3, §26.1, DECISIONS.md (D-27, D-29, D-31), and AGENTS.md, this
 - **Fixture Filename:** `apache__streampark__086548451141.txt`
 - **Build Tool:** Maven/Surefire
 - **Expected Outcomes:** NO_TEST_OUTCOMES (container-startup timeout during class initialisation; no test method ever ran)
-- **Expected Class:** NO_TEST_OUTPUT
+- **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
 ---
