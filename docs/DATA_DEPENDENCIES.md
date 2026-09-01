@@ -1,41 +1,86 @@
 # Data Dependencies for `make tables`
 
-This document details the data inputs required for each target inside `make tables` and how to obtain them. Note that none of the `data/interim` or `data/raw` directories are tracked in git due to size constraints.
+What each `make tables` target needs, and what a fresh clone can actually do.
 
-## Important Warning: `data/raw` Expiry
-GitHub Actions logs strictly expire after 90 days. The data in `data/raw` **CANNOT** be fully regenerated from scratch by running the harvester today if the underlying CI logs have expired. Any new developer must receive a securely transferred snapshot of `data/raw` and `data/state/cursor.db` from the primary operator.
+**The table below is measured, not asserted.** It comes from cloning
+`https://github.com/DeepanshuOP/blastradius.git` into `/tmp/br-verify`, running
+`uv sync`, and running each target, at commit `39839fd`. Re-verify it the same
+way rather than trusting this page.
 
-## Target Breakdown
+Nothing under `data/` is tracked in git.
 
-1. `analysis/resolve_bases.py`
-   - **Data Required**: `data/interim/base_resolution.parquet`, `data/interim/instances_raw.parquet`, `data/raw` (via `RawStore` and `cursor.db`).
-   - **In Git**: No.
-   - **How to obtain**: Requires copying the `data/` snapshot from the operator.
+## `data/raw` cannot be regenerated. Ever.
 
-2. `analysis/parse_base_logs.py`
-   - **Data Required**: `data/interim/base_resolution_new.parquet`, `data/raw`.
-   - **In Git**: No.
-   - **How to obtain**: Run `resolve_bases.py` for interim files, and copy `data/raw` from the operator.
+**GitHub Actions job logs expire 90 days after the run.** Much of this corpus is
+already past that at source, so re-running the harvester today would not
+reproduce `data/raw` — it would produce a strictly smaller, different corpus.
+The 4.6 GB snapshot is irreplaceable and must be transferred, not rebuilt. The
+same is true of `data/state/cursor.db` (131 MB), which `--as-of` reproduction
+needs.
 
-3. `src/label/fault_revealing.py`
-   - **Data Required**: `data/interim/base_resolution_new.parquet`, `data/interim/instances_raw.parquet`, `data/interim/parsed_outcomes.parquet`, `data/interim/base_outcomes.parquet`.
-   - **In Git**: No.
-   - **How to obtain**: Supplied via the interim outputs from previous steps and the initial dataset bundle.
+Phase 017 sharpened one distinction that matters here: **job *metadata* does not
+expire, job *logs* do.** An expired base run can still be enumerated
+(`/actions/runs/{id}/jobs` returns 200 indefinitely) but never read. That is why
+`base_jobs_total` and `base_jobs_retrieved` are columns in
+`data/interim/exact_green_verification.parquet` — the gap between them is the
+permanently unverifiable share, and no future work closes it.
 
-4. `analysis/fixture_score.py`
-   - **Data Required**: `data/interim/parsed_outcomes.parquet`.
-   - **In Git**: No.
-   - **How to obtain**: Computed during earlier data extraction, requires `data/interim` snapshot.
+| Path | Size | In git | Regenerable | Action |
+|---|---:|---|---|---|
+| `data/raw/` | 4.6 GB | No | **NO — 90-day expiry** | Transfer |
+| `data/state/cursor.db` | 131 MB | No | No | Transfer; `--as-of` needs it |
+| `data/interim/*.parquet` | ~31 MB | No | Yes, slowly, from `data/raw` | Transfer anyway |
+| `data/clones/` | 1.7 GB | No | Yes (`git clone --filter=blob:none`) | Re-clone |
+| `data/frame/frame_v1.csv` | small | **Yes** | Frozen under T0.8 | Nothing |
+| `tests/fixtures/` | small | **Yes** | — | Nothing |
 
-5. `analysis/holdout_eval.py`
-   - **Data Required**: `tests/fixtures/holdout_v3/` (or similar), models' prediction outputs.
-   - **In Git**: Yes (fixtures), No (some interim outputs).
-   - **How to obtain**: Run the model evaluations or load the repository fixtures.
+## Measured: what runs on a fresh clone
 
-6. `analysis/binding_report.py`, `analysis/attrition_funnel.py`, `analysis/rq1_divergence.py`, `analysis/expiry_cliff.py`, `analysis/annotation_census.py`, `analysis/corpus_stats.py`
-   - **Data Required**: `data/interim/*.parquet` (binding, changesets, cochange, outcomes, etc.), `data/frame/frame_v1.csv`.
-   - **In Git**: No (except some framing data if tracked).
-   - **How to obtain**: All of these aggregate upon the pipeline's interim data. A complete `data/interim` snapshot is required.
+**6 of 14 targets pass with no data at all.** The other 8 fail on a named
+missing file — the first one each needs is given.
 
-## Virtual Environment Requirement
-The script targets currently import `pandas` and `pyarrow`. However, these are **not** listed in the `pyproject.toml` dependencies. A fresh checkout running `uv sync` will not install them and `make tables` will immediately crash with a `ModuleNotFoundError`. Until `pyproject.toml` is updated with operator permission, developers must manually `uv pip install pandas pyarrow` into their `.venv` before running `make tables`.
+| # | Target | Fresh clone | First missing input |
+|---:|---|---|---|
+| 1 | `analysis/secret_scan.py` | **PASS** | — (no `release/`, exits 0: nothing to scan) |
+| 2 | `analysis/resolve_bases.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+| 3 | `analysis/fetch_base_logs.py` | FAIL | `data/interim/base_resolution_new.parquet` (also needs 3 PATs) |
+| 4 | `analysis/parse_base_logs.py` | FAIL | `data/interim/base_resolution_new.parquet` (also needs `data/raw`) |
+| 5 | `src/label/fault_revealing.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+| 6 | `analysis/fixture_score.py` | **PASS** | — (scores checked-in fixtures) |
+| 7 | `analysis/holdout_eval.py` | **PASS** | — (scores checked-in fixtures) |
+| 8 | `analysis/binding_report.py` | FAIL | `data/interim/parsed_outcomes.parquet` |
+| 9 | `analysis/attrition_funnel.py` | FAIL | `data/interim/instances_raw.parquet` |
+| 10 | `analysis/rq1_divergence.py` | FAIL | `data/interim/outcomes.parquet` |
+| 11 | `analysis/expiry_cliff.py` | **PASS** | — |
+| 12 | `analysis/annotation_census.py` | **PASS** | — |
+| 13 | `analysis/corpus_stats.py` | **PASS** | — |
+| 14 | `analysis/verify_exact_green.py --report-only` | FAIL | `data/interim/exact_green_verification.parquet` |
+| 15 | `analysis/corpus_delta.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+
+`make tables` therefore **stops at target 2** on a clean clone. It is a data
+problem, not a code or dependency problem: `uv sync` succeeds and `make test`
+reaches 380 passed / 14 failed / 4 errors, where every failure is a missing
+`data/` input.
+
+`analysis/rq1_divergence.py` no longer requires `matplotlib`. It imports it
+lazily inside `write_figures()` and prints every number without it, warning that
+the two PDFs were skipped. Numbers are the paper; figures are optional.
+
+## Not wired into `make tables`, and why
+
+`analysis/verify_exact_green.py`'s **sweep** needs 3 PATs and runs for tens of
+minutes, so it is an explicit step:
+
+```bash
+uv run --env-file .env python analysis/verify_exact_green.py
+```
+
+It is resumable — re-running it continues from `--out` — and `--time-budget-s`
+bounds a single slice. `make tables` runs only its `--report-only` mode, which
+regenerates every printed number from the committed parquet with no network.
+
+## Virtual environment
+
+Always `uv run`, and `uv run --env-file .env` for anything issuing HTTP. Plain
+`uv run` fails with "no GitHub PAT found in environment": `TokenPool.from_env()`
+reads `os.environ` and nothing else loads `.env` into it.

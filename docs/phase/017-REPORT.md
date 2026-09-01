@@ -118,8 +118,43 @@ defect, not a labelling one**, and await a ruling. Separately, **3,562 / 4,245
 
 ## Fresh-checkout results per target
 
-See "Phase 5" below — run against the committed state, after the commit, because
-a clone at the previous HEAD tests the code being replaced. Reordering stated.
+**Reordering, stated:** Phase 5 was run AFTER Phase 6's commit. A clone at the
+previous HEAD would have tested the code this round replaces, which measures
+nothing. Cloned `https://github.com/DeepanshuOP/blastradius.git` into
+`/tmp/br-verify` at `39839fd`, `uv sync` (clean), then each target.
+
+`make test` on the clone: **380 passed, 14 failed, 4 errors, 4 skipped.** Every
+failure is a missing `data/` input; both new fixture-backed suites
+(`test_base_verify.py`, `test_secret_scan.py`) pass with no data.
+
+`make tables` **stops at target 2**, on data, not on code or dependencies.
+**6 of 15 targets pass with no data at all:**
+
+| Target | Fresh clone | First missing input |
+|---|---|---|
+| `analysis/secret_scan.py` | **PASS** | — (no `release/`; exits 0) |
+| `analysis/resolve_bases.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+| `analysis/fetch_base_logs.py` | FAIL | same (also needs 3 PATs) |
+| `analysis/parse_base_logs.py` | FAIL | same (also needs `data/raw`) |
+| `src/label/fault_revealing.py` | FAIL | same |
+| `analysis/fixture_score.py` | **PASS** | — |
+| `analysis/holdout_eval.py` | **PASS** | — |
+| `analysis/binding_report.py` | FAIL | `data/interim/parsed_outcomes.parquet` |
+| `analysis/attrition_funnel.py` | FAIL | `data/interim/instances_raw.parquet` |
+| `analysis/rq1_divergence.py` | FAIL | `data/interim/outcomes.parquet` |
+| `analysis/expiry_cliff.py` | **PASS** | — |
+| `analysis/annotation_census.py` | **PASS** | — |
+| `analysis/corpus_stats.py` | **PASS** | — |
+| `analysis/verify_exact_green.py --report-only` | FAIL | `data/interim/exact_green_verification.parquet` |
+| `analysis/corpus_delta.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+
+`rq1_divergence.py` now fails on **data**, not on matplotlib: the lazy import
+works. `docs/DATA_DEPENDENCIES.md` rewritten from these measurements, and states
+explicitly that `data/raw` (4.6 GB) cannot be regenerated because GitHub Actions
+logs expire at 90 days — and that job *metadata* never expires while job *logs*
+do, which is why `base_jobs_total` / `base_jobs_retrieved` are columns.
+
+`/tmp/br-verify` removed after measurement.
 
 ## Suite
 
@@ -158,4 +193,17 @@ case is now asserted twice — demote without evidence, `exact_green` with it.
 
 ## Git
 
-Recorded below after the push.
+```
+commit  39839fd68f27914970bf7f565d03861e29ae0a53
+message fix: require a parsed base log before calling a base run green
+HEAD        39839fd68f27914970bf7f565d03861e29ae0a53
+origin/main 39839fd68f27914970bf7f565d03861e29ae0a53
+```
+
+No trailers. Identity verified `DeepanshuOP` /
+`99538840+DeepanshuOP@users.noreply.github.com` before committing. Explicit
+paths only, never `git add -A`. The `ghp_` placeholder in
+`tests/fixtures/secret_scan/` did not trip GitHub push protection.
+
+A follow-up commit carries this report's Phase 5 section and
+`docs/DATA_DEPENDENCIES.md`, which could only be written after the push.
