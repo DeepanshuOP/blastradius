@@ -1,0 +1,76 @@
+========================================================================================================================
+BLASTRADIUS HELD-OUT CORPUS SCORECARD (Union Scorer Evaluation — ROADMAP §25.3 / §34.4)
+========================================================================================================================
+Strategy: Union of log_gradle, log_maven, and log_pytest extractors + most specific classification.
+Normalization Rule: Strip trailing '()', replace '#' and ' > ' with '::' on both expected and extracted IDs.
+------------------------------------------------------------------------------------------------------------------------
+#   | Fixture Filename                             | Harness | Exp Class   | Act Class   | Exp | Ext | TP  | FP  | FN  | Fired        | Match
+------------------------------------------------------------------------------------------------------------------------
+1   | apache__tika__079360406349.txt               | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+2   | apache__tika__095664956225.txt               | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+3   | apache__streampark__089739161046.txt         | Maven   | TEST_FAILURE | TEST_FAILURE | 4   | 4   | 4   | 0   | 0   | maven        | OK
+4   | apache__streampark__086548451141.txt         | Maven   | NO_TEST_OUTPUT | TEST_FAILURE | 0   | 1   | 0   | 1   | 0   | maven        | DIFF
+5   | apache__atlas__080179038270.txt              | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+6   | jline__jline3__086340083763.txt              | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+7   | igniterealtime__openfire__088344723575.txt   | Maven   | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | maven        | OK
+8   | castorini__anserini__087520312502.txt        | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+9   | castorini__anserini__087122010631.txt        | Maven   | TEST_FAILURE | TEST_FAILURE | 3   | 3   | 3   | 0   | 0   | maven        | OK
+10  | apache__hertzbeat__086747165466.txt          | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+11  | rptools__maptool__087876393663.txt           | Gradle  | TEST_FAILURE | TEST_FAILURE | 3   | 3   | 3   | 0   | 0   | gradle       | OK
+12  | robo-code__robocode__093833474930.txt        | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | gradle       | OK
+13  | rptools__maptool__087849465516.txt           | Gradle  | TEST_FAILURE | TEST_FAILURE | 3   | 3   | 3   | 0   | 0   | gradle       | OK
+14  | webauthn4j__webauthn4j__079034957563.txt     | Gradle  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | gradle       | OK
+15  | graphql-java__graphql-java__091882138158.txt | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | gradle       | DIFF
+16  | graphql-java__graphql-java__092512975734.txt | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | gradle       | OK
+17  | robo-code__robocode__090325561628.txt        | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | gradle       | OK
+18  | webauthn4j__webauthn4j__080544806420.txt     | Gradle  | TEST_FAILURE | TEST_FAILURE | 3   | 3   | 3   | 0   | 0   | gradle       | OK
+19  | atmosphere__atmosphere__078279224469.txt     | Other   | NO_TEST_OUTPUT | NO_TEST_OUTPUT | 0   | 0   | 0   | 0   | 0   | none         | OK
+20  | apache__hertzbeat__089678606855.txt          | Maven   | TEST_RAN_CLEAN | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | OK
+21  | atmosphere__atmosphere__089421932457.txt     | Maven   | NO_TEST_OUTPUT | NO_TEST_OUTPUT | 0   | 0   | 0   | 0   | 0   | none         | OK
+22  | jline__jline3__094582811397.txt              | Maven   | NO_TEST_OUTPUT | NO_TEST_OUTPUT | 0   | 0   | 0   | 0   | 0   | none         | OK
+23  | oracle__opengrok__083435392401.txt           | Maven   | TEST_RAN_CLEAN | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | OK
+24  | nitrite__nitrite-java__081478189534.txt      | Other   | NO_TEST_OUTPUT | NO_TEST_OUTPUT | 0   | 0   | 0   | 0   | 0   | none         | OK
+25  | igniterealtime__openfire__079333905347.txt   | Other   | NO_TEST_OUTPUT | NO_TEST_OUTPUT | 0   | 0   | 0   | 0   | 0   | none         | OK
+26  | apache__beam__083002648254.txt               | pytest  | TEST_FAILURE | TEST_FAILURE | 6   | 6   | 6   | 0   | 0   | pytest       | OK
+27  | apache__beam__083002648219.txt               | pytest  | TEST_FAILURE | TEST_FAILURE | 6   | 6   | 6   | 0   | 0   | pytest       | OK
+28  | apache__beam__079355463403.txt               | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | pytest       | OK
+29  | apache__beam__092813893757.txt               | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | pytest       | OK
+30  | apache__beam__084686152561.txt               | pytest  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | pytest       | OK
+------------------------------------------------------------------------------------------------------------------------
+HOLD-OUT TOTALS & AGGREGATE METRICS:
+  Total Holdout Fixtures:      30
+  Total Expected Identifiers:  46
+  Total Extracted Identifiers: 47
+  True Positives (TP):         45
+  False Positives (FP):        2
+  False Negatives (FN):        1
+  Precision:                   0.9574 (95.74%)
+  Recall:                      0.9783 (97.83%)
+  F1 Score:                    0.9677
+  Classification Accuracy:     0.9667 (96.67%) [29/30]
+  Cross-Firing Fixtures:       0/30 (zero cross-contamination)
+------------------------------------------------------------------------------------------------------------------------
+PER-HARNESS BREAKDOWN:
+  Harness    | Fixtures | Exp IDs | Ext IDs | TP  | FP  | FN  | Precision  | Recall     | F1     | Class Acc
+  -----------+----------+---------+---------+-----+-----+-----+------------+------------+--------+----------
+  pytest     | 5        | 16      | 16      | 16  | 0   | 0   | 100.00%    | 100.00%    | 1.0000 | 100.00% (5/5)
+  Maven      | 14       | 15      | 16      | 15  | 1   | 0   |  93.75%    | 100.00%    | 0.9677 |  92.86% (13/14)
+  Gradle     | 8        | 15      | 15      | 14  | 1   | 1   |  93.33%    |  93.33%    | 0.9333 | 100.00% (8/8)
+  Other      | 3        | 0       | 0       | 0   | 0   | 0   |   0.00%    |   0.00%    | 0.0000 | 100.00% (3/3)
+========================================================================================================================
+
+========================================================================================================================
+DETAILED ERROR BREAKDOWN (FALSE POSITIVES & FALSE NEGATIVES)
+========================================================================================================================
+
+[4] apache__streampark__086548451141.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (0):  []
+    Extracted (1): ['org.apache.streampark.e2e.cases::FlinkSQL120OnYarnTest']
+    FP (1):        ['org.apache.streampark.e2e.cases::FlinkSQL120OnYarnTest']
+
+[15] graphql-java__graphql-java__091882138158.txt (Harness: Gradle, Confidence: CERTAIN)
+    Expected (1):  ['graphql.schema.universe.SUSchemaRoundTripTest::GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: ::scenario']
+    Extracted (1): ['SUSchemaRoundTripTest::GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: directives on every schema kind']
+    FP (1):        ['SUSchemaRoundTripTest::GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: directives on every schema kind']
+    FN (1):        ['graphql.schema.universe.SUSchemaRoundTripTest::GraphQLSchema and SUSchema remain identical through bidirectional SDL round trips: ::scenario']
+========================================================================================================================

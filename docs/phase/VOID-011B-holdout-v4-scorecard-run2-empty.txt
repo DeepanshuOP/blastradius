@@ -1,0 +1,26 @@
+========================================================================================================================
+BLASTRADIUS HELD-OUT CORPUS SCORECARD (Union Scorer Evaluation — ROADMAP §25.3 / §34.4)
+========================================================================================================================
+Strategy: Union of log_gradle, log_maven, and log_pytest extractors + most specific classification.
+Normalization Rule: Strip trailing '()', replace '#' and ' > ' with '::' on both expected and extracted IDs.
+------------------------------------------------------------------------------------------------------------------------
+#   | Fixture Filename                             | Harness | Exp Class   | Act Class   | Exp | Ext | TP  | FP  | FN  | Fired        | Match
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+HOLD-OUT TOTALS & AGGREGATE METRICS:
+  Total Holdout Fixtures:      0
+  Total Expected Identifiers:  0
+  Total Extracted Identifiers: 0
+  True Positives (TP):         0
+  False Positives (FP):        0
+  False Negatives (FN):        0
+  Precision:                   0.0000 (0.00%)
+  Recall:                      0.0000 (0.00%)
+  F1 Score:                    0.0000
+  Classification Accuracy:     0.0000 (0.00%) [0/0]
+  Cross-Firing Fixtures:       0/0 (zero cross-contamination)
+------------------------------------------------------------------------------------------------------------------------
+PER-HARNESS BREAKDOWN:
+  Harness    | Fixtures | Exp IDs | Ext IDs | TP  | FP  | FN  | Precision  | Recall     | F1     | Class Acc
+  -----------+----------+---------+---------+-----+-----+-----+------------+------------+--------+----------
+========================================================================================================================

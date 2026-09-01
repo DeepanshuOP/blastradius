@@ -68,6 +68,31 @@ docs/HANDOFF.md is the switchover file. Another agent, or a different tool
 entirely, must be able to resume from it alone.
 
 ## Scope
+
+### Throwaway scripts go in /tmp
+Never the repository root. Never `scratch/`. Never `tmp_*.py`, `scratch*.py`,
+`fix_*.py`, `phase*.py` or a bare `*.txt` of captured output, anywhere in the
+tree. Write them under `/tmp`, run them, let them die there.
+
+A script is NOT throwaway if it produces a number, a parquet, or any artifact
+that gets committed, quoted in a report, or cited in the paper. That script
+belongs in `analysis/` or `src/`, and it must:
+- be importable without side effects (all work inside functions, argparse under
+  `if __name__ == "__main__":`),
+- take `--as-of` and `--limit` where the neighbouring scripts do,
+- be wired into `make tables`.
+
+**A result whose script was deleted is not a result — it is a claim.** A
+release blocker that cannot be re-run is not a blocker. If you find yourself
+about to report a number from a script you are about to throw away, promote the
+script first.
+
+Before you finish, run `git status` and read it. If it lists a script at the
+repository root, you have broken this rule. This rule already existed and was
+violated anyway: forty untracked files accumulated at the root in four days,
+several of them load-bearing.
+
+### One task, one deliverable
 One task, one deliverable, one file (or one tightly-coupled pair). If a task
 cannot be stated in one sentence with one pass/fail condition, STOP and say it
 is too big. Do not touch files outside the stated scope, even to improve them.

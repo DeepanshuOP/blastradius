@@ -82,7 +82,23 @@ def test_base_resolve_ancestor_real_payload() -> None:
       print([r['id'] for r in runs if r['workflow_id'] == 80768812])
       "
       Output: [31308832690]
+
+    Phase 017 amendment (spec 3a, Architect ruling)
+    -----------------------------------------------
+    This test previously asserted `status == "exact_green"` for run 31308832690
+    on the strength of its `conclusion == "success"` alone. That expectation
+    encoded the defect Phase 016-A found and Phase 017 was tasked with removing:
+    a run conclusion is metadata about the run, not evidence about its tests, so
+    it can never establish that the base was green (integrity invariant 6,
+    ROADMAP §21.3).
+
+    The ancestor-traversal ground truth above is unchanged and is still
+    asserted. What changed is only what a *successful* base is allowed to
+    resolve to. The assertions below are strengthened, not weakened: the
+    resolution must now demote without log evidence, AND must still reach
+    `exact_green` when that evidence exists.
     """
+    # Without a verification record, a successful base emits nothing.
     res = resolve_base_run(
         repo="Stirling-Tools/Stirling-PDF",
         head_sha="0de2cdf979dbf76bdafb328d0e618ac358b7b452",
@@ -90,12 +106,34 @@ def test_base_resolve_ancestor_real_payload() -> None:
         workflow_id=80768812,
         base_sha="faba9f53eae8b7ca09051b12f99ea5e9f1663748",
     )
-    assert res.status == "exact_green"
+    assert res.status == "no_base"
     assert res.base_sha == "0286c716de5206af6d25a4c5dca6835bdbcb5fac"
-    assert res.base_run_id == 31308832690
-    assert res.base_run_distance == 3
-    assert res.can_emit_labels is True
-    assert res.require_base_run_id() == 31308832690
+    assert res.base_run_id is None
+    assert res.can_emit_labels is False
+    assert res.base_parse_status == "unverified"
+
+    # With a parsed base log in which tests were observed, the same ancestor
+    # traversal resolves to exact_green at the same 3-hop distance.
+    verified = resolve_base_run(
+        repo="Stirling-Tools/Stirling-PDF",
+        head_sha="0de2cdf979dbf76bdafb328d0e618ac358b7b452",
+        run_id=31326869987,
+        workflow_id=80768812,
+        base_sha="faba9f53eae8b7ca09051b12f99ea5e9f1663748",
+        base_verdicts={
+            ("Stirling-Tools/Stirling-PDF", 31308832690): {
+                "base_parse_status": "green_verified",
+                "base_jobs_total": 1,
+                "base_jobs_retrieved": 1,
+            }
+        },
+    )
+    assert verified.status == "exact_green"
+    assert verified.base_sha == "0286c716de5206af6d25a4c5dca6835bdbcb5fac"
+    assert verified.base_run_id == 31308832690
+    assert verified.base_run_distance == 3
+    assert verified.can_emit_labels is True
+    assert verified.require_base_run_id() == 31308832690
 
 
 def test_base_resolve_no_base_real_payload() -> None:
@@ -239,3 +277,107 @@ def test_base_resolve_branch_prior() -> None:
     assert res.base_run_id == 2
     assert res.base_sha == "sha2"
     assert res.base_time_gap_seconds == parse_iso("2026-08-20T12:00:00Z") - parse_iso("2026-08-19T13:00:00Z")
+
+
+def test_resolve_bases_outgoing_params_and_pagination(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify that analysis.resolve_bases passes branch, created, and per_page=100
+    on the initial workflow runs request, and passes params=None on subsequent Link-header requests."""
+    import unittest.mock
+    import pandas as pd
+    from analysis.resolve_bases import run as run_resolve
+
+    calls: list[tuple[str, dict | None]] = []
+
+    # Mock response object
+    class MockResponse:
+        def __init__(self, status_code: int, data: dict, headers: dict):
+            self.status_code = status_code
+            self._data = data
+            self.headers = headers
+            self.text = ""
+
+        def json(self) -> dict:
+            return self._data
+
+    resp1 = MockResponse(
+        status_code=200,
+        data={
+            "workflow_runs": [
+                {
+                    "id": 888888,
+                    "head_sha": "unrelated_sha",
+                    "run_started_at": "2026-08-19T10:00:00Z",
+                    "conclusion": "success",
+                }
+            ]
+        },
+        headers={"Link": '<https://api.github.com/next_page_url?page=2>; rel="next"'},
+    )
+
+    resp2 = MockResponse(
+        status_code=200,
+        data={
+            "workflow_runs": [
+                {
+                    "id": 999999,
+                    "head_sha": "base_sha_123",
+                    "run_started_at": "2026-08-19T09:00:00Z",
+                    "conclusion": "success",
+                }
+            ]
+        },
+        headers={},
+    )
+
+    def mock_get(url: str, params: dict | None = None, pool: object = None) -> MockResponse:
+        calls.append((url, params))
+        if len(calls) == 1:
+            return resp1
+        return resp2
+
+    monkeypatch.setattr("analysis.resolve_bases.get_with_backoff", mock_get)
+    monkeypatch.setattr("analysis.resolve_bases.build_commit_graph", lambda repo, store=None: {"base_sha_123": []})
+
+    # Mock dataframes
+    mock_res = pd.DataFrame([
+        {"run_id": 101, "repo": "test/repo", "status": "no_base", "base_sha": "base_sha_123", "base_run_id": None, "base_run_distance": None}
+    ])
+    mock_inst = pd.DataFrame([
+        {
+            "run_id": 101,
+            "repo": "test/repo",
+            "workflow_id": 42,
+            "base_ref": "main",
+            "base_sha": "base_sha_123",
+            "language": "Python",
+            "run_started_at": "2026-08-20T12:00:00Z",
+        }
+    ])
+
+    def mock_read_parquet(path: str) -> pd.DataFrame:
+        if "base_resolution_new" in path:
+            return mock_res
+        return mock_inst
+
+    monkeypatch.setattr("pandas.read_parquet", mock_read_parquet)
+
+    df_out = run_resolve(limit=1, python_first=True)
+    assert len(df_out) == 1
+    assert df_out.iloc[0]["status"] == "exact_green"
+    assert df_out.iloc[0]["base_run_id"] == 999999
+
+    # Verify requests
+    assert len(calls) == 2
+    # Call 1: must have branch, created, per_page
+    url1, params1 = calls[0]
+    assert "actions/workflows/42/runs" in url1
+    assert params1 is not None
+    assert params1["branch"] == "main"
+    assert params1["created"] == "<=2026-08-20"
+    assert params1["per_page"] == 100
+
+    # Call 2: must have params=None since Link header already includes query params
+    url2, params2 = calls[1]
+    assert url2 == "https://api.github.com/next_page_url?page=2"
+    assert params2 is None
+

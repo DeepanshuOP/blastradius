@@ -1,9 +1,73 @@
+"""RQ1 divergence measurement: the co-change proxy on two axes, plus null baselines.
+
+Every number this script prints regenerates without matplotlib. Figures are
+optional: `write_figures` imports matplotlib lazily and skips with a warning if
+it is absent, so `make tables` emits the full measurement on a fresh clone with
+no plotting stack. Numbers are the paper; figures are a convenience.
+"""
+
 import pandas as pd
 import numpy as np
 import os
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+
+def write_figures(dist_counts, k_vals, co_perf, b1_perf, b2_perf):
+    """Write the two RQ1 figures, or skip if matplotlib is not installed.
+
+    Args:
+        dist_counts: Partners-per-changed-file distribution (Axis 1).
+        k_vals: The k values evaluated, in order.
+        co_perf: Per-k (precision, recall) for co-change.
+        b1_perf: Per-k (precision, recall) for the changeset baseline.
+        b2_perf: Per-k (precision, recall) for the historical top-k baseline.
+
+    Returns:
+        True if the figures were written, False if matplotlib was unavailable.
+    """
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print(
+            "\nWARNING: matplotlib is not installed; skipping "
+            "paper/generated/fig1_applicability.pdf and fig2_accuracy.pdf. "
+            "Every number above was produced without it."
+        )
+        return False
+
+    os.makedirs('paper/generated', exist_ok=True)
+
+    # Fig 1
+    plt.figure(figsize=(8, 5))
+    dist_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.title('Applicability: Distribution of Partners-per-Changed-File')
+    plt.xlabel('Number of Co-change Partners')
+    plt.ylabel('Number of Changed Files')
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.savefig('paper/generated/fig1_applicability.pdf')
+    plt.close()
+
+    # Fig 2
+    if len(co_perf) > 0:
+        plt.figure(figsize=(8, 5))
+        ks = [str(k) for k in k_vals]
+
+        # Plot recall
+        plt.plot(ks, [x[1] for x in co_perf], marker='o', label='Co-change Recall')
+        plt.plot(ks, [x[1] for x in b1_perf], marker='s', linestyle='--', label='Baseline 1 (Changeset) Recall')
+        plt.plot(ks, [x[1] for x in b2_perf], marker='^', linestyle=':', label='Baseline 2 (Hist Top-k) Recall')
+
+        plt.title('Accuracy vs k (Conditional on Proxy Firing)')
+        plt.xlabel('k (Top-k recommendations)')
+        plt.ylabel('Recall')
+        plt.ylim(0, 1.0)
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig('paper/generated/fig2_accuracy.pdf')
+        plt.close()
+        print("\nGenerated paper/generated/fig1_applicability.pdf and paper/generated/fig2_accuracy.pdf")
+    return True
 
 def compute_metrics(C, GT):
     if not isinstance(C, set): C = set(C)
@@ -186,40 +250,9 @@ def main():
             b2_perf.append((df_b2['precision'].mean(), df_b2['recall'].mean()))
 
     # --------------------------------------------------------------------------
-    # FIGURES
+    # FIGURES (optional — see write_figures)
     # --------------------------------------------------------------------------
-    os.makedirs('paper/generated', exist_ok=True)
-    
-    # Fig 1
-    plt.figure(figsize=(8, 5))
-    dist_counts.plot(kind='bar', color='skyblue', edgecolor='black')
-    plt.title('Applicability: Distribution of Partners-per-Changed-File')
-    plt.xlabel('Number of Co-change Partners')
-    plt.ylabel('Number of Changed Files')
-    plt.xticks(rotation=0)
-    plt.tight_layout()
-    plt.savefig('paper/generated/fig1_applicability.pdf')
-    plt.close()
-    
-    # Fig 2
-    if len(co_perf) > 0:
-        plt.figure(figsize=(8, 5))
-        ks = [str(k) for k in k_vals]
-        
-        # Plot recall
-        plt.plot(ks, [x[1] for x in co_perf], marker='o', label='Co-change Recall')
-        plt.plot(ks, [x[1] for x in b1_perf], marker='s', linestyle='--', label='Baseline 1 (Changeset) Recall')
-        plt.plot(ks, [x[1] for x in b2_perf], marker='^', linestyle=':', label='Baseline 2 (Hist Top-k) Recall')
-        
-        plt.title('Accuracy vs k (Conditional on Proxy Firing)')
-        plt.xlabel('k (Top-k recommendations)')
-        plt.ylabel('Recall')
-        plt.ylim(0, 1.0)
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig('paper/generated/fig2_accuracy.pdf')
-        plt.close()
-        print("\nGenerated paper/generated/fig1_applicability.pdf and paper/generated/fig2_accuracy.pdf")
+    write_figures(dist_counts, k_vals, co_perf, b1_perf, b2_perf)
 
 if __name__ == '__main__':
     main()

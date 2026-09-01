@@ -1115,15 +1115,56 @@ def capture_branch_runs(
         from src.harvest.rawstore import RawRecord
         import json
         
-        page = 1
-        fetched_all_needed = False
+        import json
+        
         all_records = []
         terminal_failure = False
         
-        while page <= max_pages and not fetched_all_needed:
-            url = f"https://api.github.com/repos/{repo_full}/actions/runs"
+        # Determine the window. We slice from oldest_failed (or 2025-07-01 if None) to now.
+        start_iso = oldest_failed or "2025-07-01T00:00:00Z"
+        end_iso = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        
+        start_dt = datetime.datetime.fromisoformat(start_iso.replace('Z', '+00:00'))
+        end_dt = datetime.datetime.fromisoformat(end_iso.replace('Z', '+00:00'))
+        
+        slices = []
+        curr = start_dt
+        while curr < end_dt:
+            nxt = curr + datetime.timedelta(days=32)
+            nxt = nxt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            if nxt > end_dt: nxt = end_dt
+            slice_end = nxt - datetime.timedelta(seconds=1)
+            if slice_end >= end_dt: slice_end = end_dt
+            slices.append((curr, slice_end, 0))
+            curr = nxt
+            
+        url = f"https://api.github.com/repos/{repo_full}/actions/runs"
+        
+        while slices and not terminal_failure:
+            s_dt, e_dt, depth = slices.pop(0)
+            s_str = s_dt.isoformat().replace('+00:00', 'Z')
+            e_str = e_dt.isoformat().replace('+00:00', 'Z')
+            
             try:
-                resp = get_with_backoff(url, params={"branch": ref, "per_page": 100, "page": page}, pool=pool)
+                # First request to check total_count and fetch page 1
+                resp = get_with_backoff(url, params={"branch": ref, "created": f"{s_str}..{e_str}", "per_page": 100, "page": 1}, pool=pool)
+                body_json = json.loads(resp.text)
+                total = body_json.get('total_count', 0)
+                
+                if total >= 1000:
+                    if depth >= 5:
+                        raise RuntimeError(
+                            f"Branch runs date slice recursion depth exceeded bound of 5 for {repo_full} branch {ref}: "
+                            f"{s_str}..{e_str} with {total} items"
+                        )
+                    # Subdivide
+                    mid = s_dt + (e_dt - s_dt) / 2
+                    slices.insert(0, (mid + datetime.timedelta(seconds=1), e_dt, depth + 1))
+                    slices.insert(0, (s_dt, mid, depth + 1))
+                    print(f"Subdividing {repo_full} branch {ref}: {s_str}..{e_str} hit cap with {total} items (depth {depth + 1})")
+                    continue
+                    
+                # We are under the cap, we can use the response
                 record = {
                     "url": url,
                     "status": resp.status_code,
@@ -1131,20 +1172,28 @@ def capture_branch_runs(
                     "etag": None,
                     "body": resp.content
                 }
-                rr = RawRecord(**record)
-                all_records.append(rr)
+                all_records.append(RawRecord(**record))
                 stats["n_pages_fetched"] += 1
                 
-                # Check the oldest run in this page
-                body_json = json.loads(resp.text)
                 runs = body_json.get('workflow_runs', [])
-                if not runs or len(runs) < 100:
-                    fetched_all_needed = True # No more runs or last page
-                
-                oldest_in_page = min((r.get('run_started_at') or r.get('created_at') for r in runs if (r.get('run_started_at') or r.get('created_at'))), default=None)
-                if oldest_in_page and oldest_failed and oldest_in_page < oldest_failed:
-                    fetched_all_needed = True
+                if not runs:
+                    continue
                     
+                import math
+                num_pages = math.ceil(total / 100)
+                for page in range(2, num_pages + 1):
+                    p_resp = get_with_backoff(url, params={"branch": ref, "created": f"{s_str}..{e_str}", "per_page": 100, "page": page}, pool=pool)
+                    all_records.append(RawRecord(**{
+                        "url": url,
+                        "status": p_resp.status_code,
+                        "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                        "etag": None,
+                        "body": p_resp.content
+                    }))
+                    stats["n_pages_fetched"] += 1
+                    
+            except RuntimeError:
+                raise
             except Exception as exc:
                 bucket, detail, status_code = _classify_failure(exc)
                 if bucket == "terminal":
@@ -1154,9 +1203,7 @@ def capture_branch_runs(
                 else:
                     stats["n_transient"] += 1
                     governor.record_transient(status=status_code, token_idx=getattr(pool, 'last_used_index', 0))
-                break # Exit pagination on failure
-                
-            page += 1
+                break
             
         if not terminal_failure and all_records:
             store.write_records(repo_full, "branch_runs", ref, all_records)

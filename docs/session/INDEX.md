@@ -1,5 +1,10 @@
 # BlastRadius Session Reports Index
 
+> **PROVISIONAL (Phase 016-B).** Row 076's summary quotes 778, 4,194, and 43.88% from Phase
+> 014-A. These figures depend on `exact_green` semantics currently under verification in
+> 016-A (4,245 instances, 60% of all resolved bases, are affected). Nothing below has been
+> changed; this note only flags that row 076's figures may move.
+
 | Seq | Date | Task | Summary | File |
 | :---: | :--- | :--- | :--- | :--- |
 | **001** | 2026-08-16 | D-23 | Commit decision record D-23 (`docs/DECISIONS.md`) | [001-2026-08-17-d23-commit.md](file:///home/shree/blastradius/docs/session/001-2026-08-17-d23-commit.md) |
@@ -72,3 +77,13 @@
 | **067** | 2026-08-29 | PHASE 006-A | Repair Stage 5, Time-Ordered Base Resolution, Base Log Parsing | [067-2026-08-29-006a-repair-stage5-and-base-resolution.md](067-2026-08-29-006a-repair-stage5-and-base-resolution.md) |
 | **068** | 2026-08-30 | PHASE 007-A | Make the dataset regenerable | [068-2026-08-30-007-a-regenerable-dataset.md](068-2026-08-30-007-a-regenerable-dataset.md) |
 - [070-2026-08-31-011-A-targeted-base-resolution.md](070-2026-08-31-011-A-targeted-base-resolution.md): Phase 011-A targeted base resolution with instance-weighting completed.
+- [071-2026-08-31-012-A-re-verification.md](071-2026-08-31-012-A-re-verification.md): Phase 012-A re-verification: undo uncommitted cap change, paste raw fractions, quantify cap impact (zero groups hit), escalate schema divergences, audit capture_branch_runs liveness, propose frontier_truncated.
+- [072-2026-08-31-012B-void-v4-worksheet.md](072-2026-08-31-012B-void-v4-worksheet.md): Phase 012-B: Void v4 scoring, quarantine machine expectations, prepare 32-log hand-labelling worksheet, diagnose 3 parser defects, analyze broken sampling frame, append D-38.
+- [073-2026-08-31-013B-schema-divergence-and-decisions.md](073-2026-08-31-013B-schema-divergence-and-decisions.md): Phase 013-B: Document schema divergences (118 across 8 tables), append D-39 (Java test ID), D-40 (language sweep), D-41 (retention cadence), classify root scripts, establish Holdout v5 protocol with clean-log summary verification guard.
+- [074-2026-08-31-014B-schema-conformance-and-withdrawal.md](074-2026-08-31-014B-schema-conformance-and-withdrawal.md): Phase 014-B: Schema conformance ruling (docs/SCHEMA_CONFORMANCE.md), missing negatives finding (docs/phase/014B-missing-negatives.md), release/v0.1 withdrawal notice (release/v0.1/WITHDRAWN.md), DOI confirmation, append D-42.
+- [075-2026-08-31-015B-conformance-ruling-and-negatives.md](075-2026-08-31-015B-conformance-ruling-and-negatives.md): Phase 015-B: Conformance ruling reversal (UNDECLARED category), reconciled per-table counts (76 evaluated columns across 3 tables), instance_id restructuring correction, candidates.parquet schema addition, empirical class imbalance measurement (1:35 to 1:1707), verbatim datasheet limitation, append D-43.
+- [076-2026-08-31-014A-targeted-base-resolution-and-gate1.md](076-2026-08-31-014A-targeted-base-resolution-and-gate1.md): Phase 014-A: Protocol restructuring, outgoing-params test, strict §21.3 commit walk survey (bytechef audit), full targeted base resolution across 479 groups (Python-first, 2,371 resolved instances, 44.9% of addressable window), corpus-level base resolution jump to 56.12% (no_base down to 43.88%), strict positive instances rise to 778 (+48.5%), daemon depth bound of 5 that raises.
+- [077-2026-09-01-016-A-verify-exact-green.md](077-2026-09-01-016-A-verify-exact-green.md): Phase 016-A: Verify exact_green assignment path, empirical base-log parsing of 20 runs across 17 repos (13/20 retrievable, 6/13 clean, 7/13 NO_TEST_OUTPUT), prove 778 strict split is provisional (87.28% exact_green dependent), and complete 410 census (778/2,371 [32.81%] >90d).
+
+
+

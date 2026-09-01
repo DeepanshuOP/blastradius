@@ -1,5 +1,13 @@
 # BlastRadius — Architect Handover
 
+> **PROVISIONAL (Phase 016-B).** CLI-1 is verifying whether `exact_green` was assigned from
+> run conclusion rather than from a parsed base log (016-A, in progress). This file's 31
+> August entry (below) quotes 778 (strict instances), 4,194 (strict labels), and 43.88%
+> (`no_base` share) from Phase 014-A — all of which depend on `exact_green` semantics and are
+> PROVISIONAL pending that verification. Nothing below has been changed; this banner only
+> flags that these numbers may move. Gate 1 additionally reads against the label count per
+> D-44, not the instance count of 778 — see `docs/DECISIONS.md`.
+
 **Written:** 30 August 2026
 **Session covered:** 28–30 August 2026 (parser completion → full-corpus parse → instance table → base resolution → co-change → binding → dataset scale-up → reproducibility repair)
 **Role being handed off:** Architect (Claude in chat)
@@ -945,3 +953,18 @@ positives is missed and that is a reportable finding, not a failure. The
 contribution is the dataset and the measurement, deliberately not the model.- 2026-08-31, Gemini 3.1 Pro (High), 010A, SURVEY ONLY: Verified targeted base resolution safely replaces branch index; no implementation, 9/20 groups resolved, 010A-REPORT written, docs/phase/010A-REPORT.md docs/session/069-2026-08-31-010A-phase-spec-010-a.md, Tests: ERROR (CLI-2 syntax error), uncommitted, NEXT: Review 010A report and approve implementation phase.
 
 2026-08-31 | Antigravity | 011-A | Phase 011-A targeted base resolution with instance-weighting completed | docs/AGENT_RULES.md, analysis/fetch_base_logs.py, analysis/resolve_bases.py, docs/phase/011A-REPORT.md | 379 tests | 7320545e46c01e6a5904236fa6d7edbb049aa722 | Start Phase 011-B to scale targeted base resolution to all 479 groups and implement the Phase 5 truncation rule.
+
+2026-08-31 | Antigravity | 012-B | Voided v4 score (58.33%), quarantined machine labels, generated 32-log hand-labelling worksheet, diagnosed 3 parser defects for CLI-1, analyzed broken sampling frame (117,923 clean runs available), appended D-38 | docs/phase/011B-VOIDED-machine-labels.md, docs/phase/011B-holdout-v4-score.md, docs/phase/012B-holdout-v4-worksheet.md, docs/phase/012B-parser-defects.md, docs/phase/012B-REPORT.md, docs/DECISIONS.md, docs/session/072-2026-08-31-012B-void-v4-worksheet.md, tests/fixtures/holdout_v4/EXPECTED.md (deleted) | 377 passed (1 failing smoke in test_promoted.py owned by CLI-1) | uncommitted | Operator hand-labels docs/phase/012B-holdout-v4-worksheet.md; CLI-1 fixes parser defects in src/parse/
+
+2026-08-31 | Antigravity | 013-B | Documented schema divergences (118 across 8 tables), appended D-39, D-40, D-41 to DECISIONS.md, triaged root scripts, established Holdout v5 protocol with clean-log summary verification guard | docs/phase/013B-schema-divergence.md, docs/phase/013B-holdout-v5-protocol.md, docs/DECISIONS.md, docs/session/073-2026-08-31-013B-schema-divergence-and-decisions.md, docs/session/INDEX.md, docs/phase/013B-REPORT.md | 377 passed (1 failing smoke in test_promoted.py owned by CLI-1) | uncommitted | CLI-1 pushes fixes; operator authorizes commit with "CLI-1 has pushed"; commit and push CLI-2 changes.
+
+2026-08-31 | Antigravity | 014-B | Schema conformance ruling (docs/SCHEMA_CONFORMANCE.md), missing negatives finding (docs/phase/014B-missing-negatives.md), release/v0.1 formal withdrawal notice (release/v0.1/WITHDRAWN.md), confirmed 0 Zenodo DOIs, appended D-42 | docs/SCHEMA_CONFORMANCE.md, docs/phase/014B-missing-negatives.md, release/v0.1/WITHDRAWN.md, docs/DECISIONS.md, docs/phase/014B-REPORT.md, docs/session/074-2026-08-31-014B-schema-conformance-and-withdrawal.md, docs/session/INDEX.md, docs/HANDOFF.md | 377 passed (1 failing smoke in test_promoted.py owned by CLI-1) | uncommitted | CLI-1 repairs resolver defect and implements pipeline projection/joins to resolve DEFECT columns for schema-compliant v0.2 release.
+
+2026-08-31 | Antigravity | 015-B | Conformance ruling reversal (UNDECLARED category), reconciled counts (76 evaluated columns across 3 tables), instance_id restructuring correction, candidates.parquet schema addition, empirical class imbalance measurement (1:35 to 1:1707), verbatim datasheet limitation, appended D-43 | docs/SCHEMA_CONFORMANCE.md, docs/phase/014B-missing-negatives.md, docs/DECISIONS.md, docs/session/075-2026-08-31-015B-conformance-ruling-and-negatives.md, docs/session/INDEX.md, docs/HANDOFF.md, docs/phase/015B-REPORT.md | 377 passed (2 failed under plain uv run due to mock PAT requirement) | uncommitted | CLI-1 resolves DEFECT columns in analysis/ and src/label/ for schema-compliant v0.2 release and implements candidates.parquet generation.
+
+2026-08-31 | Antigravity | 014-A | Phase 014-A targeted base resolution across 479 groups (Python-first, 2,371 resolved instances, 44.9% addressable resolution rate), corpus-level base resolution increased to 56.12% (no_base down to 43.88%), strict positive instances rose to 778 (+48.5%), outgoing-params test added, daemon depth bound of 5 that raises implemented | analysis/resolve_bases.py, src/harvest/daemon.py, tests/test_base_resolve.py, tests/test_daemon.py, data/interim/base_resolution_new.parquet, data/interim/base_resolution_targeted.parquet, data/interim/outcomes.parquet, docs/phase/014A-REPORT.md, docs/session/076-2026-08-31-014A-targeted-base-resolution-and-gate1.md, docs/session/INDEX.md, docs/HANDOFF.md | 380 passed, 1 skipped | uncommitted | CLI-1 resolves DEFECT columns in analysis/corpus_instances.py and src/label/fault_revealing.py for schema-compliant v0.2 release.
+
+2026-09-01 | Antigravity | 016-A | Phase 016-A exact_green verification: empirical parse of 20 base runs across 17 repos (13/20 retrievable, 6/13 clean, 7/13 NO_TEST_OUTPUT), proved 778 strict split is provisional (87.28% exact_green dependent), completed 410 census (778/2,371 [32.81%] >90d) | docs/phase/016A-REPORT.md, docs/session/077-2026-09-01-016-A-verify-exact-green.md, docs/session/INDEX.md, docs/HANDOFF.md | 381 passed | uncommitted | Operator review of 016A report and decision on base-log fetching pipeline / provisional 778 handling.
+
+
+

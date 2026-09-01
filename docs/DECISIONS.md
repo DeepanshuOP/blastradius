@@ -66,3 +66,46 @@ The canonical `test_id` is the SELECTABLE UNIT: the method, or for Spock the fea
 **Consequence:** for holdout_v3 fixture 15 (graphql-java), the hand label naming the feature template `#scenario` was CORRECT and the parser emitting the leaf iteration `directives on every schema kind` was wrong. This overturns the session-060 audit verdict on that fixture.
 
 **Limitation (Accepted):** The canonical id casefolds the Python path component, which is lossy on a case-sensitive filesystem. Accepted because two Python test files in one repo differing only in case is close to nonexistent.
+
+### D-37: Holdout corpus lifecycle
+**Context**: A holdout corpus is scored exactly once. Any parser change informed by inspecting a corpus converts that corpus into a development set permanently, and its post-change score may never be reported as held-out performance. Superseding a held-out figure requires a NEW corpus under a new seed.
+
+### D-38: Void versus superseded scoring
+**Context**: A scoring event whose ground truth was produced by any automated extraction, including a grep or any function from this codebase, is VOID: no measurement occurred and the corpus is not consumed.
+**Decision**: This is distinct from a superseded score under D-37, where a valid measurement was taken and later invalidated by a parser change. A voided corpus may be labelled again by hand and scored once.
+
+### D-39: Java test identifier convention
+**Context**: Disambiguating Java test identifiers across Surefire, Maven, and Gradle outputs when package prefixes are omitted in console lines.
+**Decision**: (Architect ruling, verbatim):
+"The canonical Java test_id is the fully-qualified class name, plus '::', plus the method name. The parser recovers the package from, in order: the surefire report header, the 'Running <FQCN>' line, any 'at' stack frame. If all three fail it emits the simple class name and sets fqcn_incomplete=True. It never infers or guesses a package."
+
+### D-40: Language-ordered sweep
+**Context**: `data/frame/frame_v1.csv` is block-ordered (all Java repos followed by all Python repos). Under sequential frame execution, Python repos were never reached while logs aged against the 90-day retention clock.
+**Decision**: The harvester sweeps by language via `--lang` rather than in frame CSV order, because block-ordered CSV meant Python repos were never reached. Python log expiry at 90 days is irreversible, so Python is swept first.
+
+### D-41: Artifact retention cadence
+**Context**: Managing disk footprint, reproducible builds, and transfer requirements across local data tiers.
+**Decision**: Explicit retention policy across data directories:
+- `data/raw/` (4.6 GB): Irreplaceable. Retained permanently. Cannot be regenerated because GitHub Actions job logs expire at 90 days.
+- `data/state/` (`cursor.db`, 131 MB): Irreplaceable cursor state required for `--as-of` reproduction. Retained permanently.
+- `data/interim/` (~31 MB): Regenerable from `data/raw/` via pipeline scripts, but retained to avoid expensive re-parse runs.
+- `data/clones/` (1.7 GB): Ephemeral blobless git clones. Regenerable on demand via `git clone --filter=blob:none`.
+- `release/`: Staged/published release distribution artifacts (v0.1, etc.). Retained permanently for benchmark distribution.
+
+### D-42: Schema conformance
+**Context**: Reconciling on-disk Parquet datasets and release artifacts with frozen `docs/SCHEMAS.md`.
+**Decision**: `SCHEMAS.md` is frozen and describes the full project scope including tables later cut. A column absent from disk is one of: CUT (its table is out of scope), DEFECT (fixable), NOT MEASURED (goes in datasheet limitations verbatim), RENAMED, or RESTRUCTURED. `SCHEMAS.md` is never edited to match what was built. No release ships with an unresolved DEFECT.
+
+### D-43: Derivable negatives and candidate test universes
+**Context**: Reconciling binary classification framing and negative test outcome generation with severe empirical class imbalance.
+**Decision**: Negative examples are derivable, not materialised. BR-Bench ships positives plus candidates.parquet giving the full observed test set per repo per trailing window. Consumers derive negatives at any ratio. Rationale: materialising at the observed imbalance produces tens of millions of rows for 8,980 positives, and a frozen sampling ratio is a weaker artifact than the universe it was sampled from.
+
+### D-44: Gate 1 reads against the label count, not the instance count
+**Context**: ROADMAP §37.1 states Gate 1 as ">=5,000 positives." Phase 014-A reported this against the strict-split instance count (778), reading Gate 1 as MISSED at 778/5,000. ROADMAP §9.3 step 6 defines the labelling grain explicitly: one row is emitted per (instance, candidate test) pair, label 1 if the test is in T_reveal. A positive, under that definition, is a (change, test) pair — a label — not an instance.
+**Decision** (Architect ruling, verbatim): "Gate 1's >=5,000 positives therefore reads against the label count, currently 4,194, not the instance count of 778. Gate 1 stands at 4,194/5,000, not met."
+
+### D-45: Secret-scan severity tiering
+**Context**: `analysis/secret_scan.py` (promoted from the throwaway `tmp_scan.py` that produced the Phase 009-B result) is a T1.6b release blocker wired into `make tables`. Its four patterns are inherited byte-identical from 009-B. Run against `release/v0.1`, two of them fire only on harvested public data: all six `internal_host` matches are public identifiers (`jdk.internal`, `org.knowm.xchart.internal`, `Dockerfile.local`, `ConnectDialog.internal`, `heuristicEngine.corp`, `org.jkiss.dbeaver.app.local`) and all 25 `email` matches are Apple asset filenames of the form `AppIcon-20x20@2x.png`. Gating a release on either would fail every build on noise, which is how a blocker stops being read.
+**Decision**: Findings carry two severities. **BLOCKER** — `github_token`, `bearer_token` — fails `make tables` with a non-zero exit; neither shape can occur in harvested public source. **REVIEW** — `email`, `internal_host` — is printed for human triage and is never fatal. The patterns themselves are not weakened, only their consequence: a real `.corp` host is still reported, it just is not the thing that stops the build. Matched text is never printed in full; every sample is redacted to its first three characters plus its length, so running the scan cannot itself leak a credential into a log, a report, or the paper.
+**Revisit trigger**: a credential class appears that is not `gh[pousr]_`- or `Bearer`-shaped, or a release ships a host we control.
+

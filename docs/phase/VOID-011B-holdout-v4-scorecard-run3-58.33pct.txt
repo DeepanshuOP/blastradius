@@ -1,0 +1,144 @@
+========================================================================================================================
+BLASTRADIUS HELD-OUT CORPUS SCORECARD (Union Scorer Evaluation — ROADMAP §25.3 / §34.4)
+========================================================================================================================
+Strategy: Union of log_gradle, log_maven, and log_pytest extractors + most specific classification.
+Normalization Rule: Strip trailing '()', replace '#' and ' > ' with '::' on both expected and extracted IDs.
+------------------------------------------------------------------------------------------------------------------------
+#   | Fixture Filename                             | Harness | Exp Class   | Act Class   | Exp | Ext | TP  | FP  | FN  | Fired        | Match
+------------------------------------------------------------------------------------------------------------------------
+1   | Stirling-Tools__Stirling-PDF__081016081705.txt | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | gradle       | OK
+2   | Stirling-Tools__Stirling-PDF__081185748047.txt | Gradle  | TEST_FAILURE | TEST_FAILURE | 4   | 4   | 4   | 0   | 0   | gradle       | OK
+3   | agno-agi__agno__079305370965.txt             | pytest  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 0   | 2   | 2   | pytest       | DIFF
+4   | agno-agi__agno__092042274925.txt             | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | pytest       | DIFF
+5   | apache__atlas__085339439869.txt              | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+6   | apache__beam__086101982024.txt               | Gradle  | TEST_FAILURE | TEST_FAILURE | 3   | 3   | 3   | 0   | 0   | gradle       | OK
+7   | apache__beam__093527298308.txt               | Gradle  | TEST_FAILURE | TEST_FAILURE | 4   | 4   | 4   | 0   | 0   | gradle       | OK
+8   | apache__dolphinscheduler__092883042571.txt   | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | maven        | DIFF
+9   | apache__flink__078003756269.txt              | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | maven        | DIFF
+10  | apache__flink__079445374425.txt              | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | maven        | DIFF
+11  | apache__hugegraph__084221602296.txt          | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 2   | 0   | 2   | 1   | maven        | DIFF
+12  | apache__hugegraph__086386091934.txt          | Maven   | TEST_FAILURE | TEST_FAILURE | 5   | 5   | 0   | 5   | 5   | maven        | DIFF
+13  | apache__tika__090757115090.txt               | Maven   | NO_TEST_OUTPUT | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | DIFF
+14  | apache__zeppelin__077616025677.txt           | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+15  | dask__distributed__084645769341.txt          | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | pytest       | DIFF
+16  | dask__distributed__084757793457.txt          | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | pytest       | DIFF
+17  | fla-org__flash-linear-attention__082566635619.txt | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | pytest       | DIFF
+18  | fla-org__flash-linear-attention__086098926451.txt | pytest  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | pytest       | DIFF
+19  | floci-io__floci__078678232449.txt            | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+20  | floci-io__floci__085018489189.txt            | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+21  | gurkenlabs__litiengine__079152380933.txt     | Gradle  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | gradle       | OK
+22  | linkedin__brooklin__077863844421.txt         | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 0   | 1   | 1   | gradle       | DIFF
+23  | nats-io__nats.java__080900237539.txt         | Gradle  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | gradle       | OK
+24  | opentripplanner__opentripplanner__081988213338.txt | Maven   | NO_TEST_OUTPUT | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | DIFF
+25  | opentripplanner__opentripplanner__092404918995.txt | Maven   | NO_TEST_OUTPUT | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | DIFF
+26  | robo-code__robocode__084332182805.txt        | Gradle  | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | gradle       | OK
+27  | sirixdb__sirix__080642754882.txt             | pytest  | TEST_FAILURE | TEST_FAILURE | 4   | 4   | 4   | 0   | 0   | pytest       | OK
+28  | sirixdb__sirix__092352347826.txt             | Gradle  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 0   | 2   | 2   | gradle       | DIFF
+29  | spiculedata__saiku__086592116219.txt         | Maven   | NO_TEST_OUTPUT | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | DIFF
+30  | thealgorithms__java__095336925353.txt        | Maven   | NO_TEST_OUTPUT | TEST_RAN_CLEAN | 0   | 0   | 0   | 0   | 0   | none         | DIFF
+31  | unicode-org__cldr__090672967305.txt          | Maven   | TEST_FAILURE | TEST_FAILURE | 1   | 1   | 1   | 0   | 0   | maven        | OK
+32  | webauthn4j__webauthn4j__080348707704.txt     | Gradle  | TEST_FAILURE | TEST_FAILURE | 2   | 2   | 2   | 0   | 0   | gradle       | OK
+------------------------------------------------------------------------------------------------------------------------
+HOLD-OUT TOTALS & AGGREGATE METRICS:
+  Total Holdout Fixtures:      32
+  Total Expected Identifiers:  47
+  Total Extracted Identifiers: 48
+  True Positives (TP):         28
+  False Positives (FP):        20
+  False Negatives (FN):        19
+  Precision:                   0.5833 (58.33%)
+  Recall:                      0.5957 (59.57%)
+  F1 Score:                    0.5895
+  Classification Accuracy:     0.8438 (84.38%) [27/32]
+  Cross-Firing Fixtures:       0/32 (zero cross-contamination)
+------------------------------------------------------------------------------------------------------------------------
+PER-HARNESS BREAKDOWN:
+  Harness    | Fixtures | Exp IDs | Ext IDs | TP  | FP  | FN  | Precision  | Recall     | F1     | Class Acc
+  -----------+----------+---------+---------+-----+-----+-----+------------+------------+--------+----------
+  pytest     | 7        | 11      | 11      | 4   | 7   | 7   |  36.36%    |  36.36%    | 0.3636 | 100.00% (7/7)
+  Maven      | 15       | 14      | 15      | 5   | 10  | 9   |  33.33%    |  35.71%    | 0.3448 |  66.67% (10/15)
+  Gradle     | 10       | 22      | 22      | 19  | 3   | 3   |  86.36%    |  86.36%    | 0.8636 | 100.00% (10/10)
+========================================================================================================================
+
+========================================================================================================================
+DETAILED ERROR BREAKDOWN (FALSE POSITIVES & FALSE NEGATIVES)
+========================================================================================================================
+
+[3] agno-agi__agno__079305370965.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (2):  ['libs.agno.tests.unit.knowledge.chunking.test_code_chunking::test_code_chunking_cl100k_tokenizer', 'libs.agno.tests.unit.knowledge.chunking.test_code_chunking::test_code_chunking_gpt2_tokenizer']
+    Extracted (2): ['libs/agno/tests/unit/knowledge/chunking/test_code_chunking.py::test_code_chunking_cl100k_tokenizer', 'libs/agno/tests/unit/knowledge/chunking/test_code_chunking.py::test_code_chunking_gpt2_tokenizer']
+    FP (2):        ['libs/agno/tests/unit/knowledge/chunking/test_code_chunking.py::test_code_chunking_cl100k_tokenizer', 'libs/agno/tests/unit/knowledge/chunking/test_code_chunking.py::test_code_chunking_gpt2_tokenizer']
+    FN (2):        ['libs.agno.tests.unit.knowledge.chunking.test_code_chunking::test_code_chunking_cl100k_tokenizer', 'libs.agno.tests.unit.knowledge.chunking.test_code_chunking::test_code_chunking_gpt2_tokenizer']
+
+[4] agno-agi__agno__092042274925.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (1):  ['tests.integration.models.deepinfra.test_structured_response::test_structured_response_with_enum_fields']
+    Extracted (1): ['tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_with_enum_fields']
+    FP (1):        ['tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_with_enum_fields']
+    FN (1):        ['tests.integration.models.deepinfra.test_structured_response::test_structured_response_with_enum_fields']
+
+[8] apache__dolphinscheduler__092883042571.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (1):  ['testCreateDolphinDBDataSource  Time elapsed: 1::254 s  <<< ERROR!']
+    Extracted (1): ['org.apache.dolphinscheduler.e2e.cases.DolphinDBDataSourceE2ETest::testCreateDolphinDBDataSource']
+    FP (1):        ['org.apache.dolphinscheduler.e2e.cases.DolphinDBDataSourceE2ETest::testCreateDolphinDBDataSource']
+    FN (1):        ['testCreateDolphinDBDataSource  Time elapsed: 1::254 s  <<< ERROR!']
+
+[9] apache__flink__078003756269.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (1):  ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate(Path)']
+    Extracted (1): ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate']
+    FP (1):        ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate']
+    FN (1):        ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate(Path)']
+
+[10] apache__flink__079445374425.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (1):  ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate(Path)']
+    Extracted (1): ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate']
+    FP (1):        ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate']
+    FN (1):        ['org.apache.flink.docs.rest.RuntimeOpenRestAPIDocsCompletenessITCase::testRuntimeRestApiDocsUpToDate(Path)']
+
+[11] apache__hugegraph__084221602296.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (1):  ['org.apache.hugegraph.core.CoreTestSuite  Time elapsed: 2::946 s  <<< ERROR!']
+    Extracted (2): ['org.apache.hugegraph.core.CoreTestSuite::init', 'org.apache.hugegraph.core::CoreTestSuite']
+    FP (2):        ['org.apache.hugegraph.core.CoreTestSuite::init', 'org.apache.hugegraph.core::CoreTestSuite']
+    FN (1):        ['org.apache.hugegraph.core.CoreTestSuite  Time elapsed: 2::946 s  <<< ERROR!']
+
+[12] apache__hugegraph__086386091934.txt (Harness: Maven, Confidence: CERTAIN)
+    Expected (5):  ['testGetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::027 s  <<< FAILURE!', 'testSetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::227 s  <<< FAILURE!', 'testSetDefaultGraphWithGetCompatibilityReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::224 s  <<< FAILURE!', 'testUnsetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::22 s  <<< FAILURE!', 'testUnsetDefaultGraphWithGetCompatibilityReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::249 s  <<< FAILURE!']
+    Extracted (5): ['org.apache.hugegraph.api.GraphsApiStandaloneTest::testGetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testSetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testSetDefaultGraphWithGetCompatibilityReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testUnsetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testUnsetDefaultGraphWithGetCompatibilityReturnsFriendlyError']
+    FP (5):        ['org.apache.hugegraph.api.GraphsApiStandaloneTest::testGetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testSetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testSetDefaultGraphWithGetCompatibilityReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testUnsetDefaultGraphReturnsFriendlyError', 'org.apache.hugegraph.api.GraphsApiStandaloneTest::testUnsetDefaultGraphWithGetCompatibilityReturnsFriendlyError']
+    FN (5):        ['testGetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::027 s  <<< FAILURE!', 'testSetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::227 s  <<< FAILURE!', 'testSetDefaultGraphWithGetCompatibilityReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::224 s  <<< FAILURE!', 'testUnsetDefaultGraphReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::22 s  <<< FAILURE!', 'testUnsetDefaultGraphWithGetCompatibilityReturnsFriendlyError(org.apache.hugegraph.api.GraphsApiStandaloneTest)  Time elapsed: 0::249 s  <<< FAILURE!']
+
+[15] dask__distributed__084645769341.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (1):  ['distributed/tests/test_nanny.py::test_failure_during_worker_initialization']
+    Extracted (1): ['distributed/tests/test_nanny.py::test_failure_during_worker_initialization[45-100]']
+    FP (1):        ['distributed/tests/test_nanny.py::test_failure_during_worker_initialization[45-100]']
+    FN (1):        ['distributed/tests/test_nanny.py::test_failure_during_worker_initialization']
+
+[16] dask__distributed__084757793457.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (1):  ['distributed/tests/test_active_memory_manager.py::test_RetireWorker_stress']
+    Extracted (1): ['distributed/tests/test_active_memory_manager.py::test_RetireWorker_stress[False-17-100]']
+    FP (1):        ['distributed/tests/test_active_memory_manager.py::test_RetireWorker_stress[False-17-100]']
+    FN (1):        ['distributed/tests/test_active_memory_manager.py::test_RetireWorker_stress']
+
+[17] fla-org__flash-linear-attention__082566635619.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (1):  ['tests/models/test_modeling_forgetting_transformer.py::test_modeling']
+    Extracted (1): ['tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]']
+    FP (1):        ['tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]']
+    FN (1):        ['tests/models/test_modeling_forgetting_transformer.py::test_modeling']
+
+[18] fla-org__flash-linear-attention__086098926451.txt (Harness: pytest, Confidence: CERTAIN)
+    Expected (1):  ['tests/models/test_modeling_comba.py::test_generation']
+    Extracted (1): ['tests/models/test_modeling_comba.py::test_generation[L2-B4-T2000-H8-D64-torch.float16]']
+    FP (1):        ['tests/models/test_modeling_comba.py::test_generation[L2-B4-T2000-H8-D64-torch.float16]']
+    FN (1):        ['tests/models/test_modeling_comba.py::test_generation']
+
+[22] linkedin__brooklin__077863844421.txt (Harness: Gradle, Confidence: CERTAIN)
+    Expected (1):  ['com.linkedin.datastream.server.TestCoordinator::testLeaderDoAssignmentForNewlyElectedLeaderFailurePathVariation']
+    Extracted (1): ['Gradle suite::com.linkedin.datastream.server.TestCoordinator.testLeaderDoAssignmentForNewlyElectedLeaderFailurePathVariation']
+    FP (1):        ['Gradle suite::com.linkedin.datastream.server.TestCoordinator.testLeaderDoAssignmentForNewlyElectedLeaderFailurePathVariation']
+    FN (1):        ['com.linkedin.datastream.server.TestCoordinator::testLeaderDoAssignmentForNewlyElectedLeaderFailurePathVariation']
+
+[28] sirixdb__sirix__092352347826.txt (Harness: Gradle, Confidence: CERTAIN)
+    Expected (2):  ['org.sirix.index.path.summary.RegionOnlyPredicateCountTest::negationConjoinedWithAnAnchoringLeafIsRepresentable', 'org.sirix.index.path.summary.RegionOnlyPredicateCountTest::numericAndBooleanFuseIntoOnePass']
+    Extracted (2): ['RegionOnlyPredicateCountTest::negationConjoinedWithAnAnchoringLeafIsRepresentable', 'RegionOnlyPredicateCountTest::numericAndBooleanFuseIntoOnePass']
+    FP (2):        ['RegionOnlyPredicateCountTest::negationConjoinedWithAnAnchoringLeafIsRepresentable', 'RegionOnlyPredicateCountTest::numericAndBooleanFuseIntoOnePass']
+    FN (2):        ['org.sirix.index.path.summary.RegionOnlyPredicateCountTest::negationConjoinedWithAnAnchoringLeafIsRepresentable', 'org.sirix.index.path.summary.RegionOnlyPredicateCountTest::numericAndBooleanFuseIntoOnePass']
+========================================================================================================================

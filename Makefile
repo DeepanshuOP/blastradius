@@ -44,7 +44,12 @@ check-log-isolation:
 
 tables:
 	mkdir -p paper/generated
+	# Release blocker (T1.6b), and independent of every step below it, so it
+	# runs first: a gate placed behind a step that can fail is not a gate.
+	# Exits non-zero only on a credential-shaped match.
+	uv run python analysis/secret_scan.py
 	uv run python analysis/resolve_bases.py
+	uv run python analysis/fetch_base_logs.py
 	uv run python analysis/parse_base_logs.py
 	uv run python src/label/fault_revealing.py
 	uv run python analysis/fixture_score.py
@@ -52,6 +57,12 @@ tables:
 	uv run python analysis/binding_report.py
 	uv run python analysis/attrition_funnel.py
 	uv run python analysis/rq1_divergence.py
+	# The exact_green sweep itself needs PATs and runs for tens of minutes, so
+	# it is an explicit step (`uv run --env-file .env python
+	# analysis/verify_exact_green.py`), not part of `tables`. What `tables`
+	# regenerates is every NUMBER derived from its committed output.
+	uv run python analysis/verify_exact_green.py --report-only
+	uv run python analysis/corpus_delta.py
 	uv run python analysis/expiry_cliff.py
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py

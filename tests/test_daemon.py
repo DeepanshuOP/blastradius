@@ -2665,3 +2665,37 @@ def test_run_supervised_argument_resolution():
     assert res_1.stdout.strip() == "1"
 
 
+@responses.activate
+def test_capture_branch_runs_depth_bound_raises(tmp_path):
+    """Recursion depth exceeding bound of 5 during date-slice subdivision in capture_branch_runs raises RuntimeError."""
+    store = RawStore(tmp_path / "raw")
+    cursor = CursorStore(tmp_path / "cursor.db")
+    pool = _pool()
+
+    sha = "a" * 40
+    runs_data = {
+        "workflow_runs": [
+            {
+                "id": 1001,
+                "run_started_at": "2026-05-01T00:00:00Z",
+                "pull_requests": [{"base": {"ref": "main"}}],
+            }
+        ]
+    }
+    store.write_records(
+        "owner/repo", "runs", sha,
+        [RawRecord(url="seed", status=200, fetched_at="2026-05-01T00:00:00Z", etag=None, body=json.dumps(runs_data).encode())],
+    )
+
+    responses.add(
+        responses.GET, "https://api.github.com/repos/owner/repo/actions/runs",
+        json={"total_count": 1000, "workflow_runs": []}, status=200,
+    )
+
+    with pytest.raises(RuntimeError, match="recursion depth exceeded bound of 5"):
+        daemon.capture_branch_runs([("owner", "repo")], pool=pool, store=store, cursor=cursor, governor=_SpyGovernor())
+
+    cursor.close()
+
+
+

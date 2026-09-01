@@ -1,11 +1,74 @@
 import argparse
+import json
 import pandas as pd
+import requests
 import time
 import datetime
 import traceback
 import sys
 from src.harvest.rawstore import RawStore, RawRecord
 from src.harvest.ratelimit import TokenPool, get_with_backoff
+
+
+def fetch_all_jobs(repo: str, run_id: int, pool: TokenPool) -> tuple[list[dict], int, int]:
+    """Enumerate EVERY job of a workflow run, following pagination to total_count.
+
+    `per_page=100` with no page turn silently truncates any run with more than
+    100 jobs, which is exactly what a large matrix build is. Job metadata does
+    not expire, unlike job logs, so this succeeds even for runs whose logs are
+    long gone.
+
+    Args:
+        repo: Owner/name slug.
+        run_id: Workflow run id.
+        pool: Token pool; all HTTP goes through `get_with_backoff`.
+
+    Returns:
+        A `(jobs, http_status, requests_used)` triple. `jobs` is empty when the
+        first page did not return 200; `http_status` is that first response's
+        status so callers can distinguish 404/410/429 from an empty run.
+    """
+    jobs: list[dict] = []
+    page = 1
+    requests_used = 0
+    first_status = 0
+    jobs_url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/jobs"
+
+    while True:
+        try:
+            resp = get_with_backoff(
+                jobs_url,
+                params={"per_page": 100, "page": page, "filter": "latest"},
+                pool=pool,
+            )
+        except requests.HTTPError as exc:
+            # get_with_backoff RAISES on non-retryable 4xx rather than
+            # returning the response, so a `resp.status_code == 410` check
+            # after the call can never fire. Read the status off the exception.
+            requests_used += 1
+            if page == 1:
+                first_status = exc.response.status_code if exc.response is not None else 0
+            break
+        except Exception:
+            requests_used += 1
+            break
+
+        requests_used += 1
+        if page == 1:
+            first_status = resp.status_code
+        if resp.status_code != 200:
+            break
+
+        payload = json.loads(resp.text)
+        batch = payload.get("jobs", [])
+        jobs.extend(batch)
+        total = payload.get("total_count", 0)
+        if not batch or len(jobs) >= total:
+            break
+        page += 1
+
+    return jobs, first_status, requests_used
+
 
 def run(as_of: str = None, limit: int = None):
     df = pd.read_parquet('data/interim/base_resolution_new.parquet')
@@ -53,42 +116,53 @@ def run(as_of: str = None, limit: int = None):
             
         jobs_url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/jobs"
         try:
-            resp = get_with_backoff(jobs_url, params={"per_page": 100}, pool=pool)
-            stats['requests'] += 1
-            if resp.status_code == 404: stats['404'] += 1; continue
-            elif resp.status_code == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0)); continue
-            elif resp.status_code == 429: stats['429'] += 1; continue
-            
-            jobs = resp.json().get("jobs", [])
+            jobs, http_status, reqs = fetch_all_jobs(repo, int(run_id), pool)
+            stats['requests'] += reqs
+            if http_status == 404: stats['404'] += 1; continue
+            elif http_status == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0)); continue
+            elif http_status == 429: stats['429'] += 1; continue
+
             stats['jobs_fetched'] += len(jobs)
 
             if not store.exists(repo, "jobs", int(run_id)):
+                # Store the MERGED page set, not page 1, so downstream readers
+                # see every job of a >100-job matrix run.
                 rr_jobs = RawRecord(
                     url=jobs_url,
-                    status=resp.status_code,
+                    status=http_status,
                     fetched_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                    etag=resp.headers.get("etag"),
-                    body=resp.content
+                    etag=None,
+                    body=json.dumps({"total_count": len(jobs), "jobs": jobs}).encode("utf-8"),
                 )
                 store.write_records(repo, "jobs", int(run_id), [rr_jobs])
 
             for job in jobs:
-                if job.get("conclusion") != "failure":
-                    continue
-                    
+                # BASE SIDE: parse EVERY job, not only failed ones. A base run
+                # with conclusion == "success" has no failed job at all, so the
+                # old `conclusion != "failure"` filter fetched nothing for it
+                # and made NO_TEST_OUTPUT the guaranteed verdict. The head-side
+                # failure filter is correct and is deliberately not touched.
                 job_id = job["id"]
                 if store.exists(repo, "logs", int(job_id)):
                     stats['logs_fetched'] += 1
                     continue
                 
                 log_url = f"https://api.github.com/repos/{repo}/actions/jobs/{job_id}/logs"
-                log_resp = get_with_backoff(log_url, pool=pool)
+                try:
+                    log_resp = get_with_backoff(log_url, pool=pool)
+                    log_status = log_resp.status_code
+                except requests.HTTPError as exc:
+                    # See fetch_all_jobs: non-retryable 4xx raises, it does not
+                    # return. Without this the 404/410 counters below are dead
+                    # code and always report zero.
+                    log_resp = None
+                    log_status = exc.response.status_code if exc.response is not None else 0
                 stats['requests'] += 1
-                
-                if log_resp.status_code == 404: stats['404'] += 1
-                elif log_resp.status_code == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0))
-                elif log_resp.status_code == 429: stats['429'] += 1
-                elif log_resp.status_code == 200:
+
+                if log_status == 404: stats['404'] += 1
+                elif log_status == 410: stats['410'] += 1; stats['410_ages'].append(age_map.get(int(run_id), 0))
+                elif log_status == 429: stats['429'] += 1
+                elif log_status == 200:
                     rr = RawRecord(
                         url=log_url,
                         status=log_resp.status_code,
@@ -116,7 +190,7 @@ if __name__ == "__main__":
     parser.add_argument("--as-of", type=str, help="As of date")
     parser.add_argument("--limit", type=int, help="Limit number of runs")
     args = parser.parse_args()
-    run(as_of=args.as_of, limit=args.limit)
+    stats = run(as_of=args.as_of, limit=args.limit)
 
     if stats["410_ages"]:
         ages = pd.Series(stats["410_ages"])

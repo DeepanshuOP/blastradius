@@ -1,0 +1,46 @@
+﻿2026-08-24T12:36:06.3462044Z Current runner version: '2.336.0'
+2026-08-24T12:36:06.3488163Z ##[group]Runner Image Provisioner
+2026-08-24T12:36:06.3489117Z Hosted Compute Agent
+2026-08-24T12:36:06.3489833Z Version: 20260729.566
+2026-08-24T12:36:06.3490512Z Commit: cf7153fe6e25b664e8693c24944bf2b00355d109
+2026-08-24T12:36:06.3491315Z Build Date: 2026-07-29T19:17:02Z
+2026-08-24T12:36:06.3492103Z Worker ID: {44ec522b-897a-49c6-8102-58b079ae59bb}
+2026-08-24T12:36:06.3492847Z Azure Region: eastus
+2026-08-24T12:36:06.3493479Z ##[endgroup]
+2026-08-24T12:36:06.3495253Z ##[group]Operating System
+2026-08-24T12:36:06.3495988Z Ubuntu
+2026-08-24T12:36:06.3496647Z 24.04.4
+2026-08-24T12:36:06.3497206Z LTS
+2026-08-24T12:36:06.3497978Z ##[endgroup]
+2026-08-24T12:36:06.3498605Z ##[group]Runner Image
+2026-08-24T12:36:06.3499261Z Image: ubuntu-24.04
+2026-08-24T12:36:06.3499926Z Version: 20260816.277.1
+2026-08-24T12:36:06.3501241Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260816.277/images/ubuntu/Ubuntu2404-Readme.md
+2026-08-24T12:36:06.3502879Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260816.277
+2026-08-24T12:36:06.3503910Z ##[endgroup]
+2026-08-24T12:36:06.3505274Z ##[group]GITHUB_TOKEN Permissions
+2026-08-24T12:36:06.3507543Z Contents: read
+2026-08-24T12:36:06.3508457Z Metadata: read
+2026-08-24T12:36:06.3509110Z Packages: read
+2026-08-24T12:36:06.3509804Z ##[endgroup]
+2026-08-24T12:36:06.3512218Z Secret source: Actions
+2026-08-24T12:36:06.3513628Z Prepare workflow directory
+2026-08-24T12:36:06.3840607Z Prepare all required actions
+2026-08-24T12:36:06.3946866Z Complete job name: Lint PR Title and Body
+2026-08-24T12:36:06.4715739Z ##[group]Run TITLE_LOWER=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]')
+2026-08-24T12:36:06.4717028Z [36;1mTITLE_LOWER=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]')[0m
+2026-08-24T12:36:06.4719247Z [36;1mREGEX='^(\[(feat|fix|cookbook|test|refactor|chore|style|revert|release)\][[:space:]]+.+|(feat|fix|cookbook|test|refactor|chore|style|revert|release):[[:space:]]+.+|(feat|fix|cookbook|test|refactor|chore|style|revert|release)-[a-z0-9-]+)$'[0m
+2026-08-24T12:36:06.4721054Z [36;1m[0m
+2026-08-24T12:36:06.4721783Z [36;1mif [[ "$TITLE_LOWER" =~ $REGEX ]]; then[0m
+2026-08-24T12:36:06.4722574Z [36;1m  echo "✅ PR Title format is valid."[0m
+2026-08-24T12:36:06.4723321Z [36;1melse[0m
+2026-08-24T12:36:06.4724053Z [36;1m  echo "❌ PR Title '$TITLE' does not match the required format."[0m
+2026-08-24T12:36:06.4725123Z [36;1m  echo "   Use one of: [feat] title, feat: title, or feat-some-title"[0m
+2026-08-24T12:36:06.4725999Z [36;1m  exit 1[0m
+2026-08-24T12:36:06.4726681Z [36;1mfi[0m
+2026-08-24T12:36:06.5296801Z shell: /usr/bin/bash -e {0}
+2026-08-24T12:36:06.5297646Z env:
+2026-08-24T12:36:06.5298311Z   TITLE: feat: v3.0
+2026-08-24T12:36:06.5298795Z ##[endgroup]
+2026-08-24T12:36:06.5648510Z ✅ PR Title format is valid.
+2026-08-24T12:36:06.5795592Z Cleaning up orphan processes

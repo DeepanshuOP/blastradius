@@ -43,8 +43,11 @@ def run(as_of: str = None, limit: int = None):
             continue
             
         for job in jobs:
-            if job.get("conclusion") != "failure":
-                continue
+            # BASE SIDE: parse EVERY job of the base run and union the results
+            # per D-12. Filtering to conclusion == "failure" here made every
+            # `exact_green` base (whose jobs are all "success") parse to zero
+            # jobs and therefore NO_TEST_OUTPUT by construction. The head-side
+            # failure filter is correct and is deliberately not touched.
             job_id = job["id"]
             
             try:

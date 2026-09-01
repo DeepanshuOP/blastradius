@@ -4,6 +4,16 @@ from typing import Any, Sequence
 from dataclasses import dataclass
 from src.harvest.rawstore import RawStore, DEFAULT_ROOT
 
+#: `base_parse_status` values that constitute observed evidence of a green
+#: base: a base log was read and tests were seen to run with none failing.
+#: Nothing else may produce `exact_green`.
+GREEN_VERDICTS = frozenset({"green_verified", "green_verified_partial"})
+
+#: A base whose log was read and did contain a failing test. The base was never
+#: green, so this resolves to `exact`/`ancestor`, not to `exact_green`.
+FAILED_VERDICT = "base_failed"
+
+
 @dataclass
 class BaseResolution:
     base_sha: str | None
@@ -11,10 +21,24 @@ class BaseResolution:
     base_run_distance: int | None
     status: str
     base_time_gap_seconds: float | None = None
+    base_parse_status: str | None = None
+    base_jobs_total: int | None = None
+    base_jobs_retrieved: int | None = None
 
     def __post_init__(self) -> None:
         if self.status not in ("exact", "exact_green", "ancestor", "branch_prior", "no_base"):
             raise ValueError(f"invalid resolution status {self.status!r}")
+        # Integrity invariant 6, enforced in the type rather than by convention.
+        # `conclusion == "success"` is metadata about the RUN, not evidence
+        # about its TESTS: a run that executed a linter and no tests concludes
+        # success and is not a green base. `exact_green` therefore requires a
+        # parsed base log in which tests were observed.
+        if self.status == "exact_green" and self.base_parse_status not in GREEN_VERDICTS:
+            raise ValueError(
+                "status 'exact_green' requires base_parse_status in "
+                f"{sorted(GREEN_VERDICTS)}; got {self.base_parse_status!r}. "
+                "A run conclusion alone is never sufficient."
+            )
         if self.status == "no_base" and self.base_run_id is not None:
             raise ValueError("base_run_id must be None when status is 'no_base'")
         if self.status == "no_base" and self.base_run_distance is not None:
@@ -177,6 +201,104 @@ def _get_head_info(repo, head_sha, run_id, store, runs_cache):
             return r
     return None
 
+def _resolve_successful_base(
+    repo: str,
+    base_sha: str | None,
+    base_run_id: int,
+    base_run_distance: int | None,
+    failed_status: str,
+    base_verdicts: dict[tuple[str, int], dict] | None,
+) -> BaseResolution:
+    """Resolve a base run whose `conclusion` is "success", using log evidence.
+
+    A successful run is not a green base. It is a green base only if its logs
+    were read and tests were observed to run without failing. Anything else —
+    tests never ran, logs expired, or the run was never verified at all —
+    resolves to `no_base` and emits no labels, per integrity invariant 6.
+
+    Args:
+        repo: Owner/name slug.
+        base_sha: Base commit SHA, if known.
+        base_run_id: The successful base run.
+        base_run_distance: Ancestor hops, or None for a branch-prior match.
+        failed_status: Status to use when the base is verified to have failed
+            ("exact", "ancestor" or "branch_prior" as the caller determined).
+        base_verdicts: Mapping of (repo, base_run_id) to the verification row
+            produced by `analysis/verify_exact_green.py`. None means nothing
+            has been verified, so every successful base demotes.
+
+    Returns:
+        The resolution, always carrying `base_parse_status`.
+    """
+    verdict = (base_verdicts or {}).get((repo, int(base_run_id)))
+    parse_status = (verdict or {}).get("base_parse_status", "unverified")
+    jobs_total = (verdict or {}).get("base_jobs_total")
+    jobs_retrieved = (verdict or {}).get("base_jobs_retrieved")
+
+    if parse_status in GREEN_VERDICTS:
+        return BaseResolution(
+            base_sha=base_sha,
+            base_run_id=base_run_id,
+            base_run_distance=base_run_distance,
+            status="exact_green",
+            base_parse_status=parse_status,
+            base_jobs_total=jobs_total,
+            base_jobs_retrieved=jobs_retrieved,
+        )
+
+    if parse_status == FAILED_VERDICT:
+        return BaseResolution(
+            base_sha=base_sha,
+            base_run_id=base_run_id,
+            base_run_distance=base_run_distance,
+            status=failed_status,
+            base_parse_status=parse_status,
+            base_jobs_total=jobs_total,
+            base_jobs_retrieved=jobs_retrieved,
+        )
+
+    # no_tests_confirmed, no_tests_unverifiable, unretrievable, not_processed,
+    # or never verified at all. All emit nothing.
+    return BaseResolution(
+        base_sha=base_sha,
+        base_run_id=None,
+        base_run_distance=None,
+        status="no_base",
+        base_parse_status=parse_status,
+        base_jobs_total=jobs_total,
+        base_jobs_retrieved=jobs_retrieved,
+    )
+
+
+def load_base_verdicts(
+    path: str = "data/interim/exact_green_verification.parquet",
+) -> dict[tuple[str, int], dict]:
+    """Load verified base-run verdicts, keyed by (repo, base_run_id).
+
+    Args:
+        path: Parquet written by `analysis/verify_exact_green.py`.
+
+    Returns:
+        Mapping used by :func:`resolve_base_run`. Empty when the file is absent,
+        which correctly demotes every successful base rather than trusting one.
+    """
+    import pandas as pd
+
+    try:
+        df = pd.read_parquet(path)
+    except (FileNotFoundError, OSError):
+        return {}
+
+    out: dict[tuple[str, int], dict] = {}
+    for r in df.drop_duplicates(subset=["repo", "base_run_id"]).itertuples():
+        out[(r.repo, int(r.base_run_id))] = {
+            "base_parse_status": r.base_parse_status,
+            "base_jobs_total": int(r.base_jobs_total),
+            "base_jobs_retrieved": int(r.base_jobs_retrieved),
+        }
+    return out
+
+
 def resolve_base_run(
     repo: str,
     head_sha: str,
@@ -191,6 +313,7 @@ def resolve_base_run(
     runs_cache: dict[tuple[str, str], list[dict]] | None = None,
     max_ancestor_distance: int = 10,
     branch_prior_index: dict[str, list[dict]] | None = None, # repo -> sorted list of runs
+    base_verdicts: dict[tuple[str, int], dict] | None = None,
 ) -> BaseResolution:
     if store is None:
         store = RawStore(raw_root)
@@ -234,18 +357,23 @@ def resolve_base_run(
             if anc_matches:
                 best_anc_run = max(anc_matches, key=lambda r: r.get("run_started_at") or r.get("created_at") or "")
                 conclusion = best_anc_run.get("conclusion")
-                
-                # Check for exact vs ancestor
+                base_run_id = int(best_anc_run["id"])
+
                 if conclusion == "success":
-                    status = "exact_green"
-                else:
-                    status = "exact" if dist == 0 else "ancestor"
-                    
+                    return _resolve_successful_base(
+                        repo=repo,
+                        base_sha=curr_sha,
+                        base_run_id=base_run_id,
+                        base_run_distance=dist,
+                        failed_status="exact" if dist == 0 else "ancestor",
+                        base_verdicts=base_verdicts,
+                    )
+
                 return BaseResolution(
                     base_sha=curr_sha,
-                    base_run_id=int(best_anc_run["id"]),
+                    base_run_id=base_run_id,
                     base_run_distance=dist,
-                    status=status
+                    status="exact" if dist == 0 else "ancestor",
                 )
                 
             parents = commit_graph.get(curr_sha, [])
@@ -283,13 +411,25 @@ def resolve_base_run(
                 
                 # Found it!
                 conclusion = r.get("conclusion")
-                status = "exact_green" if conclusion == "success" else "branch_prior"
+                if conclusion == "success":
+                    res = _resolve_successful_base(
+                        repo=repo,
+                        base_sha=r.get("head_sha"),
+                        base_run_id=int(r["id"]),
+                        base_run_distance=None,
+                        failed_status="branch_prior",
+                        base_verdicts=base_verdicts,
+                    )
+                    if res.status != "no_base":
+                        res.base_time_gap_seconds = head_ts - r["_ts"]
+                    return res
+
                 return BaseResolution(
                     base_sha=r.get("head_sha"),
                     base_run_id=int(r["id"]),
                     base_run_distance=None,
-                    status=status,
-                    base_time_gap_seconds=head_ts - r["_ts"]
+                    status="branch_prior",
+                    base_time_gap_seconds=head_ts - r["_ts"],
                 )
 
     return BaseResolution(base_sha=base_sha, base_run_id=None, base_run_distance=None, status="no_base")
