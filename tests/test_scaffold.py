@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from tests.conftest import requires_data
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -36,6 +37,7 @@ def test_python_version() -> None:
     assert sys.version_info[:2] == (3, 11)
 
 
+@requires_data("data/interim")
 def test_layout_exists() -> None:
     for rel_dir in EXPECTED_DIRS:
         assert (REPO_ROOT / rel_dir).is_dir(), f"missing directory: {rel_dir}"

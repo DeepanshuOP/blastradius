@@ -2,6 +2,10 @@ import pytest
 from pathlib import Path
 from src.parse.test_ids import TestId
 from src.parse.test_files import resolve_test_file
+from tests.conftest import requires_data
+
+pytestmark = requires_data("data/clones")
+
 
 # PREDICT: 6 tests will pass. Total suite: whatever is currently there + 6. (Actually wait, let me run `pytest` first to see current test count).
 

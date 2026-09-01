@@ -1,6 +1,7 @@
 import pytest
 import pandas as pd
 from src.label.fault_revealing import compute_labels
+from pathlib import Path
 
 def test_no_base_omitted():
     # 25441351692 is a no_base run.
@@ -35,6 +36,24 @@ def test_exact_green_included():
 
 @pytest.fixture(scope="module")
 def real_data():
+    """Real pipeline frames. Skips, never fails, when data/ is absent.
+
+    A mark cannot be applied to a fixture, so the skip is raised from inside it
+    and names the missing files, per docs/DATA_DEPENDENCIES.md.
+    """
+    needed = [
+        "data/interim/base_resolution_new.parquet",
+        "data/interim/instances_raw.parquet",
+        "data/interim/parsed_outcomes.parquet",
+        "data/interim/base_outcomes.parquet",
+    ]
+    missing = [n for n in needed if not Path(n).exists()]
+    if missing:
+        pytest.skip(
+            "needs unshippable data, missing: "
+            + ", ".join(missing)
+            + " — see docs/DATA_DEPENDENCIES.md"
+        )
     res = pd.read_parquet('data/interim/base_resolution_new.parquet')
     instances = pd.read_parquet('data/interim/instances_raw.parquet')
     head = pd.read_parquet('data/interim/parsed_outcomes.parquet')

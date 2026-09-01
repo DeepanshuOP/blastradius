@@ -92,6 +92,25 @@ repository root, you have broken this rule. This rule already existed and was
 violated anyway: forty untracked files accumulated at the root in four days,
 several of them load-bearing.
 
+### A zero is not evidence until the counter has been seen to increment
+A counter reading zero proves nothing until you have watched that same counter
+go non-zero at least once. Otherwise you are reporting the shape of your code,
+not the shape of the data.
+
+Three defects in a single week produced zeros by construction:
+
+- `created` in the URL while `params=None` was passed — the filter never
+  reached the API, so the date slice "found nothing".
+- The base-side `conclusion != "failure"` filter parsed zero jobs for every
+  `exact_green` base, making `NO_TEST_OUTPUT` its guaranteed verdict.
+- A 410 counter sitting behind `if resp.status_code == 410`, which
+  `get_with_backoff()` can never reach because it *raises* on non-retryable 4xx.
+
+Before you report a zero, prove the code path that would make it non-zero is
+reachable: force it with a crafted input, a fixture, or a single hand-checked
+case, and show the counter move. "We found no secrets", "no base ran tests",
+"no runs matched" and "no errors occurred" are all claims that need this.
+
 ### One task, one deliverable
 One task, one deliverable, one file (or one tightly-coupled pair). If a task
 cannot be stated in one sentence with one pass/fail condition, STOP and say it

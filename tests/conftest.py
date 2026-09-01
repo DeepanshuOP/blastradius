@@ -10,12 +10,41 @@ ones through frame.py's fetch functions (test_frame.py) with no changes to
 either module's call sites.
 """
 
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 
 import src.harvest.frame as frame
 import src.harvest.ratelimit as ratelimit
+
+
+def requires_data(*paths: str):
+    """Skip a test whose inputs live in unshippable `data/`.
+
+    `data/raw` cannot be regenerated — GitHub Actions logs expire at 90 days —
+    so a fresh clone legitimately cannot run these tests. They must SKIP, with
+    the missing path named, never FAIL: a wall of red on `make test` teaches a
+    new contributor to ignore red, which is how a real failure gets missed.
+
+    The condition is evaluated at import, so the reason names the exact files
+    that were absent rather than the whole list.
+
+    Args:
+        *paths: Repository-relative paths the test needs, file or directory.
+
+    Returns:
+        A `pytest.mark.skipif` marker; inert when every path is present.
+    """
+    missing = [p for p in paths if not Path(p).exists()]
+    return pytest.mark.skipif(
+        bool(missing),
+        reason=(
+            "needs unshippable data, missing: "
+            + ", ".join(missing)
+            + " — see docs/DATA_DEPENDENCIES.md"
+        ),
+    )
 
 
 @pytest.fixture(autouse=True)

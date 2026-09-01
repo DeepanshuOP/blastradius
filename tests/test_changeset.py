@@ -1,5 +1,9 @@
 from pathlib import Path
 from src.parse.changeset import extract_changeset
+from tests.conftest import requires_data
+
+pytestmark = requires_data("data/raw")
+
 
 def test_extract_changeset():
     # Decentralized identity PR 577

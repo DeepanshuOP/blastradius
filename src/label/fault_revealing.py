@@ -11,16 +11,26 @@ def compute_labels(res_df, instances_df, head_parsed, base_parsed):
     base_fail = base_parsed.groupby(['run_id', 'test_id']).size().reset_index(name='n_legs_base')
     
     runs_with_base_outcomes = set(base_parsed['run_id'].unique())
-    
+
+    # Inclusion criterion: the HEAD run must have executed tests. A run that
+    # parsed to NO_TEST_OUTPUT cannot yield a fault-revealing label, so it is
+    # excluded from the corpus rather than labelled. This is a corpus-inclusion
+    # rule, distinct from invariant 6, which governs the BASE side.
+    runs_with_head_outcomes = set(head_parsed['run_id'].unique())
+
     valid_runs = []
     no_output_count = 0
-    
+    head_no_tests_count = 0
+
     # Invariant 6: status == 'no_base' -> emit NO labels.
-    
+
     for _, row in res_df.iterrows():
         r_id = row['run_id']
         status = row['status']
         if status == 'no_base':
+            continue
+        if r_id not in runs_with_head_outcomes:
+            head_no_tests_count += 1
             continue
         elif status == 'exact_green':
             valid_runs.append(r_id)
@@ -86,6 +96,7 @@ def compute_labels(res_df, instances_df, head_parsed, base_parsed):
     outcomes = pd.concat([all_labels, relaxed_labels, strict_labels])
     
     return outcomes, {
+        "head_no_tests_count": head_no_tests_count,
         "no_output_count": no_output_count,
         "flip_count": flip_count,
         "flip_rate": flip_rate,

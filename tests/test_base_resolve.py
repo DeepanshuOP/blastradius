@@ -13,8 +13,10 @@ from src.label.base_resolve import (
     build_commit_graph,
     resolve_base_run,
 )
+from tests.conftest import requires_data
 
 
+@requires_data("data/raw")
 def test_base_resolve_exact_real_payload() -> None:
     """Test exact base run resolution against real raw payloads in data/raw.
 
@@ -59,6 +61,7 @@ def test_base_resolve_exact_real_payload() -> None:
     assert res.require_base_run_id() == 30538725876
 
 
+@requires_data("data/raw", "data/clones")
 def test_base_resolve_ancestor_real_payload() -> None:
     """Test ancestor base run resolution with 3-hop distance against real raw data.
 
