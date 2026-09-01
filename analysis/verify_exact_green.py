@@ -27,13 +27,23 @@ green_verified_partial       exact_green         some jobs 410, tests ran in wha
 base_failed                  exact               a test failed: the base was never green
 no_tests_confirmed           no_base             every job retrieved, zero tests anywhere
 no_tests_unverifiable        no_base             some jobs 410, zero tests in what was read
-unretrievable                no_base             no job log could be read at all
+unretrievable                no_base             every job log was fetched; none readable
+inferred_expired             no_base             ONE probed job log 410'd; rest INFERRED expired
+oversize_unread              no_base             log(s) exceeded the 15 MB ceiling: retrievable but unread
 not_processed                exact_green         time budget expired before this run
 ===========================  ==================  =====================================
 
-`no_tests_confirmed` and the two unverifiable statuses all demote per invariant
-6, but they are different epistemic claims and must never be summed into one
+`no_tests_confirmed` and the unverifiable statuses all demote per invariant 6,
+but they are different epistemic claims and must never be summed into one
 number. The datasheet reports them separately.
+
+`inferred_expired` is kept apart from `unretrievable` for the same reason. It
+rests on log retention being per-RUN, not per-job — measured before use over 33
+qualifying runs drawn at three disjoint offsets (32 all-410, 1 410+404, **0
+mixed**), including four 27-job apache/beam runs whose logs expired together.
+`classify_retention` is unit-tested to prove the MIXED branch is reachable, so
+that zero is measured rather than structural. It is still an inference, and it
+is labelled as one in the data.
 
 Importing this module has no side effects. Run it with::
 
@@ -72,6 +82,8 @@ STATUS_TO_NEW_STATUS = {
     "no_tests_confirmed": "no_base",
     "no_tests_unverifiable": "no_base",
     "unretrievable": "no_base",
+    "inferred_expired": "no_base",
+    "oversize_unread": "no_base",
     "not_processed": "exact_green",
 }
 
@@ -175,7 +187,33 @@ def classify_base_run(
             ],
         )
 
+    # Probe-then-infer: if the FIRST job log has expired, every log of the run
+    # has (measured: per-run retention, 33/33 runs, 0 mixed). Recorded as
+    # `inferred_expired`, never as the measured `unretrievable`.
+    if len(jobs) > 1 and not store.exists(repo, "logs", int(jobs[0]["id"])):
+        probe_url = f"https://api.github.com/repos/{repo}/actions/jobs/{int(jobs[0]['id'])}/logs"
+        probe_status = None
+        try:
+            probe_resp = get_with_backoff(probe_url, pool=pool)
+            probe_status = probe_resp.status_code
+        except requests.HTTPError as exc:
+            probe_status = exc.response.status_code if exc.response is not None else 0
+        except Exception:
+            probe_status = None
+        stats["requests"] += 1
+        if probe_status == 410:
+            stats["inferred_expired_runs"] = stats.get("inferred_expired_runs", 0) + 1
+            stats["inferred_expired_jobs_skipped"] = (
+                stats.get("inferred_expired_jobs_skipped", 0) + len(jobs) - 1
+            )
+            return {
+                "base_parse_status": "inferred_expired",
+                "base_jobs_total": len(jobs),
+                "base_jobs_retrieved": 0,
+            }
+
     retrieved = 0
+    oversize = 0
     saw_tests = False
     saw_failure = False
 
@@ -210,6 +248,9 @@ def classify_base_run(
                 key = f"err_{type(exc).__name__}"
                 stats[key] = stats.get(key, 0) + 1
                 stats["err"] += 1
+                if type(exc).__name__ == "ByteCeilingExceeded":
+                    # Retrievable but unread: neither expired nor measured.
+                    oversize += 1
                 continue
             stats["requests"] += 1
             stats[f"log_{log_status}"] = stats.get(f"log_{log_status}", 0) + 1
@@ -249,10 +290,16 @@ def classify_base_run(
 
     complete = retrieved == len(jobs)
 
+    unread = len(jobs) - retrieved
+
     if saw_failure:
         status = "base_failed"
     elif saw_tests:
         status = "green_verified" if complete else "green_verified_partial"
+    elif unread > 0 and oversize == unread:
+        # Every unread job was over the 15 MB ceiling, not expired. We declined
+        # to hold those bytes; that is our limit, not GitHub's retention.
+        status = "oversize_unread"
     elif retrieved == 0:
         status = "unretrievable"
     elif complete:
@@ -298,6 +345,42 @@ def load_checkpoint(out_parquet: str | None) -> dict[tuple[str, int], dict[str, 
     return verdicts
 
 
+def sample_unswept_java(
+    runs: pd.DataFrame,
+    verified_keys: set[tuple[str, int]],
+    n: int,
+    seed: int,
+) -> pd.DataFrame:
+    """Draw a RANDOM sample of not-yet-verified Java base runs.
+
+    Checkpoint order is not random — it is repo- and id-sorted, so extending the
+    sweep by taking the next N biases the sample toward whatever that ordering
+    favours (in practice, `apache/beam`). Sampling instead makes the Java arm an
+    estimate with a defensible confidence interval.
+
+    Args:
+        runs: Ordered base-run frame from :func:`order_base_runs`.
+        verified_keys: (repo, base_run_id) pairs already verified.
+        n: Number of unswept Java runs to draw.
+        seed: RNG seed, stated in the report so the draw is reproducible.
+
+    Returns:
+        The sampled rows, plus every already-verified run so resumption still
+        skips them.
+    """
+    java = runs[runs["language"] == "Java"].copy()
+    unswept = java[
+        ~java.apply(lambda r: (r["repo"], int(r["base_run_id"])) in verified_keys, axis=1)
+    ]
+    take = min(n, len(unswept))
+    drawn = unswept.sample(n=take, random_state=seed)
+    print(f"random sample: {take} of {len(unswept)} unswept Java base runs (seed={seed})")
+    already = runs[
+        runs.apply(lambda r: (r["repo"], int(r["base_run_id"])) in verified_keys, axis=1)
+    ]
+    return pd.concat([already, drawn], ignore_index=True)
+
+
 def run(
     as_of: str | None = None,
     limit: int | None = None,
@@ -305,6 +388,8 @@ def run(
     time_budget_s: float = DEFAULT_TIME_BUDGET_S,
     out_parquet: str | None = DEFAULT_OUT,
     resume: bool = True,
+    sample_java: int | None = None,
+    seed: int = 20260901,
     pool: TokenPool | None = None,
     store: RawStore | None = None,
 ) -> pd.DataFrame:
@@ -317,6 +402,9 @@ def run(
         time_budget_s: Wall-clock cap. Unprocessed runs are reported, never guessed.
         out_parquet: Destination parquet, or None to skip writing.
         resume: Skip base runs already verified in `out_parquet`.
+        sample_java: Draw this many unswept Java runs at random instead of
+            continuing in checkpoint order.
+        seed: RNG seed for that draw.
         pool: Token pool; built from the environment when omitted.
         store: Raw store; a default one is built when omitted.
 
@@ -325,6 +413,11 @@ def run(
     """
     eg = load_exact_green_instances()
     runs = order_base_runs(eg, python_first=python_first)
+
+    if sample_java:
+        prior = load_checkpoint(out_parquet) if resume else {}
+        runs = sample_unswept_java(runs, set(prior), sample_java, seed)
+
     if limit is not None:
         runs = runs.head(limit)
 
@@ -488,7 +581,9 @@ def report(path: str = DEFAULT_OUT) -> pd.DataFrame:
         ("base_failed", "retrievable + TEST_FAILURE", "reclassify as `exact`"),
         ("no_tests_confirmed", "retrievable(all jobs) + NO_TEST_OUTPUT", "demote, CONFIRMED test-free"),
         ("no_tests_unverifiable", "partial + no tests in retrieved legs", "demote, UNVERIFIABLE"),
-        ("unretrievable", "all jobs 410", "demote, UNVERIFIABLE"),
+        ("unretrievable", "all jobs 410 (every job fetched)", "demote, UNVERIFIABLE"),
+        ("inferred_expired", "probe 410 -> rest INFERRED expired", "demote, INFERRED"),
+        ("oversize_unread", "log over 15 MB ceiling: unread, not expired", "demote, UNREAD"),
     ]
     counts = verified["base_parse_status"].value_counts().to_dict()
     for key, label, consequence in order:
@@ -496,11 +591,13 @@ def report(path: str = DEFAULT_OUT) -> pd.DataFrame:
         pct = f"{n/n_ver:.1%}" if n_ver else "n/a"
         print(f"  {label:<42} {n} / {n_ver} ({pct:>6})  -> {consequence}")
 
-    confirmed = sum(counts.get(k, 0) for k in ("no_tests_confirmed",))
+    confirmed = counts.get("no_tests_confirmed", 0)
     unverifiable = sum(counts.get(k, 0) for k in ("no_tests_unverifiable", "unretrievable"))
+    inferred = counts.get("inferred_expired", 0)
     print(f"\n  demotions, CONFIRMED test-free:       {confirmed} / {n_ver}")
-    print(f"  demotions, UNVERIFIABLE:              {unverifiable} / {n_ver}")
-    print("  (never summed: different epistemic claims)")
+    print(f"  demotions, UNVERIFIABLE (measured):   {unverifiable} / {n_ver}")
+    print(f"  demotions, INFERRED expired:          {inferred} / {n_ver}")
+    print("  (never summed: three different epistemic claims)")
 
     print("\n-- 410 exposure, both bases --")
     ur_inst = counts.get("unretrievable", 0)
@@ -555,6 +652,120 @@ def report(path: str = DEFAULT_OUT) -> pd.DataFrame:
     return verified
 
 
+def classify_retention(statuses: list[int]) -> str | None:
+    """Classify one run's per-job log HTTP statuses for the retention probe.
+
+    Pure and separately tested, so the "0 MIXED" result the probe reports is a
+    measured zero rather than an unreachable branch — see the zero-is-not-
+    evidence rule in `docs/AGENT_RULES.md`.
+
+    Args:
+        statuses: HTTP status per job log of a single run.
+
+    Returns:
+        ``None`` if the run does not qualify (no 410 present), else
+        ``"all_410"``, ``"expired_404"``, or ``"MIXED"``. MIXED means a readable
+        log survived alongside an expired one, which makes one-probe inference
+        unsound.
+    """
+    if 410 not in statuses:
+        return None
+    if all(s == 410 for s in statuses):
+        return "all_410"
+    if 200 in statuses:
+        return "MIXED"
+    return "expired_404"
+
+
+def probe_retention(sample: int = 30, language: str = "Java", offset: int = 0) -> dict[str, Any]:
+    """Test whether GitHub Actions log expiry is per-RUN or per-JOB.
+
+    The probe-then-infer optimisation rests on the claim that if one job log of
+    a run has expired, all of them have. That claim is load-bearing — it would
+    let one request stand in for eleven — so it is measured, not assumed.
+
+    Samples base runs until `sample` of them have at least one job log return
+    410, fetching EVERY job log of each. A run is classified:
+
+    * ``all_410``      — every job returned 410. Inference safe.
+    * ``expired_404``  — 410s plus 404s, no 200. Still unreadable; the 404 root
+      cause is a separate known defect.
+    * ``MIXED``        — at least one 410 AND at least one 200. **The inference
+      is unsound if this is non-zero**: a readable job survived alongside an
+      expired one, so one probe cannot speak for the run.
+
+    Args:
+        sample: Number of qualifying runs to collect.
+        language: Language arm to sample from.
+        offset: Skip this many candidate runs first, so successive calls draw
+            disjoint samples instead of re-probing the same prefix.
+
+    Returns:
+        Counts per class plus the qualifying-run total.
+    """
+    eg = load_exact_green_instances()
+    runs = order_base_runs(eg, python_first=False)
+    inst = pd.read_parquet("data/interim/instances_raw.parquet")
+    inst = inst.drop_duplicates("run_id")[["run_id", "repo", "language"]]
+    runs = runs[runs["language"] == language].iloc[offset:]
+
+    pool = TokenPool.from_env()
+    store = RawStore()
+
+    classes = {"all_410": 0, "expired_404": 0, "MIXED": 0}
+    mixed_examples: list[str] = []
+    qualifying = 0
+    scanned = 0
+
+    for row in runs.itertuples():
+        if qualifying >= sample:
+            break
+        scanned += 1
+        jobs, http_status, _ = fetch_all_jobs(row.repo, int(row.base_run_id), pool)
+        if http_status != 200 or not jobs:
+            continue
+
+        statuses: list[int] = []
+        for job in jobs:
+            job_id = int(job["id"])
+            url = f"https://api.github.com/repos/{row.repo}/actions/jobs/{job_id}/logs"
+            try:
+                resp = get_with_backoff(url, pool=pool)
+                statuses.append(resp.status_code)
+            except requests.HTTPError as exc:
+                statuses.append(exc.response.status_code if exc.response is not None else 0)
+            except Exception:
+                statuses.append(0)
+
+        cls = classify_retention(statuses)
+        if cls is None:
+            continue
+
+        qualifying += 1
+        classes[cls] += 1
+        if cls == "MIXED":
+            mixed_examples.append(f"{row.repo} run {row.base_run_id}: {statuses}")
+
+        print(
+            f"[{qualifying}/{sample}] {row.repo} run {row.base_run_id}: "
+            f"{len(jobs)} jobs, statuses={sorted(set(statuses))}"
+        )
+
+    print("\n--- PER-RUN LOG RETENTION PROBE ---")
+    print(f"runs scanned to find qualifying ones: {scanned}")
+    print(f"qualifying runs (>=1 job log 410):    {qualifying}")
+    for k in ("all_410", "expired_404", "MIXED"):
+        print(f"  {k:<14} {classes[k]} / {qualifying}")
+    if classes["MIXED"]:
+        print("\nINFERENCE UNSOUND — mixed runs found:")
+        for e in mixed_examples[:10]:
+            print(f"  {e}")
+    else:
+        print("\nInference SAFE on this sample: no run mixed an expired log with a readable one.")
+
+    return {"qualifying": qualifying, "scanned": scanned, **classes}
+
+
 def main() -> None:
     """CLI entry point."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -577,10 +788,35 @@ def main() -> None:
         action="store_true",
         help="Print the buckets from an existing --out; issue no HTTP requests",
     )
+    parser.add_argument(
+        "--probe-retention",
+        type=int,
+        metavar="N",
+        help="Test whether log expiry is per-run: sample N runs with >=1 410 job log",
+    )
+    parser.add_argument(
+        "--sample-java",
+        type=int,
+        metavar="N",
+        help="Randomly sample N unswept Java base runs instead of checkpoint order",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=20260901, help="RNG seed for --sample-java"
+    )
+    parser.add_argument(
+        "--probe-offset",
+        type=int,
+        default=0,
+        help="Skip this many candidate runs, for a disjoint follow-up sample",
+    )
     args = parser.parse_args()
 
     if args.report_only:
         report(args.out)
+        return
+
+    if args.probe_retention:
+        probe_retention(sample=args.probe_retention, offset=args.probe_offset)
         return
 
     run(
@@ -589,6 +825,8 @@ def main() -> None:
         time_budget_s=args.time_budget_s,
         out_parquet=args.out,
         resume=not args.no_resume,
+        sample_java=args.sample_java,
+        seed=args.seed,
     )
 
 
