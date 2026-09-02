@@ -7,14 +7,14 @@ What each `make tables` target needs, and what a fresh clone can actually do.
 `uv sync`, and running each target, at commit `39839fd`. Re-verify it the same
 way rather than trusting this page.
 
-Nothing under `data/` is tracked in git.
+**Tracked data files:** `data/frame/` contains 9 tracked files in git (including `frame_v1.csv`, `ATTRITION.json`, etc.), and `data/interim/` contains 3 tracked PIN files (`COCHANGE_PIN.json`, `CORPUS_PIN.json`, `INSTANCES_PIN.json`). All raw logs and generated parquet datasets under `data/` are untracked.
 
 ## `data/raw` cannot be regenerated. Ever.
 
 **GitHub Actions job logs expire 90 days after the run.** Much of this corpus is
 already past that at source, so re-running the harvester today would not
 reproduce `data/raw` — it would produce a strictly smaller, different corpus.
-The 4.6 GB snapshot is irreplaceable and must be transferred, not rebuilt. The
+The 4.9 GB snapshot (supersedes 4.6 GB) is irreplaceable and must be transferred, not rebuilt. The
 same is true of `data/state/cursor.db` (131 MB), which `--as-of` reproduction
 needs.
 
@@ -27,11 +27,12 @@ permanently unverifiable share, and no future work closes it.
 
 | Path | Size | In git | Regenerable | Action |
 |---|---:|---|---|---|
-| `data/raw/` | 4.6 GB | No | **NO — 90-day expiry** | Transfer |
+| `data/raw/` | 4.9 GB | No | **NO — 90-day expiry** | Transfer (supersedes 4.6 GB) |
 | `data/state/cursor.db` | 131 MB | No | No | Transfer; `--as-of` needs it |
-| `data/interim/*.parquet` | ~31 MB | No | Yes, slowly, from `data/raw` | Transfer anyway |
+| `data/interim/*.parquet` | 33 MB | No (3 PIN files tracked) | Yes, slowly, from `data/raw` | Transfer anyway (supersedes ~31 MB) |
+| `vendor/graphify-br/` | 34 MB | **Yes** (flat tree) | Yes (from upstream `safishamsi/graphify`) | Nothing (vendored in repo) |
 | `data/clones/` | 1.7 GB | No | Yes (`git clone --filter=blob:none`) | Re-clone |
-| `data/frame/frame_v1.csv` | small | **Yes** | Frozen under T0.8 | Nothing |
+| `data/frame/` | 18 MB | **Partial (9 tracked files)** | Frozen under T0.8 | Nothing (tracked files present in git) |
 | `tests/fixtures/` | small | **Yes** | — | Nothing |
 
 ## Measured: what runs on a fresh clone

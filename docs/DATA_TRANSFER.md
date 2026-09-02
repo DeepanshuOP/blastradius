@@ -8,21 +8,26 @@ When handing over the project to a new machine or developer, certain directories
 
 | Asset | Measured Size | In Git? | Regeneratable? | Transfer Method |
 | --- | --- | --- | --- | --- |
-| `data/raw/` | 4.6 GB | No | **NO (Irreplaceable)** | Physical copy or network transfer (rsync/rclone) |
+| `data/raw/` | 4.9 GB (supersedes 4.6 GB) | No | **NO (Irreplaceable)** | Physical copy or network transfer (rsync/rclone) |
 | `data/state/cursor.db` | 131 MB | No | **NO (Irreplaceable)** | Physical copy or network transfer |
-| `data/interim/*.parquet` | ~31 MB total | No | Yes (via `make tables` etc.) | Can be copied for convenience, or regenerated |
+| `data/interim/*.parquet` | 33 MB (supersedes ~31 MB) | No (3 PIN files in git) | Yes (via `make tables` etc.) | Can be copied for convenience, or regenerated |
+| `vendor/graphify-br/` | 34 MB | **Yes (flat tree)** | Yes (from `safishamsi/graphify`) | Tracked in git; no physical copy needed |
 | `data/clones/` | 1.7 GB | No | Yes (via `git clone`) | Can be regenerated, but copying saves bandwidth |
-| `data/frame/` | 18 MB | No | Partially (depends on point-in-time) | Physical copy or network transfer |
+| `data/frame/` | 18 MB | **Partial (9 files in git)** | Partially (frozen frame files tracked) | Physical copy or re-clone tracked frame files |
+
+## Tracked vs. Untracked Data Clarification
+- `data/frame/` contains 9 tracked files in git (`ATTRITION.json`, `QUERY.md`, `attrition_stage.csv`, `frame_v1.csv`, `frame_v1_reserve.csv`, `repos.csv`, `repos_raw.csv`, `seart_a.csv`, `seart_b.csv`) — supersedes the previous claim that nothing under `data/frame/` is tracked.
+- `data/interim/` contains 3 tracked PIN files in git (`COCHANGE_PIN.json`, `CORPUS_PIN.json`, `INSTANCES_PIN.json`) — supersedes the claim that nothing under `data/interim/` is tracked. Parquet data files (~33 MB) are untracked.
 
 ## Transfer Instructions
 
 1. **Package the Irreplaceable Data:**
-   Archive the non-regeneratable and large data folders:
+   Archive the non-regeneratable and interim data folders:
    ```bash
-   tar -czvf blastradius_data.tar.gz data/raw data/state/cursor.db data/frame
+   tar -czvf blastradius_data.tar.gz data/raw data/state/cursor.db data/interim/*.parquet
    ```
 2. **Transfer:**
-   Transfer `blastradius_data.tar.gz` to the new machine via a secure network transfer (e.g., `rsync`, `scp`, or a shared cloud drive). An external drive is not strictly required given the ~4.8 GB total compressed size, but can be used if bandwidth is severely restricted.
+   Transfer `blastradius_data.tar.gz` to the new machine via a secure network transfer (e.g., `rsync`, `scp`, or a shared cloud drive). Total compressed size is ~2.8 GB.
 3. **Extract:**
    On the new machine, extract the archive into the repository root:
    ```bash

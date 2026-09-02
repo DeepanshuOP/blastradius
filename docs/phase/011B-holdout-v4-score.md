@@ -44,6 +44,8 @@
 
 The holdout_v4 precision of 58.33% belongs in the paper as it is the only rigorously held-out measurement of the current parser logic, exposing genuine parameterisation and extraction flaws (such as the pytest parser's violation of D-32) that were inadvertently fitted out of previous sets.
 
+SUPERSEDED: holdout_v4 was VOIDED under D-38. Its ground truth was machine-derived by build_holdout_v4.py, not hand-labelled, so no measurement occurred. The 58.33% figure must never appear in the paper. As of this correction there is no valid held-out precision figure: tests/fixtures/holdout/ is a development set under D-37, holdout_v3's honest 83.87% measures a parser that no longer exists, and holdout_v5 is sampled but unscored.
+
 ## Disagreements
 - `apache__dolphinscheduler__092883042571.txt`:
   FP: `org.apache.dolphinscheduler.e2e.cases.DolphinDBDataSourceE2ETest::testCreateDolphinDBDataSource`
