@@ -121,3 +121,10 @@
   6. As a result, `candidates` was empty (`len(candidates) == 0`), suffix join did not occur, and the parser emitted the bare class name missing `io.sirix.query.scan.` (or `org.sirix.index.path.summary.`).
 - **Remediation**:
   `src/parse/log_gradle.py` should index FQCNs from `FAILED-TEST:` and test execution banners, not exclusively from `\s*at\s+` stack frames.
+
+---
+
+## 4. Defect 4: Maven Class-Level Last-Dot Split (D-46 Violation)
+
+Maven FORM A splits a class-level failure line at the last dot, so "org.apache.hugegraph.core.CoreTestSuite  Time elapsed: 2.946 s  <<< ERROR!" — which names a class and no method — emits org.apache.hugegraph.core#CoreTestSuite, package-as-class and class-as-method. Evidence: apache__hugegraph__084221602296.txt, row 57e11a35966e. Governed by D-46. NOT FIXED in this task.
+

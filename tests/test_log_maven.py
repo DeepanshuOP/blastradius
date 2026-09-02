@@ -347,3 +347,40 @@ def test_shape_junit4_multi_class_form_c_reconciliation():
     assert stats.form_c_count == 3
     assert stats.form_d_count == 0
     assert stats.dropped_class_only_count == 1
+
+
+def test_d4_class_level_event_suppressed_increments_counter():
+    """D4/D-46: Class-level FORM A failure line naming only a class emits nothing and increments counter."""
+    log_text = "[ERROR] org.apache.hugegraph.core.CoreTestSuite  Time elapsed: 2.946 s  <<< ERROR!\n"
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 0
+    assert stats.form_a_count == 0
+    assert stats.class_level_events_suppressed == 1
+    assert stats.total_outcomes == 0
+
+
+def test_cldr_pascal_case_method_emitted_and_not_suppressed():
+    """PascalCase test method with separator (e.g. TestShim.TestAll) is emitted and not suppressed."""
+    log_text = "[ERROR] org.unicode.cldr.unittest.TestShim.TestAll -- Time elapsed: 1484 s <<< FAILURE!\n"
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 1
+    assert outcomes[0].test_id == "org.unicode.cldr.unittest.TestShim#TestAll"
+    assert outcomes[0].status == "fail"
+    assert stats.form_a_count == 1
+    assert stats.class_level_events_suppressed == 0
+    assert stats.total_outcomes == 1
+
+
+def test_at_frame_corroboration_prevents_suppression_without_separator():
+    """Stack frame 'at <class>.<method>(' corroborates real method even if separator is absent."""
+    log_text = (
+        "[ERROR] org.example.MyClass.TestMethod  Time elapsed: 1.23 s  <<< ERROR!\n"
+        "\tat org.example.MyClass.TestMethod(MyClass.java:42)\n"
+    )
+    outcomes, stats = parse_maven_log_with_stats(log_text)
+    assert len(outcomes) == 1
+    assert outcomes[0].test_id == "org.example.MyClass#TestMethod"
+    assert stats.form_a_count == 1
+    assert stats.class_level_events_suppressed == 0
+
+

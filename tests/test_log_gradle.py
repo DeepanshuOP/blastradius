@@ -338,3 +338,23 @@ def test_stack_frame_suffix_join_ignores_framework_frames():
     )
     assert stats.ambiguous_join_count == 0
 
+
+def test_chevron_unsegmentable_line_increments_counter():
+    """Unsegmentable chevron line emits nothing and increments chevron_unsegmentable_count."""
+    log_chunk = "Gradle suite > UnsegmentableToken FAILED\n"
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 0
+    assert stats.chevron_unsegmentable_count == 1
+    assert stats.total_outcomes == 0
+
+
+def test_d46_synthetic_class_method_suppressed_increments_counter():
+    """D-46: JUnit4 synthetic classMethod descriptor emits nothing and increments counter."""
+    log_chunk = "HadoopFormatIOCassandraTest > classMethod FAILED\n"
+    outcomes, stats = parse_gradle_log_with_stats(log_chunk)
+    assert len(outcomes) == 0
+    assert stats.class_level_events_suppressed == 1
+    assert stats.chevron_unsegmentable_count == 0
+    assert stats.total_outcomes == 0
+
+

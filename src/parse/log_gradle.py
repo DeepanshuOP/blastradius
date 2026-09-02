@@ -101,6 +101,9 @@ _BARE_TEST_CLASS_RE = re.compile(
     r"^[a-zA-Z_$][a-zA-Z0-9_$]*(?:Test|Tests|TestCase|IT|ITCase|Spec|Specification)(?:\$[a-zA-Z_$][a-zA-Z0-9_$]*)*$"
 )
 
+# Java method identifier regex
+_JAVA_METHOD_IDENT_RE = re.compile(r"^[a-zA-Z_$][a-zA-Z0-9_$]*$")
+
 # Gradle 'took:' line: org.pkg.Class > method took: 1234ms
 _TOOK_LINE_RE = re.compile(
     r"^(?:Test\s+)?([a-zA-Z_$][a-zA-Z0-9_$.$]+)\s+>\s+.*?\s+took:\s+\d+(?:\.\d+)?(?:ms|s)$"
@@ -154,6 +157,8 @@ class GradleParseStats:
     s4_count: int = 0
     stale_guard_fired_count: int = 0
     ambiguous_join_count: int = 0
+    chevron_unsegmentable_count: int = 0
+    class_level_events_suppressed: int = 0
 
 
 def _clean_line(line: str) -> str:
@@ -222,10 +227,15 @@ def parse_gradle_log_with_stats(
             continue
 
         # 3. Check for S1: Indented method failure: "  Test methodName() FAILED (3.1s)"
+        # 3. Check for S1: Indented method failure: "  Test methodName() FAILED (3.1s)"
         # Note: Must be evaluated before S2 so that keyword "Test" is not treated as a class name.
         m_s1 = _S1_FAIL_RE.match(stripped)
         if m_s1:
             method_raw = m_s1.group(1).strip()
+            if method_raw == "classMethod" or method_raw.rstrip("()") == "classMethod":
+                stats.class_level_events_suppressed += 1
+                lines_since_class_header = 0
+                continue
             dur_str = m_s1.group(2)
             dur_s = _parse_duration_s(dur_str)
 
@@ -262,6 +272,9 @@ def parse_gradle_log_with_stats(
         if m_s2:
             cls_name = m_s2.group(1).strip()
             method_raw = m_s2.group(2).strip()
+            if method_raw == "classMethod" or method_raw.rstrip("()") == "classMethod":
+                stats.class_level_events_suppressed += 1
+                continue
             dur_str = m_s2.group(3)
 
             if cls_name not in ("Test", "Tests", "TestCase"):
@@ -297,9 +310,17 @@ def parse_gradle_log_with_stats(
                     and " > " in prefix
                 ):
                     segments = [s.strip() for s in prefix.split(" > ") if s.strip()]
+                    dropped_wrappers = 0
+                    while segments and segments[0] in ("Gradle suite", "Gradle test"):
+                        segments.pop(0)
+                        dropped_wrappers += 1
+
                     if len(segments) >= 2:
                         cls_name = segments[0]
                         method_raw = segments[-1]
+                        if method_raw == "classMethod" or method_raw.rstrip("()") == "classMethod":
+                            stats.class_level_events_suppressed += 1
+                            continue
                         test_id = f"{cls_name}#{method_raw}"
                         dur_s = _parse_duration_s(dur_str)
 
@@ -322,6 +343,35 @@ def parse_gradle_log_with_stats(
                             label_source="log",
                         )
                         continue
+                    elif len(segments) == 1 and dropped_wrappers >= 1:
+                        seg = segments[0]
+                        if "." in seg:
+                            left, right = seg.rsplit(".", 1)
+                            if right == "classMethod" or right.rstrip("()") == "classMethod":
+                                stats.class_level_events_suppressed += 1
+                                continue
+                            if (
+                                _JAVA_CLASS_RE.match(left)
+                                and _JAVA_METHOD_IDENT_RE.match(right)
+                            ):
+                                test_id = f"{left}#{right}"
+                                dur_s = _parse_duration_s(dur_str)
+                                outcomes_dict[test_id] = TestOutcome(
+                                    test_id=test_id,
+                                    parser_confidence=CONFIDENCE_S4_CHEVRON_3SEG,
+                                    run_id=run_id,
+                                    job_id=job_id,
+                                    repo=repo,
+                                    head_sha=head_sha,
+                                    status="fail",
+                                    duration_s=dur_s,
+                                    label_source="log",
+                                )
+                                stats.s4_count += 1
+                                continue
+
+                    stats.chevron_unsegmentable_count += 1
+                    continue
 
         # 6. Check if line is a Gradle took line: Class > method took: 1234ms
         m_took = _TOOK_LINE_RE.match(stripped)

@@ -90,10 +90,13 @@ _CLEAN_TEST_RE = re.compile(
     r"Tests run:\s*[1-9]\d*,\s*Failures:\s*0,\s*Errors:\s*0\b"
 )
 
+# Java method identifier regex
+_JAVA_METHOD_IDENT_RE = re.compile(r"^[a-zA-Z_$][a-zA-Z0-9_$]*$")
+
 # Surefire / Failsafe Regex Patterns:
 # FORM A: [ERROR] pkg.Class.method(params)[idx] -- Time elapsed: ... <<< FAILURE!
 _SUREFIRE_FORM_A = re.compile(
-    r"\[ERROR\]\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+)\.([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\(.*?\))?(?:\[\d+\])?\s+(?:--\s+)?Time elapsed:\s*([0-9.]+\s*[mμ]?s)?.*?(?:<<< FAILURE!|<<< ERROR!)",
+    r"\[ERROR\]\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+)\.([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\(.*?\))?(?:\[\d+\])?\s+(--\s+)?Time elapsed:\s*([0-9.]+\s*[mμ]?s)?.*?(?:<<< FAILURE!|<<< ERROR!)",
     re.IGNORECASE,
 )
 
@@ -149,6 +152,7 @@ class MavenParseStats:
     form_junit4_count: int = 0
     dropped_class_only_count: int = 0
     ambiguous_join_count: int = 0
+    class_level_events_suppressed: int = 0
 
 
 def _clean_line(line: str) -> str:
@@ -158,6 +162,15 @@ def _clean_line(line: str) -> str:
     line = _TIME_ONLY_RE.sub("", line)
     line = _CHANNEL_PREFIX_RE.sub("", line)
     return line.rstrip()
+
+
+def has_stack_frame(log_text: str, class_name: str, method_name: str) -> bool:
+    """Check if the log contains a stack frame matching 'at <class_name>.<method_name>('.
+
+    Provides positive evidence that a candidate method identifier is a real method on the class.
+    """
+    pattern = rf"\bat\s+{re.escape(class_name)}\.{re.escape(method_name)}\s*\("
+    return re.search(pattern, log_text) is not None
 
 
 # Deferred extraction point: src/parse/common.py — trigger when a second parser requires the same suffix-reconciliation logic.
@@ -340,10 +353,19 @@ def parse_maven_log_with_stats(
         if m_a:
             cls_name = m_a.group(1).strip()
             method_name = m_a.group(2).strip()
-            dur_str = m_a.group(3)
+            has_separator = bool(m_a.group(3))
+            dur_str = m_a.group(4)
             dur_s = _parse_duration_s(dur_str)
-            raw_form_a.append((cls_name, method_name, dur_s))
-            stats.form_a_count += 1
+
+            if (
+                _JAVA_METHOD_IDENT_RE.match(method_name)
+                and method_name != "classMethod"
+                and (has_separator or has_stack_frame(body, cls_name, method_name))
+            ):
+                raw_form_a.append((cls_name, method_name, dur_s))
+                stats.form_a_count += 1
+            else:
+                stats.class_level_events_suppressed += 1
             continue
 
         # Check FORM B: <<< FAILURE! - in pkg.Class
@@ -368,6 +390,9 @@ def parse_maven_log_with_stats(
         if m_j4:
             method_name = m_j4.group(1).strip()
             cls_name = m_j4.group(2).strip()
+            if method_name == "classMethod":
+                stats.class_level_events_suppressed += 1
+                continue
             dur_str = m_j4.group(3)
             dur_s = _parse_duration_s(dur_str)
             raw_form_a.append((cls_name, method_name, dur_s))
