@@ -124,6 +124,26 @@ _SUREFIRE_FORM_JUNIT4 = re.compile(
     re.IGNORECASE,
 )
 
+# D-39 source 1a: class-level summary header, present on both clean and failing classes:
+# "Tests run: N, Failures: N, Errors: N, Skipped: N, Time elapsed: X s -- in <FQCN>"
+_SUREFIRE_HEADER_RE = re.compile(
+    r"Tests run:\s*\d+,\s*Failures:\s*\d+,\s*Errors:\s*\d+,\s*Skipped:\s*\d+,"
+    r"\s*Time elapsed:\s*[0-9.]+\s*[mμ]?s\s*(?:<<<\s*(?:FAILURE|ERROR)!\s*)?"
+    r"(?:--|-)\s*in\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)*(?:\$[a-zA-Z0-9_$]+)*)\s*$"
+)
+
+# D-39 source 1b: "[INFO] Running <FQCN>" test-class execution banner.
+_MAVEN_RUNNING_RE = re.compile(
+    r"\[INFO\]\s+Running\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z0-9_$]+)*)\s*$"
+)
+
+# D-39 source 2: Java / Kotlin stack trace frame: "    at io.pkg.Class.method(Class.java:123)"
+_AT_FRAME_RE = re.compile(
+    r"^\s*at\s+(?:[a-zA-Z0-9_/@.-]+/)?"
+    r"([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z_$][a-zA-Z0-9_$]*)*)"
+    r"\.([^\n(]*[^\s(])\("
+)
+
 
 def _parse_duration_s(dur_str: str | None) -> float | None:
     if not dur_str:
@@ -153,6 +173,8 @@ class MavenParseStats:
     dropped_class_only_count: int = 0
     ambiguous_join_count: int = 0
     class_level_events_suppressed: int = 0
+    fqcn_recovered_count: int = 0
+    fqcn_incomplete_count: int = 0
 
 
 def _clean_line(line: str) -> str:
@@ -180,6 +202,8 @@ def _reconcile_maven_outcomes(
     raw_form_c: list[tuple[str, str, str | None]],
     raw_form_d: list[tuple[str, float | None]],
     stats: MavenParseStats,
+    header_fqcns: dict[str, set[str]] | None = None,
+    stack_fqcns: dict[tuple[str, str], set[str]] | None = None,
     run_id: int | None = None,
     job_id: int | None = None,
     repo: str | None = None,
@@ -189,10 +213,19 @@ def _reconcile_maven_outcomes(
     outcomes_dict: dict[str, TestOutcome] = {}
     known_fqcn_classes: set[str] = set(form_b_classes)
     consumed_classes: set[str] = set()
+    header_fqcns = header_fqcns or {}
+    stack_fqcns = stack_fqcns or {}
 
     for cls, meth, _ in raw_form_a:
         if "." in cls:
             known_fqcn_classes.add(cls)
+
+    # D-39 source 1: surefire report header / "Running <FQCN>" line, matched on simple
+    # class name. A superset of known_fqcn_classes used only for FORM C recovery, so FORM
+    # D's "single known class" heuristic below is left untouched.
+    header_fqcns_all: set[str] = set(known_fqcn_classes)
+    for candidates in header_fqcns.values():
+        header_fqcns_all.update(candidates)
 
     # 1. Process FORM A (Self-Contained FQCN + Method)
     for cls, meth, dur_s in raw_form_a:
@@ -229,19 +262,37 @@ def _reconcile_maven_outcomes(
 
     # 2. Process FORM C (Simple Class + Method)
     for cls, meth, msg in raw_form_c:
-        matching_fqns = [
-            fqn for fqn in known_fqcn_classes if fqn.split(".")[-1] == cls or fqn == cls
-        ]
-        if len(matching_fqns) == 1:
-            fqn_cls = matching_fqns[0]
+        # D-39 priority order: 1) surefire header / "Running <FQCN>" line,
+        # 2) "at" stack frame, 3) unrecoverable — emit the bare simple class name.
+        header_candidates = {
+            fqn for fqn in header_fqcns_all if fqn.split(".")[-1] == cls or fqn == cls
+        }
+        stack_candidates = stack_fqcns.get((cls, meth), set())
+
+        if len(header_candidates) >= 2:
+            stats.ambiguous_join_count += 1
+        if len(stack_candidates) >= 2:
+            stats.ambiguous_join_count += 1
+
+        header_pick = next(iter(header_candidates)) if len(header_candidates) == 1 else None
+        stack_pick = next(iter(stack_candidates)) if len(stack_candidates) == 1 else None
+
+        if header_pick and stack_pick and header_pick != stack_pick:
+            # Sources disagree: prefer the earlier source (header) and record it.
+            stats.ambiguous_join_count += 1
+            fqn_cls: str | None = header_pick
+        else:
+            fqn_cls = header_pick or stack_pick
+
+        if fqn_cls:
             test_id = f"{fqn_cls}#{meth}"
             conf = CONFIDENCE_FORM_C_JOINED
             consumed_classes.add(fqn_cls)
+            stats.fqcn_recovered_count += 1
         else:
-            if len(matching_fqns) >= 2:
-                stats.ambiguous_join_count += 1
             test_id = f"{cls}#{meth}"
             conf = CONFIDENCE_FORM_C_BARE
+            stats.fqcn_incomplete_count += 1
 
         clean_msg = msg[:2000] if msg else None
 
@@ -340,11 +391,40 @@ def parse_maven_log_with_stats(
     form_b_classes: list[str] = []
     raw_form_c: list[tuple[str, str, str | None]] = []
     raw_form_d: list[tuple[str, float | None]] = []
+    header_fqcns: dict[str, set[str]] = {}
+    stack_fqcns: dict[tuple[str, str], set[str]] = {}
 
     lines = body.splitlines()
 
     for raw_line in lines:
         line = _clean_line(raw_line)
+        stripped = line.strip()
+
+        # D-39 source 1: collect surefire report headers / "Running <FQCN>" banners,
+        # matched on simple class name. These lines are not gated on [ERROR]/<<< since
+        # they appear on clean classes too.
+        m_header = _SUREFIRE_HEADER_RE.search(line)
+        if m_header:
+            header_fqcn = m_header.group(1).strip()
+            if "." in header_fqcn:
+                simple_cls = header_fqcn.rsplit(".", 1)[-1].split("$")[0]
+                header_fqcns.setdefault(simple_cls, set()).add(header_fqcn)
+
+        m_running = _MAVEN_RUNNING_RE.search(line)
+        if m_running:
+            header_fqcn = m_running.group(1).strip()
+            simple_cls = header_fqcn.rsplit(".", 1)[-1].split("$")[0]
+            header_fqcns.setdefault(simple_cls, set()).add(header_fqcn)
+
+        # D-39 source 2: collect "at <fqcn>.<method>(" stack frames.
+        m_at = _AT_FRAME_RE.match(stripped)
+        if m_at:
+            frame_meth = m_at.group(2).strip()
+            if "/" not in frame_meth and ">" not in frame_meth:
+                frame_fqcn = m_at.group(1).strip()
+                simple_cls = frame_fqcn.rsplit(".", 1)[-1].split("$")[0]
+                stack_fqcns.setdefault((simple_cls, frame_meth), set()).add(frame_fqcn)
+
         if "[ERROR]" not in line and "<<<" not in line:
             continue
 
@@ -415,6 +495,8 @@ def parse_maven_log_with_stats(
         raw_form_c=raw_form_c,
         raw_form_d=raw_form_d,
         stats=stats,
+        header_fqcns=header_fqcns,
+        stack_fqcns=stack_fqcns,
         run_id=run_id,
         job_id=job_id,
         repo=repo,

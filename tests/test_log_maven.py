@@ -70,28 +70,31 @@ def test_shape_form_b_dropped_class_only_instrumentation():
 
 
 def test_shape_form_c_summary_only_opentripplanner():
-    """FORM C: Surefire 3.x summary failure lines with no preceding FQCN header."""
+    """FORM C: Surefire 3.x summary failure lines with no preceding FQCN header, but with
+    "at <fqcn>.<method>(" stack frames (D-39 source 2) that recover the package."""
     body = _read_fixture("opentripplanner__opentripplanner__077865124037.txt")
     outcomes, stats = parse_maven_log_with_stats(body)
 
     assert len(outcomes) == 4
     test_ids = {o.test_id for o in outcomes}
     expected_ids = {
-        "ScooterRentalGeofencingTest#arriveByAdjacentNoDropOffZonesDropsOutsideBothZones",
-        "ScooterRentalGeofencingTest#arriveBySearchBlocksRidingIntoNoTraversalZone",
-        "ScooterRentalGeofencingTest#arriveBySearchDropsOffOutsideNoDropOffZone",
-        "ScooterRentalGeofencingTest#forwardAndArriveByBothFindPath",
+        "org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveByAdjacentNoDropOffZonesDropsOutsideBothZones",
+        "org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveBySearchBlocksRidingIntoNoTraversalZone",
+        "org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveBySearchDropsOffOutsideNoDropOffZone",
+        "org.opentripplanner.street.integration.ScooterRentalGeofencingTest#forwardAndArriveByBothFindPath",
     }
     assert test_ids == expected_ids
     for o in outcomes:
         assert o.status == "fail"
-        assert o.parser_confidence == CONFIDENCE_FORM_C_BARE
+        assert o.parser_confidence == CONFIDENCE_FORM_C_JOINED
         assert o.failure_message is not None
         assert "IllegalArgument" in o.failure_message
     assert stats.form_c_count == 4
     assert stats.form_a_count == 0
     assert stats.form_b_count == 0
     assert stats.dropped_class_only_count == 0
+    assert stats.fqcn_recovered_count == 4
+    assert stats.fqcn_incomplete_count == 0
 
 
 def test_shape_form_d_bare_method_dolphinscheduler():

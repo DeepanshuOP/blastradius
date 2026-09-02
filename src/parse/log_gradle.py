@@ -130,6 +130,20 @@ _AT_FRAME_RE = re.compile(
     r"\.([^\n(]*[^\s(])\("
 )
 
+# D-39 source 1a: Surefire-style class-level summary header, present on both clean and
+# failing classes (some Gradle logs embed Surefire/Failsafe subprocess output verbatim):
+# "Tests run: N, Failures: N, Errors: N, Skipped: N, Time elapsed: X s -- in <FQCN>"
+_SUREFIRE_HEADER_RE = re.compile(
+    r"Tests run:\s*\d+,\s*Failures:\s*\d+,\s*Errors:\s*\d+,\s*Skipped:\s*\d+,"
+    r"\s*Time elapsed:\s*[0-9.]+\s*[mμ]?s\s*(?:<<<\s*(?:FAILURE|ERROR)!\s*)?"
+    r"(?:--|-)\s*in\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)*(?:\$[a-zA-Z0-9_$]+)*)\s*$"
+)
+
+# D-39 source 1b: "[INFO] Running <FQCN>" test-class execution banner.
+_RUNNING_FQCN_RE = re.compile(
+    r"\[INFO\]\s+Running\s+([a-zA-Z_$][a-zA-Z0-9_$]*(?:\.[a-zA-Z_$][a-zA-Z0-9_$]*)+(?:\$[a-zA-Z0-9_$]+)*)\s*$"
+)
+
 
 def _parse_duration_s(dur_str: str | None) -> float | None:
     if not dur_str:
@@ -159,6 +173,8 @@ class GradleParseStats:
     ambiguous_join_count: int = 0
     chevron_unsegmentable_count: int = 0
     class_level_events_suppressed: int = 0
+    fqcn_recovered_count: int = 0
+    fqcn_incomplete_count: int = 0
 
 
 def _clean_line(line: str) -> str:
@@ -179,6 +195,7 @@ def parse_gradle_log_with_stats(
     stats = GradleParseStats()
     outcomes_dict: dict[str, TestOutcome] = {}
     stack_fqcns: dict[tuple[str, str], set[str]] = {}
+    header_fqcns: dict[str, set[str]] = {}
 
     current_class: str | None = None
     lines_since_class_header: int = 0
@@ -196,6 +213,21 @@ def parse_gradle_log_with_stats(
                 fqcn = m_at.group(1).strip()
                 simple_cls = fqcn.split(".")[-1].split("$")[0]
                 stack_fqcns.setdefault((simple_cls, meth), set()).add(fqcn)
+
+        # D-39 source 1: collect surefire report headers / "Running <FQCN>" banners,
+        # matched on simple class name (case-only; never inferred, never guessed).
+        m_header = _SUREFIRE_HEADER_RE.search(line)
+        if m_header:
+            header_fqcn = m_header.group(1).strip()
+            if "." in header_fqcn:
+                simple_cls = header_fqcn.rsplit(".", 1)[-1].split("$")[0]
+                header_fqcns.setdefault(simple_cls, set()).add(header_fqcn)
+
+        m_running = _RUNNING_FQCN_RE.search(line)
+        if m_running:
+            header_fqcn = m_running.group(1).strip()
+            simple_cls = header_fqcn.rsplit(".", 1)[-1].split("$")[0]
+            header_fqcns.setdefault(simple_cls, set()).add(header_fqcn)
 
         # 1. State machine distance increment & guard check (Amendment 2)
         if current_class is not None:
@@ -407,9 +439,28 @@ def parse_gradle_log_with_stats(
 
             if "." not in cls_part:
                 simple_cls = cls_part.split("$")[0]
-                candidates = stack_fqcns.get((simple_cls, clean_meth), set())
-                if len(candidates) == 1:
-                    joined_fqcn = next(iter(candidates))
+
+                # D-39 priority order: 1) surefire header / "Running <FQCN>" line,
+                # 2) "at" stack frame, 3) unrecoverable — emit the bare simple class name.
+                header_candidates = header_fqcns.get(simple_cls, set())
+                stack_candidates = stack_fqcns.get((simple_cls, clean_meth), set())
+
+                if len(header_candidates) >= 2:
+                    stats.ambiguous_join_count += 1
+                if len(stack_candidates) >= 2:
+                    stats.ambiguous_join_count += 1
+
+                header_pick = next(iter(header_candidates)) if len(header_candidates) == 1 else None
+                stack_pick = next(iter(stack_candidates)) if len(stack_candidates) == 1 else None
+
+                if header_pick and stack_pick and header_pick != stack_pick:
+                    # Sources disagree: prefer the earlier source (header) and record it.
+                    stats.ambiguous_join_count += 1
+                    joined_fqcn = header_pick
+                else:
+                    joined_fqcn = header_pick or stack_pick
+
+                if joined_fqcn:
                     new_test_id = f"{joined_fqcn}#{meth_part}"
                     reconciled_outcomes[new_test_id] = TestOutcome(
                         test_id=new_test_id,
@@ -423,10 +474,10 @@ def parse_gradle_log_with_stats(
                         failure_message=outcome.failure_message,
                         label_source=outcome.label_source,
                     )
+                    stats.fqcn_recovered_count += 1
                 else:
-                    if len(candidates) >= 2:
-                        stats.ambiguous_join_count += 1
                     reconciled_outcomes[test_id] = outcome
+                    stats.fqcn_incomplete_count += 1
             else:
                 reconciled_outcomes[test_id] = outcome
 
