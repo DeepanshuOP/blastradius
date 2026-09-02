@@ -1,0 +1,632 @@
+﻿2026-06-02T19:14:38.8986356Z Current runner version: '2.334.0'
+2026-06-02T19:14:38.9010137Z ##[group]Runner Image Provisioner
+2026-06-02T19:14:38.9010973Z Hosted Compute Agent
+2026-06-02T19:14:38.9011657Z Version: 20260520.533
+2026-06-02T19:14:38.9012334Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-02T19:14:38.9013114Z Build Date: 2026-05-20T17:44:04Z
+2026-06-02T19:14:38.9013863Z Worker ID: {ae599df4-c16e-4f52-a939-bb6cd56718d3}
+2026-06-02T19:14:38.9014812Z Azure Region: westcentralus
+2026-06-02T19:14:38.9015514Z ##[endgroup]
+2026-06-02T19:14:38.9017008Z ##[group]Operating System
+2026-06-02T19:14:38.9017709Z Ubuntu
+2026-06-02T19:14:38.9018257Z 24.04.4
+2026-06-02T19:14:38.9018775Z LTS
+2026-06-02T19:14:38.9019342Z ##[endgroup]
+2026-06-02T19:14:38.9019932Z ##[group]Runner Image
+2026-06-02T19:14:38.9020507Z Image: ubuntu-24.04
+2026-06-02T19:14:38.9021134Z Version: 20260525.161.1
+2026-06-02T19:14:38.9022748Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-02T19:14:38.9024423Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-02T19:14:38.9025752Z ##[endgroup]
+2026-06-02T19:14:38.9028605Z ##[group]GITHUB_TOKEN Permissions
+2026-06-02T19:14:38.9030866Z Actions: read
+2026-06-02T19:14:38.9031544Z ArtifactMetadata: read
+2026-06-02T19:14:38.9032165Z Attestations: read
+2026-06-02T19:14:38.9032785Z Checks: read
+2026-06-02T19:14:38.9033376Z CodeQuality: read
+2026-06-02T19:14:38.9033931Z Contents: read
+2026-06-02T19:14:38.9034831Z Deployments: read
+2026-06-02T19:14:38.9035432Z Discussions: read
+2026-06-02T19:14:38.9036028Z Issues: read
+2026-06-02T19:14:38.9036580Z Metadata: read
+2026-06-02T19:14:38.9037124Z Models: read
+2026-06-02T19:14:38.9037788Z Packages: read
+2026-06-02T19:14:38.9038439Z Pages: read
+2026-06-02T19:14:38.9039027Z PullRequests: read
+2026-06-02T19:14:38.9039633Z RepositoryProjects: read
+2026-06-02T19:14:38.9040243Z SecurityEvents: read
+2026-06-02T19:14:38.9040906Z Statuses: read
+2026-06-02T19:14:38.9041469Z VulnerabilityAlerts: read
+2026-06-02T19:14:38.9042050Z ##[endgroup]
+2026-06-02T19:14:38.9044293Z Secret source: Dependabot
+2026-06-02T19:14:38.9045300Z Prepare workflow directory
+2026-06-02T19:14:38.9437336Z Prepare all required actions
+2026-06-02T19:14:38.9475088Z Getting action download info
+2026-06-02T19:14:39.5706371Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-06-02T19:14:39.6861563Z Download action repository 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-02T19:14:40.6814376Z Download action repository 'gradle/actions@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e' (SHA:50e97c2cd7a37755bbfafc9c5b7cafaece252f6e)
+2026-06-02T19:14:42.3911638Z Download action repository 'coactions/setup-xvfb@b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3' (SHA:b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3)
+2026-06-02T19:14:42.6814048Z Download action repository 'dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2' (SHA:a43b3a5f7366b97d083190328d2c652e1a8b6aa2)
+2026-06-02T19:14:43.6788658Z Complete job name: Build and Verify
+2026-06-02T19:14:43.7538284Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-06-02T19:14:43.7539022Z with:
+2026-06-02T19:14:43.7539243Z   fetch-depth: 0
+2026-06-02T19:14:43.7539488Z   repository: gurkenlabs/litiengine
+2026-06-02T19:14:43.7542467Z   token: ***
+2026-06-02T19:14:43.7542680Z   ssh-strict: true
+2026-06-02T19:14:43.7542890Z   ssh-user: git
+2026-06-02T19:14:43.7543108Z   persist-credentials: true
+2026-06-02T19:14:43.7543350Z   clean: true
+2026-06-02T19:14:43.7543578Z   sparse-checkout-cone-mode: true
+2026-06-02T19:14:43.7543843Z   fetch-tags: false
+2026-06-02T19:14:43.7544066Z   show-progress: true
+2026-06-02T19:14:43.7544282Z   lfs: false
+2026-06-02T19:14:43.7544481Z   submodules: false
+2026-06-02T19:14:43.7545098Z   set-safe-directory: true
+2026-06-02T19:14:43.7545628Z ##[endgroup]
+2026-06-02T19:14:43.8535720Z Syncing repository: gurkenlabs/litiengine
+2026-06-02T19:14:43.8537073Z ##[group]Getting Git version info
+2026-06-02T19:14:43.8537728Z Working directory is '/home/runner/work/litiengine/litiengine'
+2026-06-02T19:14:43.8538338Z [command]/usr/bin/git version
+2026-06-02T19:14:43.8588586Z git version 2.54.0
+2026-06-02T19:14:43.8612070Z ##[endgroup]
+2026-06-02T19:14:43.8627588Z Temporarily overriding HOME='/home/runner/work/_temp/d9102f54-142e-4d19-9016-de878a241ae9' before making global git config changes
+2026-06-02T19:14:43.8629047Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-02T19:14:43.8633168Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/litiengine/litiengine
+2026-06-02T19:14:43.8681319Z Deleting the contents of '/home/runner/work/litiengine/litiengine'
+2026-06-02T19:14:43.8685625Z ##[group]Initializing the repository
+2026-06-02T19:14:43.8690555Z [command]/usr/bin/git init /home/runner/work/litiengine/litiengine
+2026-06-02T19:14:43.8809892Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-02T19:14:43.8811630Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-02T19:14:43.8812610Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-02T19:14:43.8813337Z hint: call:
+2026-06-02T19:14:43.8813792Z hint:
+2026-06-02T19:14:43.8814299Z hint: 	git config --global init.defaultBranch <name>
+2026-06-02T19:14:43.8815309Z hint:
+2026-06-02T19:14:43.8815961Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-02T19:14:43.8817330Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-02T19:14:43.8818102Z hint:
+2026-06-02T19:14:43.8818800Z hint: 	git branch -m <name>
+2026-06-02T19:14:43.8819556Z hint:
+2026-06-02T19:14:43.8820523Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-02T19:14:43.8821625Z Initialized empty Git repository in /home/runner/work/litiengine/litiengine/.git/
+2026-06-02T19:14:43.8831919Z [command]/usr/bin/git remote add origin https://github.com/gurkenlabs/litiengine
+2026-06-02T19:14:43.8873131Z ##[endgroup]
+2026-06-02T19:14:43.8873863Z ##[group]Disabling automatic garbage collection
+2026-06-02T19:14:43.8878706Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-02T19:14:43.8907763Z ##[endgroup]
+2026-06-02T19:14:43.8908440Z ##[group]Setting up auth
+2026-06-02T19:14:43.8909096Z Removing SSH command configuration
+2026-06-02T19:14:43.8916946Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-02T19:14:43.8950500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-02T19:14:43.9307455Z Removing HTTP extra header
+2026-06-02T19:14:43.9312188Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-02T19:14:43.9341931Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-02T19:14:43.9585994Z Removing includeIf entries pointing to credentials config files
+2026-06-02T19:14:43.9587040Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-02T19:14:43.9615398Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-02T19:14:43.9857258Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-02T19:14:43.9894213Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/litiengine/litiengine/.git.path /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:14:43.9926037Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/litiengine/litiengine/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:14:43.9962077Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:14:43.9996206Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:14:44.0020204Z ##[endgroup]
+2026-06-02T19:14:44.0020644Z ##[group]Fetching the repository
+2026-06-02T19:14:44.0029867Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-06-02T19:14:46.0343826Z From https://github.com/gurkenlabs/litiengine
+2026-06-02T19:14:46.0345383Z  * [new branch]        audio-spi               -> origin/audio-spi
+2026-06-02T19:14:46.0348303Z  * [new branch]        copilot/fix-failing-github-actions-job -> origin/copilot/fix-failing-github-actions-job
+2026-06-02T19:14:46.0349619Z  * [new branch]        copilot/remove-particleparameters -> origin/copilot/remove-particleparameters
+2026-06-02T19:14:46.0350708Z  * [new branch]        dependabot/gradle/org.eclipse.parsson-parsson-1.1.9 -> origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9
+2026-06-02T19:14:46.0351570Z  * [new branch]        fire-emitter            -> origin/fire-emitter
+2026-06-02T19:14:46.0352088Z  * [new branch]        main                    -> origin/main
+2026-06-02T19:14:46.0352911Z  * [new branch]        serializable-attributes -> origin/serializable-attributes
+2026-06-02T19:14:46.0353839Z  * [new tag]           0.10.0                  -> 0.10.0
+2026-06-02T19:14:46.0354453Z  * [new tag]           0.10.1                  -> 0.10.1
+2026-06-02T19:14:46.0355500Z  * [new tag]           0.10.2                  -> 0.10.2
+2026-06-02T19:14:46.0358110Z  * [new tag]           0.10.3                  -> 0.10.3
+2026-06-02T19:14:46.0358774Z  * [new tag]           0.10.4                  -> 0.10.4
+2026-06-02T19:14:46.0359397Z  * [new tag]           0.10.5                  -> 0.10.5
+2026-06-02T19:14:46.0360118Z  * [new tag]           0.10.6                  -> 0.10.6
+2026-06-02T19:14:46.0360784Z  * [new tag]           0.10.7                  -> 0.10.7
+2026-06-02T19:14:46.0361377Z  * [new tag]           0.11.0                  -> 0.11.0
+2026-06-02T19:14:46.0361965Z  * [new tag]           0.11.1                  -> 0.11.1
+2026-06-02T19:14:46.0362560Z  * [new tag]           0.4                     -> 0.4
+2026-06-02T19:14:46.0363160Z  * [new tag]           0.4.10                  -> 0.4.10
+2026-06-02T19:14:46.0363766Z  * [new tag]           0.4.11                  -> 0.4.11
+2026-06-02T19:14:46.0364356Z  * [new tag]           0.4.12                  -> 0.4.12
+2026-06-02T19:14:46.0365239Z  * [new tag]           0.4.13                  -> 0.4.13
+2026-06-02T19:14:46.0365857Z  * [new tag]           0.4.14                  -> 0.4.14
+2026-06-02T19:14:46.0366788Z  * [new tag]           0.4.15                  -> 0.4.15
+2026-06-02T19:14:46.0367467Z  * [new tag]           0.4.16                  -> 0.4.16
+2026-06-02T19:14:46.0368080Z  * [new tag]           0.4.17                  -> 0.4.17
+2026-06-02T19:14:46.0368664Z  * [new tag]           0.4.18                  -> 0.4.18
+2026-06-02T19:14:46.0369256Z  * [new tag]           0.4.19                  -> 0.4.19
+2026-06-02T19:14:46.0369967Z  * [new tag]           0.4.20                  -> 0.4.20
+2026-06-02T19:14:46.0370616Z  * [new tag]           0.4.5                   -> 0.4.5
+2026-06-02T19:14:46.0371198Z  * [new tag]           0.4.6                   -> 0.4.6
+2026-06-02T19:14:46.0371765Z  * [new tag]           0.4.7                   -> 0.4.7
+2026-06-02T19:14:46.0372343Z  * [new tag]           0.4.8                   -> 0.4.8
+2026-06-02T19:14:46.0372906Z  * [new tag]           0.4.9                   -> 0.4.9
+2026-06-02T19:14:46.0373756Z  * [new tag]           0.5.0                   -> 0.5.0
+2026-06-02T19:14:46.0374353Z  * [new tag]           0.5.1                   -> 0.5.1
+2026-06-02T19:14:46.0375214Z  * [new tag]           0.5.2                   -> 0.5.2
+2026-06-02T19:14:46.0375783Z  * [new tag]           0.6.0                   -> 0.6.0
+2026-06-02T19:14:46.0376334Z  * [new tag]           0.6.1                   -> 0.6.1
+2026-06-02T19:14:46.0376923Z  * [new tag]           0.7.0                   -> 0.7.0
+2026-06-02T19:14:46.0377499Z  * [new tag]           0.8.0                   -> 0.8.0
+2026-06-02T19:14:46.0378076Z  * [new tag]           0.9.0                   -> 0.9.0
+2026-06-02T19:14:46.0455838Z [command]/usr/bin/git branch --list --remote origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9
+2026-06-02T19:14:46.0491104Z   origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9
+2026-06-02T19:14:46.0502684Z [command]/usr/bin/git rev-parse refs/remotes/origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9
+2026-06-02T19:14:46.0529981Z 56ba3934acd67d73b6a2d38dda83cd9b9086bfca
+2026-06-02T19:14:46.0544213Z ##[endgroup]
+2026-06-02T19:14:46.0545401Z ##[group]Determining the checkout info
+2026-06-02T19:14:46.0546377Z ##[endgroup]
+2026-06-02T19:14:46.0546989Z [command]/usr/bin/git sparse-checkout disable
+2026-06-02T19:14:46.0612078Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-02T19:14:46.0635826Z ##[group]Checking out the ref
+2026-06-02T19:14:46.0640027Z [command]/usr/bin/git checkout --progress --force -B dependabot/gradle/org.eclipse.parsson-parsson-1.1.9 refs/remotes/origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9
+2026-06-02T19:14:46.1245665Z Switched to a new branch 'dependabot/gradle/org.eclipse.parsson-parsson-1.1.9'
+2026-06-02T19:14:46.1248576Z branch 'dependabot/gradle/org.eclipse.parsson-parsson-1.1.9' set up to track 'origin/dependabot/gradle/org.eclipse.parsson-parsson-1.1.9'.
+2026-06-02T19:14:46.1257269Z ##[endgroup]
+2026-06-02T19:14:46.1303771Z [command]/usr/bin/git log -1 --format=%H
+2026-06-02T19:14:46.1328556Z 56ba3934acd67d73b6a2d38dda83cd9b9086bfca
+2026-06-02T19:14:46.1596772Z ##[group]Run actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+2026-06-02T19:14:46.1597193Z with:
+2026-06-02T19:14:46.1597403Z   distribution: temurin
+2026-06-02T19:14:46.1597639Z   java-version: 25
+2026-06-02T19:14:46.1597851Z   java-package: jdk
+2026-06-02T19:14:46.1598062Z   check-latest: false
+2026-06-02T19:14:46.1598293Z   server-id: github
+2026-06-02T19:14:46.1598556Z   server-username: GITHUB_ACTOR
+2026-06-02T19:14:46.1598821Z   server-password: GITHUB_TOKEN
+2026-06-02T19:14:46.1599078Z   overwrite-settings: true
+2026-06-02T19:14:46.1599311Z   job-status: success
+2026-06-02T19:14:46.1602208Z   token: ***
+2026-06-02T19:14:46.1602418Z ##[endgroup]
+2026-06-02T19:14:46.3070801Z ##[group]Installed distributions
+2026-06-02T19:14:46.3132153Z Resolved Java 25.0.3+9 from tool-cache
+2026-06-02T19:14:46.3132685Z Setting Java 25.0.3+9 as the default
+2026-06-02T19:14:46.3143725Z Creating toolchains.xml for JDK version 25 from temurin
+2026-06-02T19:14:46.3218990Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-02T19:14:46.3219438Z 
+2026-06-02T19:14:46.3219624Z Java configuration:
+2026-06-02T19:14:46.3220069Z   Distribution: temurin
+2026-06-02T19:14:46.3220511Z   Version: 25.0.3+9
+2026-06-02T19:14:46.3221132Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:46.3221712Z 
+2026-06-02T19:14:46.3222242Z ##[endgroup]
+2026-06-02T19:14:46.3241230Z Creating settings.xml with server-id: github
+2026-06-02T19:14:46.3241641Z Writing to /home/runner/.m2/settings.xml
+2026-06-02T19:14:46.3484315Z ##[group]Run gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
+2026-06-02T19:14:46.3485205Z with:
+2026-06-02T19:14:46.3485425Z   cache-provider: enhanced
+2026-06-02T19:14:46.3485681Z   cache-disabled: false
+2026-06-02T19:14:46.3485919Z   cache-read-only: true
+2026-06-02T19:14:46.3486147Z   cache-write-only: false
+2026-06-02T19:14:46.3486594Z   cache-overwrite-existing: false
+2026-06-02T19:14:46.3486872Z   cache-cleanup: on-success
+2026-06-02T19:14:46.3487176Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-02T19:14:46.3487505Z   add-job-summary: always
+2026-06-02T19:14:46.3487759Z   add-job-summary-as-pr-comment: never
+2026-06-02T19:14:46.3488050Z   dependency-graph: disabled
+2026-06-02T19:14:46.3488365Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-02T19:14:46.3488737Z   dependency-graph-continue-on-failure: true
+2026-06-02T19:14:46.3489042Z   build-scan-publish: false
+2026-06-02T19:14:46.3489287Z   validate-wrappers: true
+2026-06-02T19:14:46.3489581Z   allow-snapshot-wrappers: false
+2026-06-02T19:14:46.3489863Z   gradle-home-cache-strict-match: false
+2026-06-02T19:14:46.3490155Z   workflow-job-context: null
+2026-06-02T19:14:46.3493162Z   github-token: ***
+2026-06-02T19:14:46.3493380Z env:
+2026-06-02T19:14:46.3493684Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:46.3494202Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:46.3494869Z ##[endgroup]
+2026-06-02T19:14:46.8532913Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-02T19:14:46.8536915Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-06-02T19:14:46.9316108Z ##[group]Restore Gradle state from cache
+2026-06-02T19:14:47.1632329Z Cache hit for restore-key: gradle-home-v1|Linux-X64|fullbuild[27df40b80d25f4e0c5be504ed712742e]-466b106fdf78ceabc19b5f5fe7c8e4fb51ff43c3
+2026-06-02T19:14:48.3913450Z Received 9618114 of 13812418 (69.6%), 9.2 MBs/sec
+2026-06-02T19:14:48.4028690Z Received 13812418 of 13812418 (100.0%), 13.0 MBs/sec
+2026-06-02T19:14:48.4029911Z Cache Size: ~13 MB (13812418 B)
+2026-06-02T19:14:48.4061650Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2093c666-9b89-4087-8f99-b9d9135c03c1/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:48.5330412Z Cache restored successfully
+2026-06-02T19:14:48.5342104Z Restored cache entry with key gradle-home-v1|Linux-X64|fullbuild[27df40b80d25f4e0c5be504ed712742e]-56ba3934acd67d73b6a2d38dda83cd9b9086bfca to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 1601ms
+2026-06-02T19:14:48.7470762Z Cache hit for: gradle-groovy-dsl-v1-dedcd0dc618c58217d88b62edbfb8124
+2026-06-02T19:14:48.7503930Z Cache hit for: gradle-dependencies-v1-5d6d2d318b3d7d5fbe8577810e370d4b
+2026-06-02T19:14:48.7539276Z Cache hit for: gradle-instrumented-jars-v1-6dc8651f9b7823e480b28854df2da209
+2026-06-02T19:14:48.7625790Z Cache hit for: gradle-wrapper-zips-v1-32a3a100d181ec75e824fde1164fcedd
+2026-06-02T19:14:48.7710068Z Cache hit for: gradle-generated-gradle-jars-v1-a170f616d8fd19db0bb463c397263c9f
+2026-06-02T19:14:48.7803290Z Cache hit for: gradle-transforms-v1-b29455e49ef4550674e57b8f38ebec12
+2026-06-02T19:14:49.2502810Z Received 86655 of 86655 (100.0%), 0.3 MBs/sec
+2026-06-02T19:14:49.2503508Z Cache Size: ~0 MB (86655 B)
+2026-06-02T19:14:49.2531605Z [command]/usr/bin/tar -xf /home/runner/work/_temp/cab99c71-adf7-447a-a3ef-d7ad703a7ded/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:49.2673525Z Cache restored successfully
+2026-06-02T19:14:49.2676605Z Restored cache entry with key gradle-instrumented-jars-v1-6dc8651f9b7823e480b28854df2da209 to /home/runner/.gradle/caches/jars-*/*/ in 731ms
+2026-06-02T19:14:49.3219932Z Received 150832 of 150832 (100.0%), 0.4 MBs/sec
+2026-06-02T19:14:49.3220684Z Cache Size: ~0 MB (150832 B)
+2026-06-02T19:14:49.3256090Z [command]/usr/bin/tar -xf /home/runner/work/_temp/09a61047-2da2-4a63-ba4c-83c957a3b797/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:49.3589758Z Cache restored successfully
+2026-06-02T19:14:49.3591813Z Restored cache entry with key gradle-groovy-dsl-v1-dedcd0dc618c58217d88b62edbfb8124 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 823ms
+2026-06-02T19:14:49.9656010Z Received 20971520 of 47802115 (43.9%), 19.9 MBs/sec
+2026-06-02T19:14:49.9873031Z Received 12582912 of 42069614 (29.9%), 12.0 MBs/sec
+2026-06-02T19:14:50.0140705Z Received 0 of 19773956 (0.0%), 0.0 MBs/sec
+2026-06-02T19:14:50.0537536Z Received 0 of 139594732 (0.0%), 0.0 MBs/sec
+2026-06-02T19:14:50.1139925Z Received 47802115 of 47802115 (100.0%), 39.5 MBs/sec
+2026-06-02T19:14:50.1140924Z Cache Size: ~46 MB (47802115 B)
+2026-06-02T19:14:50.1278732Z [command]/usr/bin/tar -xf /home/runner/work/_temp/fbacab04-caad-4b40-ab1f-5e8bd81fa5ce/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:50.2510556Z Cache restored successfully
+2026-06-02T19:14:50.2537308Z Restored cache entry with key gradle-dependencies-v1-5d6d2d318b3d7d5fbe8577810e370d4b to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 1718ms
+2026-06-02T19:14:50.3115672Z Received 19773956 of 19773956 (100.0%), 14.5 MBs/sec
+2026-06-02T19:14:50.3116455Z Cache Size: ~19 MB (19773956 B)
+2026-06-02T19:14:50.3235173Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d6f4c81b-03ac-4fdd-a61c-898d02d823b0/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:50.3755364Z Received 42069614 of 42069614 (100.0%), 28.9 MBs/sec
+2026-06-02T19:14:50.3766304Z Cache Size: ~40 MB (42069614 B)
+2026-06-02T19:14:50.3783296Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0e45d66e-7e46-4089-b29a-9c1b80455dc4/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:50.6088965Z Cache restored successfully
+2026-06-02T19:14:50.6130030Z Restored cache entry with key gradle-transforms-v1-b29455e49ef4550674e57b8f38ebec12 to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 2076ms
+2026-06-02T19:14:50.7853251Z Cache restored successfully
+2026-06-02T19:14:50.7891953Z Restored cache entry with key gradle-generated-gradle-jars-v1-a170f616d8fd19db0bb463c397263c9f to /home/runner/.gradle/caches/9.5.1/generated-gradle-jars/gradle-api-9.5.1.jar in 2254ms
+2026-06-02T19:14:51.0575794Z Received 113246208 of 139594732 (81.1%), 54.0 MBs/sec
+2026-06-02T19:14:51.4115239Z Received 139594732 of 139594732 (100.0%), 56.5 MBs/sec
+2026-06-02T19:14:51.4116236Z Cache Size: ~133 MB (139594732 B)
+2026-06-02T19:14:51.4240236Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b4be3b3b-629c-451f-9841-02398d658308/cache.tzst -P -C /home/runner/work/litiengine/litiengine --use-compress-program unzstd
+2026-06-02T19:14:51.6386064Z Cache restored successfully
+2026-06-02T19:14:51.6449903Z Restored cache entry with key gradle-wrapper-zips-v1-32a3a100d181ec75e824fde1164fcedd to /home/runner/.gradle/wrapper/dists/gradle-9.5.1-bin/iq79hdu3mqx29lgffhp8bfmx in 3109ms
+2026-06-02T19:14:51.6534266Z ##[endgroup]
+2026-06-02T19:14:51.6697759Z ##[group]All Gradle Wrapper jars are valid
+2026-06-02T19:14:51.6699157Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-02T19:14:51.6700258Z   497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7 gradle/wrapper/gradle-wrapper.jar
+2026-06-02T19:14:51.6701594Z ##[endgroup]
+2026-06-02T19:14:51.6882223Z ##[group]Run gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
+2026-06-02T19:14:51.6882759Z with:
+2026-06-02T19:14:51.6883007Z   min-wrapper-count: 1
+2026-06-02T19:14:51.6883294Z   allow-snapshots: false
+2026-06-02T19:14:51.6883565Z env:
+2026-06-02T19:14:51.6883913Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:51.6884465Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:51.6885303Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-02T19:14:51.6885666Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-02T19:14:51.6886005Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-02T19:14:51.6886702Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-02T19:14:51.6887235Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-02T19:14:51.6887601Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-02T19:14:51.6887947Z ##[endgroup]
+2026-06-02T19:14:52.3017438Z Fetched 10 of 11 checksums
+2026-06-02T19:14:52.4382536Z Fetched 11 of 11 checksums
+2026-06-02T19:14:52.4384026Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-02T19:14:52.4385917Z   497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7 gradle/wrapper/gradle-wrapper.jar
+2026-06-02T19:14:52.4515902Z ##[group]Run sudo apt-get -y install at-spi2-core
+2026-06-02T19:14:52.4516416Z [36;1msudo apt-get -y install at-spi2-core[0m
+2026-06-02T19:14:52.4544945Z shell: /usr/bin/bash -e {0}
+2026-06-02T19:14:52.4545290Z env:
+2026-06-02T19:14:52.4545655Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:52.4546235Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:52.4546756Z   GRADLE_ACTION_ID: gradle/actions/wrapper-validation
+2026-06-02T19:14:52.4547136Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-02T19:14:52.4547474Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-02T19:14:52.4547979Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-02T19:14:52.4548520Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-02T19:14:52.4548895Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-02T19:14:52.4549210Z ##[endgroup]
+2026-06-02T19:14:53.4163700Z Reading package lists...
+2026-06-02T19:14:53.6292070Z Building dependency tree...
+2026-06-02T19:14:53.6303460Z Reading state information...
+2026-06-02T19:14:53.8048004Z The following additional packages will be installed:
+2026-06-02T19:14:53.8055336Z   gsettings-desktop-schemas session-migration
+2026-06-02T19:14:53.8265589Z The following NEW packages will be installed:
+2026-06-02T19:14:53.8273431Z   at-spi2-core gsettings-desktop-schemas session-migration
+2026-06-02T19:14:53.8501393Z 0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+2026-06-02T19:14:53.8502083Z Need to get 101 kB of archives.
+2026-06-02T19:14:53.8502696Z After this operation, 547 kB of additional disk space will be used.
+2026-06-02T19:14:53.8503240Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-06-02T19:14:53.9197981Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 session-migration amd64 0.3.9build1 [9034 B]
+2026-06-02T19:14:53.9674332Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 gsettings-desktop-schemas all 46.1-0ubuntu1 [35.6 kB]
+2026-06-02T19:14:54.0152033Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 at-spi2-core amd64 2.52.0-1build1 [56.6 kB]
+2026-06-02T19:14:54.2716779Z Fetched 101 kB in 0s (563 kB/s)
+2026-06-02T19:14:54.3051057Z Selecting previously unselected package session-migration.
+2026-06-02T19:14:54.3325389Z (Reading database ... 
+2026-06-02T19:14:54.3326019Z (Reading database ... 5%
+2026-06-02T19:14:54.3326492Z (Reading database ... 10%
+2026-06-02T19:14:54.3326922Z (Reading database ... 15%
+2026-06-02T19:14:54.3327664Z (Reading database ... 20%
+2026-06-02T19:14:54.3328362Z (Reading database ... 25%
+2026-06-02T19:14:54.3328841Z (Reading database ... 30%
+2026-06-02T19:14:54.3329253Z (Reading database ... 35%
+2026-06-02T19:14:54.3329654Z (Reading database ... 40%
+2026-06-02T19:14:54.3330053Z (Reading database ... 45%
+2026-06-02T19:14:54.3330456Z (Reading database ... 50%
+2026-06-02T19:14:54.3372018Z (Reading database ... 55%
+2026-06-02T19:14:54.4791888Z (Reading database ... 60%
+2026-06-02T19:14:54.6835958Z (Reading database ... 65%
+2026-06-02T19:14:54.8328764Z (Reading database ... 70%
+2026-06-02T19:14:54.9826275Z (Reading database ... 75%
+2026-06-02T19:14:55.1305021Z (Reading database ... 80%
+2026-06-02T19:14:55.3265389Z (Reading database ... 85%
+2026-06-02T19:14:55.4280636Z (Reading database ... 90%
+2026-06-02T19:14:55.6187837Z (Reading database ... 95%
+2026-06-02T19:14:55.6188782Z (Reading database ... 100%
+2026-06-02T19:14:55.6189606Z (Reading database ... 202271 files and directories currently installed.)
+2026-06-02T19:14:55.6235372Z Preparing to unpack .../session-migration_0.3.9build1_amd64.deb ...
+2026-06-02T19:14:55.6263626Z Unpacking session-migration (0.3.9build1) ...
+2026-06-02T19:14:55.6529311Z Selecting previously unselected package gsettings-desktop-schemas.
+2026-06-02T19:14:55.6658199Z Preparing to unpack .../gsettings-desktop-schemas_46.1-0ubuntu1_all.deb ...
+2026-06-02T19:14:55.6677062Z Unpacking gsettings-desktop-schemas (46.1-0ubuntu1) ...
+2026-06-02T19:14:55.7003743Z Selecting previously unselected package at-spi2-core.
+2026-06-02T19:14:55.7132468Z Preparing to unpack .../at-spi2-core_2.52.0-1build1_amd64.deb ...
+2026-06-02T19:14:55.7144138Z Unpacking at-spi2-core (2.52.0-1build1) ...
+2026-06-02T19:14:55.7573101Z Setting up session-migration (0.3.9build1) ...
+2026-06-02T19:14:55.8681643Z Created symlink /etc/systemd/user/graphical-session-pre.target.wants/session-migration.service → /usr/lib/systemd/user/session-migration.service.
+2026-06-02T19:14:55.8682783Z 
+2026-06-02T19:14:55.8713499Z Setting up gsettings-desktop-schemas (46.1-0ubuntu1) ...
+2026-06-02T19:14:55.8754180Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-06-02T19:14:55.8777423Z Not building database; man-db/auto-update is not 'true'.
+2026-06-02T19:14:55.8792832Z Processing triggers for libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.8) ...
+2026-06-02T19:14:55.8921299Z Setting up at-spi2-core (2.52.0-1build1) ...
+2026-06-02T19:14:56.5813137Z 
+2026-06-02T19:14:56.5813903Z Running kernel seems to be up-to-date.
+2026-06-02T19:14:56.5814335Z 
+2026-06-02T19:14:56.5814851Z No services need to be restarted.
+2026-06-02T19:14:56.5815300Z 
+2026-06-02T19:14:56.5815499Z No containers need to be restarted.
+2026-06-02T19:14:56.5815837Z 
+2026-06-02T19:14:56.5816075Z No user sessions are running outdated binaries.
+2026-06-02T19:14:56.5816482Z 
+2026-06-02T19:14:56.5816872Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-06-02T19:14:57.4486683Z ##[group]Run ./gradlew build -x test -PskipSpotless
+2026-06-02T19:14:57.4487220Z [36;1m./gradlew build -x test -PskipSpotless[0m
+2026-06-02T19:14:57.4513860Z shell: /usr/bin/bash -e {0}
+2026-06-02T19:14:57.4514190Z env:
+2026-06-02T19:14:57.4514997Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:57.4515708Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:14:57.4516332Z   GRADLE_ACTION_ID: gradle/actions/wrapper-validation
+2026-06-02T19:14:57.4516797Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-02T19:14:57.4517212Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-02T19:14:57.4517835Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-02T19:14:57.4518516Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-02T19:14:57.4518971Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-02T19:14:57.4519371Z ##[endgroup]
+2026-06-02T19:14:59.0230429Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-02T19:15:05.5236027Z > Task :buildSrc:extractPluginRequests FROM-CACHE
+2026-06-02T19:15:05.5305976Z > Task :buildSrc:generatePluginAdapters FROM-CACHE
+2026-06-02T19:15:05.6231010Z > Task :buildSrc:compileJava FROM-CACHE
+2026-06-02T19:15:05.6232449Z > Task :buildSrc:compileGroovy NO-SOURCE
+2026-06-02T19:15:05.6233571Z > Task :buildSrc:compileGroovyPlugins FROM-CACHE
+2026-06-02T19:15:05.6243496Z > Task :buildSrc:pluginDescriptors
+2026-06-02T19:15:05.6244346Z > Task :buildSrc:processResources
+2026-06-02T19:15:05.7246951Z > Task :buildSrc:classes
+2026-06-02T19:15:05.7265871Z > Task :buildSrc:jar
+2026-06-02T19:15:13.3228133Z 
+2026-06-02T19:15:13.3232262Z > Configure project :litiengine
+2026-06-02T19:15:13.3233163Z Reckoned version: 0.12.0-SNAPSHOT
+2026-06-02T19:15:15.3237003Z 
+2026-06-02T19:15:15.3265772Z > Task :compileJava NO-SOURCE
+2026-06-02T19:15:15.3286262Z > Task :processResources NO-SOURCE
+2026-06-02T19:15:15.3325210Z > Task :classes UP-TO-DATE
+2026-06-02T19:15:15.3335249Z > Task :jar
+2026-06-02T19:15:15.3365190Z > Task :assemble
+2026-06-02T19:15:15.3385315Z > Task :spotlessCheck UP-TO-DATE
+2026-06-02T19:15:15.3395262Z > Task :check
+2026-06-02T19:15:15.3415067Z > Task :build
+2026-06-02T19:15:15.4224509Z > Task :utiliti:processResources
+2026-06-02T19:15:15.4245009Z > Task :utiliti:createLicenseProperties FROM-CACHE
+2026-06-02T19:15:15.4266415Z > Task :utiliti:check
+2026-06-02T19:15:15.5227076Z > Task :shared:compileJava FROM-CACHE
+2026-06-02T19:15:15.5229935Z > Task :shared:processResources NO-SOURCE
+2026-06-02T19:15:15.5230513Z > Task :shared:classes UP-TO-DATE
+2026-06-02T19:15:15.5231048Z > Task :shared:jar
+2026-06-02T19:15:15.5231477Z > Task :shared:assemble
+2026-06-02T19:15:15.5236033Z > Task :shared:check
+2026-06-02T19:15:15.5236518Z > Task :shared:build
+2026-06-02T19:15:15.7239071Z > Task :litiengine:compileJava FROM-CACHE
+2026-06-02T19:15:15.8228208Z > Task :litiengine:processResources
+2026-06-02T19:15:15.8252711Z > Task :litiengine:classes
+2026-06-02T19:15:16.0225385Z > Task :litiengine:jar
+2026-06-02T19:15:16.1245628Z > Task :utiliti:compileJava FROM-CACHE
+2026-06-02T19:15:16.1305136Z > Task :utiliti:classes
+2026-06-02T19:15:16.2227090Z > Task :litiengine:sourcesJar
+2026-06-02T19:15:16.2245465Z > Task :litiengine:assemble
+2026-06-02T19:15:16.2285347Z > Task :litiengine:check
+2026-06-02T19:15:16.2285873Z > Task :litiengine:build
+2026-06-02T19:15:16.2286350Z > Task :utiliti:jar
+2026-06-02T19:15:17.0236152Z > Task :utiliti:startScripts
+2026-06-02T19:15:17.1223742Z > Task :utiliti:distTar
+2026-06-02T19:15:17.4223093Z > Task :utiliti:distZip
+2026-06-02T19:15:17.4231090Z > Task :utiliti:assemble
+2026-06-02T19:15:17.4231936Z > Task :utiliti:build
+2026-06-02T19:15:17.4233715Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1780427702606.json
+2026-06-02T19:15:17.4235156Z 
+2026-06-02T19:15:17.4235752Z BUILD SUCCESSFUL in 19s
+2026-06-02T19:15:17.4237038Z 21 actionable tasks: 13 executed, 8 from cache
+2026-06-02T19:15:17.7711360Z ##[group]Run coactions/setup-xvfb@b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3
+2026-06-02T19:15:17.7711855Z with:
+2026-06-02T19:15:17.7712149Z   run: ./gradlew jacocoTestReport -PskipSpotless
+2026-06-02T19:15:17.7712500Z env:
+2026-06-02T19:15:17.7712846Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:15:17.7713398Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-02T19:15:17.7713889Z   GRADLE_ACTION_ID: gradle/actions/wrapper-validation
+2026-06-02T19:15:17.7714260Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-02T19:15:17.7714990Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-02T19:15:17.7715520Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-02T19:15:17.7716054Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-02T19:15:17.7716429Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-02T19:15:17.7716780Z ##[endgroup]
+2026-06-02T19:15:17.8128835Z [command]/usr/bin/sudo apt-get install -y xvfb x11-xserver-utils
+2026-06-02T19:15:17.8358375Z Reading package lists...
+2026-06-02T19:15:18.0110245Z Building dependency tree...
+2026-06-02T19:15:18.0117826Z Reading state information...
+2026-06-02T19:15:18.1647212Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2026-06-02T19:15:18.1647888Z Suggested packages:
+2026-06-02T19:15:18.1648340Z   nickle cairo-5c xorg-docs-core
+2026-06-02T19:15:18.1791292Z The following NEW packages will be installed:
+2026-06-02T19:15:18.1792049Z   x11-xserver-utils
+2026-06-02T19:15:18.1959543Z 0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+2026-06-02T19:15:18.1960305Z Need to get 169 kB of archives.
+2026-06-02T19:15:18.1960993Z After this operation, 573 kB of additional disk space will be used.
+2026-06-02T19:15:18.1961791Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-06-02T19:15:18.2636133Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 x11-xserver-utils amd64 7.7+10build2 [169 kB]
+2026-06-02T19:15:18.6554168Z Fetched 169 kB in 0s (771 kB/s)
+2026-06-02T19:15:18.6777019Z Selecting previously unselected package x11-xserver-utils.
+2026-06-02T19:15:18.6833860Z (Reading database ... 
+2026-06-02T19:15:18.6834863Z (Reading database ... 5%
+2026-06-02T19:15:18.6835692Z (Reading database ... 10%
+2026-06-02T19:15:18.6836501Z (Reading database ... 15%
+2026-06-02T19:15:18.6837293Z (Reading database ... 20%
+2026-06-02T19:15:18.6838097Z (Reading database ... 25%
+2026-06-02T19:15:18.6838695Z (Reading database ... 30%
+2026-06-02T19:15:18.6839125Z (Reading database ... 35%
+2026-06-02T19:15:18.6839549Z (Reading database ... 40%
+2026-06-02T19:15:18.6839977Z (Reading database ... 45%
+2026-06-02T19:15:18.6840398Z (Reading database ... 50%
+2026-06-02T19:15:18.6843192Z (Reading database ... 55%
+2026-06-02T19:15:18.6962697Z (Reading database ... 60%
+2026-06-02T19:15:18.6983311Z (Reading database ... 65%
+2026-06-02T19:15:18.7005870Z (Reading database ... 70%
+2026-06-02T19:15:18.7029316Z (Reading database ... 75%
+2026-06-02T19:15:18.7058188Z (Reading database ... 80%
+2026-06-02T19:15:18.7081200Z (Reading database ... 85%
+2026-06-02T19:15:18.7232057Z (Reading database ... 90%
+2026-06-02T19:15:18.7470690Z (Reading database ... 95%
+2026-06-02T19:15:18.7471492Z (Reading database ... 100%
+2026-06-02T19:15:18.7472163Z (Reading database ... 202348 files and directories currently installed.)
+2026-06-02T19:15:18.7511493Z Preparing to unpack .../x11-xserver-utils_7.7+10build2_amd64.deb ...
+2026-06-02T19:15:18.7522490Z Unpacking x11-xserver-utils (7.7+10build2) ...
+2026-06-02T19:15:18.8069427Z Setting up x11-xserver-utils (7.7+10build2) ...
+2026-06-02T19:15:18.8105790Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-06-02T19:15:18.8124265Z Not building database; man-db/auto-update is not 'true'.
+2026-06-02T19:15:19.3536275Z 
+2026-06-02T19:15:19.3536900Z Running kernel seems to be up-to-date.
+2026-06-02T19:15:19.3537574Z 
+2026-06-02T19:15:19.3538594Z Restarting services...
+2026-06-02T19:15:19.3608094Z 
+2026-06-02T19:15:19.3608743Z Service restarts being deferred:
+2026-06-02T19:15:19.3611074Z  systemctl restart hosted-compute-agent.service
+2026-06-02T19:15:19.3611365Z 
+2026-06-02T19:15:19.3612111Z No containers need to be restarted.
+2026-06-02T19:15:19.3612330Z 
+2026-06-02T19:15:19.3612676Z No user sessions are running outdated binaries.
+2026-06-02T19:15:19.3612933Z 
+2026-06-02T19:15:19.3613178Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-06-02T19:15:20.2210885Z Command: ./gradlew jacocoTestReport -PskipSpotless
+2026-06-02T19:15:20.2231311Z [command]/usr/bin/xvfb-run --auto-servernum ./gradlew jacocoTestReport -PskipSpotless
+2026-06-02T19:15:21.4905996Z > Task :buildSrc:extractPluginRequests UP-TO-DATE
+2026-06-02T19:15:21.4961112Z > Task :buildSrc:generatePluginAdapters UP-TO-DATE
+2026-06-02T19:15:21.4987032Z > Task :buildSrc:compileJava UP-TO-DATE
+2026-06-02T19:15:21.5035188Z > Task :buildSrc:compileGroovy NO-SOURCE
+2026-06-02T19:15:21.5035899Z > Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+2026-06-02T19:15:21.5036559Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-06-02T19:15:21.5037217Z > Task :buildSrc:processResources UP-TO-DATE
+2026-06-02T19:15:21.5065079Z > Task :buildSrc:classes UP-TO-DATE
+2026-06-02T19:15:21.5095181Z > Task :buildSrc:jar UP-TO-DATE
+2026-06-02T19:15:21.8831647Z 
+2026-06-02T19:15:21.8865571Z > Configure project :litiengine
+2026-06-02T19:15:21.8891523Z Reckoned version: 0.12.0-SNAPSHOT
+2026-06-02T19:15:22.0820390Z 
+2026-06-02T19:15:22.0847555Z > Task :utiliti:processResources UP-TO-DATE
+2026-06-02T19:15:22.0848852Z > Task :utiliti:createLicenseProperties UP-TO-DATE
+2026-06-02T19:15:22.0849987Z > Task :utiliti:processTestResources NO-SOURCE
+2026-06-02T19:15:22.0852201Z > Task :litiengine:compileJava UP-TO-DATE
+2026-06-02T19:15:22.0853232Z > Task :shared:compileJava UP-TO-DATE
+2026-06-02T19:15:22.0855692Z > Task :litiengine:processResources UP-TO-DATE
+2026-06-02T19:15:22.0856655Z > Task :litiengine:classes UP-TO-DATE
+2026-06-02T19:15:22.0857880Z > Task :shared:processResources NO-SOURCE
+2026-06-02T19:15:22.0858612Z > Task :shared:classes UP-TO-DATE
+2026-06-02T19:15:22.0859286Z > Task :litiengine:jar UP-TO-DATE
+2026-06-02T19:15:22.0859944Z > Task :shared:jar UP-TO-DATE
+2026-06-02T19:15:22.0860592Z > Task :utiliti:compileJava UP-TO-DATE
+2026-06-02T19:15:22.0861285Z > Task :utiliti:classes UP-TO-DATE
+2026-06-02T19:15:22.0861961Z > Task :shared:compileTestJava NO-SOURCE
+2026-06-02T19:15:22.0862701Z > Task :shared:processTestResources NO-SOURCE
+2026-06-02T19:15:22.0863671Z > Task :shared:testClasses UP-TO-DATE
+2026-06-02T19:15:22.0866072Z > Task :shared:test NO-SOURCE
+2026-06-02T19:15:22.0868148Z > Task :shared:jacocoTestReport SKIPPED
+2026-06-02T19:15:22.1867127Z > Task :utiliti:compileTestJava FROM-CACHE
+2026-06-02T19:15:22.1875228Z > Task :utiliti:testClasses UP-TO-DATE
+2026-06-02T19:15:22.2839756Z > Task :litiengine:compileTestJava FROM-CACHE
+2026-06-02T19:15:22.2845596Z > Task :litiengine:processTestResources
+2026-06-02T19:15:22.2875585Z > Task :litiengine:testClasses
+2026-06-02T19:15:25.8818115Z 
+2026-06-02T19:15:25.8857098Z > Task :litiengine:test
+2026-06-02T19:15:25.8857744Z 
+2026-06-02T19:15:25.8858314Z AlignTests > getClampedLocation_InPoint() FAILED
+2026-06-02T19:15:25.8859289Z     java.lang.IllegalArgumentException at AlignTests.java:73
+2026-06-02T19:15:25.8859964Z 
+2026-06-02T19:15:25.8860406Z AlignTests > getClampedLocation_OffPoint() FAILED
+2026-06-02T19:15:25.8861396Z     java.lang.IllegalArgumentException at AlignTests.java:64
+2026-06-02T19:15:25.9825107Z 
+2026-06-02T19:15:25.9856155Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-02T19:15:28.0875309Z 
+2026-06-02T19:15:28.0935485Z > Task :utiliti:test
+2026-06-02T19:15:29.2817713Z > Task :utiliti:jacocoTestReport
+2026-06-02T19:15:39.0848937Z WARNING: A restricted method in java.lang.foreign.Linker has been called
+2026-06-02T19:15:39.0855107Z WARNING: java.lang.foreign.Linker::downcallHandle has been called by de.gurkenlabs.input4j.foreign.NativeHelper in an unnamed module (file:/home/runner/.gradle/caches/modules-2/files-2.1/de.gurkenlabs/input4j/1.2.0/afeb8b9e9c2ff9e40ab0a0b1abf6e85b8bc1a5a5/input4j-1.2.0.jar)
+2026-06-02T19:15:39.0858431Z WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+2026-06-02T19:15:39.0872736Z WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-06-02T19:15:39.0873643Z 
+2026-06-02T19:15:42.8830061Z 
+2026-06-02T19:15:42.8854241Z > Task :litiengine:test
+2026-06-02T19:15:42.8893293Z 
+2026-06-02T19:15:42.8935234Z 1245 tests completed, 2 failed, 3 skipped
+2026-06-02T19:15:43.1826377Z 
+2026-06-02T19:15:43.1856600Z > Task :litiengine:test FAILED
+2026-06-02T19:15:43.1859339Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__coactions_setup-xvfb-1780427721216.json
+2026-06-02T19:15:43.1860549Z 
+2026-06-02T19:15:43.1860897Z FAILURE: Build failed with an exception.
+2026-06-02T19:15:43.1863911Z 
+2026-06-02T19:15:43.1864849Z * What went wrong:
+2026-06-02T19:15:43.1865657Z Execution failed for task ':litiengine:test'.
+2026-06-02T19:15:43.1867112Z > There were failing tests. See the report at: file:///home/runner/work/litiengine/litiengine/litiengine/build/reports/tests/test/index.html
+2026-06-02T19:15:43.1868338Z 
+2026-06-02T19:15:43.1868669Z * Try:
+2026-06-02T19:15:43.1869501Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-02T19:15:43.1876812Z 
+2026-06-02T19:15:43.1877208Z BUILD FAILED in 22s
+2026-06-02T19:15:43.1877998Z 21 actionable tasks: 4 executed, 2 from cache, 15 up-to-date
+2026-06-02T19:15:43.2529342Z [command]/usr/bin/bash /home/runner/work/_actions/coactions/setup-xvfb/b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3/dist/cleanup.sh
+2026-06-02T19:15:43.2551231Z /usr/bin/bash: /home/runner/work/_actions/coactions/setup-xvfb/b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3/dist/cleanup.sh: No such file or directory
+2026-06-02T19:15:43.2586250Z ##[error]The process '/usr/bin/xvfb-run' failed with exit code 1
+2026-06-02T19:15:43.2742017Z Post job cleanup.
+2026-06-02T19:15:43.5230280Z In post-action step
+2026-06-02T19:15:43.5240538Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-06-02T19:15:43.6137715Z Cache is read-only: will not save state for use in subsequent builds.
+2026-06-02T19:15:43.6150001Z Generating Job Summary
+2026-06-02T19:15:43.6177335Z Completed post-action step
+2026-06-02T19:15:43.6413055Z Post job cleanup.
+2026-06-02T19:15:43.7791430Z Post job cleanup.
+2026-06-02T19:15:43.8629071Z [command]/usr/bin/git version
+2026-06-02T19:15:43.8666711Z git version 2.54.0
+2026-06-02T19:15:43.8708671Z Temporarily overriding HOME='/home/runner/work/_temp/6c5f40ec-cc67-4935-9032-050962abd4a9' before making global git config changes
+2026-06-02T19:15:43.8710204Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-02T19:15:43.8715283Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/litiengine/litiengine
+2026-06-02T19:15:43.8747536Z Removing SSH command configuration
+2026-06-02T19:15:43.8754346Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-02T19:15:43.8787616Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-02T19:15:43.9010191Z Removing HTTP extra header
+2026-06-02T19:15:43.9015831Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-02T19:15:43.9049989Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-02T19:15:43.9264999Z Removing includeIf entries pointing to credentials config files
+2026-06-02T19:15:43.9271567Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-02T19:15:43.9294639Z includeif.gitdir:/home/runner/work/litiengine/litiengine/.git.path
+2026-06-02T19:15:43.9295973Z includeif.gitdir:/home/runner/work/litiengine/litiengine/.git/worktrees/*.path
+2026-06-02T19:15:43.9296963Z includeif.gitdir:/github/workspace/.git.path
+2026-06-02T19:15:43.9297764Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-02T19:15:43.9305303Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/litiengine/litiengine/.git.path
+2026-06-02T19:15:43.9326529Z /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9337210Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/litiengine/litiengine/.git.path /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9370674Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/litiengine/litiengine/.git/worktrees/*.path
+2026-06-02T19:15:43.9391538Z /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9400918Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/litiengine/litiengine/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9430613Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-02T19:15:43.9452549Z /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9459900Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9489849Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-02T19:15:43.9510395Z /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9519107Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config
+2026-06-02T19:15:43.9549657Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-02T19:15:43.9773541Z Removing credentials config '/home/runner/work/_temp/git-credentials-7a1ff4bb-b26f-4f48-a044-9a9f4a77b5cd.config'
+2026-06-02T19:15:43.9949971Z Cleaning up orphan processes
+2026-06-02T19:15:44.0302812Z Terminate orphan process: pid (2570) (java)
+2026-06-02T19:15:44.0356989Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: coactions/setup-xvfb@b6b4fcfb9f5a895edadc3bc76318fae0ac17c8b3. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

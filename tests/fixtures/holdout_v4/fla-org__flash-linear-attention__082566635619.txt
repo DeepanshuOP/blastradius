@@ -1,0 +1,730 @@
+﻿2026-06-21T11:34:39.5240842Z Current runner version: '2.335.1'
+2026-06-21T11:34:39.5245843Z Runner name: 'nvidia-h100'
+2026-06-21T11:34:39.5246461Z Runner group name: 'Default'
+2026-06-21T11:34:39.5247471Z Machine name: 'bd-inst-bnYuDzAUPk'
+2026-06-21T11:34:39.5250415Z ##[group]GITHUB_TOKEN Permissions
+2026-06-21T11:34:39.5252711Z Checks: read
+2026-06-21T11:34:39.5253198Z Contents: read
+2026-06-21T11:34:39.5253617Z Metadata: read
+2026-06-21T11:34:39.5254044Z PullRequests: write
+2026-06-21T11:34:39.5254489Z ##[endgroup]
+2026-06-21T11:34:39.5256604Z Secret source: Actions
+2026-06-21T11:34:39.5257173Z Prepare workflow directory
+2026-06-21T11:34:39.5645235Z Prepare all required actions
+2026-06-21T11:34:39.5683066Z Getting action download info
+2026-06-21T11:34:40.5035778Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-21T11:34:40.9545084Z Uses: fla-org/flash-linear-attention/.github/workflows/reusable-ci-tests.yml@refs/pull/965/merge (b3fd1ee8c5b008de48cb90dd789f2b95ea3a623c)
+2026-06-21T11:34:40.9550660Z ##[group] Inputs
+2026-06-21T11:34:40.9551672Z   runner: nvidia-h100-1
+2026-06-21T11:34:40.9552662Z   gpu_type: nvidia
+2026-06-21T11:34:40.9553605Z   conda_env_name: pytorch_2_12
+2026-06-21T11:34:40.9554669Z   pytorch_version: 
+2026-06-21T11:34:40.9555637Z   pytorch_cuda_version: cu128
+2026-06-21T11:34:40.9556712Z   nvcc_toolkit_version: 12.8.1
+2026-06-21T11:34:40.9558019Z   skip_gpu_check: true
+2026-06-21T11:34:40.9558990Z   skip_models_tests: false
+2026-06-21T11:34:40.9559958Z ##[endgroup]
+2026-06-21T11:34:40.9561024Z Complete job name: Test H100 (PyTorch 2.12) / test-models
+2026-06-21T11:34:41.0339119Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-21T11:34:41.0349547Z ##[group]Run actions/checkout@v4
+2026-06-21T11:34:41.0350734Z with:
+2026-06-21T11:34:41.0351581Z   repository: fla-org/flash-linear-attention
+2026-06-21T11:34:41.0361867Z   token: ***
+2026-06-21T11:34:41.0362645Z   ssh-strict: true
+2026-06-21T11:34:41.0363445Z   ssh-user: git
+2026-06-21T11:34:41.0364272Z   persist-credentials: true
+2026-06-21T11:34:41.0365193Z   clean: true
+2026-06-21T11:34:41.0366012Z   sparse-checkout-cone-mode: true
+2026-06-21T11:34:41.0367198Z   fetch-depth: 1
+2026-06-21T11:34:41.0368022Z   fetch-tags: false
+2026-06-21T11:34:41.0368852Z   show-progress: true
+2026-06-21T11:34:41.0369682Z   lfs: false
+2026-06-21T11:34:41.0370667Z   submodules: false
+2026-06-21T11:34:41.0371531Z   set-safe-directory: true
+2026-06-21T11:34:41.0372618Z env:
+2026-06-21T11:34:41.0373363Z   FLA_CI_ENV: 1
+2026-06-21T11:34:41.0374193Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:34:41.0375160Z ##[endgroup]
+2026-06-21T11:34:41.1341921Z Syncing repository: fla-org/flash-linear-attention
+2026-06-21T11:34:41.1344659Z ##[group]Getting Git version info
+2026-06-21T11:34:41.1346525Z Working directory is '/home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention'
+2026-06-21T11:34:41.1348968Z [command]/usr/bin/git version
+2026-06-21T11:34:41.1349899Z git version 2.34.1
+2026-06-21T11:34:41.1352830Z ##[endgroup]
+2026-06-21T11:34:41.1358350Z Copying '/home/ubuntu/.gitconfig' to '/home/ubuntu/actions-runner/_work/_temp/9a3ed20f-7314-4e7e-8c8a-c567f0cb0689/.gitconfig'
+2026-06-21T11:34:41.1362952Z Temporarily overriding HOME='/home/ubuntu/actions-runner/_work/_temp/9a3ed20f-7314-4e7e-8c8a-c567f0cb0689' before making global git config changes
+2026-06-21T11:34:41.1365792Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-21T11:34:41.1368931Z [command]/usr/bin/git config --global --add safe.directory /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention
+2026-06-21T11:34:41.1372743Z [command]/usr/bin/git config --local --get remote.origin.url
+2026-06-21T11:34:41.1389799Z https://github.com/fla-org/flash-linear-attention
+2026-06-21T11:34:41.1399091Z ##[group]Removing previously created refs, to avoid conflicts
+2026-06-21T11:34:41.1402102Z [command]/usr/bin/git rev-parse --symbolic-full-name --verify --quiet HEAD
+2026-06-21T11:34:41.1419678Z HEAD
+2026-06-21T11:34:41.1450856Z [command]/usr/bin/git branch --delete --force parallel-attn-int64-autotune
+2026-06-21T11:34:41.1610779Z Deleted branch parallel-attn-int64-autotune (was 66e4b1af599).
+2026-06-21T11:34:41.1630107Z ##[endgroup]
+2026-06-21T11:34:41.1633018Z [command]/usr/bin/git submodule status
+2026-06-21T11:34:41.1812430Z ##[group]Cleaning the repository
+2026-06-21T11:34:41.1814028Z [command]/usr/bin/git clean -ffdx
+2026-06-21T11:34:41.1980392Z Removing .pytest_cache/
+2026-06-21T11:34:41.1982041Z Removing build/
+2026-06-21T11:34:41.1983227Z Removing fla/__pycache__/
+2026-06-21T11:34:41.1984560Z Removing fla/layers/__pycache__/
+2026-06-21T11:34:41.1986095Z Removing fla/models/__pycache__/
+2026-06-21T11:34:41.1987532Z Removing fla/models/abc/__pycache__/
+2026-06-21T11:34:41.1989261Z Removing fla/models/bitnet/__pycache__/
+2026-06-21T11:34:41.1990837Z Removing fla/models/comba/__pycache__/
+2026-06-21T11:34:41.1992343Z Removing fla/models/delta_net/__pycache__/
+2026-06-21T11:34:41.1993885Z Removing fla/models/deltaformer/__pycache__/
+2026-06-21T11:34:41.1995177Z Removing fla/models/forgetting_transformer/__pycache__/
+2026-06-21T11:34:41.1996490Z Removing fla/models/gated_deltanet/__pycache__/
+2026-06-21T11:34:41.1997963Z Removing fla/models/gated_deltaproduct/__pycache__/
+2026-06-21T11:34:41.1999646Z Removing fla/models/gla/__pycache__/
+2026-06-21T11:34:41.2001067Z Removing fla/models/gsa/__pycache__/
+2026-06-21T11:34:41.2002132Z Removing fla/models/hgrn/__pycache__/
+2026-06-21T11:34:41.2003195Z Removing fla/models/hgrn2/__pycache__/
+2026-06-21T11:34:41.2004253Z Removing fla/models/kda/__pycache__/
+2026-06-21T11:34:41.2005321Z Removing fla/models/lightnet/__pycache__/
+2026-06-21T11:34:41.2006455Z Removing fla/models/linear_attn/__pycache__/
+2026-06-21T11:34:41.2007983Z Removing fla/models/log_linear_mamba2/__pycache__/
+2026-06-21T11:34:41.2009155Z Removing fla/models/mamba/__pycache__/
+2026-06-21T11:34:41.2010397Z Removing fla/models/mamba2/__pycache__/
+2026-06-21T11:34:41.2011549Z Removing fla/models/mamba3/__pycache__/
+2026-06-21T11:34:41.2012661Z Removing fla/models/mesa_net/__pycache__/
+2026-06-21T11:34:41.2013751Z Removing fla/models/mla/__pycache__/
+2026-06-21T11:34:41.2014796Z Removing fla/models/moba/__pycache__/
+2026-06-21T11:34:41.2015846Z Removing fla/models/mom/__pycache__/
+2026-06-21T11:34:41.2016899Z Removing fla/models/nsa/__pycache__/
+2026-06-21T11:34:41.2017967Z Removing fla/models/parallax/__pycache__/
+2026-06-21T11:34:41.2019069Z Removing fla/models/path_attn/__pycache__/
+2026-06-21T11:34:41.2020162Z Removing fla/models/raven/__pycache__/
+2026-06-21T11:34:41.2021216Z Removing fla/models/retnet/__pycache__/
+2026-06-21T11:34:41.2022280Z Removing fla/models/rodimus/__pycache__/
+2026-06-21T11:34:41.2023344Z Removing fla/models/rwkv6/__pycache__/
+2026-06-21T11:34:41.2024404Z Removing fla/models/rwkv7/__pycache__/
+2026-06-21T11:34:41.2025452Z Removing fla/models/samba/__pycache__/
+2026-06-21T11:34:41.2026546Z Removing fla/models/transformer/__pycache__/
+2026-06-21T11:34:41.2027734Z Removing fla/models/wall_transformer/__pycache__/
+2026-06-21T11:34:41.2028896Z Removing fla/models/yoco/__pycache__/
+2026-06-21T11:34:41.2029917Z Removing fla/modules/__pycache__/
+2026-06-21T11:34:41.2030945Z Removing fla/modules/backends/__pycache__/
+2026-06-21T11:34:41.2032178Z Removing fla/modules/backends/triton_ascend/__pycache__/
+2026-06-21T11:34:41.2033423Z Removing fla/modules/conv/__pycache__/
+2026-06-21T11:34:41.2034493Z Removing fla/modules/conv/cp/__pycache__/
+2026-06-21T11:34:41.2035589Z Removing fla/modules/conv/cuda/__pycache__/
+2026-06-21T11:34:41.2036743Z Removing fla/modules/conv/triton/__pycache__/
+2026-06-21T11:34:41.2037853Z Removing fla/ops/__pycache__/
+2026-06-21T11:34:41.2038823Z Removing fla/ops/abc/__pycache__/
+2026-06-21T11:34:41.2039815Z Removing fla/ops/attn/__pycache__/
+2026-06-21T11:34:41.2041012Z Removing fla/ops/attnres/__pycache__/
+2026-06-21T11:34:41.2042071Z Removing fla/ops/backends/__pycache__/
+2026-06-21T11:34:41.2043130Z Removing fla/ops/based/__pycache__/
+2026-06-21T11:34:41.2044149Z Removing fla/ops/comba/__pycache__/
+2026-06-21T11:34:41.2045159Z Removing fla/ops/common/__pycache__/
+2026-06-21T11:34:41.2046234Z Removing fla/ops/common/backends/__pycache__/
+2026-06-21T11:34:41.2047696Z Removing fla/ops/common/backends/tilelang/__pycache__/
+2026-06-21T11:34:41.2048916Z Removing fla/ops/cp/__pycache__/
+2026-06-21T11:34:41.2049933Z Removing fla/ops/delta_rule/__pycache__/
+2026-06-21T11:34:41.2051226Z Removing fla/ops/deltaformer/__pycache__/
+2026-06-21T11:34:41.2052356Z Removing fla/ops/forgetting_attn/__pycache__/
+2026-06-21T11:34:41.2053539Z Removing fla/ops/gated_delta_product/__pycache__/
+2026-06-21T11:34:41.2054735Z Removing fla/ops/gated_delta_rule/__pycache__/
+2026-06-21T11:34:41.2055855Z Removing fla/ops/gdn2/__pycache__/
+2026-06-21T11:34:41.2056961Z Removing fla/ops/generalized_delta_rule/__pycache__/
+2026-06-21T11:34:41.2058290Z Removing fla/ops/generalized_delta_rule/dplr/__pycache__/
+2026-06-21T11:34:41.2059674Z Removing fla/ops/generalized_delta_rule/iplr/__pycache__/
+2026-06-21T11:34:41.2060881Z Removing fla/ops/gla/__pycache__/
+2026-06-21T11:34:41.2061843Z Removing fla/ops/gsa/__pycache__/
+2026-06-21T11:34:41.2062800Z Removing fla/ops/hgrn/__pycache__/
+2026-06-21T11:34:41.2063769Z Removing fla/ops/kda/__pycache__/
+2026-06-21T11:34:41.2064779Z Removing fla/ops/lightning_attn/__pycache__/
+2026-06-21T11:34:41.2066014Z Removing fla/ops/linear_attn/__pycache__/
+2026-06-21T11:34:41.2067190Z Removing fla/ops/log_linear_attn/__pycache__/
+2026-06-21T11:34:41.2068378Z Removing fla/ops/mesa_net/__pycache__/
+2026-06-21T11:34:41.2069466Z Removing fla/ops/moba/__pycache__/
+2026-06-21T11:34:41.2070535Z Removing fla/ops/nsa/__pycache__/
+2026-06-21T11:34:41.2071617Z Removing fla/ops/parallax/__pycache__/
+2026-06-21T11:34:41.2072748Z Removing fla/ops/path_attn/__pycache__/
+2026-06-21T11:34:41.2073883Z Removing fla/ops/rebased/__pycache__/
+2026-06-21T11:34:41.2074978Z Removing fla/ops/retention/__pycache__/
+2026-06-21T11:34:41.2076077Z Removing fla/ops/rwkv6/__pycache__/
+2026-06-21T11:34:41.2077133Z Removing fla/ops/rwkv7/__pycache__/
+2026-06-21T11:34:41.2078215Z Removing fla/ops/simple_gla/__pycache__/
+2026-06-21T11:34:41.2079322Z Removing fla/ops/utils/__pycache__/
+2026-06-21T11:34:41.2080414Z Removing fla/ops/wall_attn/__pycache__/
+2026-06-21T11:34:41.2081498Z Removing fla/utils/__pycache__/
+2026-06-21T11:34:41.2082563Z Removing flash_linear_attention.egg-info/
+2026-06-21T11:34:41.2083662Z Removing tests/__pycache__/
+2026-06-21T11:34:41.2084633Z Removing tests/layers/__pycache__/
+2026-06-21T11:34:41.2085677Z Removing tests/ops/__pycache__/
+2026-06-21T11:34:41.2088257Z [command]/usr/bin/git reset --hard HEAD
+2026-06-21T11:34:41.2321194Z HEAD is now at b3fd1ee8c5b Merge 66e4b1af5999ad865f4bc9f7c15061e2a8960321 into f0e213dbd8b5fb90c3c7eca869ac1706d5377139
+2026-06-21T11:34:41.2342097Z ##[endgroup]
+2026-06-21T11:34:41.2344207Z ##[group]Disabling automatic garbage collection
+2026-06-21T11:34:41.2347972Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-21T11:34:41.2371911Z ##[endgroup]
+2026-06-21T11:34:41.2373736Z ##[group]Setting up auth
+2026-06-21T11:34:41.2378652Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-21T11:34:41.2404524Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-21T11:34:41.2587286Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-21T11:34:41.2611401Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-21T11:34:41.2784558Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-21T11:34:41.2807355Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-21T11:34:41.2979337Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-21T11:34:41.3006129Z ##[endgroup]
+2026-06-21T11:34:41.3007628Z ##[group]Fetching the repository
+2026-06-21T11:34:41.3014097Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b3fd1ee8c5b008de48cb90dd789f2b95ea3a623c:refs/remotes/pull/965/merge
+2026-06-21T11:34:41.9651565Z ##[endgroup]
+2026-06-21T11:34:41.9652957Z ##[group]Determining the checkout info
+2026-06-21T11:34:41.9654459Z ##[endgroup]
+2026-06-21T11:34:41.9656920Z [command]/usr/bin/git sparse-checkout disable
+2026-06-21T11:34:41.9690860Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-21T11:34:41.9710121Z ##[group]Checking out the ref
+2026-06-21T11:34:41.9711853Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/965/merge
+2026-06-21T11:34:41.9985968Z HEAD is now at b3fd1ee8c5b Merge 66e4b1af5999ad865f4bc9f7c15061e2a8960321 into f0e213dbd8b5fb90c3c7eca869ac1706d5377139
+2026-06-21T11:34:42.0003987Z ##[endgroup]
+2026-06-21T11:34:42.0165955Z [command]/usr/bin/git log -1 --format=%H
+2026-06-21T11:34:42.0301840Z b3fd1ee8c5b008de48cb90dd789f2b95ea3a623c
+2026-06-21T11:34:42.0784555Z Prepare all required actions
+2026-06-21T11:34:42.0786015Z Getting action download info
+2026-06-21T11:34:42.3745694Z Download action repository 'tj-actions/changed-files@v47.0.0' (SHA:24d32ffd492484c1d75e0c0b894501ddb9d30d62)
+2026-06-21T11:34:42.8098520Z ##[group]Run ./.github/actions/setup-ci-env
+2026-06-21T11:34:42.8099014Z with:
+2026-06-21T11:34:42.8099394Z   runner_name: nvidia-h100
+2026-06-21T11:34:42.8099826Z   conda_env_name: pytorch_2_12
+2026-06-21T11:34:42.8100246Z   gpu_type: nvidia
+2026-06-21T11:34:42.8100650Z   pytorch_cuda_version: cu128
+2026-06-21T11:34:42.8101085Z   nvcc_toolkit_version: 12.8.1
+2026-06-21T11:34:42.8101509Z   install_tilelang: false
+2026-06-21T11:34:42.8101911Z   skip_gpu_check: true
+2026-06-21T11:34:42.8102279Z env:
+2026-06-21T11:34:42.8102624Z   FLA_CI_ENV: 1
+2026-06-21T11:34:42.8103025Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:34:42.8103438Z ##[endgroup]
+2026-06-21T11:34:42.8203918Z ##[group]Run if [ -n "$GITHUB_HEAD_REF" ]; then
+2026-06-21T11:34:42.8204668Z [36;1mif [ -n "$GITHUB_HEAD_REF" ]; then[0m
+2026-06-21T11:34:42.8205216Z [36;1m  PR_NUMBER=$(echo "$GITHUB_REF" | awk -F/ '{print $3}')[0m
+2026-06-21T11:34:42.8205913Z [36;1m  if [ -n "$PR_NUMBER" ] && git fetch origin "refs/pull/${PR_NUMBER}/head" --depth=1 2>/dev/null; then[0m
+2026-06-21T11:34:42.8206582Z [36;1m    COMMIT_MSG=$(git log -1 --pretty=%s FETCH_HEAD)[0m
+2026-06-21T11:34:42.8207258Z [36;1m  else[0m
+2026-06-21T11:34:42.8207750Z [36;1m    echo "Could not fetch PR head ref, falling back to merge commit"[0m
+2026-06-21T11:34:42.8208331Z [36;1m    COMMIT_MSG=$(git log -1 --pretty=%s HEAD)[0m
+2026-06-21T11:34:42.8208756Z [36;1m  fi[0m
+2026-06-21T11:34:42.8209085Z [36;1melse[0m
+2026-06-21T11:34:42.8209489Z [36;1m  COMMIT_MSG=$(git log -1 --pretty=%s HEAD)[0m
+2026-06-21T11:34:42.8209907Z [36;1mfi[0m
+2026-06-21T11:34:42.8210457Z [36;1mecho "Latest commit message: $COMMIT_MSG"[0m
+2026-06-21T11:34:42.8210995Z [36;1mif echo "$COMMIT_MSG" | grep -qF "[skip test]"; then[0m
+2026-06-21T11:34:42.8211542Z [36;1m  echo "::notice::Tests skipped by commit message"[0m
+2026-06-21T11:34:42.8212054Z [36;1m  echo "skip_tests=true" >> $GITHUB_OUTPUT[0m
+2026-06-21T11:34:42.8212472Z [36;1melse[0m
+2026-06-21T11:34:42.8212863Z [36;1m  echo "skip_tests=false" >> $GITHUB_OUTPUT[0m
+2026-06-21T11:34:42.8213285Z [36;1mfi[0m
+2026-06-21T11:34:42.8236630Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:34:42.8237133Z env:
+2026-06-21T11:34:42.8237468Z   FLA_CI_ENV: 1
+2026-06-21T11:34:42.8238033Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:34:42.8238430Z ##[endgroup]
+2026-06-21T11:34:43.7108223Z Latest commit message: [Log Linear Attention] Wrap a >127 line to satisfy E501
+2026-06-21T11:34:43.7217165Z ##[group]Run set -e
+2026-06-21T11:34:43.7217509Z [36;1mset -e[0m
+2026-06-21T11:34:43.7217763Z [36;1m[0m
+2026-06-21T11:34:43.7218014Z [36;1mTARGET_CONDA_ENV=""[0m
+2026-06-21T11:34:43.7218365Z [36;1mif [[ "nvidia-h100" == "nvidia-h100-1" ]]; then[0m
+2026-06-21T11:34:43.7218772Z [36;1m  TARGET_CONDA_ENV="pytorch_2_12"[0m
+2026-06-21T11:34:43.7219089Z [36;1melse[0m
+2026-06-21T11:34:43.7219360Z [36;1m  TARGET_CONDA_ENV="pytorch_2_12"[0m
+2026-06-21T11:34:43.7219660Z [36;1mfi[0m
+2026-06-21T11:34:43.7220041Z [36;1mecho "--> Runner is 'nvidia-h100', selected environment is '${TARGET_CONDA_ENV}'"[0m
+2026-06-21T11:34:43.7220458Z [36;1m[0m
+2026-06-21T11:34:43.7220753Z [36;1mCONDA_BASE=$(conda info --base 2>/dev/null || true)[0m
+2026-06-21T11:34:43.7221116Z [36;1mif [ -z "$CONDA_BASE" ]; then[0m
+2026-06-21T11:34:43.7221497Z [36;1m  for name in miniforge3 miniconda3 anaconda3; do[0m
+2026-06-21T11:34:43.7221966Z [36;1m    if [ -d "$HOME/$name" ] && [ -x "$HOME/$name/bin/conda" ]; then[0m
+2026-06-21T11:34:43.7222351Z [36;1m      CONDA_BASE="$HOME/$name"[0m
+2026-06-21T11:34:43.7222649Z [36;1m      break[0m
+2026-06-21T11:34:43.7222896Z [36;1m    fi[0m
+2026-06-21T11:34:43.7223139Z [36;1m  done[0m
+2026-06-21T11:34:43.7223374Z [36;1mfi[0m
+2026-06-21T11:34:43.7223879Z [36;1m[0m
+2026-06-21T11:34:43.7224131Z [36;1mif [ -z "$CONDA_BASE" ]; then[0m
+2026-06-21T11:34:43.7224490Z [36;1m  echo "::error::Could not find Conda installation."[0m
+2026-06-21T11:34:43.7224835Z [36;1m  exit 1[0m
+2026-06-21T11:34:43.7225076Z [36;1mfi[0m
+2026-06-21T11:34:43.7225307Z [36;1m[0m
+2026-06-21T11:34:43.7225575Z [36;1mecho "CONDA=${CONDA_BASE}" >> $GITHUB_ENV[0m
+2026-06-21T11:34:43.7226023Z [36;1mecho "CONDA_BIN_PATH=${CONDA_BASE}/envs/${TARGET_CONDA_ENV}/bin" >> $GITHUB_ENV[0m
+2026-06-21T11:34:43.7226574Z [36;1mecho "CONDA_ENV_NAME=${TARGET_CONDA_ENV}" >> $GITHUB_ENV[0m
+2026-06-21T11:34:43.7226995Z [36;1mecho "CONDA = ${CONDA_BASE}"[0m
+2026-06-21T11:34:43.7227325Z [36;1mecho "CONDA_ENV_NAME = ${TARGET_CONDA_ENV}"[0m
+2026-06-21T11:34:43.7227738Z [36;1mecho "CONDA_BIN_PATH = ${CONDA_BASE}/envs/${TARGET_CONDA_ENV}/bin"[0m
+2026-06-21T11:34:43.7244762Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:34:43.7245138Z env:
+2026-06-21T11:34:43.7245394Z   FLA_CI_ENV: 1
+2026-06-21T11:34:43.7245676Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:34:43.7245972Z ##[endgroup]
+2026-06-21T11:34:43.7279052Z --> Runner is 'nvidia-h100', selected environment is 'pytorch_2_12'
+2026-06-21T11:34:49.6148107Z CONDA = /home/ubuntu/miniconda3
+2026-06-21T11:34:49.6148497Z CONDA_ENV_NAME = pytorch_2_12
+2026-06-21T11:34:49.6149058Z CONDA_BIN_PATH = /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:34:49.6182806Z ##[group]Run $CONDA_BIN_PATH/pip uninstall -y flash-linear-attention
+2026-06-21T11:34:49.6183330Z [36;1m$CONDA_BIN_PATH/pip uninstall -y flash-linear-attention[0m
+2026-06-21T11:34:49.6183731Z [36;1m$CONDA_BIN_PATH/pip install -U pytest setuptools wheel ninja[0m
+2026-06-21T11:34:49.6184045Z [36;1m[0m
+2026-06-21T11:34:49.6184249Z [36;1mif [ "nvidia" = "nvidia" ]; then[0m
+2026-06-21T11:34:49.6184644Z [36;1m  $CONDA/bin/conda install -n $CONDA_ENV_NAME nvidia/label/cuda-12.8.1::cuda-nvcc -y[0m
+2026-06-21T11:34:49.6185051Z [36;1m  if [ -z "" ]; then[0m
+2026-06-21T11:34:49.6185550Z [36;1m    echo "Using pre-installed PyTorch in $CONDA_ENV_NAME"[0m
+2026-06-21T11:34:49.6186034Z [36;1m    $CONDA_BIN_PATH/pip install -U numpy packaging psutil ninja einops datasets transformers[0m
+2026-06-21T11:34:49.6186468Z [36;1m    $CONDA_BIN_PATH/pip install .[0m
+2026-06-21T11:34:49.6186749Z [36;1m  elif [ "" = "nightly" ]; then[0m
+2026-06-21T11:34:49.6187065Z [36;1m    echo "Installing PyTorch version:  for GPU: nvidia"[0m
+2026-06-21T11:34:49.6187494Z [36;1m    NIGHTLY_URL="https://download.pytorch.org/whl/nightly/cu128"[0m
+2026-06-21T11:34:49.6188099Z [36;1m    echo "Using nightly index URL: $NIGHTLY_URL"[0m
+2026-06-21T11:34:49.6188509Z [36;1m    $CONDA_BIN_PATH/pip install -U torch pytorch-triton --index-url $NIGHTLY_URL[0m
+2026-06-21T11:34:49.6189030Z [36;1m    $CONDA_BIN_PATH/pip install -U numpy packaging psutil ninja einops datasets transformers[0m
+2026-06-21T11:34:49.6189475Z [36;1m    $CONDA_BIN_PATH/pip install --no-deps .[0m
+2026-06-21T11:34:49.6189769Z [36;1m  else[0m
+2026-06-21T11:34:49.6190038Z [36;1m    echo "Installing PyTorch version:  for GPU: nvidia"[0m
+2026-06-21T11:34:49.6190415Z [36;1m    STABLE_URL="https://download.pytorch.org/whl/cu128"[0m
+2026-06-21T11:34:49.6190767Z [36;1m    echo "Using stable index URL: $STABLE_URL"[0m
+2026-06-21T11:34:49.6191156Z [36;1m    $CONDA_BIN_PATH/pip install -U torch~= triton --index-url $STABLE_URL[0m
+2026-06-21T11:34:49.6191660Z [36;1m    $CONDA_BIN_PATH/pip install -U numpy packaging psutil ninja einops datasets transformers[0m
+2026-06-21T11:34:49.6192079Z [36;1m    $CONDA_BIN_PATH/pip install .[0m
+2026-06-21T11:34:49.6192334Z [36;1m  fi[0m
+2026-06-21T11:34:49.6192569Z [36;1m  if [[ "nvidia-h100" == nvidia-h100* ]]; then[0m
+2026-06-21T11:34:49.6192858Z [36;1m    if [ "false" = "true" ]; then[0m
+2026-06-21T11:34:49.6193156Z [36;1m      echo "Installing tilelang for NVIDIA H100"[0m
+2026-06-21T11:34:49.6193492Z [36;1m      $CONDA_BIN_PATH/pip uninstall tilelang -y[0m
+2026-06-21T11:34:49.6194043Z [36;1m      $CONDA_BIN_PATH/pip install tilelang -f https://tile-ai.github.io/whl/nightly[0m
+2026-06-21T11:34:49.6194424Z [36;1m    fi[0m
+2026-06-21T11:34:49.6194615Z [36;1m  fi[0m
+2026-06-21T11:34:49.6194826Z [36;1melif [ "nvidia" = "intel" ]; then[0m
+2026-06-21T11:34:49.6195084Z [36;1m  if [ -z "" ]; then[0m
+2026-06-21T11:34:49.6195379Z [36;1m    echo "::error::pytorch_version is required for Intel CI."[0m
+2026-06-21T11:34:49.6195691Z [36;1m    exit 1[0m
+2026-06-21T11:34:49.6195894Z [36;1m  fi[0m
+2026-06-21T11:34:49.6196151Z [36;1m  echo "Installing PyTorch version:  for GPU: nvidia"[0m
+2026-06-21T11:34:49.6196506Z [36;1m  XPU_URL="https://download.pytorch.org/whl/xpu"[0m
+2026-06-21T11:34:49.6196824Z [36;1m  echo "Using XPU index URL: $XPU_URL"[0m
+2026-06-21T11:34:49.6197222Z [36;1m  $CONDA_BIN_PATH/pip install -U torch~= pytorch-triton-xpu --index-url $XPU_URL[0m
+2026-06-21T11:34:49.6197751Z [36;1m  $CONDA_BIN_PATH/pip install -U numpy packaging psutil ninja einops datasets transformers[0m
+2026-06-21T11:34:49.6198162Z [36;1m  $CONDA_BIN_PATH/pip install .[0m
+2026-06-21T11:34:49.6198405Z [36;1melse[0m
+2026-06-21T11:34:49.6198639Z [36;1m  echo "::error::Unsupported GPU type: nvidia"[0m
+2026-06-21T11:34:49.6198914Z [36;1m  exit 1[0m
+2026-06-21T11:34:49.6199104Z [36;1mfi[0m
+2026-06-21T11:34:49.6216200Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:34:49.6216524Z env:
+2026-06-21T11:34:49.6216716Z   FLA_CI_ENV: 1
+2026-06-21T11:34:49.6216948Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:34:49.6217206Z   CONDA: /home/ubuntu/miniconda3
+2026-06-21T11:34:49.6217513Z   CONDA_BIN_PATH: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:34:49.6217839Z   CONDA_ENV_NAME: pytorch_2_12
+2026-06-21T11:34:49.6218072Z ##[endgroup]
+2026-06-21T11:34:49.8854297Z Found existing installation: flash-linear-attention 0.5.2
+2026-06-21T11:34:49.9094614Z Uninstalling flash-linear-attention-0.5.2:
+2026-06-21T11:34:49.9141401Z   Successfully uninstalled flash-linear-attention-0.5.2
+2026-06-21T11:34:50.2464227Z Requirement already satisfied: pytest in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (9.1.1)
+2026-06-21T11:34:50.2970715Z Requirement already satisfied: setuptools in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (81.0.0)
+2026-06-21T11:34:50.3725584Z Collecting setuptools
+2026-06-21T11:34:50.3735670Z   Using cached setuptools-82.0.1-py3-none-any.whl.metadata (6.5 kB)
+2026-06-21T11:34:50.3780113Z Requirement already satisfied: wheel in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (0.47.0)
+2026-06-21T11:34:50.3929538Z Requirement already satisfied: ninja in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (1.13.0)
+2026-06-21T11:34:50.4152096Z Requirement already satisfied: iniconfig>=1.0.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from pytest) (2.3.0)
+2026-06-21T11:34:50.4155018Z Requirement already satisfied: packaging>=22 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from pytest) (26.2)
+2026-06-21T11:34:50.4158864Z Requirement already satisfied: pluggy<2,>=1.5 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from pytest) (1.6.0)
+2026-06-21T11:34:50.4162261Z Requirement already satisfied: pygments>=2.7.2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from pytest) (2.20.0)
+2026-06-21T11:34:50.4204113Z Using cached setuptools-82.0.1-py3-none-any.whl (1.0 MB)
+2026-06-21T11:34:50.5020278Z Installing collected packages: setuptools
+2026-06-21T11:34:50.5024222Z   Attempting uninstall: setuptools
+2026-06-21T11:34:50.5052261Z     Found existing installation: setuptools 81.0.0
+2026-06-21T11:34:50.5244255Z     Uninstalling setuptools-81.0.0:
+2026-06-21T11:34:50.6503305Z       Successfully uninstalled setuptools-81.0.0
+2026-06-21T11:34:51.1404993Z ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+2026-06-21T11:34:51.1440853Z torch 2.12.0 requires setuptools<82, but you have setuptools 82.0.1 which is incompatible.
+2026-06-21T11:34:51.1441295Z Successfully installed setuptools-82.0.1
+2026-06-21T11:34:51.5763806Z CI detected...
+2026-06-21T11:34:51.5766260Z 2 channel Terms of Service accepted
+2026-06-21T11:34:57.1526773Z Channels:
+2026-06-21T11:34:57.1527132Z  - defaults
+2026-06-21T11:34:57.1527388Z  - nvidia/label/cuda-12.8.1
+2026-06-21T11:34:57.1527751Z Platform: linux-64
+2026-06-21T11:35:08.1757860Z Collecting package metadata (repodata.json): - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | done
+2026-06-21T11:35:08.2811657Z Solving environment: - done
+2026-06-21T11:35:08.2870353Z 
+2026-06-21T11:35:08.2870676Z 
+2026-06-21T11:35:08.2871120Z ==> WARNING: A newer version of conda exists. <==
+2026-06-21T11:35:08.2871634Z     current version: 25.5.1
+2026-06-21T11:35:08.2871915Z     latest version: 26.5.3
+2026-06-21T11:35:08.2872080Z 
+2026-06-21T11:35:08.2872205Z Please update conda by running
+2026-06-21T11:35:08.2872387Z 
+2026-06-21T11:35:08.2872595Z     $ conda update -n base -c defaults conda
+2026-06-21T11:35:08.2872812Z 
+2026-06-21T11:35:08.2872818Z 
+2026-06-21T11:35:08.2997395Z 
+2026-06-21T11:35:08.2997791Z # All requested packages already installed.
+2026-06-21T11:35:08.2998032Z 
+2026-06-21T11:35:08.4356727Z Using pre-installed PyTorch in pytorch_2_12
+2026-06-21T11:35:08.7146414Z Requirement already satisfied: numpy in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (2.4.6)
+2026-06-21T11:35:08.8863519Z Requirement already satisfied: packaging in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (26.2)
+2026-06-21T11:35:08.9014111Z Requirement already satisfied: psutil in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (7.2.2)
+2026-06-21T11:35:08.9475377Z Requirement already satisfied: ninja in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (1.13.0)
+2026-06-21T11:35:08.9696506Z Requirement already satisfied: einops in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (0.8.2)
+2026-06-21T11:35:08.9805657Z Requirement already satisfied: datasets in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (5.0.0)
+2026-06-21T11:35:09.0055631Z Requirement already satisfied: transformers in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (5.12.1)
+2026-06-21T11:35:09.0528979Z Requirement already satisfied: filelock in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (3.29.0)
+2026-06-21T11:35:09.0560055Z Requirement already satisfied: pyarrow>=21.0.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (24.0.0)
+2026-06-21T11:35:09.0566938Z Requirement already satisfied: dill<0.4.2,>=0.3.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (0.4.1)
+2026-06-21T11:35:09.0572048Z Requirement already satisfied: pandas in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (3.0.3)
+2026-06-21T11:35:09.0578011Z Requirement already satisfied: requests>=2.32.2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (2.34.2)
+2026-06-21T11:35:09.0583548Z Requirement already satisfied: httpx<1.0.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (0.28.1)
+2026-06-21T11:35:09.0588940Z Requirement already satisfied: tqdm>=4.66.3 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (4.67.3)
+2026-06-21T11:35:09.0594033Z Requirement already satisfied: xxhash in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (3.7.0)
+2026-06-21T11:35:09.0618445Z Requirement already satisfied: multiprocess<0.70.20 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (0.70.19)
+2026-06-21T11:35:09.0619570Z Requirement already satisfied: fsspec<=2026.4.0,>=2023.1.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (2026.2.0)
+2026-06-21T11:35:09.0620544Z Requirement already satisfied: huggingface-hub<2.0,>=0.25.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (1.17.0)
+2026-06-21T11:35:09.0626111Z Requirement already satisfied: pyyaml>=5.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from datasets) (6.0.3)
+2026-06-21T11:35:09.0804230Z Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (3.14.0)
+2026-06-21T11:35:09.0821694Z Requirement already satisfied: anyio in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1.0.0->datasets) (4.13.0)
+2026-06-21T11:35:09.0826993Z Requirement already satisfied: certifi in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1.0.0->datasets) (2026.5.20)
+2026-06-21T11:35:09.0832738Z Requirement already satisfied: httpcore==1.* in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1.0.0->datasets) (1.0.9)
+2026-06-21T11:35:09.0837945Z Requirement already satisfied: idna in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1.0.0->datasets) (3.18)
+2026-06-21T11:35:09.0860928Z Requirement already satisfied: h11>=0.16 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpcore==1.*->httpx<1.0.0->datasets) (0.16.0)
+2026-06-21T11:35:09.0882386Z Requirement already satisfied: click>=8.4.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=0.25.0->datasets) (8.4.1)
+2026-06-21T11:35:09.0896104Z Requirement already satisfied: hf-xet<2.0.0,>=1.4.3 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=0.25.0->datasets) (1.5.0)
+2026-06-21T11:35:09.0919415Z Requirement already satisfied: typer<0.26.0,>=0.20.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=0.25.0->datasets) (0.25.1)
+2026-06-21T11:35:09.0925548Z Requirement already satisfied: typing-extensions>=4.1.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=0.25.0->datasets) (4.15.0)
+2026-06-21T11:35:09.1013582Z Requirement already satisfied: shellingham>=1.3.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (1.5.4)
+2026-06-21T11:35:09.1019498Z Requirement already satisfied: rich>=13.8.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (15.0.0)
+2026-06-21T11:35:09.1025193Z Requirement already satisfied: annotated-doc>=0.0.2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (0.0.4)
+2026-06-21T11:35:09.1075122Z Requirement already satisfied: regex>=2025.10.22 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers) (2026.5.9)
+2026-06-21T11:35:09.1081350Z Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers) (0.22.2)
+2026-06-21T11:35:09.1087713Z Requirement already satisfied: safetensors>=0.4.3 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers) (0.7.0)
+2026-06-21T11:35:09.1248613Z Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (2.6.2)
+2026-06-21T11:35:09.1255319Z Requirement already satisfied: aiosignal>=1.4.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (1.4.0)
+2026-06-21T11:35:09.1263737Z Requirement already satisfied: attrs>=17.3.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (26.1.0)
+2026-06-21T11:35:09.1269767Z Requirement already satisfied: frozenlist>=1.1.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (1.8.0)
+2026-06-21T11:35:09.1275899Z Requirement already satisfied: multidict<7.0,>=4.5 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (6.7.1)
+2026-06-21T11:35:09.1281706Z Requirement already satisfied: propcache>=0.2.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (0.5.2)
+2026-06-21T11:35:09.1292185Z Requirement already satisfied: yarl<2.0,>=1.17.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.4.0,>=2023.1.0->datasets) (1.24.2)
+2026-06-21T11:35:09.1449693Z Requirement already satisfied: charset_normalizer<4,>=2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from requests>=2.32.2->datasets) (3.4.7)
+2026-06-21T11:35:09.1454875Z Requirement already satisfied: urllib3<3,>=1.26 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from requests>=2.32.2->datasets) (2.7.0)
+2026-06-21T11:35:09.1497635Z Requirement already satisfied: markdown-it-py>=2.2.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from rich>=13.8.0->typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (4.2.0)
+2026-06-21T11:35:09.1502259Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from rich>=13.8.0->typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (2.20.0)
+2026-06-21T11:35:09.1520189Z Requirement already satisfied: mdurl~=0.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer<0.26.0,>=0.20.0->huggingface-hub<2.0,>=0.25.0->datasets) (0.1.2)
+2026-06-21T11:35:09.1651492Z Requirement already satisfied: python-dateutil>=2.8.2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from pandas->datasets) (2.9.0.post0)
+2026-06-21T11:35:09.1690555Z Requirement already satisfied: six>=1.5 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from python-dateutil>=2.8.2->pandas->datasets) (1.17.0)
+2026-06-21T11:35:09.5664313Z Processing ./.
+2026-06-21T11:35:09.5681074Z   Installing build dependencies: started
+2026-06-21T11:35:10.1951232Z   Installing build dependencies: finished with status 'done'
+2026-06-21T11:35:10.1959273Z   Getting requirements to build wheel: started
+2026-06-21T11:35:10.5882037Z   Getting requirements to build wheel: finished with status 'done'
+2026-06-21T11:35:10.5888288Z   Preparing metadata (pyproject.toml): started
+2026-06-21T11:35:10.7604124Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-06-21T11:35:10.7643586Z Requirement already satisfied: transformers>=4.45.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from flash-linear-attention==0.5.2) (5.12.1)
+2026-06-21T11:35:10.7648369Z Requirement already satisfied: einops in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from flash-linear-attention==0.5.2) (0.8.2)
+2026-06-21T11:35:10.7665172Z Requirement already satisfied: huggingface-hub<2.0,>=1.5.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (1.17.0)
+2026-06-21T11:35:10.7668621Z Requirement already satisfied: numpy>=1.17 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (2.4.6)
+2026-06-21T11:35:10.7672432Z Requirement already satisfied: packaging>=20.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (26.2)
+2026-06-21T11:35:10.7675865Z Requirement already satisfied: pyyaml>=5.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (6.0.3)
+2026-06-21T11:35:10.7679221Z Requirement already satisfied: regex>=2025.10.22 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (2026.5.9)
+2026-06-21T11:35:10.7682852Z Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (0.22.2)
+2026-06-21T11:35:10.7685684Z Requirement already satisfied: typer in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (0.25.1)
+2026-06-21T11:35:10.7688988Z Requirement already satisfied: safetensors>=0.4.3 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (0.7.0)
+2026-06-21T11:35:10.7692159Z Requirement already satisfied: tqdm>=4.60 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from transformers>=4.45.0->flash-linear-attention==0.5.2) (4.67.3)
+2026-06-21T11:35:10.7789232Z Requirement already satisfied: click>=8.4.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (8.4.1)
+2026-06-21T11:35:10.7792928Z Requirement already satisfied: filelock>=3.10.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (3.29.0)
+2026-06-21T11:35:10.7796328Z Requirement already satisfied: fsspec>=2023.5.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (2026.2.0)
+2026-06-21T11:35:10.7803156Z Requirement already satisfied: hf-xet<2.0.0,>=1.4.3 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (1.5.0)
+2026-06-21T11:35:10.7807490Z Requirement already satisfied: httpx<1,>=0.23.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (0.28.1)
+2026-06-21T11:35:10.7813643Z Requirement already satisfied: typing-extensions>=4.1.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (4.15.0)
+2026-06-21T11:35:10.7855254Z Requirement already satisfied: anyio in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (4.13.0)
+2026-06-21T11:35:10.7858468Z Requirement already satisfied: certifi in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (2026.5.20)
+2026-06-21T11:35:10.7862419Z Requirement already satisfied: httpcore==1.* in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (1.0.9)
+2026-06-21T11:35:10.7865423Z Requirement already satisfied: idna in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (3.18)
+2026-06-21T11:35:10.7879771Z Requirement already satisfied: h11>=0.16 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers>=4.45.0->flash-linear-attention==0.5.2) (0.16.0)
+2026-06-21T11:35:10.7902249Z Requirement already satisfied: shellingham>=1.3.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (1.5.4)
+2026-06-21T11:35:10.7906959Z Requirement already satisfied: rich>=13.8.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (15.0.0)
+2026-06-21T11:35:10.7909442Z Requirement already satisfied: annotated-doc>=0.0.2 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (0.0.4)
+2026-06-21T11:35:10.7999152Z Requirement already satisfied: markdown-it-py>=2.2.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from rich>=13.8.0->typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (4.2.0)
+2026-06-21T11:35:10.8003693Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from rich>=13.8.0->typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (2.20.0)
+2026-06-21T11:35:10.8018486Z Requirement already satisfied: mdurl~=0.1 in /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer->transformers>=4.45.0->flash-linear-attention==0.5.2) (0.1.2)
+2026-06-21T11:35:10.8107316Z Building wheels for collected packages: flash-linear-attention
+2026-06-21T11:35:10.8112264Z   Building wheel for flash-linear-attention (pyproject.toml): started
+2026-06-21T11:35:11.2387933Z   Building wheel for flash-linear-attention (pyproject.toml): finished with status 'done'
+2026-06-21T11:35:11.2408613Z   Created wheel for flash-linear-attention: filename=flash_linear_attention-0.5.2-py3-none-any.whl size=1101039 sha256=12818f88bc6b72d0c3cb047b6080f7dbf822431a4c177fca95fc8d8379ff09d7
+2026-06-21T11:35:11.2409951Z   Stored in directory: /home/ubuntu/.cache/pip/wheels/e0/38/3f/94a4faf03f21f0ef100a2e3a7911893ec03607b3edb6febdfb
+2026-06-21T11:35:11.2462786Z Successfully built flash-linear-attention
+2026-06-21T11:35:11.3178467Z Installing collected packages: flash-linear-attention
+2026-06-21T11:35:12.0624665Z Successfully installed flash-linear-attention-0.5.2
+2026-06-21T11:35:12.1280606Z ##[group]Run echo "Python executable path: $CONDA_BIN_PATH/python"
+2026-06-21T11:35:12.1281102Z [36;1mecho "Python executable path: $CONDA_BIN_PATH/python"[0m
+2026-06-21T11:35:12.1281591Z [36;1mecho "PyTorch version: $($CONDA_BIN_PATH/python -c 'import torch; print(torch.__version__)')"[0m
+2026-06-21T11:35:12.1282018Z [36;1mif [ "true" = "true" ]; then[0m
+2026-06-21T11:35:12.1282335Z [36;1m  echo "Skipping GPU check as per input parameter."[0m
+2026-06-21T11:35:12.1282629Z [36;1melse[0m
+2026-06-21T11:35:12.1282860Z [36;1m  echo "Running GPU check..."[0m
+2026-06-21T11:35:12.1283262Z [36;1m  if $CONDA_BIN_PATH/python -c "import fla; print('FLA imported successfully')"; then[0m
+2026-06-21T11:35:12.1283695Z [36;1m    echo "FLA is available. Running GPU check."[0m
+2026-06-21T11:35:12.1284024Z [36;1m    $CONDA_BIN_PATH/python scripts/check_gpu.py[0m
+2026-06-21T11:35:12.1284312Z [36;1m    if [ $? -ne 0 ]; then[0m
+2026-06-21T11:35:12.1284618Z [36;1m      echo "::error::GPU is occupied. Stopping the workflow."[0m
+2026-06-21T11:35:12.1285093Z [36;1m      exit 1[0m
+2026-06-21T11:35:12.1285310Z [36;1m    fi[0m
+2026-06-21T11:35:12.1285503Z [36;1m  else[0m
+2026-06-21T11:35:12.1285824Z [36;1m    echo "::warning::FLA not found or import failed. Skipping dependent GPU check."[0m
+2026-06-21T11:35:12.1286184Z [36;1m  fi[0m
+2026-06-21T11:35:12.1286593Z [36;1mfi[0m
+2026-06-21T11:35:12.1304296Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:35:12.1304629Z env:
+2026-06-21T11:35:12.1304834Z   FLA_CI_ENV: 1
+2026-06-21T11:35:12.1305068Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:35:12.1305323Z   CONDA: /home/ubuntu/miniconda3
+2026-06-21T11:35:12.1305627Z   CONDA_BIN_PATH: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:35:12.1305951Z   CONDA_ENV_NAME: pytorch_2_12
+2026-06-21T11:35:12.1306185Z ##[endgroup]
+2026-06-21T11:35:12.1338112Z Python executable path: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin/python
+2026-06-21T11:35:13.5042333Z PyTorch version: 2.12.0+cu130
+2026-06-21T11:35:13.5042791Z Skipping GPU check as per input parameter.
+2026-06-21T11:35:13.5263081Z ##[group]Run tj-actions/changed-files@v47.0.0
+2026-06-21T11:35:13.5263385Z with:
+2026-06-21T11:35:13.5263588Z   separator:  
+2026-06-21T11:35:13.5263818Z   include_all_old_new_renamed_files: false
+2026-06-21T11:35:13.5264093Z   old_new_separator: ,
+2026-06-21T11:35:13.5264319Z   old_new_files_separator:  
+2026-06-21T11:35:13.5264572Z   files_from_source_file_separator: 
+
+2026-06-21T11:35:13.5264843Z   files_separator: 
+
+2026-06-21T11:35:13.5265091Z   files_yaml_from_source_file_separator: 
+
+2026-06-21T11:35:13.5265390Z   files_ignore_yaml_from_source_file_separator: 
+
+2026-06-21T11:35:13.5265675Z   files_ignore_separator: 
+
+2026-06-21T11:35:13.5265920Z   files_ignore_from_source_file_separator: 
+
+2026-06-21T11:35:13.5266184Z   path: .
+2026-06-21T11:35:13.5266368Z   quotepath: true
+2026-06-21T11:35:13.5266571Z   diff_relative: true
+2026-06-21T11:35:13.5266780Z   dir_names: false
+2026-06-21T11:35:13.5267009Z   dir_names_exclude_current_dir: false
+2026-06-21T11:35:13.5267274Z   dir_names_include_files_separator: 
+
+2026-06-21T11:35:13.5267579Z   dir_names_deleted_files_include_only_deleted_dirs: false
+2026-06-21T11:35:13.5267869Z   json: false
+2026-06-21T11:35:13.5268063Z   escape_json: true
+2026-06-21T11:35:13.5268263Z   safe_output: true
+2026-06-21T11:35:13.5268460Z   fetch_depth: 25
+2026-06-21T11:35:13.5268667Z   skip_initial_fetch: false
+2026-06-21T11:35:13.5268923Z   fetch_additional_submodule_history: false
+2026-06-21T11:35:13.5269197Z   since_last_remote_commit: false
+2026-06-21T11:35:13.5269643Z   write_output_files: false
+2026-06-21T11:35:13.5269874Z   output_dir: .github/outputs
+2026-06-21T11:35:13.5270143Z   output_renamed_files_as_deleted_and_added: false
+2026-06-21T11:35:13.5270432Z   recover_deleted_files: false
+2026-06-21T11:35:13.5270680Z   recover_files_separator: 
+
+2026-06-21T11:35:13.5270926Z   recover_files_ignore_separator: 
+
+2026-06-21T11:35:13.5273791Z   token: ***
+2026-06-21T11:35:13.5274034Z   api_url: https://api.github.com
+2026-06-21T11:35:13.5274285Z   use_rest_api: false
+2026-06-21T11:35:13.5274523Z   fail_on_initial_diff_error: false
+2026-06-21T11:35:13.5274787Z   fail_on_submodule_diff_error: false
+2026-06-21T11:35:13.5275057Z   negation_patterns_first: false
+2026-06-21T11:35:13.5275290Z   matrix: false
+2026-06-21T11:35:13.5275492Z   exclude_submodules: false
+2026-06-21T11:35:13.5275725Z   fetch_missing_history_max_retries: 20
+2026-06-21T11:35:13.5275977Z   use_posix_path_separator: false
+2026-06-21T11:35:13.5276210Z   tags_pattern: *
+2026-06-21T11:35:13.5276407Z env:
+2026-06-21T11:35:13.5276580Z   FLA_CI_ENV: 1
+2026-06-21T11:35:13.5276783Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:35:13.5277024Z   CONDA: /home/ubuntu/miniconda3
+2026-06-21T11:35:13.5277319Z   CONDA_BIN_PATH: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:35:13.5277640Z   CONDA_ENV_NAME: pytorch_2_12
+2026-06-21T11:35:13.5277864Z ##[endgroup]
+2026-06-21T11:35:13.6424110Z ##[group]changed-files
+2026-06-21T11:35:13.6524542Z Using local .git directory
+2026-06-21T11:35:13.6886439Z Running on a pull_request (opened) event...
+2026-06-21T11:35:13.6889688Z Repository is shallow, fetching more history...
+2026-06-21T11:35:15.9523698Z Completed fetching more history.
+2026-06-21T11:35:16.0895682Z Retrieving changes between f0e213dbd8b5fb90c3c7eca869ac1706d5377139 (main) → 66e4b1af5999ad865f4bc9f7c15061e2a8960321 (parallel-attn-int64-autotune)
+2026-06-21T11:35:16.1106430Z All Done!
+2026-06-21T11:35:16.1106814Z ##[endgroup]
+2026-06-21T11:35:16.1108746Z ##[group]changed-files-all
+2026-06-21T11:35:16.1136074Z All Done!
+2026-06-21T11:35:16.1136411Z ##[endgroup]
+2026-06-21T11:35:16.1252379Z ##[group]Run export TEST_SCOPE="MODELS_ONLY"
+2026-06-21T11:35:16.1252741Z [36;1mexport TEST_SCOPE="MODELS_ONLY"[0m
+2026-06-21T11:35:16.1254894Z [36;1mTEST_FILES=$($CONDA_BIN_PATH/python scripts/find_dependent_tests.py "benchmarks/ops/registry.py fla/ops/attn/parallel.py fla/ops/log_linear_attn/chunk.py fla/ops/nsa/parallel.py fla/ops/path_attn/cumprod_householder_bwd.py fla/ops/path_attn/cumprod_householder_fwd.py fla/ops/path_attn/intra_chunk_preprocess_bwd.py fla/ops/path_attn/intra_chunk_preprocess_bwd_prepare.py fla/ops/path_attn/intra_chunk_preprocess_fwd.py fla/ops/path_attn/parallel_path_bwd_inter_dkv.py fla/ops/path_attn/parallel_path_bwd_inter_dqh.py fla/ops/path_attn/parallel_path_bwd_intra.py fla/ops/path_attn/parallel_path_fwd.py fla/ops/path_attn/prepare_k_cache.py fla/ops/path_attn/transform_q.py fla/ops/wall_attn/decode.py fla/ops/wall_attn/parallel.py")[0m
+2026-06-21T11:35:16.1257116Z [36;1mecho "Found models test files: $TEST_FILES"[0m
+2026-06-21T11:35:16.1257495Z [36;1mecho "test_files=$TEST_FILES" >> $GITHUB_OUTPUT[0m
+2026-06-21T11:35:16.1274058Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:35:16.1274378Z env:
+2026-06-21T11:35:16.1274582Z   FLA_CI_ENV: 1
+2026-06-21T11:35:16.1274805Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:35:16.1275067Z   CONDA: /home/ubuntu/miniconda3
+2026-06-21T11:35:16.1275387Z   CONDA_BIN_PATH: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:35:16.1275719Z   CONDA_ENV_NAME: pytorch_2_12
+2026-06-21T11:35:16.1275958Z ##[endgroup]
+2026-06-21T11:35:18.3116748Z Found models test files: /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_nsa.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_path_attn.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_wall_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_yoco.py
+2026-06-21T11:35:18.3157977Z ##[group]Run $CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_nsa.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_path_attn.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_wall_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_yoco.py
+2026-06-21T11:35:18.3162027Z [36;1m$CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_nsa.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_path_attn.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_wall_transformer.py /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_yoco.py[0m
+2026-06-21T11:35:18.3181357Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-06-21T11:35:18.3181689Z env:
+2026-06-21T11:35:18.3181889Z   FLA_CI_ENV: 1
+2026-06-21T11:35:18.3182110Z   FLA_DISABLE_BACKEND_DISPATCH: 1
+2026-06-21T11:35:18.3182370Z   CONDA: /home/ubuntu/miniconda3
+2026-06-21T11:35:18.3182679Z   CONDA_BIN_PATH: /home/ubuntu/miniconda3/envs/pytorch_2_12/bin
+2026-06-21T11:35:18.3183029Z   CONDA_ENV_NAME: pytorch_2_12
+2026-06-21T11:35:18.3183263Z ##[endgroup]
+2026-06-21T11:35:35.8735566Z ============================= test session starts ==============================
+2026-06-21T11:35:35.8736296Z platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /home/ubuntu/miniconda3/envs/pytorch_2_12/bin/python3.12
+2026-06-21T11:35:35.8736786Z cachedir: .pytest_cache
+2026-06-21T11:35:35.8737176Z rootdir: /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention
+2026-06-21T11:35:35.8737601Z configfile: pyproject.toml
+2026-06-21T11:35:35.8737841Z plugins: anyio-4.13.0
+2026-06-21T11:35:35.9228544Z collecting ... collected 33 items
+2026-06-21T11:35:35.9228763Z 
+2026-06-21T11:35:36.7113481Z tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] FAILED
+2026-06-21T11:35:36.7114043Z 
+2026-06-21T11:35:36.7114190Z =================================== FAILURES ===================================
+2026-06-21T11:35:36.7114662Z ________ test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] ________
+2026-06-21T11:35:36.7114937Z 
+2026-06-21T11:35:36.7115075Z L = 4, B = 4, T = 1024, H = 4, D = 64, use_l2warp = True
+2026-06-21T11:35:36.7115410Z attnres_block_size = None, dtype = torch.bfloat16
+2026-06-21T11:35:36.7115603Z 
+2026-06-21T11:35:36.7115712Z     @pytest.mark.parametrize(
+2026-06-21T11:35:36.7116016Z         ['L', 'B', 'T', 'H', 'D', 'use_l2warp', 'attnres_block_size', 'dtype'],
+2026-06-21T11:35:36.7116318Z         [
+2026-06-21T11:35:36.7116638Z             pytest.param(*test, id="L{}-B{}-T{}-H{}-D{}-l2{}-bs{}-{}".format(*test))
+2026-06-21T11:35:36.7116981Z             for test in [
+2026-06-21T11:35:36.7117245Z                 (4, 4, 1024, 4, 64,  True,  None, torch.bfloat16),
+2026-06-21T11:35:36.7117563Z                 (4, 4, 1024, 4, 64,  False, None, torch.bfloat16),
+2026-06-21T11:35:36.7117870Z                 (4, 4, 1024, 4, 128, False, None, torch.bfloat16),
+2026-06-21T11:35:36.7118585Z                 (4, 4, 1024, 4, 64,  False, 1,    torch.bfloat16),
+2026-06-21T11:35:36.7118889Z                 (4, 4, 1024, 4, 64,  False, 4,    torch.bfloat16),
+2026-06-21T11:35:36.7119160Z             ]
+2026-06-21T11:35:36.7119350Z         ],
+2026-06-21T11:35:36.7119735Z     )
+2026-06-21T11:35:36.7119929Z     def test_modeling(
+2026-06-21T11:35:36.7120145Z         L: int,
+2026-06-21T11:35:36.7120336Z         B: int,
+2026-06-21T11:35:36.7120520Z         T: int,
+2026-06-21T11:35:36.7120702Z         H: int,
+2026-06-21T11:35:36.7120883Z         D: int,
+2026-06-21T11:35:36.7121080Z         use_l2warp: bool,
+2026-06-21T11:35:36.7121472Z         attnres_block_size: int | None,
+2026-06-21T11:35:36.7121740Z         dtype: torch.dtype,
+2026-06-21T11:35:36.7122011Z     ):
+2026-06-21T11:35:36.7122283Z >       run_test_model_forward_backward(
+2026-06-21T11:35:36.7122617Z             L,
+2026-06-21T11:35:36.7122884Z             B,
+2026-06-21T11:35:36.7123142Z             T,
+2026-06-21T11:35:36.7123383Z             H,
+2026-06-21T11:35:36.7123563Z             D,
+2026-06-21T11:35:36.7123769Z             ForgettingTransformerConfig,
+2026-06-21T11:35:36.7124033Z             use_l2warp=use_l2warp,
+2026-06-21T11:35:36.7124298Z             attnres_block_size=attnres_block_size,
+2026-06-21T11:35:36.7124575Z             dtype=dtype,
+2026-06-21T11:35:36.7124789Z         )
+2026-06-21T11:35:36.7124887Z 
+2026-06-21T11:35:36.7125040Z tests/models/test_modeling_forgetting_transformer.py:42: 
+2026-06-21T11:35:36.7125394Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-21T11:35:36.7125951Z tests/models/test_modeling_base.py:53: in run_test_model_forward_backward
+2026-06-21T11:35:36.7126489Z     model, config = create_model_and_config(config_class, L, H, D, use_l2warp=use_l2warp, dtype=dtype, **kwargs)
+2026-06-21T11:35:36.7126979Z                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-21T11:35:36.7127454Z tests/models/test_modeling_utils.py:50: in create_model_and_config
+2026-06-21T11:35:36.7127795Z     model.to(dtype).to(device)
+2026-06-21T11:35:36.7128221Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/transformers/modeling_utils.py:3729: in to
+2026-06-21T11:35:36.7128679Z     return super().to(*args, **kwargs)
+2026-06-21T11:35:36.7128922Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-21T11:35:36.7129329Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/nn/modules/module.py:1383: in to
+2026-06-21T11:35:36.7129761Z     return self._apply(convert)
+2026-06-21T11:35:36.7129996Z            ^^^^^^^^^^^^^^^^^^^^
+2026-06-21T11:35:36.7130551Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/nn/modules/module.py:933: in _apply
+2026-06-21T11:35:36.7130983Z     module._apply(fn)
+2026-06-21T11:35:36.7131372Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/nn/modules/module.py:933: in _apply
+2026-06-21T11:35:36.7131801Z     module._apply(fn)
+2026-06-21T11:35:36.7132195Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/nn/modules/module.py:964: in _apply
+2026-06-21T11:35:36.7132636Z     param_applied = fn(param)
+2026-06-21T11:35:36.7132870Z                     ^^^^^^^^^
+2026-06-21T11:35:36.7133279Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/nn/modules/module.py:1369: in convert
+2026-06-21T11:35:36.7133706Z     return t.to(
+2026-06-21T11:35:36.7133961Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-21T11:35:36.7134170Z 
+2026-06-21T11:35:36.7134261Z     def _lazy_init():
+2026-06-21T11:35:36.7134488Z         global _initialized, _queued_calls
+2026-06-21T11:35:36.7134802Z         if is_initialized() or hasattr(_tls, "is_initializing"):
+2026-06-21T11:35:36.7135092Z             return
+2026-06-21T11:35:36.7135300Z         with _initialization_lock:
+2026-06-21T11:35:36.7135598Z             # We be double-checked locking, boys!  This is OK because
+2026-06-21T11:35:36.7136131Z             # the above test was GIL protected anyway.  The inner test
+2026-06-21T11:35:36.7136519Z             # is for when a thread blocked on some other thread which was
+2026-06-21T11:35:36.7136999Z             # doing the initialization; when they get the lock, they will
+2026-06-21T11:35:36.7137334Z             # find there is nothing left to do.
+2026-06-21T11:35:36.7137603Z             if is_initialized():
+2026-06-21T11:35:36.7137833Z                 return
+2026-06-21T11:35:36.7138125Z             # It is important to prevent other threads from entering _lazy_init
+2026-06-21T11:35:36.7138555Z             # immediately, while we are still guaranteed to have the GIL, because some
+2026-06-21T11:35:36.7138951Z             # of the C calls we make below will release the GIL
+2026-06-21T11:35:36.7139248Z             if _is_in_bad_fork():
+2026-06-21T11:35:36.7139494Z                 raise RuntimeError(
+2026-06-21T11:35:36.7139838Z                     "Cannot re-initialize CUDA in forked subprocess. To use CUDA with "
+2026-06-21T11:35:36.7140260Z                     "multiprocessing, you must use the 'spawn' start method"
+2026-06-21T11:35:36.7140567Z                 )
+2026-06-21T11:35:36.7140817Z             if not hasattr(torch._C, "_cuda_getDeviceCount"):
+2026-06-21T11:35:36.7141182Z                 raise AssertionError("Torch not compiled with CUDA enabled")
+2026-06-21T11:35:36.7141504Z             if _cudart is None:
+2026-06-21T11:35:36.7141743Z                 raise AssertionError(
+2026-06-21T11:35:36.7142120Z                     "libcudart functions unavailable. It looks like you have a broken build?"
+2026-06-21T11:35:36.7142471Z                 )
+2026-06-21T11:35:36.7142768Z             # This function throws if there's a driver initialization error, no GPUs
+2026-06-21T11:35:36.7143128Z             # are found or any other error occurs
+2026-06-21T11:35:36.7143394Z >           torch._C._cuda_init()
+2026-06-21T11:35:36.7143664Z E           RuntimeError: No CUDA GPUs are available
+2026-06-21T11:35:36.7143862Z 
+2026-06-21T11:35:36.7144136Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/cuda/__init__.py:491: RuntimeError
+2026-06-21T11:35:36.7144614Z =============================== warnings summary ===============================
+2026-06-21T11:35:36.7144939Z fla/utils/_device.py:100
+2026-06-21T11:35:36.7145600Z   /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/fla/utils/_device.py:100: UserWarning: Triton is not supported on current platform, roll back to CPU.
+2026-06-21T11:35:36.7146262Z     _cpu_device_warning()
+2026-06-21T11:35:36.7146397Z 
+2026-06-21T11:35:36.7146637Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/cuda/__init__.py:1074
+2026-06-21T11:35:36.7147181Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/cuda/__init__.py:1074
+2026-06-21T11:35:36.7147710Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/cuda/__init__.py:1074
+2026-06-21T11:35:36.7148373Z   /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/cuda/__init__.py:1074: UserWarning: Can't initialize NVML
+2026-06-21T11:35:36.7148901Z     raw_cnt = _raw_device_count_nvml()
+2026-06-21T11:35:36.7149070Z 
+2026-06-21T11:35:36.7149328Z ../../../../miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings
+2026-06-21T11:35:36.7150285Z   /home/ubuntu/miniconda3/envs/pytorch_2_12/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+2026-06-21T11:35:36.7151167Z     warnings.warn(
+2026-06-21T11:35:36.7151292Z 
+2026-06-21T11:35:36.7151503Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-06-21T11:35:36.7151904Z =========================== short test summary info ============================
+2026-06-21T11:35:36.7152616Z FAILED tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] - RuntimeError: No CUDA GPUs are available
+2026-06-21T11:35:36.7153601Z !!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+2026-06-21T11:35:36.7154034Z ======================== 1 failed, 18 warnings in 0.57s ========================
+2026-06-21T11:35:37.4778429Z ##[error]Process completed with exit code 1.
+2026-06-21T11:35:37.4889154Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-21T11:35:37.4890444Z Post job cleanup.
+2026-06-21T11:35:37.5664413Z [command]/usr/bin/git version
+2026-06-21T11:35:37.5693823Z git version 2.34.1
+2026-06-21T11:35:37.5718399Z Copying '/home/ubuntu/.gitconfig' to '/home/ubuntu/actions-runner/_work/_temp/44602a34-25b8-45e9-8d8f-1e56a5a862b4/.gitconfig'
+2026-06-21T11:35:37.5726106Z Temporarily overriding HOME='/home/ubuntu/actions-runner/_work/_temp/44602a34-25b8-45e9-8d8f-1e56a5a862b4' before making global git config changes
+2026-06-21T11:35:37.5726809Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-21T11:35:37.5730848Z [command]/usr/bin/git config --global --add safe.directory /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention
+2026-06-21T11:35:37.5756284Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-21T11:35:37.5781573Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-21T11:35:37.5962187Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-21T11:35:37.5979065Z http.https://github.com/.extraheader
+2026-06-21T11:35:37.5985649Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-21T11:35:37.6009393Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-21T11:35:37.6184108Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-21T11:35:37.6206357Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-21T11:35:37.6522216Z Cleaning up orphan processes
+2026-06-21T11:35:37.6758372Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

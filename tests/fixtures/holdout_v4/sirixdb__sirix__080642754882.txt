@@ -1,0 +1,1375 @@
+﻿2026-06-10T19:13:50.5237711Z Current runner version: '2.335.1'
+2026-06-10T19:13:50.5263931Z ##[group]Runner Image Provisioner
+2026-06-10T19:13:50.5265042Z Hosted Compute Agent
+2026-06-10T19:13:50.5265756Z Version: 20260527.539
+2026-06-10T19:13:50.5266395Z Commit: a891dd388383b896fa6ac04a82c0b75cec981078
+2026-06-10T19:13:50.5267153Z Build Date: 2026-05-27T21:39:57Z
+2026-06-10T19:13:50.5267933Z Worker ID: {bc4be9b4-1617-44d4-ab66-4cc30d423bfa}
+2026-06-10T19:13:50.5268632Z Azure Region: westus
+2026-06-10T19:13:50.5269260Z ##[endgroup]
+2026-06-10T19:13:50.5270754Z ##[group]Operating System
+2026-06-10T19:13:50.5271554Z Ubuntu
+2026-06-10T19:13:50.5272138Z 24.04.4
+2026-06-10T19:13:50.5272642Z LTS
+2026-06-10T19:13:50.5273244Z ##[endgroup]
+2026-06-10T19:13:50.5273789Z ##[group]Runner Image
+2026-06-10T19:13:50.5274369Z Image: ubuntu-24.04
+2026-06-10T19:13:50.5275307Z Version: 20260607.184.1
+2026-06-10T19:13:50.5276608Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260607.184/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-10T19:13:50.5278216Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260607.184
+2026-06-10T19:13:50.5279191Z ##[endgroup]
+2026-06-10T19:13:50.5282136Z ##[group]GITHUB_TOKEN Permissions
+2026-06-10T19:13:50.5284339Z Actions: write
+2026-06-10T19:13:50.5285290Z ArtifactMetadata: write
+2026-06-10T19:13:50.5285908Z Attestations: write
+2026-06-10T19:13:50.5286557Z Checks: write
+2026-06-10T19:13:50.5287113Z CodeQuality: write
+2026-06-10T19:13:50.5287653Z Contents: write
+2026-06-10T19:13:50.5288272Z Deployments: write
+2026-06-10T19:13:50.5288821Z Discussions: write
+2026-06-10T19:13:50.5289390Z Issues: write
+2026-06-10T19:13:50.5289978Z Metadata: read
+2026-06-10T19:13:50.5290505Z Models: read
+2026-06-10T19:13:50.5291074Z Packages: write
+2026-06-10T19:13:50.5291755Z Pages: write
+2026-06-10T19:13:50.5292329Z PullRequests: write
+2026-06-10T19:13:50.5292999Z RepositoryProjects: write
+2026-06-10T19:13:50.5293650Z SecurityEvents: write
+2026-06-10T19:13:50.5294274Z Statuses: write
+2026-06-10T19:13:50.5295079Z VulnerabilityAlerts: read
+2026-06-10T19:13:50.5295672Z ##[endgroup]
+2026-06-10T19:13:50.5297944Z Secret source: Actions
+2026-06-10T19:13:50.5298728Z Prepare workflow directory
+2026-06-10T19:13:50.5649435Z Prepare all required actions
+2026-06-10T19:13:50.5689627Z Getting action download info
+2026-06-10T19:13:51.1793383Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-10T19:13:51.2780876Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-06-10T19:13:51.8224332Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-06-10T19:13:53.1122631Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-06-10T19:13:53.2058592Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-06-10T19:13:53.4341948Z Complete job name: Test sirix-rest-api + Python client
+2026-06-10T19:13:53.5136016Z ##[group]Run actions/checkout@v4
+2026-06-10T19:13:53.5136668Z with:
+2026-06-10T19:13:53.5136893Z   repository: sirixdb/sirix
+2026-06-10T19:13:53.5139665Z   token: ***
+2026-06-10T19:13:53.5139881Z   ssh-strict: true
+2026-06-10T19:13:53.5140090Z   ssh-user: git
+2026-06-10T19:13:53.5140307Z   persist-credentials: true
+2026-06-10T19:13:53.5140555Z   clean: true
+2026-06-10T19:13:53.5140774Z   sparse-checkout-cone-mode: true
+2026-06-10T19:13:53.5141044Z   fetch-depth: 1
+2026-06-10T19:13:53.5141257Z   fetch-tags: false
+2026-06-10T19:13:53.5141473Z   show-progress: true
+2026-06-10T19:13:53.5141680Z   lfs: false
+2026-06-10T19:13:53.5141867Z   submodules: false
+2026-06-10T19:13:53.5142081Z   set-safe-directory: true
+2026-06-10T19:13:53.5142526Z ##[endgroup]
+2026-06-10T19:13:53.6344208Z Syncing repository: sirixdb/sirix
+2026-06-10T19:13:53.6346465Z ##[group]Getting Git version info
+2026-06-10T19:13:53.6347153Z Working directory is '/home/runner/work/sirix/sirix'
+2026-06-10T19:13:53.6348230Z [command]/usr/bin/git version
+2026-06-10T19:13:53.6470920Z git version 2.54.0
+2026-06-10T19:13:53.6507369Z ##[endgroup]
+2026-06-10T19:13:53.6522151Z Temporarily overriding HOME='/home/runner/work/_temp/d0b142b0-a30f-47fc-b75d-ddc1cdc56cd8' before making global git config changes
+2026-06-10T19:13:53.6523788Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-10T19:13:53.6529184Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sirix/sirix
+2026-06-10T19:13:53.6580046Z Deleting the contents of '/home/runner/work/sirix/sirix'
+2026-06-10T19:13:53.6583637Z ##[group]Initializing the repository
+2026-06-10T19:13:53.6588131Z [command]/usr/bin/git init /home/runner/work/sirix/sirix
+2026-06-10T19:13:53.6691364Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-10T19:13:53.6692465Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-10T19:13:53.6693292Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-10T19:13:53.6693760Z hint: call:
+2026-06-10T19:13:53.6693967Z hint:
+2026-06-10T19:13:53.6694293Z hint: 	git config --global init.defaultBranch <name>
+2026-06-10T19:13:53.6695015Z hint:
+2026-06-10T19:13:53.6695588Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-10T19:13:53.6696548Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-10T19:13:53.6697364Z hint:
+2026-06-10T19:13:53.6697766Z hint: 	git branch -m <name>
+2026-06-10T19:13:53.6698251Z hint:
+2026-06-10T19:13:53.6698951Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-10T19:13:53.6699960Z Initialized empty Git repository in /home/runner/work/sirix/sirix/.git/
+2026-06-10T19:13:53.6710516Z [command]/usr/bin/git remote add origin https://github.com/sirixdb/sirix
+2026-06-10T19:13:53.6759196Z ##[endgroup]
+2026-06-10T19:13:53.6759685Z ##[group]Disabling automatic garbage collection
+2026-06-10T19:13:53.6763591Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-10T19:13:53.6792272Z ##[endgroup]
+2026-06-10T19:13:53.6792733Z ##[group]Setting up auth
+2026-06-10T19:13:53.6799848Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-10T19:13:53.6833640Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-10T19:13:53.7219943Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-10T19:13:53.7254415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-10T19:13:53.7477715Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-10T19:13:53.7510573Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-10T19:13:53.7735725Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-10T19:13:53.7770667Z ##[endgroup]
+2026-06-10T19:13:53.7771297Z ##[group]Fetching the repository
+2026-06-10T19:13:53.7779303Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4efd4eb43d0ea48f6546b998c5f919676903ffc6:refs/remotes/pull/1024/merge
+2026-06-10T19:14:19.7218047Z From https://github.com/sirixdb/sirix
+2026-06-10T19:14:19.7219053Z  * [new ref]         4efd4eb43d0ea48f6546b998c5f919676903ffc6 -> pull/1024/merge
+2026-06-10T19:14:19.7267834Z ##[endgroup]
+2026-06-10T19:14:19.7268712Z ##[group]Determining the checkout info
+2026-06-10T19:14:19.7269608Z ##[endgroup]
+2026-06-10T19:14:19.7276088Z [command]/usr/bin/git sparse-checkout disable
+2026-06-10T19:14:19.7333685Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-10T19:14:19.7360764Z ##[group]Checking out the ref
+2026-06-10T19:14:19.7364503Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1024/merge
+2026-06-10T19:14:20.5190062Z Note: switching to 'refs/remotes/pull/1024/merge'.
+2026-06-10T19:14:20.5190673Z 
+2026-06-10T19:14:20.5191121Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-10T19:14:20.5192139Z changes and commit them, and you can discard any commits you make in this
+2026-06-10T19:14:20.5192964Z state without impacting any branches by switching back to a branch.
+2026-06-10T19:14:20.5193615Z 
+2026-06-10T19:14:20.5194000Z If you want to create a new branch to retain commits you create, you may
+2026-06-10T19:14:20.5195094Z do so (now or later) by using -c with the switch command. Example:
+2026-06-10T19:14:20.5195541Z 
+2026-06-10T19:14:20.5195725Z   git switch -c <new-branch-name>
+2026-06-10T19:14:20.5196027Z 
+2026-06-10T19:14:20.5196244Z Or undo this operation with:
+2026-06-10T19:14:20.5196600Z 
+2026-06-10T19:14:20.5196771Z   git switch -
+2026-06-10T19:14:20.5197031Z 
+2026-06-10T19:14:20.5197437Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-10T19:14:20.5198056Z 
+2026-06-10T19:14:20.5198728Z HEAD is now at 4efd4eb Merge caeeeb1e23e335781d79d011e8ff36e042120124 into 1cc8123f1733430290248d359e8e789d31497243
+2026-06-10T19:14:20.5232210Z ##[endgroup]
+2026-06-10T19:14:20.5283339Z [command]/usr/bin/git log -1 --format=%H
+2026-06-10T19:14:20.5305423Z 4efd4eb43d0ea48f6546b998c5f919676903ffc6
+2026-06-10T19:14:20.5582868Z ##[group]Run actions/setup-java@v4
+2026-06-10T19:14:20.5583189Z with:
+2026-06-10T19:14:20.5583417Z   distribution: temurin
+2026-06-10T19:14:20.5583653Z   java-version: 25
+2026-06-10T19:14:20.5583864Z   java-package: jdk
+2026-06-10T19:14:20.5584087Z   check-latest: false
+2026-06-10T19:14:20.5584311Z   server-id: github
+2026-06-10T19:14:20.5584876Z   server-username: GITHUB_ACTOR
+2026-06-10T19:14:20.5585183Z   server-password: GITHUB_TOKEN
+2026-06-10T19:14:20.5585461Z   overwrite-settings: true
+2026-06-10T19:14:20.5585706Z   job-status: success
+2026-06-10T19:14:20.5588461Z   token: ***
+2026-06-10T19:14:20.5588687Z ##[endgroup]
+2026-06-10T19:14:20.7638173Z ##[group]Installed distributions
+2026-06-10T19:14:20.7768326Z Resolved Java 25.0.3+9 from tool-cache
+2026-06-10T19:14:20.7775909Z Setting Java 25.0.3+9 as the default
+2026-06-10T19:14:20.7783091Z Creating toolchains.xml for JDK version 25 from temurin
+2026-06-10T19:14:20.7863151Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-10T19:14:20.7864057Z 
+2026-06-10T19:14:20.7864456Z Java configuration:
+2026-06-10T19:14:20.7865426Z   Distribution: temurin
+2026-06-10T19:14:20.7866047Z   Version: 25.0.3+9
+2026-06-10T19:14:20.7874034Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:20.7874937Z 
+2026-06-10T19:14:20.7886298Z ##[endgroup]
+2026-06-10T19:14:20.7902918Z Creating settings.xml with server-id: github
+2026-06-10T19:14:20.7903333Z Writing to /home/runner/.m2/settings.xml
+2026-06-10T19:14:20.8153575Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-06-10T19:14:20.8153898Z with:
+2026-06-10T19:14:20.8154099Z   cache-disabled: false
+2026-06-10T19:14:20.8154332Z   cache-read-only: true
+2026-06-10T19:14:20.8154558Z   cache-write-only: false
+2026-06-10T19:14:20.8155022Z   cache-overwrite-existing: false
+2026-06-10T19:14:20.8155321Z   cache-cleanup: on-success
+2026-06-10T19:14:20.8155613Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-10T19:14:20.8155936Z   add-job-summary: always
+2026-06-10T19:14:20.8156185Z   add-job-summary-as-pr-comment: never
+2026-06-10T19:14:20.8156471Z   dependency-graph: disabled
+2026-06-10T19:14:20.8156782Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-10T19:14:20.8157150Z   dependency-graph-continue-on-failure: true
+2026-06-10T19:14:20.8157454Z   build-scan-publish: false
+2026-06-10T19:14:20.8157699Z   validate-wrappers: true
+2026-06-10T19:14:20.8157947Z   allow-snapshot-wrappers: false
+2026-06-10T19:14:20.8158445Z   gradle-home-cache-strict-match: false
+2026-06-10T19:14:20.8158727Z   workflow-job-context: null
+2026-06-10T19:14:20.8161503Z   github-token: ***
+2026-06-10T19:14:20.8161720Z env:
+2026-06-10T19:14:20.8162019Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:20.8162519Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:20.8162900Z ##[endgroup]
+2026-06-10T19:14:25.6294416Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-10T19:14:25.6298050Z ##[group]Restore Gradle state from cache
+2026-06-10T19:14:25.9530389Z Cache hit for restore-key: gradle-home-v1|Linux-X64|TestRestApi[04d8ed242d6e4f9366abd4632caf0523]-1cc8123f1733430290248d359e8e789d31497243
+2026-06-10T19:14:26.7890853Z Received 269572 of 269572 (100.0%), 0.5 MBs/sec
+2026-06-10T19:14:26.7895332Z Cache Size: ~0 MB (269572 B)
+2026-06-10T19:14:26.7929073Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7dc9a2f7-0a03-41e2-b35a-9d4d4e5cee0e/cache.tzst -P -C /home/runner/work/sirix/sirix --use-compress-program unzstd
+2026-06-10T19:14:26.8517659Z Cache restored successfully
+2026-06-10T19:14:26.8523481Z Restored cache entry with key gradle-home-v1|Linux-X64|TestRestApi[04d8ed242d6e4f9366abd4632caf0523]-4efd4eb43d0ea48f6546b998c5f919676903ffc6 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 1222ms
+2026-06-10T19:14:27.0845607Z Cache hit for: gradle-instrumented-jars-v1-54bc83410fb056956c354db44d996cae
+2026-06-10T19:14:27.1153267Z Cache hit for: gradle-groovy-dsl-v1-18e94cda1eaa8bb5217071be4ddb09cc
+2026-06-10T19:14:27.8031679Z Received 92280 of 92280 (100.0%), 0.2 MBs/sec
+2026-06-10T19:14:27.8032192Z Cache Size: ~0 MB (92280 B)
+2026-06-10T19:14:27.8057496Z [command]/usr/bin/tar -xf /home/runner/work/_temp/eb99a570-2a09-46ca-a2f4-449145f4de4f/cache.tzst -P -C /home/runner/work/sirix/sirix --use-compress-program unzstd
+2026-06-10T19:14:27.8207607Z Cache restored successfully
+2026-06-10T19:14:27.8209680Z Restored cache entry with key gradle-groovy-dsl-v1-18e94cda1eaa8bb5217071be4ddb09cc to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 967ms
+2026-06-10T19:14:27.8552926Z Received 59004 of 59004 (100.0%), 0.1 MBs/sec
+2026-06-10T19:14:27.8553639Z Cache Size: ~0 MB (59004 B)
+2026-06-10T19:14:27.8574935Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b2aeb66a-023d-4075-a1bc-58db17bd2920/cache.tzst -P -C /home/runner/work/sirix/sirix --use-compress-program unzstd
+2026-06-10T19:14:27.8666787Z Cache restored successfully
+2026-06-10T19:14:27.8668918Z Restored cache entry with key gradle-instrumented-jars-v1-54bc83410fb056956c354db44d996cae to /home/runner/.gradle/caches/jars-*/*/ in 1014ms
+2026-06-10T19:14:27.8731691Z ##[endgroup]
+2026-06-10T19:14:27.9331187Z ##[group]All Gradle Wrapper jars are valid
+2026-06-10T19:14:27.9332471Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-10T19:14:27.9333181Z   28b330c20a9a73881dfe9702df78d4d78bf72368e8906c70080ab6932462fe9e bundles/sirix-distributed/gradle/wrapper/gradle-wrapper.jar
+2026-06-10T19:14:27.9334405Z   55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c gradle/wrapper/gradle-wrapper.jar
+2026-06-10T19:14:27.9335387Z ##[endgroup]
+2026-06-10T19:14:27.9480629Z ##[group]Run actions/cache/restore@v4
+2026-06-10T19:14:27.9481035Z with:
+2026-06-10T19:14:27.9481254Z   path: **/build
+
+2026-06-10T19:14:27.9481518Z   key: build-27299849141
+2026-06-10T19:14:27.9481793Z   enableCrossOsArchive: false
+2026-06-10T19:14:27.9482070Z   fail-on-cache-miss: false
+2026-06-10T19:14:27.9482328Z   lookup-only: false
+2026-06-10T19:14:27.9482555Z env:
+2026-06-10T19:14:27.9482873Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:27.9483393Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:27.9483835Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-10T19:14:27.9484180Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-10T19:14:27.9484487Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-10T19:14:27.9485352Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-10T19:14:27.9485830Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-10T19:14:27.9486367Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-10T19:14:27.9486726Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-10T19:14:27.9487012Z ##[endgroup]
+2026-06-10T19:14:28.3703632Z Cache hit for: build-27299849141
+2026-06-10T19:14:29.6919529Z Received 0 of 118824023 (0.0%), 0.0 MBs/sec
+2026-06-10T19:14:30.6930022Z Received 83886080 of 118824023 (70.6%), 40.0 MBs/sec
+2026-06-10T19:14:30.9219068Z Received 118824023 of 118824023 (100.0%), 50.8 MBs/sec
+2026-06-10T19:14:30.9222002Z Cache Size: ~113 MB (118824023 B)
+2026-06-10T19:14:30.9334906Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c0f4dc2d-88f4-438e-81f7-102243dccdb3/cache.tzst -P -C /home/runner/work/sirix/sirix --use-compress-program unzstd
+2026-06-10T19:14:31.3967890Z Cache restored successfully
+2026-06-10T19:14:31.4103125Z Cache restored from key: build-27299849141
+2026-06-10T19:14:31.4291300Z ##[group]Run actions/checkout@v4
+2026-06-10T19:14:31.4291620Z with:
+2026-06-10T19:14:31.4291866Z   repository: sirixdb/sirix-python-client
+2026-06-10T19:14:31.4292197Z   path: ./sirix-python-client
+2026-06-10T19:14:31.4295256Z   token: ***
+2026-06-10T19:14:31.4295499Z   ssh-strict: true
+2026-06-10T19:14:31.4295731Z   ssh-user: git
+2026-06-10T19:14:31.4295975Z   persist-credentials: true
+2026-06-10T19:14:31.4296233Z   clean: true
+2026-06-10T19:14:31.4296471Z   sparse-checkout-cone-mode: true
+2026-06-10T19:14:31.4296755Z   fetch-depth: 1
+2026-06-10T19:14:31.4296974Z   fetch-tags: false
+2026-06-10T19:14:31.4297209Z   show-progress: true
+2026-06-10T19:14:31.4297446Z   lfs: false
+2026-06-10T19:14:31.4297652Z   submodules: false
+2026-06-10T19:14:31.4297890Z   set-safe-directory: true
+2026-06-10T19:14:31.4298133Z env:
+2026-06-10T19:14:31.4298452Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:31.4299007Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:31.4299474Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-10T19:14:31.4299809Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-10T19:14:31.4300119Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-10T19:14:31.4300435Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-10T19:14:31.4300898Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-10T19:14:31.4301394Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-10T19:14:31.4301732Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-10T19:14:31.4302021Z ##[endgroup]
+2026-06-10T19:14:31.5302867Z Syncing repository: sirixdb/sirix-python-client
+2026-06-10T19:14:31.5307291Z ##[group]Getting Git version info
+2026-06-10T19:14:31.5307996Z Working directory is '/home/runner/work/sirix/sirix/sirix-python-client'
+2026-06-10T19:14:31.5361052Z [command]/usr/bin/git version
+2026-06-10T19:14:31.5399948Z git version 2.54.0
+2026-06-10T19:14:31.5426920Z ##[endgroup]
+2026-06-10T19:14:31.5440639Z Temporarily overriding HOME='/home/runner/work/_temp/75d8ae5b-10fd-4366-8078-c76bcea522a1' before making global git config changes
+2026-06-10T19:14:31.5442001Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-10T19:14:31.5446206Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sirix/sirix/sirix-python-client
+2026-06-10T19:14:31.5477545Z ##[group]Initializing the repository
+2026-06-10T19:14:31.5482967Z [command]/usr/bin/git init /home/runner/work/sirix/sirix/sirix-python-client
+2026-06-10T19:14:31.5519418Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-10T19:14:31.5520553Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-10T19:14:31.5521547Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-10T19:14:31.5522208Z hint: call:
+2026-06-10T19:14:31.5522598Z hint:
+2026-06-10T19:14:31.5523541Z hint: 	git config --global init.defaultBranch <name>
+2026-06-10T19:14:31.5524195Z hint:
+2026-06-10T19:14:31.5525119Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-10T19:14:31.5526169Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-10T19:14:31.5526968Z hint:
+2026-06-10T19:14:31.5527413Z hint: 	git branch -m <name>
+2026-06-10T19:14:31.5527920Z hint:
+2026-06-10T19:14:31.5528606Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-10T19:14:31.5529859Z Initialized empty Git repository in /home/runner/work/sirix/sirix/sirix-python-client/.git/
+2026-06-10T19:14:31.5534303Z [command]/usr/bin/git remote add origin https://github.com/sirixdb/sirix-python-client
+2026-06-10T19:14:31.5564482Z ##[endgroup]
+2026-06-10T19:14:31.5565513Z ##[group]Disabling automatic garbage collection
+2026-06-10T19:14:31.5570493Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-10T19:14:31.5599032Z ##[endgroup]
+2026-06-10T19:14:31.5600112Z ##[group]Setting up auth
+2026-06-10T19:14:31.5606815Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-10T19:14:31.5636413Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-10T19:14:31.5860585Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-10T19:14:31.5893149Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-10T19:14:31.6112142Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-10T19:14:31.6144039Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-10T19:14:31.6368947Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-10T19:14:31.6404865Z ##[endgroup]
+2026-06-10T19:14:31.6405584Z ##[group]Determining the default branch
+2026-06-10T19:14:31.6408826Z Retrieving the default branch name
+2026-06-10T19:14:32.0447351Z Default branch 'master'
+2026-06-10T19:14:32.0448139Z ##[endgroup]
+2026-06-10T19:14:32.0448702Z ##[group]Fetching the repository
+2026-06-10T19:14:32.0455990Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/heads/master:refs/remotes/origin/master
+2026-06-10T19:14:32.8958310Z From https://github.com/sirixdb/sirix-python-client
+2026-06-10T19:14:32.8958938Z  * [new branch]      master     -> origin/master
+2026-06-10T19:14:32.8982770Z ##[endgroup]
+2026-06-10T19:14:32.8983432Z ##[group]Determining the checkout info
+2026-06-10T19:14:32.8984518Z ##[endgroup]
+2026-06-10T19:14:32.8990413Z [command]/usr/bin/git sparse-checkout disable
+2026-06-10T19:14:32.9028713Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-10T19:14:32.9055965Z ##[group]Checking out the ref
+2026-06-10T19:14:32.9060287Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-06-10T19:14:32.9134186Z Reset branch 'master'
+2026-06-10T19:14:32.9137613Z branch 'master' set up to track 'origin/master'.
+2026-06-10T19:14:32.9143594Z ##[endgroup]
+2026-06-10T19:14:32.9179578Z [command]/usr/bin/git log -1 --format=%H
+2026-06-10T19:14:32.9202974Z 2b444524784c477ed2c748d1bde56402ec8a3275
+2026-06-10T19:14:32.9369117Z ##[group]Run actions/setup-python@v5
+2026-06-10T19:14:32.9369459Z with:
+2026-06-10T19:14:32.9369695Z   python-version: 3.9
+2026-06-10T19:14:32.9369957Z   architecture: x64
+2026-06-10T19:14:32.9370192Z   check-latest: false
+2026-06-10T19:14:32.9372968Z   token: ***
+2026-06-10T19:14:32.9373208Z   update-environment: true
+2026-06-10T19:14:32.9373481Z   allow-prereleases: false
+2026-06-10T19:14:32.9373925Z   freethreaded: false
+2026-06-10T19:14:32.9374163Z env:
+2026-06-10T19:14:32.9374480Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:32.9375481Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:32.9375955Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-10T19:14:32.9376298Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-10T19:14:32.9376619Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-10T19:14:32.9376947Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-10T19:14:32.9377448Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-10T19:14:32.9377956Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-10T19:14:32.9378309Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-10T19:14:32.9378618Z ##[endgroup]
+2026-06-10T19:14:33.1135021Z ##[group]Installed versions
+2026-06-10T19:14:33.1212911Z Version 3.9 was not found in the local cache
+2026-06-10T19:14:33.9099460Z Version 3.9 is available for downloading
+2026-06-10T19:14:33.9101371Z Download from "https://github.com/actions/python-versions/releases/download/3.9.25-19039189640/python-3.9.25-linux-24.04-x64.tar.gz"
+2026-06-10T19:14:34.6526937Z Extract downloaded archive
+2026-06-10T19:14:34.6658876Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/b65e50d2-d910-4b77-83e3-34533ac06afa -f /home/runner/work/_temp/fc101a55-7ce5-4708-a011-aa213cc94135
+2026-06-10T19:14:36.0433847Z Execute installation script
+2026-06-10T19:14:36.0539029Z Check if Python hostedtoolcache folder exist...
+2026-06-10T19:14:36.0540061Z Create Python 3.9.25 folder
+2026-06-10T19:14:36.0552542Z Copy Python binaries to hostedtoolcache folder
+2026-06-10T19:14:36.5212073Z Create additional symlinks (Required for the UsePythonVersion Azure Pipelines task and the setup-python GitHub Action)
+2026-06-10T19:14:36.5254084Z Upgrading pip...
+2026-06-10T19:14:38.7919328Z Looking in links: /tmp/tmpdl2jrpw8
+2026-06-10T19:14:38.7923296Z Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (79.0.1)
+2026-06-10T19:14:38.7927982Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (23.0.1)
+2026-06-10T19:14:39.9855844Z Collecting pip
+2026-06-10T19:14:40.0170124Z Downloading pip-26.0.1-py3-none-any.whl (1.8 MB)
+2026-06-10T19:14:40.0696666Z ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 36.8 MB/s eta 0:00:00
+2026-06-10T19:14:40.0697260Z 
+2026-06-10T19:14:40.1314217Z Installing collected packages: pip
+2026-06-10T19:14:40.1316029Z Attempting uninstall: pip
+2026-06-10T19:14:40.1322258Z Found existing installation: pip 23.0.1
+2026-06-10T19:14:40.3162572Z Uninstalling pip-23.0.1:
+2026-06-10T19:14:40.3236545Z Successfully uninstalled pip-23.0.1
+2026-06-10T19:14:41.1604497Z Successfully installed pip-26.0.1
+2026-06-10T19:14:41.2194254Z Create complete file
+2026-06-10T19:14:41.2244158Z Successfully set up CPython (3.9.25)
+2026-06-10T19:14:41.2245280Z ##[endgroup]
+2026-06-10T19:14:41.2401282Z ##[group]Run docker compose up -d keycloak
+2026-06-10T19:14:41.2401767Z [36;1mdocker compose up -d keycloak[0m
+2026-06-10T19:14:41.2402144Z [36;1mpython -m pip install --upgrade pip[0m
+2026-06-10T19:14:41.2402601Z [36;1mpip install -r sirix-python-client/requirements-all.txt[0m
+2026-06-10T19:14:41.2403009Z [36;1msleep 40[0m
+2026-06-10T19:14:41.2406564Z [36;1mjava -Xms1g -Xmx4g --enable-preview --enable-native-access=ALL-UNNAMED --add-modules=jdk.incubator.vector --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED -jar ./bundles/sirix-rest-api/build/libs/sirix-rest-api-*-fat.jar -conf ./bundles/sirix-rest-api/src/main/resources/sirix-conf.json &[0m
+2026-06-10T19:14:41.2409739Z [36;1mecho "Waiting for REST API on port 9443..."[0m
+2026-06-10T19:14:41.2410102Z [36;1mfor i in $(seq 1 120); do[0m
+2026-06-10T19:14:41.2410527Z [36;1m  if curl -s -o /dev/null http://localhost:9443/ 2>/dev/null; then[0m
+2026-06-10T19:14:41.2410986Z [36;1m    echo "REST API is up after ${i}s"[0m
+2026-06-10T19:14:41.2411314Z [36;1m    break[0m
+2026-06-10T19:14:41.2411547Z [36;1m  fi[0m
+2026-06-10T19:14:41.2411787Z [36;1m  if [ "$i" -eq 120 ]; then[0m
+2026-06-10T19:14:41.2412131Z [36;1m    echo "REST API failed to start within 120s"[0m
+2026-06-10T19:14:41.2412482Z [36;1m    exit 1[0m
+2026-06-10T19:14:41.2412715Z [36;1m  fi[0m
+2026-06-10T19:14:41.2412930Z [36;1m  sleep 1[0m
+2026-06-10T19:14:41.2413181Z [36;1mdone[0m
+2026-06-10T19:14:41.2413466Z [36;1mpython -m pytest sirix-python-client -v[0m
+2026-06-10T19:14:41.2596302Z shell: /usr/bin/bash -e {0}
+2026-06-10T19:14:41.2596707Z env:
+2026-06-10T19:14:41.2597180Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:41.2597962Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-10T19:14:41.2598641Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-10T19:14:41.2599121Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-10T19:14:41.2599575Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-10T19:14:41.2600041Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-10T19:14:41.2600723Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-10T19:14:41.2601482Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-10T19:14:41.2601975Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-10T19:14:41.2602497Z   pythonLocation: /opt/hostedtoolcache/Python/3.9.25/x64
+2026-06-10T19:14:41.2603159Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib/pkgconfig
+2026-06-10T19:14:41.2603825Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+2026-06-10T19:14:41.2604417Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+2026-06-10T19:14:41.2605205Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.9.25/x64
+2026-06-10T19:14:41.2605815Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.25/x64/lib
+2026-06-10T19:14:41.2606319Z ##[endgroup]
+2026-06-10T19:14:52.3526454Z #1 [internal] load local bake definitions
+2026-06-10T19:14:52.5033315Z #1 reading from stdin 449B done
+2026-06-10T19:14:52.5033882Z #1 DONE 0.0s
+2026-06-10T19:14:52.9565751Z 
+2026-06-10T19:14:52.9566383Z #2 [internal] load build definition from Dockerfile
+2026-06-10T19:14:52.9566922Z #2 transferring dockerfile: 757B 0.0s done
+2026-06-10T19:14:52.9567321Z #2 DONE 0.1s
+2026-06-10T19:14:52.9567486Z 
+2026-06-10T19:14:52.9567762Z #3 [internal] load metadata for registry.access.redhat.com/ubi9:latest
+2026-06-10T19:14:53.6363385Z #3 ...
+2026-06-10T19:14:53.6363586Z 
+2026-06-10T19:14:53.6363845Z #4 [internal] load metadata for quay.io/keycloak/keycloak:25.0.1
+2026-06-10T19:14:53.6364925Z #4 DONE 0.8s
+2026-06-10T19:14:53.7867776Z 
+2026-06-10T19:14:53.7868531Z #3 [internal] load metadata for registry.access.redhat.com/ubi9:latest
+2026-06-10T19:14:53.9698801Z #3 DONE 1.2s
+2026-06-10T19:14:54.1368877Z 
+2026-06-10T19:14:54.1369422Z #5 [internal] load .dockerignore
+2026-06-10T19:14:54.1369936Z #5 transferring context: 2B done
+2026-06-10T19:14:54.1370385Z #5 DONE 0.0s
+2026-06-10T19:14:54.1370539Z 
+2026-06-10T19:14:54.1370670Z #6 [internal] load build context
+2026-06-10T19:14:54.1371008Z #6 transferring context: 1.66kB done
+2026-06-10T19:14:54.1371339Z #6 DONE 0.0s
+2026-06-10T19:14:54.1371485Z 
+2026-06-10T19:14:54.1372072Z #7 [ubi-micro-build 1/3] FROM registry.access.redhat.com/ubi9:latest@sha256:46d19c10caf9888e8a01131283eaaf50c7f5d4eddab02cd92a66f8adf2e15407
+2026-06-10T19:14:54.1373307Z #7 resolve registry.access.redhat.com/ubi9:latest@sha256:46d19c10caf9888e8a01131283eaaf50c7f5d4eddab02cd92a66f8adf2e15407 done
+2026-06-10T19:14:54.1374829Z #7 sha256:46d19c10caf9888e8a01131283eaaf50c7f5d4eddab02cd92a66f8adf2e15407 970B / 970B done
+2026-06-10T19:14:54.1375494Z #7 sha256:c628b778d487286b5e718e23e14c23f60b9b44cd20e7e69050ef59e655625630 429B / 429B done
+2026-06-10T19:14:54.1376152Z #7 sha256:0057bf395035edb6f3639917ac961ab60c07c98366d7a5aa95deba39ab49dc2d 6.33kB / 6.33kB done
+2026-06-10T19:14:54.1376813Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 0B / 80.51MB 0.1s
+2026-06-10T19:14:54.5118837Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 12.58MB / 80.51MB 0.4s
+2026-06-10T19:14:54.6366904Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 28.31MB / 80.51MB 0.6s
+2026-06-10T19:14:54.7373520Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 33.55MB / 80.51MB 0.7s
+2026-06-10T19:14:54.8374381Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 42.99MB / 80.51MB 0.8s
+2026-06-10T19:14:55.0365151Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 61.87MB / 80.51MB 1.0s
+2026-06-10T19:14:55.1380680Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 67.11MB / 80.51MB 1.1s
+2026-06-10T19:14:55.3359724Z #7 sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 80.51MB / 80.51MB 1.3s done
+2026-06-10T19:14:55.4376794Z #7 extracting sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da
+2026-06-10T19:14:59.3441310Z #7 extracting sha256:aca19e660f6d3005b0e0cb3182b2827554e877ed8773c57b83b87bf82f8cc6da 3.8s done
+2026-06-10T19:14:59.5159125Z #7 DONE 5.5s
+2026-06-10T19:14:59.5159710Z 
+2026-06-10T19:14:59.5171015Z #8 [stage-1 1/5] FROM quay.io/keycloak/keycloak:25.0.1@sha256:a3d10e729b140f5a044f6d04f324aa53ae58ed11398e0e6e432cb98042b41b1f
+2026-06-10T19:14:59.5172936Z #8 resolve quay.io/keycloak/keycloak:25.0.1@sha256:a3d10e729b140f5a044f6d04f324aa53ae58ed11398e0e6e432cb98042b41b1f done
+2026-06-10T19:14:59.5174441Z #8 sha256:09ee2abe1b5721dbec7c1701c796e6d5d06014bff030f3c1299a3e14c65bacf2 81.21MB / 81.21MB 1.7s done
+2026-06-10T19:14:59.5175724Z #8 sha256:a3d10e729b140f5a044f6d04f324aa53ae58ed11398e0e6e432cb98042b41b1f 1.61kB / 1.61kB done
+2026-06-10T19:14:59.5176443Z #8 sha256:a0c0dedfee3b1b4fae57a0b0c6f215616012eb99f12201c43a8f0444f95c205d 1.06kB / 1.06kB done
+2026-06-10T19:14:59.5177159Z #8 sha256:79fc80eb59b467bf1e4b3bd82205b093ca0f5c5830edb450b807619894367071 8.94kB / 8.94kB done
+2026-06-10T19:14:59.5177876Z #8 sha256:a04e04efb6ef734885409c59529ee99f639717edcba8f2ee59b54ad6afe9cc9b 7.26MB / 7.26MB 0.2s done
+2026-06-10T19:14:59.5179059Z #8 extracting sha256:a04e04efb6ef734885409c59529ee99f639717edcba8f2ee59b54ad6afe9cc9b 0.3s done
+2026-06-10T19:14:59.5180369Z #8 sha256:8a4a6837906da5df2ebfdd1f51a15e43f38b443750597be47635e52874b3f606 146.46MB / 146.46MB 3.6s done
+2026-06-10T19:14:59.5181651Z #8 sha256:8612ed7ab0b03eeb7d84605a280b6d165302bff25982d87923fd76ed3b75c40c 550B / 550B 1.5s done
+2026-06-10T19:14:59.5183083Z #8 extracting sha256:09ee2abe1b5721dbec7c1701c796e6d5d06014bff030f3c1299a3e14c65bacf2 2.8s done
+2026-06-10T19:15:00.3155708Z #8 ...
+2026-06-10T19:15:00.3156534Z 
+2026-06-10T19:15:00.3157007Z #9 [ubi-micro-build 2/3] RUN mkdir -p /mnt/rootfs
+2026-06-10T19:15:00.3157621Z #9 DONE 0.8s
+2026-06-10T19:15:00.4351530Z 
+2026-06-10T19:15:00.4352713Z #8 [stage-1 1/5] FROM quay.io/keycloak/keycloak:25.0.1@sha256:a3d10e729b140f5a044f6d04f324aa53ae58ed11398e0e6e432cb98042b41b1f
+2026-06-10T19:15:00.4354104Z #8 extracting sha256:8a4a6837906da5df2ebfdd1f51a15e43f38b443750597be47635e52874b3f606 0.1s
+2026-06-10T19:15:01.3637074Z #8 extracting sha256:8a4a6837906da5df2ebfdd1f51a15e43f38b443750597be47635e52874b3f606 0.9s done
+2026-06-10T19:15:01.3638955Z #8 extracting sha256:8612ed7ab0b03eeb7d84605a280b6d165302bff25982d87923fd76ed3b75c40c
+2026-06-10T19:15:01.5423120Z #8 extracting sha256:8612ed7ab0b03eeb7d84605a280b6d165302bff25982d87923fd76ed3b75c40c done
+2026-06-10T19:15:01.5424049Z #8 DONE 7.4s
+2026-06-10T19:15:01.5424266Z 
+2026-06-10T19:15:01.5425834Z #10 [ubi-micro-build 3/3] RUN dnf install --installroot /mnt/rootfs jq curl     --releasever 9 --setopt install_weak_deps=false --nodocs -y;     dnf --installroot /mnt/rootfs clean all
+2026-06-10T19:15:01.5427887Z #10 0.504 Updating Subscription Management repositories.
+2026-06-10T19:15:01.5428550Z #10 0.504 Unable to read consumer identity
+2026-06-10T19:15:01.5429080Z #10 0.506 
+2026-06-10T19:15:01.5429895Z #10 0.506 This system is not registered with an entitlement server. You can use subscription-manager to register.
+2026-06-10T19:15:01.5430877Z #10 0.506 
+2026-06-10T19:15:01.5431519Z #10 0.667 Red Hat Universal Base Image 9 (RPMs) - BaseOS  4.0 MB/s | 534 kB     00:00    
+2026-06-10T19:15:01.5432589Z #10 0.907 Red Hat Universal Base Image 9 (RPMs) - AppStre  23 MB/s | 2.9 MB     00:00    
+2026-06-10T19:15:01.8192031Z #10 1.504 Red Hat Universal Base Image 9 (RPMs) - CodeRea 5.6 MB/s | 375 kB     00:00    
+2026-06-10T19:15:01.9778050Z #10 1.663 Dependencies resolved.
+2026-06-10T19:15:02.0810816Z #10 1.667 ===========================================================================================
+2026-06-10T19:15:02.0812121Z #10 1.667  Package                    Arch    Version                     Repository             Size
+2026-06-10T19:15:02.0813036Z #10 1.667 ===========================================================================================
+2026-06-10T19:15:02.0813705Z #10 1.667 Installing:
+2026-06-10T19:15:02.0814855Z #10 1.667  curl                       x86_64  7.76.1-40.el9               ubi-9-baseos-rpms     299 k
+2026-06-10T19:15:02.0816337Z #10 1.667  jq                         x86_64  1.6-19.el9_8.2              ubi-9-baseos-rpms     193 k
+2026-06-10T19:15:02.0817153Z #10 1.667 Installing dependencies:
+2026-06-10T19:15:02.0817853Z #10 1.667  alternatives               x86_64  1.24-2.el9                  ubi-9-baseos-rpms      42 k
+2026-06-10T19:15:02.0818811Z #10 1.667  audit-libs                 x86_64  3.1.5-8.el9                 ubi-9-baseos-rpms     128 k
+2026-06-10T19:15:02.0819744Z #10 1.667  basesystem                 noarch  11-13.el9                   ubi-9-baseos-rpms     8.0 k
+2026-06-10T19:15:02.0820676Z #10 1.667  bash                       x86_64  5.1.8-9.el9                 ubi-9-baseos-rpms     1.7 M
+2026-06-10T19:15:02.0821547Z #10 1.667  bzip2-libs                 x86_64  1.0.8-11.el9                ubi-9-baseos-rpms      45 k
+2026-06-10T19:15:02.0823170Z #10 1.667  ca-certificates            noarch  2025.2.80_v9.0.305-91.el9   ubi-9-baseos-rpms     1.0 M
+2026-06-10T19:15:02.0823935Z #10 1.667  coreutils                  x86_64  8.32-40.el9                 ubi-9-baseos-rpms     1.2 M
+2026-06-10T19:15:02.0824534Z #10 1.667  coreutils-common           x86_64  8.32-40.el9                 ubi-9-baseos-rpms     2.0 M
+2026-06-10T19:15:02.0825337Z #10 1.667  crypto-policies            noarch  20260224-1.gitea0f072.el9_8 ubi-9-baseos-rpms      96 k
+2026-06-10T19:15:02.0825981Z #10 1.667  cyrus-sasl-lib             x86_64  2.1.27-22.el9               ubi-9-baseos-rpms     768 k
+2026-06-10T19:15:02.0827041Z #10 1.667  filesystem                 x86_64  3.16-5.el9                  ubi-9-baseos-rpms     4.8 M
+2026-06-10T19:15:02.0827967Z #10 1.667  findutils                  x86_64  1:4.8.0-7.el9               ubi-9-baseos-rpms     550 k
+2026-06-10T19:15:02.0828904Z #10 1.667  gawk                       x86_64  5.1.0-6.el9                 ubi-9-baseos-rpms     1.0 M
+2026-06-10T19:15:02.0829782Z #10 1.667  gdbm-libs                  x86_64  1:1.23-1.el9                ubi-9-baseos-rpms      59 k
+2026-06-10T19:15:02.0831215Z #10 1.667  glibc                      x86_64  2.34-270.el9_8              ubi-9-baseos-rpms     2.0 M
+2026-06-10T19:15:02.0831859Z #10 1.667  glibc-common               x86_64  2.34-270.el9_8              ubi-9-baseos-rpms     315 k
+2026-06-10T19:15:02.0832521Z #10 1.667  glibc-minimal-langpack     x86_64  2.34-270.el9_8              ubi-9-baseos-rpms      31 k
+2026-06-10T19:15:02.0833137Z #10 1.667  gmp                        x86_64  1:6.2.0-13.el9              ubi-9-baseos-rpms     319 k
+2026-06-10T19:15:02.0834291Z #10 1.667  grep                       x86_64  3.6-5.el9                   ubi-9-baseos-rpms     273 k
+2026-06-10T19:15:02.0835744Z #10 1.667  keyutils-libs              x86_64  1.6.3-1.el9                 ubi-9-baseos-rpms      34 k
+2026-06-10T19:15:02.0836639Z #10 1.667  krb5-libs                  x86_64  1.21.1-10.el9_8             ubi-9-baseos-rpms     772 k
+2026-06-10T19:15:02.0837184Z #10 1.667  libacl                     x86_64  2.3.1-4.el9                 ubi-9-baseos-rpms      24 k
+2026-06-10T19:15:02.0837718Z #10 1.667  libattr                    x86_64  2.5.1-3.el9                 ubi-9-baseos-rpms      20 k
+2026-06-10T19:15:02.0838247Z #10 1.667  libbrotli                  x86_64  1.0.9-9.el9_7               ubi-9-baseos-rpms     319 k
+2026-06-10T19:15:02.0838785Z #10 1.667  libcap                     x86_64  2.48-10.el9_8.1             ubi-9-baseos-rpms      77 k
+2026-06-10T19:15:02.0839316Z #10 1.667  libcap-ng                  x86_64  0.8.2-7.el9                 ubi-9-baseos-rpms      36 k
+2026-06-10T19:15:02.0839855Z #10 1.667  libcom_err                 x86_64  1.46.5-8.el9                ubi-9-baseos-rpms      26 k
+2026-06-10T19:15:02.0840881Z #10 1.667  libcurl                    x86_64  7.76.1-40.el9               ubi-9-baseos-rpms     290 k
+2026-06-10T19:15:02.0841628Z #10 1.667  libevent                   x86_64  2.1.12-8.el9_4              ubi-9-baseos-rpms     266 k
+2026-06-10T19:15:02.0842748Z #10 1.667  libffi                     x86_64  3.4.2-8.el9                 ubi-9-baseos-rpms      40 k
+2026-06-10T19:15:02.0843885Z #10 1.667  libgcc                     x86_64  11.5.0-14.el9               ubi-9-baseos-rpms      85 k
+2026-06-10T19:15:02.0844960Z #10 1.667  libidn2                    x86_64  2.3.0-7.el9                 ubi-9-baseos-rpms     105 k
+2026-06-10T19:15:02.0845847Z #10 1.667  libnghttp2                 x86_64  1.43.0-6.el9_8.1            ubi-9-baseos-rpms      78 k
+2026-06-10T19:15:02.0846654Z #10 1.667  libpsl                     x86_64  0.21.1-5.el9                ubi-9-baseos-rpms      66 k
+2026-06-10T19:15:02.0847242Z #10 1.667  libselinux                 x86_64  3.6-3.el9                   ubi-9-baseos-rpms      88 k
+2026-06-10T19:15:02.0848141Z #10 1.667  libsemanage                x86_64  3.6-5.el9_6                 ubi-9-baseos-rpms     121 k
+2026-06-10T19:15:02.0849019Z #10 1.667  libsepol                   x86_64  3.6-3.el9                   ubi-9-baseos-rpms     331 k
+2026-06-10T19:15:02.0849570Z #10 1.667  libsigsegv                 x86_64  2.13-4.el9                  ubi-9-baseos-rpms      30 k
+2026-06-10T19:15:02.0850370Z #10 1.667  libssh                     x86_64  0.10.4-18.el9               ubi-9-baseos-rpms     220 k
+2026-06-10T19:15:02.0850927Z #10 1.667  libssh-config              noarch  0.10.4-18.el9               ubi-9-baseos-rpms      14 k
+2026-06-10T19:15:02.0851489Z #10 1.667  libtasn1                   x86_64  4.16.0-9.el9                ubi-9-baseos-rpms      77 k
+2026-06-10T19:15:02.0852464Z #10 1.667  libtool-ltdl               x86_64  2.4.6-46.el9                ubi-9-appstream-rpms   37 k
+2026-06-10T19:15:02.0853632Z #10 1.667  libunistring               x86_64  0.9.10-15.el9               ubi-9-baseos-rpms     499 k
+2026-06-10T19:15:02.0854204Z #10 1.667  libverto                   x86_64  0.3.2-3.el9                 ubi-9-baseos-rpms      24 k
+2026-06-10T19:15:02.0855313Z #10 1.667  libxcrypt                  x86_64  4.4.18-3.el9                ubi-9-baseos-rpms     120 k
+2026-06-10T19:15:02.0856355Z #10 1.667  mpfr                       x86_64  4.1.0-10.el9                ubi-9-baseos-rpms     330 k
+2026-06-10T19:15:02.0856947Z #10 1.667  ncurses-base               noarch  6.2-12.20210508.el9         ubi-9-baseos-rpms      96 k
+2026-06-10T19:15:02.0857997Z #10 1.667  ncurses-libs               x86_64  6.2-12.20210508.el9         ubi-9-baseos-rpms     328 k
+2026-06-10T19:15:02.0858557Z #10 1.667  oniguruma                  x86_64  6.9.6-1.el9.5               ubi-9-appstream-rpms  221 k
+2026-06-10T19:15:02.0859287Z #10 1.667  openldap                   x86_64  2.6.8-4.el9                 ubi-9-baseos-rpms     290 k
+2026-06-10T19:15:02.0859879Z #10 1.667  openssl-fips-provider      x86_64  3.0.7-8.el9                 ubi-9-baseos-rpms     9.2 k
+2026-06-10T19:15:02.0860499Z #10 1.667  openssl-fips-provider-so   x86_64  3.0.7-8.el9                 ubi-9-baseos-rpms     576 k
+2026-06-10T19:15:02.0861094Z #10 1.667  openssl-libs               x86_64  1:3.5.5-3.el9_8             ubi-9-baseos-rpms     2.3 M
+2026-06-10T19:15:02.0861646Z #10 1.667  p11-kit                    x86_64  0.26.2-1.el9                ubi-9-baseos-rpms     609 k
+2026-06-10T19:15:02.0862767Z #10 1.667  p11-kit-trust              x86_64  0.26.2-1.el9                ubi-9-baseos-rpms     161 k
+2026-06-10T19:15:02.0863486Z #10 1.667  pcre                       x86_64  8.44-4.el9                  ubi-9-baseos-rpms     200 k
+2026-06-10T19:15:02.0864133Z #10 1.667  pcre2                      x86_64  10.40-6.el9                 ubi-9-baseos-rpms     236 k
+2026-06-10T19:15:02.0864980Z #10 1.667  pcre2-syntax               noarch  10.40-6.el9                 ubi-9-baseos-rpms     144 k
+2026-06-10T19:15:02.0865617Z #10 1.667  publicsuffix-list-dafsa    noarch  20210518-3.el9              ubi-9-baseos-rpms      59 k
+2026-06-10T19:15:02.0866745Z #10 1.667  readline                   x86_64  8.1-4.el9                   ubi-9-baseos-rpms     215 k
+2026-06-10T19:15:02.0867328Z #10 1.667  redhat-release             x86_64  9.8-1.0.el9                 ubi-9-baseos-rpms      60 k
+2026-06-10T19:15:02.0868429Z #10 1.667  sed                        x86_64  4.8-10.el9                  ubi-9-baseos-rpms     310 k
+2026-06-10T19:15:02.0869126Z #10 1.667  setup                      noarch  2.13.7-10.el9               ubi-9-baseos-rpms     150 k
+2026-06-10T19:15:02.0869699Z #10 1.667  shadow-utils               x86_64  2:4.9-16.el9                ubi-9-baseos-rpms     1.2 M
+2026-06-10T19:15:02.0870261Z #10 1.667  tzdata                     noarch  2026b-1.el9                 ubi-9-baseos-rpms     912 k
+2026-06-10T19:15:02.0870802Z #10 1.667  zlib                       x86_64  1.2.11-40.el9               ubi-9-baseos-rpms      93 k
+2026-06-10T19:15:02.0871202Z #10 1.667 
+2026-06-10T19:15:02.0871419Z #10 1.667 Transaction Summary
+2026-06-10T19:15:02.0872225Z #10 1.667 ===========================================================================================
+2026-06-10T19:15:02.0872625Z #10 1.667 Install  68 Packages
+2026-06-10T19:15:02.0872883Z #10 1.667 
+2026-06-10T19:15:02.0873126Z #10 1.670 Total download size: 29 M
+2026-06-10T19:15:02.0873422Z #10 1.670 Installed size: 76 M
+2026-06-10T19:15:02.0873688Z #10 1.670 Downloading Packages:
+2026-06-10T19:15:02.0874105Z #10 1.704 (1/68): basesystem-11-13.el9.noarch.rpm         282 kB/s | 8.0 kB     00:00    
+2026-06-10T19:15:02.0875241Z #10 1.707 (2/68): alternatives-1.24-2.el9.x86_64.rpm      1.3 MB/s |  42 kB     00:00    
+2026-06-10T19:15:02.0876207Z #10 1.711 (3/68): audit-libs-3.1.5-8.el9.x86_64.rpm       3.5 MB/s | 128 kB     00:00    
+2026-06-10T19:15:02.0876952Z #10 1.712 (4/68): bzip2-libs-1.0.8-11.el9.x86_64.rpm      9.2 MB/s |  45 kB     00:00    
+2026-06-10T19:15:02.0877497Z #10 1.731 (5/68): bash-5.1.8-9.el9.x86_64.rpm              65 MB/s | 1.7 MB     00:00    
+2026-06-10T19:15:02.0878032Z #10 1.737 (6/68): ca-certificates-2025.2.80_v9.0.305-91.e  40 MB/s | 1.0 MB     00:00    
+2026-06-10T19:15:02.0878946Z #10 1.744 (7/68): coreutils-8.32-40.el9.x86_64.rpm         37 MB/s | 1.2 MB     00:00    
+2026-06-10T19:15:02.0880350Z #10 1.745 (8/68): crypto-policies-20260224-1.gitea0f072.e  12 MB/s |  96 kB     00:00    
+2026-06-10T19:15:02.0881000Z #10 1.753 (9/68): curl-7.76.1-40.el9.x86_64.rpm            35 MB/s | 299 kB     00:00    
+2026-06-10T19:15:02.0881735Z #10 1.761 (10/68): cyrus-sasl-lib-2.1.27-22.el9.x86_64.rp  50 MB/s | 768 kB     00:00    
+2026-06-10T19:15:02.0883028Z #10 1.766 (11/68): coreutils-common-8.32-40.el9.x86_64.rp  58 MB/s | 2.0 MB     00:00    
+2026-06-10T19:15:02.1856007Z #10 1.774 (12/68): findutils-4.8.0-7.el9.x86_64.rpm        41 MB/s | 550 kB     00:00    
+2026-06-10T19:15:02.1857195Z #10 1.779 (13/68): gdbm-libs-1.23-1.el9.x86_64.rpm         13 MB/s |  59 kB     00:00    
+2026-06-10T19:15:02.1857747Z #10 1.784 (14/68): gawk-5.1.0-6.el9.x86_64.rpm             59 MB/s | 1.0 MB     00:00    
+2026-06-10T19:15:02.1858901Z #10 1.792 (15/68): glibc-common-2.34-270.el9_8.x86_64.rpm  40 MB/s | 315 kB     00:00    
+2026-06-10T19:15:02.1859851Z #10 1.796 (16/68): glibc-minimal-langpack-2.34-270.el9_8. 9.9 MB/s |  31 kB     00:00    
+2026-06-10T19:15:02.1860398Z #10 1.803 (17/68): gmp-6.2.0-13.el9.x86_64.rpm             47 MB/s | 319 kB     00:00    
+2026-06-10T19:15:02.1860921Z #10 1.814 (18/68): glibc-2.34-270.el9_8.x86_64.rpm         58 MB/s | 2.0 MB     00:00    
+2026-06-10T19:15:02.1861421Z #10 1.817 (19/68): grep-3.6-5.el9.x86_64.rpm               19 MB/s | 273 kB     00:00    
+2026-06-10T19:15:02.1861921Z #10 1.820 (20/68): jq-1.6-19.el9_8.2.x86_64.rpm            32 MB/s | 193 kB     00:00    
+2026-06-10T19:15:02.1862471Z #10 1.822 (21/68): keyutils-libs-1.6.3-1.el9.x86_64.rpm   9.2 MB/s |  34 kB     00:00    
+2026-06-10T19:15:02.1862998Z #10 1.834 (22/68): filesystem-3.16-5.el9.x86_64.rpm        59 MB/s | 4.8 MB     00:00    
+2026-06-10T19:15:02.1863515Z #10 1.840 (23/68): krb5-libs-1.21.1-10.el9_8.x86_64.rpm    40 MB/s | 772 kB     00:00    
+2026-06-10T19:15:02.1864024Z #10 1.846 (24/68): libbrotli-1.0.9-9.el9_7.x86_64.rpm      51 MB/s | 319 kB     00:00    
+2026-06-10T19:15:02.1864531Z #10 1.851 (25/68): libcap-2.48-10.el9_8.1.x86_64.rpm       16 MB/s |  77 kB     00:00    
+2026-06-10T19:15:02.1869111Z #10 1.855 (26/68): libcap-ng-0.8.2-7.el9.x86_64.rpm       9.9 MB/s |  36 kB     00:00    
+2026-06-10T19:15:02.1870212Z #10 1.859 (27/68): libcom_err-1.46.5-8.el9.x86_64.rpm     7.9 MB/s |  26 kB     00:00    
+2026-06-10T19:15:02.1871189Z #10 1.865 (28/68): libcurl-7.76.1-40.el9.x86_64.rpm        50 MB/s | 290 kB     00:00    
+2026-06-10T19:15:02.1872203Z #10 1.871 (29/68): libacl-2.3.1-4.el9.x86_64.rpm          506 kB/s |  24 kB     00:00    
+2026-06-10T19:15:02.2881860Z #10 1.872 (30/68): libattr-2.5.1-3.el9.x86_64.rpm         540 kB/s |  20 kB     00:00    
+2026-06-10T19:15:02.2883259Z #10 1.874 (31/68): libevent-2.1.12-8.el9_4.x86_64.rpm      29 MB/s | 266 kB     00:00    
+2026-06-10T19:15:02.2885082Z #10 1.879 (32/68): libidn2-2.3.0-7.el9.x86_64.rpm          23 MB/s | 105 kB     00:00    
+2026-06-10T19:15:02.2886588Z #10 1.883 (33/68): libnghttp2-1.43.0-6.el9_8.1.x86_64.rpm  21 MB/s |  78 kB     00:00    
+2026-06-10T19:15:02.2888029Z #10 1.887 (34/68): libpsl-0.21.1-5.el9.x86_64.rpm          17 MB/s |  66 kB     00:00    
+2026-06-10T19:15:02.2889355Z #10 1.888 (35/68): libgcc-11.5.0-14.el9.x86_64.rpm        5.3 MB/s |  85 kB     00:00    
+2026-06-10T19:15:02.2890853Z #10 1.891 (36/68): libselinux-3.6-3.el9.x86_64.rpm         22 MB/s |  88 kB     00:00    
+2026-06-10T19:15:02.2905145Z #10 1.893 (37/68): libsemanage-3.6-5.el9_6.x86_64.rpm      26 MB/s | 121 kB     00:00    
+2026-06-10T19:15:02.2906006Z #10 1.897 (38/68): libsepol-3.6-3.el9.x86_64.rpm           57 MB/s | 331 kB     00:00    
+2026-06-10T19:15:02.2906618Z #10 1.899 (39/68): libsigsegv-2.13-4.el9.x86_64.rpm       5.7 MB/s |  30 kB     00:00    
+2026-06-10T19:15:02.2907163Z #10 1.900 (40/68): libffi-3.4.2-8.el9.x86_64.rpm          1.3 MB/s |  40 kB     00:00    
+2026-06-10T19:15:02.2907675Z #10 1.903 (41/68): libssh-0.10.4-18.el9.x86_64.rpm         46 MB/s | 220 kB     00:00    
+2026-06-10T19:15:02.2908198Z #10 1.904 (42/68): libssh-config-0.10.4-18.el9.noarch.rpm 3.1 MB/s |  14 kB     00:00    
+2026-06-10T19:15:02.2908724Z #10 1.907 (43/68): libtasn1-4.16.0-9.el9.x86_64.rpm        12 MB/s |  77 kB     00:00    
+2026-06-10T19:15:02.2909225Z #10 1.909 (44/68): libverto-0.3.2-3.el9.x86_64.rpm        5.2 MB/s |  24 kB     00:00    
+2026-06-10T19:15:02.2909736Z #10 1.912 (45/68): libxcrypt-4.4.18-3.el9.x86_64.rpm       29 MB/s | 120 kB     00:00    
+2026-06-10T19:15:02.2910480Z #10 1.915 (46/68): libunistring-0.9.10-15.el9.x86_64.rpm   39 MB/s | 499 kB     00:00    
+2026-06-10T19:15:02.2911469Z #10 1.917 (47/68): ncurses-base-6.2-12.20210508.el9.noarc  18 MB/s |  96 kB     00:00    
+2026-06-10T19:15:02.2912037Z #10 1.919 (48/68): mpfr-4.1.0-10.el9.x86_64.rpm            31 MB/s | 330 kB     00:00    
+2026-06-10T19:15:02.2912577Z #10 1.924 (49/68): ncurses-libs-6.2-12.20210508.el9.x86_6  41 MB/s | 328 kB     00:00    
+2026-06-10T19:15:02.2913147Z #10 1.925 (50/68): openssl-fips-provider-3.0.7-8.el9.x86_ 1.7 MB/s | 9.2 kB     00:00    
+2026-06-10T19:15:02.2913701Z #10 1.927 (51/68): openldap-2.6.8-4.el9.x86_64.rpm         31 MB/s | 290 kB     00:00    
+2026-06-10T19:15:02.2914456Z #10 1.935 (52/68): openssl-fips-provider-so-3.0.7-8.el9.x  52 MB/s | 576 kB     00:00    
+2026-06-10T19:15:02.2915682Z #10 1.941 (53/68): p11-kit-0.26.2-1.el9.x86_64.rpm         43 MB/s | 609 kB     00:00    
+2026-06-10T19:15:02.2916279Z #10 1.943 (54/68): p11-kit-trust-0.26.2-1.el9.x86_64.rpm   21 MB/s | 161 kB     00:00    
+2026-06-10T19:15:02.2917062Z #10 1.946 (55/68): pcre-8.44-4.el9.x86_64.rpm              42 MB/s | 200 kB     00:00    
+2026-06-10T19:15:02.2917621Z #10 1.951 (56/68): pcre2-syntax-10.40-6.el9.noarch.rpm     33 MB/s | 144 kB     00:00    
+2026-06-10T19:15:02.2918369Z #10 1.955 (57/68): publicsuffix-list-dafsa-20210518-3.el9  17 MB/s |  59 kB     00:00    
+2026-06-10T19:15:02.2919159Z #10 1.960 (58/68): readline-8.1-4.el9.x86_64.rpm           42 MB/s | 215 kB     00:00    
+2026-06-10T19:15:02.2919803Z #10 1.967 (59/68): openssl-libs-3.5.5-3.el9_8.x86_64.rpm   55 MB/s | 2.3 MB     00:00    
+2026-06-10T19:15:02.2920338Z #10 1.969 (60/68): redhat-release-9.8-1.0.el9.x86_64.rpm  7.2 MB/s |  60 kB     00:00    
+2026-06-10T19:15:02.2921175Z #10 1.973 (61/68): sed-4.8-10.el9.x86_64.rpm               52 MB/s | 310 kB     00:00    
+2026-06-10T19:15:02.4676230Z #10 1.975 (62/68): setup-2.13.7-10.el9.noarch.rpm          24 MB/s | 150 kB     00:00    
+2026-06-10T19:15:02.4677117Z #10 1.988 (63/68): tzdata-2026b-1.el9.noarch.rpm           72 MB/s | 912 kB     00:00    
+2026-06-10T19:15:02.4677985Z #10 1.992 (64/68): shadow-utils-4.9-16.el9.x86_64.rpm      66 MB/s | 1.2 MB     00:00    
+2026-06-10T19:15:02.4678784Z #10 1.997 (65/68): libtool-ltdl-2.4.6-46.el9.x86_64.rpm   7.3 MB/s |  37 kB     00:00    
+2026-06-10T19:15:02.4679555Z #10 1.999 (66/68): zlib-1.2.11-40.el9.x86_64.rpm          8.5 MB/s |  93 kB     00:00    
+2026-06-10T19:15:02.4680330Z #10 2.002 (67/68): oniguruma-6.9.6-1.el9.5.x86_64.rpm      46 MB/s | 221 kB     00:00    
+2026-06-10T19:15:03.3659878Z #10 3.051 (68/68): pcre2-10.40-6.el9.x86_64.rpm           213 kB/s | 236 kB     00:01    
+2026-06-10T19:15:03.5974781Z #10 3.054 --------------------------------------------------------------------------------
+2026-06-10T19:15:03.5975996Z #10 3.055 Total                                            21 MB/s |  29 MB     00:01     
+2026-06-10T19:15:03.5977230Z #10 3.066 Red Hat Universal Base Image 9 (RPMs) - BaseOS  3.5 MB/s | 3.6 kB     00:00    
+2026-06-10T19:15:03.5978305Z #10 3.128 Importing GPG key 0xFD431D51:
+2026-06-10T19:15:03.5979273Z #10 3.128  Userid     : "Red Hat, Inc. (release key 2) <security@redhat.com>"
+2026-06-10T19:15:03.5980019Z #10 3.128  Fingerprint: 567E 347A D004 4ADE 55BA 8A5F 199E 2F91 FD43 1D51
+2026-06-10T19:15:03.5980741Z #10 3.128  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+2026-06-10T19:15:03.5981297Z #10 3.131 Key imported successfully
+2026-06-10T19:15:03.5981733Z #10 3.132 Importing GPG key 0x5A6340B3:
+2026-06-10T19:15:03.5982259Z #10 3.132  Userid     : "Red Hat, Inc. (auxiliary key 3) <security@redhat.com>"
+2026-06-10T19:15:03.5982848Z #10 3.132  Fingerprint: 7E46 2425 8C40 6535 D56D 6F13 5054 E4A4 5A63 40B3
+2026-06-10T19:15:03.5983402Z #10 3.132  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+2026-06-10T19:15:03.5983851Z #10 3.132 Key imported successfully
+2026-06-10T19:15:04.1369254Z #10 3.822 Running transaction check
+2026-06-10T19:15:04.3281370Z #10 3.863 Transaction check succeeded.
+2026-06-10T19:15:04.3282106Z #10 3.863 Running transaction test
+2026-06-10T19:15:04.6307944Z #10 4.316 Transaction test succeeded.
+2026-06-10T19:15:04.7817993Z #10 4.317 Running transaction
+2026-06-10T19:15:05.1772632Z #10 4.594   Running scriptlet: filesystem-3.16-5.el9.x86_64                           1/1 
+2026-06-10T19:15:05.3828590Z #10 4.862   Preparing        :                                                        1/1 
+2026-06-10T19:15:05.4961316Z #10 5.068   Installing       : tzdata-2026b-1.el9.noarch                             1/68 
+2026-06-10T19:15:05.4962050Z #10 5.081   Installing       : redhat-release-9.8-1.0.el9.x86_64                     2/68 
+2026-06-10T19:15:05.4962700Z #10 5.088   Installing       : setup-2.13.7-10.el9.noarch                            3/68 
+2026-06-10T19:15:05.4963349Z #10 5.090   Running scriptlet: setup-2.13.7-10.el9.noarch                            3/68 
+2026-06-10T19:15:05.4964006Z #10 5.132   Installing       : filesystem-3.16-5.el9.x86_64                          4/68 
+2026-06-10T19:15:05.6074006Z #10 5.181   Installing       : basesystem-11-13.el9.noarch                           5/68 
+2026-06-10T19:15:05.6075377Z #10 5.184   Installing       : publicsuffix-list-dafsa-20210518-3.el9.noarch         6/68 
+2026-06-10T19:15:05.6076418Z #10 5.187   Installing       : pcre2-syntax-10.40-6.el9.noarch                       7/68 
+2026-06-10T19:15:05.6077389Z #10 5.209   Installing       : ncurses-base-6.2-12.20210508.el9.noarch               8/68 
+2026-06-10T19:15:05.6078110Z #10 5.220   Installing       : ncurses-libs-6.2-12.20210508.el9.x86_64               9/68 
+2026-06-10T19:15:05.6078672Z #10 5.239   Installing       : bash-5.1.8-9.el9.x86_64                              10/68 
+2026-06-10T19:15:05.6079219Z #10 5.242   Running scriptlet: bash-5.1.8-9.el9.x86_64                              10/68 
+2026-06-10T19:15:05.6079788Z #10 5.245   Installing       : libgcc-11.5.0-14.el9.x86_64                          11/68 
+2026-06-10T19:15:05.6080332Z #10 5.247   Running scriptlet: libgcc-11.5.0-14.el9.x86_64                          11/68 
+2026-06-10T19:15:05.6080887Z #10 5.248   Installing       : glibc-minimal-langpack-2.34-270.el9_8.x86_64         12/68 
+2026-06-10T19:15:05.6081427Z #10 5.259   Installing       : glibc-common-2.34-270.el9_8.x86_64                   13/68 
+2026-06-10T19:15:05.6081959Z #10 5.262   Running scriptlet: glibc-2.34-270.el9_8.x86_64                          14/68 
+2026-06-10T19:15:05.7105178Z #10 5.293   Installing       : glibc-2.34-270.el9_8.x86_64                          14/68 
+2026-06-10T19:15:05.7106076Z #10 5.296   Running scriptlet: glibc-2.34-270.el9_8.x86_64                          14/68 
+2026-06-10T19:15:05.7106894Z #10 5.340   Installing       : zlib-1.2.11-40.el9.x86_64                            15/68 
+2026-06-10T19:15:05.7107670Z #10 5.346   Installing       : gmp-1:6.2.0-13.el9.x86_64                            16/68 
+2026-06-10T19:15:05.7108452Z #10 5.352   Installing       : libattr-2.5.1-3.el9.x86_64                           17/68 
+2026-06-10T19:15:05.7109220Z #10 5.355   Installing       : libacl-2.3.1-4.el9.x86_64                            18/68 
+2026-06-10T19:15:05.7110631Z #10 5.358   Installing       : libcom_err-1.46.5-8.el9.x86_64                       19/68 
+2026-06-10T19:15:05.7111586Z #10 5.378   Installing       : crypto-policies-20260224-1.gitea0f072.el9_8.noarch   20/68 
+2026-06-10T19:15:05.7112501Z #10 5.381   Running scriptlet: crypto-policies-20260224-1.gitea0f072.el9_8.noarch   20/68 
+2026-06-10T19:15:05.7113203Z #10 5.384   Installing       : libffi-3.4.2-8.el9.x86_64                            21/68 
+2026-06-10T19:15:05.7114106Z #10 5.389   Installing       : libsepol-3.6-3.el9.x86_64                            22/68 
+2026-06-10T19:15:05.7115055Z #10 5.392   Installing       : libsigsegv-2.13-4.el9.x86_64                         23/68 
+2026-06-10T19:15:05.8114739Z #10 5.396   Installing       : libtasn1-4.16.0-9.el9.x86_64                         24/68 
+2026-06-10T19:15:05.8115874Z #10 5.403   Installing       : libunistring-0.9.10-15.el9.x86_64                    25/68 
+2026-06-10T19:15:05.8116624Z #10 5.407   Installing       : libidn2-2.3.0-7.el9.x86_64                           26/68 
+2026-06-10T19:15:05.8117609Z #10 5.412   Installing       : libxcrypt-4.4.18-3.el9.x86_64                        27/68 
+2026-06-10T19:15:05.8118299Z #10 5.415   Installing       : libpsl-0.21.1-5.el9.x86_64                           28/68 
+2026-06-10T19:15:05.8118941Z #10 5.428   Installing       : p11-kit-0.26.2-1.el9.x86_64                          29/68 
+2026-06-10T19:15:05.8119572Z #10 5.435   Installing       : mpfr-4.1.0-10.el9.x86_64                             30/68 
+2026-06-10T19:15:05.8120224Z #10 5.439   Installing       : alternatives-1.24-2.el9.x86_64                       31/68 
+2026-06-10T19:15:05.8121366Z #10 5.444   Installing       : p11-kit-trust-0.26.2-1.el9.x86_64                    32/68 
+2026-06-10T19:15:05.8122073Z #10 5.445   Running scriptlet: p11-kit-trust-0.26.2-1.el9.x86_64                    32/68 
+2026-06-10T19:15:05.8122908Z #10 5.469   Installing       : bzip2-libs-1.0.8-11.el9.x86_64                       33/68 
+2026-06-10T19:15:05.8123595Z #10 5.473   Installing       : gdbm-libs-1:1.23-1.el9.x86_64                        34/68 
+2026-06-10T19:15:05.8124363Z #10 5.476   Installing       : keyutils-libs-1.6.3-1.el9.x86_64                     35/68 
+2026-06-10T19:15:05.8125167Z #10 5.482   Installing       : libbrotli-1.0.9-9.el9_7.x86_64                       36/68 
+2026-06-10T19:15:05.8125684Z #10 5.488   Installing       : libcap-2.48-10.el9_8.1.x86_64                        37/68 
+2026-06-10T19:15:05.8126203Z #10 5.492   Installing       : libcap-ng-0.8.2-7.el9.x86_64                         38/68 
+2026-06-10T19:15:05.9118583Z #10 5.497   Installing       : audit-libs-3.1.5-8.el9.x86_64                        39/68 
+2026-06-10T19:15:05.9119860Z #10 5.500   Installing       : libnghttp2-1.43.0-6.el9_8.1.x86_64                   40/68 
+2026-06-10T19:15:05.9121092Z #10 5.503   Installing       : libverto-0.3.2-3.el9.x86_64                          41/68 
+2026-06-10T19:15:05.9122582Z #10 5.508   Installing       : pcre-8.44-4.el9.x86_64                               42/68 
+2026-06-10T19:15:05.9123647Z #10 5.514   Installing       : grep-3.6-5.el9.x86_64                                43/68 
+2026-06-10T19:15:05.9124392Z #10 5.520   Installing       : pcre2-10.40-6.el9.x86_64                             44/68 
+2026-06-10T19:15:05.9125412Z #10 5.524   Installing       : libselinux-3.6-3.el9.x86_64                          45/68 
+2026-06-10T19:15:05.9126125Z #10 5.528   Installing       : sed-4.8-10.el9.x86_64                                46/68 
+2026-06-10T19:15:05.9126690Z #10 5.535   Installing       : findutils-1:4.8.0-7.el9.x86_64                       47/68 
+2026-06-10T19:15:05.9127506Z #10 5.540   Installing       : libsemanage-3.6-5.el9_6.x86_64                       48/68 
+2026-06-10T19:15:05.9128087Z #10 5.560   Installing       : shadow-utils-2:4.9-16.el9.x86_64                     49/68 
+2026-06-10T19:15:05.9128660Z #10 5.567   Installing       : readline-8.1-4.el9.x86_64                            50/68 
+2026-06-10T19:15:05.9129495Z #10 5.582   Installing       : gawk-5.1.0-6.el9.x86_64                              51/68 
+2026-06-10T19:15:05.9130075Z #10 5.590   Installing       : libtool-ltdl-2.4.6-46.el9.x86_64                     52/68 
+2026-06-10T19:15:05.9130654Z #10 5.595   Installing       : oniguruma-6.9.6-1.el9.5.x86_64                       53/68 
+2026-06-10T19:15:06.0152053Z #10 5.597   Installing       : libssh-config-0.10.4-18.el9.noarch                   54/68 
+2026-06-10T19:15:06.0152908Z #10 5.611   Installing       : coreutils-common-8.32-40.el9.x86_64                  55/68 
+2026-06-10T19:15:06.0153691Z #10 5.620   Installing       : openssl-fips-provider-so-3.0.7-8.el9.x86_64          56/68 
+2026-06-10T19:15:06.0154465Z #10 5.622   Installing       : openssl-fips-provider-3.0.7-8.el9.x86_64             57/68 
+2026-06-10T19:15:06.0155632Z #10 5.647   Installing       : openssl-libs-1:3.5.5-3.el9_8.x86_64                  58/68 
+2026-06-10T19:15:06.2074000Z #10 5.700   Installing       : coreutils-8.32-40.el9.x86_64                         59/68 
+2026-06-10T19:15:06.2075709Z #10 5.706   Running scriptlet: ca-certificates-2025.2.80_v9.0.305-91.el9.noarch     60/68 
+2026-06-10T19:15:06.2076709Z #10 5.738   Installing       : ca-certificates-2025.2.80_v9.0.305-91.el9.noarch     60/68 
+2026-06-10T19:15:06.9804228Z #10 5.742   Running scriptlet: ca-certificates-2025.2.80_v9.0.305-91.el9.noarch     60/68 
+2026-06-10T19:15:07.2218121Z #10 6.666   Installing       : krb5-libs-1.21.1-10.el9_8.x86_64                     61/68 
+2026-06-10T19:15:07.2219259Z #10 6.678   Installing       : cyrus-sasl-lib-2.1.27-22.el9.x86_64                  62/68 
+2026-06-10T19:15:07.2220307Z #10 6.684   Installing       : libssh-0.10.4-18.el9.x86_64                          63/68 
+2026-06-10T19:15:07.2221331Z #10 6.691   Installing       : libevent-2.1.12-8.el9_4.x86_64                       64/68 
+2026-06-10T19:15:07.2222296Z #10 6.707   Installing       : openldap-2.6.8-4.el9.x86_64                          65/68 
+2026-06-10T19:15:07.2223301Z #10 6.713   Installing       : libcurl-7.76.1-40.el9.x86_64                         66/68 
+2026-06-10T19:15:07.2224298Z #10 6.717   Installing       : curl-7.76.1-40.el9.x86_64                            67/68 
+2026-06-10T19:15:07.2225413Z #10 6.722   Installing       : jq-1.6-19.el9_8.2.x86_64                             68/68 
+2026-06-10T19:15:07.2226378Z #10 6.731   Running scriptlet: filesystem-3.16-5.el9.x86_64                         68/68 
+2026-06-10T19:15:08.0079489Z #10 6.756   Running scriptlet: ca-certificates-2025.2.80_v9.0.305-91.el9.noarch     68/68 
+2026-06-10T19:15:08.1189335Z #10 7.693   Running scriptlet: jq-1.6-19.el9_8.2.x86_64                             68/68 
+2026-06-10T19:15:08.1191605Z #10 7.804   Verifying        : alternatives-1.24-2.el9.x86_64                        1/68 
+2026-06-10T19:15:08.3472612Z #10 7.804   Verifying        : audit-libs-3.1.5-8.el9.x86_64                         2/68 
+2026-06-10T19:15:08.3473872Z #10 7.804   Verifying        : basesystem-11-13.el9.noarch                           3/68 
+2026-06-10T19:15:08.3475336Z #10 7.804   Verifying        : bash-5.1.8-9.el9.x86_64                               4/68 
+2026-06-10T19:15:08.3476384Z #10 7.804   Verifying        : bzip2-libs-1.0.8-11.el9.x86_64                        5/68 
+2026-06-10T19:15:08.3477455Z #10 7.804   Verifying        : ca-certificates-2025.2.80_v9.0.305-91.el9.noarch      6/68 
+2026-06-10T19:15:08.3478502Z #10 7.804   Verifying        : coreutils-8.32-40.el9.x86_64                          7/68 
+2026-06-10T19:15:08.3479515Z #10 7.804   Verifying        : coreutils-common-8.32-40.el9.x86_64                   8/68 
+2026-06-10T19:15:08.3480579Z #10 7.804   Verifying        : crypto-policies-20260224-1.gitea0f072.el9_8.noarch    9/68 
+2026-06-10T19:15:08.3481588Z #10 7.805   Verifying        : curl-7.76.1-40.el9.x86_64                            10/68 
+2026-06-10T19:15:08.3482549Z #10 7.805   Verifying        : cyrus-sasl-lib-2.1.27-22.el9.x86_64                  11/68 
+2026-06-10T19:15:08.3483996Z #10 7.805   Verifying        : filesystem-3.16-5.el9.x86_64                         12/68 
+2026-06-10T19:15:08.3485241Z #10 7.805   Verifying        : findutils-1:4.8.0-7.el9.x86_64                       13/68 
+2026-06-10T19:15:08.3486198Z #10 7.805   Verifying        : gawk-5.1.0-6.el9.x86_64                              14/68 
+2026-06-10T19:15:08.3487152Z #10 7.805   Verifying        : gdbm-libs-1:1.23-1.el9.x86_64                        15/68 
+2026-06-10T19:15:08.3488109Z #10 7.805   Verifying        : glibc-2.34-270.el9_8.x86_64                          16/68 
+2026-06-10T19:15:08.3489111Z #10 7.805   Verifying        : glibc-common-2.34-270.el9_8.x86_64                   17/68 
+2026-06-10T19:15:08.3490145Z #10 7.805   Verifying        : glibc-minimal-langpack-2.34-270.el9_8.x86_64         18/68 
+2026-06-10T19:15:08.3491198Z #10 7.805   Verifying        : gmp-1:6.2.0-13.el9.x86_64                            19/68 
+2026-06-10T19:15:08.3492171Z #10 7.805   Verifying        : grep-3.6-5.el9.x86_64                                20/68 
+2026-06-10T19:15:08.3493755Z #10 7.806   Verifying        : jq-1.6-19.el9_8.2.x86_64                             21/68 
+2026-06-10T19:15:08.3494978Z #10 7.806   Verifying        : keyutils-libs-1.6.3-1.el9.x86_64                     22/68 
+2026-06-10T19:15:08.3495987Z #10 7.806   Verifying        : krb5-libs-1.21.1-10.el9_8.x86_64                     23/68 
+2026-06-10T19:15:08.3496995Z #10 7.806   Verifying        : libacl-2.3.1-4.el9.x86_64                            24/68 
+2026-06-10T19:15:08.3497954Z #10 7.806   Verifying        : libattr-2.5.1-3.el9.x86_64                           25/68 
+2026-06-10T19:15:08.3498926Z #10 7.806   Verifying        : libbrotli-1.0.9-9.el9_7.x86_64                       26/68 
+2026-06-10T19:15:08.3500018Z #10 7.806   Verifying        : libcap-2.48-10.el9_8.1.x86_64                        27/68 
+2026-06-10T19:15:08.3501021Z #10 7.806   Verifying        : libcap-ng-0.8.2-7.el9.x86_64                         28/68 
+2026-06-10T19:15:08.3502025Z #10 7.806   Verifying        : libcom_err-1.46.5-8.el9.x86_64                       29/68 
+2026-06-10T19:15:08.3503035Z #10 7.806   Verifying        : libcurl-7.76.1-40.el9.x86_64                         30/68 
+2026-06-10T19:15:08.3504046Z #10 7.806   Verifying        : libevent-2.1.12-8.el9_4.x86_64                       31/68 
+2026-06-10T19:15:08.3505286Z #10 7.806   Verifying        : libffi-3.4.2-8.el9.x86_64                            32/68 
+2026-06-10T19:15:08.3506256Z #10 7.807   Verifying        : libgcc-11.5.0-14.el9.x86_64                          33/68 
+2026-06-10T19:15:08.3507253Z #10 7.807   Verifying        : libidn2-2.3.0-7.el9.x86_64                           34/68 
+2026-06-10T19:15:08.3508240Z #10 7.807   Verifying        : libnghttp2-1.43.0-6.el9_8.1.x86_64                   35/68 
+2026-06-10T19:15:08.3509220Z #10 7.807   Verifying        : libpsl-0.21.1-5.el9.x86_64                           36/68 
+2026-06-10T19:15:08.3510208Z #10 7.807   Verifying        : libselinux-3.6-3.el9.x86_64                          37/68 
+2026-06-10T19:15:08.3511245Z #10 7.807   Verifying        : libsemanage-3.6-5.el9_6.x86_64                       38/68 
+2026-06-10T19:15:08.3512256Z #10 7.807   Verifying        : libsepol-3.6-3.el9.x86_64                            39/68 
+2026-06-10T19:15:08.3513232Z #10 7.807   Verifying        : libsigsegv-2.13-4.el9.x86_64                         40/68 
+2026-06-10T19:15:08.3514217Z #10 7.807   Verifying        : libssh-0.10.4-18.el9.x86_64                          41/68 
+2026-06-10T19:15:08.3515497Z #10 7.807   Verifying        : libssh-config-0.10.4-18.el9.noarch                   42/68 
+2026-06-10T19:15:08.3516508Z #10 7.807   Verifying        : libtasn1-4.16.0-9.el9.x86_64                         43/68 
+2026-06-10T19:15:08.3517523Z #10 7.808   Verifying        : libunistring-0.9.10-15.el9.x86_64                    44/68 
+2026-06-10T19:15:08.3518550Z #10 7.808   Verifying        : libverto-0.3.2-3.el9.x86_64                          45/68 
+2026-06-10T19:15:08.3519879Z #10 7.808   Verifying        : libxcrypt-4.4.18-3.el9.x86_64                        46/68 
+2026-06-10T19:15:08.3520896Z #10 7.808   Verifying        : mpfr-4.1.0-10.el9.x86_64                             47/68 
+2026-06-10T19:15:08.3521878Z #10 7.808   Verifying        : ncurses-base-6.2-12.20210508.el9.noarch              48/68 
+2026-06-10T19:15:08.3522881Z #10 7.808   Verifying        : ncurses-libs-6.2-12.20210508.el9.x86_64              49/68 
+2026-06-10T19:15:08.3523869Z #10 7.808   Verifying        : openldap-2.6.8-4.el9.x86_64                          50/68 
+2026-06-10T19:15:08.3525136Z #10 7.808   Verifying        : openssl-fips-provider-3.0.7-8.el9.x86_64             51/68 
+2026-06-10T19:15:08.3526224Z #10 7.808   Verifying        : openssl-fips-provider-so-3.0.7-8.el9.x86_64          52/68 
+2026-06-10T19:15:08.3527291Z #10 7.808   Verifying        : openssl-libs-1:3.5.5-3.el9_8.x86_64                  53/68 
+2026-06-10T19:15:08.3528319Z #10 7.808   Verifying        : p11-kit-0.26.2-1.el9.x86_64                          54/68 
+2026-06-10T19:15:08.3529567Z #10 7.808   Verifying        : p11-kit-trust-0.26.2-1.el9.x86_64                    55/68 
+2026-06-10T19:15:08.3530548Z #10 7.808   Verifying        : pcre-8.44-4.el9.x86_64                               56/68 
+2026-06-10T19:15:08.3531554Z #10 7.809   Verifying        : pcre2-10.40-6.el9.x86_64                             57/68 
+2026-06-10T19:15:08.3532559Z #10 7.809   Verifying        : pcre2-syntax-10.40-6.el9.noarch                      58/68 
+2026-06-10T19:15:08.3533607Z #10 7.809   Verifying        : publicsuffix-list-dafsa-20210518-3.el9.noarch        59/68 
+2026-06-10T19:15:08.3534855Z #10 7.809   Verifying        : readline-8.1-4.el9.x86_64                            60/68 
+2026-06-10T19:15:08.3535903Z #10 7.809   Verifying        : redhat-release-9.8-1.0.el9.x86_64                    61/68 
+2026-06-10T19:15:08.3536933Z #10 7.809   Verifying        : sed-4.8-10.el9.x86_64                                62/68 
+2026-06-10T19:15:08.3537958Z #10 7.809   Verifying        : setup-2.13.7-10.el9.noarch                           63/68 
+2026-06-10T19:15:08.3538958Z #10 7.809   Verifying        : shadow-utils-2:4.9-16.el9.x86_64                     64/68 
+2026-06-10T19:15:08.3539990Z #10 7.809   Verifying        : tzdata-2026b-1.el9.noarch                            65/68 
+2026-06-10T19:15:08.3540982Z #10 7.809   Verifying        : zlib-1.2.11-40.el9.x86_64                            66/68 
+2026-06-10T19:15:08.3541939Z #10 7.809   Verifying        : libtool-ltdl-2.4.6-46.el9.x86_64                     67/68 
+2026-06-10T19:15:08.3542913Z #10 7.810   Verifying        : oniguruma-6.9.6-1.el9.5.x86_64                       68/68 
+2026-06-10T19:15:08.3543719Z #10 7.873 Installed products updated.
+2026-06-10T19:15:08.3544241Z #10 7.882 
+2026-06-10T19:15:08.3544833Z #10 7.882 Installed:
+2026-06-10T19:15:08.3545523Z #10 7.882   alternatives-1.24-2.el9.x86_64                                                
+2026-06-10T19:15:08.3546512Z #10 7.882   audit-libs-3.1.5-8.el9.x86_64                                                 
+2026-06-10T19:15:08.3547520Z #10 7.882   basesystem-11-13.el9.noarch                                                   
+2026-06-10T19:15:08.3548486Z #10 7.882   bash-5.1.8-9.el9.x86_64                                                       
+2026-06-10T19:15:08.3549446Z #10 7.882   bzip2-libs-1.0.8-11.el9.x86_64                                                
+2026-06-10T19:15:08.3550452Z #10 7.882   ca-certificates-2025.2.80_v9.0.305-91.el9.noarch                              
+2026-06-10T19:15:08.3551485Z #10 7.882   coreutils-8.32-40.el9.x86_64                                                  
+2026-06-10T19:15:08.3552476Z #10 7.882   coreutils-common-8.32-40.el9.x86_64                                           
+2026-06-10T19:15:08.3553562Z #10 7.882   crypto-policies-20260224-1.gitea0f072.el9_8.noarch                            
+2026-06-10T19:15:08.3554864Z #10 7.882   curl-7.76.1-40.el9.x86_64                                                     
+2026-06-10T19:15:08.3556119Z #10 7.882   cyrus-sasl-lib-2.1.27-22.el9.x86_64                                           
+2026-06-10T19:15:08.3557183Z #10 7.882   filesystem-3.16-5.el9.x86_64                                                  
+2026-06-10T19:15:08.3558164Z #10 7.882   findutils-1:4.8.0-7.el9.x86_64                                                
+2026-06-10T19:15:08.3559102Z #10 7.882   gawk-5.1.0-6.el9.x86_64                                                       
+2026-06-10T19:15:08.3560027Z #10 7.882   gdbm-libs-1:1.23-1.el9.x86_64                                                 
+2026-06-10T19:15:08.3560967Z #10 7.882   glibc-2.34-270.el9_8.x86_64                                                   
+2026-06-10T19:15:08.3562037Z #10 7.882   glibc-common-2.34-270.el9_8.x86_64                                            
+2026-06-10T19:15:08.3563107Z #10 7.882   glibc-minimal-langpack-2.34-270.el9_8.x86_64                                  
+2026-06-10T19:15:08.3564135Z #10 7.882   gmp-1:6.2.0-13.el9.x86_64                                                     
+2026-06-10T19:15:08.3565508Z #10 7.882   grep-3.6-5.el9.x86_64                                                         
+2026-06-10T19:15:08.3566442Z #10 7.882   jq-1.6-19.el9_8.2.x86_64                                                      
+2026-06-10T19:15:08.3567432Z #10 7.882   keyutils-libs-1.6.3-1.el9.x86_64                                              
+2026-06-10T19:15:08.3568402Z #10 7.882   krb5-libs-1.21.1-10.el9_8.x86_64                                              
+2026-06-10T19:15:08.3569363Z #10 7.882   libacl-2.3.1-4.el9.x86_64                                                     
+2026-06-10T19:15:08.3570299Z #10 7.882   libattr-2.5.1-3.el9.x86_64                                                    
+2026-06-10T19:15:08.3571276Z #10 7.882   libbrotli-1.0.9-9.el9_7.x86_64                                                
+2026-06-10T19:15:08.3572251Z #10 7.882   libcap-2.48-10.el9_8.1.x86_64                                                 
+2026-06-10T19:15:08.3573217Z #10 7.882   libcap-ng-0.8.2-7.el9.x86_64                                                  
+2026-06-10T19:15:08.3574175Z #10 7.882   libcom_err-1.46.5-8.el9.x86_64                                                
+2026-06-10T19:15:08.3575430Z #10 7.882   libcurl-7.76.1-40.el9.x86_64                                                  
+2026-06-10T19:15:08.3576394Z #10 7.882   libevent-2.1.12-8.el9_4.x86_64                                                
+2026-06-10T19:15:08.3577285Z #10 7.882   libffi-3.4.2-8.el9.x86_64                                                     
+2026-06-10T19:15:08.3578184Z #10 7.882   libgcc-11.5.0-14.el9.x86_64                                                   
+2026-06-10T19:15:08.3579035Z #10 7.882   libidn2-2.3.0-7.el9.x86_64                                                    
+2026-06-10T19:15:08.3579901Z #10 7.882   libnghttp2-1.43.0-6.el9_8.1.x86_64                                            
+2026-06-10T19:15:08.3580836Z #10 7.882   libpsl-0.21.1-5.el9.x86_64                                                    
+2026-06-10T19:15:08.3581778Z #10 7.882   libselinux-3.6-3.el9.x86_64                                                   
+2026-06-10T19:15:08.3582708Z #10 7.882   libsemanage-3.6-5.el9_6.x86_64                                                
+2026-06-10T19:15:08.3583674Z #10 7.882   libsepol-3.6-3.el9.x86_64                                                     
+2026-06-10T19:15:08.3584913Z #10 7.882   libsigsegv-2.13-4.el9.x86_64                                                  
+2026-06-10T19:15:08.3585906Z #10 7.882   libssh-0.10.4-18.el9.x86_64                                                   
+2026-06-10T19:15:08.3586860Z #10 7.882   libssh-config-0.10.4-18.el9.noarch                                            
+2026-06-10T19:15:08.3587817Z #10 7.882   libtasn1-4.16.0-9.el9.x86_64                                                  
+2026-06-10T19:15:08.3588775Z #10 7.882   libtool-ltdl-2.4.6-46.el9.x86_64                                              
+2026-06-10T19:15:08.3590191Z #10 7.882   libunistring-0.9.10-15.el9.x86_64                                             
+2026-06-10T19:15:08.3591216Z #10 7.882   libverto-0.3.2-3.el9.x86_64                                                   
+2026-06-10T19:15:08.3592181Z #10 7.882   libxcrypt-4.4.18-3.el9.x86_64                                                 
+2026-06-10T19:15:08.3593138Z #10 7.882   mpfr-4.1.0-10.el9.x86_64                                                      
+2026-06-10T19:15:08.3594213Z #10 7.882   ncurses-base-6.2-12.20210508.el9.noarch                                       
+2026-06-10T19:15:08.3595561Z #10 7.882   ncurses-libs-6.2-12.20210508.el9.x86_64                                       
+2026-06-10T19:15:08.3596590Z #10 7.882   oniguruma-6.9.6-1.el9.5.x86_64                                                
+2026-06-10T19:15:08.3597550Z #10 7.882   openldap-2.6.8-4.el9.x86_64                                                   
+2026-06-10T19:15:08.3598592Z #10 7.882   openssl-fips-provider-3.0.7-8.el9.x86_64                                      
+2026-06-10T19:15:08.3599993Z #10 7.882   openssl-fips-provider-so-3.0.7-8.el9.x86_64                                   
+2026-06-10T19:15:08.3601070Z #10 7.882   openssl-libs-1:3.5.5-3.el9_8.x86_64                                           
+2026-06-10T19:15:08.3602034Z #10 7.882   p11-kit-0.26.2-1.el9.x86_64                                                   
+2026-06-10T19:15:08.3603002Z #10 7.882   p11-kit-trust-0.26.2-1.el9.x86_64                                             
+2026-06-10T19:15:08.3603980Z #10 7.882   pcre-8.44-4.el9.x86_64                                                        
+2026-06-10T19:15:08.3605149Z #10 7.882   pcre2-10.40-6.el9.x86_64                                                      
+2026-06-10T19:15:08.3606165Z #10 7.882   pcre2-syntax-10.40-6.el9.noarch                                               
+2026-06-10T19:15:08.3607225Z #10 7.882   publicsuffix-list-dafsa-20210518-3.el9.noarch                                 
+2026-06-10T19:15:08.3608280Z #10 7.882   readline-8.1-4.el9.x86_64                                                     
+2026-06-10T19:15:08.3609249Z #10 7.882   redhat-release-9.8-1.0.el9.x86_64                                             
+2026-06-10T19:15:08.3610223Z #10 7.882   sed-4.8-10.el9.x86_64                                                         
+2026-06-10T19:15:08.3611184Z #10 7.882   setup-2.13.7-10.el9.noarch                                                    
+2026-06-10T19:15:08.3612171Z #10 7.882   shadow-utils-2:4.9-16.el9.x86_64                                              
+2026-06-10T19:15:08.3613161Z #10 7.882   tzdata-2026b-1.el9.noarch                                                     
+2026-06-10T19:15:08.3614084Z #10 7.882   zlib-1.2.11-40.el9.x86_64                                                     
+2026-06-10T19:15:08.3615031Z #10 7.882 
+2026-06-10T19:15:08.3615430Z #10 7.882 Complete!
+2026-06-10T19:15:08.5258671Z #10 8.211 Updating Subscription Management repositories.
+2026-06-10T19:15:08.7480688Z #10 8.212 Unable to read consumer identity
+2026-06-10T19:15:08.7481343Z #10 8.214 
+2026-06-10T19:15:08.7482138Z #10 8.214 This system is not registered with an entitlement server. You can use subscription-manager to register.
+2026-06-10T19:15:08.7482930Z #10 8.214 
+2026-06-10T19:15:08.7483228Z #10 8.222 26 files removed
+2026-06-10T19:15:08.7483582Z #10 DONE 8.3s
+2026-06-10T19:15:08.8551157Z 
+2026-06-10T19:15:08.8551752Z #11 [stage-1 2/5] COPY --from=ubi-micro-build /mnt/rootfs /
+2026-06-10T19:15:09.6026129Z #11 DONE 0.7s
+2026-06-10T19:15:09.7782484Z 
+2026-06-10T19:15:09.7783580Z #12 [stage-1 3/5] COPY wait-for-keycloak.sh /opt/keycloak/scripts/wait-for-keycloak.sh
+2026-06-10T19:15:09.7785540Z #12 DONE 0.0s
+2026-06-10T19:15:09.7785841Z 
+2026-06-10T19:15:09.7786371Z #13 [stage-1 4/5] COPY create-sirix-users.sh /opt/keycloak/scripts/create-sirix-users.sh
+2026-06-10T19:15:09.7787272Z #13 DONE 0.0s
+2026-06-10T19:15:09.7787507Z 
+2026-06-10T19:15:09.7788244Z #14 [stage-1 5/5] RUN chmod +x /opt/keycloak/scripts/wait-for-keycloak.sh /opt/keycloak/scripts/create-sirix-users.sh
+2026-06-10T19:15:09.7789398Z #14 DONE 0.1s
+2026-06-10T19:15:09.9307129Z 
+2026-06-10T19:15:09.9307952Z #15 exporting to image
+2026-06-10T19:15:09.9308672Z #15 exporting layers
+2026-06-10T19:15:10.4945216Z #15 exporting layers 0.7s done
+2026-06-10T19:15:10.5249411Z #15 writing image sha256:65deca22e7f688e3713a52d9c7acdcd303fb7ab8c1788dcc9c5fd6739c2e9375 done
+2026-06-10T19:15:10.5250583Z  keycloak  Built
+2026-06-10T19:15:10.5251412Z #15 naming to docker.io/library/sirix-keycloak done
+2026-06-10T19:15:10.5252134Z #15 DONE 0.7s
+2026-06-10T19:15:10.5252422Z 
+2026-06-10T19:15:10.5252732Z #16 resolving provenance for metadata file
+2026-06-10T19:15:10.5253253Z #16 DONE 0.0s
+2026-06-10T19:15:10.5416649Z  Network sirix_auth-network  Creating
+2026-06-10T19:15:10.5766240Z  Network sirix_auth-network  Created
+2026-06-10T19:15:10.5774811Z  Container sirix-keycloak-1  Creating
+2026-06-10T19:15:10.6016007Z  Container sirix-keycloak-1  Created
+2026-06-10T19:15:10.6023619Z  Container sirix-keycloak-1  Starting
+2026-06-10T19:15:10.8132022Z  Container sirix-keycloak-1  Started
+2026-06-10T19:15:11.2176441Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (26.0.1)
+2026-06-10T19:15:12.0606462Z Collecting alabaster==0.7.12 (from -r sirix-python-client/requirements-all.txt (line 1))
+2026-06-10T19:15:12.1122746Z   Downloading alabaster-0.7.12-py2.py3-none-any.whl.metadata (2.0 kB)
+2026-06-10T19:15:12.1525974Z Collecting anyio==4.7.0 (from -r sirix-python-client/requirements-all.txt (line 2))
+2026-06-10T19:15:12.1613208Z   Downloading anyio-4.7.0-py3-none-any.whl.metadata (4.7 kB)
+2026-06-10T19:15:12.1944021Z Collecting attrs==23.1.0 (from -r sirix-python-client/requirements-all.txt (line 3))
+2026-06-10T19:15:12.2046651Z   Downloading attrs-23.1.0-py3-none-any.whl.metadata (11 kB)
+2026-06-10T19:15:12.2566480Z Collecting Babel==2.9.1 (from -r sirix-python-client/requirements-all.txt (line 4))
+2026-06-10T19:15:12.2641339Z   Downloading Babel-2.9.1-py2.py3-none-any.whl.metadata (1.2 kB)
+2026-06-10T19:15:12.3047083Z Collecting certifi==2024.7.4 (from -r sirix-python-client/requirements-all.txt (line 5))
+2026-06-10T19:15:12.3112864Z   Downloading certifi-2024.7.4-py3-none-any.whl.metadata (2.2 kB)
+2026-06-10T19:15:12.5417104Z Collecting charset-normalizer==2.0.7 (from -r sirix-python-client/requirements-all.txt (line 6))
+2026-06-10T19:15:12.5471334Z   Downloading charset_normalizer-2.0.7-py3-none-any.whl.metadata (11 kB)
+2026-06-10T19:15:12.5731566Z Collecting colorama==0.4.4 (from -r sirix-python-client/requirements-all.txt (line 7))
+2026-06-10T19:15:12.5793106Z   Downloading colorama-0.4.4-py2.py3-none-any.whl.metadata (14 kB)
+2026-06-10T19:15:13.4297916Z Collecting coverage==7.3.2 (from -r sirix-python-client/requirements-all.txt (line 8))
+2026-06-10T19:15:13.4363837Z   Downloading coverage-7.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.1 kB)
+2026-06-10T19:15:13.4562526Z Collecting docutils==0.17.1 (from -r sirix-python-client/requirements-all.txt (line 9))
+2026-06-10T19:15:13.4604054Z   Downloading docutils-0.17.1-py2.py3-none-any.whl.metadata (2.9 kB)
+2026-06-10T19:15:13.4740399Z Collecting h11==0.14.0 (from -r sirix-python-client/requirements-all.txt (line 10))
+2026-06-10T19:15:13.4793963Z   Downloading h11-0.14.0-py3-none-any.whl.metadata (8.2 kB)
+2026-06-10T19:15:13.5046097Z Collecting httpcore==1.0.7 (from -r sirix-python-client/requirements-all.txt (line 11))
+2026-06-10T19:15:13.5097863Z   Downloading httpcore-1.0.7-py3-none-any.whl.metadata (21 kB)
+2026-06-10T19:15:13.5595097Z Collecting httpx==0.28.1 (from -r sirix-python-client/requirements-all.txt (line 12))
+2026-06-10T19:15:13.5648825Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2026-06-10T19:15:13.5908650Z Collecting idna==3.7 (from -r sirix-python-client/requirements-all.txt (line 13))
+2026-06-10T19:15:13.5955949Z   Downloading idna-3.7-py3-none-any.whl.metadata (9.9 kB)
+2026-06-10T19:15:13.6120582Z Collecting imagesize==1.3.0 (from -r sirix-python-client/requirements-all.txt (line 14))
+2026-06-10T19:15:13.6177241Z   Downloading imagesize-1.3.0-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-06-10T19:15:13.6336563Z Collecting iniconfig==1.1.1 (from -r sirix-python-client/requirements-all.txt (line 15))
+2026-06-10T19:15:13.6364074Z   Downloading iniconfig-1.1.1-py2.py3-none-any.whl.metadata (2.4 kB)
+2026-06-10T19:15:13.6591997Z Collecting Jinja2==3.1.6 (from -r sirix-python-client/requirements-all.txt (line 16))
+2026-06-10T19:15:13.6655957Z   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+2026-06-10T19:15:13.7742383Z Collecting MarkupSafe==2.0.1 (from -r sirix-python-client/requirements-all.txt (line 17))
+2026-06-10T19:15:13.7794124Z   Downloading MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (3.2 kB)
+2026-06-10T19:15:13.8035916Z Collecting packaging==21.2 (from -r sirix-python-client/requirements-all.txt (line 18))
+2026-06-10T19:15:13.8100169Z   Downloading packaging-21.2-py3-none-any.whl.metadata (14 kB)
+2026-06-10T19:15:13.8373135Z Collecting pluggy==1.3.0 (from -r sirix-python-client/requirements-all.txt (line 19))
+2026-06-10T19:15:13.8436785Z   Downloading pluggy-1.3.0-py3-none-any.whl.metadata (4.3 kB)
+2026-06-10T19:15:13.8759743Z Collecting Pygments==2.15.0 (from -r sirix-python-client/requirements-all.txt (line 20))
+2026-06-10T19:15:13.8819313Z   Downloading Pygments-2.15.0-py3-none-any.whl.metadata (2.5 kB)
+2026-06-10T19:15:13.9188608Z Collecting pyparsing==2.4.7 (from -r sirix-python-client/requirements-all.txt (line 21))
+2026-06-10T19:15:13.9238363Z   Downloading pyparsing-2.4.7-py2.py3-none-any.whl.metadata (3.6 kB)
+2026-06-10T19:15:13.9796000Z Collecting pytest==7.4.3 (from -r sirix-python-client/requirements-all.txt (line 22))
+2026-06-10T19:15:13.9849921Z   Downloading pytest-7.4.3-py3-none-any.whl.metadata (7.9 kB)
+2026-06-10T19:15:14.0302368Z Collecting pytest-asyncio==0.21.1 (from -r sirix-python-client/requirements-all.txt (line 23))
+2026-06-10T19:15:14.0355595Z   Downloading pytest_asyncio-0.21.1-py3-none-any.whl.metadata (4.0 kB)
+2026-06-10T19:15:14.0659232Z Collecting pytest-cov==4.1.0 (from -r sirix-python-client/requirements-all.txt (line 24))
+2026-06-10T19:15:14.0720412Z   Downloading pytest_cov-4.1.0-py3-none-any.whl.metadata (26 kB)
+2026-06-10T19:15:14.1475779Z Collecting pytz==2021.3 (from -r sirix-python-client/requirements-all.txt (line 25))
+2026-06-10T19:15:14.1552579Z   Downloading pytz-2021.3-py2.py3-none-any.whl.metadata (21 kB)
+2026-06-10T19:15:14.2008949Z Collecting requests==2.32.4 (from -r sirix-python-client/requirements-all.txt (line 26))
+2026-06-10T19:15:14.2059894Z   Downloading requests-2.32.4-py3-none-any.whl.metadata (4.9 kB)
+2026-06-10T19:15:14.2272124Z Collecting rfc3986==1.5.0 (from -r sirix-python-client/requirements-all.txt (line 27))
+2026-06-10T19:15:14.2340870Z   Downloading rfc3986-1.5.0-py2.py3-none-any.whl.metadata (6.5 kB)
+2026-06-10T19:15:14.2525398Z Collecting sniffio==1.2.0 (from -r sirix-python-client/requirements-all.txt (line 28))
+2026-06-10T19:15:14.2571992Z   Downloading sniffio-1.2.0-py3-none-any.whl.metadata (3.6 kB)
+2026-06-10T19:15:14.2757527Z Collecting snowballstemmer==2.2.0 (from -r sirix-python-client/requirements-all.txt (line 29))
+2026-06-10T19:15:14.2806155Z   Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
+2026-06-10T19:15:14.3569034Z Collecting Sphinx==4.3.0 (from -r sirix-python-client/requirements-all.txt (line 30))
+2026-06-10T19:15:14.3648682Z   Downloading Sphinx-4.3.0-py3-none-any.whl.metadata (8.0 kB)
+2026-06-10T19:15:14.4017399Z Collecting sphinx-rtd-theme==1.0.0 (from -r sirix-python-client/requirements-all.txt (line 31))
+2026-06-10T19:15:14.4105198Z   Downloading sphinx_rtd_theme-1.0.0-py2.py3-none-any.whl.metadata (4.3 kB)
+2026-06-10T19:15:14.4346940Z Collecting sphinxcontrib-applehelp==1.0.2 (from -r sirix-python-client/requirements-all.txt (line 32))
+2026-06-10T19:15:14.4405905Z   Downloading sphinxcontrib_applehelp-1.0.2-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-06-10T19:15:14.4570313Z Collecting sphinxcontrib-devhelp==1.0.2 (from -r sirix-python-client/requirements-all.txt (line 33))
+2026-06-10T19:15:14.4630797Z   Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-06-10T19:15:14.4836535Z Collecting sphinxcontrib-htmlhelp==2.0.0 (from -r sirix-python-client/requirements-all.txt (line 34))
+2026-06-10T19:15:14.4899124Z   Downloading sphinxcontrib_htmlhelp-2.0.0-py2.py3-none-any.whl.metadata (1.6 kB)
+2026-06-10T19:15:14.5047134Z Collecting sphinxcontrib-jsmath==1.0.1 (from -r sirix-python-client/requirements-all.txt (line 35))
+2026-06-10T19:15:14.5094921Z   Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-06-10T19:15:14.5268676Z Collecting sphinxcontrib-qthelp==1.0.3 (from -r sirix-python-client/requirements-all.txt (line 36))
+2026-06-10T19:15:14.5351377Z   Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-06-10T19:15:14.5618103Z Collecting sphinxcontrib-serializinghtml==1.1.5 (from -r sirix-python-client/requirements-all.txt (line 37))
+2026-06-10T19:15:14.5673870Z   Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl.metadata (1.5 kB)
+2026-06-10T19:15:14.5864213Z Collecting toml==0.10.2 (from -r sirix-python-client/requirements-all.txt (line 38))
+2026-06-10T19:15:14.5913413Z   Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+2026-06-10T19:15:14.6364827Z Collecting tomli==2.0.1 (from -r sirix-python-client/requirements-all.txt (line 39))
+2026-06-10T19:15:14.6436487Z   Downloading tomli-2.0.1-py3-none-any.whl.metadata (8.9 kB)
+2026-06-10T19:15:14.6858524Z Collecting urllib3==2.6.3 (from -r sirix-python-client/requirements-all.txt (line 40))
+2026-06-10T19:15:14.6916287Z   Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+2026-06-10T19:15:14.7222735Z Collecting exceptiongroup>=1.0.2 (from anyio==4.7.0->-r sirix-python-client/requirements-all.txt (line 2))
+2026-06-10T19:15:14.7272334Z   Downloading exceptiongroup-1.3.1-py3-none-any.whl.metadata (6.7 kB)
+2026-06-10T19:15:14.7706845Z Collecting typing_extensions>=4.5 (from anyio==4.7.0->-r sirix-python-client/requirements-all.txt (line 2))
+2026-06-10T19:15:14.7762493Z   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2026-06-10T19:15:14.9516873Z Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages (from Sphinx==4.3.0->-r sirix-python-client/requirements-all.txt (line 30)) (79.0.1)
+2026-06-10T19:15:15.0091515Z Downloading alabaster-0.7.12-py2.py3-none-any.whl (14 kB)
+2026-06-10T19:15:15.0171861Z Downloading anyio-4.7.0-py3-none-any.whl (93 kB)
+2026-06-10T19:15:15.0287134Z Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
+2026-06-10T19:15:15.0362826Z Downloading Babel-2.9.1-py2.py3-none-any.whl (8.8 MB)
+2026-06-10T19:15:15.0966886Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.8/8.8 MB 165.4 MB/s  0:00:00
+2026-06-10T19:15:15.1029701Z Downloading certifi-2024.7.4-py3-none-any.whl (162 kB)
+2026-06-10T19:15:15.1139961Z Downloading charset_normalizer-2.0.7-py3-none-any.whl (38 kB)
+2026-06-10T19:15:15.1223635Z Downloading colorama-0.4.4-py2.py3-none-any.whl (16 kB)
+2026-06-10T19:15:15.1367643Z Downloading coverage-7.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (227 kB)
+2026-06-10T19:15:15.1462411Z Downloading docutils-0.17.1-py2.py3-none-any.whl (575 kB)
+2026-06-10T19:15:15.1578485Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 575.5/575.5 kB 84.2 MB/s  0:00:00
+2026-06-10T19:15:15.1629422Z Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+2026-06-10T19:15:15.1723450Z Downloading httpcore-1.0.7-py3-none-any.whl (78 kB)
+2026-06-10T19:15:15.1820249Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-06-10T19:15:15.1946098Z Downloading idna-3.7-py3-none-any.whl (66 kB)
+2026-06-10T19:15:15.2024286Z Downloading imagesize-1.3.0-py2.py3-none-any.whl (5.2 kB)
+2026-06-10T19:15:15.2093676Z Downloading iniconfig-1.1.1-py2.py3-none-any.whl (5.0 kB)
+2026-06-10T19:15:15.2183727Z Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+2026-06-10T19:15:15.2283872Z Downloading MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (30 kB)
+2026-06-10T19:15:15.2408237Z Downloading packaging-21.2-py3-none-any.whl (40 kB)
+2026-06-10T19:15:15.2494769Z Downloading pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+2026-06-10T19:15:15.2599448Z Downloading pluggy-1.3.0-py3-none-any.whl (18 kB)
+2026-06-10T19:15:15.2679845Z Downloading Pygments-2.15.0-py3-none-any.whl (1.1 MB)
+2026-06-10T19:15:15.2841732Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 112.8 MB/s  0:00:00
+2026-06-10T19:15:15.2908686Z Downloading pytest-7.4.3-py3-none-any.whl (325 kB)
+2026-06-10T19:15:15.3028237Z Downloading pytest_asyncio-0.21.1-py3-none-any.whl (13 kB)
+2026-06-10T19:15:15.3102338Z Downloading pytest_cov-4.1.0-py3-none-any.whl (21 kB)
+2026-06-10T19:15:15.3205540Z Downloading pytz-2021.3-py2.py3-none-any.whl (503 kB)
+2026-06-10T19:15:15.3319782Z Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+2026-06-10T19:15:15.3393640Z Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+2026-06-10T19:15:15.3509454Z Downloading rfc3986-1.5.0-py2.py3-none-any.whl (31 kB)
+2026-06-10T19:15:15.3575674Z Downloading sniffio-1.2.0-py3-none-any.whl (10 kB)
+2026-06-10T19:15:15.3701018Z Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl (93 kB)
+2026-06-10T19:15:15.4566286Z Downloading Sphinx-4.3.0-py3-none-any.whl (3.1 MB)
+2026-06-10T19:15:15.4736077Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 192.4 MB/s  0:00:00
+2026-06-10T19:15:15.4788969Z Downloading sphinx_rtd_theme-1.0.0-py2.py3-none-any.whl (2.8 MB)
+2026-06-10T19:15:15.4949517Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 209.6 MB/s  0:00:00
+2026-06-10T19:15:15.5003400Z Downloading sphinxcontrib_applehelp-1.0.2-py2.py3-none-any.whl (121 kB)
+2026-06-10T19:15:15.5088631Z Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl (84 kB)
+2026-06-10T19:15:15.5173773Z Downloading sphinxcontrib_htmlhelp-2.0.0-py2.py3-none-any.whl (100 kB)
+2026-06-10T19:15:15.5245554Z Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl (5.1 kB)
+2026-06-10T19:15:15.5317082Z Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl (90 kB)
+2026-06-10T19:15:15.5395952Z Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl (94 kB)
+2026-06-10T19:15:15.5462743Z Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+2026-06-10T19:15:15.5531183Z Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+2026-06-10T19:15:15.5599719Z Downloading exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+2026-06-10T19:15:15.5670884Z Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2026-06-10T19:15:15.7994457Z Installing collected packages: snowballstemmer, rfc3986, pytz, iniconfig, alabaster, urllib3, typing_extensions, tomli, toml, sphinxcontrib-serializinghtml, sphinxcontrib-qthelp, sphinxcontrib-jsmath, sphinxcontrib-htmlhelp, sphinxcontrib-devhelp, sphinxcontrib-applehelp, sniffio, pyparsing, Pygments, pluggy, MarkupSafe, imagesize, idna, h11, docutils, coverage, colorama, charset-normalizer, certifi, Babel, attrs, requests, packaging, Jinja2, httpcore, exceptiongroup, Sphinx, pytest, anyio, sphinx-rtd-theme, pytest-cov, pytest-asyncio, httpx
+2026-06-10T19:15:21.0594052Z 
+2026-06-10T19:15:21.0701642Z Successfully installed Babel-2.9.1 Jinja2-3.1.6 MarkupSafe-2.0.1 Pygments-2.15.0 Sphinx-4.3.0 alabaster-0.7.12 anyio-4.7.0 attrs-23.1.0 certifi-2024.7.4 charset-normalizer-2.0.7 colorama-0.4.4 coverage-7.3.2 docutils-0.17.1 exceptiongroup-1.3.1 h11-0.14.0 httpcore-1.0.7 httpx-0.28.1 idna-3.7 imagesize-1.3.0 iniconfig-1.1.1 packaging-21.2 pluggy-1.3.0 pyparsing-2.4.7 pytest-7.4.3 pytest-asyncio-0.21.1 pytest-cov-4.1.0 pytz-2021.3 requests-2.32.4 rfc3986-1.5.0 sniffio-1.2.0 snowballstemmer-2.2.0 sphinx-rtd-theme-1.0.0 sphinxcontrib-applehelp-1.0.2 sphinxcontrib-devhelp-1.0.2 sphinxcontrib-htmlhelp-2.0.0 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-qthelp-1.0.3 sphinxcontrib-serializinghtml-1.1.5 toml-0.10.2 tomli-2.0.1 typing_extensions-4.15.0 urllib3-2.6.3
+2026-06-10T19:16:01.2896804Z Waiting for REST API on port 9443...
+2026-06-10T19:16:01.3595966Z WARNING: Using incubator modules: jdk.incubator.vector
+2026-06-10T19:16:08.3855594Z 19:16:08.383 [vert.x-eventloop-thread-1] ERROR io.sirix.rest.SirixVerticle - Request failed: GET / (statusCode=401, no exception)
+2026-06-10T19:16:08.4192540Z 19:16:08.418 [vert.x-eventloop-thread-1] ERROR io.vertx.ext.web.RoutingContext - Unhandled exception in router
+2026-06-10T19:16:08.4210642Z REST API is up after 8s
+2026-06-10T19:16:08.8292963Z ============================= test session starts ==============================
+2026-06-10T19:16:08.8294273Z platform linux -- Python 3.9.25, pytest-7.4.3, pluggy-1.3.0 -- /opt/hostedtoolcache/Python/3.9.25/x64/bin/python
+2026-06-10T19:16:08.8295576Z cachedir: .pytest_cache
+2026-06-10T19:16:08.8296184Z rootdir: /home/runner/work/sirix/sirix/sirix-python-client
+2026-06-10T19:16:08.8296935Z plugins: anyio-4.7.0, cov-4.1.0, asyncio-0.21.1
+2026-06-10T19:16:08.8298019Z asyncio: mode=strict
+2026-06-10T19:16:08.9525571Z collecting ... collected 67 items
+2026-06-10T19:16:08.9526063Z 
+2026-06-10T19:16:09.4008577Z WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+2026-06-10T19:16:09.4010722Z WARNING: sun.misc.Unsafe::arrayBaseOffset has been called by net.openhft.hashing.UnsafeAccess (file:/home/runner/work/sirix/sirix/bundles/sirix-rest-api/build/libs/sirix-rest-api-1.0.0-alpha21-fat.jar)
+2026-06-10T19:16:09.4012849Z WARNING: Please consider reporting this to the maintainers of class net.openhft.hashing.UnsafeAccess
+2026-06-10T19:16:09.4014098Z WARNING: sun.misc.Unsafe::arrayBaseOffset will be removed in a future release
+2026-06-10T19:16:10.2737707Z sirix-python-client/tests/test_json_store.py::test_create_store PASSED   [  1%]
+2026-06-10T19:16:10.4557996Z sirix-python-client/tests/test_json_store.py::test_exists PASSED         [  2%]
+2026-06-10T19:16:10.9293539Z sirix-python-client/tests/test_json_store.py::test_insert_one PASSED     [  4%]
+2026-06-10T19:16:11.1550539Z sirix-python-client/tests/test_json_store.py::test_insert_many PASSED    [  5%]
+2026-06-10T19:16:11.3633313Z sirix-python-client/tests/test_json_store.py::test_find_all_store PASSED [  7%]
+2026-06-10T19:16:11.5925312Z sirix-python-client/tests/test_json_store.py::test_find_all_projection PASSED [  8%]
+2026-06-10T19:16:11.7745953Z sirix-python-client/tests/test_json_store.py::test_find_all_old_revision_number PASSED [ 10%]
+2026-06-10T19:16:11.9479501Z sirix-python-client/tests/test_json_store.py::test_find_all_old_revision_date PASSED [ 11%]
+2026-06-10T19:16:12.1643035Z sirix-python-client/tests/test_json_store.py::test_find_one PASSED       [ 13%]
+2026-06-10T19:16:12.4096347Z sirix-python-client/tests/test_json_store.py::test_history PASSED        [ 14%]
+2026-06-10T19:16:12.6288368Z sirix-python-client/tests/test_json_store.py::test_update_by_key PASSED  [ 16%]
+2026-06-10T19:16:12.8167432Z sirix-python-client/tests/test_json_store.py::test_upsert_non_existent_field PASSED [ 17%]
+2026-06-10T19:16:13.0061575Z sirix-python-client/tests/test_json_store.py::test_shift_time_axis PASSED [ 19%]
+2026-06-10T19:16:13.2108297Z sirix-python-client/tests/test_json_store.py::test_update_many PASSED    [ 20%]
+2026-06-10T19:16:13.3863545Z sirix-python-client/tests/test_json_store.py::test_delete_fields PASSED  [ 22%]
+2026-06-10T19:16:13.3874316Z sirix-python-client/tests/test_json_store.py::test_delete_record SKIPPED [ 23%]
+2026-06-10T19:16:13.5236316Z sirix-python-client/tests/test_resource_sync.py::test_delete_resource PASSED [ 25%]
+2026-06-10T19:16:13.6382490Z sirix-python-client/tests/test_resource_sync.py::test_delete_nonexistent_resource PASSED [ 26%]
+2026-06-10T19:16:13.7777289Z sirix-python-client/tests/test_resource_sync.py::test_read_resource PASSED [ 28%]
+2026-06-10T19:16:13.9088618Z sirix-python-client/tests/test_resource_sync.py::test_get_etag PASSED    [ 29%]
+2026-06-10T19:16:14.0413345Z sirix-python-client/tests/test_resource_sync.py::test_get_etag_nonexistent PASSED [ 31%]
+2026-06-10T19:16:14.1953919Z sirix-python-client/tests/test_resource_sync.py::test_delete_by_node_id PASSED [ 32%]
+2026-06-10T19:16:14.3461739Z sirix-python-client/tests/test_resource_sync.py::test_delete_by_etag PASSED [ 34%]
+2026-06-10T19:16:14.5018170Z sirix-python-client/tests/test_resource_sync.py::test_update_by_etag PASSED [ 35%]
+2026-06-10T19:16:14.6670560Z sirix-python-client/tests/test_resource_sync.py::test_update_by_node_id PASSED [ 37%]
+2026-06-10T19:16:14.8176811Z sirix-python-client/tests/test_resource_sync.py::test_update_nonexistent_node PASSED [ 38%]
+2026-06-10T19:16:14.9492503Z sirix-python-client/tests/test_resource_sync.py::test_read_metadata PASSED [ 40%]
+2026-06-10T19:16:15.0834097Z sirix-python-client/tests/test_resource_sync.py::test_read_metadata_key_only PASSED [ 41%]
+2026-06-10T19:16:15.2185353Z sirix-python-client/tests/test_resource_sync.py::test_read_metadata_key_and_child_count PASSED [ 43%]
+2026-06-10T19:16:15.3841059Z sirix-python-client/tests/test_resource_sync.py::test_history PASSED     [ 44%]
+2026-06-10T19:16:15.5365901Z sirix-python-client/tests/test_resource_sync.py::test_diff PASSED        [ 46%]
+2026-06-10T19:16:15.6666882Z sirix-python-client/tests/test_resource_sync.py::test_query PASSED       [ 47%]
+2026-06-10T19:16:15.7955750Z sirix-python-client/tests/test_resource_sync.py::test_delete_resource16 PASSED [ 49%]
+2026-06-10T19:16:15.9676115Z sirix-python-client/tests/test_sirix_async.py::test_sirix_async_init PASSED [ 50%]
+2026-06-10T19:16:16.0988781Z sirix-python-client/tests/test_sirix_async.py::test_auth_refresh PASSED  [ 52%]
+2026-06-10T19:16:16.2188483Z sirix-python-client/tests/test_sirix_async.py::test_get_info PASSED      [ 53%]
+2026-06-10T19:16:16.3312483Z sirix-python-client/tests/test_sirix_async.py::test_database_create 19:16:16.329 [DefaultDispatcher-worker-3] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:16.3325517Z io.vertx.core.VertxException: BodyHandler invoked after the request has ended. It should be the first handler invoked. Otherwise, you must pause the request after it's received.
+2026-06-10T19:16:16.3331720Z 19:16:16.332 [vert.x-eventloop-thread-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:16.3332986Z java.lang.IllegalStateException: Response head already sent
+2026-06-10T19:16:16.3334144Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.checkHeadWritten(Http1ServerResponse.java:673)
+2026-06-10T19:16:16.3335957Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.setStatusCode(Http1ServerResponse.java:139)
+2026-06-10T19:16:16.3337530Z 	at io.sirix.rest.crud.AbstractCreateHandler$createMultipleResources$2.invokeSuspend(AbstractCreateHandler.kt:138)
+2026-06-10T19:16:16.3339047Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+2026-06-10T19:16:16.3340193Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+2026-06-10T19:16:16.3341261Z 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)
+2026-06-10T19:16:16.3342311Z 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+2026-06-10T19:16:16.3343381Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)
+2026-06-10T19:16:16.3344963Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)
+2026-06-10T19:16:16.3346379Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)
+2026-06-10T19:16:16.3347686Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)
+2026-06-10T19:16:16.3811252Z FAILED [ 55%]
+2026-06-10T19:16:16.4906758Z sirix-python-client/tests/test_sirix_async.py::test_database_delete 19:16:16.490 [DefaultDispatcher-worker-3] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:16.4909303Z io.vertx.core.VertxException: BodyHandler invoked after the request has ended. It should be the first handler invoked. Otherwise, you must pause the request after it's received.
+2026-06-10T19:16:16.4911158Z 19:16:16.490 [vert.x-eventloop-thread-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:16.4912026Z java.lang.IllegalStateException: Response head already sent
+2026-06-10T19:16:16.4913196Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.checkHeadWritten(Http1ServerResponse.java:673)
+2026-06-10T19:16:16.4914959Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.setStatusCode(Http1ServerResponse.java:139)
+2026-06-10T19:16:16.4916412Z 	at io.sirix.rest.crud.AbstractCreateHandler$createMultipleResources$2.invokeSuspend(AbstractCreateHandler.kt:138)
+2026-06-10T19:16:16.4917817Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+2026-06-10T19:16:16.4918873Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+2026-06-10T19:16:16.4919921Z 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)
+2026-06-10T19:16:16.4921344Z 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+2026-06-10T19:16:16.4922441Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)
+2026-06-10T19:16:16.4923847Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)
+2026-06-10T19:16:16.4925526Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)
+2026-06-10T19:16:16.4926847Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)
+2026-06-10T19:16:16.5077866Z FAILED [ 56%]
+2026-06-10T19:16:16.6208327Z sirix-python-client/tests/test_sirix_async.py::test_resource_exists PASSED [ 58%]
+2026-06-10T19:16:16.7526988Z sirix-python-client/tests/test_sirix_async.py::test_create_resource PASSED [ 59%]
+2026-06-10T19:16:16.8863873Z sirix-python-client/tests/test_sirix_async.py::test_delete_resource PASSED [ 61%]
+2026-06-10T19:16:17.0025781Z sirix-python-client/tests/test_sirix_async.py::test_delete_nonexistent_resource PASSED [ 62%]
+2026-06-10T19:16:17.1377656Z sirix-python-client/tests/test_sirix_async.py::test_read_resource PASSED [ 64%]
+2026-06-10T19:16:17.2741555Z sirix-python-client/tests/test_sirix_async.py::test_get_etag PASSED      [ 65%]
+2026-06-10T19:16:17.4040623Z sirix-python-client/tests/test_sirix_async.py::test_get_etag_nonexistent PASSED [ 67%]
+2026-06-10T19:16:17.5512655Z sirix-python-client/tests/test_sirix_async.py::test_delete_by_node_id PASSED [ 68%]
+2026-06-10T19:16:17.6918692Z sirix-python-client/tests/test_sirix_async.py::test_delete_by_etag PASSED [ 70%]
+2026-06-10T19:16:17.8398186Z sirix-python-client/tests/test_sirix_async.py::test_update_by_etag PASSED [ 71%]
+2026-06-10T19:16:17.9872296Z sirix-python-client/tests/test_sirix_async.py::test_update_by_node_id PASSED [ 73%]
+2026-06-10T19:16:18.1276577Z sirix-python-client/tests/test_sirix_async.py::test_update_nonexistent_node PASSED [ 74%]
+2026-06-10T19:16:18.2722198Z sirix-python-client/tests/test_sirix_async.py::test_read_metadata PASSED [ 76%]
+2026-06-10T19:16:18.4540127Z sirix-python-client/tests/test_sirix_async.py::test_history PASSED       [ 77%]
+2026-06-10T19:16:18.6265794Z sirix-python-client/tests/test_sirix_async.py::test_diff PASSED          [ 79%]
+2026-06-10T19:16:18.7936134Z sirix-python-client/tests/test_sirix_async.py::test_sirix_query PASSED   [ 80%]
+2026-06-10T19:16:18.9743714Z sirix-python-client/tests/test_sirix_async.py::test_resource_query PASSED [ 82%]
+2026-06-10T19:16:19.0950760Z sirix-python-client/tests/test_sirix_sync.py::test_sirix_sync_init PASSED [ 83%]
+2026-06-10T19:16:19.2195192Z sirix-python-client/tests/test_sirix_sync.py::test_auth_refresh PASSED   [ 85%]
+2026-06-10T19:16:19.3405682Z sirix-python-client/tests/test_sirix_sync.py::test_get_info PASSED       [ 86%]
+2026-06-10T19:16:19.4511920Z sirix-python-client/tests/test_sirix_sync.py::test_create 19:16:19.450 [DefaultDispatcher-worker-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:19.4514154Z io.vertx.core.VertxException: BodyHandler invoked after the request has ended. It should be the first handler invoked. Otherwise, you must pause the request after it's received.
+2026-06-10T19:16:19.4536174Z 19:16:19.451 [vert.x-eventloop-thread-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:19.4537648Z java.lang.IllegalStateException: Response head already sent
+2026-06-10T19:16:19.4538982Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.checkHeadWritten(Http1ServerResponse.java:673)
+2026-06-10T19:16:19.4540385Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.setStatusCode(Http1ServerResponse.java:139)
+2026-06-10T19:16:19.4541842Z 	at io.sirix.rest.crud.AbstractCreateHandler$createMultipleResources$2.invokeSuspend(AbstractCreateHandler.kt:138)
+2026-06-10T19:16:19.4543250Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+2026-06-10T19:16:19.4544080Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+2026-06-10T19:16:19.4545278Z 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)
+2026-06-10T19:16:19.4545869Z 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+2026-06-10T19:16:19.4546484Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)
+2026-06-10T19:16:19.4547212Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)
+2026-06-10T19:16:19.4547961Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)
+2026-06-10T19:16:19.4548665Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)
+2026-06-10T19:16:19.4751149Z FAILED         [ 88%]
+2026-06-10T19:16:19.5830590Z sirix-python-client/tests/test_sirix_sync.py::test_delete 19:16:19.582 [DefaultDispatcher-worker-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:19.5832950Z io.vertx.core.VertxException: BodyHandler invoked after the request has ended. It should be the first handler invoked. Otherwise, you must pause the request after it's received.
+2026-06-10T19:16:19.5835414Z 19:16:19.583 [vert.x-eventloop-thread-1] ERROR io.sirix.rest.SirixVerticle - Request failed: PUT /First (statusCode=500)
+2026-06-10T19:16:19.5836399Z java.lang.IllegalStateException: Response head already sent
+2026-06-10T19:16:19.5837062Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.checkHeadWritten(Http1ServerResponse.java:673)
+2026-06-10T19:16:19.5837841Z 	at io.vertx.core.http.impl.http1.Http1ServerResponse.setStatusCode(Http1ServerResponse.java:139)
+2026-06-10T19:16:19.5838644Z 	at io.sirix.rest.crud.AbstractCreateHandler$createMultipleResources$2.invokeSuspend(AbstractCreateHandler.kt:138)
+2026-06-10T19:16:19.5839430Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+2026-06-10T19:16:19.5840042Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+2026-06-10T19:16:19.5840630Z 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)
+2026-06-10T19:16:19.5841190Z 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+2026-06-10T19:16:19.5841760Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)
+2026-06-10T19:16:19.5842475Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)
+2026-06-10T19:16:19.5843213Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)
+2026-06-10T19:16:19.5843916Z 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)
+2026-06-10T19:16:19.5975554Z FAILED         [ 89%]
+2026-06-10T19:16:19.7058391Z sirix-python-client/tests/test_sirix_sync.py::test_exists PASSED         [ 91%]
+2026-06-10T19:16:19.8441783Z sirix-python-client/tests/test_sirix_sync.py::test_create_resource PASSED [ 92%]
+2026-06-10T19:16:19.9834914Z sirix-python-client/tests/test_sirix_sync.py::test_sirix_query PASSED    [ 94%]
+2026-06-10T19:16:20.1237683Z sirix-python-client/tests/test_sirix_sync.py::test_resource_query PASSED [ 95%]
+2026-06-10T19:16:20.2567704Z sirix-python-client/tests/test_xml.py::test_create_xml_database PASSED   [ 97%]
+2026-06-10T19:16:20.4672589Z sirix-python-client/tests/test_xml.py::test_create_xml_resource PASSED   [ 98%]
+2026-06-10T19:16:20.6216299Z sirix-python-client/tests/test_xml.py::test_read PASSED                  [100%]
+2026-06-10T19:16:20.6217089Z 
+2026-06-10T19:16:20.6217475Z =================================== FAILURES ===================================
+2026-06-10T19:16:20.6218326Z _____________________________ test_database_create _____________________________
+2026-06-10T19:16:20.6218849Z 
+2026-06-10T19:16:20.6219046Z     async def test_database_create():
+2026-06-10T19:16:20.6219667Z         client = httpx.AsyncClient(base_url=base_url)
+2026-06-10T19:16:20.6220425Z         sirix = await pysirix.sirix_async("admin", "admin", client)
+2026-06-10T19:16:20.6221570Z         db = sirix.database("First", DBType.JSON)
+2026-06-10T19:16:20.6222010Z >       await db.create()
+2026-06-10T19:16:20.6222181Z 
+2026-06-10T19:16:20.6222352Z sirix-python-client/tests/test_sirix_async.py:49: 
+2026-06-10T19:16:20.6222771Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6223353Z sirix-python-client/pysirix/async_client.py:42: in create_database
+2026-06-10T19:16:20.6224112Z     resp.raise_for_status()
+2026-06-10T19:16:20.6224991Z /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/contextlib.py:137: in __exit__
+2026-06-10T19:16:20.6225531Z     self.gen.throw(typ, value, traceback)
+2026-06-10T19:16:20.6225898Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6226158Z 
+2026-06-10T19:16:20.6226258Z     @contextmanager
+2026-06-10T19:16:20.6226515Z     def include_response_text_in_errors():
+2026-06-10T19:16:20.6226807Z         try:
+2026-06-10T19:16:20.6227023Z             yield
+2026-06-10T19:16:20.6227290Z         except httpx.HTTPStatusError as exc:
+2026-06-10T19:16:20.6227616Z             response = exc.response
+2026-06-10T19:16:20.6227974Z             message = f"{exc}\nSirixDB error message: {response.text}"
+2026-06-10T19:16:20.6228515Z >           raise SirixServerError(message, response=response, request=exc.request) from None
+2026-06-10T19:16:20.6229286Z E           pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6230064Z E           For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6230684Z E           SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6231018Z 
+2026-06-10T19:16:20.6231204Z sirix-python-client/pysirix/errors.py:12: SirixServerError
+2026-06-10T19:16:20.6231657Z _____________________________ test_database_delete _____________________________
+2026-06-10T19:16:20.6231947Z 
+2026-06-10T19:16:20.6232067Z     async def test_database_delete():
+2026-06-10T19:16:20.6232402Z         client = httpx.AsyncClient(base_url=base_url)
+2026-06-10T19:16:20.6232803Z         sirix = await pysirix.sirix_async("admin", "admin", client)
+2026-06-10T19:16:20.6233329Z         db = sirix.database("First", DBType.JSON)
+2026-06-10T19:16:20.6233926Z >       await db.create()
+2026-06-10T19:16:20.6234225Z 
+2026-06-10T19:16:20.6234500Z sirix-python-client/tests/test_sirix_async.py:60: 
+2026-06-10T19:16:20.6235489Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6236313Z sirix-python-client/pysirix/async_client.py:42: in create_database
+2026-06-10T19:16:20.6237001Z     resp.raise_for_status()
+2026-06-10T19:16:20.6237692Z /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/contextlib.py:137: in __exit__
+2026-06-10T19:16:20.6238304Z     self.gen.throw(typ, value, traceback)
+2026-06-10T19:16:20.6238672Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6239161Z 
+2026-06-10T19:16:20.6239266Z     @contextmanager
+2026-06-10T19:16:20.6239530Z     def include_response_text_in_errors():
+2026-06-10T19:16:20.6239816Z         try:
+2026-06-10T19:16:20.6240037Z             yield
+2026-06-10T19:16:20.6240293Z         except httpx.HTTPStatusError as exc:
+2026-06-10T19:16:20.6240610Z             response = exc.response
+2026-06-10T19:16:20.6240973Z             message = f"{exc}\nSirixDB error message: {response.text}"
+2026-06-10T19:16:20.6241500Z >           raise SirixServerError(message, response=response, request=exc.request) from None
+2026-06-10T19:16:20.6242247Z E           pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6243016Z E           For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6243629Z E           SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6244091Z 
+2026-06-10T19:16:20.6244279Z sirix-python-client/pysirix/errors.py:12: SirixServerError
+2026-06-10T19:16:20.6245011Z _________________________________ test_create __________________________________
+2026-06-10T19:16:20.6245300Z 
+2026-06-10T19:16:20.6245404Z     def test_create():
+2026-06-10T19:16:20.6245680Z         client = httpx.Client(base_url=base_url)
+2026-06-10T19:16:20.6246053Z         sirix = pysirix.sirix_sync("admin", "admin", client)
+2026-06-10T19:16:20.6246429Z         db = sirix.database("First", DBType.JSON)
+2026-06-10T19:16:20.6246737Z >       db.create()
+2026-06-10T19:16:20.6246875Z 
+2026-06-10T19:16:20.6247018Z sirix-python-client/tests/test_sirix_sync.py:48: 
+2026-06-10T19:16:20.6247391Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6247800Z sirix-python-client/pysirix/database.py:43: in create
+2026-06-10T19:16:20.6248273Z     return self._client.create_database(self.database_name, self.database_type)
+2026-06-10T19:16:20.6248799Z sirix-python-client/pysirix/sync_client.py:63: in create_database
+2026-06-10T19:16:20.6249188Z     resp.raise_for_status()
+2026-06-10T19:16:20.6249596Z /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/contextlib.py:137: in __exit__
+2026-06-10T19:16:20.6250053Z     self.gen.throw(typ, value, traceback)
+2026-06-10T19:16:20.6250405Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6250656Z 
+2026-06-10T19:16:20.6250752Z     @contextmanager
+2026-06-10T19:16:20.6251001Z     def include_response_text_in_errors():
+2026-06-10T19:16:20.6251288Z         try:
+2026-06-10T19:16:20.6251490Z             yield
+2026-06-10T19:16:20.6251733Z         except httpx.HTTPStatusError as exc:
+2026-06-10T19:16:20.6252049Z             response = exc.response
+2026-06-10T19:16:20.6252406Z             message = f"{exc}\nSirixDB error message: {response.text}"
+2026-06-10T19:16:20.6252929Z >           raise SirixServerError(message, response=response, request=exc.request) from None
+2026-06-10T19:16:20.6253670Z E           pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6254429Z E           For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6255274Z E           SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6255605Z 
+2026-06-10T19:16:20.6255786Z sirix-python-client/pysirix/errors.py:12: SirixServerError
+2026-06-10T19:16:20.6256225Z _________________________________ test_delete __________________________________
+2026-06-10T19:16:20.6256497Z 
+2026-06-10T19:16:20.6256595Z     def test_delete():
+2026-06-10T19:16:20.6256864Z         client = httpx.Client(base_url=base_url)
+2026-06-10T19:16:20.6257227Z         sirix = pysirix.sirix_sync("admin", "admin", client)
+2026-06-10T19:16:20.6257592Z         db = sirix.database("First", DBType.JSON)
+2026-06-10T19:16:20.6257902Z >       db.create()
+2026-06-10T19:16:20.6258035Z 
+2026-06-10T19:16:20.6258320Z sirix-python-client/tests/test_sirix_sync.py:59: 
+2026-06-10T19:16:20.6258695Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6259100Z sirix-python-client/pysirix/database.py:43: in create
+2026-06-10T19:16:20.6259575Z     return self._client.create_database(self.database_name, self.database_type)
+2026-06-10T19:16:20.6260084Z sirix-python-client/pysirix/sync_client.py:63: in create_database
+2026-06-10T19:16:20.6260472Z     resp.raise_for_status()
+2026-06-10T19:16:20.6260870Z /opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/contextlib.py:137: in __exit__
+2026-06-10T19:16:20.6261335Z     self.gen.throw(typ, value, traceback)
+2026-06-10T19:16:20.6261688Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2026-06-10T19:16:20.6261938Z 
+2026-06-10T19:16:20.6262027Z     @contextmanager
+2026-06-10T19:16:20.6262275Z     def include_response_text_in_errors():
+2026-06-10T19:16:20.6262687Z         try:
+2026-06-10T19:16:20.6262893Z             yield
+2026-06-10T19:16:20.6263140Z         except httpx.HTTPStatusError as exc:
+2026-06-10T19:16:20.6263452Z             response = exc.response
+2026-06-10T19:16:20.6263802Z             message = f"{exc}\nSirixDB error message: {response.text}"
+2026-06-10T19:16:20.6264326Z >           raise SirixServerError(message, response=response, request=exc.request) from None
+2026-06-10T19:16:20.6265396Z E           pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6266162Z E           For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6266770Z E           SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6267097Z 
+2026-06-10T19:16:20.6267271Z sirix-python-client/pysirix/errors.py:12: SirixServerError
+2026-06-10T19:16:20.6267706Z =========================== short test summary info ============================
+2026-06-10T19:16:20.6268645Z FAILED sirix-python-client/tests/test_sirix_async.py::test_database_create - pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6269633Z For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6270216Z SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6271210Z FAILED sirix-python-client/tests/test_sirix_async.py::test_database_delete - pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6272508Z For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6273090Z SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6274000Z FAILED sirix-python-client/tests/test_sirix_sync.py::test_create - pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6275325Z For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6275903Z SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6276807Z FAILED sirix-python-client/tests/test_sirix_sync.py::test_delete - pysirix.errors.SirixServerError: Server error '500 Internal Server Error' for url 'http://localhost:9443/First'
+2026-06-10T19:16:20.6277747Z For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+2026-06-10T19:16:20.6278314Z SirixDB error message: {"statusCode":500,"message":"Internal server error"}
+2026-06-10T19:16:20.6278802Z =================== 4 failed, 62 passed, 1 skipped in 11.80s ===================
+2026-06-10T19:16:20.6357206Z Task was destroyed but it is pending!
+2026-06-10T19:16:20.6359365Z task: <Task pending name='Task-3' coro=<Auth._sleep_then_refresh() running at /home/runner/work/sirix/sirix/sirix-python-client/pysirix/auth.py:132> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x7f7c48cdb610>()]>>
+2026-06-10T19:16:20.6367265Z Task was destroyed but it is pending!
+2026-06-10T19:16:20.6368806Z task: <Task pending name='Task-13' coro=<Auth._sleep_then_refresh() running at /home/runner/work/sirix/sirix/sirix-python-client/pysirix/auth.py:132> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x7f7c48ce98b0>()]>>
+2026-06-10T19:16:20.6370622Z Task was destroyed but it is pending!
+2026-06-10T19:16:20.6372197Z task: <Task pending name='Task-16' coro=<Auth._sleep_then_refresh() running at /home/runner/work/sirix/sirix/sirix-python-client/pysirix/auth.py:132> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x7f7c48b480d0>()]>>
+2026-06-10T19:16:25.6797095Z ##[error]Process completed with exit code 1.
+2026-06-10T19:16:25.6907632Z Post job cleanup.
+2026-06-10T19:16:25.7922112Z [command]/usr/bin/git version
+2026-06-10T19:16:25.7967307Z git version 2.54.0
+2026-06-10T19:16:25.8010599Z Temporarily overriding HOME='/home/runner/work/_temp/838e826a-18b0-4803-b02b-ea2d0c397b33' before making global git config changes
+2026-06-10T19:16:25.8011669Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-10T19:16:25.8018443Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sirix/sirix/sirix-python-client
+2026-06-10T19:16:25.8053656Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-10T19:16:25.8085775Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-10T19:16:25.8312356Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-10T19:16:25.8337405Z http.https://github.com/.extraheader
+2026-06-10T19:16:25.8350413Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-10T19:16:25.8381954Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-10T19:16:25.8614935Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-10T19:16:25.8647745Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-10T19:16:25.9068318Z Post job cleanup.
+2026-06-10T19:16:26.2292761Z In post-action step
+2026-06-10T19:16:26.2300043Z Cache is read-only: will not save state for use in subsequent builds.
+2026-06-10T19:16:26.2306587Z Generating Job Summary
+2026-06-10T19:16:26.2330236Z Completed post-action step
+2026-06-10T19:16:26.2479698Z Post job cleanup.
+2026-06-10T19:16:26.4360082Z Post job cleanup.
+2026-06-10T19:16:26.5396700Z [command]/usr/bin/git version
+2026-06-10T19:16:26.5441348Z git version 2.54.0
+2026-06-10T19:16:26.5491541Z Temporarily overriding HOME='/home/runner/work/_temp/8f9e62b1-55ac-4045-bcf3-87f9ad54e7f6' before making global git config changes
+2026-06-10T19:16:26.5492685Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-10T19:16:26.5499304Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sirix/sirix
+2026-06-10T19:16:26.5536416Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-10T19:16:26.5573429Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-10T19:16:26.5814850Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-10T19:16:26.5837346Z http.https://github.com/.extraheader
+2026-06-10T19:16:26.5851731Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-10T19:16:26.5883635Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-10T19:16:26.6110007Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-10T19:16:26.6141494Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-10T19:16:26.6521012Z Cleaning up orphan processes
+2026-06-10T19:16:26.6939894Z Terminate orphan process: pid (3960) (java)
+2026-06-10T19:16:26.6958605Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/cache/restore@v4, actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, gradle/actions/setup-gradle@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

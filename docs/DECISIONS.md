@@ -109,3 +109,17 @@ The canonical `test_id` is the SELECTABLE UNIT: the method, or for Spock the fea
 **Decision**: Findings carry two severities. **BLOCKER** — `github_token`, `bearer_token` — fails `make tables` with a non-zero exit; neither shape can occur in harvested public source. **REVIEW** — `email`, `internal_host` — is printed for human triage and is never fatal. The patterns themselves are not weakened, only their consequence: a real `.corp` host is still reported, it just is not the thing that stops the build. Matched text is never printed in full; every sample is redacted to its first three characters plus its length, so running the scan cannot itself leak a credential into a log, a report, or the paper.
 **Revisit trigger**: a credential class appears that is not `gh[pousr]_`- or `Bearer`-shaped, or a release ships a host we control.
 
+### D-46: Class-level failure events are not test ids, and are counted rather than dropped silently
+
+D-46 — Class-level failure events are not test ids, and are counted rather than dropped
+silently. A CI failure that names a class with no source-level method — a Maven class-level
+`<<< ERROR!` line, or JUnit4's synthetic `classMethod` descriptor for a @BeforeClass /
+@AfterClass failure — describes a fixture or suite failure, not a test. Emitting it as
+<class>#<method> manufactures an identifier that names no source symbol, can never bind, and
+fragments the join key. Such events MUST NOT be emitted as a test_id. They MUST be counted
+and the count reported on every parse run; silent deletion is forbidden, because the
+brooklin `Gradle suite` defect showed that a discarded outcome leaves no trace and is
+therefore undetectable. Distinguishing rule: a method-position token is legitimate if it
+names a developer-written source symbol (setup, init, run, TestAll all do); it is not
+legitimate if the test framework synthesised it (classMethod does not). Revisit trigger: a
+framework is added whose synthetic descriptors are not enumerable.

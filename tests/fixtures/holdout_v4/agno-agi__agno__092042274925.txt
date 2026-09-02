@@ -1,0 +1,1272 @@
+﻿2026-08-04T15:27:21.6128021Z Current runner version: '2.336.0'
+2026-08-04T15:27:21.6146871Z ##[group]Runner Image Provisioner
+2026-08-04T15:27:21.6147620Z Hosted Compute Agent
+2026-08-04T15:27:21.6148137Z Version: 20260707.563
+2026-08-04T15:27:21.6148690Z Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+2026-08-04T15:27:21.6149474Z Build Date: 2026-07-07T19:33:50Z
+2026-08-04T15:27:21.6150122Z Worker ID: {5cafce06-f645-4941-9d3d-8f1d01f11e7c}
+2026-08-04T15:27:21.6150730Z Azure Region: centralus
+2026-08-04T15:27:21.6151239Z ##[endgroup]
+2026-08-04T15:27:21.6152330Z ##[group]Operating System
+2026-08-04T15:27:21.6152844Z Ubuntu
+2026-08-04T15:27:21.6153267Z 24.04.4
+2026-08-04T15:27:21.6153725Z LTS
+2026-08-04T15:27:21.6154182Z ##[endgroup]
+2026-08-04T15:27:21.6154681Z ##[group]Runner Image
+2026-08-04T15:27:21.6155171Z Image: ubuntu-24.04
+2026-08-04T15:27:21.6155615Z Version: 20260720.247.2
+2026-08-04T15:27:21.6157243Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+2026-08-04T15:27:21.6158569Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+2026-08-04T15:27:21.6159498Z ##[endgroup]
+2026-08-04T15:27:21.6160665Z ##[group]GITHUB_TOKEN Permissions
+2026-08-04T15:27:21.6162427Z Contents: read
+2026-08-04T15:27:21.6162893Z Metadata: read
+2026-08-04T15:27:21.6163395Z Packages: read
+2026-08-04T15:27:21.6163895Z ##[endgroup]
+2026-08-04T15:27:21.6165556Z Secret source: Actions
+2026-08-04T15:27:21.6166398Z Prepare workflow directory
+2026-08-04T15:27:21.6573518Z Prepare all required actions
+2026-08-04T15:27:21.6613300Z Getting action download info
+2026-08-04T15:27:21.8974953Z Download action repository 'actions/checkout@v3' (SHA:a37ce9120846195fa4ece8f58b268e6043cb2f26)
+2026-08-04T15:27:22.3535250Z Download action repository 'actions/setup-python@v4' (SHA:7f4fc3e22c37d6ff65e88745f38bd3157c663f7c)
+2026-08-04T15:27:22.5526794Z Complete job name: test-deepinfra (3.12)
+2026-08-04T15:27:22.6045202Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-08-04T15:27:22.6052552Z ##[group]Run actions/checkout@v3
+2026-08-04T15:27:22.6053171Z with:
+2026-08-04T15:27:22.6053667Z   repository: agno-agi/agno
+2026-08-04T15:27:22.6057059Z   token: ***
+2026-08-04T15:27:22.6057504Z   ssh-strict: true
+2026-08-04T15:27:22.6058029Z   persist-credentials: true
+2026-08-04T15:27:22.6058494Z   clean: true
+2026-08-04T15:27:22.6058972Z   sparse-checkout-cone-mode: true
+2026-08-04T15:27:22.6059866Z   fetch-depth: 1
+2026-08-04T15:27:22.6060325Z   fetch-tags: false
+2026-08-04T15:27:22.6060907Z   lfs: false
+2026-08-04T15:27:22.6061329Z   submodules: false
+2026-08-04T15:27:22.6061823Z   set-safe-directory: true
+2026-08-04T15:27:22.6062392Z   allow-unsafe-pr-checkout: false
+2026-08-04T15:27:22.6063131Z env:
+2026-08-04T15:27:22.6063598Z   PYTEST_ADDOPTS: --reruns 1
+2026-08-04T15:27:22.6064215Z   DEEPINFRA_API_KEY: ***
+2026-08-04T15:27:22.6064761Z   EXA_API_KEY: ***
+2026-08-04T15:27:22.6065190Z ##[endgroup]
+2026-08-04T15:27:22.6809151Z (node:1917) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-08-04T15:27:22.6810692Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-08-04T15:27:22.6875169Z Syncing repository: agno-agi/agno
+2026-08-04T15:27:22.6876693Z ##[group]Getting Git version info
+2026-08-04T15:27:22.6877280Z Working directory is '/home/runner/work/agno/agno'
+2026-08-04T15:27:22.6878188Z [command]/usr/bin/git version
+2026-08-04T15:27:22.6908844Z git version 2.54.0
+2026-08-04T15:27:22.6928351Z ##[endgroup]
+2026-08-04T15:27:22.6936728Z Temporarily overriding HOME='/home/runner/work/_temp/83013014-4e89-47eb-bb99-f0b30bde7529' before making global git config changes
+2026-08-04T15:27:22.6938682Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-04T15:27:22.6940479Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agno/agno
+2026-08-04T15:27:22.6964886Z Deleting the contents of '/home/runner/work/agno/agno'
+2026-08-04T15:27:22.6970100Z ##[group]Initializing the repository
+2026-08-04T15:27:22.6973143Z [command]/usr/bin/git init /home/runner/work/agno/agno
+2026-08-04T15:27:22.7045150Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-08-04T15:27:22.7046497Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-08-04T15:27:22.7047713Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-08-04T15:27:22.7048536Z hint: call:
+2026-08-04T15:27:22.7049137Z hint:
+2026-08-04T15:27:22.7050320Z hint: 	git config --global init.defaultBranch <name>
+2026-08-04T15:27:22.7051180Z hint:
+2026-08-04T15:27:22.7051903Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-08-04T15:27:22.7052841Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-08-04T15:27:22.7053645Z hint:
+2026-08-04T15:27:22.7054209Z hint: 	git branch -m <name>
+2026-08-04T15:27:22.7054793Z hint:
+2026-08-04T15:27:22.7055510Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-08-04T15:27:22.7056966Z Initialized empty Git repository in /home/runner/work/agno/agno/.git/
+2026-08-04T15:27:22.7059041Z [command]/usr/bin/git remote add origin https://github.com/agno-agi/agno
+2026-08-04T15:27:22.7075859Z ##[endgroup]
+2026-08-04T15:27:22.7076995Z ##[group]Disabling automatic garbage collection
+2026-08-04T15:27:22.7078211Z [command]/usr/bin/git config --local gc.auto 0
+2026-08-04T15:27:22.7098359Z ##[endgroup]
+2026-08-04T15:27:22.7099629Z ##[group]Setting up auth
+2026-08-04T15:27:22.7103190Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-04T15:27:22.7123977Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-04T15:27:22.7352521Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-04T15:27:22.7373256Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-04T15:27:22.7530225Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-08-04T15:27:22.7554163Z ##[endgroup]
+2026-08-04T15:27:22.7554970Z ##[group]Fetching the repository
+2026-08-04T15:27:22.7559966Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +f6bad97ef2f57e408ed82d4a5118f112f33f9327:refs/remotes/origin/feat/denormalize-sessions-table
+2026-08-04T15:27:23.0224267Z remote: Enumerating objects: 5787, done.        
+2026-08-04T15:27:23.0225910Z remote: Counting objects:   0% (1/5787)        
+2026-08-04T15:27:23.0226918Z remote: Counting objects:   1% (58/5787)        
+2026-08-04T15:27:23.0227863Z remote: Counting objects:   2% (116/5787)        
+2026-08-04T15:27:23.0228921Z remote: Counting objects:   3% (174/5787)        
+2026-08-04T15:27:23.0230130Z remote: Counting objects:   4% (232/5787)        
+2026-08-04T15:27:23.0230907Z remote: Counting objects:   5% (290/5787)        
+2026-08-04T15:27:23.0231665Z remote: Counting objects:   6% (348/5787)        
+2026-08-04T15:27:23.0232368Z remote: Counting objects:   7% (406/5787)        
+2026-08-04T15:27:23.0233097Z remote: Counting objects:   8% (463/5787)        
+2026-08-04T15:27:23.0233903Z remote: Counting objects:   9% (521/5787)        
+2026-08-04T15:27:23.0234593Z remote: Counting objects:  10% (579/5787)        
+2026-08-04T15:27:23.0235316Z remote: Counting objects:  11% (637/5787)        
+2026-08-04T15:27:23.0236037Z remote: Counting objects:  12% (695/5787)        
+2026-08-04T15:27:23.0237024Z remote: Counting objects:  13% (753/5787)        
+2026-08-04T15:27:23.0237785Z remote: Counting objects:  14% (811/5787)        
+2026-08-04T15:27:23.0238467Z remote: Counting objects:  15% (869/5787)        
+2026-08-04T15:27:23.0239143Z remote: Counting objects:  16% (926/5787)        
+2026-08-04T15:27:23.0239976Z remote: Counting objects:  17% (984/5787)        
+2026-08-04T15:27:23.0240713Z remote: Counting objects:  18% (1042/5787)        
+2026-08-04T15:27:23.0241502Z remote: Counting objects:  19% (1100/5787)        
+2026-08-04T15:27:23.0242319Z remote: Counting objects:  20% (1158/5787)        
+2026-08-04T15:27:23.0243102Z remote: Counting objects:  21% (1216/5787)        
+2026-08-04T15:27:23.0243896Z remote: Counting objects:  22% (1274/5787)        
+2026-08-04T15:27:23.0244691Z remote: Counting objects:  23% (1332/5787)        
+2026-08-04T15:27:23.0245476Z remote: Counting objects:  24% (1389/5787)        
+2026-08-04T15:27:23.0246336Z remote: Counting objects:  25% (1447/5787)        
+2026-08-04T15:27:23.0247199Z remote: Counting objects:  26% (1505/5787)        
+2026-08-04T15:27:23.0247975Z remote: Counting objects:  27% (1563/5787)        
+2026-08-04T15:27:23.0248910Z remote: Counting objects:  28% (1621/5787)        
+2026-08-04T15:27:23.0249901Z remote: Counting objects:  29% (1679/5787)        
+2026-08-04T15:27:23.0250677Z remote: Counting objects:  30% (1737/5787)        
+2026-08-04T15:27:23.0251479Z remote: Counting objects:  31% (1794/5787)        
+2026-08-04T15:27:23.0252254Z remote: Counting objects:  32% (1852/5787)        
+2026-08-04T15:27:23.0253035Z remote: Counting objects:  33% (1910/5787)        
+2026-08-04T15:27:23.0253761Z remote: Counting objects:  34% (1968/5787)        
+2026-08-04T15:27:23.0254475Z remote: Counting objects:  35% (2026/5787)        
+2026-08-04T15:27:23.0255266Z remote: Counting objects:  36% (2084/5787)        
+2026-08-04T15:27:23.0256090Z remote: Counting objects:  37% (2142/5787)        
+2026-08-04T15:27:23.0256825Z remote: Counting objects:  38% (2200/5787)        
+2026-08-04T15:27:23.0257591Z remote: Counting objects:  39% (2257/5787)        
+2026-08-04T15:27:23.0258302Z remote: Counting objects:  40% (2315/5787)        
+2026-08-04T15:27:23.0259074Z remote: Counting objects:  41% (2373/5787)        
+2026-08-04T15:27:23.0260221Z remote: Counting objects:  42% (2431/5787)        
+2026-08-04T15:27:23.0260963Z remote: Counting objects:  43% (2489/5787)        
+2026-08-04T15:27:23.0261706Z remote: Counting objects:  44% (2547/5787)        
+2026-08-04T15:27:23.0262443Z remote: Counting objects:  45% (2605/5787)        
+2026-08-04T15:27:23.0263235Z remote: Counting objects:  46% (2663/5787)        
+2026-08-04T15:27:23.0263961Z remote: Counting objects:  47% (2720/5787)        
+2026-08-04T15:27:23.0264686Z remote: Counting objects:  48% (2778/5787)        
+2026-08-04T15:27:23.0265422Z remote: Counting objects:  49% (2836/5787)        
+2026-08-04T15:27:23.0266403Z remote: Counting objects:  50% (2894/5787)        
+2026-08-04T15:27:23.0267237Z remote: Counting objects:  51% (2952/5787)        
+2026-08-04T15:27:23.0267988Z remote: Counting objects:  52% (3010/5787)        
+2026-08-04T15:27:23.0268722Z remote: Counting objects:  53% (3068/5787)        
+2026-08-04T15:27:23.0269654Z remote: Counting objects:  54% (3125/5787)        
+2026-08-04T15:27:23.0270399Z remote: Counting objects:  55% (3183/5787)        
+2026-08-04T15:27:23.0271162Z remote: Counting objects:  56% (3241/5787)        
+2026-08-04T15:27:23.0271900Z remote: Counting objects:  57% (3299/5787)        
+2026-08-04T15:27:23.0272634Z remote: Counting objects:  58% (3357/5787)        
+2026-08-04T15:27:23.0273344Z remote: Counting objects:  59% (3415/5787)        
+2026-08-04T15:27:23.0274042Z remote: Counting objects:  60% (3473/5787)        
+2026-08-04T15:27:23.0274767Z remote: Counting objects:  61% (3531/5787)        
+2026-08-04T15:27:23.0275467Z remote: Counting objects:  62% (3588/5787)        
+2026-08-04T15:27:23.0276146Z remote: Counting objects:  63% (3646/5787)        
+2026-08-04T15:27:23.0277005Z remote: Counting objects:  64% (3704/5787)        
+2026-08-04T15:27:23.0277726Z remote: Counting objects:  65% (3762/5787)        
+2026-08-04T15:27:23.0278780Z remote: Counting objects:  66% (3820/5787)        
+2026-08-04T15:27:23.0279600Z remote: Counting objects:  67% (3878/5787)        
+2026-08-04T15:27:23.0280294Z remote: Counting objects:  68% (3936/5787)        
+2026-08-04T15:27:23.0281014Z remote: Counting objects:  69% (3994/5787)        
+2026-08-04T15:27:23.0281755Z remote: Counting objects:  70% (4051/5787)        
+2026-08-04T15:27:23.0282457Z remote: Counting objects:  71% (4109/5787)        
+2026-08-04T15:27:23.0283149Z remote: Counting objects:  72% (4167/5787)        
+2026-08-04T15:27:23.0283830Z remote: Counting objects:  73% (4225/5787)        
+2026-08-04T15:27:23.0397964Z remote: Counting objects:  74% (4283/5787)        
+2026-08-04T15:27:23.0399421Z remote: Counting objects:  75% (4341/5787)        
+2026-08-04T15:27:23.0401397Z remote: Counting objects:  76% (4399/5787)        
+2026-08-04T15:27:23.0402818Z remote: Counting objects:  77% (4456/5787)        
+2026-08-04T15:27:23.0404168Z remote: Counting objects:  78% (4514/5787)        
+2026-08-04T15:27:23.0405531Z remote: Counting objects:  79% (4572/5787)        
+2026-08-04T15:27:23.0406871Z remote: Counting objects:  80% (4630/5787)        
+2026-08-04T15:27:23.0408350Z remote: Counting objects:  81% (4688/5787)        
+2026-08-04T15:27:23.0410185Z remote: Counting objects:  82% (4746/5787)        
+2026-08-04T15:27:23.0411423Z remote: Counting objects:  83% (4804/5787)        
+2026-08-04T15:27:23.0412460Z remote: Counting objects:  84% (4862/5787)        
+2026-08-04T15:27:23.0413503Z remote: Counting objects:  85% (4919/5787)        
+2026-08-04T15:27:23.0414586Z remote: Counting objects:  86% (4977/5787)        
+2026-08-04T15:27:23.0415598Z remote: Counting objects:  87% (5035/5787)        
+2026-08-04T15:27:23.0416850Z remote: Counting objects:  88% (5093/5787)        
+2026-08-04T15:27:23.0417945Z remote: Counting objects:  89% (5151/5787)        
+2026-08-04T15:27:23.0418991Z remote: Counting objects:  90% (5209/5787)        
+2026-08-04T15:27:23.0420249Z remote: Counting objects:  91% (5267/5787)        
+2026-08-04T15:27:23.0421338Z remote: Counting objects:  92% (5325/5787)        
+2026-08-04T15:27:23.0422434Z remote: Counting objects:  93% (5382/5787)        
+2026-08-04T15:27:23.0423485Z remote: Counting objects:  94% (5440/5787)        
+2026-08-04T15:27:23.0424513Z remote: Counting objects:  95% (5498/5787)        
+2026-08-04T15:27:23.0425752Z remote: Counting objects:  96% (5556/5787)        
+2026-08-04T15:27:23.0426835Z remote: Counting objects:  97% (5614/5787)        
+2026-08-04T15:27:23.0427996Z remote: Counting objects:  98% (5672/5787)        
+2026-08-04T15:27:23.0429425Z remote: Counting objects:  99% (5730/5787)        
+2026-08-04T15:27:23.0430675Z remote: Counting objects: 100% (5787/5787)        
+2026-08-04T15:27:23.0431954Z remote: Counting objects: 100% (5787/5787), done.        
+2026-08-04T15:27:23.0433257Z remote: Compressing objects:   0% (1/4595)        
+2026-08-04T15:27:23.0434479Z remote: Compressing objects:   1% (46/4595)        
+2026-08-04T15:27:23.0435707Z remote: Compressing objects:   2% (92/4595)        
+2026-08-04T15:27:23.0436945Z remote: Compressing objects:   3% (138/4595)        
+2026-08-04T15:27:23.0438277Z remote: Compressing objects:   4% (184/4595)        
+2026-08-04T15:27:23.0439730Z remote: Compressing objects:   5% (230/4595)        
+2026-08-04T15:27:23.0441044Z remote: Compressing objects:   6% (276/4595)        
+2026-08-04T15:27:23.0442364Z remote: Compressing objects:   7% (322/4595)        
+2026-08-04T15:27:23.0443697Z remote: Compressing objects:   8% (368/4595)        
+2026-08-04T15:27:23.0445065Z remote: Compressing objects:   9% (414/4595)        
+2026-08-04T15:27:23.0446459Z remote: Compressing objects:  10% (460/4595)        
+2026-08-04T15:27:23.0447836Z remote: Compressing objects:  11% (506/4595)        
+2026-08-04T15:27:23.0449155Z remote: Compressing objects:  12% (552/4595)        
+2026-08-04T15:27:23.0451221Z remote: Compressing objects:  13% (598/4595)        
+2026-08-04T15:27:23.0453262Z remote: Compressing objects:  14% (644/4595)        
+2026-08-04T15:27:23.0454881Z remote: Compressing objects:  15% (690/4595)        
+2026-08-04T15:27:23.0456551Z remote: Compressing objects:  16% (736/4595)        
+2026-08-04T15:27:23.0457877Z remote: Compressing objects:  17% (782/4595)        
+2026-08-04T15:27:23.0459320Z remote: Compressing objects:  18% (828/4595)        
+2026-08-04T15:27:23.0460888Z remote: Compressing objects:  19% (874/4595)        
+2026-08-04T15:27:23.0462158Z remote: Compressing objects:  20% (919/4595)        
+2026-08-04T15:27:23.0463470Z remote: Compressing objects:  21% (965/4595)        
+2026-08-04T15:27:23.0464735Z remote: Compressing objects:  22% (1011/4595)        
+2026-08-04T15:27:23.0466097Z remote: Compressing objects:  23% (1057/4595)        
+2026-08-04T15:27:23.0467424Z remote: Compressing objects:  24% (1103/4595)        
+2026-08-04T15:27:23.0468681Z remote: Compressing objects:  25% (1149/4595)        
+2026-08-04T15:27:23.0470101Z remote: Compressing objects:  26% (1195/4595)        
+2026-08-04T15:27:23.0471363Z remote: Compressing objects:  27% (1241/4595)        
+2026-08-04T15:27:23.0472647Z remote: Compressing objects:  28% (1287/4595)        
+2026-08-04T15:27:23.0473927Z remote: Compressing objects:  29% (1333/4595)        
+2026-08-04T15:27:23.0475198Z remote: Compressing objects:  30% (1379/4595)        
+2026-08-04T15:27:23.0476431Z remote: Compressing objects:  31% (1425/4595)        
+2026-08-04T15:27:23.0477699Z remote: Compressing objects:  32% (1471/4595)        
+2026-08-04T15:27:23.0478956Z remote: Compressing objects:  33% (1517/4595)        
+2026-08-04T15:27:23.0480621Z remote: Compressing objects:  34% (1563/4595)        
+2026-08-04T15:27:23.0481867Z remote: Compressing objects:  35% (1609/4595)        
+2026-08-04T15:27:23.0483260Z remote: Compressing objects:  36% (1655/4595)        
+2026-08-04T15:27:23.0484536Z remote: Compressing objects:  37% (1701/4595)        
+2026-08-04T15:27:23.0485792Z remote: Compressing objects:  38% (1747/4595)        
+2026-08-04T15:27:23.0487115Z remote: Compressing objects:  39% (1793/4595)        
+2026-08-04T15:27:23.0488379Z remote: Compressing objects:  40% (1838/4595)        
+2026-08-04T15:27:23.0489846Z remote: Compressing objects:  41% (1884/4595)        
+2026-08-04T15:27:23.0491097Z remote: Compressing objects:  42% (1930/4595)        
+2026-08-04T15:27:23.0492344Z remote: Compressing objects:  43% (1976/4595)        
+2026-08-04T15:27:23.0493623Z remote: Compressing objects:  44% (2022/4595)        
+2026-08-04T15:27:23.0494857Z remote: Compressing objects:  45% (2068/4595)        
+2026-08-04T15:27:23.0496087Z remote: Compressing objects:  46% (2114/4595)        
+2026-08-04T15:27:23.0497340Z remote: Compressing objects:  47% (2160/4595)        
+2026-08-04T15:27:23.0498566Z remote: Compressing objects:  48% (2206/4595)        
+2026-08-04T15:27:23.0499918Z remote: Compressing objects:  49% (2252/4595)        
+2026-08-04T15:27:23.0501142Z remote: Compressing objects:  50% (2298/4595)        
+2026-08-04T15:27:23.0502357Z remote: Compressing objects:  51% (2344/4595)        
+2026-08-04T15:27:23.0503587Z remote: Compressing objects:  52% (2390/4595)        
+2026-08-04T15:27:23.0504830Z remote: Compressing objects:  53% (2436/4595)        
+2026-08-04T15:27:23.0506062Z remote: Compressing objects:  54% (2482/4595)        
+2026-08-04T15:27:23.0507272Z remote: Compressing objects:  55% (2528/4595)        
+2026-08-04T15:27:23.0508483Z remote: Compressing objects:  56% (2574/4595)        
+2026-08-04T15:27:23.0509932Z remote: Compressing objects:  57% (2620/4595)        
+2026-08-04T15:27:23.0511144Z remote: Compressing objects:  58% (2666/4595)        
+2026-08-04T15:27:23.0512334Z remote: Compressing objects:  59% (2712/4595)        
+2026-08-04T15:27:23.0513555Z remote: Compressing objects:  60% (2757/4595)        
+2026-08-04T15:27:23.0514767Z remote: Compressing objects:  61% (2803/4595)        
+2026-08-04T15:27:23.0516044Z remote: Compressing objects:  62% (2849/4595)        
+2026-08-04T15:27:23.0517263Z remote: Compressing objects:  63% (2895/4595)        
+2026-08-04T15:27:23.0518455Z remote: Compressing objects:  64% (2941/4595)        
+2026-08-04T15:27:23.0519858Z remote: Compressing objects:  65% (2987/4595)        
+2026-08-04T15:27:23.0521047Z remote: Compressing objects:  66% (3033/4595)        
+2026-08-04T15:27:23.0522200Z remote: Compressing objects:  67% (3079/4595)        
+2026-08-04T15:27:23.0523396Z remote: Compressing objects:  68% (3125/4595)        
+2026-08-04T15:27:23.0524577Z remote: Compressing objects:  69% (3171/4595)        
+2026-08-04T15:27:23.0525748Z remote: Compressing objects:  70% (3217/4595)        
+2026-08-04T15:27:23.0526919Z remote: Compressing objects:  71% (3263/4595)        
+2026-08-04T15:27:23.0528145Z remote: Compressing objects:  72% (3309/4595)        
+2026-08-04T15:27:23.0529421Z remote: Compressing objects:  73% (3355/4595)        
+2026-08-04T15:27:23.0530633Z remote: Compressing objects:  74% (3401/4595)        
+2026-08-04T15:27:23.0531794Z remote: Compressing objects:  75% (3447/4595)        
+2026-08-04T15:27:23.0532941Z remote: Compressing objects:  76% (3493/4595)        
+2026-08-04T15:27:23.0534133Z remote: Compressing objects:  77% (3539/4595)        
+2026-08-04T15:27:23.0535319Z remote: Compressing objects:  78% (3585/4595)        
+2026-08-04T15:27:23.0536526Z remote: Compressing objects:  79% (3631/4595)        
+2026-08-04T15:27:23.0537838Z remote: Compressing objects:  80% (3676/4595)        
+2026-08-04T15:27:23.0538983Z remote: Compressing objects:  81% (3722/4595)        
+2026-08-04T15:27:23.0540717Z remote: Compressing objects:  82% (3768/4595)        
+2026-08-04T15:27:23.0542364Z remote: Compressing objects:  83% (3814/4595)        
+2026-08-04T15:27:23.0544027Z remote: Compressing objects:  84% (3860/4595)        
+2026-08-04T15:27:23.0545570Z remote: Compressing objects:  85% (3906/4595)        
+2026-08-04T15:27:23.0546752Z remote: Compressing objects:  86% (3952/4595)        
+2026-08-04T15:27:23.0547983Z remote: Compressing objects:  87% (3998/4595)        
+2026-08-04T15:27:23.0549160Z remote: Compressing objects:  88% (4044/4595)        
+2026-08-04T15:27:23.0550631Z remote: Compressing objects:  89% (4090/4595)        
+2026-08-04T15:27:23.0551876Z remote: Compressing objects:  90% (4136/4595)        
+2026-08-04T15:27:23.0553029Z remote: Compressing objects:  91% (4182/4595)        
+2026-08-04T15:27:23.0554265Z remote: Compressing objects:  92% (4228/4595)        
+2026-08-04T15:27:23.0555442Z remote: Compressing objects:  93% (4274/4595)        
+2026-08-04T15:27:23.0556699Z remote: Compressing objects:  94% (4320/4595)        
+2026-08-04T15:27:23.0557912Z remote: Compressing objects:  95% (4366/4595)        
+2026-08-04T15:27:23.0559088Z remote: Compressing objects:  96% (4412/4595)        
+2026-08-04T15:27:23.0560557Z remote: Compressing objects:  97% (4458/4595)        
+2026-08-04T15:27:23.0561744Z remote: Compressing objects:  98% (4504/4595)        
+2026-08-04T15:27:23.0562897Z remote: Compressing objects:  99% (4550/4595)        
+2026-08-04T15:27:23.0564083Z remote: Compressing objects: 100% (4595/4595)        
+2026-08-04T15:27:23.0565316Z remote: Compressing objects: 100% (4595/4595), done.        
+2026-08-04T15:27:23.1052315Z Receiving objects:   0% (1/5787)
+2026-08-04T15:27:23.1410937Z Receiving objects:   1% (58/5787)
+2026-08-04T15:27:23.1419923Z Receiving objects:   2% (116/5787)
+2026-08-04T15:27:23.1503920Z Receiving objects:   3% (174/5787)
+2026-08-04T15:27:23.1729531Z Receiving objects:   4% (232/5787)
+2026-08-04T15:27:23.1814398Z Receiving objects:   5% (290/5787)
+2026-08-04T15:27:23.2057828Z Receiving objects:   6% (348/5787)
+2026-08-04T15:27:23.2070983Z Receiving objects:   7% (406/5787)
+2026-08-04T15:27:23.2081546Z Receiving objects:   8% (463/5787)
+2026-08-04T15:27:23.2134492Z Receiving objects:   9% (521/5787)
+2026-08-04T15:27:23.2146281Z Receiving objects:  10% (579/5787)
+2026-08-04T15:27:23.2371115Z Receiving objects:  11% (637/5787)
+2026-08-04T15:27:23.2452861Z Receiving objects:  12% (695/5787)
+2026-08-04T15:27:23.2701099Z Receiving objects:  13% (753/5787)
+2026-08-04T15:27:23.3027777Z Receiving objects:  14% (811/5787)
+2026-08-04T15:27:23.3044596Z Receiving objects:  15% (869/5787)
+2026-08-04T15:27:23.3096576Z Receiving objects:  16% (926/5787)
+2026-08-04T15:27:23.3113421Z Receiving objects:  17% (984/5787)
+2026-08-04T15:27:23.3117494Z Receiving objects:  18% (1042/5787)
+2026-08-04T15:27:23.3123838Z Receiving objects:  19% (1100/5787)
+2026-08-04T15:27:23.3134162Z Receiving objects:  20% (1158/5787)
+2026-08-04T15:27:23.3275425Z Receiving objects:  21% (1216/5787)
+2026-08-04T15:27:23.3282729Z Receiving objects:  22% (1274/5787)
+2026-08-04T15:27:23.3429713Z Receiving objects:  23% (1332/5787)
+2026-08-04T15:27:23.3446168Z Receiving objects:  24% (1389/5787)
+2026-08-04T15:27:23.3597440Z Receiving objects:  25% (1447/5787)
+2026-08-04T15:27:23.3607390Z Receiving objects:  26% (1505/5787)
+2026-08-04T15:27:23.3642473Z Receiving objects:  27% (1563/5787)
+2026-08-04T15:27:23.3651040Z Receiving objects:  28% (1621/5787)
+2026-08-04T15:27:23.3668420Z Receiving objects:  29% (1679/5787)
+2026-08-04T15:27:23.3676182Z Receiving objects:  30% (1737/5787)
+2026-08-04T15:27:23.3683039Z Receiving objects:  31% (1794/5787)
+2026-08-04T15:27:23.3686204Z Receiving objects:  32% (1852/5787)
+2026-08-04T15:27:23.3692787Z Receiving objects:  33% (1910/5787)
+2026-08-04T15:27:23.3702582Z Receiving objects:  34% (1968/5787)
+2026-08-04T15:27:23.3712664Z Receiving objects:  35% (2026/5787)
+2026-08-04T15:27:23.3717181Z Receiving objects:  36% (2084/5787)
+2026-08-04T15:27:23.3741712Z Receiving objects:  37% (2142/5787)
+2026-08-04T15:27:23.3744765Z Receiving objects:  38% (2200/5787)
+2026-08-04T15:27:23.3746479Z Receiving objects:  39% (2257/5787)
+2026-08-04T15:27:23.3747849Z Receiving objects:  40% (2315/5787)
+2026-08-04T15:27:23.3749088Z Receiving objects:  41% (2373/5787)
+2026-08-04T15:27:23.3752014Z Receiving objects:  42% (2431/5787)
+2026-08-04T15:27:23.3797059Z Receiving objects:  43% (2489/5787)
+2026-08-04T15:27:23.3819826Z Receiving objects:  44% (2547/5787)
+2026-08-04T15:27:23.3830229Z Receiving objects:  45% (2605/5787)
+2026-08-04T15:27:23.3842304Z Receiving objects:  46% (2663/5787)
+2026-08-04T15:27:23.3912974Z Receiving objects:  47% (2720/5787)
+2026-08-04T15:27:23.3920178Z Receiving objects:  48% (2778/5787)
+2026-08-04T15:27:23.3976310Z Receiving objects:  49% (2836/5787)
+2026-08-04T15:27:23.3999507Z Receiving objects:  50% (2894/5787)
+2026-08-04T15:27:23.4009087Z Receiving objects:  51% (2952/5787)
+2026-08-04T15:27:23.4020588Z Receiving objects:  52% (3010/5787)
+2026-08-04T15:27:23.4034633Z Receiving objects:  53% (3068/5787)
+2026-08-04T15:27:23.4046350Z Receiving objects:  54% (3125/5787)
+2026-08-04T15:27:23.4056667Z Receiving objects:  55% (3183/5787)
+2026-08-04T15:27:23.4101706Z Receiving objects:  56% (3241/5787)
+2026-08-04T15:27:23.4121495Z Receiving objects:  57% (3299/5787)
+2026-08-04T15:27:23.4142094Z Receiving objects:  58% (3357/5787)
+2026-08-04T15:27:23.4223321Z Receiving objects:  59% (3415/5787)
+2026-08-04T15:27:23.4275909Z Receiving objects:  60% (3473/5787)
+2026-08-04T15:27:23.4302299Z Receiving objects:  61% (3531/5787)
+2026-08-04T15:27:23.4334426Z Receiving objects:  62% (3588/5787)
+2026-08-04T15:27:23.4401808Z Receiving objects:  63% (3646/5787)
+2026-08-04T15:27:23.4424910Z Receiving objects:  64% (3704/5787)
+2026-08-04T15:27:23.4438285Z Receiving objects:  65% (3762/5787)
+2026-08-04T15:27:23.4466661Z Receiving objects:  66% (3820/5787)
+2026-08-04T15:27:23.4511463Z Receiving objects:  67% (3878/5787)
+2026-08-04T15:27:23.4552680Z Receiving objects:  68% (3936/5787)
+2026-08-04T15:27:23.4580929Z Receiving objects:  69% (3994/5787)
+2026-08-04T15:27:23.4629511Z Receiving objects:  70% (4051/5787)
+2026-08-04T15:27:23.4674169Z Receiving objects:  71% (4109/5787)
+2026-08-04T15:27:23.4731491Z Receiving objects:  72% (4167/5787)
+2026-08-04T15:27:23.4769157Z Receiving objects:  73% (4225/5787)
+2026-08-04T15:27:23.4802354Z Receiving objects:  74% (4283/5787)
+2026-08-04T15:27:23.4856041Z Receiving objects:  75% (4341/5787)
+2026-08-04T15:27:23.4906900Z Receiving objects:  76% (4399/5787)
+2026-08-04T15:27:23.4929568Z Receiving objects:  77% (4456/5787)
+2026-08-04T15:27:23.4953781Z Receiving objects:  78% (4514/5787)
+2026-08-04T15:27:23.5005814Z Receiving objects:  79% (4572/5787)
+2026-08-04T15:27:23.5016138Z Receiving objects:  80% (4630/5787)
+2026-08-04T15:27:23.5024318Z Receiving objects:  81% (4688/5787)
+2026-08-04T15:27:23.5476373Z Receiving objects:  82% (4746/5787)
+2026-08-04T15:27:23.5687922Z Receiving objects:  83% (4804/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6033359Z Receiving objects:  84% (4862/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6078901Z Receiving objects:  85% (4919/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6115750Z Receiving objects:  86% (4977/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6150053Z Receiving objects:  87% (5035/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6197960Z Receiving objects:  88% (5093/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6224960Z Receiving objects:  89% (5151/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6263142Z Receiving objects:  90% (5209/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6312049Z Receiving objects:  91% (5267/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6340389Z Receiving objects:  92% (5325/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6384376Z Receiving objects:  93% (5382/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6436226Z Receiving objects:  94% (5440/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6484001Z Receiving objects:  95% (5498/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6508691Z Receiving objects:  96% (5556/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6529867Z Receiving objects:  97% (5614/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6542458Z Receiving objects:  98% (5672/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6555804Z Receiving objects:  99% (5730/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6557335Z remote: Total 5787 (delta 1425), reused 3512 (delta 1149), pack-reused 0 (from 0)        
+2026-08-04T15:27:23.6573210Z Receiving objects: 100% (5787/5787), 9.94 MiB | 19.87 MiB/s
+2026-08-04T15:27:23.6574643Z Receiving objects: 100% (5787/5787), 14.51 MiB | 23.77 MiB/s, done.
+2026-08-04T15:27:23.6582033Z Resolving deltas:   0% (0/1425)
+2026-08-04T15:27:23.6584701Z Resolving deltas:   1% (16/1425)
+2026-08-04T15:27:23.6587873Z Resolving deltas:   2% (29/1425)
+2026-08-04T15:27:23.6591109Z Resolving deltas:   3% (43/1425)
+2026-08-04T15:27:23.6596303Z Resolving deltas:   4% (57/1425)
+2026-08-04T15:27:23.6597890Z Resolving deltas:   5% (72/1425)
+2026-08-04T15:27:23.6599637Z Resolving deltas:   6% (86/1425)
+2026-08-04T15:27:23.6600778Z Resolving deltas:   7% (100/1425)
+2026-08-04T15:27:23.6603359Z Resolving deltas:   8% (115/1425)
+2026-08-04T15:27:23.6606725Z Resolving deltas:   9% (129/1425)
+2026-08-04T15:27:23.6611939Z Resolving deltas:  10% (143/1425)
+2026-08-04T15:27:23.6614394Z Resolving deltas:  11% (158/1425)
+2026-08-04T15:27:23.6620847Z Resolving deltas:  12% (171/1425)
+2026-08-04T15:27:23.6623963Z Resolving deltas:  13% (186/1425)
+2026-08-04T15:27:23.6629483Z Resolving deltas:  14% (201/1425)
+2026-08-04T15:27:23.6633515Z Resolving deltas:  15% (214/1425)
+2026-08-04T15:27:23.6636464Z Resolving deltas:  16% (228/1425)
+2026-08-04T15:27:23.6641352Z Resolving deltas:  17% (243/1425)
+2026-08-04T15:27:23.6645863Z Resolving deltas:  18% (257/1425)
+2026-08-04T15:27:23.6651781Z Resolving deltas:  19% (271/1425)
+2026-08-04T15:27:23.6658049Z Resolving deltas:  20% (285/1425)
+2026-08-04T15:27:23.6660869Z Resolving deltas:  21% (300/1425)
+2026-08-04T15:27:23.6662326Z Resolving deltas:  22% (314/1425)
+2026-08-04T15:27:23.6663598Z Resolving deltas:  23% (330/1425)
+2026-08-04T15:27:23.6664881Z Resolving deltas:  24% (342/1425)
+2026-08-04T15:27:23.6668105Z Resolving deltas:  25% (358/1425)
+2026-08-04T15:27:23.6670941Z Resolving deltas:  26% (371/1425)
+2026-08-04T15:27:23.6673701Z Resolving deltas:  27% (385/1425)
+2026-08-04T15:27:23.6675182Z Resolving deltas:  28% (399/1425)
+2026-08-04T15:27:23.6678160Z Resolving deltas:  29% (414/1425)
+2026-08-04T15:27:23.6680367Z Resolving deltas:  30% (428/1425)
+2026-08-04T15:27:23.6683464Z Resolving deltas:  31% (442/1425)
+2026-08-04T15:27:23.6686281Z Resolving deltas:  32% (456/1425)
+2026-08-04T15:27:23.6688949Z Resolving deltas:  33% (471/1425)
+2026-08-04T15:27:23.6691279Z Resolving deltas:  34% (485/1425)
+2026-08-04T15:27:23.6692941Z Resolving deltas:  35% (499/1425)
+2026-08-04T15:27:23.6698395Z Resolving deltas:  36% (513/1425)
+2026-08-04T15:27:23.6699671Z Resolving deltas:  37% (528/1425)
+2026-08-04T15:27:23.6702258Z Resolving deltas:  38% (543/1425)
+2026-08-04T15:27:23.6703532Z Resolving deltas:  39% (556/1425)
+2026-08-04T15:27:23.6705183Z Resolving deltas:  40% (570/1425)
+2026-08-04T15:27:23.6706421Z Resolving deltas:  41% (585/1425)
+2026-08-04T15:27:23.6707662Z Resolving deltas:  42% (600/1425)
+2026-08-04T15:27:23.6711301Z Resolving deltas:  43% (614/1425)
+2026-08-04T15:27:23.6712913Z Resolving deltas:  44% (627/1425)
+2026-08-04T15:27:23.6714551Z Resolving deltas:  45% (642/1425)
+2026-08-04T15:27:23.6715911Z Resolving deltas:  46% (656/1425)
+2026-08-04T15:27:23.6717439Z Resolving deltas:  47% (670/1425)
+2026-08-04T15:27:23.6718774Z Resolving deltas:  48% (684/1425)
+2026-08-04T15:27:23.6720624Z Resolving deltas:  49% (699/1425)
+2026-08-04T15:27:23.6721754Z Resolving deltas:  50% (713/1425)
+2026-08-04T15:27:23.6722823Z Resolving deltas:  51% (727/1425)
+2026-08-04T15:27:23.6723966Z Resolving deltas:  52% (741/1425)
+2026-08-04T15:27:23.6725063Z Resolving deltas:  53% (756/1425)
+2026-08-04T15:27:23.6726447Z Resolving deltas:  54% (770/1425)
+2026-08-04T15:27:23.6727604Z Resolving deltas:  55% (784/1425)
+2026-08-04T15:27:23.6728650Z Resolving deltas:  56% (798/1425)
+2026-08-04T15:27:23.6729994Z Resolving deltas:  57% (813/1425)
+2026-08-04T15:27:23.6731399Z Resolving deltas:  58% (827/1425)
+2026-08-04T15:27:23.6733095Z Resolving deltas:  59% (841/1425)
+2026-08-04T15:27:23.6735037Z Resolving deltas:  60% (855/1425)
+2026-08-04T15:27:23.6736253Z Resolving deltas:  61% (871/1425)
+2026-08-04T15:27:23.6737962Z Resolving deltas:  62% (884/1425)
+2026-08-04T15:27:23.6741813Z Resolving deltas:  63% (898/1425)
+2026-08-04T15:27:23.6744315Z Resolving deltas:  64% (912/1425)
+2026-08-04T15:27:23.6746836Z Resolving deltas:  65% (927/1425)
+2026-08-04T15:27:23.6750240Z Resolving deltas:  66% (941/1425)
+2026-08-04T15:27:23.6753551Z Resolving deltas:  67% (955/1425)
+2026-08-04T15:27:23.6757230Z Resolving deltas:  68% (969/1425)
+2026-08-04T15:27:23.6759980Z Resolving deltas:  69% (984/1425)
+2026-08-04T15:27:23.6762337Z Resolving deltas:  70% (998/1425)
+2026-08-04T15:27:23.6766833Z Resolving deltas:  71% (1012/1425)
+2026-08-04T15:27:23.6771614Z Resolving deltas:  72% (1026/1425)
+2026-08-04T15:27:23.6775650Z Resolving deltas:  73% (1041/1425)
+2026-08-04T15:27:23.6779371Z Resolving deltas:  74% (1055/1425)
+2026-08-04T15:27:23.6803032Z Resolving deltas:  75% (1069/1425)
+2026-08-04T15:27:23.6830338Z Resolving deltas:  76% (1083/1425)
+2026-08-04T15:27:23.6849859Z Resolving deltas:  77% (1098/1425)
+2026-08-04T15:27:23.6858895Z Resolving deltas:  78% (1112/1425)
+2026-08-04T15:27:23.6870059Z Resolving deltas:  79% (1126/1425)
+2026-08-04T15:27:23.6878191Z Resolving deltas:  80% (1140/1425)
+2026-08-04T15:27:23.6879539Z Resolving deltas:  81% (1155/1425)
+2026-08-04T15:27:23.6891245Z Resolving deltas:  82% (1169/1425)
+2026-08-04T15:27:23.6897877Z Resolving deltas:  83% (1183/1425)
+2026-08-04T15:27:23.6903914Z Resolving deltas:  84% (1197/1425)
+2026-08-04T15:27:23.6907987Z Resolving deltas:  85% (1212/1425)
+2026-08-04T15:27:23.6910785Z Resolving deltas:  86% (1226/1425)
+2026-08-04T15:27:23.6914130Z Resolving deltas:  87% (1240/1425)
+2026-08-04T15:27:23.6915394Z Resolving deltas:  88% (1254/1425)
+2026-08-04T15:27:23.6918127Z Resolving deltas:  89% (1269/1425)
+2026-08-04T15:27:23.6919468Z Resolving deltas:  90% (1283/1425)
+2026-08-04T15:27:23.6920705Z Resolving deltas:  91% (1297/1425)
+2026-08-04T15:27:23.6922959Z Resolving deltas:  92% (1311/1425)
+2026-08-04T15:27:23.6926635Z Resolving deltas:  93% (1326/1425)
+2026-08-04T15:27:23.6929985Z Resolving deltas:  94% (1340/1425)
+2026-08-04T15:27:23.6943393Z Resolving deltas:  95% (1356/1425)
+2026-08-04T15:27:23.6951425Z Resolving deltas:  96% (1368/1425)
+2026-08-04T15:27:23.6957876Z Resolving deltas:  97% (1383/1425)
+2026-08-04T15:27:23.6964628Z Resolving deltas:  98% (1397/1425)
+2026-08-04T15:27:23.6970703Z Resolving deltas:  99% (1411/1425)
+2026-08-04T15:27:23.6971649Z Resolving deltas: 100% (1425/1425)
+2026-08-04T15:27:23.6972493Z Resolving deltas: 100% (1425/1425), done.
+2026-08-04T15:27:23.8631956Z From https://github.com/agno-agi/agno
+2026-08-04T15:27:23.8633198Z  * [new ref]         f6bad97ef2f57e408ed82d4a5118f112f33f9327 -> origin/feat/denormalize-sessions-table
+2026-08-04T15:27:23.8651701Z ##[endgroup]
+2026-08-04T15:27:23.8653044Z ##[group]Determining the checkout info
+2026-08-04T15:27:23.8654252Z ##[endgroup]
+2026-08-04T15:27:23.8655575Z ##[group]Checking out the ref
+2026-08-04T15:27:23.8658416Z [command]/usr/bin/git checkout --progress --force -B feat/denormalize-sessions-table refs/remotes/origin/feat/denormalize-sessions-table
+2026-08-04T15:27:24.0999806Z Switched to a new branch 'feat/denormalize-sessions-table'
+2026-08-04T15:27:24.1007767Z branch 'feat/denormalize-sessions-table' set up to track 'origin/feat/denormalize-sessions-table'.
+2026-08-04T15:27:24.1013640Z ##[endgroup]
+2026-08-04T15:27:24.1057649Z [command]/usr/bin/git log -1 --format='%H'
+2026-08-04T15:27:24.1077675Z 'f6bad97ef2f57e408ed82d4a5118f112f33f9327'
+2026-08-04T15:27:24.1272813Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-08-04T15:27:24.1274494Z ##[group]Run actions/setup-python@v4
+2026-08-04T15:27:24.1274821Z with:
+2026-08-04T15:27:24.1275095Z   python-version: 3.12
+2026-08-04T15:27:24.1275393Z   check-latest: false
+2026-08-04T15:27:24.1277477Z   token: ***
+2026-08-04T15:27:24.1277781Z   update-environment: true
+2026-08-04T15:27:24.1278090Z   allow-prereleases: false
+2026-08-04T15:27:24.1278358Z env:
+2026-08-04T15:27:24.1278615Z   PYTEST_ADDOPTS: --reruns 1
+2026-08-04T15:27:24.1278955Z   DEEPINFRA_API_KEY: ***
+2026-08-04T15:27:24.1279417Z   EXA_API_KEY: ***
+2026-08-04T15:27:24.1279724Z ##[endgroup]
+2026-08-04T15:27:24.2363391Z ##[group]Installed versions
+2026-08-04T15:27:24.2453982Z (node:2005) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-08-04T15:27:24.2454776Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-08-04T15:27:24.2455331Z Successfully set up CPython (3.12.13)
+2026-08-04T15:27:24.2456119Z ##[endgroup]
+2026-08-04T15:27:24.2554957Z ##[group]Run curl -LsSf https://astral.sh/uv/install.sh | sh
+2026-08-04T15:27:24.2555505Z [36;1mcurl -LsSf https://astral.sh/uv/install.sh | sh[0m
+2026-08-04T15:27:24.2555899Z [36;1mecho "$HOME/.cargo/bin" >> $GITHUB_PATH[0m
+2026-08-04T15:27:24.2599101Z shell: /usr/bin/bash -e {0}
+2026-08-04T15:27:24.2599742Z env:
+2026-08-04T15:27:24.2600015Z   PYTEST_ADDOPTS: --reruns 1
+2026-08-04T15:27:24.2600490Z   DEEPINFRA_API_KEY: ***
+2026-08-04T15:27:24.2600853Z   EXA_API_KEY: ***
+2026-08-04T15:27:24.2601164Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:24.2601633Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+2026-08-04T15:27:24.2602050Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:24.2602453Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:24.2602834Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:24.2603309Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+2026-08-04T15:27:24.2603627Z ##[endgroup]
+2026-08-04T15:27:24.4087194Z downloading uv 0.12.1 x86_64-unknown-linux-gnu
+2026-08-04T15:27:25.1080804Z installing to /home/runner/.local/bin
+2026-08-04T15:27:25.1120384Z   uv
+2026-08-04T15:27:25.1134427Z   uvx
+2026-08-04T15:27:25.1159324Z everything's installed!
+2026-08-04T15:27:25.1235167Z ##[group]Run ./scripts/run_model_tests.sh deepinfra
+2026-08-04T15:27:25.1235561Z [36;1m./scripts/run_model_tests.sh deepinfra[0m
+2026-08-04T15:27:25.1262789Z shell: /usr/bin/bash -e {0}
+2026-08-04T15:27:25.1263081Z env:
+2026-08-04T15:27:25.1263397Z   PYTEST_ADDOPTS: --reruns 1
+2026-08-04T15:27:25.1263885Z   DEEPINFRA_API_KEY: ***
+2026-08-04T15:27:25.1264233Z   EXA_API_KEY: ***
+2026-08-04T15:27:25.1264594Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:25.1265006Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+2026-08-04T15:27:25.1265448Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:25.1265829Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:25.1266230Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+2026-08-04T15:27:25.1266639Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+2026-08-04T15:27:25.1266996Z ##[endgroup]
+2026-08-04T15:27:25.1976898Z 
+2026-08-04T15:27:25.1977377Z === Creating test environment for deepinfra ===
+2026-08-04T15:27:28.0925916Z 
+2026-08-04T15:27:28.0926695Z === Installing core dependencies ===
+2026-08-04T15:27:28.0927433Z pip install --upgrade pip
+2026-08-04T15:27:28.3852068Z Requirement already satisfied: pip in ./.venv/lib/python3.12/site-packages (25.0.1)
+2026-08-04T15:27:28.4838642Z Collecting pip
+2026-08-04T15:27:28.5592378Z   Downloading pip-26.2-py3-none-any.whl.metadata (4.6 kB)
+2026-08-04T15:27:28.5732899Z Downloading pip-26.2-py3-none-any.whl (1.8 MB)
+2026-08-04T15:27:28.6526722Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 33.7 MB/s eta 0:00:00
+2026-08-04T15:27:28.6643708Z Installing collected packages: pip
+2026-08-04T15:27:28.6644741Z   Attempting uninstall: pip
+2026-08-04T15:27:28.6660727Z     Found existing installation: pip 25.0.1
+2026-08-04T15:27:28.6854871Z     Uninstalling pip-25.0.1:
+2026-08-04T15:27:28.6889911Z       Successfully uninstalled pip-25.0.1
+2026-08-04T15:27:29.3099029Z Successfully installed pip-26.2
+2026-08-04T15:27:29.6479146Z Installing base packages...
+2026-08-04T15:27:29.9844999Z Collecting aioboto3
+2026-08-04T15:27:30.0500635Z   Downloading aioboto3-15.5.0-py3-none-any.whl.metadata (8.9 kB)
+2026-08-04T15:27:30.2910236Z Collecting boto3
+2026-08-04T15:27:30.3011872Z   Downloading boto3-1.43.63-py3-none-any.whl.metadata (6.6 kB)
+2026-08-04T15:27:30.3250369Z Collecting docstring-parser
+2026-08-04T15:27:30.3352388Z   Downloading docstring_parser-0.18.0-py3-none-any.whl.metadata (3.5 kB)
+2026-08-04T15:27:30.3662956Z Collecting gitpython
+2026-08-04T15:27:30.3765959Z   Downloading gitpython-3.1.58-py3-none-any.whl.metadata (13 kB)
+2026-08-04T15:27:30.4061216Z Collecting httpx
+2026-08-04T15:27:30.4165241Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2026-08-04T15:27:30.4423120Z Collecting pydantic-settings
+2026-08-04T15:27:30.4526205Z   Downloading pydantic_settings-2.14.2-py3-none-any.whl.metadata (3.4 kB)
+2026-08-04T15:27:30.5365212Z Collecting pydantic
+2026-08-04T15:27:30.5465904Z   Downloading pydantic-2.13.4-py3-none-any.whl.metadata (109 kB)
+2026-08-04T15:27:30.5881172Z Collecting python-dotenv
+2026-08-04T15:27:30.5983579Z   Downloading python_dotenv-1.2.2-py3-none-any.whl.metadata (27 kB)
+2026-08-04T15:27:30.6256157Z Collecting python-multipart
+2026-08-04T15:27:30.6357500Z   Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+2026-08-04T15:27:30.6730763Z Collecting pyyaml
+2026-08-04T15:27:30.6833404Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-08-04T15:27:30.7198736Z Collecting rich
+2026-08-04T15:27:30.7304408Z   Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+2026-08-04T15:27:30.7606906Z Collecting tomli
+2026-08-04T15:27:30.7711236Z   Downloading tomli-2.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+2026-08-04T15:27:30.7998034Z Collecting typer
+2026-08-04T15:27:30.8100368Z   Downloading typer-0.27.1-py3-none-any.whl.metadata (16 kB)
+2026-08-04T15:27:30.8364647Z Collecting typing-extensions
+2026-08-04T15:27:30.8468736Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-08-04T15:27:30.8755544Z Collecting aiobotocore==2.25.1 (from aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:30.8857621Z   Downloading aiobotocore-2.25.1-py3-none-any.whl.metadata (25 kB)
+2026-08-04T15:27:30.9097785Z Collecting aiofiles>=23.2.1 (from aioboto3)
+2026-08-04T15:27:30.9198924Z   Downloading aiofiles-25.1.0-py3-none-any.whl.metadata (6.3 kB)
+2026-08-04T15:27:31.2802348Z Collecting aiohttp<4.0.0,>=3.9.2 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.2908147Z   Downloading aiohttp-3.14.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+2026-08-04T15:27:31.3147790Z Collecting aioitertools<1.0.0,>=0.5.1 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.3248824Z   Downloading aioitertools-0.13.0-py3-none-any.whl.metadata (3.3 kB)
+2026-08-04T15:27:31.4766867Z Collecting botocore<1.40.62,>=1.40.46 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.4870491Z   Downloading botocore-1.40.61-py3-none-any.whl.metadata (5.7 kB)
+2026-08-04T15:27:31.5140617Z Collecting python-dateutil<3.0.0,>=2.1 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.5243384Z   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2026-08-04T15:27:31.5468208Z Collecting jmespath<2.0.0,>=0.7.1 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.5569725Z   Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)
+2026-08-04T15:27:31.7324001Z Collecting multidict<7.0.0,>=6.0.0 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.7425175Z   Downloading multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+2026-08-04T15:27:31.9271015Z Collecting wrapt<2.0.0,>=1.10.10 (from aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:31.9381588Z   Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
+2026-08-04T15:27:31.9520960Z Collecting boto3
+2026-08-04T15:27:31.9623810Z   Downloading boto3-1.40.61-py3-none-any.whl.metadata (6.6 kB)
+2026-08-04T15:27:31.9981758Z Collecting s3transfer<0.15.0,>=0.14.0 (from boto3)
+2026-08-04T15:27:32.0085374Z   Downloading s3transfer-0.14.0-py3-none-any.whl.metadata (1.7 kB)
+2026-08-04T15:27:32.0325787Z Collecting aiohappyeyeballs>=2.5.0 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.0428337Z   Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+2026-08-04T15:27:32.0648742Z Collecting aiosignal>=1.4.0 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.0752127Z   Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+2026-08-04T15:27:32.0987436Z Collecting attrs>=17.3.0 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.1088536Z   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+2026-08-04T15:27:32.1662620Z Collecting frozenlist>=1.1.1 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.1770037Z   Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+2026-08-04T15:27:32.2305261Z Collecting propcache>=0.2.0 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.2408955Z   Downloading propcache-0.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (16 kB)
+2026-08-04T15:27:32.4501598Z Collecting yarl<2.0,>=1.17.0 (from aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:32.4604287Z   Downloading yarl-1.24.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (103 kB)
+2026-08-04T15:27:33.1071894Z Collecting urllib3!=2.2.0,<3,>=1.25.4 (from botocore<1.40.62,>=1.40.46->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:33.1173929Z   Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+2026-08-04T15:27:33.1923467Z Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:33.2026151Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2026-08-04T15:27:33.2407298Z Collecting idna>=2.0 (from yarl<2.0,>=1.17.0->aiohttp<4.0.0,>=3.9.2->aiobotocore==2.25.1->aiobotocore[boto3]==2.25.1->aioboto3)
+2026-08-04T15:27:33.2508682Z   Downloading idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+2026-08-04T15:27:33.2767122Z Collecting gitdb<5,>=4.0.1 (from gitpython)
+2026-08-04T15:27:33.2868941Z   Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+2026-08-04T15:27:33.3089124Z Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->gitpython)
+2026-08-04T15:27:33.3195316Z   Downloading smmap-5.0.3-py3-none-any.whl.metadata (4.6 kB)
+2026-08-04T15:27:33.3461039Z Collecting anyio (from httpx)
+2026-08-04T15:27:33.3564977Z   Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+2026-08-04T15:27:33.3831387Z Collecting certifi (from httpx)
+2026-08-04T15:27:33.3932821Z   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+2026-08-04T15:27:33.4340882Z Collecting httpcore==1.* (from httpx)
+2026-08-04T15:27:33.4444880Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2026-08-04T15:27:33.4678186Z Collecting h11>=0.16 (from httpcore==1.*->httpx)
+2026-08-04T15:27:33.4781721Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2026-08-04T15:27:33.5021987Z Collecting typing-inspection>=0.4.0 (from pydantic-settings)
+2026-08-04T15:27:33.5123636Z   Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2026-08-04T15:27:33.5338612Z Collecting annotated-types>=0.6.0 (from pydantic)
+2026-08-04T15:27:33.5440376Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-08-04T15:27:34.0021381Z Collecting pydantic-core==2.46.4 (from pydantic)
+2026-08-04T15:27:34.0123779Z   Downloading pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+2026-08-04T15:27:34.0390996Z Collecting markdown-it-py>=2.2.0 (from rich)
+2026-08-04T15:27:34.0492871Z   Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+2026-08-04T15:27:34.0783114Z Collecting pygments<3.0.0,>=2.13.0 (from rich)
+2026-08-04T15:27:34.0886651Z   Downloading pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+2026-08-04T15:27:34.1125030Z Collecting shellingham>=1.3.0 (from typer)
+2026-08-04T15:27:34.1227648Z   Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+2026-08-04T15:27:34.1469929Z Collecting annotated-doc>=0.0.2 (from typer)
+2026-08-04T15:27:34.1572143Z   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+2026-08-04T15:27:34.1829092Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich)
+2026-08-04T15:27:34.1930661Z   Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+2026-08-04T15:27:34.2110443Z Downloading aioboto3-15.5.0-py3-none-any.whl (35 kB)
+2026-08-04T15:27:34.2237415Z Downloading aiobotocore-2.25.1-py3-none-any.whl (86 kB)
+2026-08-04T15:27:34.2372503Z Downloading boto3-1.40.61-py3-none-any.whl (139 kB)
+2026-08-04T15:27:34.2527499Z Downloading aiohttp-3.14.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+2026-08-04T15:27:34.2939653Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 52.2 MB/s  0:00:00
+2026-08-04T15:27:34.3044512Z Downloading aioitertools-0.13.0-py3-none-any.whl (24 kB)
+2026-08-04T15:27:34.3167103Z Downloading botocore-1.40.61-py3-none-any.whl (14.1 MB)
+2026-08-04T15:27:34.4486358Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 107.1 MB/s  0:00:00
+2026-08-04T15:27:34.4587141Z Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)
+2026-08-04T15:27:34.4708142Z Downloading multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (256 kB)
+2026-08-04T15:27:34.4837209Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-08-04T15:27:34.4964456Z Downloading s3transfer-0.14.0-py3-none-any.whl (85 kB)
+2026-08-04T15:27:34.5088137Z Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+2026-08-04T15:27:34.5212983Z Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (88 kB)
+2026-08-04T15:27:34.5338767Z Downloading yarl-1.24.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (109 kB)
+2026-08-04T15:27:34.5493274Z Downloading docstring_parser-0.18.0-py3-none-any.whl (22 kB)
+2026-08-04T15:27:34.5614689Z Downloading gitpython-3.1.58-py3-none-any.whl (220 kB)
+2026-08-04T15:27:34.5930440Z Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+2026-08-04T15:27:34.6055960Z Downloading smmap-5.0.3-py3-none-any.whl (24 kB)
+2026-08-04T15:27:34.6178162Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-08-04T15:27:34.6303224Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-08-04T15:27:34.6426190Z Downloading pydantic_settings-2.14.2-py3-none-any.whl (61 kB)
+2026-08-04T15:27:34.6549129Z Downloading pydantic-2.13.4-py3-none-any.whl (472 kB)
+2026-08-04T15:27:34.6680924Z Downloading pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-08-04T15:27:34.6841872Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 130.5 MB/s  0:00:00
+2026-08-04T15:27:34.6947369Z Downloading python_dotenv-1.2.2-py3-none-any.whl (22 kB)
+2026-08-04T15:27:34.7071653Z Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+2026-08-04T15:27:34.7195038Z Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-08-04T15:27:34.7244406Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 179.8 MB/s  0:00:00
+2026-08-04T15:27:34.7348551Z Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+2026-08-04T15:27:34.7477504Z Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+2026-08-04T15:27:34.7531279Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 262.1 MB/s  0:00:00
+2026-08-04T15:27:34.7634190Z Downloading tomli-2.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (253 kB)
+2026-08-04T15:27:34.7767152Z Downloading typer-0.27.1-py3-none-any.whl (122 kB)
+2026-08-04T15:27:34.7893699Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-08-04T15:27:34.8018807Z Downloading aiofiles-25.1.0-py3-none-any.whl (14 kB)
+2026-08-04T15:27:34.8140944Z Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+2026-08-04T15:27:34.8262526Z Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+2026-08-04T15:27:34.8385045Z Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+2026-08-04T15:27:34.8509665Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-08-04T15:27:34.8630826Z Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-08-04T15:27:34.8757698Z Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (242 kB)
+2026-08-04T15:27:34.8885590Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+2026-08-04T15:27:34.9007143Z Downloading idna-3.18-py3-none-any.whl (65 kB)
+2026-08-04T15:27:34.9130668Z Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+2026-08-04T15:27:34.9254578Z Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+2026-08-04T15:27:34.9376305Z Downloading propcache-0.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (61 kB)
+2026-08-04T15:27:34.9501939Z Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+2026-08-04T15:27:34.9623857Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-08-04T15:27:34.9746658Z Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2026-08-04T15:27:34.9866979Z Downloading anyio-4.14.2-py3-none-any.whl (125 kB)
+2026-08-04T15:27:34.9992070Z Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+2026-08-04T15:27:35.1848174Z Installing collected packages: wrapt, urllib3, typing-extensions, tomli, smmap, six, shellingham, pyyaml, python-multipart, python-dotenv, pygments, propcache, multidict, mdurl, jmespath, idna, h11, frozenlist, docstring-parser, certifi, attrs, annotated-types, annotated-doc, aioitertools, aiohappyeyeballs, aiofiles, yarl, typing-inspection, python-dateutil, pydantic-core, markdown-it-py, httpcore, gitdb, anyio, aiosignal, rich, pydantic, httpx, gitpython, botocore, aiohttp, typer, s3transfer, pydantic-settings, aiobotocore, boto3, aioboto3
+2026-08-04T15:27:37.5601346Z 
+2026-08-04T15:27:37.5632032Z Successfully installed aioboto3-15.5.0 aiobotocore-2.25.1 aiofiles-25.1.0 aiohappyeyeballs-2.7.1 aiohttp-3.14.3 aioitertools-0.13.0 aiosignal-1.4.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.14.2 attrs-26.1.0 boto3-1.40.61 botocore-1.40.61 certifi-2026.7.22 docstring-parser-0.18.0 frozenlist-1.8.0 gitdb-4.0.12 gitpython-3.1.58 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.18 jmespath-1.1.0 markdown-it-py-4.2.0 mdurl-0.1.2 multidict-6.7.1 propcache-0.5.2 pydantic-2.13.4 pydantic-core-2.46.4 pydantic-settings-2.14.2 pygments-2.20.0 python-dateutil-2.9.0.post0 python-dotenv-1.2.2 python-multipart-0.0.32 pyyaml-6.0.3 rich-15.0.0 s3transfer-0.14.0 shellingham-1.5.4 six-1.17.0 smmap-5.0.3 tomli-2.4.1 typer-0.27.1 typing-extensions-4.16.0 typing-inspection-0.4.2 urllib3-2.7.0 wrapt-1.17.3 yarl-1.24.5
+2026-08-04T15:27:37.6968839Z 
+2026-08-04T15:27:37.6969742Z === Installing test dependencies ===
+2026-08-04T15:27:37.6970344Z Installing pytest packages...
+2026-08-04T15:27:38.0632313Z Collecting pytest
+2026-08-04T15:27:38.1248820Z   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+2026-08-04T15:27:38.1541697Z Collecting pytest-asyncio
+2026-08-04T15:27:38.1643285Z   Downloading pytest_asyncio-1.4.0-py3-none-any.whl.metadata (4.1 kB)
+2026-08-04T15:27:38.1868341Z Collecting pytest-rerunfailures
+2026-08-04T15:27:38.1970282Z   Downloading pytest_rerunfailures-16.4-py3-none-any.whl.metadata (26 kB)
+2026-08-04T15:27:38.2242038Z Collecting pytest-timeout
+2026-08-04T15:27:38.2342837Z   Downloading pytest_timeout-2.4.0-py3-none-any.whl.metadata (20 kB)
+2026-08-04T15:27:38.2681670Z Collecting requests
+2026-08-04T15:27:38.2783948Z   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+2026-08-04T15:27:38.2984022Z Collecting iniconfig>=1.0.1 (from pytest)
+2026-08-04T15:27:38.3085023Z   Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2026-08-04T15:27:38.3316879Z Collecting packaging>=22 (from pytest)
+2026-08-04T15:27:38.3422233Z   Downloading packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+2026-08-04T15:27:38.3629656Z Collecting pluggy<2,>=1.5 (from pytest)
+2026-08-04T15:27:38.3731109Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2026-08-04T15:27:38.3770039Z Requirement already satisfied: pygments>=2.7.2 in ./.venv/lib/python3.12/site-packages (from pytest) (2.20.0)
+2026-08-04T15:27:38.3793147Z Requirement already satisfied: typing-extensions>=4.12 in ./.venv/lib/python3.12/site-packages (from pytest-asyncio) (4.16.0)
+2026-08-04T15:27:38.4988351Z Collecting charset_normalizer<4,>=2 (from requests)
+2026-08-04T15:27:38.5090568Z   Downloading charset_normalizer-3.4.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (41 kB)
+2026-08-04T15:27:38.5173037Z Requirement already satisfied: idna<4,>=2.5 in ./.venv/lib/python3.12/site-packages (from requests) (3.18)
+2026-08-04T15:27:38.5177108Z Requirement already satisfied: urllib3<3,>=1.26 in ./.venv/lib/python3.12/site-packages (from requests) (2.7.0)
+2026-08-04T15:27:38.5181266Z Requirement already satisfied: certifi>=2023.5.7 in ./.venv/lib/python3.12/site-packages (from requests) (2026.7.22)
+2026-08-04T15:27:38.5313334Z Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-08-04T15:27:38.5727406Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+2026-08-04T15:27:38.5849999Z Downloading pytest_asyncio-1.4.0-py3-none-any.whl (16 kB)
+2026-08-04T15:27:38.5971671Z Downloading pytest_rerunfailures-16.4-py3-none-any.whl (16 kB)
+2026-08-04T15:27:38.6093641Z Downloading pytest_timeout-2.4.0-py3-none-any.whl (14 kB)
+2026-08-04T15:27:38.6217078Z Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+2026-08-04T15:27:38.6343571Z Downloading charset_normalizer-3.4.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (224 kB)
+2026-08-04T15:27:38.6481112Z Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2026-08-04T15:27:38.6603073Z Downloading packaging-26.2-py3-none-any.whl (100 kB)
+2026-08-04T15:27:38.7215105Z Installing collected packages: pluggy, packaging, iniconfig, charset_normalizer, requests, pytest, pytest-timeout, pytest-rerunfailures, pytest-asyncio
+2026-08-04T15:27:39.0634003Z 
+2026-08-04T15:27:39.0664370Z Successfully installed charset_normalizer-3.4.9 iniconfig-2.3.0 packaging-26.2 pluggy-1.6.0 pytest-9.1.1 pytest-asyncio-1.4.0 pytest-rerunfailures-16.4 pytest-timeout-2.4.0 requests-2.34.2
+2026-08-04T15:27:39.1197617Z 
+2026-08-04T15:27:39.1198186Z === Installing agno with deepinfra dependencies ===
+2026-08-04T15:27:39.1198722Z pip install -e ../agnoctl -e .[deepinfra,integration-tests]
+2026-08-04T15:27:39.3667087Z Obtaining file:///home/runner/work/agno/agno/libs/agnoctl
+2026-08-04T15:27:39.3681183Z   Installing build dependencies: started
+2026-08-04T15:27:40.1185073Z   Installing build dependencies: finished with status 'done'
+2026-08-04T15:27:40.1191925Z   Checking if build backend supports build_editable: started
+2026-08-04T15:27:40.3535525Z   Checking if build backend supports build_editable: finished with status 'done'
+2026-08-04T15:27:40.3543411Z   Getting requirements to build editable: started
+2026-08-04T15:27:40.6095749Z   Getting requirements to build editable: finished with status 'done'
+2026-08-04T15:27:40.6105406Z   Preparing editable metadata (pyproject.toml): started
+2026-08-04T15:27:40.7566255Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2026-08-04T15:27:40.7623069Z Obtaining file:///home/runner/work/agno/agno/libs/agno
+2026-08-04T15:27:40.7652569Z   Installing build dependencies: started
+2026-08-04T15:27:41.1787710Z   Installing build dependencies: finished with status 'done'
+2026-08-04T15:27:41.1791675Z   Checking if build backend supports build_editable: started
+2026-08-04T15:27:41.3901684Z   Checking if build backend supports build_editable: finished with status 'done'
+2026-08-04T15:27:41.3909835Z   Getting requirements to build editable: started
+2026-08-04T15:27:41.6960346Z   Getting requirements to build editable: finished with status 'done'
+2026-08-04T15:27:41.6969122Z   Preparing editable metadata (pyproject.toml): started
+2026-08-04T15:27:41.9056155Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2026-08-04T15:27:42.0227715Z Requirement already satisfied: httpx in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agnoctl==0.1.3) (0.28.1)
+2026-08-04T15:27:42.0233400Z Requirement already satisfied: rich in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agnoctl==0.1.3) (15.0.0)
+2026-08-04T15:27:42.0235183Z Requirement already satisfied: typer in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agnoctl==0.1.3) (0.27.1)
+2026-08-04T15:27:42.0242148Z Requirement already satisfied: docstring-parser in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (0.18.0)
+2026-08-04T15:27:42.0245271Z Requirement already satisfied: h11>=0.16.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (0.16.0)
+2026-08-04T15:27:42.0248745Z Requirement already satisfied: packaging in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (26.2)
+2026-08-04T15:27:42.0252186Z Requirement already satisfied: pydantic-settings in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (2.14.2)
+2026-08-04T15:27:42.0254704Z Requirement already satisfied: pydantic in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (2.13.4)
+2026-08-04T15:27:42.0257282Z Requirement already satisfied: pyyaml in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (6.0.3)
+2026-08-04T15:27:42.0260758Z Requirement already satisfied: typing-extensions in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (4.16.0)
+2026-08-04T15:27:42.0277610Z WARNING: agno 2.8.6 does not provide the extra 'deepinfra'
+2026-08-04T15:27:42.1268099Z Collecting exa_py>=2.0.0 (from agno==2.8.6)
+2026-08-04T15:27:42.1912682Z   Downloading exa_py-2.16.2-py3-none-any.whl.metadata (4.8 kB)
+2026-08-04T15:27:42.2157090Z Collecting ddgs (from agno==2.8.6)
+2026-08-04T15:27:42.2259556Z   Downloading ddgs-9.14.4-py3-none-any.whl.metadata (20 kB)
+2026-08-04T15:27:42.2651940Z Collecting yfinance (from agno==2.8.6)
+2026-08-04T15:27:42.2754787Z   Downloading yfinance-1.5.2-py2.py3-none-any.whl.metadata (6.2 kB)
+2026-08-04T15:27:42.5066228Z Collecting sqlalchemy (from agno==2.8.6)
+2026-08-04T15:27:42.5170413Z   Downloading sqlalchemy-2.0.51-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2026-08-04T15:27:42.6438335Z Collecting Pillow (from agno==2.8.6)
+2026-08-04T15:27:42.6539773Z   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+2026-08-04T15:27:42.6788575Z Collecting PyJWT (from agno==2.8.6)
+2026-08-04T15:27:42.6889657Z   Downloading pyjwt-2.13.0-py3-none-any.whl.metadata (3.4 kB)
+2026-08-04T15:27:42.6924768Z Requirement already satisfied: pytest-rerunfailures in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (16.4)
+2026-08-04T15:27:42.6929521Z Requirement already satisfied: pytest-timeout in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from agno==2.8.6) (2.4.0)
+2026-08-04T15:27:42.6938048Z Requirement already satisfied: httpcore>=1.0.9 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from exa_py>=2.0.0->agno==2.8.6) (1.0.9)
+2026-08-04T15:27:42.7337872Z Collecting openai>=1.48 (from exa_py>=2.0.0->agno==2.8.6)
+2026-08-04T15:27:42.7441244Z   Downloading openai-2.53.0-py3-none-any.whl.metadata (40 kB)
+2026-08-04T15:27:42.7553879Z Requirement already satisfied: python-dotenv>=1.0.1 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from exa_py>=2.0.0->agno==2.8.6) (1.2.2)
+2026-08-04T15:27:42.7557567Z Requirement already satisfied: requests>=2.32.3 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from exa_py>=2.0.0->agno==2.8.6) (2.34.2)
+2026-08-04T15:27:42.7573334Z Requirement already satisfied: certifi in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from httpcore>=1.0.9->exa_py>=2.0.0->agno==2.8.6) (2026.7.22)
+2026-08-04T15:27:42.7585437Z Requirement already satisfied: anyio in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from httpx->agnoctl==0.1.3) (4.14.2)
+2026-08-04T15:27:42.7590274Z Requirement already satisfied: idna in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from httpx->agnoctl==0.1.3) (3.18)
+2026-08-04T15:27:42.7764250Z Collecting distro<2,>=1.7.0 (from openai>=1.48->exa_py>=2.0.0->agno==2.8.6)
+2026-08-04T15:27:42.7871842Z   Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+2026-08-04T15:27:42.8527553Z Collecting jiter<1,>=0.10.0 (from openai>=1.48->exa_py>=2.0.0->agno==2.8.6)
+2026-08-04T15:27:42.8627385Z   Downloading jiter-0.16.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+2026-08-04T15:27:42.8819816Z Collecting sniffio (from openai>=1.48->exa_py>=2.0.0->agno==2.8.6)
+2026-08-04T15:27:42.8920418Z   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+2026-08-04T15:27:42.9230304Z Collecting tqdm>4 (from openai>=1.48->exa_py>=2.0.0->agno==2.8.6)
+2026-08-04T15:27:42.9331883Z   Downloading tqdm-4.70.0-py3-none-any.whl.metadata (57 kB)
+2026-08-04T15:27:42.9453297Z Requirement already satisfied: annotated-types>=0.6.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pydantic->agno==2.8.6) (0.8.0)
+2026-08-04T15:27:42.9456984Z Requirement already satisfied: pydantic-core==2.46.4 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pydantic->agno==2.8.6) (2.46.4)
+2026-08-04T15:27:42.9461623Z Requirement already satisfied: typing-inspection>=0.4.2 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pydantic->agno==2.8.6) (0.4.2)
+2026-08-04T15:27:42.9504561Z Requirement already satisfied: charset_normalizer<4,>=2 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from requests>=2.32.3->exa_py>=2.0.0->agno==2.8.6) (3.4.9)
+2026-08-04T15:27:42.9510740Z Requirement already satisfied: urllib3<3,>=1.26 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from requests>=2.32.3->exa_py>=2.0.0->agno==2.8.6) (2.7.0)
+2026-08-04T15:27:42.9781760Z Collecting mcp<2,>=1.9.2 (from agno==2.8.6)
+2026-08-04T15:27:42.9882598Z   Downloading mcp-1.29.0-py3-none-any.whl.metadata (9.3 kB)
+2026-08-04T15:27:43.0149984Z Collecting fastmcp<4,>=3.4.3 (from agno==2.8.6)
+2026-08-04T15:27:43.0254291Z   Downloading fastmcp-3.4.5-py3-none-any.whl.metadata (8.5 kB)
+2026-08-04T15:27:43.0477652Z Collecting fastmcp-slim==3.4.5 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.0578485Z   Downloading fastmcp_slim-3.4.5-py3-none-any.whl.metadata (10 kB)
+2026-08-04T15:27:43.0852867Z Collecting platformdirs>=4.0.0 (from fastmcp-slim==3.4.5->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.0954286Z   Downloading platformdirs-4.11.0-py3-none-any.whl.metadata (5.5 kB)
+2026-08-04T15:27:43.1356220Z Collecting authlib>=1.6.11 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.1457789Z   Downloading authlib-1.7.2-py2.py3-none-any.whl.metadata (10 kB)
+2026-08-04T15:27:43.1662788Z Collecting exceptiongroup>=1.2.2 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.1776960Z   Downloading exceptiongroup-1.3.1-py3-none-any.whl.metadata (6.7 kB)
+2026-08-04T15:27:43.2052775Z Collecting opentelemetry-api>=1.20.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.2153775Z   Downloading opentelemetry_api-1.44.0-py3-none-any.whl.metadata (1.4 kB)
+2026-08-04T15:27:43.2359716Z Collecting py-key-value-aio<0.5.0,>=0.4.4 (from py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.2460449Z   Downloading py_key_value_aio-0.4.5-py3-none-any.whl.metadata (16 kB)
+2026-08-04T15:27:43.2768649Z Collecting starlette>=1.0.1 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.2871413Z   Downloading starlette-1.3.1-py3-none-any.whl.metadata (6.4 kB)
+2026-08-04T15:27:43.3160140Z Collecting cyclopts>=4.0.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.3262639Z   Downloading cyclopts-4.22.5-py3-none-any.whl.metadata (12 kB)
+2026-08-04T15:27:43.3478053Z Collecting griffelib>=2.0.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.3579450Z   Downloading griffelib-2.1.0-py3-none-any.whl.metadata (1.3 kB)
+2026-08-04T15:27:43.3800389Z Collecting joserfc>=1.1.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.3901748Z   Downloading joserfc-1.7.4-py3-none-any.whl.metadata (3.1 kB)
+2026-08-04T15:27:43.4098226Z Collecting jsonref>=1.1.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.4200174Z   Downloading jsonref-1.1.0-py3-none-any.whl.metadata (2.7 kB)
+2026-08-04T15:27:43.4401438Z Collecting jsonschema-path>=0.3.4 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.4502884Z   Downloading jsonschema_path-0.5.0-py3-none-any.whl.metadata (8.1 kB)
+2026-08-04T15:27:43.4702119Z Collecting openapi-pydantic>=0.5.1 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.4802804Z   Downloading openapi_pydantic-0.5.1-py3-none-any.whl.metadata (10 kB)
+2026-08-04T15:27:43.5017110Z Collecting pyperclip>=1.9.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.5122729Z   Downloading pyperclip-1.11.0-py3-none-any.whl.metadata (2.4 kB)
+2026-08-04T15:27:43.5155909Z Requirement already satisfied: python-multipart>=0.0.26 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6) (0.0.32)
+2026-08-04T15:27:43.5321152Z Collecting uncalled-for>=0.2.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.5422099Z   Downloading uncalled_for-0.3.2-py3-none-any.whl.metadata (2.9 kB)
+2026-08-04T15:27:43.5682292Z Collecting uvicorn>=0.35 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.5784360Z   Downloading uvicorn-0.52.1-py3-none-any.whl.metadata (6.6 kB)
+2026-08-04T15:27:43.6375172Z Collecting watchfiles>=1.0.0 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.6476186Z   Downloading watchfiles-1.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2026-08-04T15:27:43.9838311Z Collecting websockets>=15.0.1 (from fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:43.9943233Z   Downloading websockets-17.0.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+2026-08-04T15:27:44.0171822Z Collecting httpx-sse>=0.4 (from mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.0272971Z   Downloading httpx_sse-0.4.3-py3-none-any.whl.metadata (9.7 kB)
+2026-08-04T15:27:44.0524523Z Collecting jsonschema>=4.20.0 (from mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.0625849Z   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+2026-08-04T15:27:44.0902294Z Collecting sse-starlette>=1.6.1 (from mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.1004130Z   Downloading sse_starlette-3.4.6-py3-none-any.whl.metadata (15 kB)
+2026-08-04T15:27:44.1327026Z Collecting beartype>=0.20.0 (from py-key-value-aio<0.5.0,>=0.4.4->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.1427740Z   Downloading beartype-0.22.9-py3-none-any.whl.metadata (37 kB)
+2026-08-04T15:27:44.1771999Z Collecting aiofile>=3.5.0 (from py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.1872379Z   Downloading aiofile-3.12.0-py3-none-any.whl.metadata (14 kB)
+2026-08-04T15:27:44.2161443Z Collecting keyring>=25.6.0 (from py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.2263137Z   Downloading keyring-25.7.0-py3-none-any.whl.metadata (21 kB)
+2026-08-04T15:27:44.2526110Z Collecting cachetools>=5.0.0 (from py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.2626070Z   Downloading cachetools-7.1.7-py3-none-any.whl.metadata (5.5 kB)
+2026-08-04T15:27:44.3038064Z Collecting caio~=0.12.0 (from aiofile>=3.5.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.3140513Z   Downloading caio-0.12.2-cp312-cp312-manylinux_2_34_x86_64.whl.metadata (4.5 kB)
+2026-08-04T15:27:44.4456666Z Collecting cryptography (from authlib>=1.6.11->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.4559963Z   Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+2026-08-04T15:27:44.4640445Z Requirement already satisfied: attrs>=23.1.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from cyclopts>=4.0.0->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6) (26.1.0)
+2026-08-04T15:27:44.4827860Z Collecting rich-rst<3.0.0,>=1.3.1 (from cyclopts>=4.0.0->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.4928306Z   Downloading rich_rst-2.1.0-py3-none-any.whl.metadata (4.7 kB)
+2026-08-04T15:27:44.4987269Z Requirement already satisfied: pygments>=2.0.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from rich-rst<3.0.0,>=1.3.1->cyclopts>=4.0.0->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6) (2.20.0)
+2026-08-04T15:27:44.6059965Z Collecting cffi>=2.0.0 (from cryptography->authlib>=1.6.11->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.6160404Z   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+2026-08-04T15:27:44.6377621Z Collecting pycparser (from cffi>=2.0.0->cryptography->authlib>=1.6.11->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.6478420Z   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+2026-08-04T15:27:44.6715111Z Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=4.20.0->mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.6818655Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+2026-08-04T15:27:44.7121345Z Collecting referencing>=0.28.4 (from jsonschema>=4.20.0->mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.7229156Z   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+2026-08-04T15:27:44.9109553Z Collecting rpds-py>=0.25.0 (from jsonschema>=4.20.0->mcp<2,>=1.9.2->agno==2.8.6)
+2026-08-04T15:27:44.9215176Z   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+2026-08-04T15:27:44.9440028Z Collecting pathable<0.7.0,>=0.6.0 (from jsonschema-path>=0.3.4->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.9539621Z   Downloading pathable-0.6.0-py3-none-any.whl.metadata (7.2 kB)
+2026-08-04T15:27:44.9807372Z Collecting SecretStorage>=3.2 (from keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:44.9907399Z   Downloading secretstorage-3.5.0-py3-none-any.whl.metadata (4.0 kB)
+2026-08-04T15:27:45.0118817Z Collecting jeepney>=0.4.2 (from keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.0221015Z   Downloading jeepney-0.9.0-py3-none-any.whl.metadata (1.2 kB)
+2026-08-04T15:27:45.0430783Z Collecting jaraco.classes (from keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.0531592Z   Downloading jaraco.classes-3.4.0-py3-none-any.whl.metadata (2.6 kB)
+2026-08-04T15:27:45.0830256Z Collecting jaraco.functools (from keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.0931332Z   Downloading jaraco_functools-4.6.0-py3-none-any.whl.metadata (2.9 kB)
+2026-08-04T15:27:45.1145052Z Collecting jaraco.context (from keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.1245785Z   Downloading jaraco_context-6.1.2-py3-none-any.whl.metadata (4.2 kB)
+2026-08-04T15:27:45.1536675Z Collecting email-validator>=2.0.0 (from pydantic[email]>=2.11.7->fastmcp-slim==3.4.5->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.1641173Z   Downloading email_validator-2.3.0-py3-none-any.whl.metadata (26 kB)
+2026-08-04T15:27:45.1881817Z Collecting dnspython>=2.0.0 (from email-validator>=2.0.0->pydantic[email]>=2.11.7->fastmcp-slim==3.4.5->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.1983780Z   Downloading dnspython-2.8.0-py3-none-any.whl.metadata (5.7 kB)
+2026-08-04T15:27:45.2139593Z Requirement already satisfied: markdown-it-py>=2.2.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from rich->agnoctl==0.1.3) (4.2.0)
+2026-08-04T15:27:45.2157668Z Requirement already satisfied: mdurl~=0.1 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from markdown-it-py>=2.2.0->rich->agnoctl==0.1.3) (0.1.2)
+2026-08-04T15:27:45.2482815Z Collecting click>=7.0 (from uvicorn>=0.35->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.2582751Z   Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+2026-08-04T15:27:45.2954035Z Collecting primp>=1.2.3 (from ddgs->agno==2.8.6)
+2026-08-04T15:27:45.3057131Z   Downloading primp-1.3.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.7 kB)
+2026-08-04T15:27:45.4534930Z Collecting lxml>=4.9.4 (from ddgs->agno==2.8.6)
+2026-08-04T15:27:45.4636542Z   Downloading lxml-6.1.1-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+2026-08-04T15:27:45.4852863Z Collecting fake-useragent>=2.2.0 (from ddgs->agno==2.8.6)
+2026-08-04T15:27:45.4953031Z   Downloading fake_useragent-2.2.0-py3-none-any.whl.metadata (17 kB)
+2026-08-04T15:27:45.5567009Z Collecting brotli (from httpx[brotli,http2,socks]>=0.28.1->ddgs->agno==2.8.6)
+2026-08-04T15:27:45.5667789Z   Downloading brotli-1.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.1 kB)
+2026-08-04T15:27:45.5894951Z Collecting h2<5,>=3 (from httpx[brotli,http2,socks]>=0.28.1->ddgs->agno==2.8.6)
+2026-08-04T15:27:45.5996229Z   Downloading h2-4.4.1-py3-none-any.whl.metadata (3.8 kB)
+2026-08-04T15:27:45.6204137Z Collecting socksio==1.* (from httpx[brotli,http2,socks]>=0.28.1->ddgs->agno==2.8.6)
+2026-08-04T15:27:45.6304229Z   Downloading socksio-1.0.0-py3-none-any.whl.metadata (6.1 kB)
+2026-08-04T15:27:45.6544144Z Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[brotli,http2,socks]>=0.28.1->ddgs->agno==2.8.6)
+2026-08-04T15:27:45.6645479Z   Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+2026-08-04T15:27:45.6856441Z Collecting hpack<5,>=4.2 (from h2<5,>=3->httpx[brotli,http2,socks]>=0.28.1->ddgs->agno==2.8.6)
+2026-08-04T15:27:45.6957189Z   Downloading hpack-4.2.0-py3-none-any.whl.metadata (3.3 kB)
+2026-08-04T15:27:45.7272119Z Collecting more-itertools (from jaraco.classes->keyring>=25.6.0->py-key-value-aio[filetree,keyring,memory]<0.5.0,>=0.4.4; extra == "client"->fastmcp-slim[client,server]==3.4.5->fastmcp<4,>=3.4.3->agno==2.8.6)
+2026-08-04T15:27:45.7374529Z   Downloading more_itertools-11.1.0-py3-none-any.whl.metadata (41 kB)
+2026-08-04T15:27:45.7487289Z Requirement already satisfied: pytest!=8.2.2,>=8.2 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pytest-rerunfailures->agno==2.8.6) (9.1.1)
+2026-08-04T15:27:45.7504728Z Requirement already satisfied: iniconfig>=1.0.1 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pytest!=8.2.2,>=8.2->pytest-rerunfailures->agno==2.8.6) (2.3.0)
+2026-08-04T15:27:45.7510103Z Requirement already satisfied: pluggy<2,>=1.5 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pytest!=8.2.2,>=8.2->pytest-rerunfailures->agno==2.8.6) (1.6.0)
+2026-08-04T15:27:45.8564673Z Collecting greenlet>=1 (from sqlalchemy->agno==2.8.6)
+2026-08-04T15:27:45.8664961Z   Downloading greenlet-3.5.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+2026-08-04T15:27:45.8731203Z Requirement already satisfied: shellingham>=1.3.0 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from typer->agnoctl==0.1.3) (1.5.4)
+2026-08-04T15:27:45.8736023Z Requirement already satisfied: annotated-doc>=0.0.2 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from typer->agnoctl==0.1.3) (0.0.5)
+2026-08-04T15:27:45.9576284Z Collecting pandas>=1.3.0 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:45.9675727Z   Downloading pandas-3.0.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (79 kB)
+2026-08-04T15:27:46.1210930Z Collecting numpy>=1.16.5 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.1310608Z   Downloading numpy-2.5.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-08-04T15:27:46.1521267Z Collecting multitasking>=0.0.7 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.1622823Z   Downloading multitasking-0.0.13-py3-none-any.whl.metadata (16 kB)
+2026-08-04T15:27:46.1989894Z Collecting pytz>=2022.5 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.2091949Z   Downloading pytz-2026.3.post1-py2.py3-none-any.whl.metadata (22 kB)
+2026-08-04T15:27:46.2556314Z Collecting peewee>=3.16.2 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.2658410Z   Downloading peewee-4.3.0-py3-none-any.whl.metadata (10 kB)
+2026-08-04T15:27:46.2899124Z Collecting beautifulsoup4>=4.11.1 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.3000610Z   Downloading beautifulsoup4-4.15.0-py3-none-any.whl.metadata (3.8 kB)
+2026-08-04T15:27:46.3481563Z Collecting curl_cffi>=0.15 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.3584796Z   Downloading curl_cffi-0.16.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (17 kB)
+2026-08-04T15:27:46.4982856Z Collecting protobuf>=3.19.0 (from yfinance->agno==2.8.6)
+2026-08-04T15:27:46.5083280Z   Downloading protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+2026-08-04T15:27:46.5352853Z Collecting soupsieve>=1.6.1 (from beautifulsoup4>=4.11.1->yfinance->agno==2.8.6)
+2026-08-04T15:27:46.5454121Z   Downloading soupsieve-2.9.1-py3-none-any.whl.metadata (4.6 kB)
+2026-08-04T15:27:46.5555850Z Requirement already satisfied: python-dateutil>=2.8.2 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from pandas>=1.3.0->yfinance->agno==2.8.6) (2.9.0.post0)
+2026-08-04T15:27:46.5598208Z Requirement already satisfied: six>=1.5 in /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages (from python-dateutil>=2.8.2->pandas>=1.3.0->yfinance->agno==2.8.6) (1.17.0)
+2026-08-04T15:27:46.5753784Z Downloading exa_py-2.16.2-py3-none-any.whl (86 kB)
+2026-08-04T15:27:46.5895956Z Downloading openai-2.53.0-py3-none-any.whl (1.7 MB)
+2026-08-04T15:27:46.6389100Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 37.5 MB/s  0:00:00
+2026-08-04T15:27:46.6490995Z Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+2026-08-04T15:27:46.6628330Z Downloading jiter-0.16.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (343 kB)
+2026-08-04T15:27:46.6761522Z Downloading tqdm-4.70.0-py3-none-any.whl (80 kB)
+2026-08-04T15:27:46.6891200Z Downloading fastmcp-3.4.5-py3-none-any.whl (8.0 kB)
+2026-08-04T15:27:46.7019972Z Downloading fastmcp_slim-3.4.5-py3-none-any.whl (766 kB)
+2026-08-04T15:27:46.7079823Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 766.5/766.5 kB 125.6 MB/s  0:00:00
+2026-08-04T15:27:46.7184017Z Downloading mcp-1.29.0-py3-none-any.whl (223 kB)
+2026-08-04T15:27:46.7320791Z Downloading py_key_value_aio-0.4.5-py3-none-any.whl (170 kB)
+2026-08-04T15:27:46.7475798Z Downloading aiofile-3.12.0-py3-none-any.whl (20 kB)
+2026-08-04T15:27:46.7598859Z Downloading caio-0.12.2-cp312-cp312-manylinux_2_34_x86_64.whl (196 kB)
+2026-08-04T15:27:46.7732808Z Downloading authlib-1.7.2-py2.py3-none-any.whl (259 kB)
+2026-08-04T15:27:46.7867510Z Downloading beartype-0.22.9-py3-none-any.whl (1.3 MB)
+2026-08-04T15:27:46.7941742Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 197.4 MB/s  0:00:00
+2026-08-04T15:27:46.8045798Z Downloading cachetools-7.1.7-py3-none-any.whl (16 kB)
+2026-08-04T15:27:46.8173904Z Downloading cyclopts-4.22.5-py3-none-any.whl (234 kB)
+2026-08-04T15:27:46.8307140Z Downloading rich_rst-2.1.0-py3-none-any.whl (272 kB)
+2026-08-04T15:27:46.8438799Z Downloading exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+2026-08-04T15:27:46.8572649Z Downloading griffelib-2.1.0-py3-none-any.whl (142 kB)
+2026-08-04T15:27:46.8701993Z Downloading httpx_sse-0.4.3-py3-none-any.whl (9.0 kB)
+2026-08-04T15:27:46.8831322Z Downloading joserfc-1.7.4-py3-none-any.whl (71 kB)
+2026-08-04T15:27:46.8966836Z Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-08-04T15:27:46.9306174Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 141.3 MB/s  0:00:00
+2026-08-04T15:27:46.9410097Z Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-08-04T15:27:46.9540117Z Downloading jsonref-1.1.0-py3-none-any.whl (9.4 kB)
+2026-08-04T15:27:46.9692387Z Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-08-04T15:27:46.9822847Z Downloading jsonschema_path-0.5.0-py3-none-any.whl (24 kB)
+2026-08-04T15:27:47.0001667Z Downloading pathable-0.6.0-py3-none-any.whl (18 kB)
+2026-08-04T15:27:47.0136808Z Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-08-04T15:27:47.0261687Z Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-08-04T15:27:47.0387475Z Downloading keyring-25.7.0-py3-none-any.whl (39 kB)
+2026-08-04T15:27:47.0516911Z Downloading jeepney-0.9.0-py3-none-any.whl (49 kB)
+2026-08-04T15:27:47.0646758Z Downloading openapi_pydantic-0.5.1-py3-none-any.whl (96 kB)
+2026-08-04T15:27:47.0778972Z Downloading opentelemetry_api-1.44.0-py3-none-any.whl (60 kB)
+2026-08-04T15:27:47.0907798Z Downloading platformdirs-4.11.0-py3-none-any.whl (23 kB)
+2026-08-04T15:27:47.1050615Z Downloading email_validator-2.3.0-py3-none-any.whl (35 kB)
+2026-08-04T15:27:47.1178759Z Downloading dnspython-2.8.0-py3-none-any.whl (331 kB)
+2026-08-04T15:27:47.1312540Z Downloading pyjwt-2.13.0-py3-none-any.whl (31 kB)
+2026-08-04T15:27:47.1444780Z Downloading pyperclip-1.11.0-py3-none-any.whl (11 kB)
+2026-08-04T15:27:47.1575868Z Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+2026-08-04T15:27:47.1710056Z Downloading secretstorage-3.5.0-py3-none-any.whl (15 kB)
+2026-08-04T15:27:47.1865019Z Downloading sse_starlette-3.4.6-py3-none-any.whl (16 kB)
+2026-08-04T15:27:47.1994344Z Downloading starlette-1.3.1-py3-none-any.whl (73 kB)
+2026-08-04T15:27:47.2125198Z Downloading uncalled_for-0.3.2-py3-none-any.whl (11 kB)
+2026-08-04T15:27:47.2252909Z Downloading uvicorn-0.52.1-py3-none-any.whl (79 kB)
+2026-08-04T15:27:47.2382899Z Downloading click-8.4.2-py3-none-any.whl (119 kB)
+2026-08-04T15:27:47.2520114Z Downloading watchfiles-1.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2026-08-04T15:27:47.2655726Z Downloading websockets-17.0.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (220 kB)
+2026-08-04T15:27:47.2786258Z Downloading ddgs-9.14.4-py3-none-any.whl (70 kB)
+2026-08-04T15:27:47.2916962Z Downloading fake_useragent-2.2.0-py3-none-any.whl (161 kB)
+2026-08-04T15:27:47.3047321Z Downloading h2-4.4.1-py3-none-any.whl (62 kB)
+2026-08-04T15:27:47.3182697Z Downloading hpack-4.2.0-py3-none-any.whl (34 kB)
+2026-08-04T15:27:47.3308398Z Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+2026-08-04T15:27:47.3432713Z Downloading socksio-1.0.0-py3-none-any.whl (12 kB)
+2026-08-04T15:27:47.3557411Z Downloading lxml-6.1.1-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.2 MB)
+2026-08-04T15:27:47.4026846Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 110.3 MB/s  0:00:00
+2026-08-04T15:27:47.4129480Z Downloading primp-1.3.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.3 MB)
+2026-08-04T15:27:47.4473909Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 156.1 MB/s  0:00:00
+2026-08-04T15:27:47.4576097Z Downloading brotli-1.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.4 MB)
+2026-08-04T15:27:47.4635478Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 272.1 MB/s  0:00:00
+2026-08-04T15:27:47.4736480Z Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+2026-08-04T15:27:47.4862546Z Downloading jaraco_context-6.1.2-py3-none-any.whl (7.9 kB)
+2026-08-04T15:27:47.4987104Z Downloading jaraco_functools-4.6.0-py3-none-any.whl (11 kB)
+2026-08-04T15:27:47.5112679Z Downloading more_itertools-11.1.0-py3-none-any.whl (72 kB)
+2026-08-04T15:27:47.5237388Z Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+2026-08-04T15:27:47.5680573Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 156.7 MB/s  0:00:00
+2026-08-04T15:27:47.5786050Z Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+2026-08-04T15:27:47.5919436Z Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+2026-08-04T15:27:47.6048183Z Downloading sqlalchemy-2.0.51-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+2026-08-04T15:27:47.6235468Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 183.2 MB/s  0:00:00
+2026-08-04T15:27:47.6338152Z Downloading greenlet-3.5.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+2026-08-04T15:27:47.6387208Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 621.5/621.5 kB 106.6 MB/s  0:00:00
+2026-08-04T15:27:47.6488910Z Downloading yfinance-1.5.2-py2.py3-none-any.whl (144 kB)
+2026-08-04T15:27:47.6620812Z Downloading beautifulsoup4-4.15.0-py3-none-any.whl (109 kB)
+2026-08-04T15:27:47.6747249Z Downloading curl_cffi-0.16.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (13.5 MB)
+2026-08-04T15:27:47.7604157Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 157.4 MB/s  0:00:00
+2026-08-04T15:27:47.7704220Z Downloading multitasking-0.0.13-py3-none-any.whl (16 kB)
+2026-08-04T15:27:47.7827729Z Downloading numpy-2.5.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-08-04T15:27:47.8810985Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.7/16.7 MB 170.2 MB/s  0:00:00
+2026-08-04T15:27:47.8913788Z Downloading pandas-3.0.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.0 MB)
+2026-08-04T15:27:47.9606569Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.0/11.0 MB 159.6 MB/s  0:00:00
+2026-08-04T15:27:47.9708327Z Downloading peewee-4.3.0-py3-none-any.whl (179 kB)
+2026-08-04T15:27:47.9840820Z Downloading protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.whl (327 kB)
+2026-08-04T15:27:48.0006314Z Downloading pytz-2026.3.post1-py2.py3-none-any.whl (508 kB)
+2026-08-04T15:27:48.0144561Z Downloading soupsieve-2.9.1-py3-none-any.whl (37 kB)
+2026-08-04T15:27:48.2404815Z Building wheels for collected packages: agnoctl, agno
+2026-08-04T15:27:48.2408726Z   Building editable for agnoctl (pyproject.toml): started
+2026-08-04T15:27:48.4078869Z   Building editable for agnoctl (pyproject.toml): finished with status 'done'
+2026-08-04T15:27:48.4085365Z   Created wheel for agnoctl: filename=agnoctl-0.1.3-0.editable-py3-none-any.whl size=11854 sha256=81f70047dc32968e0777b2ffbe2a659b339d36bfdedc4acd8b5db4952e3cfdc9
+2026-08-04T15:27:48.4087561Z   Stored in directory: /tmp/pip-ephem-wheel-cache-e2ojfbun/wheels/31/7a/2b/585771616b4541537d127d7bfaef475b2f4ae8b12613662caf
+2026-08-04T15:27:48.4124311Z   Building editable for agno (pyproject.toml): started
+2026-08-04T15:27:48.7234607Z   Building editable for agno (pyproject.toml): finished with status 'done'
+2026-08-04T15:27:48.7240510Z   Created wheel for agno: filename=agno-2.8.6-0.editable-py3-none-any.whl size=14938 sha256=c5fb58c17925d3870f6e7c3c979e59284e3d176e6a9c1eea137134835867795c
+2026-08-04T15:27:48.7242877Z   Stored in directory: /tmp/pip-ephem-wheel-cache-e2ojfbun/wheels/a9/55/1b/60c84eb54a46ece9335b647a274aa7d30fb408cb188953012a
+2026-08-04T15:27:48.7312989Z Successfully built agnoctl agno
+2026-08-04T15:27:48.8766848Z Installing collected packages: pytz, pyperclip, multitasking, brotli, websockets, uncalled-for, tqdm, soupsieve, socksio, sniffio, rpds-py, PyJWT, pycparser, protobuf, primp, platformdirs, Pillow, peewee, pathable, opentelemetry-api, numpy, more-itertools, lxml, jsonref, jiter, jeepney, jaraco.context, hyperframe, httpx-sse, hpack, griffelib, greenlet, fake-useragent, exceptiongroup, dnspython, distro, click, caio, cachetools, beartype, watchfiles, uvicorn, starlette, sqlalchemy, referencing, py-key-value-aio, pandas, jaraco.functools, jaraco.classes, h2, email-validator, cffi, beautifulsoup4, aiofile, sse-starlette, rich-rst, openapi-pydantic, openai, jsonschema-specifications, jsonschema-path, curl_cffi, cryptography, yfinance, SecretStorage, jsonschema, joserfc, fastmcp-slim, exa_py, ddgs, cyclopts, agnoctl, mcp, keyring, authlib, agno, fastmcp
+2026-08-04T15:28:00.2641996Z 
+2026-08-04T15:28:00.2709370Z Successfully installed Pillow-12.3.0 PyJWT-2.13.0 SecretStorage-3.5.0 agno-2.8.6 agnoctl-0.1.3 aiofile-3.12.0 authlib-1.7.2 beartype-0.22.9 beautifulsoup4-4.15.0 brotli-1.2.0 cachetools-7.1.7 caio-0.12.2 cffi-2.1.1 click-8.4.2 cryptography-50.0.0 curl_cffi-0.16.0 cyclopts-4.22.5 ddgs-9.14.4 distro-1.9.0 dnspython-2.8.0 email-validator-2.3.0 exa_py-2.16.2 exceptiongroup-1.3.1 fake-useragent-2.2.0 fastmcp-3.4.5 fastmcp-slim-3.4.5 greenlet-3.5.4 griffelib-2.1.0 h2-4.4.1 hpack-4.2.0 httpx-sse-0.4.3 hyperframe-6.1.0 jaraco.classes-3.4.0 jaraco.context-6.1.2 jaraco.functools-4.6.0 jeepney-0.9.0 jiter-0.16.0 joserfc-1.7.4 jsonref-1.1.0 jsonschema-4.26.0 jsonschema-path-0.5.0 jsonschema-specifications-2025.9.1 keyring-25.7.0 lxml-6.1.1 mcp-1.29.0 more-itertools-11.1.0 multitasking-0.0.13 numpy-2.5.1 openai-2.53.0 openapi-pydantic-0.5.1 opentelemetry-api-1.44.0 pandas-3.0.5 pathable-0.6.0 peewee-4.3.0 platformdirs-4.11.0 primp-1.3.1 protobuf-7.35.1 py-key-value-aio-0.4.5 pycparser-3.0 pyperclip-1.11.0 pytz-2026.3.post1 referencing-0.37.0 rich-rst-2.1.0 rpds-py-2026.6.3 sniffio-1.3.1 socksio-1.0.0 soupsieve-2.9.1 sqlalchemy-2.0.51 sse-starlette-3.4.6 starlette-1.3.1 tqdm-4.70.0 uncalled-for-0.3.2 uvicorn-0.52.1 watchfiles-1.2.0 websockets-17.0.1 yfinance-1.5.2
+2026-08-04T15:28:00.4342031Z 
+2026-08-04T15:28:00.4342795Z === Running deepinfra tests ===
+2026-08-04T15:28:00.4344316Z Running tests in tests/integration/models/deepinfra
+2026-08-04T15:28:02.0489136Z ============================= test session starts ==============================
+2026-08-04T15:28:02.0490596Z platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/agno/agno/.venv/bin/python
+2026-08-04T15:28:02.0491453Z cachedir: .pytest_cache
+2026-08-04T15:28:02.0491929Z rootdir: /home/runner/work/agno/agno/libs/agno
+2026-08-04T15:28:02.0492437Z configfile: pyproject.toml
+2026-08-04T15:28:02.0493047Z plugins: anyio-4.14.2, asyncio-1.4.0, rerunfailures-16.4, timeout-2.4.0
+2026-08-04T15:28:02.0493982Z asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+2026-08-04T15:28:03.0558259Z collecting ... collected 17 items
+2026-08-04T15:28:03.0558728Z 
+2026-08-04T15:28:04.7585157Z tests/integration/models/deepinfra/test_basic.py::test_basic PASSED      [  5%]
+2026-08-04T15:28:06.7316779Z tests/integration/models/deepinfra/test_basic.py::test_basic_stream PASSED [ 11%]
+2026-08-04T15:28:08.0560827Z tests/integration/models/deepinfra/test_basic.py::test_async_basic PASSED [ 17%]
+2026-08-04T15:28:09.2410604Z tests/integration/models/deepinfra/test_basic.py::test_async_basic_stream PASSED [ 23%]
+2026-08-04T15:28:11.5251750Z tests/integration/models/deepinfra/test_basic.py::test_with_memory PASSED [ 29%]
+2026-08-04T15:28:13.7522797Z tests/integration/models/deepinfra/test_basic.py::test_structured_output PASSED [ 35%]
+2026-08-04T15:28:18.4073599Z tests/integration/models/deepinfra/test_basic.py::test_history PASSED    [ 41%]
+2026-08-04T15:28:24.2215870Z tests/integration/models/deepinfra/test_structured_response.py::test_structured_response PASSED [ 47%]
+2026-08-04T15:28:25.3766792Z tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_with_enum_fields 
+2026-08-04T15:28:25.3768013Z -------------------------------- live log call ---------------------------------
+2026-08-04T15:28:25.3768937Z WARNING  agno:log.py:225 Failed to parse cleaned JSON: 1 validation error for Recipe
+2026-08-04T15:28:25.3769999Z rating
+2026-08-04T15:28:25.3770634Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#A-'}, input_type=dict]
+2026-08-04T15:28:25.3771493Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:28:25.3777967Z WARNING  agno:log.py:225 Validation failed on merged data: 1 validation error for Recipe
+2026-08-04T15:28:25.3778698Z rating
+2026-08-04T15:28:25.3779559Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#A-'}, input_type=dict]
+2026-08-04T15:28:25.3780562Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:28:25.3783404Z WARNING  agno:string.py:226 All parsing attempts failed.
+2026-08-04T15:28:25.3787956Z WARNING  agno:log.py:225 Failed to convert response to output_schema
+2026-08-04T15:28:25.4785753Z RERUN                                                                    [ 52%]
+2026-08-04T15:28:27.4693845Z tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_with_enum_fields 
+2026-08-04T15:28:27.4694943Z -------------------------------- live log call ---------------------------------
+2026-08-04T15:28:27.4695915Z WARNING  agno:log.py:225 Failed to parse cleaned JSON: 1 validation error for Recipe
+2026-08-04T15:28:27.4696541Z rating
+2026-08-04T15:28:27.4697207Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''}, input_type=dict]
+2026-08-04T15:28:27.4698161Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:28:27.4704739Z WARNING  agno:log.py:225 Validation failed on merged data: 1 validation error for Recipe
+2026-08-04T15:28:27.4705467Z rating
+2026-08-04T15:28:27.4706453Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''}, input_type=dict]
+2026-08-04T15:28:27.4707654Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:28:27.4710253Z WARNING  agno:string.py:226 All parsing attempts failed.
+2026-08-04T15:28:27.4714775Z WARNING  agno:log.py:225 Failed to convert response to output_schema
+2026-08-04T15:28:27.4755005Z FAILED                                                                   [ 52%]
+2026-08-04T15:28:33.0882678Z tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_strict_output_false PASSED [ 58%]
+2026-08-04T15:28:38.3907405Z tests/integration/models/deepinfra/test_tool_use.py::test_tool_use PASSED [ 64%]
+2026-08-04T15:28:42.5376886Z tests/integration/models/deepinfra/test_tool_use.py::test_tool_use_stream PASSED [ 70%]
+2026-08-04T15:28:47.0911719Z tests/integration/models/deepinfra/test_tool_use.py::test_async_tool_use PASSED [ 76%]
+2026-08-04T15:28:47.1135445Z tests/integration/models/deepinfra/test_tool_use.py::test_async_tool_use_stream 
+2026-08-04T15:28:47.1136497Z -------------------------------- live log call ---------------------------------
+2026-08-04T15:28:47.1137610Z ERROR    asyncio:base_events.py:1833 Task exception was never retrieved
+2026-08-04T15:28:47.1139334Z future: <Task finished name='Task-23' coro=<AsyncClient.aclose() done, defined at /home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+2026-08-04T15:28:47.1140232Z Traceback (most recent call last):
+2026-08-04T15:28:47.1148980Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1985, in aclose
+2026-08-04T15:28:47.1149914Z     await self._transport.aclose()
+2026-08-04T15:28:47.1150648Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 406, in aclose
+2026-08-04T15:28:47.1151249Z     await self._pool.aclose()
+2026-08-04T15:28:47.1151833Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+2026-08-04T15:28:47.1152561Z     await self._close_connections(closing_connections)
+2026-08-04T15:28:47.1153350Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+2026-08-04T15:28:47.1153930Z     await connection.aclose()
+2026-08-04T15:28:47.1154597Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 173, in aclose
+2026-08-04T15:28:47.1155149Z     await self._connection.aclose()
+2026-08-04T15:28:47.1155856Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpcore/_async/http11.py", line 258, in aclose
+2026-08-04T15:28:47.1156497Z     await self._network_stream.aclose()
+2026-08-04T15:28:47.1156976Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+2026-08-04T15:28:47.1157564Z     await self._stream.aclose()
+2026-08-04T15:28:47.1158078Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/anyio/streams/tls.py", line 248, in aclose
+2026-08-04T15:28:47.1158637Z     await self.transport_stream.aclose()
+2026-08-04T15:28:47.1159356Z   File "/home/runner/work/agno/agno/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+2026-08-04T15:28:47.1159875Z     self._transport.close()
+2026-08-04T15:28:47.1160427Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/selector_events.py", line 1213, in close
+2026-08-04T15:28:47.1160923Z     super().close()
+2026-08-04T15:28:47.1161529Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/selector_events.py", line 875, in close
+2026-08-04T15:28:47.1162084Z     self._loop.call_soon(self._call_connection_lost, None)
+2026-08-04T15:28:47.1162601Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 799, in call_soon
+2026-08-04T15:28:47.1163190Z     self._check_closed()
+2026-08-04T15:28:47.1163808Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 545, in _check_closed
+2026-08-04T15:28:47.1183501Z ##[error]    raise RuntimeError('Event loop is closed')
+2026-08-04T15:28:47.1188796Z RuntimeError: Event loop is closed
+2026-08-04T15:28:50.9687254Z PASSED                                                                   [ 82%]
+2026-08-04T15:28:59.6785086Z tests/integration/models/deepinfra/test_tool_use.py::test_parallel_tool_calls PASSED [ 88%]
+2026-08-04T15:29:13.7197730Z tests/integration/models/deepinfra/test_tool_use.py::test_tool_call_custom_tool_no_parameters PASSED [ 94%]
+2026-08-04T15:29:41.6200754Z tests/integration/models/deepinfra/test_tool_use.py::test_tool_call_custom_tool_optional_parameters PASSED [100%]
+2026-08-04T15:29:41.6201332Z 
+2026-08-04T15:29:41.6201726Z =================================== FAILURES ===================================
+2026-08-04T15:29:41.6202235Z __________________ test_structured_response_with_enum_fields ___________________
+2026-08-04T15:29:41.6202578Z 
+2026-08-04T15:29:41.6203033Z     def test_structured_response_with_enum_fields():
+2026-08-04T15:29:41.6203565Z         class Grade(enum.Enum):
+2026-08-04T15:29:41.6203919Z             A_PLUS = "a+"
+2026-08-04T15:29:41.6204422Z             A = "a"
+2026-08-04T15:29:41.6204687Z             B = "b"
+2026-08-04T15:29:41.6204933Z             C = "c"
+2026-08-04T15:29:41.6205221Z             D = "d"
+2026-08-04T15:29:41.6205463Z             F = "f"
+2026-08-04T15:29:41.6205737Z     
+2026-08-04T15:29:41.6205980Z         class Recipe(BaseModel):
+2026-08-04T15:29:41.6206250Z             recipe_name: str
+2026-08-04T15:29:41.6206696Z             rating: Grade
+2026-08-04T15:29:41.6206982Z     
+2026-08-04T15:29:41.6207689Z         structured_output_agent = Agent(
+2026-08-04T15:29:41.6208076Z             model=DeepInfra(id="meta-llama/Llama-2-70b-chat-hf"),
+2026-08-04T15:29:41.6208502Z             description="You help generate recipe names and ratings.",
+2026-08-04T15:29:41.6208926Z             output_schema=Recipe,
+2026-08-04T15:29:41.6209374Z         )
+2026-08-04T15:29:41.6209722Z         response = structured_output_agent.run("Generate a recipe name and rating.")
+2026-08-04T15:29:41.6210146Z         assert response.content is not None
+2026-08-04T15:29:41.6210498Z >       assert isinstance(response.content.rating, Grade)
+2026-08-04T15:29:41.6210903Z                           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-08-04T15:29:41.6211255Z E       AttributeError: 'str' object has no attribute 'rating'
+2026-08-04T15:29:41.6211471Z 
+2026-08-04T15:29:41.6211718Z tests/integration/models/deepinfra/test_structured_response.py:61: AttributeError
+2026-08-04T15:29:41.6212199Z ----------------------------- Captured stdout call -----------------------------
+2026-08-04T15:29:41.6212651Z WARNING  Failed to parse cleaned JSON: 1 validation error for Recipe            
+2026-08-04T15:29:41.6213272Z          rating                                                                 
+2026-08-04T15:29:41.6213848Z            Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum,          
+2026-08-04T15:29:41.6214393Z          input_value={'$ref': '#A-'}, input_type=dict]                          
+2026-08-04T15:29:41.6214998Z              For further information visit                                      
+2026-08-04T15:29:41.6215954Z          https://errors.pydantic.dev/2.13/v/enum                                
+2026-08-04T15:29:41.6217308Z WARNING  Validation failed on merged data: 1 validation error for Recipe        
+2026-08-04T15:29:41.6218223Z          rating                                                                 
+2026-08-04T15:29:41.6219107Z            Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum,          
+2026-08-04T15:29:41.6220168Z          input_value={'$ref': '#A-'}, input_type=dict]                          
+2026-08-04T15:29:41.6221103Z              For further information visit                                      
+2026-08-04T15:29:41.6222077Z          https://errors.pydantic.dev/2.13/v/enum                                
+2026-08-04T15:29:41.6223089Z WARNING  All parsing attempts failed.                                           
+2026-08-04T15:29:41.6224143Z WARNING  Failed to convert response to output_schema                            
+2026-08-04T15:29:41.6225142Z ------------------------------ Captured log call -------------------------------
+2026-08-04T15:29:41.6226180Z WARNING  agno:log.py:225 Failed to parse cleaned JSON: 1 validation error for Recipe
+2026-08-04T15:29:41.6227039Z rating
+2026-08-04T15:29:41.6227745Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#A-'}, input_type=dict]
+2026-08-04T15:29:41.6228803Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:29:41.6230093Z WARNING  agno:log.py:225 Validation failed on merged data: 1 validation error for Recipe
+2026-08-04T15:29:41.6231000Z rating
+2026-08-04T15:29:41.6231737Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#A-'}, input_type=dict]
+2026-08-04T15:29:41.6232824Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:29:41.6233915Z WARNING  agno:string.py:226 All parsing attempts failed.
+2026-08-04T15:29:41.6234960Z WARNING  agno:log.py:225 Failed to convert response to output_schema
+2026-08-04T15:29:41.6235887Z ----------------------------- Captured stdout call -----------------------------
+2026-08-04T15:29:41.6236940Z WARNING  Failed to parse cleaned JSON: 1 validation error for Recipe            
+2026-08-04T15:29:41.6237824Z          rating                                                                 
+2026-08-04T15:29:41.6238597Z            Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum,          
+2026-08-04T15:29:41.6239675Z          input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''},      
+2026-08-04T15:29:41.6240531Z          input_type=dict]                                                       
+2026-08-04T15:29:41.6241463Z              For further information visit                                      
+2026-08-04T15:29:41.6242400Z          https://errors.pydantic.dev/2.13/v/enum                                
+2026-08-04T15:29:41.6243405Z WARNING  Validation failed on merged data: 1 validation error for Recipe        
+2026-08-04T15:29:41.6244407Z          rating                                                                 
+2026-08-04T15:29:41.6245201Z            Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum,          
+2026-08-04T15:29:41.6246090Z          input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''},      
+2026-08-04T15:29:41.6247013Z          input_type=dict]                                                       
+2026-08-04T15:29:41.6247862Z              For further information visit                                      
+2026-08-04T15:29:41.6248874Z          https://errors.pydantic.dev/2.13/v/enum                                
+2026-08-04T15:29:41.6250042Z WARNING  All parsing attempts failed.                                           
+2026-08-04T15:29:41.6251069Z WARNING  Failed to convert response to output_schema                            
+2026-08-04T15:29:41.6252058Z ------------------------------ Captured log call -------------------------------
+2026-08-04T15:29:41.6253082Z WARNING  agno:log.py:225 Failed to parse cleaned JSON: 1 validation error for Recipe
+2026-08-04T15:29:41.6254000Z rating
+2026-08-04T15:29:41.6255363Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''}, input_type=dict]
+2026-08-04T15:29:41.6256658Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:29:41.6257719Z WARNING  agno:log.py:225 Validation failed on merged data: 1 validation error for Recipe
+2026-08-04T15:29:41.6258583Z rating
+2026-08-04T15:29:41.6259642Z   Input should be 'a+', 'a', 'b', 'c', 'd' or 'f' [type=enum, input_value={'$ref': '#Grade', 'type'...'f'], 'description': ''}, input_type=dict]
+2026-08-04T15:29:41.6260908Z     For further information visit https://errors.pydantic.dev/2.13/v/enum
+2026-08-04T15:29:41.6261834Z WARNING  agno:string.py:226 All parsing attempts failed.
+2026-08-04T15:29:41.6262683Z WARNING  agno:log.py:225 Failed to convert response to output_schema
+2026-08-04T15:29:41.6263518Z =========================== short test summary info ============================
+2026-08-04T15:29:41.6265273Z FAILED tests/integration/models/deepinfra/test_structured_response.py::test_structured_response_with_enum_fields - AttributeError: 'str' object has no attribute 'rating'
+2026-08-04T15:29:41.6266827Z =============== 1 failed, 16 passed, 1 rerun in 99.45s (0:01:39) ===============
+2026-08-04T15:29:41.8800947Z 
+2026-08-04T15:29:41.8802009Z === Test Results ===
+2026-08-04T15:29:41.8802991Z Tests failed for deepinfra
+2026-08-04T15:29:41.8811888Z ##[error]Process completed with exit code 1.
+2026-08-04T15:29:41.8935113Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-08-04T15:29:41.8936276Z Post job cleanup.
+2026-08-04T15:29:41.9494945Z (node:2339) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-08-04T15:29:41.9495561Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-08-04T15:29:41.9519656Z [command]/usr/bin/git version
+2026-08-04T15:29:41.9546600Z git version 2.54.0
+2026-08-04T15:29:41.9572750Z Temporarily overriding HOME='/home/runner/work/_temp/05497e8a-bda5-4e3a-8f5e-79e682b647ae' before making global git config changes
+2026-08-04T15:29:41.9573669Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-04T15:29:41.9576365Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agno/agno
+2026-08-04T15:29:41.9603542Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-04T15:29:41.9627480Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-04T15:29:41.9796612Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-04T15:29:41.9812336Z http.https://github.com/.extraheader
+2026-08-04T15:29:41.9819307Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-08-04T15:29:41.9841622Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-04T15:29:42.0102392Z Cleaning up orphan processes
+2026-08-04T15:29:42.0316233Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v3, actions/setup-python@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

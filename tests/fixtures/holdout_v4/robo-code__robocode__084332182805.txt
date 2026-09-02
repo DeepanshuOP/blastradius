@@ -1,0 +1,1286 @@
+﻿2026-06-30T15:33:46.4389459Z Current runner version: '2.335.1'
+2026-06-30T15:33:46.4422893Z ##[group]Runner Image Provisioner
+2026-06-30T15:33:46.4424283Z Hosted Compute Agent
+2026-06-30T15:33:46.4425227Z Version: 20260611.554
+2026-06-30T15:33:46.4426247Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-30T15:33:46.4427575Z Build Date: 2026-06-11T21:40:46Z
+2026-06-30T15:33:46.4429067Z Worker ID: {b9519a1e-af8d-4221-97e7-9c0e95505254}
+2026-06-30T15:33:46.4430648Z Azure Region: eastus
+2026-06-30T15:33:46.4431663Z ##[endgroup]
+2026-06-30T15:33:46.4433741Z ##[group]Operating System
+2026-06-30T15:33:46.4434796Z Ubuntu
+2026-06-30T15:33:46.4435667Z 24.04.4
+2026-06-30T15:33:46.4436528Z LTS
+2026-06-30T15:33:46.4437319Z ##[endgroup]
+2026-06-30T15:33:46.4438207Z ##[group]Runner Image
+2026-06-30T15:33:46.4439587Z Image: ubuntu-24.04
+2026-06-30T15:33:46.4440512Z Version: 20260622.220.1
+2026-06-30T15:33:46.4442583Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260622.220/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-30T15:33:46.4445287Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260622.220
+2026-06-30T15:33:46.4446932Z ##[endgroup]
+2026-06-30T15:33:46.4448999Z ##[group]GITHUB_TOKEN Permissions
+2026-06-30T15:33:46.4451727Z Contents: read
+2026-06-30T15:33:46.4452637Z Metadata: read
+2026-06-30T15:33:46.4453608Z ##[endgroup]
+2026-06-30T15:33:46.4456578Z Secret source: Dependabot
+2026-06-30T15:33:46.4457886Z Prepare workflow directory
+2026-06-30T15:33:46.4920299Z Prepare all required actions
+2026-06-30T15:33:46.4975017Z Getting action download info
+2026-06-30T15:33:46.7276095Z Download action repository 'actions/checkout@v7' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-06-30T15:33:46.8220050Z Download action repository 'actions/setup-java@v5' (SHA:1bcf9fb12cf4aa7d266a90ae39939e61372fe520)
+2026-06-30T15:33:47.0402102Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-30T15:33:47.1107090Z Download action repository 'dorny/test-reporter@v3' (SHA:a43b3a5f7366b97d083190328d2c652e1a8b6aa2)
+2026-06-30T15:33:47.4298533Z Complete job name: build
+2026-06-30T15:33:47.5097920Z ##[group]Run actions/checkout@v7
+2026-06-30T15:33:47.5099082Z with:
+2026-06-30T15:33:47.5099557Z   repository: robo-code/robocode
+2026-06-30T15:33:47.5104944Z   token: ***
+2026-06-30T15:33:47.5105422Z   ssh-strict: true
+2026-06-30T15:33:47.5105902Z   ssh-user: git
+2026-06-30T15:33:47.5106386Z   persist-credentials: true
+2026-06-30T15:33:47.5106911Z   clean: true
+2026-06-30T15:33:47.5107394Z   sparse-checkout-cone-mode: true
+2026-06-30T15:33:47.5107955Z   fetch-depth: 1
+2026-06-30T15:33:47.5108748Z   fetch-tags: false
+2026-06-30T15:33:47.5109253Z   show-progress: true
+2026-06-30T15:33:47.5109752Z   lfs: false
+2026-06-30T15:33:47.5110203Z   submodules: false
+2026-06-30T15:33:47.5110706Z   set-safe-directory: true
+2026-06-30T15:33:47.5111252Z   allow-unsafe-pr-checkout: false
+2026-06-30T15:33:47.5112267Z ##[endgroup]
+2026-06-30T15:33:47.6371628Z Syncing repository: robo-code/robocode
+2026-06-30T15:33:47.6373516Z ##[group]Getting Git version info
+2026-06-30T15:33:47.6374338Z Working directory is '/home/runner/work/robocode/robocode'
+2026-06-30T15:33:47.6375490Z [command]/usr/bin/git version
+2026-06-30T15:33:47.6679612Z git version 2.54.0
+2026-06-30T15:33:47.6712029Z ##[endgroup]
+2026-06-30T15:33:47.6723136Z Temporarily overriding HOME='/home/runner/work/_temp/0c106659-117f-4bec-8cd0-498fc61d4e7e' before making global git config changes
+2026-06-30T15:33:47.6728756Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-30T15:33:47.6730864Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-06-30T15:33:47.6990475Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-06-30T15:33:47.6994407Z ##[group]Determining repository object format
+2026-06-30T15:33:47.6996421Z ##[endgroup]
+2026-06-30T15:33:47.6997865Z ##[group]Initializing the repository
+2026-06-30T15:33:47.7002295Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-06-30T15:33:47.7649502Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-30T15:33:47.7652377Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-30T15:33:47.7656196Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-30T15:33:47.7658917Z hint: call:
+2026-06-30T15:33:47.7660290Z hint:
+2026-06-30T15:33:47.7661837Z hint: 	git config --global init.defaultBranch <name>
+2026-06-30T15:33:47.7663821Z hint:
+2026-06-30T15:33:47.7666746Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-30T15:33:47.7669830Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-30T15:33:47.7671952Z hint:
+2026-06-30T15:33:47.7673475Z hint: 	git branch -m <name>
+2026-06-30T15:33:47.7675136Z hint:
+2026-06-30T15:33:47.7676336Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-30T15:33:47.7678133Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-06-30T15:33:47.7681763Z [command]/usr/bin/git remote add origin https://github.com/robo-code/robocode
+2026-06-30T15:33:47.8613490Z ##[endgroup]
+2026-06-30T15:33:47.8617852Z ##[group]Disabling automatic garbage collection
+2026-06-30T15:33:47.8620400Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-30T15:33:47.9035154Z ##[endgroup]
+2026-06-30T15:33:47.9040114Z ##[group]Setting up auth
+2026-06-30T15:33:47.9042465Z Removing SSH command configuration
+2026-06-30T15:33:47.9045635Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-30T15:33:47.9087952Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-30T15:33:47.9472610Z Removing HTTP extra header
+2026-06-30T15:33:47.9479803Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-30T15:33:47.9512603Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-30T15:33:47.9727956Z Removing includeIf entries pointing to credentials config files
+2026-06-30T15:33:47.9732707Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-30T15:33:47.9763623Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-30T15:33:47.9985534Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-30T15:33:48.0023729Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/robocode/robocode/.git.path /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:33:48.0052883Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/robocode/robocode/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:33:48.0085500Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:33:48.0117606Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:33:48.0144911Z ##[endgroup]
+2026-06-30T15:33:48.0147195Z ##[group]Fetching the repository
+2026-06-30T15:33:48.0154905Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fe4f4f133368dec06fd5c444b46df6d2838008fd:refs/remotes/origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4044018Z From https://github.com/robo-code/robocode
+2026-06-30T15:33:48.4045632Z  * [new ref]         fe4f4f133368dec06fd5c444b46df6d2838008fd -> origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4103423Z [command]/usr/bin/git branch --list --remote origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4136878Z   origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4146447Z [command]/usr/bin/git rev-parse refs/remotes/origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4169233Z fe4f4f133368dec06fd5c444b46df6d2838008fd
+2026-06-30T15:33:48.4173241Z ##[endgroup]
+2026-06-30T15:33:48.4174144Z ##[group]Determining the checkout info
+2026-06-30T15:33:48.4174991Z ##[endgroup]
+2026-06-30T15:33:48.4180113Z [command]/usr/bin/git sparse-checkout disable
+2026-06-30T15:33:48.4226465Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-30T15:33:48.4255834Z ##[group]Checking out the ref
+2026-06-30T15:33:48.4260303Z [command]/usr/bin/git checkout --progress --force -B dependabot/gradle/all-dependencies-7b8f202699 refs/remotes/origin/dependabot/gradle/all-dependencies-7b8f202699
+2026-06-30T15:33:48.4816551Z Switched to a new branch 'dependabot/gradle/all-dependencies-7b8f202699'
+2026-06-30T15:33:48.4820103Z branch 'dependabot/gradle/all-dependencies-7b8f202699' set up to track 'origin/dependabot/gradle/all-dependencies-7b8f202699'.
+2026-06-30T15:33:48.4830493Z ##[endgroup]
+2026-06-30T15:33:48.4876986Z [command]/usr/bin/git log -1 --format=%H
+2026-06-30T15:33:48.4904504Z fe4f4f133368dec06fd5c444b46df6d2838008fd
+2026-06-30T15:33:48.5285325Z ##[group]Run actions/setup-java@v5
+2026-06-30T15:33:48.5285922Z with:
+2026-06-30T15:33:48.5286236Z   java-version: 17
+2026-06-30T15:33:48.5286571Z   distribution: temurin
+2026-06-30T15:33:48.5287019Z   cache: gradle
+2026-06-30T15:33:48.5287357Z   java-package: jdk
+2026-06-30T15:33:48.5287694Z   check-latest: false
+2026-06-30T15:33:48.5288091Z   server-id: github
+2026-06-30T15:33:48.5288771Z   server-username: GITHUB_ACTOR
+2026-06-30T15:33:48.5289168Z   server-password: GITHUB_TOKEN
+2026-06-30T15:33:48.5289692Z   overwrite-settings: true
+2026-06-30T15:33:48.5290083Z   job-status: success
+2026-06-30T15:33:48.5294585Z   token: ***
+2026-06-30T15:33:48.5294913Z ##[endgroup]
+2026-06-30T15:33:48.6992515Z ##[group]Installed distributions
+2026-06-30T15:33:48.7195827Z Resolved Java 17.0.19+10 from tool-cache
+2026-06-30T15:33:48.7196965Z Setting Java 17.0.19+10 as the default
+2026-06-30T15:33:48.7207573Z Creating toolchains.xml for JDK version 17 from temurin
+2026-06-30T15:33:48.7287782Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-30T15:33:48.7288674Z 
+2026-06-30T15:33:48.7288981Z Java configuration:
+2026-06-30T15:33:48.7289807Z   Distribution: temurin
+2026-06-30T15:33:48.7290586Z   Version: 17.0.19+10
+2026-06-30T15:33:48.7291600Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:33:48.7292480Z 
+2026-06-30T15:33:48.7295358Z ##[endgroup]
+2026-06-30T15:33:48.7337686Z Creating settings.xml with server-id: github
+2026-06-30T15:33:48.7338809Z Writing to /home/runner/.m2/settings.xml
+2026-06-30T15:33:48.9775473Z gradle cache is not found
+2026-06-30T15:33:48.9969225Z ##[group]Run ./gradlew build --stacktrace
+2026-06-30T15:33:48.9969806Z [36;1m./gradlew build --stacktrace[0m
+2026-06-30T15:33:49.0165706Z shell: /usr/bin/bash -e {0}
+2026-06-30T15:33:49.0166171Z env:
+2026-06-30T15:33:49.0166735Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:33:49.0167684Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:33:49.0168745Z ##[endgroup]
+2026-06-30T15:33:50.4654226Z Fetching distribution.
+2026-06-30T15:33:50.4655732Z Downloading https://services.gradle.org/distributions/gradle-9.6.1-bin.zip
+2026-06-30T15:33:53.2511798Z .............10%.............20%..............30%.............40%..............50%.............60%.............70%..............80%.............90%..............100%
+2026-06-30T15:33:54.7739092Z 
+2026-06-30T15:33:54.7749953Z Welcome to Gradle 9.6.1!
+2026-06-30T15:33:54.7750345Z 
+2026-06-30T15:33:54.7759171Z Here are the highlights of this release:
+2026-06-30T15:33:54.7760117Z  - Improved Configuration Cache hit rates
+2026-06-30T15:33:54.7761032Z  - Additional CLI rendering options
+2026-06-30T15:33:54.7761941Z  - Important project hierarchy lookup deprecations
+2026-06-30T15:33:54.7762667Z 
+2026-06-30T15:33:54.7763361Z For more details see https://docs.gradle.org/9.6.1/release-notes.html
+2026-06-30T15:33:54.7764345Z 
+2026-06-30T15:33:54.8723069Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-30T15:34:34.8771312Z > Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-30T15:34:35.7720971Z > Task :buildSrc:generateExternalPluginSpecBuilders
+2026-06-30T15:34:35.7722023Z > Task :buildSrc:extractPrecompiledScriptPluginPlugins
+2026-06-30T15:34:44.1743716Z > Task :buildSrc:generateScriptPluginAdapters
+2026-06-30T15:34:44.1749107Z > Task :buildSrc:pluginDescriptors
+2026-06-30T15:34:44.2744932Z > Task :buildSrc:processResources
+2026-06-30T15:34:51.6721168Z > Task :buildSrc:compilePluginsBlocks
+2026-06-30T15:34:59.7740541Z > Task :buildSrc:generatePrecompiledScriptPluginAccessors
+2026-06-30T15:35:06.0734644Z 
+2026-06-30T15:35:06.0761607Z > Task :buildSrc:compileKotlin
+2026-06-30T15:35:06.0767928Z w: file:///home/runner/work/robocode/robocode/buildSrc/src/main/kotlin/net.sf.robocode.java-conventions.gradle.kts:90:32 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:06.0795386Z w: file:///home/runner/work/robocode/robocode/buildSrc/src/main/kotlin/net.sf.robocode.java-conventions.gradle.kts:91:37 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:06.4719715Z 
+2026-06-30T15:35:06.4721699Z > Task :buildSrc:compileJava NO-SOURCE
+2026-06-30T15:35:06.4723343Z > Task :buildSrc:compileGroovy NO-SOURCE
+2026-06-30T15:35:06.4768978Z > Task :buildSrc:classes
+2026-06-30T15:35:06.5718935Z > Task :buildSrc:jar
+2026-06-30T15:35:11.5729426Z 
+2026-06-30T15:35:11.5739713Z > Configure project :
+2026-06-30T15:35:11.5742658Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:26:30: 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5747546Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:27:30: 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5753862Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:47:39: 'fun RegisteringDomainObjectDelegateProviderWithAction<out TaskContainer, Task>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<Task>>' is deprecated. Use 'val task = tasks.register(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5761615Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:47:39: 'fun <T : Any, C : NamedDomainObjectContainer<T>> C.registering(action: T.() -> Unit): RegisteringDomainObjectDelegateProviderWithAction<out C, T>' is deprecated. Use 'val element = register(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5766226Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:47:39: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5790157Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:104:32: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5795442Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:104:32: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5799887Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:104:32: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5804024Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:178:50: 'fun ExistingDomainObjectDelegateProvider<out TaskContainer>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<Task>>' is deprecated. Use 'val task = tasks.named(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5807979Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:178:50: 'val <T : Any, C : NamedDomainObjectCollection<T>> C.existing: ExistingDomainObjectDelegateProvider<out C>' is deprecated. Use 'val element = named(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5811813Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:178:50: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5815751Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:188:44: 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:11.5819821Z w: file:///home/runner/work/robocode/robocode/build.gradle.kts:189:49: 'fun Project.provideDelegate(any: Any?, property: KProperty<*>): PropertyDelegate' is deprecated. Use 'val property = project.property(name)' or 'val property = project.findProperty(name)' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5767258Z 
+2026-06-30T15:35:16.5820201Z > Configure project :robocode.content
+2026-06-30T15:35:16.5841882Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:21:24: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5857988Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:21:24: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5901077Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:21:24: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5931217Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:31:29: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5991362Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:31:29: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.5995998Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:31:29: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6031578Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:38:26: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6061519Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:38:26: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6090370Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:38:26: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6102347Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:48:31: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6121489Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:48:31: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6150382Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:48:31: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6155487Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:59:34: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6161041Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:59:34: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6165653Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:59:34: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6170246Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:71:32: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6175361Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:71:32: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6236656Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:71:32: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6272517Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:82:32: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6277382Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:82:32: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6281270Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:82:32: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6285058Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:93:38: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6340707Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:93:38: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6345104Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:93:38: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6349902Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:104:33: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6354492Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:104:33: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6358568Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:104:33: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6371967Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:115:30: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6377697Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:115:30: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6381868Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:115:30: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6386019Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:126:36: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6391306Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:126:36: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:16.6395686Z w: file:///home/runner/work/robocode/robocode/robocode.content/build.gradle.kts:126:36: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:17.8718188Z 
+2026-06-30T15:35:17.8719250Z > Configure project :robocode.core
+2026-06-30T15:35:17.8722294Z w: file:///home/runner/work/robocode/robocode/robocode.core/build.gradle.kts:21:24: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:17.8741006Z w: file:///home/runner/work/robocode/robocode/robocode.core/build.gradle.kts:21:24: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:17.8746632Z w: file:///home/runner/work/robocode/robocode/robocode.core/build.gradle.kts:21:24: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6718897Z 
+2026-06-30T15:35:20.6739682Z > Configure project :robocode.installer
+2026-06-30T15:35:20.6755358Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:82:24: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6759343Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:82:24: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6763237Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:82:24: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6767389Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:96:23: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6771720Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:96:23: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6775128Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:96:23: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6781032Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:103:23: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6785339Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:103:23: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6789365Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:103:23: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6792744Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:107:22: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6796828Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:107:22: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6813106Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:107:22: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6819160Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:124:23: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6825440Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:124:23: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6829822Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:124:23: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6851511Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:131:22: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6857571Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:131:22: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:20.6862646Z w: file:///home/runner/work/robocode/robocode/robocode.installer/build.gradle.kts:131:22: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6769228Z 
+2026-06-30T15:35:24.6804094Z > Configure project :robocode.samples
+2026-06-30T15:35:24.6807794Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:18:24: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6812430Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:18:24: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6815927Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:18:24: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6820739Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:28:29: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6826953Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:28:29: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6863009Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:28:29: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6867035Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:35:41: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6871517Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:35:41: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:24.6874959Z w: file:///home/runner/work/robocode/robocode/robocode.samples/build.gradle.kts:35:41: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1769123Z 
+2026-06-30T15:35:27.1859268Z > Configure project :robocode.tests.robots
+2026-06-30T15:35:27.1861067Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:14:24: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1863810Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:14:24: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1866602Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:14:24: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1869168Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:21:29: 'fun <U : Task> RegisteringDomainObjectDelegateProviderWithTypeAndAction<out TaskContainer, U>.provideDelegate(receiver: Any?, property: KProperty<*>): ExistingDomainObjectDelegate<TaskProvider<U>>' is deprecated. Use 'val task = tasks.register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1871912Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:21:29: 'fun <T : Any, C : PolymorphicDomainObjectContainer<T>, U : T> C.registering(type: KClass<U>, action: U.() -> Unit): RegisteringDomainObjectDelegateProviderWithTypeAndAction<out C, U>' is deprecated. Use 'val element = register<Type>(name) { }' instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:27.1874384Z w: file:///home/runner/work/robocode/robocode/robocode.tests.robots/build.gradle.kts:21:29: 'fun <T> ExistingDomainObjectDelegate<out T>.getValue(receiver: Any?, property: KProperty<*>): T' is deprecated. Use the named() API instead. See the Gradle 9.6 upgrading guide.
+2026-06-30T15:35:35.6731399Z 
+2026-06-30T15:35:35.6733289Z > Task :compileJava NO-SOURCE
+2026-06-30T15:35:35.6736043Z > Task :processResources NO-SOURCE
+2026-06-30T15:35:35.6737074Z > Task :classes UP-TO-DATE
+2026-06-30T15:35:35.6737845Z > Task :jar
+2026-06-30T15:35:35.6738812Z > Task :assemble
+2026-06-30T15:35:35.6741037Z > Task :compileTestJava NO-SOURCE
+2026-06-30T15:35:35.6742021Z > Task :processTestResources NO-SOURCE
+2026-06-30T15:35:35.6742941Z > Task :testClasses UP-TO-DATE
+2026-06-30T15:35:35.6743751Z > Task :test NO-SOURCE
+2026-06-30T15:35:35.6744535Z > Task :check UP-TO-DATE
+2026-06-30T15:35:35.6745266Z > Task :build
+2026-06-30T15:35:40.3720350Z > Task :robocode.api:compileJava
+2026-06-30T15:35:40.3729301Z > Task :robocode.api:processResources NO-SOURCE
+2026-06-30T15:35:40.3739668Z > Task :robocode.api:classes
+2026-06-30T15:35:44.6740929Z > Task :robocode.api:javadoc
+2026-06-30T15:35:44.7726866Z > Task :robocode.api:jar
+2026-06-30T15:35:44.8736773Z > Task :robocode.api:javadocJar
+2026-06-30T15:35:44.8737632Z > Task :robocode.api:sourcesJar
+2026-06-30T15:35:44.8738096Z > Task :robocode.api:assemble
+2026-06-30T15:35:44.8738883Z > Task :robocode.api:compileTestJava NO-SOURCE
+2026-06-30T15:35:44.8739441Z > Task :robocode.api:processTestResources NO-SOURCE
+2026-06-30T15:35:44.8739961Z > Task :robocode.api:testClasses UP-TO-DATE
+2026-06-30T15:35:44.8740448Z > Task :robocode.api:test NO-SOURCE
+2026-06-30T15:35:44.8740877Z > Task :robocode.api:check UP-TO-DATE
+2026-06-30T15:35:44.8741302Z > Task :robocode.api:build
+2026-06-30T15:35:44.8741748Z > Task :robocode.core:copyVersion
+2026-06-30T15:35:46.2740206Z > Task :robocode.core:compileJava
+2026-06-30T15:35:46.9743762Z > Task :robocode.host:compileJava
+2026-06-30T15:35:47.6745908Z > Task :robocode.battle:compileJava
+2026-06-30T15:35:47.6769226Z > Task :robocode.battle:processResources NO-SOURCE
+2026-06-30T15:35:47.6798982Z > Task :robocode.battle:classes
+2026-06-30T15:35:48.2726293Z > Task :robocode.battle:javadoc
+2026-06-30T15:35:48.2727886Z > Task :robocode.battle:jar
+2026-06-30T15:35:48.2729335Z > Task :robocode.battle:javadocJar
+2026-06-30T15:35:48.2730294Z > Task :robocode.battle:sourcesJar
+2026-06-30T15:35:48.2731138Z > Task :robocode.battle:assemble
+2026-06-30T15:35:48.2732034Z > Task :robocode.battle:compileTestJava NO-SOURCE
+2026-06-30T15:35:48.2733087Z > Task :robocode.battle:processTestResources NO-SOURCE
+2026-06-30T15:35:48.2734148Z > Task :robocode.battle:testClasses UP-TO-DATE
+2026-06-30T15:35:48.2735040Z > Task :robocode.core:processResources
+2026-06-30T15:35:48.2735845Z > Task :robocode.core:classes
+2026-06-30T15:35:48.3732184Z > Task :robocode.core:jar
+2026-06-30T15:35:48.3734937Z > Task :robocode.host:processResources NO-SOURCE
+2026-06-30T15:35:48.3736433Z > Task :robocode.host:classes
+2026-06-30T15:35:48.8749779Z > Task :robocode.host:javadoc
+2026-06-30T15:35:48.8831288Z > Task :robocode.host:jar
+2026-06-30T15:35:49.0752419Z > Task :robocode.repository:compileJava
+2026-06-30T15:35:49.0756558Z > Task :robocode.repository:processResources NO-SOURCE
+2026-06-30T15:35:49.0757836Z > Task :robocode.repository:classes
+2026-06-30T15:35:49.6719482Z > Task :robocode.repository:javadoc
+2026-06-30T15:35:49.6720757Z > Task :robocode.repository:jar
+2026-06-30T15:35:49.6721952Z > Task :robocode.battle:test NO-SOURCE
+2026-06-30T15:35:49.6722632Z > Task :robocode.battle:check UP-TO-DATE
+2026-06-30T15:35:49.6723338Z > Task :robocode.battle:build
+2026-06-30T15:35:49.7720037Z > Task :robocode.content:copyCompilers
+2026-06-30T15:35:49.7720746Z > Task :robocode.content:copyContent
+2026-06-30T15:35:49.8720136Z > Task :robocode.content:copyExternalLibs
+2026-06-30T15:35:49.8721002Z > Task :robocode.content:copyRobocodeApiLib
+2026-06-30T15:35:49.8721703Z > Task :robocode.content:copyRobocodeBattleLib
+2026-06-30T15:35:49.8722493Z > Task :robocode.content:copyRobocodeCoreLib
+2026-06-30T15:35:49.8723198Z > Task :robocode.content:copyRobocodeHostLib
+2026-06-30T15:35:49.8723795Z > Task :robocode.content:copyRobocodeRepositoryLib
+2026-06-30T15:35:49.9739756Z > Task :robocode.sound:compileJava
+2026-06-30T15:35:49.9740632Z > Task :robocode.sound:processResources
+2026-06-30T15:35:49.9741399Z > Task :robocode.sound:classes
+2026-06-30T15:35:50.5721921Z > Task :robocode.sound:javadoc
+2026-06-30T15:35:50.5722457Z > Task :robocode.sound:jar
+2026-06-30T15:35:50.5722850Z > Task :robocode.content:copyRobocodeSoundLib
+2026-06-30T15:35:51.5730632Z Note: Some input files use unchecked or unsafe operations.
+2026-06-30T15:35:51.5731045Z 
+2026-06-30T15:35:51.5733397Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T15:35:51.5734149Z > Task :robocode.ui:compileJava
+2026-06-30T15:35:52.1740640Z Note: Some input files use unchecked or unsafe operations.
+2026-06-30T15:35:52.1741364Z 
+2026-06-30T15:35:52.1789598Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T15:35:52.1790332Z > Task :robocode.ui.editor:compileJava
+2026-06-30T15:35:52.1808861Z 
+2026-06-30T15:35:52.1849451Z > Task :robocode.ui.editor:processResources NO-SOURCE
+2026-06-30T15:35:52.1867348Z > Task :robocode.ui.editor:classes
+2026-06-30T15:35:52.1899716Z > Task :robocode.ui.editor:jar
+2026-06-30T15:35:52.1906356Z > Task :robocode.content:copyRobocodeUiEditorLib
+2026-06-30T15:35:52.2766584Z > Task :robocode.ui:processResources
+2026-06-30T15:35:52.2789233Z > Task :robocode.ui:classes
+2026-06-30T15:35:52.8718667Z > Task :robocode.ui:javadoc
+2026-06-30T15:35:52.9719708Z > Task :robocode.ui:jar
+2026-06-30T15:35:52.9720645Z > Task :robocode.content:copyRobocodeUiLib
+2026-06-30T15:35:52.9721782Z > Task :robocode.content:compileJava NO-SOURCE
+2026-06-30T15:35:52.9722703Z > Task :robocode.content:processResources
+2026-06-30T15:35:52.9723630Z > Task :robocode.content:classes
+2026-06-30T15:35:52.9724427Z > Task :robocode.content:jar
+2026-06-30T15:35:52.9725125Z > Task :robocode.content:assemble
+2026-06-30T15:35:52.9725918Z > Task :robocode.content:compileTestJava NO-SOURCE
+2026-06-30T15:35:52.9726840Z > Task :robocode.content:processTestResources NO-SOURCE
+2026-06-30T15:35:52.9727757Z > Task :robocode.content:testClasses UP-TO-DATE
+2026-06-30T15:35:52.9729039Z > Task :robocode.content:test NO-SOURCE
+2026-06-30T15:35:52.9729790Z > Task :robocode.content:check UP-TO-DATE
+2026-06-30T15:35:52.9730680Z > Task :robocode.content:build
+2026-06-30T15:35:53.5718059Z > Task :robocode.core:javadoc
+2026-06-30T15:35:53.5719387Z > Task :robocode.core:javadocJar
+2026-06-30T15:35:53.5720452Z > Task :robocode.core:sourcesJar
+2026-06-30T15:35:53.5721108Z > Task :robocode.core:assemble
+2026-06-30T15:35:53.9740326Z > Task :robocode.core:compileTestJava
+2026-06-30T15:35:53.9799654Z > Task :robocode.core:processTestResources NO-SOURCE
+2026-06-30T15:35:53.9829325Z > Task :robocode.core:testClasses
+2026-06-30T15:35:55.5739928Z > Task :robocode.core:test
+2026-06-30T15:35:55.5747555Z > Task :robocode.core:check
+2026-06-30T15:35:55.5758821Z > Task :robocode.core:build
+2026-06-30T15:35:55.5778893Z > Task :robocode.host:javadocJar
+2026-06-30T15:35:55.5779433Z > Task :robocode.host:sourcesJar
+2026-06-30T15:35:55.5779949Z > Task :robocode.host:assemble
+2026-06-30T15:35:55.6719534Z > Task :robocode.host:compileTestJava
+2026-06-30T15:35:55.6720656Z > Task :robocode.host:processTestResources
+2026-06-30T15:35:55.6721702Z > Task :robocode.host:testClasses
+2026-06-30T15:35:56.0753302Z > Task :robocode.host:test
+2026-06-30T15:35:56.0776779Z > Task :robocode.host:check
+2026-06-30T15:35:56.0778876Z > Task :robocode.host:build
+2026-06-30T15:35:56.2719990Z > Task :robocode.installer:compileJava
+2026-06-30T15:35:56.2744784Z > Task :robocode.installer:processResources NO-SOURCE
+2026-06-30T15:35:56.2759523Z > Task :robocode.installer:classes
+2026-06-30T15:35:56.3720409Z > Task :robocode.roborumble:compileJava
+2026-06-30T15:35:56.3729565Z > Task :robocode.roborumble:processResources NO-SOURCE
+2026-06-30T15:35:56.3739442Z > Task :robocode.roborumble:classes
+2026-06-30T15:35:56.9720326Z > Task :robocode.roborumble:javadoc
+2026-06-30T15:35:56.9721237Z > Task :robocode.roborumble:jar
+2026-06-30T15:35:57.0721901Z > Task :robocode.samples:compileJava
+2026-06-30T15:35:57.0747562Z > Task :robocode.samples:processResources
+2026-06-30T15:35:57.0777629Z > Task :robocode.samples:classes
+2026-06-30T15:35:57.1759651Z > Task :robocode.samples:copyContent
+2026-06-30T15:35:57.1780594Z > Task :robocode.samples:copyRobotClasses
+2026-06-30T15:35:57.1809375Z > Task :robocode.samples:copyRobotClassesToTestRobots
+2026-06-30T15:35:58.6717634Z > Task :robocode.samples:javadoc
+2026-06-30T15:35:58.6718673Z > Task :robocode.samples:jar
+2026-06-30T15:35:59.5718735Z > Task :robocode.installer:jar
+2026-06-30T15:36:01.4729204Z > Task :robocode.installer:startScripts
+2026-06-30T15:36:01.8719726Z > Task :robocode.installer:distTar
+2026-06-30T15:36:03.2722547Z > Task :robocode.installer:distZip
+2026-06-30T15:36:03.2733787Z > Task :robocode.installer:assemble
+2026-06-30T15:36:03.2769122Z > Task :robocode.installer:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.2795973Z > Task :robocode.installer:processTestResources NO-SOURCE
+2026-06-30T15:36:03.2819074Z > Task :robocode.installer:testClasses UP-TO-DATE
+2026-06-30T15:36:03.2849152Z > Task :robocode.installer:test NO-SOURCE
+2026-06-30T15:36:03.2849887Z > Task :robocode.installer:check UP-TO-DATE
+2026-06-30T15:36:03.2858876Z > Task :robocode.installer:build
+2026-06-30T15:36:03.2888876Z > Task :robocode.main:compileJava
+2026-06-30T15:36:03.2899367Z > Task :robocode.main:processResources NO-SOURCE
+2026-06-30T15:36:03.2900208Z > Task :robocode.main:classes
+2026-06-30T15:36:03.2900913Z > Task :robocode.main:jar
+2026-06-30T15:36:03.4718885Z > Task :robocode.main:startScripts
+2026-06-30T15:36:03.4749633Z > Task :robocode.main:distTar
+2026-06-30T15:36:03.4779067Z > Task :robocode.main:distZip
+2026-06-30T15:36:03.4785006Z > Task :robocode.main:assemble
+2026-06-30T15:36:03.4799298Z > Task :robocode.main:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.4800648Z > Task :robocode.main:processTestResources NO-SOURCE
+2026-06-30T15:36:03.4801574Z > Task :robocode.main:testClasses UP-TO-DATE
+2026-06-30T15:36:03.4802379Z > Task :robocode.main:test NO-SOURCE
+2026-06-30T15:36:03.4803114Z > Task :robocode.main:check UP-TO-DATE
+2026-06-30T15:36:03.4803838Z > Task :robocode.main:build
+2026-06-30T15:36:03.4804533Z > Task :robocode.repository:javadocJar
+2026-06-30T15:36:03.4805291Z > Task :robocode.repository:sourcesJar
+2026-06-30T15:36:03.4806037Z > Task :robocode.repository:assemble
+2026-06-30T15:36:03.4806897Z > Task :robocode.repository:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.4807906Z > Task :robocode.repository:processTestResources NO-SOURCE
+2026-06-30T15:36:03.4809122Z > Task :robocode.repository:testClasses UP-TO-DATE
+2026-06-30T15:36:03.4810015Z > Task :robocode.repository:test NO-SOURCE
+2026-06-30T15:36:03.4812609Z > Task :robocode.repository:check UP-TO-DATE
+2026-06-30T15:36:03.4813509Z > Task :robocode.repository:build
+2026-06-30T15:36:03.4814665Z > Task :robocode.roborumble:javadocJar
+2026-06-30T15:36:03.4815465Z > Task :robocode.roborumble:sourcesJar
+2026-06-30T15:36:03.4816823Z > Task :robocode.roborumble:assemble
+2026-06-30T15:36:03.4817915Z > Task :robocode.roborumble:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.4819334Z > Task :robocode.roborumble:processTestResources NO-SOURCE
+2026-06-30T15:36:03.4820433Z > Task :robocode.roborumble:testClasses UP-TO-DATE
+2026-06-30T15:36:03.4821311Z > Task :robocode.roborumble:test NO-SOURCE
+2026-06-30T15:36:03.4822142Z > Task :robocode.roborumble:check UP-TO-DATE
+2026-06-30T15:36:03.4822959Z > Task :robocode.roborumble:build
+2026-06-30T15:36:03.5767645Z > Task :robocode.samples:javadocJar
+2026-06-30T15:36:03.5825813Z > Task :robocode.samples:sourcesJar
+2026-06-30T15:36:03.5830598Z > Task :robocode.samples:assemble
+2026-06-30T15:36:03.5831816Z > Task :robocode.samples:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.5832710Z > Task :robocode.samples:processTestResources NO-SOURCE
+2026-06-30T15:36:03.5833604Z > Task :robocode.samples:testClasses UP-TO-DATE
+2026-06-30T15:36:03.5834364Z > Task :robocode.samples:test NO-SOURCE
+2026-06-30T15:36:03.5835120Z > Task :robocode.samples:check UP-TO-DATE
+2026-06-30T15:36:03.5839689Z > Task :robocode.samples:build
+2026-06-30T15:36:03.5840426Z > Task :robocode.sound:javadocJar
+2026-06-30T15:36:03.5841106Z > Task :robocode.sound:sourcesJar
+2026-06-30T15:36:03.5841840Z > Task :robocode.sound:assemble
+2026-06-30T15:36:03.5842610Z > Task :robocode.sound:compileTestJava NO-SOURCE
+2026-06-30T15:36:03.5843519Z > Task :robocode.sound:processTestResources NO-SOURCE
+2026-06-30T15:36:03.5844362Z > Task :robocode.sound:testClasses UP-TO-DATE
+2026-06-30T15:36:03.5845153Z > Task :robocode.sound:test NO-SOURCE
+2026-06-30T15:36:03.5849608Z > Task :robocode.sound:check UP-TO-DATE
+2026-06-30T15:36:03.5853439Z > Task :robocode.sound:build
+2026-06-30T15:36:03.6730844Z Note: /home/runner/work/robocode/robocode/robocode.tests/src/main/java/net/sf/robocode/test/helpers/Assert.java uses or overrides a deprecated API.
+2026-06-30T15:36:03.6732275Z 
+2026-06-30T15:36:03.6733211Z Note: Recompile with -Xlint:deprecation for details.
+2026-06-30T15:36:03.6733959Z > Task :robocode.tests:compileJava
+2026-06-30T15:36:03.6734795Z 
+2026-06-30T15:36:03.6735310Z > Task :robocode.tests:processResources NO-SOURCE
+2026-06-30T15:36:03.6736292Z > Task :robocode.tests:classes
+2026-06-30T15:36:03.6737070Z > Task :robocode.tests:jar
+2026-06-30T15:36:03.6737877Z > Task :robocode.tests:assemble
+2026-06-30T15:36:03.8740042Z > Task :robocode.tests.robots:compileJava
+2026-06-30T15:36:04.1716668Z 
+2026-06-30T15:36:04.1733571Z Note: Some input files use or override a deprecated API.
+2026-06-30T15:36:04.1735397Z Note: Recompile with -Xlint:deprecation for details.
+2026-06-30T15:36:04.1736319Z > Task :robocode.tests:compileTestJava
+2026-06-30T15:36:04.1737160Z 
+2026-06-30T15:36:04.1737715Z > Task :robocode.tests:processTestResources NO-SOURCE
+2026-06-30T15:36:04.1739102Z > Task :robocode.tests:testClasses
+2026-06-30T15:36:04.1740069Z > Task :robocode.tests.robots:processResources
+2026-06-30T15:36:04.1741059Z > Task :robocode.tests.robots:classes
+2026-06-30T15:36:04.1741923Z > Task :robocode.tests.robots:copyContent
+2026-06-30T15:36:04.1742847Z > Task :robocode.tests.robots:copyRobotClasses
+2026-06-30T15:36:04.1743766Z > Task :robocode.tests.robots:jar
+2026-06-30T15:36:20.8716932Z 
+2026-06-30T15:36:20.8719880Z > Task :robocode.tests:test
+2026-06-30T15:36:20.8720669Z 
+2026-06-30T15:36:20.9720512Z TestFairPlay > run FAILED
+2026-06-30T15:36:20.9722068Z     java.lang.AssertionError at TestFairPlay.java:31
+2026-06-30T15:37:07.1721142Z 
+2026-06-30T15:37:07.1829487Z 59 tests completed, 1 failed, 1 skipped
+2026-06-30T15:37:07.2720064Z There were failing tests. See the report at: file:///home/runner/work/robocode/robocode/robocode.tests/build/reports/tests/test/index.html
+2026-06-30T15:37:07.3729314Z 
+2026-06-30T15:37:07.3730171Z > Task :robocode.tests:check
+2026-06-30T15:37:07.3730870Z > Task :robocode.tests:build
+2026-06-30T15:37:07.3731853Z > Task :robocode.tests.robots:assemble
+2026-06-30T15:37:07.3732721Z > Task :robocode.tests.robots:compileTestJava NO-SOURCE
+2026-06-30T15:37:07.3733617Z > Task :robocode.tests.robots:processTestResources NO-SOURCE
+2026-06-30T15:37:07.3734556Z > Task :robocode.tests.robots:testClasses UP-TO-DATE
+2026-06-30T15:37:07.3735319Z > Task :robocode.tests.robots:test NO-SOURCE
+2026-06-30T15:37:07.3736085Z > Task :robocode.tests.robots:check UP-TO-DATE
+2026-06-30T15:37:07.3736913Z > Task :robocode.tests.robots:build
+2026-06-30T15:37:07.3737468Z > Task :robocode.ui:javadocJar
+2026-06-30T15:37:07.3737966Z > Task :robocode.ui:sourcesJar
+2026-06-30T15:37:07.3738883Z > Task :robocode.ui:assemble
+2026-06-30T15:37:07.3759205Z > Task :robocode.ui:compileTestJava NO-SOURCE
+2026-06-30T15:37:07.3769121Z > Task :robocode.ui:processTestResources NO-SOURCE
+2026-06-30T15:37:07.3779476Z > Task :robocode.ui:testClasses UP-TO-DATE
+2026-06-30T15:37:07.3780242Z > Task :robocode.ui:test NO-SOURCE
+2026-06-30T15:37:07.3780793Z > Task :robocode.ui:check UP-TO-DATE
+2026-06-30T15:37:07.3781306Z > Task :robocode.ui:build
+2026-06-30T15:37:07.3781773Z > Task :robocode.ui.editor:assemble
+2026-06-30T15:37:07.3782549Z > Task :robocode.ui.editor:compileTestJava NO-SOURCE
+2026-06-30T15:37:07.3783436Z > Task :robocode.ui.editor:processTestResources NO-SOURCE
+2026-06-30T15:37:07.3784197Z > Task :robocode.ui.editor:testClasses UP-TO-DATE
+2026-06-30T15:37:07.3784898Z > Task :robocode.ui.editor:test NO-SOURCE
+2026-06-30T15:37:07.3785643Z > Task :robocode.ui.editor:check UP-TO-DATE
+2026-06-30T15:37:07.3786377Z > Task :robocode.ui.editor:build
+2026-06-30T15:37:07.4679439Z 
+2026-06-30T15:37:07.4686642Z [Incubating] Problems report is available at: file:///home/runner/work/robocode/robocode/build/reports/problems/problems-report.html
+2026-06-30T15:37:07.4688808Z 
+2026-06-30T15:37:07.4689629Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-06-30T15:37:07.4690603Z 
+2026-06-30T15:37:07.4691766Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-30T15:37:07.4699151Z 
+2026-06-30T15:37:07.4700658Z For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-30T15:37:07.4702307Z 
+2026-06-30T15:37:07.4702712Z BUILD SUCCESSFUL in 3m 17s
+2026-06-30T15:37:07.4703466Z 102 actionable tasks: 102 executed
+2026-06-30T15:37:07.4705118Z Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
+2026-06-30T15:37:07.8096760Z ##[group]Run actions/upload-artifact@v7
+2026-06-30T15:37:07.8097234Z with:
+2026-06-30T15:37:07.8097568Z   name: robocode.core-test-result
+2026-06-30T15:37:07.8098062Z   path: robocode.core/build/reports/tests/test
+2026-06-30T15:37:07.8098846Z   if-no-files-found: warn
+2026-06-30T15:37:07.8099267Z   compression-level: 6
+2026-06-30T15:37:07.8099626Z   overwrite: false
+2026-06-30T15:37:07.8099983Z   include-hidden-files: false
+2026-06-30T15:37:07.8100368Z   archive: true
+2026-06-30T15:37:07.8100676Z env:
+2026-06-30T15:37:07.8101152Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:07.8101986Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:07.8102618Z ##[endgroup]
+2026-06-30T15:37:07.9764360Z With the provided path, there will be 7 files uploaded
+2026-06-30T15:37:07.9771279Z Artifact name is valid!
+2026-06-30T15:37:07.9772026Z Root directory input is valid!
+2026-06-30T15:37:08.1253076Z Uploading artifact: robocode.core-test-result.zip
+2026-06-30T15:37:08.1300519Z Beginning upload of artifact content to blob storage
+2026-06-30T15:37:08.2241029Z Uploaded bytes 8852
+2026-06-30T15:37:08.2411477Z Finished uploading artifact content to blob storage!
+2026-06-30T15:37:08.2413459Z SHA256 digest of uploaded artifact is 0f629f9bd3caec997fd7bb8c9c5b7e1a5ed7b2c89aa55dbb1b2f5888c4ef5e2a
+2026-06-30T15:37:08.2415498Z Finalizing artifact upload
+2026-06-30T15:37:08.5553857Z Artifact robocode.core-test-result successfully finalized. Artifact ID 7985622191
+2026-06-30T15:37:08.5555430Z Artifact robocode.core-test-result has been successfully uploaded! Final size is 8852 bytes. Artifact ID is 7985622191
+2026-06-30T15:37:08.5558805Z Artifact download URL: https://github.com/robo-code/robocode/actions/runs/28456374495/artifacts/7985622191
+2026-06-30T15:37:08.5742245Z ##[group]Run actions/upload-artifact@v7
+2026-06-30T15:37:08.5742662Z with:
+2026-06-30T15:37:08.5742944Z   name: robocode.host-test-result
+2026-06-30T15:37:08.5743360Z   path: robocode.host/build/reports/tests/test
+2026-06-30T15:37:08.5743762Z   if-no-files-found: warn
+2026-06-30T15:37:08.5744069Z   compression-level: 6
+2026-06-30T15:37:08.5744546Z   overwrite: false
+2026-06-30T15:37:08.5744839Z   include-hidden-files: false
+2026-06-30T15:37:08.5745183Z   archive: true
+2026-06-30T15:37:08.5745437Z env:
+2026-06-30T15:37:08.5745828Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:08.5746507Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:08.5747025Z ##[endgroup]
+2026-06-30T15:37:08.7250975Z With the provided path, there will be 5 files uploaded
+2026-06-30T15:37:08.7256124Z Artifact name is valid!
+2026-06-30T15:37:08.7256826Z Root directory input is valid!
+2026-06-30T15:37:08.9747144Z Uploading artifact: robocode.host-test-result.zip
+2026-06-30T15:37:08.9798741Z Beginning upload of artifact content to blob storage
+2026-06-30T15:37:09.0618538Z Uploaded bytes 6241
+2026-06-30T15:37:09.0789228Z Finished uploading artifact content to blob storage!
+2026-06-30T15:37:09.0791385Z SHA256 digest of uploaded artifact is 9d80baa15923b3af8a800a7acdc9fe52bd96d90498288f85dedec37187285ebb
+2026-06-30T15:37:09.0793388Z Finalizing artifact upload
+2026-06-30T15:37:09.2698079Z Artifact robocode.host-test-result successfully finalized. Artifact ID 7985622574
+2026-06-30T15:37:09.2700671Z Artifact robocode.host-test-result has been successfully uploaded! Final size is 6241 bytes. Artifact ID is 7985622574
+2026-06-30T15:37:09.2702956Z Artifact download URL: https://github.com/robo-code/robocode/actions/runs/28456374495/artifacts/7985622574
+2026-06-30T15:37:09.2887514Z ##[group]Run actions/upload-artifact@v7
+2026-06-30T15:37:09.2888085Z with:
+2026-06-30T15:37:09.2888725Z   name: robocode.tests-result
+2026-06-30T15:37:09.2889316Z   path: robocode.tests/build/reports/tests/test
+2026-06-30T15:37:09.2890081Z   if-no-files-found: warn
+2026-06-30T15:37:09.2890687Z   compression-level: 6
+2026-06-30T15:37:09.2891421Z   overwrite: false
+2026-06-30T15:37:09.2892040Z   include-hidden-files: false
+2026-06-30T15:37:09.2892807Z   archive: true
+2026-06-30T15:37:09.2893359Z env:
+2026-06-30T15:37:09.2894121Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:09.2895343Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:09.2896218Z ##[endgroup]
+2026-06-30T15:37:09.4755352Z With the provided path, there will be 109 files uploaded
+2026-06-30T15:37:09.4766590Z Artifact name is valid!
+2026-06-30T15:37:09.4767290Z Root directory input is valid!
+2026-06-30T15:37:09.6625266Z Uploading artifact: robocode.tests-result.zip
+2026-06-30T15:37:09.6667764Z Beginning upload of artifact content to blob storage
+2026-06-30T15:37:09.8710575Z Uploaded bytes 170099
+2026-06-30T15:37:09.8964276Z Finished uploading artifact content to blob storage!
+2026-06-30T15:37:09.8967343Z SHA256 digest of uploaded artifact is 926fe342d9462615f3a1f16c9b4ef8c3e38f49e8a06f6bf5bff1f0699dc3e0ff
+2026-06-30T15:37:09.8969554Z Finalizing artifact upload
+2026-06-30T15:37:10.0982350Z Artifact robocode.tests-result successfully finalized. Artifact ID 7985622952
+2026-06-30T15:37:10.0984385Z Artifact robocode.tests-result has been successfully uploaded! Final size is 170099 bytes. Artifact ID is 7985622952
+2026-06-30T15:37:10.0987433Z Artifact download URL: https://github.com/robo-code/robocode/actions/runs/28456374495/artifacts/7985622952
+2026-06-30T15:37:10.1175086Z ##[group]Run actions/upload-artifact@v7
+2026-06-30T15:37:10.1175537Z with:
+2026-06-30T15:37:10.1175862Z   name: robocode-setup
+2026-06-30T15:37:10.1176230Z   path: build/robocode-*-setup.jar
+2026-06-30T15:37:10.1176652Z   if-no-files-found: warn
+2026-06-30T15:37:10.1177018Z   compression-level: 6
+2026-06-30T15:37:10.1177357Z   overwrite: false
+2026-06-30T15:37:10.1177701Z   include-hidden-files: false
+2026-06-30T15:37:10.1178073Z   archive: true
+2026-06-30T15:37:10.1178659Z env:
+2026-06-30T15:37:10.1179113Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:10.1179891Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:10.1180689Z ##[endgroup]
+2026-06-30T15:37:10.2742444Z With the provided path, there will be 1 file uploaded
+2026-06-30T15:37:10.2747204Z Artifact name is valid!
+2026-06-30T15:37:10.2747888Z Root directory input is valid!
+2026-06-30T15:37:10.5073700Z Uploading artifact: robocode-setup.zip
+2026-06-30T15:37:10.5133529Z Beginning upload of artifact content to blob storage
+2026-06-30T15:37:10.9917807Z Uploaded bytes 8388608
+2026-06-30T15:37:11.2791739Z Uploaded bytes 16777216
+2026-06-30T15:37:11.4624219Z Uploaded bytes 21338154
+2026-06-30T15:37:11.4787922Z Finished uploading artifact content to blob storage!
+2026-06-30T15:37:11.4790768Z SHA256 digest of uploaded artifact is 156d6a6f5951bc8294f724d255a7eff4411cedff37e3b4548919f8dd19bdc4b2
+2026-06-30T15:37:11.4799658Z Finalizing artifact upload
+2026-06-30T15:37:11.6960672Z Artifact robocode-setup successfully finalized. Artifact ID 7985623658
+2026-06-30T15:37:11.6962727Z Artifact robocode-setup has been successfully uploaded! Final size is 21338154 bytes. Artifact ID is 7985623658
+2026-06-30T15:37:11.6966662Z Artifact download URL: https://github.com/robo-code/robocode/actions/runs/28456374495/artifacts/7985623658
+2026-06-30T15:37:11.7212017Z ##[group]Run dorny/test-reporter@v3
+2026-06-30T15:37:11.7212420Z with:
+2026-06-30T15:37:11.7212714Z   name: Unit test results
+2026-06-30T15:37:11.7213085Z   path: **/build/test-results/test/*.xml
+2026-06-30T15:37:11.7213481Z   reporter: java-junit
+2026-06-30T15:37:11.7213807Z   fail-on-error: true
+2026-06-30T15:37:11.7214140Z   path-replace-backslashes: false
+2026-06-30T15:37:11.7214525Z   list-suites: all
+2026-06-30T15:37:11.7214821Z   list-tests: all
+2026-06-30T15:37:11.7215115Z   max-annotations: 10
+2026-06-30T15:37:11.7215435Z   fail-on-empty: true
+2026-06-30T15:37:11.7215749Z   only-summary: false
+2026-06-30T15:37:11.7216058Z   use-actions-summary: true
+2026-06-30T15:37:11.7216406Z   badge-title: tests
+2026-06-30T15:37:11.7216713Z   collapsed: auto
+2026-06-30T15:37:11.7221209Z   token: ***
+2026-06-30T15:37:11.7221524Z env:
+2026-06-30T15:37:11.7221964Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:11.7222726Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
+2026-06-30T15:37:11.7223272Z ##[endgroup]
+2026-06-30T15:37:11.8157075Z Check runs will be created with SHA=fe4f4f133368dec06fd5c444b46df6d2838008fd
+2026-06-30T15:37:11.8160709Z ##[group]Listing all files tracked by git
+2026-06-30T15:37:11.8195575Z [command]/usr/bin/git ls-files -z
+2026-06-30T15:37:11.8584455Z .dockerignore .github/dependabot.yml .github/workflows/assembly.yml .github/workflows/release.yml .gitignore Dockerfile LICENSE.txt README.md build.gradle.kts buildSrc/build.gradle.kts buildSrc/settings.gradle.kts buildSrc/src/main/kotlin/net.sf.robocode.java-conventions.gradle.kts gradle.properties gradle/libs.versions.toml gradle/test-libs.versions.toml gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.properties gradlew gradlew.bat publish.md release.md robocode.api/build.gradle.kts robocode.api/src/main/java/gl4java/GLFont.java robocode.api/src/main/java/gl4java/GLFunc.java robocode.api/src/main/java/net/sf/robocode/api/Module.java robocode.api/src/main/java/net/sf/robocode/battle/IBattleManagerBase.java robocode.api/src/main/java/net/sf/robocode/core/ContainerBase.java robocode.api/src/main/java/net/sf/robocode/core/IModule.java robocode.api/src/main/java/net/sf/robocode/gui/IWindowManagerBase.java robocode.api/src/main/java/net/sf/robocode/io/FileUtil.java robocode.api/src/main/java/net/sf/robocode/io/Logger.java robocode.api/src/main/java/net/sf/robocode/io/RobocodeProperties.java robocode.api/src/main/java/net/sf/robocode/manager/IVersionManagerBase.java robocode.api/src/main/java/net/sf/robocode/peer/IRobotStatics.java robocode.api/src/main/java/net/sf/robocode/repository/CodeSizeCalculator.java robocode.api/src/main/java/net/sf/robocode/repository/IRepositoryManagerBase.java robocode.api/src/main/java/net/sf/robocode/security/HiddenAccess.java robocode.api/src/main/java/net/sf/robocode/security/IHiddenBulletHelper.java robocode.api/src/main/java/net/sf/robocode/security/IHiddenEventHelper.java robocode.api/src/main/java/net/sf/robocode/security/IHiddenRulesHelper.java robocode.api/src/main/java/net/sf/robocode/security/IHiddenSpecificationHelper.java robocode.api/src/main/java/net/sf/robocode/security/IHiddenStatusHelper.java robocode.api/src/main/java/net/sf/robocode/security/IThreadManagerBase.java robocode.api/src/main/java/net/sf/robocode/security/SafeComponent.java robocode.api/src/main/java/net/sf/robocode/serialization/ISerializableHelper.java robocode.api/src/main/java/net/sf/robocode/serialization/RbSerializer.java robocode.api/src/main/java/net/sf/robocode/util/StringUtil.java robocode.api/src/main/java/net/sf/robocode/util/UrlUtil.java robocode.api/src/main/java/robocode/AdvancedRobot.java robocode.api/src/main/java/robocode/BattleEndedEvent.java robocode.api/src/main/java/robocode/BattleResults.java robocode.api/src/main/java/robocode/BattleRules.java robocode.api/src/main/java/robocode/BorderSentry.java robocode.api/src/main/java/robocode/Bullet.java robocode.api/src/main/java/robocode/BulletHitBulletEvent.java robocode.api/src/main/java/robocode/BulletHitEvent.java robocode.api/src/main/java/robocode/BulletMissedEvent.java robocode.api/src/main/java/robocode/Condition.java robocode.api/src/main/java/robocode/CustomEvent.java robocode.api/src/main/java/robocode/DeathEvent.java robocode.api/src/main/java/robocode/Droid.java robocode.api/src/main/java/robocode/Event.java robocode.api/src/main/java/robocode/GunTurnCompleteCondition.java robocode.api/src/main/java/robocode/HitByBulletEvent.java robocode.api/src/main/java/robocode/HitRobotEvent.java robocode.api/src/main/java/robocode/HitWallEvent.java robocode.api/src/main/java/robocode/JuniorRobot.java robocode.api/src/main/java/robocode/KeyEvent.java robocode.api/src/main/java/robocode/KeyPressedEvent.java robocode.api/src/main/java/robocode/KeyReleasedEvent.java robocode.api/src/main/java/robocode/KeyTypedEvent.java robocode.api/src/main/java/robocode/MessageEvent.java robocode.api/src/main/java/robocode/MouseClickedEvent.java robocode.api/src/main/java/robocode/MouseDraggedEvent.java robocode.api/src/main/java/robocode/MouseEnteredEvent.java robocode.api/src/main/java/robocode/MouseEvent.java robocode.api/src/main/java/robocode/MouseExitedEvent.java robocode.api/src/main/java/robocode/MouseMovedEvent.java robocode.api/src/main/java/robocode/MousePressedEvent.java robocode.api/src/main/java/robocode/MouseReleasedEvent.java robocode.api/src/main/java/robocode/MouseWheelMovedEvent.java robocode.api/src/main/java/robocode/MoveCompleteCondition.java robocode.api/src/main/java/robocode/PaintEvent.java robocode.api/src/main/java/robocode/RadarTurnCompleteCondition.java robocode.api/src/main/java/robocode/RateControlRobot.java robocode.api/src/main/java/robocode/Robocode.java robocode.api/src/main/java/robocode/RobocodeFileOutputStream.java robocode.api/src/main/java/robocode/RobocodeFileWriter.java robocode.api/src/main/java/robocode/Robot.java robocode.api/src/main/java/robocode/RobotDeathEvent.java robocode.api/src/main/java/robocode/RobotStatus.java robocode.api/src/main/java/robocode/RoundEndedEvent.java robocode.api/src/main/java/robocode/Rules.java robocode.api/src/main/java/robocode/ScannedRobotEvent.java robocode.api/src/main/java/robocode/SkippedTurnEvent.java robocode.api/src/main/java/robocode/StatusEvent.java robocode.api/src/main/java/robocode/TeamRobot.java robocode.api/src/main/java/robocode/TurnCompleteCondition.java robocode.api/src/main/java/robocode/WinEvent.java robocode.api/src/main/java/robocode/_AdvancedRadiansRobot.java robocode.api/src/main/java/robocode/_AdvancedRobot.java robocode.api/src/main/java/robocode/_Robot.java robocode.api/src/main/java/robocode/_RobotBase.java robocode.api/src/main/java/robocode/annotation/SafeStatic.java robocode.api/src/main/java/robocode/annotation/package-info.java robocode.api/src/main/java/robocode/control/BattleSpecification.java robocode.api/src/main/java/robocode/control/BattlefieldSpecification.java robocode.api/src/main/java/robocode/control/IRobocodeEngine.java robocode.api/src/main/java/robocode/control/RandomFactory.java robocode.api/src/main/java/robocode/control/RobocodeEngine.java robocode.api/src/main/java/robocode/control/RobocodeListener.java robocode.api/src/main/java/robocode/control/RobotResults.java robocode.api/src/main/java/robocode/control/RobotSetup.java robocode.api/src/main/java/robocode/control/RobotSpecification.java robocode.api/src/main/java/robocode/control/RobotTestBed.java robocode.api/src/main/java/robocode/control/events/BattleAdaptor.java robocode.api/src/main/java/robocode/control/events/BattleCompletedEvent.java robocode.api/src/main/java/robocode/control/events/BattleErrorEvent.java robocode.api/src/main/java/robocode/control/events/BattleEvent.java robocode.api/src/main/java/robocode/control/events/BattleFinishedEvent.java robocode.api/src/main/java/robocode/control/events/BattleMessageEvent.java robocode.api/src/main/java/robocode/control/events/BattlePausedEvent.java robocode.api/src/main/java/robocode/control/events/BattleResumedEvent.java robocode.api/src/main/java/robocode/control/events/BattleStartedEvent.java robocode.api/src/main/java/robocode/control/events/IBattleListener.java robocode.api/src/main/java/robocode/control/events/RoundEndedEvent.java robocode.api/src/main/java/robocode/control/events/RoundStartedEvent.java robocode.api/src/main/java/robocode/control/events/TurnEndedEvent.java robocode.api/src/main/java/robocode/control/events/TurnStartedEvent.java robocode.api/src/main/java/robocode/control/events/package-info.java robocode.api/src/main/java/robocode/control/package-info.java robocode.api/src/main/java/robocode/control/snapshot/BulletState.java robocode.api/src/main/java/robocode/control/snapshot/IBulletSnapshot.java robocode.api/src/main/java/robocode/control/snapshot/IDebugProperty.java robocode.api/src/main/java/robocode/control/snapshot/IRobotSnapshot.java robocode.api/src/main/java/robocode/control/snapshot/IScoreSnapshot.java robocode.api/src/main/java/robocode/control/snapshot/ITurnSnapshot.java robocode.api/src/main/java/robocode/control/snapshot/RobotState.java robocode.api/src/main/java/robocode/control/snapshot/package-info.java robocode.api/src/main/java/robocode/exception/AbortedException.java robocode.api/src/main/java/robocode/exception/DeathException.java robocode.api/src/main/java/robocode/exception/DisabledException.java robocode.api/src/main/java/robocode/exception/EventInterruptedException.java robocode.api/src/main/java/robocode/exception/RobotException.java robocode.api/src/main/java/robocode/exception/WinException.java robocode.api/src/main/java/robocode/exception/package-info.java robocode.api/src/main/java/robocode/package-info.java robocode.api/src/main/java/robocode/robocodeGL/EllipseGL.java robocode.api/src/main/java/robocode/robocodeGL/LabelGL.java robocode.api/src/main/java/robocode/robocodeGL/LineGL.java robocode.api/src/main/java/robocode/robocodeGL/PointGL.java robocode.api/src/main/java/robocode/robocodeGL/RectangleGL.java robocode.api/src/main/java/robocode/robocodeGL/RenderElement.java robocode.api/src/main/java/robocode/robocodeGL/system/GLRenderer.java robocode.api/src/main/java/robocode/robotinterfaces/IAdvancedEvents.java robocode.api/src/main/java/robocode/robotinterfaces/IAdvancedRobot.java robocode.api/src/main/java/robocode/robotinterfaces/IBasicEvents.java robocode.api/src/main/java/robocode/robotinterfaces/IBasicEvents2.java robocode.api/src/main/java/robocode/robotinterfaces/IBasicEvents3.java robocode.api/src/main/java/robocode/robotinterfaces/IBasicRobot.java robocode.api/src/main/java/robocode/robotinterfaces/IInteractiveEvents.java robocode.api/src/main/java/robocode/robotinterfaces/IInteractiveRobot.java robocode.api/src/main/java/robocode/robotinterfaces/IJuniorRobot.java robocode.api/src/main/java/robocode/robotinterfaces/IPaintEvents.java robocode.api/src/main/java/robocode/robotinterfaces/IPaintRobot.java robocode.api/src/main/java/robocode/robotinterfaces/ITeamEvents.java robocode.api/src/main/java/robocode/robotinterfaces/ITeamRobot.java robocode.api/src/main/java/robocode/robotinterfaces/package-info.java robocode.api/src/main/java/robocode/robotinterfaces/peer/IAdvancedRobotPeer.java robocode.api/src/main/java/robocode/robotinterfaces/peer/IBasicRobotPeer.java robocode.api/src/main/java/robocode/robotinterfaces/peer/IJuniorRobotPeer.java robocode.api/src/main/java/robocode/robotinterfaces/peer/IStandardRobotPeer.java robocode.api/src/main/java/robocode/robotinterfaces/peer/ITeamRobotPeer.java robocode.api/src/main/java/robocode/robotinterfaces/peer/package-info.java robocode.api/src/main/java/robocode/util/Utils.java robocode.api/src/main/java/robocode/util/package-info.java robocode.battle/build.gradle.kts robocode.battle/src/main/java/net/sf/robocode/battle/BaseBattle.java robocode.battle/src/main/java/net/sf/robocode/battle/Battle.java robocode.battle/src/main/java/net/sf/robocode/battle/BattleManager.java robocode.battle/src/main/java/net/sf/robocode/battle/BoundingRectangle.java robocode.battle/src/main/java/net/sf/robocode/battle/Command.java robocode.battle/src/main/java/net/sf/robocode/battle/IBattle.java robocode.battle/src/main/java/net/sf/robocode/battle/Module.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/BulletPeer.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/ContestantPeer.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/ContestantStatistics.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/ExplosionPeer.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/IRobotPeerBattle.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/RobotPeer.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/RobotStatistics.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/TeamPeer.java robocode.battle/src/main/java/net/sf/robocode/battle/peer/TeamStatistics.java robocode.battle/src/main/java/net/sf/robocode/battle/snapshot/BulletSnapshot.java robocode.battle/src/main/java/net/sf/robocode/battle/snapshot/RobotSnapshot.java robocode.battle/src/main/java/net/sf/robocode/battle/snapshot/ScoreSnapshot.java robocode.battle/src/main/java/net/sf/robocode/battle/snapshot/TurnSnapshot.java robocode.battle/src/main/java/net/sf/robocode/recording/BattlePlayer.java robocode.battle/src/main/java/net/sf/robocode/recording/BattleRecordInfo.java robocode.battle/src/main/java/net/sf/robocode/recording/BattleRecorder.java robocode.battle/src/main/java/net/sf/robocode/recording/RecordManager.java robocode.content/build.gradle.kts robocode.content/src/main/resources/ReadMe.html robocode.content/src/main/resources/ReadMe.md robocode.content/src/main/resources/battles/intro.battle robocode.content/src/main/resources/battles/sample.battle robocode.content/src/main/resources/compilers/CompilerTest.java robocode.content/src/main/resources/desktop/robocode.png robocode.content/src/main/resources/desktop/robocodeMeleeRumble.desktop robocode.content/src/main/resources/desktop/robocodeRoboRumble.desktop robocode.content/src/main/resources/desktop/robocodeRobocode.desktop robocode.content/src/main/resources/desktop/robocodeTeamRumble.desktop robocode.content/src/main/resources/desktop/robocodeTwinDuel.desktop robocode.content/src/main/resources/desktop/roborumble.png robocode.content/src/main/resources/java2d.bat robocode.content/src/main/resources/license/epl-v10.html robocode.content/src/main/resources/meleerumble.bat robocode.content/src/main/resources/meleerumble.command robocode.content/src/main/resources/meleerumble.sh robocode.content/src/main/resources/robocode.bat robocode.content/src/main/resources/robocode.command robocode.content/src/main/resources/robocode.ico robocode.content/src/main/resources/robocode.ico.asc robocode.content/src/main/resources/robocode.sh robocode.content/src/main/resources/roborumble.bat robocode.content/src/main/resources/roborumble.command robocode.content/src/main/resources/roborumble.ico robocode.content/src/main/resources/roborumble.sh robocode.content/src/main/resources/roborumble/meleerumble.txt robocode.content/src/main/resources/roborumble/roborumble.properties robocode.content/src/main/resources/roborumble/roborumble.txt robocode.content/src/main/resources/roborumble/teamrumble.txt robocode.content/src/main/resources/roborumble/twinduel.txt robocode.content/src/main/resources/set_java_options.bat robocode.content/src/main/resources/set_java_options.sh robocode.content/src/main/resources/teamrumble.bat robocode.content/src/main/resources/teamrumble.command robocode.content/src/main/resources/teamrumble.sh robocode.content/src/main/resources/templates/newjavafile.tpt robocode.content/src/main/resources/templates/newjuniorrobot.tpt robocode.content/src/main/resources/templates/newrobot.tpt robocode.content/src/main/resources/theme/editor/Robocode Black Theme.properties robocode.content/src/main/resources/theme/editor/Robocode White Theme.properties robocode.content/src/main/resources/twinduel.bat robocode.content/src/main/resources/twinduel.command robocode.content/src/main/resources/twinduel.sh robocode.core/build.gradle.kts robocode.core/src/main/java/net/sf/robocode/battle/BattleProperties.java robocode.core/src/main/java/net/sf/robocode/battle/BattleRankingTableModel.java robocode.core/src/main/java/net/sf/robocode/battle/BattleResultsTableModel.java robocode.core/src/main/java/net/sf/robocode/battle/IBattleManager.java robocode.core/src/main/java/net/sf/robocode/battle/events/BattleEventDispatcher.java robocode.core/src/main/java/net/sf/robocode/cachecleaner/CacheCleaner.java robocode.core/src/main/java/net/sf/robocode/core/BaseModule.java robocode.core/src/main/java/net/sf/robocode/core/Container.java robocode.core/src/main/java/net/sf/robocode/core/EngineClassLoader.java robocode.core/src/main/java/net/sf/robocode/core/Module.java robocode.core/src/main/java/net/sf/robocode/core/RobocodeMain.java robocode.core/src/main/java/net/sf/robocode/core/RobocodeMainBase.java robocode.core/src/main/java/net/sf/robocode/host/ICpuManager.java robocode.core/src/main/java/net/sf/robocode/host/IHostManager.java robocode.core/src/main/java/net/sf/robocode/host/IRobotClassLoader.java robocode.core/src/main/java/net/sf/robocode/host/RobotStatics.java robocode.core/src/main/java/net/sf/robocode/io/JarJar.java robocode.core/src/main/java/net/sf/robocode/io/URLJarCollector.java robocode.core/src/main/java/net/sf/robocode/peer/BadBehavior.java robocode.core/src/main/java/net/sf/robocode/peer/BulletCommand.java robocode.core/src/main/java/net/sf/robocode/peer/BulletStatus.java robocode.core/src/main/java/net/sf/robocode/peer/DebugProperty.java robocode.core/src/main/java/net/sf/robocode/peer/ExecCommands.java robocode.core/src/main/java/net/sf/robocode/peer/ExecResults.java robocode.core/src/main/java/net/sf/robocode/peer/IRobotPeer.java robocode.core/src/main/java/net/sf/robocode/peer/TeamMessage.java robocode.core/src/main/java/net/sf/robocode/recording/BattleRecordFormat.java robocode.core/src/main/java/net/sf/robocode/recording/IRecordManager.java robocode.core/src/main/java/net/sf/robocode/repository/CodeSizeCalculator.java robocode.core/src/main/java/net/sf/robocode/repository/IRepositoryManager.java robocode.core/src/main/java/net/sf/robocode/repository/IRobotItem.java robocode.core/src/main/java/net/sf/robocode/repository/IRobotSpecItem.java robocode.core/src/main/java/net/sf/robocode/repository/RobotProperties.java robocode.core/src/main/java/net/sf/robocode/repository/RobotType.java robocode.core/src/main/java/net/sf/robocode/repository/TeamProperties.java robocode.core/src/main/java/net/sf/robocode/robotpaint/Graphics2DSerialized.java robocode.core/src/main/java/net/sf/robocode/robotpaint/IGraphicsProxy.java robocode.core/src/main/java/net/sf/robocode/serialization/CsvWriter.java robocode.core/src/main/java/net/sf/robocode/serialization/IXmlSerializable.java robocode.core/src/main/java/net/sf/robocode/serialization/SerializableOptions.java robocode.core/src/main/java/net/sf/robocode/serialization/XmlReader.java robocode.core/src/main/java/net/sf/robocode/serialization/XmlWriter.java robocode.core/src/main/java/net/sf/robocode/settings/ISettingsListener.java robocode.core/src/main/java/net/sf/robocode/settings/ISettingsManager.java robocode.core/src/main/java/net/sf/robocode/settings/SettingsManager.java robocode.core/src/main/java/net/sf/robocode/sound/ISoundManager.java robocode.core/src/main/java/net/sf/robocode/ui/IWindowManager.java robocode.core/src/main/java/net/sf/robocode/util/AlphanumericComparator.java robocode.core/src/main/java/net/sf/robocode/util/JavaVersion.java robocode.core/src/main/java/net/sf/robocode/version/IVersionManager.java robocode.core/src/main/java/net/sf/robocode/version/Version.java robocode.core/src/main/java/net/sf/robocode/version/VersionManager.java robocode.core/src/main/resources/battleRecord.xsd robocode.core/src/main/resources/battleRecordS.xsd robocode.core/src/test/java/net/sf/robocode/serialization/ObjectCloner.java robocode.core/src/test/java/net/sf/robocode/serialization/RbSerializerTest.java robocode.core/src/test/java/net/sf/robocode/version/VersionTest.java robocode.host/build.gradle.kts robocode.host/src/main/java/net/sf/robocode/host/CpuManager.java robocode.host/src/main/java/net/sf/robocode/host/HostManager.java robocode.host/src/main/java/net/sf/robocode/host/IHost.java robocode.host/src/main/java/net/sf/robocode/host/IHostedThread.java robocode.host/src/main/java/net/sf/robocode/host/IThreadManager.java robocode.host/src/main/java/net/sf/robocode/host/JavaHost.java robocode.host/src/main/java/net/sf/robocode/host/Module.java robocode.host/src/main/java/net/sf/robocode/host/events/EventManager.java robocode.host/src/main/java/net/sf/robocode/host/events/EventQueue.java robocode.host/src/main/java/net/sf/robocode/host/events/IEventManager.java robocode.host/src/main/java/net/sf/robocode/host/io/BufferedPipedInputStream.java robocode.host/src/main/java/net/sf/robocode/host/io/BufferedPipedOutputStream.java robocode.host/src/main/java/net/sf/robocode/host/io/RobotFileOutputStream.java robocode.host/src/main/java/net/sf/robocode/host/io/RobotFileSystemManager.java robocode.host/src/main/java/net/sf/robocode/host/io/RobotOutputStream.java robocode.host/src/main/java/net/sf/robocode/host/jarjar/JarJarURLConnection.java robocode.host/src/main/java/net/sf/robocode/host/proxies/AdvancedRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/BasicRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/HostingRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/IHostingRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/JuniorRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/StandardRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/proxies/TeamRobotProxy.java robocode.host/src/main/java/net/sf/robocode/host/security/ClassAnalyzer.java robocode.host/src/main/java/net/sf/robocode/host/security/ClassFileReader.java robocode.host/src/main/java/net/sf/robocode/host/security/ISecurityManager.java robocode.host/src/main/java/net/sf/robocode/host/security/RobocodePermission.java robocode.host/src/main/java/net/sf/robocode/host/security/RobocodeSecurityAdapter.java robocode.host/src/main/java/net/sf/robocode/host/security/RobocodeSecurityManager.java robocode.host/src/main/java/net/sf/robocode/host/security/RobocodeSecurityPolicy.java robocode.host/src/main/java/net/sf/robocode/host/security/RobotClassLoader.java robocode.host/src/main/java/net/sf/robocode/host/security/RobotThreadManager.java robocode.host/src/main/java/net/sf/robocode/host/security/SecureInputStream.java robocode.host/src/main/java/net/sf/robocode/host/security/SecurePrintStream.java robocode.host/src/main/java/net/sf/robocode/host/security/ThreadManager.java robocode.host/src/main/java/net/sf/robocode/host/security/permissions/CompatibilityPermissionFactory.java robocode.host/src/main/java/net/sf/robocode/host/security/permissions/RobocodeRuntimePermission.java robocode.host/src/main/java/net/sf/robocode/host/security/permissions/package-info.java robocode.host/src/main/java/net/sf/robocode/host/serialization/RobocodeObjectInputStream.java robocode.host/src/test/java/net/sf/robocode/host/jarjar/JarJarTest.java robocode.host/src/test/resources/Outer.jar robocode.installer/build.gradle.kts robocode.installer/src/chocolatey/robocode.nuspec robocode.installer/src/chocolatey/tools/LICENSE.txt robocode.installer/src/chocolatey/tools/VERIFICATION.txt robocode.installer/src/chocolatey/tools/chocolateyinstall.ps1 robocode.installer/src/main/java/net/sf/robocode/installer/Extractor.java robocode.installer/src/main/java/net/sf/robocode/installer/Installer.java robocode.installer/src/main/java/net/sf/robocode/installer/InstallerDialog.java robocode.installer/src/main/java/net/sf/robocode/installer/OsUtil.java robocode.installer/src/main/java/net/sf/robocode/installer/ShortcutManager.java robocode.main/build.gradle.kts robocode.main/src/main/java/net/sf/robocode/main/Robocode.java robocode.repository/build.gradle.kts robocode.repository/src/main/java/net/sf/robocode/repository/IRepository.java robocode.repository/src/main/java/net/sf/robocode/repository/Module.java robocode.repository/src/main/java/net/sf/robocode/repository/Repository.java robocode.repository/src/main/java/net/sf/robocode/repository/RepositoryManager.java robocode.repository/src/main/java/net/sf/robocode/repository/items/IRepositoryItem.java robocode.repository/src/main/java/net/sf/robocode/repository/items/RepositoryItem.java robocode.repository/src/main/java/net/sf/robocode/repository/items/RobotItem.java robocode.repository/src/main/java/net/sf/robocode/repository/items/RobotSpecItem.java robocode.repository/src/main/java/net/sf/robocode/repository/items/TeamItem.java robocode.repository/src/main/java/net/sf/robocode/repository/items/handlers/ClassHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/items/handlers/ItemHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/items/handlers/PropertiesHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/items/handlers/SourceHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/items/handlers/TeamHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/packager/JarCreator.java robocode.repository/src/main/java/net/sf/robocode/repository/packager/JarExtractor.java robocode.repository/src/main/java/net/sf/robocode/repository/parsers/ClasspathFileParser.java robocode.repository/src/main/java/net/sf/robocode/repository/root/BaseRoot.java robocode.repository/src/main/java/net/sf/robocode/repository/root/ClasspathRoot.java robocode.repository/src/main/java/net/sf/robocode/repository/root/IRepositoryRoot.java robocode.repository/src/main/java/net/sf/robocode/repository/root/JarRoot.java robocode.repository/src/main/java/net/sf/robocode/repository/root/handlers/ClassPathHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/root/handlers/JarHandler.java robocode.repository/src/main/java/net/sf/robocode/repository/root/handlers/RootHandler.java robocode.roborumble/build.gradle.kts robocode.roborumble/src/main/java/net/sf/robocode/roborumble/battlesengine/BattlesFile.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/battlesengine/BattlesRunner.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/battlesengine/CompetitionsSelector.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/battlesengine/PrepareBattles.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/battlesengine/RumbleBattle.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/netengine/BotsDownload.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/netengine/FileTransfer.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/netengine/ResultsUpload.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/netengine/UpdateRatingFiles.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/util/ExcludesUtil.java robocode.roborumble/src/main/java/net/sf/robocode/roborumble/util/PropertiesUtil.java robocode.roborumble/src/main/java/roborumble/RoboRumbleAtHome.java robocode.samples/build.gradle.kts robocode.samples/src/main/java/sample/Corners.java robocode.samples/src/main/java/sample/Crazy.java robocode.samples/src/main/java/sample/Fire.java robocode.samples/src/main/java/sample/Interactive.java robocode.samples/src/main/java/sample/Interactive_v2.java robocode.samples/src/main/java/sample/MyFirstJuniorRobot.java robocode.samples/src/main/java/sample/MyFirstRobot.java robocode.samples/src/main/java/sample/PaintingRobot.java robocode.samples/src/main/java/sample/RamFire.java robocode.samples/src/main/java/sample/SittingDuck.html robocode.samples/src/main/java/sample/SittingDuck.java robocode.samples/src/main/java/sample/SpinBot.java robocode.samples/src/main/java/sample/Target.java robocode.samples/src/main/java/sample/TrackFire.java robocode.samples/src/main/java/sample/Tracker.java robocode.samples/src/main/java/sample/VelociRobot.java robocode.samples/src/main/java/sample/Walls.java robocode.samples/src/main/java/sampleex/Alien.java robocode.samples/src/main/java/sampleex/AlienComposition.java robocode.samples/src/main/java/sampleex/MasterAndSlave.java robocode.samples/src/main/java/sampleex/ProxyOfGreyEminence.java robocode.samples/src/main/java/sampleex/RegullarMonk.java robocode.samples/src/main/java/sampleex/Slave.java robocode.samples/src/main/java/samplesentry/BorderGuard.java robocode.samples/src/main/java/sampleteam/MyFirstDroid.java robocode.samples/src/main/java/sampleteam/MyFirstLeader.java robocode.samples/src/main/java/sampleteam/Point.java robocode.samples/src/main/java/sampleteam/RobotColors.java robocode.samples/src/main/resources/sample/Corners.properties robocode.samples/src/main/resources/sample/Crazy.properties robocode.samples/src/main/resources/sample/Fire.properties robocode.samples/src/main/resources/sample/Interactive.properties robocode.samples/src/main/resources/sample/Interactive_v2.properties robocode.samples/src/main/resources/sample/MyFirstJuniorRobot.properties robocode.samples/src/main/resources/sample/MyFirstRobot.properties robocode.samples/src/main/resources/sample/PaintingRobot.properties robocode.samples/src/main/resources/sample/RamFire.properties robocode.samples/src/main/resources/sample/SittingDuck.properties robocode.samples/src/main/resources/sample/SpinBot.properties robocode.samples/src/main/resources/sample/Target.properties robocode.samples/src/main/resources/sample/TrackFire.properties robocode.samples/src/main/resources/sample/Tracker.properties robocode.samples/src/main/resources/sample/VelociRobot.properties robocode.samples/src/main/resources/sample/Walls.properties robocode.samples/src/main/resources/sampleex/Alien.properties robocode.samples/src/main/resources/sampleex/MasterAndSlave.properties robocode.samples/src/main/resources/sampleex/ProxyOfGreyEminence.properties robocode.samples/src/main/resources/samplesentry/BorderGuard.properties robocode.samples/src/main/resources/sampleteam/MyFirstTeam.team robocode.sound/build.gradle.kts robocode.sound/src/main/java/net/sf/robocode/sound/Module.java robocode.sound/src/main/java/net/sf/robocode/sound/SoundCache.java robocode.sound/src/main/java/net/sf/robocode/sound/SoundManager.java robocode.sound/src/main/resources/net/sf/robocode/sound/sounds/13831_adcbicycle_22.wav robocode.sound/src/main/resources/net/sf/robocode/sound/sounds/explode.wav robocode.sound/src/main/resources/net/sf/robocode/sound/sounds/shellhit.wav robocode.sound/src/main/resources/net/sf/robocode/sound/sounds/zap.wav robocode.tests.robots/build.gradle.kts robocode.tests.robots/src/main/java/NoPackageButReallyLongNameIWouldSayTooLongMaybeEventLonger.java robocode.tests.robots/src/main/java/NoPackageShortName.java robocode.tests.robots/src/main/java/robocode/BadNamespace.java robocode.tests.robots/src/main/java/tested/robots/Ahead.java robocode.tests.robots/src/main/java/tested/robots/AwtAttack.java robocode.tests.robots/src/main/java/tested/robots/BadFirePower.java robocode.tests.robots/src/main/java/tested/robots/BattleLost.java robocode.tests.robots/src/main/java/tested/robots/BattleWin.java robocode.tests.robots/src/main/java/tested/robots/BodyTurnRate.java robocode.tests.robots/src/main/java/tested/robots/ConstructorAwtAttack.java robocode.tests.robots/src/main/java/tested/robots/ConstructorHttpAttack.java robocode.tests.robots/src/main/java/tested/robots/ConstructorReflectionAttack.java robocode.tests.robots/src/main/java/tested/robots/ConstructorSocketAttack.java robocode.tests.robots/src/main/java/tested/robots/ConstructorThreadAttack.java robocode.tests.robots/src/main/java/tested/robots/CustomEvents.java robocode.tests.robots/src/main/java/tested/robots/DecelerationCaveat1.java robocode.tests.robots/src/main/java/tested/robots/DecelerationCaveat2.java robocode.tests.robots/src/main/java/tested/robots/DecelerationCaveat3.java robocode.tests.robots/src/main/java/tested/robots/DieFast.java robocode.tests.robots/src/main/java/tested/robots/DnsAttack.java robocode.tests.robots/src/main/java/tested/robots/EnvAttack.java robocode.tests.robots/src/main/java/tested/robots/EventPriorityFilter.java robocode.tests.robots/src/main/java/tested/robots/FairPlay.java robocode.tests.robots/src/main/java/tested/robots/FileAttack.java robocode.tests.robots/src/main/java/tested/robots/FileOutputStreamAttack.java robocode.tests.robots/src/main/java/tested/robots/FileWriteSize.java robocode.tests.robots/src/main/java/tested/robots/GunHeat.java robocode.tests.robots/src/main/java/tested/robots/GunTurnRate.java robocode.tests.robots/src/main/java/tested/robots/HttpAttack.java robocode.tests.robots/src/main/java/tested/robots/IncludeNamespaceAttack.java robocode.tests.robots/src/main/java/tested/robots/InteruptibleEvent.java robocode.tests.robots/src/main/java/tested/robots/JuniorEvents.java robocode.tests.robots/src/main/java/tested/robots/MaxTurnRate.java robocode.tests.robots/src/main/java/tested/robots/MaxVelocity.java robocode.tests.robots/src/main/java/tested/robots/PrivateConstructor.java robocode.tests.robots/src/main/java/tested/robots/RadarTurnRateAndSetAdjust.java robocode.tests.robots/src/main/java/tested/robots/Random.java robocode.tests.robots/src/main/java/tested/robots/RateControl.java robocode.tests.robots/src/main/java/tested/robots/ReflectionAttack.java robocode.tests.robots/src/main/java/tested/robots/ReverseDirection.java robocode.tests.robots/src/main/java/tested/robots/RobotDeathEvents.java robocode.tests.robots/src/main/java/tested/robots/SkipTurns.java robocode.tests.robots/src/main/java/tested/robots/SocketAttack.java robocode.tests.robots/src/main/java/tested/robots/ThreadAttack.java robocode.tests.robots/src/main/java/tested/robots/ThreadGroupAttack.java robocode.tests.robots/src/main/java/tested/robots/Throwing.java robocode.tests.robots/src/main/java/tested/robots/TooLongNameThisIsReallyTooLongName.java robocode.tests.robots/src/main/java/tested/robots/UndeadThread.java robocode.tests.robots/src/main/java/tested/robots/WatchBullets.java robocode.tests.robots/src/main/java/tooLongNamespaceThisIsReallyTooLongNamespace/TooLongNamespace.java robocode.tests.robots/src/main/resources/tested/robots/TestTeam.team robocode.tests/build.gradle.kts robocode.tests/config/robocode.properties robocode.tests/src/main/java/net/sf/robocode/test/helpers/Assert.java robocode.tests/src/main/java/net/sf/robocode/test/helpers/RobocodeTestBed.java robocode.tests/src/test/java/net/sf/robocode/test/core/util/AlphanumericComparatorTest.java robocode.tests/src/test/java/net/sf/robocode/test/host/security/RobotClassLoaderTest.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestAcceleration.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestAwtAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestBodyTurnRate.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestBulletPower.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestConstructorAwtAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestConstructorHttpAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestConstructorReflectionAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestConstructorSocketAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestConstructorThreadAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestCustomEvents.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestDuplicatesAndScore.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestEnvAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestEventPriorityFilter.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestFairPlay.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestFileAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestFileOutputStreamAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestFileWrite.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestFileWriteSize.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestGunHeat.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestGunTurnRate.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestHttpAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestIncludeNamespaceAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestInteruptibleEvent.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestJunior.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestLost.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestMaxTurnRate.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestMaxVelocity.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestNames.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestPosition.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestPrivateConstructor.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestRadarTurnRateAndSetAdjust.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestRandom.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestRankingsWithTargetRobots.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestRateControl.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestReflectionAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestReverseDirection.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestRobotDeathEvents.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestScore.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestScoring.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestSkippedTurns.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestSocketAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestStaticConstructorDnsAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestThreadAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestThreadGroupAttack.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestThrowing.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestUndeadThread.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestWatchBullet.java robocode.tests/src/test/java/net/sf/robocode/test/robots/TestWin.java robocode.tests/src/test/java/net/sf/robocode/test/samples/RobocodeRunner.java robocode.ui.editor/build.gradle.kts robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/CompilerPreferencesDialog.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/CompilerProperties.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/CompoundUndoManager.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/EditWindow.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/EditorPane.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/EditorPanel.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/EditorThemeConfigDialog.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/FindReplaceDialog.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/FontStyle.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/IEditorProperties.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/JavaDocument.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/LineHighlighter.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/LineNumberArea.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/Module.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/MoreWindowsDialog.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/RobocodeCompiler.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/RobocodeCompilerFactory.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/RobocodeEditor.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/RobocodeEditorMenuBar.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/StyledDocument.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/UndoManagerWithActions.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/WindowMenuItem.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/ColorAndStyle.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/ColorAndStyleAdapter.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/ComboBoxUtil.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/EditorProperties.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/EditorPropertiesManager.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/EditorThemeProperties.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/EditorThemePropertiesManager.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/EditorThemePropertyChangeAdapter.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/IColorAndStyleListener.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/IEditorThemeProperties.java robocode.ui.editor/src/main/java/net/sf/robocode/ui/editor/theme/IEditorThemePropertyChangeListener.java robocode.ui/build.gradle.kts robocode.ui/src/main/java/net/sf/robocode/ui/BrowserManager.java robocode.ui/src/main/java/net/sf/robocode/ui/CheckList.java robocode.ui/src/main/java/net/sf/robocode/ui/IImageManager.java robocode.ui/src/main/java/net/sf/robocode/ui/IRobotDialogManager.java robocode.ui/src/main/java/net/sf/robocode/ui/IWindowManagerExt.java robocode.ui/src/main/java/net/sf/robocode/ui/ImageManager.java robocode.ui/src/main/java/net/sf/robocode/ui/Module.java robocode.ui/src/main/java/net/sf/robocode/ui/RobotDialogManager.java robocode.ui/src/main/java/net/sf/robocode/ui/WindowManager.java robocode.ui/src/main/java/net/sf/robocode/ui/battle/AwtBattleAdaptor.java robocode.ui/src/main/java/net/sf/robocode/ui/battleview/BattleField.java robocode.ui/src/main/java/net/sf/robocode/ui/battleview/BattleView.java robocode.ui/src/main/java/net/sf/robocode/ui/battleview/InteractiveHandler.java robocode.ui/src/main/java/net/sf/robocode/ui/battleview/MirroredGraphics.java robocode.ui/src/main/java/net/sf/robocode/ui/battleview/ScreenshotUtil.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/AboutBox.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/AvailableRobotsPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/BaseScoreDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/BattleButton.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/BattleDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/ConsoleDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/ConsoleScrollPane.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/ConsoleTableModel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/MenuBar.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/NewBattleDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/NewBattleRulesTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesCommonOptionsTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesDevelopmentOptionsTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesRenderingOptionsTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesSoundOptionsTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/PreferencesViewOptionsTab.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RankingDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RcSplashScreen.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/ResultsDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/ResultsTableCellRenderer.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobocodeFrame.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobotButton.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobotDescriptionPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobotDialog.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobotExtractor.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/RobotSelectionPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/TeamCreator.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/TeamCreatorOptionsPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WindowPositionManager.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WindowUtil.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/Wizard.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WizardCardPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WizardController.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WizardListener.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WizardPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/dialog/WizardTabbedPane.java robocode.ui/src/main/java/net/sf/robocode/ui/editor/IRobocodeEditor.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/ColorUtil.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/GraphicsState.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/ImageUtil.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/RenderImage.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/RenderObject.java robocode.ui/src/main/java/net/sf/robocode/ui/gfx/RobocodeLogo.java robocode.ui/src/main/java/net/sf/robocode/ui/packager/ConfirmPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/packager/FilenamePanel.java robocode.ui/src/main/java/net/sf/robocode/ui/packager/PackagerOptionsPanel.java robocode.ui/src/main/java/net/sf/robocode/ui/packager/RobotPackager.java robocode.ui/src/main/java/net/sf/robocode/ui/util/LimitedClassnameDocument.java robocode.ui/src/main/java/net/sf/robocode/ui/util/LimitedDocument.java robocode.ui/src/main/java/net/sf/robocode/ui/util/ShortcutUtil.java robocode.ui/src/main/resources/net/sf/robocode/ui/html/about.html robocode.ui/src/main/resources/net/sf/robocode/ui/html/transparent.png robocode.ui/src/main/resources/net/sf/robocode/ui/icons/robocode-icon.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/.cvsignore robocode.ui/src/main/resources/net/sf/robocode/ui/images/body.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/.cvsignore robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-1.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-10.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-11.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-12.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-13.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-14.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-15.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-16.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-17.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-2.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-3.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-4.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-5.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-6.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-7.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-8.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion1-9.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-1.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-10.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-11.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-12.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-13.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-14.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-15.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-16.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-17.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-18.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-19.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-2.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-20.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-21.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-22.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-23.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-24.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-25.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-26.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-27.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-28.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-29.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-3.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-30.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-31.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-32.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-33.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-34.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-35.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-36.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-37.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-38.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-39.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-4.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-40.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-41.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-42.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-43.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-44.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-45.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-46.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-47.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-48.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-49.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-5.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-50.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-51.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-52.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-53.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-54.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-55.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-56.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-57.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-58.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-59.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-6.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-60.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-61.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-62.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-63.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-64.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-65.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-66.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-67.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-68.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-69.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-7.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-70.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-71.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-8.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/explosion/explosion2-9.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/.cvsignore robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/blue_metal/blue_metal_0.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/blue_metal/blue_metal_1.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/blue_metal/blue_metal_2.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/blue_metal/blue_metal_3.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/blue_metal/blue_metal_4.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/ground/explode_debris.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/radar.png robocode.ui/src/main/resources/net/sf/robocode/ui/images/turret.png settings.gradle.kts versions.md 
+2026-06-30T15:37:11.8932212Z ##[endgroup]
+2026-06-30T15:37:11.8932763Z Found 767 files tracked by GitHub
+2026-06-30T15:37:11.8933374Z Using test report parser 'java-junit'
+2026-06-30T15:37:11.8940574Z ##[group]Creating test report Unit test results
+2026-06-30T15:37:11.8942999Z Processing test results for check run Unit test results
+2026-06-30T15:37:11.9493517Z Summary content:
+2026-06-30T15:37:11.9494176Z ## 86 passed, 1 failed and 1 skipped 
+2026-06-30T15:37:11.9519594Z ![Tests failed](https://img.shields.io/badge/tests-86%20passed%2C%201%20failed%2C%201%20skipped-critical)
+2026-06-30T15:37:11.9541148Z |Report|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9554047Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9555638Z |[robocode.core/build/test-results/test/TEST-net.sf.robocode.serialization.RbSerializerTest.xml](#user-content-tr-qwAAZg-r0)|5 ✅|||609ms|
+2026-06-30T15:37:11.9557737Z |[robocode.core/build/test-results/test/TEST-net.sf.robocode.version.VersionTest.xml](#user-content-tr-qwAAZg-r1)|22 ✅|||21ms|
+2026-06-30T15:37:11.9559855Z |[robocode.host/build/test-results/test/TEST-net.sf.robocode.host.jarjar.JarJarTest.xml](#user-content-tr-qwAAZg-r2)|2 ✅|||17ms|
+2026-06-30T15:37:11.9561943Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.core.util.AlphanumericComparatorTest.xml](#user-content-tr-qwAAZg-r3)|1 ✅|||6ms|
+2026-06-30T15:37:11.9564127Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.host.security.RobotClassLoaderTest.xml](#user-content-tr-qwAAZg-r4)|6 ✅|||123ms|
+2026-06-30T15:37:11.9566185Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestAcceleration.xml](#user-content-tr-qwAAZg-r5)|1 ✅|||630ms|
+2026-06-30T15:37:11.9568407Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestAwtAttack.xml](#user-content-tr-qwAAZg-r6)|1 ✅|||74ms|
+2026-06-30T15:37:11.9570674Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestBodyTurnRate.xml](#user-content-tr-qwAAZg-r7)|1 ✅|||198ms|
+2026-06-30T15:37:11.9572722Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestBulletPower.xml](#user-content-tr-qwAAZg-r8)|1 ✅|||251ms|
+2026-06-30T15:37:11.9574794Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorAwtAttack.xml](#user-content-tr-qwAAZg-r9)|1 ✅|||35ms|
+2026-06-30T15:37:11.9576919Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorHttpAttack.xml](#user-content-tr-qwAAZg-r10)|1 ✅|||258ms|
+2026-06-30T15:37:11.9579856Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorReflectionAttack.xml](#user-content-tr-qwAAZg-r11)|1 ✅|||41ms|
+2026-06-30T15:37:11.9582193Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorSocketAttack.xml](#user-content-tr-qwAAZg-r12)|1 ✅|||141ms|
+2026-06-30T15:37:11.9584458Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorThreadAttack.xml](#user-content-tr-qwAAZg-r13)|1 ✅|||212ms|
+2026-06-30T15:37:11.9586141Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestCustomEvents.xml](#user-content-tr-qwAAZg-r14)|1 ✅|||165ms|
+2026-06-30T15:37:11.9587408Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestDuplicatesAndScore.xml](#user-content-tr-qwAAZg-r15)|1 ✅|||4s|
+2026-06-30T15:37:11.9589006Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestEnvAttack.xml](#user-content-tr-qwAAZg-r16)|1 ✅|||68ms|
+2026-06-30T15:37:11.9590285Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestEventPriorityFilter.xml](#user-content-tr-qwAAZg-r17)|1 ✅|||173ms|
+2026-06-30T15:37:11.9591521Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFairPlay.xml](#user-content-tr-qwAAZg-r18)|1 ✅|1 ❌||56s|
+2026-06-30T15:37:11.9592722Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileAttack.xml](#user-content-tr-qwAAZg-r19)|1 ✅|||53ms|
+2026-06-30T15:37:11.9593981Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileOutputStreamAttack.xml](#user-content-tr-qwAAZg-r20)|1 ✅|||213ms|
+2026-06-30T15:37:11.9595223Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileWrite.xml](#user-content-tr-qwAAZg-r21)|1 ✅|||268ms|
+2026-06-30T15:37:11.9596448Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileWriteSize.xml](#user-content-tr-qwAAZg-r22)|1 ✅|||179ms|
+2026-06-30T15:37:11.9597629Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestGunHeat.xml](#user-content-tr-qwAAZg-r23)|1 ✅|||137ms|
+2026-06-30T15:37:11.9599094Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestGunTurnRate.xml](#user-content-tr-qwAAZg-r24)|1 ✅|||144ms|
+2026-06-30T15:37:11.9600516Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestHttpAttack.xml](#user-content-tr-qwAAZg-r25)|1 ✅|||89ms|
+2026-06-30T15:37:11.9601772Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestIncludeNamespaceAttack.xml](#user-content-tr-qwAAZg-r26)|1 ✅|||19ms|
+2026-06-30T15:37:11.9603065Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestInteruptibleEvent.xml](#user-content-tr-qwAAZg-r27)|1 ✅|||224ms|
+2026-06-30T15:37:11.9604281Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestJunior.xml](#user-content-tr-qwAAZg-r28)|1 ✅|||73ms|
+2026-06-30T15:37:11.9605395Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestLost.xml](#user-content-tr-qwAAZg-r29)|1 ✅|||194ms|
+2026-06-30T15:37:11.9606558Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestMaxTurnRate.xml](#user-content-tr-qwAAZg-r30)|1 ✅|||145ms|
+2026-06-30T15:37:11.9607761Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestMaxVelocity.xml](#user-content-tr-qwAAZg-r31)|1 ✅|||183ms|
+2026-06-30T15:37:11.9609200Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestNames.xml](#user-content-tr-qwAAZg-r32)|1 ✅|||51ms|
+2026-06-30T15:37:11.9610360Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestPosition.xml](#user-content-tr-qwAAZg-r33)|1 ✅|||171ms|
+2026-06-30T15:37:11.9611575Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestPrivateConstructor.xml](#user-content-tr-qwAAZg-r34)|1 ✅|||31ms|
+2026-06-30T15:37:11.9612895Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRadarTurnRateAndSetAdjust.xml](#user-content-tr-qwAAZg-r35)|1 ✅|||145ms|
+2026-06-30T15:37:11.9614115Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRandom.xml](#user-content-tr-qwAAZg-r36)|1 ✅|||70ms|
+2026-06-30T15:37:11.9615343Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRankingsWithTargetRobots.xml](#user-content-tr-qwAAZg-r37)|1 ✅|||2s|
+2026-06-30T15:37:11.9616619Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRateControl.xml](#user-content-tr-qwAAZg-r38)|1 ✅|||143ms|
+2026-06-30T15:37:11.9617828Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestReflectionAttack.xml](#user-content-tr-qwAAZg-r39)|1 ✅|||68ms|
+2026-06-30T15:37:11.9619211Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestReverseDirection.xml](#user-content-tr-qwAAZg-r40)|1 ✅|||115ms|
+2026-06-30T15:37:11.9620447Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRobotDeathEvents.xml](#user-content-tr-qwAAZg-r41)|1 ✅|||3s|
+2026-06-30T15:37:11.9621605Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestScore.xml](#user-content-tr-qwAAZg-r42)|4 ✅|||9s|
+2026-06-30T15:37:11.9622712Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestScoring.xml](#user-content-tr-qwAAZg-r43)|1 ✅|||3s|
+2026-06-30T15:37:11.9623903Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestSkippedTurns.xml](#user-content-tr-qwAAZg-r44)|||1 ⚪|4ms|
+2026-06-30T15:37:11.9625125Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestSocketAttack.xml](#user-content-tr-qwAAZg-r45)|1 ✅|||87ms|
+2026-06-30T15:37:11.9626399Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestStaticConstructorDnsAttack.xml](#user-content-tr-qwAAZg-r46)|1 ✅|||58ms|
+2026-06-30T15:37:11.9627676Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThreadAttack.xml](#user-content-tr-qwAAZg-r47)|1 ✅|||122ms|
+2026-06-30T15:37:11.9629143Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThreadGroupAttack.xml](#user-content-tr-qwAAZg-r48)|1 ✅|||7s|
+2026-06-30T15:37:11.9630353Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThrowing.xml](#user-content-tr-qwAAZg-r49)|1 ✅|||23ms|
+2026-06-30T15:37:11.9631688Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestUndeadThread.xml](#user-content-tr-qwAAZg-r50)|1 ✅|||7s|
+2026-06-30T15:37:11.9632885Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestWatchBullet.xml](#user-content-tr-qwAAZg-r51)|1 ✅|||190ms|
+2026-06-30T15:37:11.9634033Z |[robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestWin.xml](#user-content-tr-qwAAZg-r52)|1 ✅|||1s|
+2026-06-30T15:37:11.9635350Z ## ✅ <a id="user-content-tr-qwAAZg-r0" href="#user-content-tr-qwAAZg-r0">robocode.core/build/test-results/test/TEST-net.sf.robocode.serialization.RbSerializerTest.xml</a>
+2026-06-30T15:37:11.9636383Z **5** tests were completed in **609ms** with **5** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9636891Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9637215Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9637821Z |[net.sf.robocode.serialization.RbSerializerTest](#user-content-tr-qwAAZg-r0s0)|5 ✅|||609ms|
+2026-06-30T15:37:11.9639111Z ### ✅ <a id="user-content-tr-qwAAZg-r0s0" href="#user-content-tr-qwAAZg-r0s0">net.sf.robocode.serialization.RbSerializerTest</a>
+2026-06-30T15:37:11.9639775Z ```
+2026-06-30T15:37:11.9640018Z ✅ empty
+2026-06-30T15:37:11.9640258Z ✅ graphics
+2026-06-30T15:37:11.9640509Z ✅ withProperties
+2026-06-30T15:37:11.9640790Z ✅ withBullets
+2026-06-30T15:37:11.9641054Z ✅ withMessages
+2026-06-30T15:37:11.9641296Z ```
+2026-06-30T15:37:11.9642113Z ## ✅ <a id="user-content-tr-qwAAZg-r1" href="#user-content-tr-qwAAZg-r1">robocode.core/build/test-results/test/TEST-net.sf.robocode.version.VersionTest.xml</a>
+2026-06-30T15:37:11.9643066Z **22** tests were completed in **21ms** with **22** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9643570Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9643900Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9644398Z |[net.sf.robocode.version.VersionTest](#user-content-tr-qwAAZg-r1s0)|22 ✅|||21ms|
+2026-06-30T15:37:11.9645300Z ### ✅ <a id="user-content-tr-qwAAZg-r1s0" href="#user-content-tr-qwAAZg-r1s0">net.sf.robocode.version.VersionTest</a>
+2026-06-30T15:37:11.9645914Z ```
+2026-06-30T15:37:11.9646138Z ✅ smaller
+2026-06-30T15:37:11.9646398Z ✅ compareBetas2
+2026-06-30T15:37:11.9646677Z ✅ compareBetas3
+2026-06-30T15:37:11.9646932Z ✅ compareBetas4
+2026-06-30T15:37:11.9647194Z ✅ smallerThanBeta
+2026-06-30T15:37:11.9647458Z ✅ greaterShort
+2026-06-30T15:37:11.9647750Z ✅ compareBetasShort2
+2026-06-30T15:37:11.9648035Z ✅ greaterThanBeta
+2026-06-30T15:37:11.9648445Z ✅ equalVersion
+2026-06-30T15:37:11.9648719Z ✅ compareBetasShort
+2026-06-30T15:37:11.9648983Z ✅ greaterShort2
+2026-06-30T15:37:11.9649231Z ✅ same
+2026-06-30T15:37:11.9649488Z ✅ compareBetas
+2026-06-30T15:37:11.9649730Z ✅ greater
+2026-06-30T15:37:11.9649974Z ✅ equalBetas
+2026-06-30T15:37:11.9650229Z ✅ greaterToo
+2026-06-30T15:37:11.9650486Z ✅ greaterShortBeta2
+2026-06-30T15:37:11.9650807Z ✅ greaterShortBeta3
+2026-06-30T15:37:11.9651080Z ✅ smallerThanAlpha
+2026-06-30T15:37:11.9651385Z ✅ greaterLong
+2026-06-30T15:37:11.9651702Z ✅ greaterShortBeta
+2026-06-30T15:37:11.9651982Z ✅ equalAlphas
+2026-06-30T15:37:11.9652230Z ```
+2026-06-30T15:37:11.9653089Z ## ✅ <a id="user-content-tr-qwAAZg-r2" href="#user-content-tr-qwAAZg-r2">robocode.host/build/test-results/test/TEST-net.sf.robocode.host.jarjar.JarJarTest.xml</a>
+2026-06-30T15:37:11.9654066Z **2** tests were completed in **17ms** with **2** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9654571Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9654907Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9655420Z |[net.sf.robocode.host.jarjar.JarJarTest](#user-content-tr-qwAAZg-r2s0)|2 ✅|||17ms|
+2026-06-30T15:37:11.9656317Z ### ✅ <a id="user-content-tr-qwAAZg-r2s0" href="#user-content-tr-qwAAZg-r2s0">net.sf.robocode.host.jarjar.JarJarTest</a>
+2026-06-30T15:37:11.9656932Z ```
+2026-06-30T15:37:11.9657162Z ✅ run
+2026-06-30T15:37:11.9657599Z ✅ runClassLoader
+2026-06-30T15:37:11.9657843Z ```
+2026-06-30T15:37:11.9659293Z ## ✅ <a id="user-content-tr-qwAAZg-r3" href="#user-content-tr-qwAAZg-r3">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.core.util.AlphanumericComparatorTest.xml</a>
+2026-06-30T15:37:11.9660482Z **1** tests were completed in **6ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9661117Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9661660Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9662441Z |[net.sf.robocode.test.core.util.AlphanumericComparatorTest](#user-content-tr-qwAAZg-r3s0)|1 ✅|||6ms|
+2026-06-30T15:37:11.9663762Z ### ✅ <a id="user-content-tr-qwAAZg-r3s0" href="#user-content-tr-qwAAZg-r3s0">net.sf.robocode.test.core.util.AlphanumericComparatorTest</a>
+2026-06-30T15:37:11.9664652Z ```
+2026-06-30T15:37:11.9665061Z ✅ correctSorting
+2026-06-30T15:37:11.9665488Z ```
+2026-06-30T15:37:11.9666626Z ## ✅ <a id="user-content-tr-qwAAZg-r4" href="#user-content-tr-qwAAZg-r4">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.host.security.RobotClassLoaderTest.xml</a>
+2026-06-30T15:37:11.9686577Z **6** tests were completed in **123ms** with **6** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9687154Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9687538Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9688468Z |[net.sf.robocode.test.host.security.RobotClassLoaderTest](#user-content-tr-qwAAZg-r4s0)|6 ✅|||123ms|
+2026-06-30T15:37:11.9689626Z ### ✅ <a id="user-content-tr-qwAAZg-r4s0" href="#user-content-tr-qwAAZg-r4s0">net.sf.robocode.test.host.security.RobotClassLoaderTest</a>
+2026-06-30T15:37:11.9690413Z ```
+2026-06-30T15:37:11.9690704Z ✅ robotAllowedMain
+2026-06-30T15:37:11.9691013Z ✅ robotBlockedControl
+2026-06-30T15:37:11.9691345Z ✅ robotBlockedBad
+2026-06-30T15:37:11.9691672Z ✅ robotBlockedRobocode
+2026-06-30T15:37:11.9691978Z ✅ robotAllowed
+2026-06-30T15:37:11.9692285Z ✅ engineAllowed
+2026-06-30T15:37:11.9692553Z ```
+2026-06-30T15:37:11.9693546Z ## ✅ <a id="user-content-tr-qwAAZg-r5" href="#user-content-tr-qwAAZg-r5">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestAcceleration.xml</a>
+2026-06-30T15:37:11.9694614Z **1** tests were completed in **630ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9695160Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9695522Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9696413Z |[net.sf.robocode.test.robots.TestAcceleration](#user-content-tr-qwAAZg-r5s0)|1 ✅|||630ms|
+2026-06-30T15:37:11.9698140Z ### ✅ <a id="user-content-tr-qwAAZg-r5s0" href="#user-content-tr-qwAAZg-r5s0">net.sf.robocode.test.robots.TestAcceleration</a>
+2026-06-30T15:37:11.9699537Z ```
+2026-06-30T15:37:11.9699951Z ✅ run
+2026-06-30T15:37:11.9700276Z ```
+2026-06-30T15:37:11.9701572Z ## ✅ <a id="user-content-tr-qwAAZg-r6" href="#user-content-tr-qwAAZg-r6">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestAwtAttack.xml</a>
+2026-06-30T15:37:11.9703152Z **1** tests were completed in **74ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9703900Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9704441Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9705281Z |[net.sf.robocode.test.robots.TestAwtAttack](#user-content-tr-qwAAZg-r6s0)|1 ✅|||74ms|
+2026-06-30T15:37:11.9706745Z ### ✅ <a id="user-content-tr-qwAAZg-r6s0" href="#user-content-tr-qwAAZg-r6s0">net.sf.robocode.test.robots.TestAwtAttack</a>
+2026-06-30T15:37:11.9707785Z ```
+2026-06-30T15:37:11.9708208Z ✅ run
+2026-06-30T15:37:11.9708820Z ```
+2026-06-30T15:37:11.9710249Z ## ✅ <a id="user-content-tr-qwAAZg-r7" href="#user-content-tr-qwAAZg-r7">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestBodyTurnRate.xml</a>
+2026-06-30T15:37:11.9712013Z **1** tests were completed in **198ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9712839Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9713391Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9714654Z |[net.sf.robocode.test.robots.TestBodyTurnRate](#user-content-tr-qwAAZg-r7s0)|1 ✅|||198ms|
+2026-06-30T15:37:11.9716345Z ### ✅ <a id="user-content-tr-qwAAZg-r7s0" href="#user-content-tr-qwAAZg-r7s0">net.sf.robocode.test.robots.TestBodyTurnRate</a>
+2026-06-30T15:37:11.9717366Z ```
+2026-06-30T15:37:11.9717815Z ✅ run
+2026-06-30T15:37:11.9718213Z ```
+2026-06-30T15:37:11.9719942Z ## ✅ <a id="user-content-tr-qwAAZg-r8" href="#user-content-tr-qwAAZg-r8">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestBulletPower.xml</a>
+2026-06-30T15:37:11.9721590Z **1** tests were completed in **251ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9722445Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9722987Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9723948Z |[net.sf.robocode.test.robots.TestBulletPower](#user-content-tr-qwAAZg-r8s0)|1 ✅|||251ms|
+2026-06-30T15:37:11.9725550Z ### ✅ <a id="user-content-tr-qwAAZg-r8s0" href="#user-content-tr-qwAAZg-r8s0">net.sf.robocode.test.robots.TestBulletPower</a>
+2026-06-30T15:37:11.9726699Z ```
+2026-06-30T15:37:11.9727138Z ✅ run
+2026-06-30T15:37:11.9727742Z ```
+2026-06-30T15:37:11.9729483Z ## ✅ <a id="user-content-tr-qwAAZg-r9" href="#user-content-tr-qwAAZg-r9">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorAwtAttack.xml</a>
+2026-06-30T15:37:11.9731185Z **1** tests were completed in **35ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9732031Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9732615Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9733664Z |[net.sf.robocode.test.robots.TestConstructorAwtAttack](#user-content-tr-qwAAZg-r9s0)|1 ✅|||35ms|
+2026-06-30T15:37:11.9735428Z ### ✅ <a id="user-content-tr-qwAAZg-r9s0" href="#user-content-tr-qwAAZg-r9s0">net.sf.robocode.test.robots.TestConstructorAwtAttack</a>
+2026-06-30T15:37:11.9736580Z ```
+2026-06-30T15:37:11.9737057Z ✅ run
+2026-06-30T15:37:11.9737422Z ```
+2026-06-30T15:37:11.9739263Z ## ✅ <a id="user-content-tr-qwAAZg-r10" href="#user-content-tr-qwAAZg-r10">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorHttpAttack.xml</a>
+2026-06-30T15:37:11.9741079Z **1** tests were completed in **258ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9741916Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9742506Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9743629Z |[net.sf.robocode.test.robots.TestConstructorHttpAttack](#user-content-tr-qwAAZg-r10s0)|1 ✅|||258ms|
+2026-06-30T15:37:11.9745419Z ### ✅ <a id="user-content-tr-qwAAZg-r10s0" href="#user-content-tr-qwAAZg-r10s0">net.sf.robocode.test.robots.TestConstructorHttpAttack</a>
+2026-06-30T15:37:11.9746596Z ```
+2026-06-30T15:37:11.9747113Z ✅ run
+2026-06-30T15:37:11.9747494Z ```
+2026-06-30T15:37:11.9749350Z ## ✅ <a id="user-content-tr-qwAAZg-r11" href="#user-content-tr-qwAAZg-r11">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorReflectionAttack.xml</a>
+2026-06-30T15:37:11.9751142Z **1** tests were completed in **41ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9752051Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9752575Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9753741Z |[net.sf.robocode.test.robots.TestConstructorReflectionAttack](#user-content-tr-qwAAZg-r11s0)|1 ✅|||41ms|
+2026-06-30T15:37:11.9755055Z ### ✅ <a id="user-content-tr-qwAAZg-r11s0" href="#user-content-tr-qwAAZg-r11s0">net.sf.robocode.test.robots.TestConstructorReflectionAttack</a>
+2026-06-30T15:37:11.9756332Z ```
+2026-06-30T15:37:11.9756753Z ✅ run
+2026-06-30T15:37:11.9757153Z ```
+2026-06-30T15:37:11.9758776Z ## ✅ <a id="user-content-tr-qwAAZg-r12" href="#user-content-tr-qwAAZg-r12">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorSocketAttack.xml</a>
+2026-06-30T15:37:11.9760327Z **1** tests were completed in **141ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9761310Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9761828Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9762796Z |[net.sf.robocode.test.robots.TestConstructorSocketAttack](#user-content-tr-qwAAZg-r12s0)|1 ✅|||141ms|
+2026-06-30T15:37:11.9764366Z ### ✅ <a id="user-content-tr-qwAAZg-r12s0" href="#user-content-tr-qwAAZg-r12s0">net.sf.robocode.test.robots.TestConstructorSocketAttack</a>
+2026-06-30T15:37:11.9765393Z ```
+2026-06-30T15:37:11.9765750Z ✅ run
+2026-06-30T15:37:11.9766064Z ```
+2026-06-30T15:37:11.9767414Z ## ✅ <a id="user-content-tr-qwAAZg-r13" href="#user-content-tr-qwAAZg-r13">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestConstructorThreadAttack.xml</a>
+2026-06-30T15:37:11.9769131Z **1** tests were completed in **212ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9769863Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9770339Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9771294Z |[net.sf.robocode.test.robots.TestConstructorThreadAttack](#user-content-tr-qwAAZg-r13s0)|1 ✅|||212ms|
+2026-06-30T15:37:11.9773121Z ### ✅ <a id="user-content-tr-qwAAZg-r13s0" href="#user-content-tr-qwAAZg-r13s0">net.sf.robocode.test.robots.TestConstructorThreadAttack</a>
+2026-06-30T15:37:11.9774169Z ```
+2026-06-30T15:37:11.9774516Z ✅ run
+2026-06-30T15:37:11.9774833Z ```
+2026-06-30T15:37:11.9776149Z ## ✅ <a id="user-content-tr-qwAAZg-r14" href="#user-content-tr-qwAAZg-r14">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestCustomEvents.xml</a>
+2026-06-30T15:37:11.9777512Z **1** tests were completed in **165ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9778189Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9778861Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9779675Z |[net.sf.robocode.test.robots.TestCustomEvents](#user-content-tr-qwAAZg-r14s0)|1 ✅|||165ms|
+2026-06-30T15:37:11.9781015Z ### ✅ <a id="user-content-tr-qwAAZg-r14s0" href="#user-content-tr-qwAAZg-r14s0">net.sf.robocode.test.robots.TestCustomEvents</a>
+2026-06-30T15:37:11.9782145Z ```
+2026-06-30T15:37:11.9782462Z ✅ run
+2026-06-30T15:37:11.9782796Z ```
+2026-06-30T15:37:11.9784081Z ## ✅ <a id="user-content-tr-qwAAZg-r15" href="#user-content-tr-qwAAZg-r15">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestDuplicatesAndScore.xml</a>
+2026-06-30T15:37:11.9785551Z **1** tests were completed in **4s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9786340Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9786787Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9787613Z |[net.sf.robocode.test.robots.TestDuplicatesAndScore](#user-content-tr-qwAAZg-r15s0)|1 ✅|||4s|
+2026-06-30T15:37:11.9789264Z ### ✅ <a id="user-content-tr-qwAAZg-r15s0" href="#user-content-tr-qwAAZg-r15s0">net.sf.robocode.test.robots.TestDuplicatesAndScore</a>
+2026-06-30T15:37:11.9790242Z ```
+2026-06-30T15:37:11.9790591Z ✅ run
+2026-06-30T15:37:11.9790912Z ```
+2026-06-30T15:37:11.9792123Z ## ✅ <a id="user-content-tr-qwAAZg-r16" href="#user-content-tr-qwAAZg-r16">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestEnvAttack.xml</a>
+2026-06-30T15:37:11.9793505Z **1** tests were completed in **68ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9794218Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9794744Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9795778Z |[net.sf.robocode.test.robots.TestEnvAttack](#user-content-tr-qwAAZg-r16s0)|1 ✅|||68ms|
+2026-06-30T15:37:11.9797297Z ### ✅ <a id="user-content-tr-qwAAZg-r16s0" href="#user-content-tr-qwAAZg-r16s0">net.sf.robocode.test.robots.TestEnvAttack</a>
+2026-06-30T15:37:11.9798635Z ```
+2026-06-30T15:37:11.9799047Z ✅ run
+2026-06-30T15:37:11.9799414Z ```
+2026-06-30T15:37:11.9801018Z ## ✅ <a id="user-content-tr-qwAAZg-r17" href="#user-content-tr-qwAAZg-r17">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestEventPriorityFilter.xml</a>
+2026-06-30T15:37:11.9803118Z **1** tests were completed in **173ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9804041Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9804611Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9805680Z |[net.sf.robocode.test.robots.TestEventPriorityFilter](#user-content-tr-qwAAZg-r17s0)|1 ✅|||173ms|
+2026-06-30T15:37:11.9807435Z ### ✅ <a id="user-content-tr-qwAAZg-r17s0" href="#user-content-tr-qwAAZg-r17s0">net.sf.robocode.test.robots.TestEventPriorityFilter</a>
+2026-06-30T15:37:11.9808826Z ```
+2026-06-30T15:37:11.9809233Z ✅ run
+2026-06-30T15:37:11.9809575Z ```
+2026-06-30T15:37:11.9810972Z ## ❌ <a id="user-content-tr-qwAAZg-r18" href="#user-content-tr-qwAAZg-r18">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFairPlay.xml</a>
+2026-06-30T15:37:11.9812517Z **2** tests were completed in **56s** with **1** passed, **1** failed and **0** skipped.
+2026-06-30T15:37:11.9813322Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9813858Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9814681Z |[net.sf.robocode.test.robots.TestFairPlay](#user-content-tr-qwAAZg-r18s0)|1 ✅|1 ❌||56s|
+2026-06-30T15:37:11.9816451Z ### ❌ <a id="user-content-tr-qwAAZg-r18s0" href="#user-content-tr-qwAAZg-r18s0">net.sf.robocode.test.robots.TestFairPlay</a>
+2026-06-30T15:37:11.9817538Z ```
+2026-06-30T15:37:11.9817902Z ❌ run
+2026-06-30T15:37:11.9818884Z 	java.lang.AssertionError: java.lang.AssertionError: Number of errors 1 is different than expected 0
+2026-06-30T15:37:11.9819880Z 	----------err #0--------------------------------------------------
+2026-06-30T15:37:11.9820574Z 	Unable to stop thread: tested.robots.FairPlay (1)
+2026-06-30T15:37:11.9821223Z 	======================================================================
+2026-06-30T15:37:11.9821812Z ✅ run
+2026-06-30T15:37:11.9822134Z ```
+2026-06-30T15:37:11.9823449Z ## ✅ <a id="user-content-tr-qwAAZg-r19" href="#user-content-tr-qwAAZg-r19">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileAttack.xml</a>
+2026-06-30T15:37:11.9824913Z **1** tests were completed in **53ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9825624Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9826099Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9826884Z |[net.sf.robocode.test.robots.TestFileAttack](#user-content-tr-qwAAZg-r19s0)|1 ✅|||53ms|
+2026-06-30T15:37:11.9828450Z ### ✅ <a id="user-content-tr-qwAAZg-r19s0" href="#user-content-tr-qwAAZg-r19s0">net.sf.robocode.test.robots.TestFileAttack</a>
+2026-06-30T15:37:11.9829848Z ```
+2026-06-30T15:37:11.9830271Z ✅ run
+2026-06-30T15:37:11.9830625Z ```
+2026-06-30T15:37:11.9832091Z ## ✅ <a id="user-content-tr-qwAAZg-r20" href="#user-content-tr-qwAAZg-r20">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileOutputStreamAttack.xml</a>
+2026-06-30T15:37:11.9833706Z **1** tests were completed in **213ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9834545Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9835093Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9836064Z |[net.sf.robocode.test.robots.TestFileOutputStreamAttack](#user-content-tr-qwAAZg-r20s0)|1 ✅|||213ms|
+2026-06-30T15:37:11.9837703Z ### ✅ <a id="user-content-tr-qwAAZg-r20s0" href="#user-content-tr-qwAAZg-r20s0">net.sf.robocode.test.robots.TestFileOutputStreamAttack</a>
+2026-06-30T15:37:11.9838914Z ```
+2026-06-30T15:37:11.9839231Z ✅ run
+2026-06-30T15:37:11.9839536Z ```
+2026-06-30T15:37:11.9840816Z ## ✅ <a id="user-content-tr-qwAAZg-r21" href="#user-content-tr-qwAAZg-r21">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileWrite.xml</a>
+2026-06-30T15:37:11.9842284Z **1** tests were completed in **268ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9843038Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9843548Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9844361Z |[net.sf.robocode.test.robots.TestFileWrite](#user-content-tr-qwAAZg-r21s0)|1 ✅|||268ms|
+2026-06-30T15:37:11.9846153Z ### ✅ <a id="user-content-tr-qwAAZg-r21s0" href="#user-content-tr-qwAAZg-r21s0">net.sf.robocode.test.robots.TestFileWrite</a>
+2026-06-30T15:37:11.9847043Z ```
+2026-06-30T15:37:11.9847351Z ✅ run
+2026-06-30T15:37:11.9847663Z ```
+2026-06-30T15:37:11.9849137Z ## ✅ <a id="user-content-tr-qwAAZg-r22" href="#user-content-tr-qwAAZg-r22">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestFileWriteSize.xml</a>
+2026-06-30T15:37:11.9850564Z **1** tests were completed in **179ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9851837Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9852465Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9853415Z |[net.sf.robocode.test.robots.TestFileWriteSize](#user-content-tr-qwAAZg-r22s0)|1 ✅|||179ms|
+2026-06-30T15:37:11.9854807Z ### ✅ <a id="user-content-tr-qwAAZg-r22s0" href="#user-content-tr-qwAAZg-r22s0">net.sf.robocode.test.robots.TestFileWriteSize</a>
+2026-06-30T15:37:11.9855747Z ```
+2026-06-30T15:37:11.9856058Z ✅ run
+2026-06-30T15:37:11.9856343Z ```
+2026-06-30T15:37:11.9857567Z ## ✅ <a id="user-content-tr-qwAAZg-r23" href="#user-content-tr-qwAAZg-r23">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestGunHeat.xml</a>
+2026-06-30T15:37:11.9859116Z **1** tests were completed in **137ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9859754Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9860165Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9860880Z |[net.sf.robocode.test.robots.TestGunHeat](#user-content-tr-qwAAZg-r23s0)|1 ✅|||137ms|
+2026-06-30T15:37:11.9862066Z ### ✅ <a id="user-content-tr-qwAAZg-r23s0" href="#user-content-tr-qwAAZg-r23s0">net.sf.robocode.test.robots.TestGunHeat</a>
+2026-06-30T15:37:11.9862868Z ```
+2026-06-30T15:37:11.9863170Z ✅ run
+2026-06-30T15:37:11.9863455Z ```
+2026-06-30T15:37:11.9864522Z ## ✅ <a id="user-content-tr-qwAAZg-r24" href="#user-content-tr-qwAAZg-r24">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestGunTurnRate.xml</a>
+2026-06-30T15:37:11.9865802Z **1** tests were completed in **144ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9866421Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9866804Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9867455Z |[net.sf.robocode.test.robots.TestGunTurnRate](#user-content-tr-qwAAZg-r24s0)|1 ✅|||144ms|
+2026-06-30T15:37:11.9868954Z ### ✅ <a id="user-content-tr-qwAAZg-r24s0" href="#user-content-tr-qwAAZg-r24s0">net.sf.robocode.test.robots.TestGunTurnRate</a>
+2026-06-30T15:37:11.9869725Z ```
+2026-06-30T15:37:11.9870011Z ✅ run
+2026-06-30T15:37:11.9870269Z ```
+2026-06-30T15:37:11.9871251Z ## ✅ <a id="user-content-tr-qwAAZg-r25" href="#user-content-tr-qwAAZg-r25">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestHttpAttack.xml</a>
+2026-06-30T15:37:11.9872388Z **1** tests were completed in **89ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9872987Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9873360Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9873985Z |[net.sf.robocode.test.robots.TestHttpAttack](#user-content-tr-qwAAZg-r25s0)|1 ✅|||89ms|
+2026-06-30T15:37:11.9875074Z ### ✅ <a id="user-content-tr-qwAAZg-r25s0" href="#user-content-tr-qwAAZg-r25s0">net.sf.robocode.test.robots.TestHttpAttack</a>
+2026-06-30T15:37:11.9875824Z ```
+2026-06-30T15:37:11.9876105Z ✅ run
+2026-06-30T15:37:11.9876345Z ```
+2026-06-30T15:37:11.9877411Z ## ✅ <a id="user-content-tr-qwAAZg-r26" href="#user-content-tr-qwAAZg-r26">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestIncludeNamespaceAttack.xml</a>
+2026-06-30T15:37:11.9878791Z **1** tests were completed in **19ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9879355Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9879750Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9880471Z |[net.sf.robocode.test.robots.TestIncludeNamespaceAttack](#user-content-tr-qwAAZg-r26s0)|1 ✅|||19ms|
+2026-06-30T15:37:11.9881897Z ### ✅ <a id="user-content-tr-qwAAZg-r26s0" href="#user-content-tr-qwAAZg-r26s0">net.sf.robocode.test.robots.TestIncludeNamespaceAttack</a>
+2026-06-30T15:37:11.9882726Z ```
+2026-06-30T15:37:11.9882991Z ✅ run
+2026-06-30T15:37:11.9883246Z ```
+2026-06-30T15:37:11.9884311Z ## ✅ <a id="user-content-tr-qwAAZg-r27" href="#user-content-tr-qwAAZg-r27">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestInteruptibleEvent.xml</a>
+2026-06-30T15:37:11.9885526Z **1** tests were completed in **224ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9886105Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9886484Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9887121Z |[net.sf.robocode.test.robots.TestInteruptibleEvent](#user-content-tr-qwAAZg-r27s0)|1 ✅|||224ms|
+2026-06-30T15:37:11.9888432Z ### ✅ <a id="user-content-tr-qwAAZg-r27s0" href="#user-content-tr-qwAAZg-r27s0">net.sf.robocode.test.robots.TestInteruptibleEvent</a>
+2026-06-30T15:37:11.9889269Z ```
+2026-06-30T15:37:11.9889554Z ✅ run
+2026-06-30T15:37:11.9889781Z ```
+2026-06-30T15:37:11.9890816Z ## ✅ <a id="user-content-tr-qwAAZg-r28" href="#user-content-tr-qwAAZg-r28">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestJunior.xml</a>
+2026-06-30T15:37:11.9891879Z **1** tests were completed in **73ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9892411Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9892773Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9893328Z |[net.sf.robocode.test.robots.TestJunior](#user-content-tr-qwAAZg-r28s0)|1 ✅|||73ms|
+2026-06-30T15:37:11.9894304Z ### ✅ <a id="user-content-tr-qwAAZg-r28s0" href="#user-content-tr-qwAAZg-r28s0">net.sf.robocode.test.robots.TestJunior</a>
+2026-06-30T15:37:11.9894977Z ```
+2026-06-30T15:37:11.9895228Z ✅ run
+2026-06-30T15:37:11.9895478Z ```
+2026-06-30T15:37:11.9896365Z ## ✅ <a id="user-content-tr-qwAAZg-r29" href="#user-content-tr-qwAAZg-r29">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestLost.xml</a>
+2026-06-30T15:37:11.9897410Z **1** tests were completed in **194ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9897967Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9898618Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9899171Z |[net.sf.robocode.test.robots.TestLost](#user-content-tr-qwAAZg-r29s0)|1 ✅|||194ms|
+2026-06-30T15:37:11.9900140Z ### ✅ <a id="user-content-tr-qwAAZg-r29s0" href="#user-content-tr-qwAAZg-r29s0">net.sf.robocode.test.robots.TestLost</a>
+2026-06-30T15:37:11.9900813Z ```
+2026-06-30T15:37:11.9901061Z ✅ run
+2026-06-30T15:37:11.9901302Z ```
+2026-06-30T15:37:11.9902224Z ## ✅ <a id="user-content-tr-qwAAZg-r30" href="#user-content-tr-qwAAZg-r30">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestMaxTurnRate.xml</a>
+2026-06-30T15:37:11.9903299Z **1** tests were completed in **145ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9903887Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9904249Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9904882Z |[net.sf.robocode.test.robots.TestMaxTurnRate](#user-content-tr-qwAAZg-r30s0)|1 ✅|||145ms|
+2026-06-30T15:37:11.9905909Z ### ✅ <a id="user-content-tr-qwAAZg-r30s0" href="#user-content-tr-qwAAZg-r30s0">net.sf.robocode.test.robots.TestMaxTurnRate</a>
+2026-06-30T15:37:11.9906607Z ```
+2026-06-30T15:37:11.9906885Z ✅ run
+2026-06-30T15:37:11.9907126Z ```
+2026-06-30T15:37:11.9908049Z ## ✅ <a id="user-content-tr-qwAAZg-r31" href="#user-content-tr-qwAAZg-r31">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestMaxVelocity.xml</a>
+2026-06-30T15:37:11.9909434Z **1** tests were completed in **183ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9910002Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9910360Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9910976Z |[net.sf.robocode.test.robots.TestMaxVelocity](#user-content-tr-qwAAZg-r31s0)|1 ✅|||183ms|
+2026-06-30T15:37:11.9912185Z ### ✅ <a id="user-content-tr-qwAAZg-r31s0" href="#user-content-tr-qwAAZg-r31s0">net.sf.robocode.test.robots.TestMaxVelocity</a>
+2026-06-30T15:37:11.9912883Z ```
+2026-06-30T15:37:11.9913143Z ✅ run
+2026-06-30T15:37:11.9913380Z ```
+2026-06-30T15:37:11.9914236Z ## ✅ <a id="user-content-tr-qwAAZg-r32" href="#user-content-tr-qwAAZg-r32">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestNames.xml</a>
+2026-06-30T15:37:11.9915253Z **1** tests were completed in **51ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9915793Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9916141Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9916709Z |[net.sf.robocode.test.robots.TestNames](#user-content-tr-qwAAZg-r32s0)|1 ✅|||51ms|
+2026-06-30T15:37:11.9917652Z ### ✅ <a id="user-content-tr-qwAAZg-r32s0" href="#user-content-tr-qwAAZg-r32s0">net.sf.robocode.test.robots.TestNames</a>
+2026-06-30T15:37:11.9918647Z ```
+2026-06-30T15:37:11.9918921Z ✅ run
+2026-06-30T15:37:11.9919162Z ```
+2026-06-30T15:37:11.9920237Z ## ✅ <a id="user-content-tr-qwAAZg-r33" href="#user-content-tr-qwAAZg-r33">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestPosition.xml</a>
+2026-06-30T15:37:11.9921294Z **1** tests were completed in **171ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9921844Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9922209Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9922806Z |[net.sf.robocode.test.robots.TestPosition](#user-content-tr-qwAAZg-r33s0)|1 ✅|||171ms|
+2026-06-30T15:37:11.9923810Z ### ✅ <a id="user-content-tr-qwAAZg-r33s0" href="#user-content-tr-qwAAZg-r33s0">net.sf.robocode.test.robots.TestPosition</a>
+2026-06-30T15:37:11.9924504Z ```
+2026-06-30T15:37:11.9924755Z ✅ run
+2026-06-30T15:37:11.9924991Z ```
+2026-06-30T15:37:11.9925952Z ## ✅ <a id="user-content-tr-qwAAZg-r34" href="#user-content-tr-qwAAZg-r34">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestPrivateConstructor.xml</a>
+2026-06-30T15:37:11.9927096Z **1** tests were completed in **31ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9927631Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9927993Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9928794Z |[net.sf.robocode.test.robots.TestPrivateConstructor](#user-content-tr-qwAAZg-r34s0)|1 ✅|||31ms|
+2026-06-30T15:37:11.9929889Z ### ✅ <a id="user-content-tr-qwAAZg-r34s0" href="#user-content-tr-qwAAZg-r34s0">net.sf.robocode.test.robots.TestPrivateConstructor</a>
+2026-06-30T15:37:11.9930647Z ```
+2026-06-30T15:37:11.9930914Z ✅ run
+2026-06-30T15:37:11.9931158Z ```
+2026-06-30T15:37:11.9932171Z ## ✅ <a id="user-content-tr-qwAAZg-r35" href="#user-content-tr-qwAAZg-r35">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRadarTurnRateAndSetAdjust.xml</a>
+2026-06-30T15:37:11.9933313Z **1** tests were completed in **145ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9933884Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9934244Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9934926Z |[net.sf.robocode.test.robots.TestRadarTurnRateAndSetAdjust](#user-content-tr-qwAAZg-r35s0)|1 ✅|||145ms|
+2026-06-30T15:37:11.9936116Z ### ✅ <a id="user-content-tr-qwAAZg-r35s0" href="#user-content-tr-qwAAZg-r35s0">net.sf.robocode.test.robots.TestRadarTurnRateAndSetAdjust</a>
+2026-06-30T15:37:11.9936896Z ```
+2026-06-30T15:37:11.9937160Z ✅ run
+2026-06-30T15:37:11.9937432Z ```
+2026-06-30T15:37:11.9938513Z ## ✅ <a id="user-content-tr-qwAAZg-r36" href="#user-content-tr-qwAAZg-r36">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRandom.xml</a>
+2026-06-30T15:37:11.9939630Z **1** tests were completed in **70ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9940178Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9940542Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9941259Z |[net.sf.robocode.test.robots.TestRandom](#user-content-tr-qwAAZg-r36s0)|1 ✅|||70ms|
+2026-06-30T15:37:11.9942253Z ### ✅ <a id="user-content-tr-qwAAZg-r36s0" href="#user-content-tr-qwAAZg-r36s0">net.sf.robocode.test.robots.TestRandom</a>
+2026-06-30T15:37:11.9942948Z ```
+2026-06-30T15:37:11.9943193Z ✅ run
+2026-06-30T15:37:11.9943445Z ```
+2026-06-30T15:37:11.9944440Z ## ✅ <a id="user-content-tr-qwAAZg-r37" href="#user-content-tr-qwAAZg-r37">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRankingsWithTargetRobots.xml</a>
+2026-06-30T15:37:11.9945563Z **1** tests were completed in **2s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9946098Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9946480Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9947146Z |[net.sf.robocode.test.robots.TestRankingsWithTargetRobots](#user-content-tr-qwAAZg-r37s0)|1 ✅|||2s|
+2026-06-30T15:37:11.9948460Z ### ✅ <a id="user-content-tr-qwAAZg-r37s0" href="#user-content-tr-qwAAZg-r37s0">net.sf.robocode.test.robots.TestRankingsWithTargetRobots</a>
+2026-06-30T15:37:11.9949253Z ```
+2026-06-30T15:37:11.9949604Z ✅ run
+2026-06-30T15:37:11.9949975Z ```
+2026-06-30T15:37:11.9950937Z ## ✅ <a id="user-content-tr-qwAAZg-r38" href="#user-content-tr-qwAAZg-r38">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRateControl.xml</a>
+2026-06-30T15:37:11.9952024Z **1** tests were completed in **143ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9952552Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9952928Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9953513Z |[net.sf.robocode.test.robots.TestRateControl](#user-content-tr-qwAAZg-r38s0)|1 ✅|||143ms|
+2026-06-30T15:37:11.9954533Z ### ✅ <a id="user-content-tr-qwAAZg-r38s0" href="#user-content-tr-qwAAZg-r38s0">net.sf.robocode.test.robots.TestRateControl</a>
+2026-06-30T15:37:11.9955246Z ```
+2026-06-30T15:37:11.9955518Z ✅ run
+2026-06-30T15:37:11.9955755Z ```
+2026-06-30T15:37:11.9956744Z ## ✅ <a id="user-content-tr-qwAAZg-r39" href="#user-content-tr-qwAAZg-r39">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestReflectionAttack.xml</a>
+2026-06-30T15:37:11.9957832Z **1** tests were completed in **68ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9958515Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9958878Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9959516Z |[net.sf.robocode.test.robots.TestReflectionAttack](#user-content-tr-qwAAZg-r39s0)|1 ✅|||68ms|
+2026-06-30T15:37:11.9960583Z ### ✅ <a id="user-content-tr-qwAAZg-r39s0" href="#user-content-tr-qwAAZg-r39s0">net.sf.robocode.test.robots.TestReflectionAttack</a>
+2026-06-30T15:37:11.9961323Z ```
+2026-06-30T15:37:11.9961586Z ✅ run
+2026-06-30T15:37:11.9961822Z ```
+2026-06-30T15:37:11.9962791Z ## ✅ <a id="user-content-tr-qwAAZg-r40" href="#user-content-tr-qwAAZg-r40">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestReverseDirection.xml</a>
+2026-06-30T15:37:11.9963874Z **1** tests were completed in **115ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9964429Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9964784Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9965391Z |[net.sf.robocode.test.robots.TestReverseDirection](#user-content-tr-qwAAZg-r40s0)|1 ✅|||115ms|
+2026-06-30T15:37:11.9966483Z ### ✅ <a id="user-content-tr-qwAAZg-r40s0" href="#user-content-tr-qwAAZg-r40s0">net.sf.robocode.test.robots.TestReverseDirection</a>
+2026-06-30T15:37:11.9967280Z ```
+2026-06-30T15:37:11.9967538Z ✅ run
+2026-06-30T15:37:11.9967801Z ```
+2026-06-30T15:37:11.9968875Z ## ✅ <a id="user-content-tr-qwAAZg-r41" href="#user-content-tr-qwAAZg-r41">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestRobotDeathEvents.xml</a>
+2026-06-30T15:37:11.9969947Z **1** tests were completed in **3s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9970469Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9970977Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9971600Z |[net.sf.robocode.test.robots.TestRobotDeathEvents](#user-content-tr-qwAAZg-r41s0)|1 ✅|||3s|
+2026-06-30T15:37:11.9972686Z ### ✅ <a id="user-content-tr-qwAAZg-r41s0" href="#user-content-tr-qwAAZg-r41s0">net.sf.robocode.test.robots.TestRobotDeathEvents</a>
+2026-06-30T15:37:11.9973418Z ```
+2026-06-30T15:37:11.9973661Z ✅ run
+2026-06-30T15:37:11.9973904Z ```
+2026-06-30T15:37:11.9974793Z ## ✅ <a id="user-content-tr-qwAAZg-r42" href="#user-content-tr-qwAAZg-r42">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestScore.xml</a>
+2026-06-30T15:37:11.9975812Z **4** tests were completed in **9s** with **4** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9976345Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9976692Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9977239Z |[net.sf.robocode.test.robots.TestScore](#user-content-tr-qwAAZg-r42s0)|4 ✅|||9s|
+2026-06-30T15:37:11.9978197Z ### ✅ <a id="user-content-tr-qwAAZg-r42s0" href="#user-content-tr-qwAAZg-r42s0">net.sf.robocode.test.robots.TestScore</a>
+2026-06-30T15:37:11.9979216Z ```
+2026-06-30T15:37:11.9979793Z ✅ run[0: Test with tested.robots.Random, expected score: 5,000]
+2026-06-30T15:37:11.9980398Z ✅ run[1: Test with sample.SittingDuck, expected score: 5,000]
+2026-06-30T15:37:11.9980928Z ✅ run[2: Test with sample.Corners, expected score: 4,500]
+2026-06-30T15:37:11.9981460Z ✅ run[3: Test with sample.Fire, expected score: 4,000]
+2026-06-30T15:37:11.9981863Z ```
+2026-06-30T15:37:11.9982769Z ## ✅ <a id="user-content-tr-qwAAZg-r43" href="#user-content-tr-qwAAZg-r43">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestScoring.xml</a>
+2026-06-30T15:37:11.9983806Z **1** tests were completed in **3s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9984343Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9984697Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9985274Z |[net.sf.robocode.test.robots.TestScoring](#user-content-tr-qwAAZg-r43s0)|1 ✅|||3s|
+2026-06-30T15:37:11.9986292Z ### ✅ <a id="user-content-tr-qwAAZg-r43s0" href="#user-content-tr-qwAAZg-r43s0">net.sf.robocode.test.robots.TestScoring</a>
+2026-06-30T15:37:11.9986973Z ```
+2026-06-30T15:37:11.9987241Z ✅ run
+2026-06-30T15:37:11.9987491Z ```
+2026-06-30T15:37:11.9988568Z ## ✅ <a id="user-content-tr-qwAAZg-r44" href="#user-content-tr-qwAAZg-r44">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestSkippedTurns.xml</a>
+2026-06-30T15:37:11.9989657Z **1** tests were completed in **4ms** with **0** passed, **0** failed and **1** skipped.
+2026-06-30T15:37:11.9990203Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9990549Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9991158Z |[net.sf.robocode.test.robots.TestSkippedTurns](#user-content-tr-qwAAZg-r44s0)|||1 ⚪|4ms|
+2026-06-30T15:37:11.9992196Z ### ✅ <a id="user-content-tr-qwAAZg-r44s0" href="#user-content-tr-qwAAZg-r44s0">net.sf.robocode.test.robots.TestSkippedTurns</a>
+2026-06-30T15:37:11.9992920Z ```
+2026-06-30T15:37:11.9993178Z ⚪ run
+2026-06-30T15:37:11.9993411Z ```
+2026-06-30T15:37:11.9994348Z ## ✅ <a id="user-content-tr-qwAAZg-r45" href="#user-content-tr-qwAAZg-r45">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestSocketAttack.xml</a>
+2026-06-30T15:37:11.9995426Z **1** tests were completed in **87ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:11.9995940Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:11.9996311Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:11.9996919Z |[net.sf.robocode.test.robots.TestSocketAttack](#user-content-tr-qwAAZg-r45s0)|1 ✅|||87ms|
+2026-06-30T15:37:11.9997947Z ### ✅ <a id="user-content-tr-qwAAZg-r45s0" href="#user-content-tr-qwAAZg-r45s0">net.sf.robocode.test.robots.TestSocketAttack</a>
+2026-06-30T15:37:11.9998792Z ```
+2026-06-30T15:37:11.9999066Z ✅ run
+2026-06-30T15:37:11.9999314Z ```
+2026-06-30T15:37:12.0000345Z ## ✅ <a id="user-content-tr-qwAAZg-r46" href="#user-content-tr-qwAAZg-r46">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestStaticConstructorDnsAttack.xml</a>
+2026-06-30T15:37:12.0001632Z **1** tests were completed in **58ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0002152Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0002521Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0003234Z |[net.sf.robocode.test.robots.TestStaticConstructorDnsAttack](#user-content-tr-qwAAZg-r46s0)|1 ✅|||58ms|
+2026-06-30T15:37:12.0004421Z ### ✅ <a id="user-content-tr-qwAAZg-r46s0" href="#user-content-tr-qwAAZg-r46s0">net.sf.robocode.test.robots.TestStaticConstructorDnsAttack</a>
+2026-06-30T15:37:12.0005205Z ```
+2026-06-30T15:37:12.0005466Z ✅ run
+2026-06-30T15:37:12.0005699Z ```
+2026-06-30T15:37:12.0006647Z ## ✅ <a id="user-content-tr-qwAAZg-r47" href="#user-content-tr-qwAAZg-r47">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThreadAttack.xml</a>
+2026-06-30T15:37:12.0007713Z **1** tests were completed in **122ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0008381Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0008884Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0009503Z |[net.sf.robocode.test.robots.TestThreadAttack](#user-content-tr-qwAAZg-r47s0)|1 ✅|||122ms|
+2026-06-30T15:37:12.0010533Z ### ✅ <a id="user-content-tr-qwAAZg-r47s0" href="#user-content-tr-qwAAZg-r47s0">net.sf.robocode.test.robots.TestThreadAttack</a>
+2026-06-30T15:37:12.0011261Z ```
+2026-06-30T15:37:12.0011541Z ✅ run
+2026-06-30T15:37:12.0011771Z ```
+2026-06-30T15:37:12.0012736Z ## ✅ <a id="user-content-tr-qwAAZg-r48" href="#user-content-tr-qwAAZg-r48">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThreadGroupAttack.xml</a>
+2026-06-30T15:37:12.0013802Z **1** tests were completed in **7s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0014340Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0014700Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0015323Z |[net.sf.robocode.test.robots.TestThreadGroupAttack](#user-content-tr-qwAAZg-r48s0)|1 ✅|||7s|
+2026-06-30T15:37:12.0016432Z ### ✅ <a id="user-content-tr-qwAAZg-r48s0" href="#user-content-tr-qwAAZg-r48s0">net.sf.robocode.test.robots.TestThreadGroupAttack</a>
+2026-06-30T15:37:12.0017164Z ```
+2026-06-30T15:37:12.0017412Z ✅ run
+2026-06-30T15:37:12.0017671Z ```
+2026-06-30T15:37:12.0018893Z ## ✅ <a id="user-content-tr-qwAAZg-r49" href="#user-content-tr-qwAAZg-r49">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestThrowing.xml</a>
+2026-06-30T15:37:12.0019974Z **1** tests were completed in **23ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0020542Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0020921Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0021519Z |[net.sf.robocode.test.robots.TestThrowing](#user-content-tr-qwAAZg-r49s0)|1 ✅|||23ms|
+2026-06-30T15:37:12.0022527Z ### ✅ <a id="user-content-tr-qwAAZg-r49s0" href="#user-content-tr-qwAAZg-r49s0">net.sf.robocode.test.robots.TestThrowing</a>
+2026-06-30T15:37:12.0023248Z ```
+2026-06-30T15:37:12.0023504Z ✅ run
+2026-06-30T15:37:12.0023764Z ```
+2026-06-30T15:37:12.0024708Z ## ✅ <a id="user-content-tr-qwAAZg-r50" href="#user-content-tr-qwAAZg-r50">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestUndeadThread.xml</a>
+2026-06-30T15:37:12.0025764Z **1** tests were completed in **7s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0026300Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0026662Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0027218Z |[net.sf.robocode.test.robots.TestUndeadThread](#user-content-tr-qwAAZg-r50s0)|1 ✅|||7s|
+2026-06-30T15:37:12.0028189Z ### ✅ <a id="user-content-tr-qwAAZg-r50s0" href="#user-content-tr-qwAAZg-r50s0">net.sf.robocode.test.robots.TestUndeadThread</a>
+2026-06-30T15:37:12.0029008Z ```
+2026-06-30T15:37:12.0029256Z ✅ run
+2026-06-30T15:37:12.0029498Z ```
+2026-06-30T15:37:12.0030546Z ## ✅ <a id="user-content-tr-qwAAZg-r51" href="#user-content-tr-qwAAZg-r51">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestWatchBullet.xml</a>
+2026-06-30T15:37:12.0031560Z **1** tests were completed in **190ms** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0032088Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0032418Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0032990Z |[net.sf.robocode.test.robots.TestWatchBullet](#user-content-tr-qwAAZg-r51s0)|1 ✅|||190ms|
+2026-06-30T15:37:12.0033969Z ### ✅ <a id="user-content-tr-qwAAZg-r51s0" href="#user-content-tr-qwAAZg-r51s0">net.sf.robocode.test.robots.TestWatchBullet</a>
+2026-06-30T15:37:12.0034622Z ```
+2026-06-30T15:37:12.0034881Z ✅ run
+2026-06-30T15:37:12.0035134Z ```
+2026-06-30T15:37:12.0035954Z ## ✅ <a id="user-content-tr-qwAAZg-r52" href="#user-content-tr-qwAAZg-r52">robocode.tests/build/test-results/test/TEST-net.sf.robocode.test.robots.TestWin.xml</a>
+2026-06-30T15:37:12.0036935Z **1** tests were completed in **1s** with **1** passed, **0** failed and **0** skipped.
+2026-06-30T15:37:12.0037463Z |Test suite|Passed|Failed|Skipped|Time|
+2026-06-30T15:37:12.0037922Z |:---|---:|---:|---:|---:|
+2026-06-30T15:37:12.0038705Z |[net.sf.robocode.test.robots.TestWin](#user-content-tr-qwAAZg-r52s0)|1 ✅|||1s|
+2026-06-30T15:37:12.0039637Z ### ✅ <a id="user-content-tr-qwAAZg-r52s0" href="#user-content-tr-qwAAZg-r52s0">net.sf.robocode.test.robots.TestWin</a>
+2026-06-30T15:37:12.0040264Z ```
+2026-06-30T15:37:12.0040526Z ✅ run
+2026-06-30T15:37:12.0040760Z ```
+2026-06-30T15:37:12.0041367Z ##[endgroup]
+2026-06-30T15:37:12.0061051Z ##[error]Failed test were found and 'fail-on-error' option is set to true
+2026-06-30T15:37:12.0364186Z Post job cleanup.
+2026-06-30T15:37:12.1954361Z Post job cleanup.
+2026-06-30T15:37:12.2902374Z [command]/usr/bin/git version
+2026-06-30T15:37:12.2945603Z git version 2.54.0
+2026-06-30T15:37:12.2983629Z Temporarily overriding HOME='/home/runner/work/_temp/10296372-e3bc-460f-a7b6-8eb1fae701d9' before making global git config changes
+2026-06-30T15:37:12.2985699Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-30T15:37:12.2990739Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-06-30T15:37:12.3031188Z Removing SSH command configuration
+2026-06-30T15:37:12.3037423Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-30T15:37:12.3076025Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-30T15:37:12.3327907Z Removing HTTP extra header
+2026-06-30T15:37:12.3333324Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-30T15:37:12.3367548Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-30T15:37:12.3595582Z Removing includeIf entries pointing to credentials config files
+2026-06-30T15:37:12.3603314Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-30T15:37:12.3748831Z includeif.gitdir:/home/runner/work/robocode/robocode/.git.path
+2026-06-30T15:37:12.3750848Z includeif.gitdir:/home/runner/work/robocode/robocode/.git/worktrees/*.path
+2026-06-30T15:37:12.3759887Z includeif.gitdir:/github/workspace/.git.path
+2026-06-30T15:37:12.3761559Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-30T15:37:12.3771201Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/robocode/robocode/.git.path
+2026-06-30T15:37:12.3787804Z /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.3799122Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/robocode/robocode/.git.path /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.3833808Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/robocode/robocode/.git/worktrees/*.path
+2026-06-30T15:37:12.3857235Z /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.3866713Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/robocode/robocode/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.3965208Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-30T15:37:12.3990448Z /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.3998131Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.4030063Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-30T15:37:12.4053271Z /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.4062862Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config
+2026-06-30T15:37:12.4095806Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-30T15:37:12.4332560Z Removing credentials config '/home/runner/work/_temp/git-credentials-ffda7d4a-89bb-401d-8893-375c3b9bc15a.config'
+2026-06-30T15:37:12.4517384Z Cleaning up orphan processes
+2026-06-30T15:37:12.4900628Z Terminate orphan process: pid (2322) (java)
+2026-06-30T15:37:12.5044250Z Terminate orphan process: pid (2482) (java)
+2026-06-30T15:37:12.5068897Z Terminate orphan process: pid (2659) (java)

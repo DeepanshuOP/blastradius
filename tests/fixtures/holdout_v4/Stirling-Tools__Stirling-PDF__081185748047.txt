@@ -1,0 +1,1112 @@
+﻿2026-06-13T11:08:09.7191041Z Current runner version: '2.333.1'
+2026-06-13T11:08:09.7266390Z Runner name: 'depot-z8xsr0h9zv'
+2026-06-13T11:08:09.7267229Z Runner group name: 'default'
+2026-06-13T11:08:09.7267876Z Machine name: 'depot-machine'
+2026-06-13T11:08:09.7269610Z ##[group]GITHUB_TOKEN Permissions
+2026-06-13T11:08:09.7271240Z Actions: read
+2026-06-13T11:08:09.7271832Z Contents: read
+2026-06-13T11:08:09.7272269Z Metadata: read
+2026-06-13T11:08:09.7272724Z PullRequests: write
+2026-06-13T11:08:09.7273154Z SecurityEvents: write
+2026-06-13T11:08:09.7275047Z ##[endgroup]
+2026-06-13T11:08:09.7275577Z Secret source: Actions
+2026-06-13T11:08:09.7276066Z Prepare workflow directory
+2026-06-13T11:08:09.7547200Z Prepare all required actions
+2026-06-13T11:08:09.7570144Z Getting action download info
+2026-06-13T11:08:10.1281802Z Download action repository 'step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5' (SHA:ab7a9404c0f3da075243ca237b5fac12c98deaa5)
+2026-06-13T11:08:10.7761784Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-06-13T11:08:10.8708087Z Download action repository 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-06-13T11:08:11.0406761Z Download action repository 'actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae' (SHA:27d5ce7f107fe9357f9df03efb73ab90386fccae)
+2026-06-13T11:08:11.1366797Z Download action repository 'gradle/actions@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e' (SHA:50e97c2cd7a37755bbfafc9c5b7cafaece252f6e)
+2026-06-13T11:08:11.5954753Z Download action repository 'go-task/setup-task@3be4020d41929789a01026e0e427a4321ce0ad44' (SHA:3be4020d41929789a01026e0e427a4321ce0ad44)
+2026-06-13T11:08:11.6821009Z Download action repository 'actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3' (SHA:3a2844b7e9c422d3c10d287c895573f7108da1b3)
+2026-06-13T11:08:11.7674469Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-06-13T11:08:11.9769536Z Download action repository 'madrapps/jacoco-report@50d3aff4548aa991e6753342d9ba291084e63848' (SHA:50d3aff4548aa991e6753342d9ba291084e63848)
+2026-06-13T11:08:12.2117913Z Uses: Stirling-Tools/Stirling-PDF/.github/workflows/backend-build.yml@refs/pull/6654/merge (d101a616a7c79d6e8dbdaba835654db5e1a30894)
+2026-06-13T11:08:12.2121064Z Complete job name: build / build (25, saas)
+2026-06-13T11:08:12.2871180Z ##[group]Run step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5
+2026-06-13T11:08:12.2872350Z with:
+2026-06-13T11:08:12.2872637Z   egress-policy: audit
+2026-06-13T11:08:12.2874561Z   token: ***
+2026-06-13T11:08:12.2874816Z   disable-telemetry: false
+2026-06-13T11:08:12.2875071Z   disable-sudo: false
+2026-06-13T11:08:12.2875334Z   disable-sudo-and-containers: false
+2026-06-13T11:08:12.2875624Z   disable-file-monitoring: false
+2026-06-13T11:08:12.2875887Z   use-policy-store: false
+2026-06-13T11:08:12.2876146Z   deploy-on-self-hosted-vm: false
+2026-06-13T11:08:12.2876494Z env:
+2026-06-13T11:08:12.2876816Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:12.2877053Z ##[endgroup]
+2026-06-13T11:08:15.1984084Z [harden-runner] pre-step
+2026-06-13T11:08:15.1985954Z [!] Current Configuration: 
+2026-06-13T11:08:15.1987390Z {"repo":"Stirling-Tools/Stirling-PDF","run_id":"27465001189","correlation_id":"0affd188-f1aa-4097-bc78-317f5407ee7c","working_directory":"/home/runner/work/Stirling-PDF/Stirling-PDF","api_url":"https://agent.api.stepsecurity.io/v1","telemetry_url":"https://prod.app-api.stepsecurity.io/v1","allowed_endpoints":"","egress_policy":"audit","disable_telemetry":false,"disable_sudo":false,"disable_sudo_and_containers":false,"disable_file_monitoring":false,"private":false,"is_github_hosted":false,"is_debug":false,"one_time_key":"","api_key":"","use_policy_store":false,"deploy_on_self_hosted_vm":false}
+2026-06-13T11:08:15.1988572Z 
+2026-06-13T11:08:15.1989003Z [32mView security insights and recommended policy at:[0m
+2026-06-13T11:08:15.1990360Z https://app.stepsecurity.io/github/Stirling-Tools/Stirling-PDF/actions/runs/27465001189
+2026-06-13T11:08:15.1990975Z RUNNER_NAME: depot-z8xsr0h9zv
+2026-06-13T11:08:15.1991285Z Detected Depot runner environment. Installing agent-bravo.
+2026-06-13T11:08:15.9523759Z Runner IP Address: 3.91.155.134
+2026-06-13T11:08:15.9525693Z Installing Harden Runner bravo agent for third-party runner
+2026-06-13T11:08:15.9526098Z [!] Checking TLS_STATUS: Stirling-Tools
+2026-06-13T11:08:16.1789471Z [!] TLS_NOT_ENABLED: Stirling-Tools
+2026-06-13T11:08:16.1790788Z TLS is not enabled for this organization. Bravo agent installation skipped.
+2026-06-13T11:08:16.1911232Z ##[group]Run step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5
+2026-06-13T11:08:16.1911821Z with:
+2026-06-13T11:08:16.1912094Z   egress-policy: audit
+2026-06-13T11:08:16.1913934Z   token: ***
+2026-06-13T11:08:16.1914116Z   disable-telemetry: false
+2026-06-13T11:08:16.1914309Z   disable-sudo: false
+2026-06-13T11:08:16.1914507Z   disable-sudo-and-containers: false
+2026-06-13T11:08:16.1914741Z   disable-file-monitoring: false
+2026-06-13T11:08:16.1914945Z   use-policy-store: false
+2026-06-13T11:08:16.1915138Z   deploy-on-self-hosted-vm: false
+2026-06-13T11:08:16.1915337Z env:
+2026-06-13T11:08:16.1915601Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:16.1915801Z   STATE_disableSudo: false
+2026-06-13T11:08:16.1916001Z   STATE_disableSudoAndContainers: false
+2026-06-13T11:08:16.1916224Z   STATE_monitorStatusCode: 200
+2026-06-13T11:08:16.1916420Z   STATE_addSummary: false
+2026-06-13T11:08:16.1916619Z   STATE_correlation_id: depot-z8xsr0h9zv
+2026-06-13T11:08:16.1916919Z ##[endgroup]
+2026-06-13T11:08:16.2293038Z [harden-runner] main-step
+2026-06-13T11:08:16.2294790Z [32mView security insights and recommended policy at:[0m
+2026-06-13T11:08:16.2295216Z https://app.stepsecurity.io/github/Stirling-Tools/Stirling-PDF/actions/runs/27465001189
+2026-06-13T11:08:16.2381129Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-06-13T11:08:16.2381728Z with:
+2026-06-13T11:08:16.2381948Z   repository: Stirling-Tools/Stirling-PDF
+2026-06-13T11:08:16.2383696Z   token: ***
+2026-06-13T11:08:16.2383978Z   ssh-strict: true
+2026-06-13T11:08:16.2384152Z   ssh-user: git
+2026-06-13T11:08:16.2384326Z   persist-credentials: true
+2026-06-13T11:08:16.2384512Z   clean: true
+2026-06-13T11:08:16.2384684Z   sparse-checkout-cone-mode: true
+2026-06-13T11:08:16.2384885Z   fetch-depth: 1
+2026-06-13T11:08:16.2385206Z   fetch-tags: false
+2026-06-13T11:08:16.2385394Z   show-progress: true
+2026-06-13T11:08:16.2385565Z   lfs: false
+2026-06-13T11:08:16.2385735Z   submodules: false
+2026-06-13T11:08:16.2385908Z   set-safe-directory: true
+2026-06-13T11:08:16.2386089Z env:
+2026-06-13T11:08:16.2386341Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:16.2386510Z ##[endgroup]
+2026-06-13T11:08:16.2848646Z Syncing repository: Stirling-Tools/Stirling-PDF
+2026-06-13T11:08:16.2850294Z ##[group]Getting Git version info
+2026-06-13T11:08:16.2850840Z Working directory is '/home/runner/work/Stirling-PDF/Stirling-PDF'
+2026-06-13T11:08:16.2851249Z [command]/usr/bin/git version
+2026-06-13T11:08:16.6001238Z git version 2.54.0
+2026-06-13T11:08:16.6025463Z ##[endgroup]
+2026-06-13T11:08:16.6034063Z Temporarily overriding HOME='/home/runner/work/_temp/08c94030-10b0-4741-9937-0763bd23dc13' before making global git config changes
+2026-06-13T11:08:16.6034604Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-13T11:08:16.6037475Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-13T11:08:16.6469357Z Deleting the contents of '/home/runner/work/Stirling-PDF/Stirling-PDF'
+2026-06-13T11:08:16.6471355Z ##[group]Initializing the repository
+2026-06-13T11:08:16.6474070Z [command]/usr/bin/git init /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-13T11:08:16.7129622Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-13T11:08:16.7130192Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-13T11:08:16.7130826Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-13T11:08:16.7131081Z hint: call:
+2026-06-13T11:08:16.7131234Z hint:
+2026-06-13T11:08:16.7131426Z hint: 	git config --global init.defaultBranch <name>
+2026-06-13T11:08:16.7131658Z hint:
+2026-06-13T11:08:16.7131856Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-13T11:08:16.7132161Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-13T11:08:16.7132399Z hint:
+2026-06-13T11:08:16.7132555Z hint: 	git branch -m <name>
+2026-06-13T11:08:16.7132718Z hint:
+2026-06-13T11:08:16.7132936Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-13T11:08:16.7140614Z Initialized empty Git repository in /home/runner/work/Stirling-PDF/Stirling-PDF/.git/
+2026-06-13T11:08:16.7147040Z [command]/usr/bin/git remote add origin https://github.com/Stirling-Tools/Stirling-PDF
+2026-06-13T11:08:16.7208027Z ##[endgroup]
+2026-06-13T11:08:16.7208559Z ##[group]Disabling automatic garbage collection
+2026-06-13T11:08:16.7210108Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-13T11:08:16.7221767Z ##[endgroup]
+2026-06-13T11:08:16.7222062Z ##[group]Setting up auth
+2026-06-13T11:08:16.7222838Z Removing SSH command configuration
+2026-06-13T11:08:16.7225848Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-13T11:08:16.7249601Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-13T11:08:17.0677567Z Removing HTTP extra header
+2026-06-13T11:08:17.0681689Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-13T11:08:17.0696387Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-13T11:08:17.0784331Z Removing includeIf entries pointing to credentials config files
+2026-06-13T11:08:17.0787871Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-13T11:08:17.0801352Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-13T11:08:17.0891907Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-13T11:08:17.0907504Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:08:17.0919295Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:08:17.0942038Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:08:17.0954285Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:08:17.0964540Z ##[endgroup]
+2026-06-13T11:08:17.0964788Z ##[group]Fetching the repository
+2026-06-13T11:08:17.0969183Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d101a616a7c79d6e8dbdaba835654db5e1a30894:refs/remotes/pull/6654/merge
+2026-06-13T11:08:20.1359949Z From https://github.com/Stirling-Tools/Stirling-PDF
+2026-06-13T11:08:20.1361133Z  * [new ref]         d101a616a7c79d6e8dbdaba835654db5e1a30894 -> pull/6654/merge
+2026-06-13T11:08:20.1411347Z ##[endgroup]
+2026-06-13T11:08:20.1411885Z ##[group]Determining the checkout info
+2026-06-13T11:08:20.1412174Z ##[endgroup]
+2026-06-13T11:08:20.1415241Z [command]/usr/bin/git sparse-checkout disable
+2026-06-13T11:08:20.1463597Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-13T11:08:20.1474391Z ##[group]Checking out the ref
+2026-06-13T11:08:20.1476670Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6654/merge
+2026-06-13T11:08:20.7131099Z Note: switching to 'refs/remotes/pull/6654/merge'.
+2026-06-13T11:08:20.7132003Z 
+2026-06-13T11:08:20.7132203Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-13T11:08:20.7132557Z changes and commit them, and you can discard any commits you make in this
+2026-06-13T11:08:20.7132853Z state without impacting any branches by switching back to a branch.
+2026-06-13T11:08:20.7133033Z 
+2026-06-13T11:08:20.7133187Z If you want to create a new branch to retain commits you create, you may
+2026-06-13T11:08:20.7133467Z do so (now or later) by using -c with the switch command. Example:
+2026-06-13T11:08:20.7133659Z 
+2026-06-13T11:08:20.7133758Z   git switch -c <new-branch-name>
+2026-06-13T11:08:20.7133926Z 
+2026-06-13T11:08:20.7134016Z Or undo this operation with:
+2026-06-13T11:08:20.7134159Z 
+2026-06-13T11:08:20.7134245Z   git switch -
+2026-06-13T11:08:20.7134347Z 
+2026-06-13T11:08:20.7134498Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-13T11:08:20.7134695Z 
+2026-06-13T11:08:20.7134925Z HEAD is now at d101a61 Merge 61feed02cb881f906d58b0fbc9fa2b1a8cae136d into 946c032fb55ae785d151dd26cced91ca3125aa43
+2026-06-13T11:08:20.7141656Z ##[endgroup]
+2026-06-13T11:08:20.7179763Z [command]/usr/bin/git log -1 --format=%H
+2026-06-13T11:08:20.7191401Z d101a616a7c79d6e8dbdaba835654db5e1a30894
+2026-06-13T11:08:20.7317760Z ##[group]Run actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+2026-06-13T11:08:20.7318205Z with:
+2026-06-13T11:08:20.7318375Z   java-version: 25
+2026-06-13T11:08:20.7318535Z   distribution: temurin
+2026-06-13T11:08:20.7318702Z   java-package: jdk
+2026-06-13T11:08:20.7318889Z   check-latest: false
+2026-06-13T11:08:20.7319038Z   server-id: github
+2026-06-13T11:08:20.7319191Z   server-username: GITHUB_ACTOR
+2026-06-13T11:08:20.7319364Z   server-password: GITHUB_TOKEN
+2026-06-13T11:08:20.7319537Z   overwrite-settings: true
+2026-06-13T11:08:20.7319708Z   job-status: success
+2026-06-13T11:08:20.7321551Z   token: ***
+2026-06-13T11:08:20.7321702Z env:
+2026-06-13T11:08:20.7321933Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:20.7322112Z ##[endgroup]
+2026-06-13T11:08:20.8095184Z ##[group]Installed distributions
+2026-06-13T11:08:20.8576668Z Resolved Java 25.0.3+9 from tool-cache
+2026-06-13T11:08:20.8577107Z Setting Java 25.0.3+9 as the default
+2026-06-13T11:08:20.8582036Z Creating toolchains.xml for JDK version 25 from temurin
+2026-06-13T11:08:20.8618862Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-13T11:08:20.8619260Z 
+2026-06-13T11:08:20.8619350Z Java configuration:
+2026-06-13T11:08:20.8619519Z   Distribution: temurin
+2026-06-13T11:08:20.8619676Z   Version: 25.0.3+9
+2026-06-13T11:08:20.8619892Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:20.8620076Z 
+2026-06-13T11:08:20.8620252Z ##[endgroup]
+2026-06-13T11:08:20.8632739Z Creating settings.xml with server-id: github
+2026-06-13T11:08:20.8633188Z Overwriting existing file /home/runner/.m2/settings.xml
+2026-06-13T11:08:22.4423237Z ##[group]Run actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+2026-06-13T11:08:22.4423967Z with:
+2026-06-13T11:08:22.4424256Z   path: ~/.gradle/wrapper
+~/.gradle/caches/modules-2/files-2.1
+~/.gradle/caches/modules-2/metadata-2.*
+
+2026-06-13T11:08:22.4424683Z   key: gradle-deps-Linux-jdk-25-6de123b7e906a6e715aa94dca95b2c26b78811aba18467f59078b1552f6fe4a0
+2026-06-13T11:08:22.4425006Z   enableCrossOsArchive: false
+2026-06-13T11:08:22.4425181Z   fail-on-cache-miss: false
+2026-06-13T11:08:22.4425344Z   lookup-only: false
+2026-06-13T11:08:22.4425496Z   save-always: false
+2026-06-13T11:08:22.4425728Z env:
+2026-06-13T11:08:22.4426019Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:22.4426223Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:22.4426512Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:22.4426755Z ##[endgroup]
+2026-06-13T11:08:22.6276229Z Cache hit for: gradle-deps-Linux-jdk-25-6de123b7e906a6e715aa94dca95b2c26b78811aba18467f59078b1552f6fe4a0
+2026-06-13T11:08:23.8188563Z Cache Size: ~400 MB (419187400 B)
+2026-06-13T11:08:23.8217198Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2ad88bfc-7196-4dc9-a302-91d828365af7/cache.tzst -P -C /home/runner/work/Stirling-PDF/Stirling-PDF --use-compress-program unzstd
+2026-06-13T11:08:24.0268900Z Cache restored successfully
+2026-06-13T11:08:24.1661847Z Cache restored from key: gradle-deps-Linux-jdk-25-6de123b7e906a6e715aa94dca95b2c26b78811aba18467f59078b1552f6fe4a0
+2026-06-13T11:08:24.1791189Z ##[group]Run gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
+2026-06-13T11:08:24.1791630Z with:
+2026-06-13T11:08:24.1791812Z   gradle-version: 9.3.1
+2026-06-13T11:08:24.1792016Z   cache-disabled: true
+2026-06-13T11:08:24.1792177Z   cache-provider: enhanced
+2026-06-13T11:08:24.1792342Z   cache-read-only: true
+2026-06-13T11:08:24.1792500Z   cache-write-only: false
+2026-06-13T11:08:24.1792669Z   cache-overwrite-existing: false
+2026-06-13T11:08:24.1792863Z   cache-cleanup: on-success
+2026-06-13T11:08:24.1793055Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-13T11:08:24.1793272Z   add-job-summary: always
+2026-06-13T11:08:24.1793444Z   add-job-summary-as-pr-comment: never
+2026-06-13T11:08:24.1793632Z   dependency-graph: disabled
+2026-06-13T11:08:24.1793839Z   dependency-graph-report-dir: dependency-graph-reports
+2026-06-13T11:08:24.1794068Z   dependency-graph-continue-on-failure: true
+2026-06-13T11:08:24.1794265Z   build-scan-publish: false
+2026-06-13T11:08:24.1794452Z   validate-wrappers: true
+2026-06-13T11:08:24.1794626Z   allow-snapshot-wrappers: false
+2026-06-13T11:08:24.1794812Z   gradle-home-cache-strict-match: false
+2026-06-13T11:08:24.1795039Z   workflow-job-context: {
+  "jdk-version": 25,
+  "flavor": "saas"
+}
+2026-06-13T11:08:24.1796800Z   github-token: ***
+2026-06-13T11:08:24.1796949Z env:
+2026-06-13T11:08:24.1797211Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:24.1797419Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:24.1797711Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:24.1797947Z ##[endgroup]
+2026-06-13T11:08:26.8905358Z Gradle User Home already exists at /home/runner/.gradle
+2026-06-13T11:08:26.8915723Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-13T11:08:26.8917262Z Cache is disabled: will not restore state from previous builds.
+2026-06-13T11:08:26.9229947Z ##[group]All Gradle Wrapper jars are valid
+2026-06-13T11:08:26.9231088Z ✓ Found known Gradle Wrapper JAR files:
+2026-06-13T11:08:26.9231474Z   b3a875ddc1f044746e1b1a55f645584505f4a10438c1afea9f15e92a7c42ec13 gradle/wrapper/gradle-wrapper.jar
+2026-06-13T11:08:26.9231872Z ##[endgroup]
+2026-06-13T11:08:26.9558328Z ##[group]Provision Gradle 9.3.1
+2026-06-13T11:08:33.1703355Z Downloaded https://services.gradle.org/distributions/gradle-9.3.1-bin.zip to /home/runner/work/_temp/.gradle-actions/gradle-installations/downloads/gradle-9.3.1-bin.zip (size 137037885)
+2026-06-13T11:08:33.1737154Z [command]/usr/bin/unzip -o -q /home/runner/work/_temp/.gradle-actions/gradle-installations/downloads/gradle-9.3.1-bin.zip
+2026-06-13T11:08:33.8419587Z Extracted Gradle 9.3.1 to /home/runner/work/_temp/.gradle-actions/gradle-installations/installs/gradle-9.3.1
+2026-06-13T11:08:33.8420884Z Provisioned Gradle executable /home/runner/work/_temp/.gradle-actions/gradle-installations/installs/gradle-9.3.1/bin/gradle
+2026-06-13T11:08:33.8421541Z ##[endgroup]
+2026-06-13T11:08:33.8506033Z ##[group]Run go-task/setup-task@3be4020d41929789a01026e0e427a4321ce0ad44
+2026-06-13T11:08:33.8506440Z with:
+2026-06-13T11:08:33.8506710Z   version: 3.x
+2026-06-13T11:08:33.8508368Z   repo-token: ***
+2026-06-13T11:08:33.8508522Z   max-retries: 3
+2026-06-13T11:08:33.8508676Z env:
+2026-06-13T11:08:33.8508906Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:33.8509108Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:33.8509398Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:33.8509655Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:08:33.8509879Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:08:33.8510069Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:08:33.8510337Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:08:33.8510712Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:08:33.8510945Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:08:33.8511122Z ##[endgroup]
+2026-06-13T11:08:33.8838991Z (node:2564) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-06-13T11:08:33.8839879Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-13T11:08:34.8969532Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/3a8175e5-9b7c-4096-a165-040cd8b9ae6b -f /home/runner/work/_temp/ca37bb3f-19a3-488a-b2f9-565d5e5292a2
+2026-06-13T11:08:35.1768106Z Successfully setup Task version v3.51.1
+2026-06-13T11:08:35.1868825Z ##[group]Run task backend:build:ci
+2026-06-13T11:08:35.1869399Z [36;1mtask backend:build:ci[0m
+2026-06-13T11:08:35.4030603Z shell: /usr/bin/bash -e {0}
+2026-06-13T11:08:35.4031092Z env:
+2026-06-13T11:08:35.4031416Z   DEPOT_TOKEN: ***
+2026-06-13T11:08:35.4031638Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:35.4031936Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:08:35.4032207Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:08:35.4032417Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:08:35.4032608Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:08:35.4032880Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:08:35.4033166Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:08:35.4033383Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:08:35.4033587Z   MAVEN_USER: ***
+2026-06-13T11:08:35.4033847Z   MAVEN_PASSWORD: ***
+2026-06-13T11:08:35.4034004Z   MAVEN_PUBLIC_URL: 
+2026-06-13T11:08:35.4034156Z   STIRLING_FLAVOR: saas
+2026-06-13T11:08:35.4034325Z ##[endgroup]
+2026-06-13T11:08:35.4214760Z [32mtask: [backend:build:ci] ./gradlew build -PnoSpotless
+2026-06-13T11:08:35.7111897Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:35.7112948Z [[33mbackend:build:ci[0m] Welcome to Gradle 9.3.1!
+2026-06-13T11:08:35.7113225Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:35.7113581Z [[33mbackend:build:ci[0m] Here are the highlights of this release:
+2026-06-13T11:08:35.7113952Z [[33mbackend:build:ci[0m]  - Test reporting improvements
+2026-06-13T11:08:35.7114233Z [[33mbackend:build:ci[0m]  - Error and warning improvements
+2026-06-13T11:08:35.7118276Z [[33mbackend:build:ci[0m]  - Build authoring improvements
+2026-06-13T11:08:35.7118515Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:35.7118853Z [[33mbackend:build:ci[0m] For more details see https://docs.gradle.org/9.3.1/release-notes.html
+2026-06-13T11:08:35.7119157Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:35.8106585Z [[33mbackend:build:ci[0m] Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-13T11:08:42.4110344Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:42.4111864Z [[33mbackend:build:ci[0m] > Configure project :
+2026-06-13T11:08:42.4112316Z [[33mbackend:build:ci[0m] No custom MAVEN_PUBLIC_URL set, defaulting to Maven Central
+2026-06-13T11:08:42.6108096Z [[33mbackend:build:ci[0m] Writing version.properties to /home/runner/work/Stirling-PDF/Stirling-PDF/app/common/src/main/resources/version.properties
+2026-06-13T11:08:42.8107637Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:42.8108739Z [[33mbackend:build:ci[0m] > Configure project :common
+2026-06-13T11:08:42.8109347Z [[33mbackend:build:ci[0m] JPDFium native platforms: linux-x64, linux-arm64, darwin-x64, darwin-arm64, windows-x64
+2026-06-13T11:08:44.8107150Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:08:44.8108613Z [[33mbackend:build:ci[0m] > Configure project :***-pdf
+2026-06-13T11:08:44.8109133Z [[33mbackend:build:ci[0m] Frontend build disabled - JAR will be backend-only with API landing page
+2026-06-13T11:09:07.0107434Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.0109127Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessGradle SKIPPED
+2026-06-13T11:09:07.0109819Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessGradleCheck SKIPPED
+2026-06-13T11:09:07.0110250Z [[33mbackend:build:ci[0m] > Task :saas:spotlessGradle SKIPPED
+2026-06-13T11:09:07.0110948Z [[33mbackend:build:ci[0m] > Task :saas:spotlessGradleCheck SKIPPED
+2026-06-13T11:09:07.0111358Z [[33mbackend:build:ci[0m] > Task :saas:spotlessJava SKIPPED
+2026-06-13T11:09:07.0111720Z [[33mbackend:build:ci[0m] > Task :saas:spotlessJavaCheck SKIPPED
+2026-06-13T11:09:07.0112076Z [[33mbackend:build:ci[0m] > Task :saas:spotlessYaml SKIPPED
+2026-06-13T11:09:07.0112439Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessJava SKIPPED
+2026-06-13T11:09:07.0112970Z [[33mbackend:build:ci[0m] > Task :saas:spotlessYamlCheck SKIPPED
+2026-06-13T11:09:07.0113358Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessJavaCheck SKIPPED
+2026-06-13T11:09:07.0113728Z [[33mbackend:build:ci[0m] > Task :saas:spotlessCheck SKIPPED
+2026-06-13T11:09:07.0159335Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessYaml SKIPPED
+2026-06-13T11:09:07.0162573Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessYamlCheck SKIPPED
+2026-06-13T11:09:07.0163884Z [[33mbackend:build:ci[0m] > Task :proprietary:spotlessCheck SKIPPED
+2026-06-13T11:09:07.1109657Z [[33mbackend:build:ci[0m] > Task :***-pdf:cleanFrontendAssets UP-TO-DATE
+2026-06-13T11:09:07.1110939Z [[33mbackend:build:ci[0m] > Task :saas:processTestResources NO-SOURCE
+2026-06-13T11:09:07.1111299Z [[33mbackend:build:ci[0m] > Task :proprietary:processTestResources
+2026-06-13T11:09:07.2106798Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.2108261Z [[33mbackend:build:ci[0m] > Task :***-pdf:copyApiLandingPage
+2026-06-13T11:09:07.2108805Z [[33mbackend:build:ci[0m] Copying API landing page to index.html for backend-only mode...
+2026-06-13T11:09:07.2128278Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.2129773Z [[33mbackend:build:ci[0m] > Task :***-pdf:compileQuarkusTestGeneratedSourcesJava NO-SOURCE
+2026-06-13T11:09:07.2130308Z [[33mbackend:build:ci[0m] > Task :***-pdf:processTestResources
+2026-06-13T11:09:07.2130914Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessGradle SKIPPED
+2026-06-13T11:09:07.2131371Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessGradleCheck SKIPPED
+2026-06-13T11:09:07.2132190Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessJava SKIPPED
+2026-06-13T11:09:07.2132613Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessJavaCheck SKIPPED
+2026-06-13T11:09:07.2133024Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessYaml SKIPPED
+2026-06-13T11:09:07.2133449Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessYamlCheck SKIPPED
+2026-06-13T11:09:07.2134807Z [[33mbackend:build:ci[0m] > Task :***-pdf:spotlessCheck SKIPPED
+2026-06-13T11:09:07.2135249Z [[33mbackend:build:ci[0m] > Task :writeVersion
+2026-06-13T11:09:07.2135796Z [[33mbackend:build:ci[0m] > Task :processResources NO-SOURCE
+2026-06-13T11:09:07.3117917Z [[33mbackend:build:ci[0m] > Task :saas:processResources
+2026-06-13T11:09:07.3119080Z [[33mbackend:build:ci[0m] > Task :compileRestartHelper FROM-CACHE
+2026-06-13T11:09:07.3119382Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.3119613Z [[33mbackend:build:ci[0m] > Task :buildRestartHelper
+2026-06-13T11:09:07.3120290Z [[33mbackend:build:ci[0m] restart-helper.jar created at: /home/runner/work/Stirling-PDF/Stirling-PDF/build/libs/restart-helper.jar
+2026-06-13T11:09:07.3120779Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.3121003Z [[33mbackend:build:ci[0m] > Task :spotlessGradle SKIPPED
+2026-06-13T11:09:07.3121279Z [[33mbackend:build:ci[0m] > Task :spotlessGradleCheck SKIPPED
+2026-06-13T11:09:07.3121550Z [[33mbackend:build:ci[0m] > Task :spotlessYaml SKIPPED
+2026-06-13T11:09:07.3121839Z [[33mbackend:build:ci[0m] > Task :spotlessYamlCheck SKIPPED
+2026-06-13T11:09:07.3122111Z [[33mbackend:build:ci[0m] > Task :spotlessCheck SKIPPED
+2026-06-13T11:09:07.3122392Z [[33mbackend:build:ci[0m] > Task :processTestResources NO-SOURCE
+2026-06-13T11:09:07.3122641Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.3122855Z [[33mbackend:build:ci[0m] > Task :syncAppVersion
+2026-06-13T11:09:07.3123151Z [[33mbackend:build:ci[0m] Synchronizing application version to 2.12.0
+2026-06-13T11:09:07.3123411Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:07.3123646Z [[33mbackend:build:ci[0m] > Task :proprietary:processResources
+2026-06-13T11:09:07.5107976Z [[33mbackend:build:ci[0m] > Task :***-pdf:processResources
+2026-06-13T11:09:13.6107084Z [[33mbackend:build:ci[0m] > Task :common:compileJava
+2026-06-13T11:09:13.6108540Z [[33mbackend:build:ci[0m] > Task :common:processResources
+2026-06-13T11:09:13.6108950Z [[33mbackend:build:ci[0m] > Task :common:classes
+2026-06-13T11:09:13.7107269Z [[33mbackend:build:ci[0m] > Task :common:jar
+2026-06-13T11:09:13.7108276Z [[33mbackend:build:ci[0m] > Task :common:assemble
+2026-06-13T11:09:13.7108608Z [[33mbackend:build:ci[0m] > Task :common:spotlessGradle SKIPPED
+2026-06-13T11:09:13.7108924Z [[33mbackend:build:ci[0m] > Task :common:spotlessGradleCheck SKIPPED
+2026-06-13T11:09:13.7109222Z [[33mbackend:build:ci[0m] > Task :common:spotlessJava SKIPPED
+2026-06-13T11:09:13.7109510Z [[33mbackend:build:ci[0m] > Task :common:spotlessJavaCheck SKIPPED
+2026-06-13T11:09:13.7109805Z [[33mbackend:build:ci[0m] > Task :common:spotlessYaml SKIPPED
+2026-06-13T11:09:13.7110096Z [[33mbackend:build:ci[0m] > Task :common:spotlessYamlCheck SKIPPED
+2026-06-13T11:09:13.7110382Z [[33mbackend:build:ci[0m] > Task :common:spotlessCheck SKIPPED
+2026-06-13T11:09:15.2112569Z [[33mbackend:build:ci[0m] > Task :common:compileTestJava FROM-CACHE
+2026-06-13T11:09:15.2114005Z [[33mbackend:build:ci[0m] > Task :common:processTestResources
+2026-06-13T11:09:15.2114474Z [[33mbackend:build:ci[0m] > Task :common:testClasses
+2026-06-13T11:09:17.4107452Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:17.4113147Z [[33mbackend:build:ci[0m] > Task :proprietary:compileJava
+2026-06-13T11:09:17.4173977Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:116: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4175420Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm WorkflowCreationRequest request)
+2026-06-13T11:09:17.4176363Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4181338Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:116: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4182717Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm WorkflowCreationRequest request)
+2026-06-13T11:09:17.4183378Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4184713Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:116: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4186300Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm WorkflowCreationRequest request)
+2026-06-13T11:09:17.4186686Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4187453Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:116: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4188246Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm WorkflowCreationRequest request)
+2026-06-13T11:09:17.4188610Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4190747Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:116: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4192069Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm WorkflowCreationRequest request)
+2026-06-13T11:09:17.4192789Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4194417Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:429: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4195546Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm
+2026-06-13T11:09:17.4196208Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4197691Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:429: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4199699Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm
+2026-06-13T11:09:17.4200178Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4201455Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:429: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4203031Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm
+2026-06-13T11:09:17.4203569Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4204806Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:429: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4206125Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm
+2026-06-13T11:09:17.4206949Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4208201Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/workflow/controller/SigningSessionController.java:429: warning: [removal] MultipartForm in org.jboss.resteasy.reactive has been deprecated and marked for removal
+2026-06-13T11:09:17.4209250Z [[33mbackend:build:ci[0m]             @org.jboss.resteasy.reactive.MultipartForm
+2026-06-13T11:09:17.4209740Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:17.4210737Z [[33mbackend:build:ci[0m] Note: Some input files use or override a deprecated API.
+2026-06-13T11:09:17.4211111Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:deprecation for details.
+2026-06-13T11:09:17.4211780Z [[33mbackend:build:ci[0m] Note: /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/main/java/***/software/proprietary/security/database/repository/UserRepository.java uses unchecked or unsafe operations.
+2026-06-13T11:09:17.4212370Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:unchecked for details.
+2026-06-13T11:09:17.4212642Z [[33mbackend:build:ci[0m] 10 warnings
+2026-06-13T11:09:19.8107649Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:19.8109099Z [[33mbackend:build:ci[0m] > Task :proprietary:classes
+2026-06-13T11:09:19.8109963Z [[33mbackend:build:ci[0m] > Task :proprietary:jar
+2026-06-13T11:09:19.9107153Z [[33mbackend:build:ci[0m] > Task :proprietary:assemble
+2026-06-13T11:09:20.0108113Z [[33mbackend:build:ci[0m] > Task :saas:compileJava FROM-CACHE
+2026-06-13T11:09:20.0109502Z [[33mbackend:build:ci[0m] > Task :saas:classes
+2026-06-13T11:09:20.0110043Z [[33mbackend:build:ci[0m] > Task :saas:jar
+2026-06-13T11:09:20.0110366Z [[33mbackend:build:ci[0m] > Task :saas:assemble
+2026-06-13T11:09:20.7131653Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:20.7161413Z [[33mbackend:build:ci[0m] > Task :saas:compileTestJava FAILED
+2026-06-13T11:09:20.7163233Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:60: error: cannot find symbol
+2026-06-13T11:09:20.7163943Z [[33mbackend:build:ci[0m]         when(jobRepo.save(any(ProcessingJob.class))).thenAnswer(inv -> inv.getArgument(0));
+2026-06-13T11:09:20.7164305Z [[33mbackend:build:ci[0m]                     ^
+2026-06-13T11:09:20.7164582Z [[33mbackend:build:ci[0m]   symbol:   method save(ProcessingJob)
+2026-06-13T11:09:20.7164930Z [[33mbackend:build:ci[0m]   location: variable jobRepo of type ProcessingJobRepository
+2026-06-13T11:09:20.7165516Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:61: error: cannot find symbol
+2026-06-13T11:09:20.7166098Z [[33mbackend:build:ci[0m]         when(stepRepo.save(any(ProcessingJobStep.class))).thenAnswer(inv -> inv.getArgument(0));
+2026-06-13T11:09:20.7166504Z [[33mbackend:build:ci[0m]                      ^
+2026-06-13T11:09:20.7166788Z [[33mbackend:build:ci[0m]   symbol:   method save(ProcessingJobStep)
+2026-06-13T11:09:20.7167148Z [[33mbackend:build:ci[0m]   location: variable stepRepo of type ProcessingJobStepRepository
+2026-06-13T11:09:20.7167816Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:101: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:20.7168447Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(existingId)).thenReturn(Optional.of(existing));
+2026-06-13T11:09:20.7168790Z [[33mbackend:build:ci[0m]                                           ^
+2026-06-13T11:09:20.7169141Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7169640Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7170159Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7170747Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7171165Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7171468Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>of(T)
+2026-06-13T11:09:20.7172183Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:122: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:20.7172779Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(jobAId)).thenReturn(Optional.of(jobA));
+2026-06-13T11:09:20.7173103Z [[33mbackend:build:ci[0m]                                       ^
+2026-06-13T11:09:20.7173452Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7173920Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7174413Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7174912Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7175294Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7175588Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>of(T)
+2026-06-13T11:09:20.7176207Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:147: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:20.7176861Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(newerId)).thenReturn(Optional.of(newerJob));
+2026-06-13T11:09:20.7177197Z [[33mbackend:build:ci[0m]                                        ^
+2026-06-13T11:09:20.7177541Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7178007Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7178502Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7179000Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7179385Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7179667Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>of(T)
+2026-06-13T11:09:20.7180288Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:168: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:20.7180964Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(existingId)).thenReturn(Optional.of(existing));
+2026-06-13T11:09:20.7181316Z [[33mbackend:build:ci[0m]                                           ^
+2026-06-13T11:09:20.7181674Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7182141Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7182633Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7183132Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7183522Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7183804Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>of(T)
+2026-06-13T11:09:20.7184413Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:197: error: no suitable method found for thenReturn(Optional<Object>)
+2026-06-13T11:09:20.7185041Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(staleId)).thenReturn(Optional.empty());
+2026-06-13T11:09:20.7185369Z [[33mbackend:build:ci[0m]                                        ^
+2026-06-13T11:09:20.7185713Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7186177Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7186674Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7187172Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7187581Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7187869Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>empty()
+2026-06-13T11:09:20.7188521Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:222: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:20.7189114Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(jobId)).thenReturn(Optional.of(open));
+2026-06-13T11:09:20.7189445Z [[33mbackend:build:ci[0m]                                      ^
+2026-06-13T11:09:20.7189827Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7190293Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7190943Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7191453Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7191843Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7192147Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>of(T)
+2026-06-13T11:09:20.7192694Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:232: error: cannot find symbol
+2026-06-13T11:09:20.7193214Z [[33mbackend:build:ci[0m]         verify(jobRepo, times(1)).save(any(ProcessingJob.class));
+2026-06-13T11:09:20.7193551Z [[33mbackend:build:ci[0m]                                  ^
+2026-06-13T11:09:20.7193827Z [[33mbackend:build:ci[0m]   symbol:   method save(ProcessingJob)
+2026-06-13T11:09:20.7194122Z [[33mbackend:build:ci[0m]   location: class ProcessingJobRepository
+2026-06-13T11:09:20.7194723Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:238: error: no suitable method found for thenReturn(Optional<Object>)
+2026-06-13T11:09:20.7195304Z [[33mbackend:build:ci[0m]         when(jobRepo.findById(unknown)).thenReturn(Optional.empty());
+2026-06-13T11:09:20.7195638Z [[33mbackend:build:ci[0m]                                        ^
+2026-06-13T11:09:20.7195976Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:20.7196447Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7196943Z [[33mbackend:build:ci[0m]     method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:20.7197452Z [[33mbackend:build:ci[0m]       (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:20.7197829Z [[33mbackend:build:ci[0m]   where T is a type-variable:
+2026-06-13T11:09:20.7198168Z [[33mbackend:build:ci[0m]     T extends Object declared in method <T>empty()
+2026-06-13T11:09:20.7198699Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:266: error: cannot find symbol
+2026-06-13T11:09:20.7199183Z [[33mbackend:build:ci[0m]         verify(jobRepo).saveAll(List.of(a, b));
+2026-06-13T11:09:20.7199457Z [[33mbackend:build:ci[0m]                        ^
+2026-06-13T11:09:20.7199736Z [[33mbackend:build:ci[0m]   symbol:   method saveAll(List<ProcessingJob>)
+2026-06-13T11:09:20.7200044Z [[33mbackend:build:ci[0m]   location: class ProcessingJobRepository
+2026-06-13T11:09:20.7200629Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:273: error: cannot find symbol
+2026-06-13T11:09:20.7201114Z [[33mbackend:build:ci[0m]         verify(jobRepo, never()).saveAll(any());
+2026-06-13T11:09:20.7201402Z [[33mbackend:build:ci[0m]                                 ^
+2026-06-13T11:09:20.7201670Z [[33mbackend:build:ci[0m]   symbol:   method saveAll(Object)
+2026-06-13T11:09:20.7201955Z [[33mbackend:build:ci[0m]   location: class ProcessingJobRepository
+2026-06-13T11:09:20.7202478Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:289: error: cannot find symbol
+2026-06-13T11:09:20.7203016Z [[33mbackend:build:ci[0m]         verify(stepRepo, atLeastOnce()).save(captor.capture());
+2026-06-13T11:09:20.7203331Z [[33mbackend:build:ci[0m]                                        ^
+2026-06-13T11:09:20.7203623Z [[33mbackend:build:ci[0m]   symbol:   method save(ProcessingJobStep)
+2026-06-13T11:09:20.7203928Z [[33mbackend:build:ci[0m]   location: class ProcessingJobStepRepository
+2026-06-13T11:09:20.7204199Z [[33mbackend:build:ci[0m] 13 errors
+2026-06-13T11:09:21.8141765Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:21.8171621Z [[33mbackend:build:ci[0m] > Task :proprietary:compileTestJava
+2026-06-13T11:09:21.8192185Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:73: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:21.8211336Z [[33mbackend:build:ci[0m]         initialSecuritySetup.init();
+2026-06-13T11:09:21.8251309Z [[33mbackend:build:ci[0m]                             ^
+2026-06-13T11:09:21.8281058Z [[33mbackend:build:ci[0m]   required: StartupEvent
+2026-06-13T11:09:21.8311076Z [[33mbackend:build:ci[0m]   found:    no arguments
+2026-06-13T11:09:21.8344858Z [[33mbackend:build:ci[0m]   reason: actual and formal argument lists differ in length
+2026-06-13T11:09:21.8363351Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:94: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:21.8401164Z [[33mbackend:build:ci[0m]         initialSecuritySetup.init();
+2026-06-13T11:09:21.8431381Z [[33mbackend:build:ci[0m]                             ^
+2026-06-13T11:09:21.8461442Z [[33mbackend:build:ci[0m]   required: StartupEvent
+2026-06-13T11:09:21.8472450Z [[33mbackend:build:ci[0m]   found:    no arguments
+2026-06-13T11:09:21.8473361Z [[33mbackend:build:ci[0m]   reason: actual and formal argument lists differ in length
+2026-06-13T11:09:21.8474420Z [[33mbackend:build:ci[0m] /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:113: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:21.8475285Z [[33mbackend:build:ci[0m]         initialSecuritySetup.init();
+2026-06-13T11:09:21.8475678Z [[33mbackend:build:ci[0m]                             ^
+2026-06-13T11:09:21.8476214Z [[33mbackend:build:ci[0m]   required: StartupEvent
+2026-06-13T11:09:21.8476580Z [[33mbackend:build:ci[0m]   found:    no arguments
+2026-06-13T11:09:21.8480083Z [[33mbackend:build:ci[0m]   reason: actual and formal argument lists differ in length
+2026-06-13T11:09:21.9131619Z [[33mbackend:build:ci[0m] Note: Some input files use or override a deprecated API.
+2026-06-13T11:09:21.9133000Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:deprecation for details.
+2026-06-13T11:09:21.9171514Z [[33mbackend:build:ci[0m] Note: /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/util/SecretMaskerTest.java uses unchecked or unsafe operations.
+2026-06-13T11:09:21.9172518Z [[33mbackend:build:ci[0m] Note: Recompile with -Xlint:unchecked for details.
+2026-06-13T11:09:21.9172848Z [[33mbackend:build:ci[0m] 3 errors
+2026-06-13T11:09:22.0106908Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:22.0135456Z [[33mbackend:build:ci[0m] > Task :proprietary:compileTestJava FAILED
+2026-06-13T11:09:22.4116651Z [[33mbackend:build:ci[0m] cluster.enabled=true with backplane=inprocess - only the local JVM is coordinated. Cross-node lookups and the file proxy will fail. Use backplane=valkey for real multi-node deployments.
+2026-06-13T11:09:22.5107310Z [[33mbackend:build:ci[0m] > Task :***-pdf:quarkusGenerateAppModel
+2026-06-13T11:09:23.7106424Z [[33mbackend:build:ci[0m] WARNING: A restricted method in java.lang.System has been called
+2026-06-13T11:09:23.7108620Z [[33mbackend:build:ci[0m] WARNING: java.lang.System::load has been called by ***.software.jpdfium.panama.NativeLoader in an unnamed module (file:/home/runner/.gradle/caches/modules-2/files-2.1/com.***/jpdfium/1.0.2/f6bad10d81e8ac689b289665f1bc576e0dd3ed8d/jpdfium-1.0.2.jar)
+2026-06-13T11:09:23.7109469Z [[33mbackend:build:ci[0m] WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+2026-06-13T11:09:23.7109979Z [[33mbackend:build:ci[0m] WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+2026-06-13T11:09:23.7110335Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.0106589Z [[33mbackend:build:ci[0m] OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-13T11:09:29.4107064Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 6d85206c-d421-4532-8cd4-501dd0877d7c owned by alice
+2026-06-13T11:09:29.4108562Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 35fedda2-330e-4451-ba36-51ec5bdb4e43 owned by alice
+2026-06-13T11:09:29.4109125Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 35fedda2-330e-4451-ba36-51ec5bdb4e43 owned by alice
+2026-06-13T11:09:29.4109635Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 35fedda2-330e-4451-ba36-51ec5bdb4e43 owned by alice
+2026-06-13T11:09:29.5107144Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 35fedda2-330e-4451-ba36-51ec5bdb4e43 owned by alice
+2026-06-13T11:09:29.5108588Z [[33mbackend:build:ci[0m] Access denied: user bob attempted to access file 35fedda2-330e-4451-ba36-51ec5bdb4e43 owned by alice
+2026-06-13T11:09:29.5108969Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.5109192Z [[33mbackend:build:ci[0m] > Task :common:test
+2026-06-13T11:09:29.5109506Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.5109777Z [[33mbackend:build:ci[0m] JobQueueTest > shouldCheckIfJobIsQueued() FAILED
+2026-06-13T11:09:29.5110285Z [[33mbackend:build:ci[0m]     java.lang.NullPointerException at JobQueueTest.java:94
+2026-06-13T11:09:29.5110697Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.5110981Z [[33mbackend:build:ci[0m] JobQueueTest > shouldCancelJob() FAILED
+2026-06-13T11:09:29.5111392Z [[33mbackend:build:ci[0m]     java.lang.NullPointerException at JobQueueTest.java:60
+2026-06-13T11:09:29.5111694Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.5112069Z [[33mbackend:build:ci[0m] JobQueueTest > shouldGetQueueStats() FAILED
+2026-06-13T11:09:29.5112419Z [[33mbackend:build:ci[0m]     java.lang.NullPointerException at JobQueueTest.java:71
+2026-06-13T11:09:29.5112706Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.5112976Z [[33mbackend:build:ci[0m] JobQueueTest > shouldQueueJob() FAILED
+2026-06-13T11:09:29.5113321Z [[33mbackend:build:ci[0m]     java.lang.NullPointerException at JobQueueTest.java:49
+2026-06-13T11:09:29.6106743Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:29.6108186Z [[33mbackend:build:ci[0m] Skipping sticky-note[1]: pageIndex=99 out of range [0, 2).
+2026-06-13T11:09:29.6108877Z [[33mbackend:build:ci[0m] Skipping sticky-note[2]: pageIndex=-1 out of range [0, 2).
+2026-06-13T11:09:29.6109338Z [[33mbackend:build:ci[0m] Applied 1/3 sticky notes; 2 skipped due to invalid specs.
+2026-06-13T11:09:29.6109795Z [[33mbackend:build:ci[0m] Skipping sticky-note[1]: text length 100001 exceeds limit 100000.
+2026-06-13T11:09:29.6110246Z [[33mbackend:build:ci[0m] Applied 1/2 sticky notes; 1 skipped due to invalid specs.
+2026-06-13T11:09:29.6110840Z [[33mbackend:build:ci[0m] Skipping sticky-note[1]: non-positive dimensions width=0.0 height=20.0.
+2026-06-13T11:09:29.6111348Z [[33mbackend:build:ci[0m] Skipping sticky-note[2]: non-positive dimensions width=20.0 height=-5.0.
+2026-06-13T11:09:29.6111817Z [[33mbackend:build:ci[0m] Applied 1/3 sticky notes; 2 skipped due to invalid specs.
+2026-06-13T11:09:29.6112212Z [[33mbackend:build:ci[0m] Skipping sticky-note[1]: text is blank.
+2026-06-13T11:09:29.6112731Z [[33mbackend:build:ci[0m] Applied 1/2 sticky notes; 1 skipped due to invalid specs.
+2026-06-13T11:09:29.7107209Z [[33mbackend:build:ci[0m] Could not load resource bundle messages for locale en, using default
+2026-06-13T11:09:30.3106822Z [[33mbackend:build:ci[0m] PDF corruption detected during merge: corrupted
+2026-06-13T11:09:30.3108338Z [[33mbackend:build:ci[0m] Unexpected error during merge
+2026-06-13T11:09:30.3113090Z [[33mbackend:build:ci[0m] java.lang.RuntimeException: unexpected
+2026-06-13T11:09:30.3114151Z [[33mbackend:build:ci[0m] 	at ***.software.common.util.ExceptionUtilsTest$LoggingTests.testLogExceptionUnexpectedError(ExceptionUtilsTest.java:321)
+2026-06-13T11:09:30.3114955Z [[33mbackend:build:ci[0m] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-06-13T11:09:30.3115515Z [[33mbackend:build:ci[0m] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-06-13T11:09:30.3116061Z [[33mbackend:build:ci[0m] 	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701)
+2026-06-13T11:09:30.3116677Z [[33mbackend:build:ci[0m] 	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502)
+2026-06-13T11:09:30.3117313Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45)
+2026-06-13T11:09:30.3117911Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61)
+2026-06-13T11:09:30.3118596Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124)
+2026-06-13T11:09:30.3119277Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163)
+2026-06-13T11:09:30.3119936Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148)
+2026-06-13T11:09:30.3152123Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+2026-06-13T11:09:30.3153166Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123)
+2026-06-13T11:09:30.3153967Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105)
+2026-06-13T11:09:30.3154845Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99)
+2026-06-13T11:09:30.3155528Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66)
+2026-06-13T11:09:30.3156178Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47)
+2026-06-13T11:09:30.3156813Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39)
+2026-06-13T11:09:30.3157440Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104)
+2026-06-13T11:09:30.3158094Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98)
+2026-06-13T11:09:30.3158744Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71)
+2026-06-13T11:09:30.3159416Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219)
+2026-06-13T11:09:30.3160121Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3160854Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215)
+2026-06-13T11:09:30.3161490Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157)
+2026-06-13T11:09:30.3162095Z [[33mbackend:build:ci[0m] 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70)
+2026-06-13T11:09:30.3162705Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176)
+2026-06-13T11:09:30.3163324Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3163937Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-06-13T11:09:30.3164477Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-06-13T11:09:30.3165018Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-06-13T11:09:30.3165623Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3166232Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-06-13T11:09:30.3166843Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-06-13T11:09:30.3167308Z [[33mbackend:build:ci[0m] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-06-13T11:09:30.3167955Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-06-13T11:09:30.3168701Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-06-13T11:09:30.3169304Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3169940Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-06-13T11:09:30.3170547Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-06-13T11:09:30.3171100Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-06-13T11:09:30.3171701Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3172294Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-06-13T11:09:30.3172861Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-06-13T11:09:30.3173342Z [[33mbackend:build:ci[0m] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-06-13T11:09:30.3173966Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-06-13T11:09:30.3174692Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-06-13T11:09:30.3176806Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3177452Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-06-13T11:09:30.3177990Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-06-13T11:09:30.3178531Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-06-13T11:09:30.3179129Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3179718Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-06-13T11:09:30.3180291Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-06-13T11:09:30.3180820Z [[33mbackend:build:ci[0m] 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+2026-06-13T11:09:30.3181443Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+2026-06-13T11:09:30.3182165Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+2026-06-13T11:09:30.3182770Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3183367Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+2026-06-13T11:09:30.3183888Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+2026-06-13T11:09:30.3184421Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+2026-06-13T11:09:30.3185014Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+2026-06-13T11:09:30.3185606Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+2026-06-13T11:09:30.3186238Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+2026-06-13T11:09:30.3186930Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+2026-06-13T11:09:30.3187665Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+2026-06-13T11:09:30.3188325Z [[33mbackend:build:ci[0m] 	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+2026-06-13T11:09:30.3188964Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+2026-06-13T11:09:30.3189618Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+2026-06-13T11:09:30.3190260Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+2026-06-13T11:09:30.3190948Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+2026-06-13T11:09:30.3191602Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+2026-06-13T11:09:30.3192267Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+2026-06-13T11:09:30.3192910Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+2026-06-13T11:09:30.3193463Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+2026-06-13T11:09:30.3193952Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+2026-06-13T11:09:30.3194432Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+2026-06-13T11:09:30.3194929Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-06-13T11:09:30.3195473Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+2026-06-13T11:09:30.3196178Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+2026-06-13T11:09:30.3196848Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+2026-06-13T11:09:30.3197373Z [[33mbackend:build:ci[0m] 	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+2026-06-13T11:09:30.3198179Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestDefinitionProcessor$CollectThenExecuteTestDefinitionConsumer.processAllTestClasses(JUnitPlatformTestDefinitionProcessor.java:172)
+2026-06-13T11:09:30.3199246Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestDefinitionProcessor$CollectThenExecuteTestDefinitionConsumer.access$000(JUnitPlatformTestDefinitionProcessor.java:121)
+2026-06-13T11:09:30.3200145Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestDefinitionProcessor.stop(JUnitPlatformTestDefinitionProcessor.java:114)
+2026-06-13T11:09:30.3200928Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.SuiteTestDefinitionProcessor.stop(SuiteTestDefinitionProcessor.java:64)
+2026-06-13T11:09:30.3201594Z [[33mbackend:build:ci[0m] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+2026-06-13T11:09:30.3202066Z [[33mbackend:build:ci[0m] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+2026-06-13T11:09:30.3202498Z [[33mbackend:build:ci[0m] 	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+2026-06-13T11:09:30.3202986Z [[33mbackend:build:ci[0m] 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+2026-06-13T11:09:30.3203483Z [[33mbackend:build:ci[0m] 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+2026-06-13T11:09:30.3204025Z [[33mbackend:build:ci[0m] 	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+2026-06-13T11:09:30.3204635Z [[33mbackend:build:ci[0m] 	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+2026-06-13T11:09:30.3205120Z [[33mbackend:build:ci[0m] 	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+2026-06-13T11:09:30.3205530Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:195)
+2026-06-13T11:09:30.3206080Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+2026-06-13T11:09:30.3206707Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+2026-06-13T11:09:30.3207199Z [[33mbackend:build:ci[0m] 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+2026-06-13T11:09:30.3207741Z [[33mbackend:build:ci[0m] 	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+2026-06-13T11:09:30.3208392Z [[33mbackend:build:ci[0m] 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+2026-06-13T11:09:30.3209110Z [[33mbackend:build:ci[0m] 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+2026-06-13T11:09:30.3209721Z [[33mbackend:build:ci[0m] 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+2026-06-13T11:09:30.3210240Z [[33mbackend:build:ci[0m] 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+2026-06-13T11:09:30.4106946Z [[33mbackend:build:ci[0m] No valid directories to monitor - FileMonitor will not function
+2026-06-13T11:09:32.4106024Z [[33mbackend:build:ci[0m] Could not load font file '/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf': 'loca' table is mandatory
+2026-06-13T11:09:35.4106708Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4107987Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4108408Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4108983Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4109587Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4109902Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4110183Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4110629Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4110954Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4111226Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4111494Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4111764Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4112033Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4112394Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4112663Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4112932Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4113199Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4113468Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4113747Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4114021Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4114289Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4114557Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4114867Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4115135Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4115408Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4115677Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4115945Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4116223Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4116493Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4116829Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4117104Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4117377Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4117657Z [[33mbackend:build:ci[0m] Child field is same object as parent
+2026-06-13T11:09:35.4118147Z [[33mbackend:build:ci[0m] Failed to parse size string INVALID: Character I is neither a decimal digit number, decimal point, nor "e" notation exponential mark.
+2026-06-13T11:09:35.4118647Z [[33mbackend:build:ci[0m] Size value cannot be negative: -10
+2026-06-13T11:09:35.4118970Z [[33mbackend:build:ci[0m] Size value too large to fit in long: 10995116277760000000
+2026-06-13T11:09:35.6106834Z [[33mbackend:build:ci[0m] Not running from JAR, current location: /home/runner/work/Stirling-PDF/Stirling-PDF/app/common/build/classes/java/main
+2026-06-13T11:09:35.6108160Z [[33mbackend:build:ci[0m] Restart helper JAR not found in any expected location
+2026-06-13T11:09:35.6108690Z [[33mbackend:build:ci[0m] Not running from JAR, current location: /home/runner/work/Stirling-PDF/Stirling-PDF/app/common/build/classes/java/main
+2026-06-13T11:09:35.6109236Z [[33mbackend:build:ci[0m] Stripping OOXML external relationship target: https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8106344Z [[33mbackend:build:ci[0m] Stripping OOXML external relationship target: https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8107636Z [[33mbackend:build:ci[0m] Stripping ODF external href attribute (xlink:href): https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8108153Z [[33mbackend:build:ci[0m] Stripping OOXML external relationship target: https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8108609Z [[33mbackend:build:ci[0m] Stripping OOXML external relationship target: https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8109057Z [[33mbackend:build:ci[0m] Stripping ODF external href attribute (xlink:href): https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8109564Z [[33mbackend:build:ci[0m] Stripping ODF external href attribute (xlink:href): https://webhook.site/ssrf-callback
+2026-06-13T11:09:35.8110008Z [[33mbackend:build:ci[0m] Stripping OOXML external relationship target: https://webhook.site/ssrf-callback
+2026-06-13T11:09:36.0105897Z [[33mbackend:build:ci[0m] Removing dangerous URL in attribute href: javascript:alert(xss)
+2026-06-13T11:09:36.0107093Z [[33mbackend:build:ci[0m] Removing dangerous SVG element: foreignObject
+2026-06-13T11:09:36.0107596Z [[33mbackend:build:ci[0m] Removing event handler attribute: onclick
+2026-06-13T11:09:36.0107901Z [[33mbackend:build:ci[0m] Removing dangerous SVG element: script
+2026-06-13T11:09:38.3122310Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.3123571Z [[33mbackend:build:ci[0m] > Task :common:test FAILED
+2026-06-13T11:09:38.3124005Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.3124400Z [[33mbackend:build:ci[0m] 810 tests completed, 4 failed, 5 skipped
+2026-06-13T11:09:38.4106303Z [[33mbackend:build:ci[0m] gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1781348918928.json
+2026-06-13T11:09:38.4107802Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4108550Z [[33mbackend:build:ci[0m] [Incubating] Problems report is available at: file:///home/runner/work/Stirling-PDF/Stirling-PDF/build/reports/problems/problems-report.html
+2026-06-13T11:09:38.4109178Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4109514Z [[33mbackend:build:ci[0m] FAILURE: Build completed with 3 failures.
+2026-06-13T11:09:38.4109848Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4110155Z [[33mbackend:build:ci[0m] 1: Task failed with an exception.
+2026-06-13T11:09:38.4110602Z [[33mbackend:build:ci[0m] -----------
+2026-06-13T11:09:38.4110922Z [[33mbackend:build:ci[0m] * What went wrong:
+2026-06-13T11:09:38.4111281Z [[33mbackend:build:ci[0m] Execution failed for task ':saas:compileTestJava'.
+2026-06-13T11:09:38.4111696Z [[33mbackend:build:ci[0m] > Compilation failed; see the compiler output below.
+2026-06-13T11:09:38.4112602Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:101: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:38.4113308Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(existingId)).thenReturn(Optional.of(existing));
+2026-06-13T11:09:38.4113749Z [[33mbackend:build:ci[0m]                                             ^
+2026-06-13T11:09:38.4114186Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4114748Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4115332Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4115931Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4116398Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4116772Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>of(T)
+2026-06-13T11:09:38.4117480Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:122: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:38.4118173Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(jobAId)).thenReturn(Optional.of(jobA));
+2026-06-13T11:09:38.4118580Z [[33mbackend:build:ci[0m]                                         ^
+2026-06-13T11:09:38.4119005Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4119556Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4120132Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4120802Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4121272Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4121719Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>of(T)
+2026-06-13T11:09:38.4122414Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:147: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:38.4123114Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(newerId)).thenReturn(Optional.of(newerJob));
+2026-06-13T11:09:38.4123544Z [[33mbackend:build:ci[0m]                                          ^
+2026-06-13T11:09:38.4123967Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4124513Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4125091Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4125675Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4126131Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4126532Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>of(T)
+2026-06-13T11:09:38.4127267Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:168: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:38.4127966Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(existingId)).thenReturn(Optional.of(existing));
+2026-06-13T11:09:38.4128388Z [[33mbackend:build:ci[0m]                                             ^
+2026-06-13T11:09:38.4128808Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4129358Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4129941Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4130585Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4131052Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4131417Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>of(T)
+2026-06-13T11:09:38.4132097Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:197: error: no suitable method found for thenReturn(Optional<Object>)
+2026-06-13T11:09:38.4132766Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(staleId)).thenReturn(Optional.empty());
+2026-06-13T11:09:38.4133177Z [[33mbackend:build:ci[0m]                                          ^
+2026-06-13T11:09:38.4133594Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4134141Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4134729Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4135308Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4135769Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4136141Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>empty()
+2026-06-13T11:09:38.4136848Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:222: error: no suitable method found for thenReturn(Optional<ProcessingJob>)
+2026-06-13T11:09:38.4137558Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(jobId)).thenReturn(Optional.of(open));
+2026-06-13T11:09:38.4137960Z [[33mbackend:build:ci[0m]                                        ^
+2026-06-13T11:09:38.4138377Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4138923Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4139508Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4140087Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4140624Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4140994Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>of(T)
+2026-06-13T11:09:38.4141682Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:238: error: no suitable method found for thenReturn(Optional<Object>)
+2026-06-13T11:09:38.4142403Z [[33mbackend:build:ci[0m]           when(jobRepo.findById(unknown)).thenReturn(Optional.empty());
+2026-06-13T11:09:38.4142873Z [[33mbackend:build:ci[0m]                                          ^
+2026-06-13T11:09:38.4143504Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob) is not applicable
+2026-06-13T11:09:38.4144338Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4144892Z [[33mbackend:build:ci[0m]       method OngoingStubbing.thenReturn(ProcessingJob,ProcessingJob...) is not applicable
+2026-06-13T11:09:38.4145429Z [[33mbackend:build:ci[0m]         (argument mismatch; no instance(s) of type variable(s) T exist so that Optional<T> conforms to ProcessingJob)
+2026-06-13T11:09:38.4145832Z [[33mbackend:build:ci[0m]     where T is a type-variable:
+2026-06-13T11:09:38.4146142Z [[33mbackend:build:ci[0m]       T extends Object declared in method <T>empty()
+2026-06-13T11:09:38.4146721Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:60: error: cannot find symbol
+2026-06-13T11:09:38.4147297Z [[33mbackend:build:ci[0m]           when(jobRepo.save(any(ProcessingJob.class))).thenAnswer(inv -> inv.getArgument(0));
+2026-06-13T11:09:38.4147648Z [[33mbackend:build:ci[0m]                       ^
+2026-06-13T11:09:38.4147926Z [[33mbackend:build:ci[0m]     symbol:   method save(ProcessingJob)
+2026-06-13T11:09:38.4148277Z [[33mbackend:build:ci[0m]     location: variable jobRepo of type ProcessingJobRepository
+2026-06-13T11:09:38.4148837Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:61: error: cannot find symbol
+2026-06-13T11:09:38.4149416Z [[33mbackend:build:ci[0m]           when(stepRepo.save(any(ProcessingJobStep.class))).thenAnswer(inv -> inv.getArgument(0));
+2026-06-13T11:09:38.4149774Z [[33mbackend:build:ci[0m]                        ^
+2026-06-13T11:09:38.4150048Z [[33mbackend:build:ci[0m]     symbol:   method save(ProcessingJobStep)
+2026-06-13T11:09:38.4150486Z [[33mbackend:build:ci[0m]     location: variable stepRepo of type ProcessingJobStepRepository
+2026-06-13T11:09:38.4151078Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:232: error: cannot find symbol
+2026-06-13T11:09:38.4151589Z [[33mbackend:build:ci[0m]           verify(jobRepo, times(1)).save(any(ProcessingJob.class));
+2026-06-13T11:09:38.4151949Z [[33mbackend:build:ci[0m]                                    ^
+2026-06-13T11:09:38.4152237Z [[33mbackend:build:ci[0m]     symbol:   method save(ProcessingJob)
+2026-06-13T11:09:38.4152537Z [[33mbackend:build:ci[0m]     location: class ProcessingJobRepository
+2026-06-13T11:09:38.4153061Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:266: error: cannot find symbol
+2026-06-13T11:09:38.4153541Z [[33mbackend:build:ci[0m]           verify(jobRepo).saveAll(List.of(a, b));
+2026-06-13T11:09:38.4153828Z [[33mbackend:build:ci[0m]                          ^
+2026-06-13T11:09:38.4154106Z [[33mbackend:build:ci[0m]     symbol:   method saveAll(List<ProcessingJob>)
+2026-06-13T11:09:38.4154415Z [[33mbackend:build:ci[0m]     location: class ProcessingJobRepository
+2026-06-13T11:09:38.4154937Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:273: error: cannot find symbol
+2026-06-13T11:09:38.4155418Z [[33mbackend:build:ci[0m]           verify(jobRepo, never()).saveAll(any());
+2026-06-13T11:09:38.4155714Z [[33mbackend:build:ci[0m]                                   ^
+2026-06-13T11:09:38.4155986Z [[33mbackend:build:ci[0m]     symbol:   method saveAll(Object)
+2026-06-13T11:09:38.4156272Z [[33mbackend:build:ci[0m]     location: class ProcessingJobRepository
+2026-06-13T11:09:38.4156829Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/saas/src/test/java/***/software/saas/payg/job/JobServiceTest.java:289: error: cannot find symbol
+2026-06-13T11:09:38.4157339Z [[33mbackend:build:ci[0m]           verify(stepRepo, atLeastOnce()).save(captor.capture());
+2026-06-13T11:09:38.4157658Z [[33mbackend:build:ci[0m]                                          ^
+2026-06-13T11:09:38.4157950Z [[33mbackend:build:ci[0m]     symbol:   method save(ProcessingJobStep)
+2026-06-13T11:09:38.4158268Z [[33mbackend:build:ci[0m]     location: class ProcessingJobStepRepository
+2026-06-13T11:09:38.4158533Z [[33mbackend:build:ci[0m]   13 errors
+2026-06-13T11:09:38.4158760Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4158953Z [[33mbackend:build:ci[0m] * Try:
+2026-06-13T11:09:38.4159246Z [[33mbackend:build:ci[0m] > Check your code and dependencies to fix the compilation error(s)
+2026-06-13T11:09:38.4159657Z [[33mbackend:build:ci[0m] > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-13T11:09:38.4160054Z [[33mbackend:build:ci[0m] ==============================================================================
+2026-06-13T11:09:38.4160324Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4160619Z [[33mbackend:build:ci[0m] 2: Task failed with an exception.
+2026-06-13T11:09:38.4160862Z [[33mbackend:build:ci[0m] -----------
+2026-06-13T11:09:38.4161076Z [[33mbackend:build:ci[0m] * What went wrong:
+2026-06-13T11:09:38.4161380Z [[33mbackend:build:ci[0m] Execution failed for task ':proprietary:compileTestJava'.
+2026-06-13T11:09:38.4161725Z [[33mbackend:build:ci[0m] > Compilation failed; see the compiler output below.
+2026-06-13T11:09:38.4162439Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:73: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:38.4163087Z [[33mbackend:build:ci[0m]           initialSecuritySetup.init();
+2026-06-13T11:09:38.4163368Z [[33mbackend:build:ci[0m]                               ^
+2026-06-13T11:09:38.4163628Z [[33mbackend:build:ci[0m]     required: StartupEvent
+2026-06-13T11:09:38.4163891Z [[33mbackend:build:ci[0m]     found:    no arguments
+2026-06-13T11:09:38.4164189Z [[33mbackend:build:ci[0m]     reason: actual and formal argument lists differ in length
+2026-06-13T11:09:38.4164938Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:94: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:38.4165567Z [[33mbackend:build:ci[0m]           initialSecuritySetup.init();
+2026-06-13T11:09:38.4165845Z [[33mbackend:build:ci[0m]                               ^
+2026-06-13T11:09:38.4166127Z [[33mbackend:build:ci[0m]     required: StartupEvent
+2026-06-13T11:09:38.4166413Z [[33mbackend:build:ci[0m]     found:    no arguments
+2026-06-13T11:09:38.4166708Z [[33mbackend:build:ci[0m]     reason: actual and formal argument lists differ in length
+2026-06-13T11:09:38.4167428Z [[33mbackend:build:ci[0m]   /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/InitialSecuritySetupTest.java:113: error: method init in class InitialSecuritySetup cannot be applied to given types;
+2026-06-13T11:09:38.4168067Z [[33mbackend:build:ci[0m]           initialSecuritySetup.init();
+2026-06-13T11:09:38.4168338Z [[33mbackend:build:ci[0m]                               ^
+2026-06-13T11:09:38.4168583Z [[33mbackend:build:ci[0m]     required: StartupEvent
+2026-06-13T11:09:38.4168828Z [[33mbackend:build:ci[0m]     found:    no arguments
+2026-06-13T11:09:38.4169120Z [[33mbackend:build:ci[0m]     reason: actual and formal argument lists differ in length
+2026-06-13T11:09:38.4169496Z [[33mbackend:build:ci[0m]   Note: Recompile with -Xlint:deprecation for details.
+2026-06-13T11:09:38.4170098Z [[33mbackend:build:ci[0m]   Note: /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/util/SecretMaskerTest.java uses unchecked or unsafe operations.
+2026-06-13T11:09:38.4170709Z [[33mbackend:build:ci[0m]   Note: Recompile with -Xlint:unchecked for details.
+2026-06-13T11:09:38.4171050Z [[33mbackend:build:ci[0m]   Note: Some input files use or override a deprecated API.
+2026-06-13T11:09:38.4171330Z [[33mbackend:build:ci[0m]   3 errors
+2026-06-13T11:09:38.4171531Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4171722Z [[33mbackend:build:ci[0m] * Try:
+2026-06-13T11:09:38.4172033Z [[33mbackend:build:ci[0m] > Check your code and dependencies to fix the compilation error(s)
+2026-06-13T11:09:38.4172434Z [[33mbackend:build:ci[0m] > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-13T11:09:38.4172816Z [[33mbackend:build:ci[0m] ==============================================================================
+2026-06-13T11:09:38.4173073Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4173301Z [[33mbackend:build:ci[0m] 3: Task failed with an exception.
+2026-06-13T11:09:38.4173547Z [[33mbackend:build:ci[0m] -----------
+2026-06-13T11:09:38.4173759Z [[33mbackend:build:ci[0m] * What went wrong:
+2026-06-13T11:09:38.4174021Z [[33mbackend:build:ci[0m] Execution failed for task ':common:test'.
+2026-06-13T11:09:38.4174525Z [[33mbackend:build:ci[0m] > There were failing tests. See the report at: file:///home/runner/work/Stirling-PDF/Stirling-PDF/app/common/build/reports/tests/test/index.html
+2026-06-13T11:09:38.4174945Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4175134Z [[33mbackend:build:ci[0m] * Try:
+2026-06-13T11:09:38.4175447Z [[33mbackend:build:ci[0m] > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-13T11:09:38.4175830Z [[33mbackend:build:ci[0m] ==============================================================================
+2026-06-13T11:09:38.4176083Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4176423Z [[33mbackend:build:ci[0m] Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-06-13T11:09:38.4176744Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4177164Z [[33mbackend:build:ci[0m] You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-13T11:09:38.4177592Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4178085Z [[33mbackend:build:ci[0m] For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-13T11:09:38.4178521Z [[33mbackend:build:ci[0m] 
+2026-06-13T11:09:38.4178725Z [[33mbackend:build:ci[0m] BUILD FAILED in 1m 2s
+2026-06-13T11:09:38.4179028Z [[33mbackend:build:ci[0m] 24 actionable tasks: 20 executed, 3 from cache, 1 up-to-date
+2026-06-13T11:09:38.7273582Z [0m[31mtask: Failed to run task "backend:build:ci": exit status 1
+2026-06-13T11:09:38.7286996Z ##[error]exit status 1
+2026-06-13T11:09:38.7300197Z [0m
+2026-06-13T11:09:38.7304947Z ##[error]Process completed with exit code 201.
+2026-06-13T11:09:38.7327413Z ##[group]Run # Common + core + proprietary always build (proprietary is
+2026-06-13T11:09:38.7327880Z [36;1m# Common + core + proprietary always build (proprietary is[0m
+2026-06-13T11:09:38.7328179Z [36;1m# excluded only at runtime, not from the gradle subproject[0m
+2026-06-13T11:09:38.7328444Z [36;1m# graph). Saas builds add a fourth report dir.[0m
+2026-06-13T11:09:38.7328658Z [36;1mdeclare -a dirs=([0m
+2026-06-13T11:09:38.7328842Z [36;1m  "app/core/build/reports/tests/"[0m
+2026-06-13T11:09:38.7329055Z [36;1m  "app/core/build/test-results/"[0m
+2026-06-13T11:09:38.7329255Z [36;1m  "app/common/build/reports/tests/"[0m
+2026-06-13T11:09:38.7329455Z [36;1m  "app/common/build/test-results/"[0m
+2026-06-13T11:09:38.7329660Z [36;1m  "app/proprietary/build/reports/tests/"[0m
+2026-06-13T11:09:38.7329886Z [36;1m  "app/proprietary/build/test-results/"[0m
+2026-06-13T11:09:38.7330077Z [36;1m)[0m
+2026-06-13T11:09:38.7330226Z [36;1mif [ "saas" = "saas" ]; then[0m
+2026-06-13T11:09:38.7330647Z [36;1m  dirs+=("app/saas/build/reports/tests/" "app/saas/build/test-results/")[0m
+2026-06-13T11:09:38.7330898Z [36;1mfi[0m
+2026-06-13T11:09:38.7331053Z [36;1mfor dir in "${dirs[@]}"; do[0m
+2026-06-13T11:09:38.7331237Z [36;1m  if [ ! -d "$dir" ]; then[0m
+2026-06-13T11:09:38.7331417Z [36;1m    echo "Missing $dir"[0m
+2026-06-13T11:09:38.7331588Z [36;1m    exit 1[0m
+2026-06-13T11:09:38.7331734Z [36;1m  fi[0m
+2026-06-13T11:09:38.7331881Z [36;1mdone[0m
+2026-06-13T11:09:38.7352762Z shell: /usr/bin/bash -e {0}
+2026-06-13T11:09:38.7352969Z env:
+2026-06-13T11:09:38.7353238Z   DEPOT_TOKEN: ***
+2026-06-13T11:09:38.7353450Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:38.7353756Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:38.7354017Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:09:38.7354221Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:09:38.7354417Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:09:38.7354692Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:09:38.7354989Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:09:38.7355200Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:09:38.7355383Z ##[endgroup]
+2026-06-13T11:09:38.7394557Z Missing app/core/build/reports/tests/
+2026-06-13T11:09:38.7395701Z ##[error]Process completed with exit code 1.
+2026-06-13T11:09:38.7431879Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-13T11:09:38.7432252Z with:
+2026-06-13T11:09:38.7432434Z   name: test-reports-jdk-25-flavor-saas
+2026-06-13T11:09:38.7432813Z   path: app/**/build/reports/jacoco/test
+app/**/build/reports/tests/
+app/**/build/test-results/
+app/**/build/reports/problems/
+build/reports/problems/
+
+2026-06-13T11:09:38.7433200Z   retention-days: 3
+2026-06-13T11:09:38.7433364Z   if-no-files-found: warn
+2026-06-13T11:09:38.7433533Z   compression-level: 6
+2026-06-13T11:09:38.7433693Z   overwrite: false
+2026-06-13T11:09:38.7433859Z   include-hidden-files: false
+2026-06-13T11:09:38.7434030Z   archive: true
+2026-06-13T11:09:38.7434174Z env:
+2026-06-13T11:09:38.7434422Z   DEPOT_TOKEN: ***
+2026-06-13T11:09:38.7434687Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:38.7434990Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:38.7435266Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:09:38.7435469Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:09:38.7435663Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:09:38.7435944Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:09:38.7436230Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:09:38.7436440Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:09:38.7436622Z ##[endgroup]
+2026-06-13T11:09:38.9351833Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-06-13T11:09:38.9353265Z The least common ancestor is /home/runner/work/Stirling-PDF/Stirling-PDF. This will be the root directory of the artifact
+2026-06-13T11:09:38.9353677Z With the provided path, there will be 310 files uploaded
+2026-06-13T11:09:38.9355961Z Artifact name is valid!
+2026-06-13T11:09:38.9356226Z Root directory input is valid!
+2026-06-13T11:09:39.1334482Z Uploading artifact: test-reports-jdk-25-flavor-saas.zip
+2026-06-13T11:09:39.1354258Z Beginning upload of artifact content to blob storage
+2026-06-13T11:09:39.3169301Z Uploaded bytes 423488
+2026-06-13T11:09:39.3383384Z Finished uploading artifact content to blob storage!
+2026-06-13T11:09:39.3383906Z SHA256 digest of uploaded artifact is 5c78a8f3af47324ba9900a6ea420b41451174e6662c9594e3e4e261d52ade722
+2026-06-13T11:09:39.3384226Z Finalizing artifact upload
+2026-06-13T11:09:39.5115483Z Artifact test-reports-jdk-25-flavor-saas successfully finalized. Artifact ID 7610202043
+2026-06-13T11:09:39.5116175Z Artifact test-reports-jdk-25-flavor-saas has been successfully uploaded! Final size is 423488 bytes. Artifact ID is 7610202043
+2026-06-13T11:09:39.5117354Z Artifact download URL: https://github.com/Stirling-Tools/Stirling-PDF/actions/runs/27465001189/artifacts/7610202043
+2026-06-13T11:09:39.5187058Z ##[group]Run python -m pip install --quiet defusedxml
+2026-06-13T11:09:39.5187466Z [36;1mpython -m pip install --quiet defusedxml[0m
+2026-06-13T11:09:39.5208512Z shell: /usr/bin/bash -e {0}
+2026-06-13T11:09:39.5208729Z env:
+2026-06-13T11:09:39.5209018Z   DEPOT_TOKEN: ***
+2026-06-13T11:09:39.5209236Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:39.5209531Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:39.5209794Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:09:39.5209997Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:09:39.5210201Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:09:39.5210552Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:09:39.5210846Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:09:39.5211056Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:09:39.5211262Z ##[endgroup]
+2026-06-13T11:09:43.5714027Z ##[group]Run python scripts/coverage-summary.py \
+2026-06-13T11:09:43.5714737Z [36;1mpython scripts/coverage-summary.py \[0m
+2026-06-13T11:09:43.5715007Z [36;1m  --title "Backend JUnit coverage (JDK 25)" \[0m
+2026-06-13T11:09:43.5715315Z [36;1m  --jacoco "common=app/common/build/reports/jacoco/test/jacocoTestReport.xml" \[0m
+2026-06-13T11:09:43.5715674Z [36;1m  --jacoco "core=app/core/build/reports/jacoco/test/jacocoTestReport.xml" \[0m
+2026-06-13T11:09:43.5716031Z [36;1m  --jacoco "proprietary=app/proprietary/build/reports/jacoco/test/jacocoTestReport.xml" \[0m
+2026-06-13T11:09:43.5716378Z [36;1m  --jacoco "saas=app/saas/build/reports/jacoco/test/jacocoTestReport.xml" \[0m
+2026-06-13T11:09:43.5716685Z [36;1m  --github-step-summary[0m
+2026-06-13T11:09:43.5737332Z shell: /usr/bin/bash -e {0}
+2026-06-13T11:09:43.5737658Z env:
+2026-06-13T11:09:43.5737985Z   DEPOT_TOKEN: ***
+2026-06-13T11:09:43.5752906Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:43.5753304Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:43.5753580Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:09:43.5753815Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:09:43.5754011Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:09:43.5754312Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:09:43.5754605Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:09:43.5754812Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:09:43.5755006Z ##[endgroup]
+2026-06-13T11:09:43.6197269Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-06-13T11:09:43.6197710Z with:
+2026-06-13T11:09:43.6197887Z   name: jacoco-exec-junit-jdk-25
+2026-06-13T11:09:43.6198105Z   path: app/*/build/jacoco/*.exec
+2026-06-13T11:09:43.6198285Z   retention-days: 7
+2026-06-13T11:09:43.6198454Z   if-no-files-found: warn
+2026-06-13T11:09:43.6198621Z   compression-level: 6
+2026-06-13T11:09:43.6198778Z   overwrite: false
+2026-06-13T11:09:43.6198941Z   include-hidden-files: false
+2026-06-13T11:09:43.6199107Z   archive: true
+2026-06-13T11:09:43.6199251Z env:
+2026-06-13T11:09:43.6199506Z   DEPOT_TOKEN: ***
+2026-06-13T11:09:43.6199720Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:43.6200012Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.3-9/x64
+2026-06-13T11:09:43.6200270Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-06-13T11:09:43.6200608Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-06-13T11:09:43.6200832Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-13T11:09:43.6201106Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-06-13T11:09:43.6201391Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-06-13T11:09:43.6201598Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-06-13T11:09:43.6201788Z ##[endgroup]
+2026-06-13T11:09:43.6976280Z With the provided path, there will be 1 file uploaded
+2026-06-13T11:09:43.6978526Z Artifact name is valid!
+2026-06-13T11:09:43.6978784Z Root directory input is valid!
+2026-06-13T11:09:43.8361368Z Uploading artifact: jacoco-exec-junit-jdk-25.zip
+2026-06-13T11:09:43.8379961Z Beginning upload of artifact content to blob storage
+2026-06-13T11:09:43.9117518Z Uploaded bytes 120567
+2026-06-13T11:09:43.9255667Z Finished uploading artifact content to blob storage!
+2026-06-13T11:09:43.9256136Z SHA256 digest of uploaded artifact is cd5da6e3a682315ccf912ce39359b2f9202e8cc5afaafe918766ec5066cb2de9
+2026-06-13T11:09:43.9256564Z Finalizing artifact upload
+2026-06-13T11:09:44.1188023Z Artifact jacoco-exec-junit-jdk-25 successfully finalized. Artifact ID 7610202537
+2026-06-13T11:09:44.1188647Z Artifact jacoco-exec-junit-jdk-25 has been successfully uploaded! Final size is 120567 bytes. Artifact ID is 7610202537
+2026-06-13T11:09:44.1189944Z Artifact download URL: https://github.com/Stirling-Tools/Stirling-PDF/actions/runs/27465001189/artifacts/7610202537
+2026-06-13T11:09:44.1284242Z Post job cleanup.
+2026-06-13T11:09:44.2611764Z In post-action step
+2026-06-13T11:09:44.2615445Z Cache is disabled: will not restore state from previous builds.
+2026-06-13T11:09:44.2618385Z Generating Job Summary
+2026-06-13T11:09:44.2628255Z Completed post-action step
+2026-06-13T11:09:44.2725428Z Post job cleanup.
+2026-06-13T11:09:44.3414159Z Post job cleanup.
+2026-06-13T11:09:44.3832907Z [command]/usr/bin/git version
+2026-06-13T11:09:44.3852186Z git version 2.54.0
+2026-06-13T11:09:44.3870647Z Temporarily overriding HOME='/home/runner/work/_temp/913b13c0-087b-452d-9101-5d5367c0932e' before making global git config changes
+2026-06-13T11:09:44.3871144Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-13T11:09:44.3873722Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Stirling-PDF/Stirling-PDF
+2026-06-13T11:09:44.3887326Z Removing SSH command configuration
+2026-06-13T11:09:44.3890242Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-13T11:09:44.3904830Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-13T11:09:44.4001559Z Removing HTTP extra header
+2026-06-13T11:09:44.4003882Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-13T11:09:44.4017560Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-13T11:09:44.4108821Z Removing includeIf entries pointing to credentials config files
+2026-06-13T11:09:44.4112610Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-13T11:09:44.4135175Z includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path
+2026-06-13T11:09:44.4135754Z includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path
+2026-06-13T11:09:44.4136116Z includeif.gitdir:/github/workspace/.git.path
+2026-06-13T11:09:44.4136365Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-13T11:09:44.4139452Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path
+2026-06-13T11:09:44.4148191Z /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4153059Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git.path /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4167256Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path
+2026-06-13T11:09:44.4176170Z /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4180146Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Stirling-PDF/Stirling-PDF/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4193203Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-06-13T11:09:44.4201793Z /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4205061Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4217713Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-06-13T11:09:44.4228737Z /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4232289Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config
+2026-06-13T11:09:44.4245356Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-13T11:09:44.4337376Z Removing credentials config '/home/runner/work/_temp/git-credentials-a0b2748e-a8b2-4646-8371-1a4150fc2476.config'
+2026-06-13T11:09:44.4408536Z Post job cleanup.
+2026-06-13T11:09:44.4782299Z [harden-runner] post-step
+2026-06-13T11:09:54.4904566Z timed out
+2026-06-13T11:09:54.4982219Z Cleaning up orphan processes
+2026-06-13T11:09:54.6855204Z Terminate orphan process: pid (2644) (java)

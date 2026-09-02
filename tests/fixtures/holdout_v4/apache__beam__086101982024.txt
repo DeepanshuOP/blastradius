@@ -1,0 +1,1334 @@
+﻿2026-07-09T10:58:03.8812018Z Current runner version: '2.335.1'
+2026-07-09T10:58:03.8828436Z Runner name: 'main-runner-2404-9kmqn-b8cb8'
+2026-07-09T10:58:03.8831154Z Runner group name: 'beam'
+2026-07-09T10:58:03.8833198Z Machine name: 'main-runner-2404-9kmqn-b8cb8'
+2026-07-09T10:58:03.8844884Z ##[group]GITHUB_TOKEN Permissions
+2026-07-09T10:58:03.8851059Z Actions: write
+2026-07-09T10:58:03.8852612Z Checks: write
+2026-07-09T10:58:03.8853929Z Contents: read
+2026-07-09T10:58:03.8855317Z Deployments: read
+2026-07-09T10:58:03.8856783Z Discussions: read
+2026-07-09T10:58:03.8858111Z Issues: write
+2026-07-09T10:58:03.8859441Z Metadata: read
+2026-07-09T10:58:03.8861308Z Packages: read
+2026-07-09T10:58:03.8862522Z Pages: read
+2026-07-09T10:58:03.8864030Z PullRequests: write
+2026-07-09T10:58:03.8865726Z RepositoryProjects: read
+2026-07-09T10:58:03.8867235Z SecurityEvents: read
+2026-07-09T10:58:03.8868774Z Statuses: read
+2026-07-09T10:58:03.8870124Z ##[endgroup]
+2026-07-09T10:58:03.8876408Z Secret source: Actions
+2026-07-09T10:58:03.8878733Z Prepare workflow directory
+2026-07-09T10:58:04.0173637Z Prepare all required actions
+2026-07-09T10:58:04.0280950Z Getting action download info
+2026-07-09T10:58:04.5485015Z Download action repository 'actions/checkout@v7' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-09T10:58:05.0852490Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-07-09T10:58:05.7370455Z Download action repository 'EnricoMi/publish-unit-test-result-action@v2' (SHA:d0a4676d0e0b938bc201470d88276b7c74c712b3)
+2026-07-09T10:58:06.7567874Z Download action repository 'jwgmeligmeyling/spotbugs-github-action@v1.2' (SHA:b8e2c3523acb34c87f14e18cbcd2d87db8c8584e)
+2026-07-09T10:58:07.4428450Z Complete job name: beam_PreCommit_Java_Hadoop_IO_Direct (Run Java_Hadoop_IO_Direct PreCommit)
+2026-07-09T10:58:07.5365338Z A job started hook has been configured by the self-hosted runner administrator
+2026-07-09T10:58:07.5725107Z ##[group]Run '/etc/arc/hooks/job-started.sh'
+2026-07-09T10:58:07.5758586Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T10:58:07.5762005Z ##[endgroup]
+2026-07-09T10:58:07.6172568Z [0;37m2026-07-09 10:58:07.613  DEBUG --- Running ARC Job Started Hooks[0m
+2026-07-09T10:58:07.6203064Z [0;37m2026-07-09 10:58:07.618  DEBUG --- Running hook: /etc/arc/hooks/job-started.d/update-status[0m
+2026-07-09T10:58:07.6529894Z ##[group]Pull down action image 'ghcr.io/enricomi/publish-unit-test-result-action:v2.24.0'
+2026-07-09T10:58:07.6583121Z ##[command]/usr/local/bin/docker pull ghcr.io/enricomi/publish-unit-test-result-action:v2.24.0
+2026-07-09T10:58:09.0181588Z v2.24.0: Pulling from enricomi/publish-unit-test-result-action
+2026-07-09T10:58:09.3094564Z 9b70e313681f: Pulling fs layer
+2026-07-09T10:58:09.3101119Z 352f17d06b0d: Pulling fs layer
+2026-07-09T10:58:09.3102105Z 294fc1a4747b: Pulling fs layer
+2026-07-09T10:58:09.3102899Z 074f4a30e8b8: Pulling fs layer
+2026-07-09T10:58:09.3104107Z 849a71fe3c5c: Pulling fs layer
+2026-07-09T10:58:09.3105156Z 96b937d31921: Pulling fs layer
+2026-07-09T10:58:09.3106266Z 61a2c2c67880: Pulling fs layer
+2026-07-09T10:58:09.3107199Z 9bffe9dde7f3: Pulling fs layer
+2026-07-09T10:58:09.3108098Z 992632f797a1: Pulling fs layer
+2026-07-09T10:58:09.3109147Z 96b937d31921: Waiting
+2026-07-09T10:58:09.3110048Z 61a2c2c67880: Waiting
+2026-07-09T10:58:09.3111408Z 9bffe9dde7f3: Waiting
+2026-07-09T10:58:09.3112255Z 074f4a30e8b8: Waiting
+2026-07-09T10:58:09.3113085Z 849a71fe3c5c: Waiting
+2026-07-09T10:58:09.3113972Z 992632f797a1: Waiting
+2026-07-09T10:58:09.7198149Z 352f17d06b0d: Verifying Checksum
+2026-07-09T10:58:09.7201423Z 352f17d06b0d: Download complete
+2026-07-09T10:58:09.9478815Z 9b70e313681f: Verifying Checksum
+2026-07-09T10:58:09.9479956Z 9b70e313681f: Download complete
+2026-07-09T10:58:10.0577534Z 074f4a30e8b8: Download complete
+2026-07-09T10:58:10.1533371Z 294fc1a4747b: Verifying Checksum
+2026-07-09T10:58:10.1534819Z 294fc1a4747b: Download complete
+2026-07-09T10:58:10.2292177Z 849a71fe3c5c: Verifying Checksum
+2026-07-09T10:58:10.2293939Z 849a71fe3c5c: Download complete
+2026-07-09T10:58:10.3081131Z 96b937d31921: Verifying Checksum
+2026-07-09T10:58:10.3096975Z 96b937d31921: Download complete
+2026-07-09T10:58:10.4841556Z 9bffe9dde7f3: Verifying Checksum
+2026-07-09T10:58:10.4843126Z 9bffe9dde7f3: Download complete
+2026-07-09T10:58:10.5759326Z 992632f797a1: Verifying Checksum
+2026-07-09T10:58:10.5761350Z 992632f797a1: Download complete
+2026-07-09T10:58:10.7108398Z 9b70e313681f: Pull complete
+2026-07-09T10:58:10.8455043Z 61a2c2c67880: Verifying Checksum
+2026-07-09T10:58:10.8456395Z 61a2c2c67880: Download complete
+2026-07-09T10:58:11.2559786Z 352f17d06b0d: Pull complete
+2026-07-09T10:58:13.0464417Z 294fc1a4747b: Pull complete
+2026-07-09T10:58:13.0872431Z 074f4a30e8b8: Pull complete
+2026-07-09T10:58:13.2036266Z 849a71fe3c5c: Pull complete
+2026-07-09T10:58:13.2563890Z 96b937d31921: Pull complete
+2026-07-09T10:58:15.3267046Z 61a2c2c67880: Pull complete
+2026-07-09T10:58:15.3935086Z 9bffe9dde7f3: Pull complete
+2026-07-09T10:58:15.4751819Z 992632f797a1: Pull complete
+2026-07-09T10:58:15.5035372Z Digest: sha256:4b0f12ca591495ab7c177753bc4142f1b679f7f95df9595f19c31a986021001d
+2026-07-09T10:58:15.5217379Z Status: Downloaded newer image for ghcr.io/enricomi/publish-unit-test-result-action:v2.24.0
+2026-07-09T10:58:15.5348100Z ghcr.io/enricomi/publish-unit-test-result-action:v2.24.0
+2026-07-09T10:58:15.5401394Z ##[endgroup]
+2026-07-09T10:58:15.5904654Z ##[group]Run actions/checkout@v7
+2026-07-09T10:58:15.5905813Z with:
+2026-07-09T10:58:15.5906813Z   repository: apache/beam
+2026-07-09T10:58:15.5916593Z   token: ***
+2026-07-09T10:58:15.5917780Z   ssh-strict: true
+2026-07-09T10:58:15.5918583Z   ssh-user: git
+2026-07-09T10:58:15.5919359Z   persist-credentials: true
+2026-07-09T10:58:15.5922637Z   clean: true
+2026-07-09T10:58:15.5923683Z   sparse-checkout-cone-mode: true
+2026-07-09T10:58:15.5924880Z   fetch-depth: 1
+2026-07-09T10:58:15.5925667Z   fetch-tags: false
+2026-07-09T10:58:15.5926420Z   show-progress: true
+2026-07-09T10:58:15.5927371Z   lfs: false
+2026-07-09T10:58:15.5928204Z   submodules: false
+2026-07-09T10:58:15.5929257Z   set-safe-directory: true
+2026-07-09T10:58:15.5930339Z   allow-unsafe-pr-checkout: false
+2026-07-09T10:58:15.5931580Z env:
+2026-07-09T10:58:15.5932499Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:15.5933788Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:15.5937095Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:15.5938296Z ##[endgroup]
+2026-07-09T10:58:16.1311859Z Syncing repository: apache/beam
+2026-07-09T10:58:16.1316166Z ##[group]Getting Git version info
+2026-07-09T10:58:16.1317459Z Working directory is '/runner/_work/beam/beam'
+2026-07-09T10:58:16.1319310Z [command]/usr/bin/git version
+2026-07-09T10:58:16.1320449Z git version 2.54.0
+2026-07-09T10:58:16.1324155Z ##[endgroup]
+2026-07-09T10:58:16.1339849Z Temporarily overriding HOME='/runner/_work/_temp/8b0097bf-2ae4-403d-9f3f-9a3bb4a1cfb8' before making global git config changes
+2026-07-09T10:58:16.1353606Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-09T10:58:16.1357017Z [command]/usr/bin/git config --global --add safe.directory /runner/_work/beam/beam
+2026-07-09T10:58:16.1468701Z Deleting the contents of '/runner/_work/beam/beam'
+2026-07-09T10:58:16.1504258Z ##[group]Determining repository object format
+2026-07-09T10:58:16.1511516Z ##[endgroup]
+2026-07-09T10:58:16.1513533Z ##[group]Initializing the repository
+2026-07-09T10:58:16.1515209Z [command]/usr/bin/git init /runner/_work/beam/beam
+2026-07-09T10:58:16.1721565Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-09T10:58:16.1744897Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-09T10:58:16.1763414Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-09T10:58:16.1766369Z hint: call:
+2026-07-09T10:58:16.1767793Z hint:
+2026-07-09T10:58:16.1769611Z hint: 	git config --global init.defaultBranch <name>
+2026-07-09T10:58:16.1771534Z hint:
+2026-07-09T10:58:16.1774077Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-09T10:58:16.1776444Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-09T10:58:16.1777647Z hint:
+2026-07-09T10:58:16.1778757Z hint: 	git branch -m <name>
+2026-07-09T10:58:16.1779739Z hint:
+2026-07-09T10:58:16.1781646Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-09T10:58:16.1797899Z Initialized empty Git repository in /runner/_work/beam/beam/.git/
+2026-07-09T10:58:16.1801656Z [command]/usr/bin/git remote add origin https://github.com/apache/beam
+2026-07-09T10:58:16.1842793Z ##[endgroup]
+2026-07-09T10:58:16.1844216Z ##[group]Disabling automatic garbage collection
+2026-07-09T10:58:16.1845541Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-09T10:58:16.1956990Z ##[endgroup]
+2026-07-09T10:58:16.1960846Z ##[group]Setting up auth
+2026-07-09T10:58:16.1962374Z Removing SSH command configuration
+2026-07-09T10:58:16.1964040Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-09T10:58:16.2025263Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-09T10:58:16.2634399Z Removing HTTP extra header
+2026-07-09T10:58:16.2637497Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-09T10:58:16.2705788Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-09T10:58:16.3337098Z Removing includeIf entries pointing to credentials config files
+2026-07-09T10:58:16.3339875Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-09T10:58:16.3433183Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-09T10:58:16.4148167Z [command]/usr/bin/git config --file /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-09T10:58:16.4265191Z [command]/usr/bin/git config --local includeIf.gitdir:/runner/_work/beam/beam/.git.path /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T10:58:16.4362354Z [command]/usr/bin/git config --local includeIf.gitdir:/runner/_work/beam/beam/.git/worktrees/*.path /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T10:58:16.4453447Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T10:58:16.4546037Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T10:58:16.4664998Z ##[endgroup]
+2026-07-09T10:58:16.4666544Z ##[group]Fetching the repository
+2026-07-09T10:58:16.4669703Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +eba9ffa57e353a496d4bbc453e7c7a573b605713:refs/remotes/origin/master
+2026-07-09T10:58:23.7956213Z From https://github.com/apache/beam
+2026-07-09T10:58:23.7957607Z  * [new ref]           eba9ffa57e353a496d4bbc453e7c7a573b605713 -> origin/master
+2026-07-09T10:58:23.8013660Z [command]/usr/bin/git branch --list --remote origin/master
+2026-07-09T10:58:23.8100249Z   origin/master
+2026-07-09T10:58:23.8121248Z [command]/usr/bin/git rev-parse refs/remotes/origin/master
+2026-07-09T10:58:23.8174200Z eba9ffa57e353a496d4bbc453e7c7a573b605713
+2026-07-09T10:58:23.8178543Z ##[endgroup]
+2026-07-09T10:58:23.8179997Z ##[group]Determining the checkout info
+2026-07-09T10:58:23.8182594Z ##[endgroup]
+2026-07-09T10:58:23.8184455Z [command]/usr/bin/git sparse-checkout disable
+2026-07-09T10:58:23.8477203Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-09T10:58:23.9095600Z ##[group]Checking out the ref
+2026-07-09T10:58:23.9098760Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-07-09T10:58:25.0224190Z Updating files:  23% (3610/15374)
+2026-07-09T10:58:25.0451674Z Updating files:  24% (3690/15374)
+2026-07-09T10:58:25.0608863Z Updating files:  25% (3844/15374)
+2026-07-09T10:58:25.0778000Z Updating files:  26% (3998/15374)
+2026-07-09T10:58:25.0915689Z Updating files:  27% (4151/15374)
+2026-07-09T10:58:25.1115396Z Updating files:  28% (4305/15374)
+2026-07-09T10:58:25.1324169Z Updating files:  29% (4459/15374)
+2026-07-09T10:58:25.1551602Z Updating files:  30% (4613/15374)
+2026-07-09T10:58:25.1828242Z Updating files:  31% (4766/15374)
+2026-07-09T10:58:25.2046813Z Updating files:  32% (4920/15374)
+2026-07-09T10:58:25.2303350Z Updating files:  33% (5074/15374)
+2026-07-09T10:58:25.2535583Z Updating files:  34% (5228/15374)
+2026-07-09T10:58:25.2736743Z Updating files:  35% (5381/15374)
+2026-07-09T10:58:25.2978429Z Updating files:  36% (5535/15374)
+2026-07-09T10:58:25.3209047Z Updating files:  37% (5689/15374)
+2026-07-09T10:58:25.3458964Z Updating files:  38% (5843/15374)
+2026-07-09T10:58:25.3704269Z Updating files:  39% (5996/15374)
+2026-07-09T10:58:25.3908751Z Updating files:  40% (6150/15374)
+2026-07-09T10:58:25.4181748Z Updating files:  41% (6304/15374)
+2026-07-09T10:58:25.4390333Z Updating files:  42% (6458/15374)
+2026-07-09T10:58:25.4649454Z Updating files:  43% (6611/15374)
+2026-07-09T10:58:25.4834800Z Updating files:  44% (6765/15374)
+2026-07-09T10:58:25.8642219Z Updating files:  45% (6919/15374)
+2026-07-09T10:58:25.9160017Z Updating files:  46% (7073/15374)
+2026-07-09T10:58:25.9345695Z Updating files:  47% (7226/15374)
+2026-07-09T10:58:25.9504346Z Updating files:  48% (7380/15374)
+2026-07-09T10:58:25.9661828Z Updating files:  49% (7534/15374)
+2026-07-09T10:58:25.9913729Z Updating files:  50% (7687/15374)
+2026-07-09T10:58:26.0067910Z Updating files:  51% (7841/15374)
+2026-07-09T10:58:26.0143349Z Updating files:  51% (7937/15374)
+2026-07-09T10:58:26.0334621Z Updating files:  52% (7995/15374)
+2026-07-09T10:58:26.0548795Z Updating files:  53% (8149/15374)
+2026-07-09T10:58:26.0795830Z Updating files:  54% (8302/15374)
+2026-07-09T10:58:26.1012977Z Updating files:  55% (8456/15374)
+2026-07-09T10:58:26.1248081Z Updating files:  56% (8610/15374)
+2026-07-09T10:58:26.1442811Z Updating files:  57% (8764/15374)
+2026-07-09T10:58:26.1723609Z Updating files:  58% (8917/15374)
+2026-07-09T10:58:26.2022654Z Updating files:  59% (9071/15374)
+2026-07-09T10:58:26.2204527Z Updating files:  60% (9225/15374)
+2026-07-09T10:58:26.2427773Z Updating files:  61% (9379/15374)
+2026-07-09T10:58:26.2735588Z Updating files:  62% (9532/15374)
+2026-07-09T10:58:26.2964584Z Updating files:  63% (9686/15374)
+2026-07-09T10:58:26.3232228Z Updating files:  64% (9840/15374)
+2026-07-09T10:58:26.3545281Z Updating files:  65% (9994/15374)
+2026-07-09T10:58:26.3808589Z Updating files:  66% (10147/15374)
+2026-07-09T10:58:26.4035548Z Updating files:  67% (10301/15374)
+2026-07-09T10:58:26.4268119Z Updating files:  68% (10455/15374)
+2026-07-09T10:58:26.4507955Z Updating files:  69% (10609/15374)
+2026-07-09T10:58:27.2257225Z Updating files:  70% (10762/15374)
+2026-07-09T10:58:27.2522268Z Updating files:  70% (10855/15374)
+2026-07-09T10:58:27.3136224Z Updating files:  71% (10916/15374)
+2026-07-09T10:58:27.3498405Z Updating files:  72% (11070/15374)
+2026-07-09T10:58:27.3758633Z Updating files:  73% (11224/15374)
+2026-07-09T10:58:27.3980037Z Updating files:  74% (11377/15374)
+2026-07-09T10:58:27.4274236Z Updating files:  75% (11531/15374)
+2026-07-09T10:58:27.4472908Z Updating files:  76% (11685/15374)
+2026-07-09T10:58:27.4627321Z Updating files:  77% (11838/15374)
+2026-07-09T10:58:27.4845276Z Updating files:  78% (11992/15374)
+2026-07-09T10:58:28.4502599Z Updating files:  79% (12146/15374)
+2026-07-09T10:58:28.4623348Z Updating files:  79% (12220/15374)
+2026-07-09T10:58:28.4732941Z Updating files:  80% (12300/15374)
+2026-07-09T10:58:28.5152761Z Updating files:  81% (12453/15374)
+2026-07-09T10:58:28.5475334Z Updating files:  82% (12607/15374)
+2026-07-09T10:58:28.5715487Z Updating files:  83% (12761/15374)
+2026-07-09T10:58:28.5937046Z Updating files:  84% (12915/15374)
+2026-07-09T10:58:28.6273743Z Updating files:  85% (13068/15374)
+2026-07-09T10:58:28.6479036Z Updating files:  86% (13222/15374)
+2026-07-09T10:58:28.6702928Z Updating files:  87% (13376/15374)
+2026-07-09T10:58:28.6893013Z Updating files:  88% (13530/15374)
+2026-07-09T10:58:28.7105278Z Updating files:  89% (13683/15374)
+2026-07-09T10:58:28.7307478Z Updating files:  90% (13837/15374)
+2026-07-09T10:58:28.7480014Z Updating files:  91% (13991/15374)
+2026-07-09T10:58:28.7695327Z Updating files:  92% (14145/15374)
+2026-07-09T10:58:28.7885690Z Updating files:  93% (14298/15374)
+2026-07-09T10:58:28.8099323Z Updating files:  94% (14452/15374)
+2026-07-09T10:58:28.8285477Z Updating files:  95% (14606/15374)
+2026-07-09T10:58:28.9791157Z Updating files:  96% (14760/15374)
+2026-07-09T10:58:29.0069282Z Updating files:  97% (14913/15374)
+2026-07-09T10:58:29.1435411Z Updating files:  97% (14922/15374)
+2026-07-09T10:58:29.2682384Z Updating files:  98% (15067/15374)
+2026-07-09T10:58:29.4586642Z Updating files:  99% (15221/15374)
+2026-07-09T10:58:29.4587600Z Updating files: 100% (15374/15374)
+2026-07-09T10:58:29.4832919Z Updating files: 100% (15374/15374), done.
+2026-07-09T10:58:29.5272723Z Reset branch 'master'
+2026-07-09T10:58:29.5273864Z branch 'master' set up to track 'origin/master'.
+2026-07-09T10:58:29.5436089Z ##[endgroup]
+2026-07-09T10:58:29.5512098Z [command]/usr/bin/git log -1 --format=%H
+2026-07-09T10:58:29.5573543Z eba9ffa57e353a496d4bbc453e7c7a573b605713
+2026-07-09T10:58:29.6352510Z Prepare all required actions
+2026-07-09T10:58:29.6353972Z Getting action download info
+2026-07-09T10:58:29.6666117Z ##[group]Run ./.github/actions/setup-action
+2026-07-09T10:58:29.6666602Z with:
+2026-07-09T10:58:29.6667008Z   comment_phrase: Run Java_Hadoop_IO_Direct PreCommit
+2026-07-09T10:58:29.6673603Z   github_token: ***
+2026-07-09T10:58:29.6674287Z   github_job: beam_PreCommit_Java_Hadoop_IO_Direct (Run Java_Hadoop_IO_Direct PreCommit)
+2026-07-09T10:58:29.6674977Z env:
+2026-07-09T10:58:29.6675303Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:29.6675769Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:29.6676357Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:29.6676786Z ##[endgroup]
+2026-07-09T10:58:29.6975788Z ##[group]Run # GitHub will automatically generate a merge commit when there are no merge conflicts.
+2026-07-09T10:58:29.6977637Z [36;1m# GitHub will automatically generate a merge commit when there are no merge conflicts.[0m
+2026-07-09T10:58:29.6979785Z [36;1m# We first try to check that out, and fall back to checking out the tip of the pull request branch.[0m
+2026-07-09T10:58:29.6982057Z [36;1mgit fetch --depth=1 origin +refs/pull/39270/merge:refs/remotes/pull/39270/merge || \[0m
+2026-07-09T10:58:29.6983670Z [36;1mgit fetch --depth=1 origin +refs/pull/39270/head:refs/remotes/pull/39270/head[0m
+2026-07-09T10:58:29.6985047Z [36;1mgit checkout pull/39270/merge || git checkout pull/39270/head[0m
+2026-07-09T10:58:29.7007598Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T10:58:29.7008540Z env:
+2026-07-09T10:58:29.7009118Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:29.7010193Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:29.7011564Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:29.7012283Z ##[endgroup]
+2026-07-09T10:58:30.3960122Z From https://github.com/apache/beam
+2026-07-09T10:58:30.3961644Z  * [new ref]           refs/pull/39270/merge -> pull/39270/merge
+2026-07-09T10:58:31.5126789Z Note: switching to 'pull/39270/merge'.
+2026-07-09T10:58:31.5127387Z 
+2026-07-09T10:58:31.5127900Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-09T10:58:31.5129162Z changes and commit them, and you can discard any commits you make in this
+2026-07-09T10:58:31.5130430Z state without impacting any branches by switching back to a branch.
+2026-07-09T10:58:31.5132094Z 
+2026-07-09T10:58:31.5132606Z If you want to create a new branch to retain commits you create, you may
+2026-07-09T10:58:31.5133937Z do so (now or later) by using -c with the switch command. Example:
+2026-07-09T10:58:31.5134604Z 
+2026-07-09T10:58:31.5134878Z   git switch -c <new-branch-name>
+2026-07-09T10:58:31.5135354Z 
+2026-07-09T10:58:31.5135619Z Or undo this operation with:
+2026-07-09T10:58:31.5136054Z 
+2026-07-09T10:58:31.5136281Z   git switch -
+2026-07-09T10:58:31.5136619Z 
+2026-07-09T10:58:31.5137210Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-09T10:58:31.5138074Z 
+2026-07-09T10:58:31.5139070Z HEAD is now at 0b8209c1 Merge 7fb07784bf2c7b01480d65cc1d8319599982f58b into eba9ffa57e353a496d4bbc453e7c7a573b605713
+2026-07-09T10:58:31.5298363Z ##[group]Run echo KUBELET_GCLOUD_CONFIG_PATH=/var/lib/kubelet/pods/$POD_UID/volumes/kubernetes.io~empty-dir/gcloud >> $GITHUB_ENV
+2026-07-09T10:58:31.5301121Z [36;1mecho KUBELET_GCLOUD_CONFIG_PATH=/var/lib/kubelet/pods/$POD_UID/volumes/kubernetes.io~empty-dir/gcloud >> $GITHUB_ENV[0m
+2026-07-09T10:58:31.5325466Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T10:58:31.5326413Z env:
+2026-07-09T10:58:31.5326958Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:31.5328543Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:31.5329649Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:31.5330408Z ##[endgroup]
+2026-07-09T10:58:31.5669662Z Prepare all required actions
+2026-07-09T10:58:31.5670959Z Getting action download info
+2026-07-09T10:58:31.7597123Z Download action repository 'actions/setup-python@v6' (SHA:ece7cb06caefa5fff74198d8649806c4678c61a1)
+2026-07-09T10:58:32.3774452Z Download action repository 'actions/cache@v6' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+2026-07-09T10:58:33.2236414Z Download action repository 'actions/setup-java@v5' (SHA:0f481fcb613427c0f801b606911222b5b6f3083a)
+2026-07-09T10:58:34.2434752Z Download action repository 'gradle/actions@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e' (SHA:50e97c2cd7a37755bbfafc9c5b7cafaece252f6e)
+2026-07-09T10:58:37.5962579Z Download action repository 'actions/setup-go@v6' (SHA:924ae3a1cded613372ab5595356fb5720e22ba16)
+2026-07-09T10:58:38.2514907Z ##[group]Run ./.github/actions/setup-environment-action
+2026-07-09T10:58:38.2515791Z with:
+2026-07-09T10:58:38.2516386Z   disable-cache: false
+2026-07-09T10:58:38.2516991Z   python-cache: true
+2026-07-09T10:58:38.2517742Z   tox-cache: true
+2026-07-09T10:58:38.2518370Z env:
+2026-07-09T10:58:38.2518891Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:38.2520015Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:38.2521118Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:38.2522535Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T10:58:38.2524086Z ##[endgroup]
+2026-07-09T10:58:38.2984761Z ##[group]Run gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
+2026-07-09T10:58:38.2985812Z with:
+2026-07-09T10:58:38.2986308Z   cache-disabled: false
+2026-07-09T10:58:38.2987345Z   validate-wrappers: false
+2026-07-09T10:58:38.2988312Z   cache-provider: enhanced
+2026-07-09T10:58:38.2989284Z   cache-read-only: false
+2026-07-09T10:58:38.2990344Z   cache-write-only: false
+2026-07-09T10:58:38.2991566Z   cache-overwrite-existing: false
+2026-07-09T10:58:38.2992638Z   cache-cleanup: on-success
+2026-07-09T10:58:38.2993819Z   gradle-home-cache-includes: caches
+notifications
+
+2026-07-09T10:58:38.2994810Z   add-job-summary: always
+2026-07-09T10:58:38.2995238Z   add-job-summary-as-pr-comment: never
+2026-07-09T10:58:38.2995723Z   dependency-graph: disabled
+2026-07-09T10:58:38.2996220Z   dependency-graph-report-dir: dependency-graph-reports
+2026-07-09T10:58:38.2996817Z   dependency-graph-continue-on-failure: true
+2026-07-09T10:58:38.2997309Z   build-scan-publish: false
+2026-07-09T10:58:38.2997723Z   allow-snapshot-wrappers: false
+2026-07-09T10:58:38.2998621Z   gradle-home-cache-strict-match: false
+2026-07-09T10:58:38.2999565Z   workflow-job-context: {
+  "job_name": "beam_PreCommit_Java_Hadoop_IO_Direct",
+  "job_phrase": "Run Java_Hadoop_IO_Direct PreCommit"
+}
+2026-07-09T10:58:38.3005656Z   github-token: ***
+2026-07-09T10:58:38.3006017Z env:
+2026-07-09T10:58:38.3006333Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T10:58:38.3007228Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T10:58:38.3007862Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T10:58:38.3008798Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T10:58:38.3009747Z ##[endgroup]
+2026-07-09T10:58:39.4494337Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-07-09T10:58:39.6512752Z Preparing cache for cleanup.
+2026-07-09T10:58:39.6544492Z ##[group]Restore Gradle state from cache
+2026-07-09T10:58:39.8343560Z Cache hit for restore-key: gradle-home-v1|Linux-X64|beam_PreCommit_SQL[c26f0dadaa398af1d69328410c9d8216]-eba9ffa57e353a496d4bbc453e7c7a573b605713
+2026-07-09T10:58:41.0143561Z Received 41943040 of 2901335623 (1.4%), 39.8 MBs/sec
+2026-07-09T10:58:42.0312318Z Received 134217728 of 2901335623 (4.6%), 63.3 MBs/sec
+2026-07-09T10:58:43.0372647Z Received 247463936 of 2901335623 (8.5%), 78.0 MBs/sec
+2026-07-09T10:58:44.0351190Z Received 335544320 of 2901335623 (11.6%), 79.5 MBs/sec
+2026-07-09T10:58:45.0359705Z Received 436207616 of 2901335623 (15.0%), 82.8 MBs/sec
+2026-07-09T10:58:46.0375832Z Received 536870912 of 2901335623 (18.5%), 85.0 MBs/sec
+2026-07-09T10:58:47.0376933Z Received 650117120 of 2901335623 (22.4%), 88.2 MBs/sec
+2026-07-09T10:58:48.0424696Z Received 734003200 of 2901335623 (25.3%), 87.2 MBs/sec
+2026-07-09T10:58:49.0477753Z Received 813694976 of 2901335623 (28.0%), 85.9 MBs/sec
+2026-07-09T10:58:50.2008127Z Received 939524096 of 2901335623 (32.4%), 87.9 MBs/sec
+2026-07-09T10:58:51.2032585Z Received 1048576000 of 2901335623 (36.1%), 89.3 MBs/sec
+2026-07-09T10:58:52.2031990Z Received 1145044992 of 2901335623 (39.5%), 89.6 MBs/sec
+2026-07-09T10:58:53.2035030Z Received 1241513984 of 2901335623 (42.8%), 89.7 MBs/sec
+2026-07-09T10:58:54.2048309Z Received 1342177280 of 2901335623 (46.3%), 90.2 MBs/sec
+2026-07-09T10:58:55.2072799Z Received 1455423488 of 2901335623 (50.2%), 91.3 MBs/sec
+2026-07-09T10:58:56.2051568Z Received 1539309568 of 2901335623 (53.1%), 90.6 MBs/sec
+2026-07-09T10:58:57.2064051Z Received 1610612736 of 2901335623 (55.5%), 89.3 MBs/sec
+2026-07-09T10:58:58.2085955Z Received 1740636160 of 2901335623 (60.0%), 91.2 MBs/sec
+2026-07-09T10:58:59.2112729Z Received 1816133632 of 2901335623 (62.6%), 90.2 MBs/sec
+2026-07-09T10:59:00.2136336Z Received 1904214016 of 2901335623 (65.6%), 89.9 MBs/sec
+2026-07-09T10:59:01.2152732Z Received 2009071616 of 2901335623 (69.2%), 90.4 MBs/sec
+2026-07-09T10:59:02.2153188Z Received 2009071616 of 2901335623 (69.2%), 86.3 MBs/sec
+2026-07-09T10:59:03.2160349Z Received 2009071616 of 2901335623 (69.2%), 82.6 MBs/sec
+2026-07-09T10:59:04.2162346Z Received 2009071616 of 2901335623 (69.2%), 79.2 MBs/sec
+2026-07-09T10:59:05.2175300Z Received 2009071616 of 2901335623 (69.2%), 76.0 MBs/sec
+2026-07-09T10:59:06.3241185Z Received 2013265920 of 2901335623 (69.4%), 73.0 MBs/sec
+2026-07-09T10:59:07.3257155Z Received 2113929216 of 2901335623 (72.9%), 73.8 MBs/sec
+2026-07-09T10:59:08.3264121Z Received 2172649472 of 2901335623 (74.9%), 73.2 MBs/sec
+2026-07-09T10:59:09.3323942Z Received 2264924160 of 2901335623 (78.1%), 73.7 MBs/sec
+2026-07-09T10:59:10.6351054Z Received 2281701376 of 2901335623 (78.6%), 71.1 MBs/sec
+2026-07-09T10:59:11.6356820Z Received 2373976064 of 2901335623 (81.8%), 71.6 MBs/sec
+2026-07-09T10:59:12.6383706Z Received 2420113408 of 2901335623 (83.4%), 70.7 MBs/sec
+2026-07-09T10:59:13.6378031Z Received 2541748224 of 2901335623 (87.6%), 72.1 MBs/sec
+2026-07-09T10:59:14.6402825Z Received 2596274176 of 2901335623 (89.5%), 71.5 MBs/sec
+2026-07-09T10:59:15.6441092Z Received 2684354560 of 2901335623 (92.5%), 71.8 MBs/sec
+2026-07-09T10:59:16.7053771Z Received 2759852032 of 2901335623 (95.1%), 71.7 MBs/sec
+2026-07-09T10:59:17.8924610Z Received 2818572288 of 2901335623 (97.1%), 71.0 MBs/sec
+2026-07-09T10:59:18.9296573Z Received 2860515328 of 2901335623 (98.6%), 70.1 MBs/sec
+2026-07-09T10:59:20.2383449Z Received 2901335623 of 2901335623 (100.0%), 68.8 MBs/sec
+2026-07-09T10:59:20.2417660Z Cache Size: ~2767 MB (2901335623 B)
+2026-07-09T10:59:20.2698563Z [command]/usr/bin/tar -xf /runner/_work/_temp/b54fb81c-0ff2-44a5-8166-a227cb8b193c/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:13.2412143Z Cache restored successfully
+2026-07-09T11:00:13.9945890Z Restored cache entry with key gradle-home-v1|Linux-X64|beam_PreCommit_Java_Hadoop_IO_Direct[1cd245ae167f23d7d42badafad2850b3]-eba9ffa57e353a496d4bbc453e7c7a573b605713 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 94340ms
+2026-07-09T11:00:14.1678926Z Cache hit for: gradle-generated-gradle-jars-v1-4434c59050703a48bf14168622b59891
+2026-07-09T11:00:14.1684363Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+2026-07-09T11:00:14.1688012Z Cache hit for: gradle-kotlin-dsl-v1-965852463ad0ca3bd47a57067fc51fb9
+2026-07-09T11:00:14.1694795Z Cache hit for: gradle-dependencies-v1-e00cb1b43fb951d75e4668f06a4cba3d
+2026-07-09T11:00:14.1698384Z Cache hit for: gradle-groovy-dsl-v1-d91ce5e92587dfcb28a562ac549d957d
+2026-07-09T11:00:14.1887326Z Cache hit for: gradle-instrumented-jars-v1-821396dbbce035002e110239be419518
+2026-07-09T11:00:14.1921258Z Did not restore transforms with key gradle-transforms-v1-f0a4d866fff4c9219ead2b308cf1305e to /home/runner/.gradle/caches/transforms-4/*/
+2026-07-09T11:00:14.1922653Z /home/runner/.gradle/caches/*/transforms/*/
+2026-07-09T11:00:14.9778756Z Received 817810 of 817810 (100.0%), 1.2 MBs/sec
+2026-07-09T11:00:14.9779442Z Cache Size: ~1 MB (817810 B)
+2026-07-09T11:00:14.9876409Z Received 2784383 of 2784383 (100.0%), 5.9 MBs/sec
+2026-07-09T11:00:14.9877585Z Cache Size: ~3 MB (2784383 B)
+2026-07-09T11:00:15.0104432Z [command]/usr/bin/tar -xf /runner/_work/_temp/88ca46f4-0282-4d02-9057-834ad4fbdfef/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:15.0476063Z [command]/usr/bin/tar -xf /runner/_work/_temp/a4168fa3-42c8-49e2-8c0c-f3e399843772/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:15.3421580Z Received 4967185 of 4967185 (100.0%), 4.6 MBs/sec
+2026-07-09T11:00:15.3423017Z Cache Size: ~5 MB (4967185 B)
+2026-07-09T11:00:15.4557449Z Received 17714932 of 47075060 (37.6%), 15.2 MBs/sec
+2026-07-09T11:00:15.4558809Z Received 20971520 of 137227581 (15.3%), 19.6 MBs/sec
+2026-07-09T11:00:15.5167554Z Received 12582912 of 1444542620 (0.9%), 11.3 MBs/sec
+2026-07-09T11:00:15.5683776Z Cache restored successfully
+2026-07-09T11:00:15.5788070Z Restored cache entry with key gradle-kotlin-dsl-v1-965852463ad0ca3bd47a57067fc51fb9 to /home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/,/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/ in 1578ms
+2026-07-09T11:00:15.6202814Z [command]/usr/bin/tar -xf /runner/_work/_temp/a17f2394-b241-4445-9963-d30f24825496/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:15.7010774Z Received 47075060 of 47075060 (100.0%), 33.1 MBs/sec
+2026-07-09T11:00:15.7011711Z Cache Size: ~45 MB (47075060 B)
+2026-07-09T11:00:16.0291329Z [command]/usr/bin/tar -xf /runner/_work/_temp/4325cdb2-477c-46e0-a0ed-ccebb11f2bf6/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:16.3182442Z Cache restored successfully
+2026-07-09T11:00:16.4561615Z Received 117440512 of 137227581 (85.6%), 55.5 MBs/sec
+2026-07-09T11:00:16.4868513Z Restored cache entry with key gradle-instrumented-jars-v1-821396dbbce035002e110239be419518 to /home/runner/.gradle/caches/jars-*/*/ in 2486ms
+2026-07-09T11:00:16.5176616Z Received 121634816 of 1444542620 (8.4%), 56.3 MBs/sec
+2026-07-09T11:00:16.9690076Z Received 137227581 of 137227581 (100.0%), 51.7 MBs/sec
+2026-07-09T11:00:16.9693066Z Cache Size: ~131 MB (137227581 B)
+2026-07-09T11:00:17.0094419Z [command]/usr/bin/tar -xf /runner/_work/_temp/dfd58370-4290-414a-bc53-1779bf92aeb5/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:00:17.5205608Z Received 201326592 of 1444542620 (13.9%), 62.7 MBs/sec
+2026-07-09T11:00:18.2126100Z Cache restored successfully
+2026-07-09T11:00:18.2159340Z Restored cache entry with key gradle-groovy-dsl-v1-d91ce5e92587dfcb28a562ac549d957d to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 4214ms
+2026-07-09T11:00:18.5179326Z Received 301989888 of 1444542620 (20.9%), 70.9 MBs/sec
+2026-07-09T11:00:19.4747549Z Cache restored successfully
+2026-07-09T11:00:19.4907996Z Restored cache entry with key gradle-generated-gradle-jars-v1-4434c59050703a48bf14168622b59891 to /home/runner/.gradle/caches/8.14.3/generated-gradle-jars/gradle-api-8.14.3.jar in 5494ms
+2026-07-09T11:00:19.5179386Z Received 402653184 of 1444542620 (27.9%), 75.9 MBs/sec
+2026-07-09T11:00:19.8594085Z Cache restored successfully
+2026-07-09T11:00:19.8960360Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 5896ms
+2026-07-09T11:00:20.5177193Z Received 520093696 of 1444542620 (36.0%), 81.8 MBs/sec
+2026-07-09T11:00:21.5177967Z Received 624951296 of 1444542620 (43.3%), 84.4 MBs/sec
+2026-07-09T11:00:22.5178564Z Received 721420288 of 1444542620 (49.9%), 85.3 MBs/sec
+2026-07-09T11:00:23.5177819Z Received 805306368 of 1444542620 (55.7%), 84.7 MBs/sec
+2026-07-09T11:00:24.5182939Z Received 926941184 of 1444542620 (64.2%), 87.9 MBs/sec
+2026-07-09T11:00:25.5184823Z Received 994050048 of 1444542620 (68.8%), 85.7 MBs/sec
+2026-07-09T11:00:26.5190185Z Received 1073741824 of 1444542620 (74.3%), 84.9 MBs/sec
+2026-07-09T11:00:27.5212137Z Received 1186988032 of 1444542620 (82.2%), 86.6 MBs/sec
+2026-07-09T11:00:28.5215046Z Received 1258291200 of 1444542620 (87.1%), 85.3 MBs/sec
+2026-07-09T11:00:29.5223421Z Received 1342177280 of 1444542620 (92.9%), 85.0 MBs/sec
+2026-07-09T11:00:30.5216502Z Received 1440348316 of 1444542620 (99.7%), 85.5 MBs/sec
+2026-07-09T11:00:30.6840073Z Received 1444542620 of 1444542620 (100.0%), 84.9 MBs/sec
+2026-07-09T11:00:30.6845017Z Cache Size: ~1378 MB (1444542620 B)
+2026-07-09T11:00:30.6888018Z [command]/usr/bin/tar -xf /runner/_work/_temp/23a4198b-0dab-4b6e-99b7-38e105862a98/cache.tgz -P -C /runner/_work/beam/beam -z
+2026-07-09T11:01:06.7088087Z Cache restored successfully
+2026-07-09T11:01:07.2516291Z Restored cache entry with key gradle-dependencies-v1-e00cb1b43fb951d75e4668f06a4cba3d to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 53251ms
+2026-07-09T11:01:07.3120976Z ##[endgroup]
+2026-07-09T11:01:07.4184245Z Prepare all required actions
+2026-07-09T11:01:07.4314302Z ##[group]Run ./.github/actions/gradle-command-self-hosted-action
+2026-07-09T11:01:07.4316285Z with:
+2026-07-09T11:01:07.4317326Z   gradle-command: :sdks:java:io:hadoop-file-system:build
+2026-07-09T11:01:07.4318813Z   arguments: -PdisableSpotlessCheck=true \
+-PdisableCheckStyle=true \
+
+2026-07-09T11:01:07.4319981Z   max-workers: 8
+2026-07-09T11:01:07.4320995Z env:
+2026-07-09T11:01:07.4322184Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:01:07.4324140Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:01:07.4325542Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:01:07.4327814Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:01:07.4329791Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:01:07.4330958Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:01:07.4331977Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:01:07.4334344Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:01:07.4335272Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:01:07.4335944Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:01:07.4336900Z ##[endgroup]
+2026-07-09T11:01:07.4420045Z ##[group]Run # This step is a workaround to avoid a decryption issue of Beam's
+2026-07-09T11:01:07.4424245Z [36;1m# This step is a workaround to avoid a decryption issue of Beam's[0m
+2026-07-09T11:01:07.4425998Z [36;1m# net.linguica.gradle.maven.settings plugin and github's provided maven[0m
+2026-07-09T11:01:07.4434499Z [36;1m# settings.xml file[0m
+2026-07-09T11:01:07.4435313Z [36;1mif [ -f ~/.m2/settings.xml ]; then[0m
+2026-07-09T11:01:07.4436131Z [36;1m  rm ~/.m2/settings.xml[0m
+2026-07-09T11:01:07.4437000Z [36;1mfi[0m
+2026-07-09T11:01:07.4438264Z [36;1m./gradlew :sdks:java:io:hadoop-file-system:build --max-workers=8 --continue --no-daemon \[0m
+2026-07-09T11:01:07.4442147Z [36;1m -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false \[0m
+2026-07-09T11:01:07.4443544Z [36;1m-PdisableSpotlessCheck=true \[0m
+2026-07-09T11:01:07.4444451Z [36;1m-PdisableCheckStyle=true \[0m
+2026-07-09T11:01:07.4477072Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T11:01:07.4478326Z env:
+2026-07-09T11:01:07.4479774Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:01:07.4481541Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:01:07.4483369Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:01:07.4485329Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:01:07.4487601Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:01:07.4489398Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:01:07.4490365Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:01:07.4492510Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:01:07.4493918Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:01:07.4494553Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:01:07.4495086Z ##[endgroup]
+2026-07-09T11:01:10.8359290Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-07-09T11:01:15.5339010Z Daemon will be stopped at the end of the build 
+2026-07-09T11:01:17.2338819Z Configuration on demand is an incubating feature.
+2026-07-09T11:01:38.8332408Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:17.2435465Z 
+2026-07-09T11:02:17.3004096Z > Configure project :buildSrc
+2026-07-09T11:02:17.3023440Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror for buildSrc.
+2026-07-09T11:02:19.0333136Z 
+2026-07-09T11:02:19.0346412Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-09T11:02:19.9349996Z > Task :buildSrc:compileGroovy FROM-CACHE
+2026-07-09T11:02:20.0344602Z > Task :buildSrc:pluginDescriptors
+2026-07-09T11:02:20.1332442Z > Task :buildSrc:processResources
+2026-07-09T11:02:20.1334160Z > Task :buildSrc:classes
+2026-07-09T11:02:20.6352949Z > Task :buildSrc:jar
+2026-07-09T11:02:36.9335279Z 
+2026-07-09T11:02:36.9384070Z > Configure project :
+2026-07-09T11:02:36.9385764Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:40.0330350Z 
+2026-07-09T11:02:40.0332385Z > Configure project :sdks:java:io:hadoop-file-system
+2026-07-09T11:02:40.0333300Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:43.1330752Z 
+2026-07-09T11:02:43.1347870Z > Configure project :sdks:java:core
+2026-07-09T11:02:43.1350094Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:44.5327167Z 
+2026-07-09T11:02:44.5362749Z > Configure project :model:pipeline
+2026-07-09T11:02:44.5402727Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:45.0333152Z 
+2026-07-09T11:02:45.0334835Z > Configure project :model:fn-execution
+2026-07-09T11:02:45.0339531Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:45.3328039Z 
+2026-07-09T11:02:45.3338080Z > Configure project :model:job-management
+2026-07-09T11:02:45.3341171Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:45.6331265Z 
+2026-07-09T11:02:45.6339170Z > Configure project :sdks:java:transform-service
+2026-07-09T11:02:45.6359408Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:45.9330146Z 
+2026-07-09T11:02:45.9363505Z > Configure project :sdks:java:transform-service:launcher
+2026-07-09T11:02:45.9393702Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:48.1327424Z 
+2026-07-09T11:02:48.1328945Z > Configure project :runners:core-java
+2026-07-09T11:02:48.1331285Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:48.7328834Z 
+2026-07-09T11:02:48.7330338Z > Configure project :examples:java
+2026-07-09T11:02:48.7331907Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:49.2329286Z 
+2026-07-09T11:02:49.2330981Z > Configure project :release
+2026-07-09T11:02:49.2332245Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:49.2333530Z 
+2026-07-09T11:02:49.2333772Z > Configure project :runners:direct-java
+2026-07-09T11:02:49.2334518Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:49.5329268Z 
+2026-07-09T11:02:49.5331266Z > Configure project :runners:local-java
+2026-07-09T11:02:49.5332162Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:49.8330100Z 
+2026-07-09T11:02:49.8332202Z > Configure project :runners:java-fn-execution
+2026-07-09T11:02:49.8334425Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:50.2342205Z 
+2026-07-09T11:02:50.2343838Z > Configure project :sdks:java:harness
+2026-07-09T11:02:50.2344901Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:02:50.7327030Z 
+2026-07-09T11:02:50.7328818Z > Task :sdks:java:core:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7331584Z > Task :runners:core-java:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7348408Z > Task :sdks:java:io:hadoop-file-system:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7350045Z > Task :model:fn-execution:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7351589Z > Task :runners:direct-java:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7353085Z > Task :sdks:java:transform-service:launcher:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7354470Z > Task :model:pipeline:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7356503Z > Task :model:job-management:createCheckerFrameworkManifest
+2026-07-09T11:02:50.7358779Z > Task :sdks:java:io:hadoop-file-system:processResources NO-SOURCE
+2026-07-09T11:02:50.7362604Z > Task :sdks:java:io:hadoop-file-system:processTestResources NO-SOURCE
+2026-07-09T11:02:50.8333693Z > Task :runners:core-java:processResources NO-SOURCE
+2026-07-09T11:02:50.8335190Z > Task :runners:java-fn-execution:createCheckerFrameworkManifest
+2026-07-09T11:02:50.8336413Z > Task :model:job-management:extractProto
+2026-07-09T11:02:50.8337342Z > Task :model:fn-execution:extractProto
+2026-07-09T11:02:50.8338372Z > Task :runners:local-java:createCheckerFrameworkManifest
+2026-07-09T11:02:50.8340379Z > Task :runners:local-java:processResources NO-SOURCE
+2026-07-09T11:02:50.8341874Z > Task :runners:java-fn-execution:processResources NO-SOURCE
+2026-07-09T11:02:50.8343146Z > Task :runners:direct-java:processResources NO-SOURCE
+2026-07-09T11:02:50.8344341Z > Task :sdks:java:harness:createCheckerFrameworkManifest
+2026-07-09T11:02:50.8345599Z > Task :sdks:java:harness:processResources NO-SOURCE
+2026-07-09T11:02:51.0339208Z > Task :model:job-management:processResources
+2026-07-09T11:02:51.0359895Z > Task :sdks:java:core:generateGrammarSource FROM-CACHE
+2026-07-09T11:02:51.0362167Z > Task :model:fn-execution:processResources
+2026-07-09T11:02:51.1329150Z > Task :sdks:java:core:processResources
+2026-07-09T11:02:51.1332263Z > Task :sdks:java:core:generateTestGrammarSource NO-SOURCE
+2026-07-09T11:02:51.2337586Z > Task :sdks:java:core:processTestResources
+2026-07-09T11:02:51.3339998Z > Task :sdks:java:transform-service:launcher:compileJava FROM-CACHE
+2026-07-09T11:02:51.3361109Z > Task :sdks:java:transform-service:launcher:processResources
+2026-07-09T11:02:51.3362007Z > Task :sdks:java:transform-service:launcher:classes
+2026-07-09T11:02:51.3363198Z > Task :sdks:java:transform-service:launcher:jar
+2026-07-09T11:02:52.2331004Z > Task :model:pipeline:extractIncludeProto
+2026-07-09T11:02:52.2332452Z > Task :model:pipeline:extractProto
+2026-07-09T11:02:52.3331925Z > Task :model:pipeline:generateProto FROM-CACHE
+2026-07-09T11:02:53.0328988Z > Task :model:pipeline:compileJava FROM-CACHE
+2026-07-09T11:02:53.0331553Z > Task :model:pipeline:processResources
+2026-07-09T11:02:53.0333228Z > Task :model:pipeline:classes
+2026-07-09T11:02:53.5329544Z > Task :model:pipeline:jar
+2026-07-09T11:02:53.6331415Z > Task :model:pipeline:shadowJar FROM-CACHE
+2026-07-09T11:02:54.3329852Z > Task :model:fn-execution:extractIncludeProto
+2026-07-09T11:02:54.4330899Z > Task :model:job-management:extractIncludeProto
+2026-07-09T11:02:54.4332133Z > Task :model:job-management:generateProto FROM-CACHE
+2026-07-09T11:02:54.5329450Z > Task :model:fn-execution:generateProto FROM-CACHE
+2026-07-09T11:02:55.1329881Z > Task :model:job-management:compileJava FROM-CACHE
+2026-07-09T11:02:55.1331871Z > Task :model:job-management:classes
+2026-07-09T11:02:55.2331835Z > Task :model:fn-execution:compileJava FROM-CACHE
+2026-07-09T11:02:55.2332527Z > Task :model:fn-execution:classes
+2026-07-09T11:02:55.3331822Z > Task :model:job-management:shadowJar FROM-CACHE
+2026-07-09T11:02:55.3336984Z > Task :model:fn-execution:shadowJar FROM-CACHE
+2026-07-09T11:03:01.8334215Z > Task :sdks:java:core:compileJava FROM-CACHE
+2026-07-09T11:03:01.8335202Z > Task :sdks:java:core:classes
+2026-07-09T11:03:02.2335329Z > Task :sdks:java:core:shadowJar FROM-CACHE
+2026-07-09T11:03:03.2373054Z > Task :runners:local-java:compileJava FROM-CACHE
+2026-07-09T11:03:03.2374297Z > Task :runners:local-java:classes UP-TO-DATE
+2026-07-09T11:03:03.3356419Z > Task :runners:local-java:jar
+2026-07-09T11:03:04.1364688Z > Task :runners:core-java:compileJava FROM-CACHE
+2026-07-09T11:03:04.1372181Z > Task :runners:core-java:classes UP-TO-DATE
+2026-07-09T11:03:04.5330142Z > Task :runners:core-java:jar
+2026-07-09T11:03:05.1352340Z > Task :sdks:java:harness:compileJava FROM-CACHE
+2026-07-09T11:03:05.1354084Z > Task :sdks:java:harness:classes UP-TO-DATE
+2026-07-09T11:03:05.3333613Z > Task :sdks:java:harness:jar
+2026-07-09T11:03:05.8343876Z > Task :runners:java-fn-execution:compileJava FROM-CACHE
+2026-07-09T11:03:05.8352776Z > Task :runners:java-fn-execution:classes UP-TO-DATE
+2026-07-09T11:03:05.9338518Z > Task :runners:java-fn-execution:jar
+2026-07-09T11:03:06.4335762Z > Task :runners:direct-java:compileJava FROM-CACHE
+2026-07-09T11:03:06.4362764Z > Task :runners:direct-java:classes UP-TO-DATE
+2026-07-09T11:03:08.7332827Z > Task :runners:direct-java:shadowJar FROM-CACHE
+2026-07-09T11:03:09.5341641Z > Task :sdks:java:core:compileTestJava FROM-CACHE
+2026-07-09T11:03:09.5344169Z > Task :sdks:java:core:testClasses
+2026-07-09T11:03:09.9329099Z > Task :sdks:java:core:shadowTestJar FROM-CACHE
+2026-07-09T11:03:25.2328389Z 
+2026-07-09T11:03:25.2329742Z > Task :sdks:java:io:hadoop-file-system:compileJava
+2026-07-09T11:03:25.2331890Z Could not store entry 87c598b1735387f9f8dee3b7fe1e8b31 in remote build cache: Storing entry at 'https://beam-cache.apache.org/cache/87c598b1735387f9f8dee3b7fe1e8b31' response status 403: Forbidden
+2026-07-09T11:03:25.2333120Z 
+2026-07-09T11:03:25.2333422Z > Task :sdks:java:io:hadoop-file-system:classes
+2026-07-09T11:03:25.3329392Z > Task :sdks:java:io:hadoop-file-system:jar
+2026-07-09T11:03:25.3330128Z > Task :sdks:java:io:hadoop-file-system:assemble
+2026-07-09T11:03:30.6328827Z > Task :sdks:java:io:hadoop-file-system:analyzeClassesDependencies
+2026-07-09T11:03:39.9356506Z 
+2026-07-09T11:03:39.9358128Z > Task :sdks:java:io:hadoop-file-system:compileTestJava
+2026-07-09T11:03:39.9379460Z Note: /runner/_work/beam/beam/sdks/java/io/hadoop-file-system/src/test/java/org/apache/beam/sdk/io/hdfs/HadoopFileSystemTest.java uses or overrides a deprecated API.
+2026-07-09T11:03:39.9382618Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-09T11:03:40.8327209Z 
+2026-07-09T11:03:40.8328885Z > Task :sdks:java:io:hadoop-file-system:testClasses
+2026-07-09T11:03:40.8331239Z > Task :sdks:java:io:hadoop-file-system:analyzeTestClassesDependencies SKIPPED
+2026-07-09T11:03:40.8333080Z > Task :sdks:java:io:hadoop-file-system:analyzeDependencies
+2026-07-09T11:03:40.8334988Z > Task :sdks:java:io:hadoop-file-system:checkstyleMain SKIPPED
+2026-07-09T11:03:40.8336478Z > Task :sdks:java:io:hadoop-file-system:checkstyleTest SKIPPED
+2026-07-09T11:03:44.7335569Z > Task :sdks:java:io:hadoop-file-system:javadoc
+2026-07-09T11:03:44.9330071Z > Task :sdks:java:io:hadoop-file-system:spotbugsTest SKIPPED
+2026-07-09T11:04:04.1329216Z > Task :sdks:java:io:hadoop-file-system:spotbugsMain
+2026-07-09T11:04:14.9330030Z > Task :sdks:java:io:hadoop-file-system:test
+2026-07-09T11:04:44.4329945Z > Task :sdks:java:io:hadoop-file-system:check
+2026-07-09T11:04:44.4336645Z > Task :sdks:java:io:hadoop-file-system:build
+2026-07-09T11:04:44.5330388Z gradle/actions: Writing build results to /runner/_work/_temp/.gradle-actions/build-results/__self_3-1783594881925.json
+2026-07-09T11:04:44.5332900Z 
+2026-07-09T11:04:44.5335169Z [Incubating] Problems report is available at: file:///runner/_work/beam/beam/build/reports/problems/problems-report.html
+2026-07-09T11:04:44.5337067Z 
+2026-07-09T11:04:44.5338278Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-07-09T11:04:44.5339712Z 
+2026-07-09T11:04:44.5341430Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-09T11:04:44.5343332Z 
+2026-07-09T11:04:44.5345815Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-09T11:04:44.5350947Z 
+2026-07-09T11:04:44.5351913Z BUILD SUCCESSFUL in 3m 36s
+2026-07-09T11:04:44.5353096Z 61 actionable tasks: 39 executed, 22 from cache
+2026-07-09T11:04:44.8329556Z The remote build cache was disabled during the build due to errors.
+2026-07-09T11:04:45.3200359Z Prepare all required actions
+2026-07-09T11:04:45.3309439Z ##[group]Run ./.github/actions/gradle-command-self-hosted-action
+2026-07-09T11:04:45.3310913Z with:
+2026-07-09T11:04:45.3311764Z   gradle-command: :sdks:java:io:hadoop-common:build
+2026-07-09T11:04:45.3313043Z   arguments: -PdisableSpotlessCheck=true \
+-PdisableCheckStyle=true \
+
+2026-07-09T11:04:45.3314359Z   max-workers: 8
+2026-07-09T11:04:45.3315027Z env:
+2026-07-09T11:04:45.3316091Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:04:45.3317233Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:04:45.3318508Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:04:45.3320685Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:04:45.3322433Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:04:45.3323404Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:04:45.3324427Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:04:45.3325926Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:04:45.3327397Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:04:45.3328506Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:04:45.3329862Z ##[endgroup]
+2026-07-09T11:04:45.3407835Z ##[group]Run # This step is a workaround to avoid a decryption issue of Beam's
+2026-07-09T11:04:45.3409480Z [36;1m# This step is a workaround to avoid a decryption issue of Beam's[0m
+2026-07-09T11:04:45.3411186Z [36;1m# net.linguica.gradle.maven.settings plugin and github's provided maven[0m
+2026-07-09T11:04:45.3412965Z [36;1m# settings.xml file[0m
+2026-07-09T11:04:45.3413817Z [36;1mif [ -f ~/.m2/settings.xml ]; then[0m
+2026-07-09T11:04:45.3414805Z [36;1m  rm ~/.m2/settings.xml[0m
+2026-07-09T11:04:45.3415634Z [36;1mfi[0m
+2026-07-09T11:04:45.3416771Z [36;1m./gradlew :sdks:java:io:hadoop-common:build --max-workers=8 --continue --no-daemon \[0m
+2026-07-09T11:04:45.3418663Z [36;1m -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false \[0m
+2026-07-09T11:04:45.3420136Z [36;1m-PdisableSpotlessCheck=true \[0m
+2026-07-09T11:04:45.3421267Z [36;1m-PdisableCheckStyle=true \[0m
+2026-07-09T11:04:45.3443309Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T11:04:45.3444429Z env:
+2026-07-09T11:04:45.3445076Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:04:45.3446073Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:04:45.3447191Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:04:45.3449109Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:04:45.3451076Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:04:45.3457788Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:04:45.3458693Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:04:45.3460127Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:04:45.3461743Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:04:45.3462683Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:04:45.3463516Z ##[endgroup]
+2026-07-09T11:04:47.4276103Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-07-09T11:04:50.8252907Z Daemon will be stopped at the end of the build 
+2026-07-09T11:04:52.0243301Z Configuration on demand is an incubating feature.
+2026-07-09T11:04:59.7274148Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:09.5242810Z 
+2026-07-09T11:05:09.5311202Z > Configure project :buildSrc
+2026-07-09T11:05:09.5313139Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror for buildSrc.
+2026-07-09T11:05:10.5246155Z 
+2026-07-09T11:05:10.5248382Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-09T11:05:11.1233342Z > Task :buildSrc:compileGroovy UP-TO-DATE
+2026-07-09T11:05:11.2259432Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-07-09T11:05:11.2274264Z > Task :buildSrc:processResources UP-TO-DATE
+2026-07-09T11:05:11.2276347Z > Task :buildSrc:classes UP-TO-DATE
+2026-07-09T11:05:11.2282042Z > Task :buildSrc:jar UP-TO-DATE
+2026-07-09T11:05:15.8232538Z 
+2026-07-09T11:05:15.8262229Z > Configure project :
+2026-07-09T11:05:15.8271337Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:19.1302076Z 
+2026-07-09T11:05:19.1303847Z > Configure project :sdks:java:io:hadoop-common
+2026-07-09T11:05:19.1306107Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:24.1235564Z 
+2026-07-09T11:05:24.1275709Z > Configure project :sdks:java:core
+2026-07-09T11:05:24.1292595Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:25.9229618Z 
+2026-07-09T11:05:25.9231543Z > Configure project :model:pipeline
+2026-07-09T11:05:25.9233591Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:26.4242412Z 
+2026-07-09T11:05:26.4247419Z > Configure project :model:fn-execution
+2026-07-09T11:05:26.4249320Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:27.0273724Z 
+2026-07-09T11:05:27.0309272Z > Configure project :model:job-management
+2026-07-09T11:05:27.0344910Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:27.4235715Z 
+2026-07-09T11:05:27.4238210Z > Configure project :sdks:java:transform-service
+2026-07-09T11:05:27.4239578Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:28.1238498Z 
+2026-07-09T11:05:28.1240863Z > Configure project :sdks:java:transform-service:launcher
+2026-07-09T11:05:28.1245625Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:05:30.6267979Z 
+2026-07-09T11:05:30.6344073Z > Task :model:fn-execution:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:05:30.6425156Z > Task :sdks:java:core:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:05:30.6443951Z > Task :sdks:java:transform-service:launcher:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:05:30.6446777Z > Task :model:pipeline:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:05:30.6449001Z > Task :model:job-management:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:05:30.6452504Z > Task :model:job-management:extractProto UP-TO-DATE
+2026-07-09T11:05:30.6457177Z > Task :model:fn-execution:extractProto UP-TO-DATE
+2026-07-09T11:05:30.7264787Z > Task :model:job-management:processResources UP-TO-DATE
+2026-07-09T11:05:30.8304065Z > Task :model:fn-execution:processResources UP-TO-DATE
+2026-07-09T11:05:30.8322906Z > Task :sdks:java:core:generateGrammarSource UP-TO-DATE
+2026-07-09T11:05:30.8364681Z > Task :sdks:java:core:processResources UP-TO-DATE
+2026-07-09T11:05:30.9259338Z > Task :sdks:java:io:hadoop-common:createCheckerFrameworkManifest
+2026-07-09T11:05:30.9304380Z > Task :sdks:java:io:hadoop-common:processResources NO-SOURCE
+2026-07-09T11:05:30.9313530Z > Task :sdks:java:io:hadoop-common:processTestResources NO-SOURCE
+2026-07-09T11:05:31.0294046Z > Task :model:pipeline:extractIncludeProto UP-TO-DATE
+2026-07-09T11:05:31.0318910Z > Task :model:pipeline:extractProto UP-TO-DATE
+2026-07-09T11:05:31.0322241Z > Task :sdks:java:transform-service:launcher:compileJava UP-TO-DATE
+2026-07-09T11:05:31.1261603Z > Task :sdks:java:transform-service:launcher:processResources UP-TO-DATE
+2026-07-09T11:05:31.1293974Z > Task :sdks:java:transform-service:launcher:classes UP-TO-DATE
+2026-07-09T11:05:31.1297565Z > Task :sdks:java:transform-service:launcher:jar UP-TO-DATE
+2026-07-09T11:05:31.2243151Z > Task :model:pipeline:generateProto UP-TO-DATE
+2026-07-09T11:05:31.8256688Z > Task :model:pipeline:compileJava UP-TO-DATE
+2026-07-09T11:05:31.8306764Z > Task :model:pipeline:processResources UP-TO-DATE
+2026-07-09T11:05:31.8308460Z > Task :model:pipeline:classes UP-TO-DATE
+2026-07-09T11:05:31.9285090Z > Task :model:pipeline:jar UP-TO-DATE
+2026-07-09T11:05:32.2323980Z > Task :model:job-management:extractIncludeProto UP-TO-DATE
+2026-07-09T11:05:32.2335942Z > Task :model:fn-execution:extractIncludeProto UP-TO-DATE
+2026-07-09T11:05:32.3311019Z > Task :model:job-management:generateProto UP-TO-DATE
+2026-07-09T11:05:32.3315765Z > Task :model:pipeline:shadowJar UP-TO-DATE
+2026-07-09T11:05:32.3317916Z > Task :model:fn-execution:generateProto UP-TO-DATE
+2026-07-09T11:05:32.7273755Z > Task :model:job-management:compileJava UP-TO-DATE
+2026-07-09T11:05:32.7303280Z > Task :model:job-management:classes UP-TO-DATE
+2026-07-09T11:05:32.9258199Z > Task :model:fn-execution:compileJava UP-TO-DATE
+2026-07-09T11:05:32.9261830Z > Task :model:fn-execution:classes UP-TO-DATE
+2026-07-09T11:05:33.0256834Z > Task :model:job-management:shadowJar UP-TO-DATE
+2026-07-09T11:05:33.1259370Z > Task :model:fn-execution:shadowJar UP-TO-DATE
+2026-07-09T11:05:35.1233296Z > Task :sdks:java:core:compileJava UP-TO-DATE
+2026-07-09T11:05:35.1234467Z > Task :sdks:java:core:classes UP-TO-DATE
+2026-07-09T11:05:35.3233103Z > Task :sdks:java:core:shadowJar UP-TO-DATE
+2026-07-09T11:05:35.8237365Z > Task :sdks:java:io:hadoop-common:compileJava FROM-CACHE
+2026-07-09T11:05:35.8238710Z > Task :sdks:java:io:hadoop-common:classes UP-TO-DATE
+2026-07-09T11:05:35.9248976Z > Task :sdks:java:io:hadoop-common:jar
+2026-07-09T11:05:35.9262539Z > Task :sdks:java:io:hadoop-common:assemble
+2026-07-09T11:05:41.6234026Z 
+2026-07-09T11:05:41.6236965Z > Task :sdks:java:io:hadoop-common:analyzeClassesDependencies
+2026-07-09T11:05:41.6240241Z Could not store entry 26a62226782f57022cd5f56d861517d4 in remote build cache: Storing entry at 'https://beam-cache.apache.org/cache/26a62226782f57022cd5f56d861517d4' response status 403: Forbidden
+2026-07-09T11:05:47.9234981Z Note: /runner/_work/beam/beam/sdks/java/io/hadoop-common/src/test/java/org/apache/beam/sdk/io/hadoop/SerializableConfigurationTest.java uses or overrides a deprecated API.
+2026-07-09T11:05:47.9237316Z 
+2026-07-09T11:05:47.9237729Z > Task :sdks:java:io:hadoop-common:compileTestJava
+2026-07-09T11:05:47.9239876Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-09T11:05:48.9237887Z 
+2026-07-09T11:05:48.9239842Z > Task :sdks:java:io:hadoop-common:testClasses
+2026-07-09T11:05:48.9241875Z > Task :sdks:java:io:hadoop-common:analyzeTestClassesDependencies SKIPPED
+2026-07-09T11:05:48.9244598Z > Task :sdks:java:io:hadoop-common:analyzeDependencies
+2026-07-09T11:05:48.9246130Z > Task :sdks:java:io:hadoop-common:checkstyleMain SKIPPED
+2026-07-09T11:05:48.9247755Z > Task :sdks:java:io:hadoop-common:checkstyleTest SKIPPED
+2026-07-09T11:05:52.4242680Z > Task :sdks:java:io:hadoop-common:javadoc
+2026-07-09T11:05:52.6232229Z > Task :sdks:java:io:hadoop-common:spotbugsTest SKIPPED
+2026-07-09T11:05:56.4253614Z > Task :sdks:java:io:hadoop-common:test
+2026-07-09T11:06:02.7233032Z > Task :sdks:java:io:hadoop-common:spotbugsMain
+2026-07-09T11:06:02.7235471Z > Task :sdks:java:io:hadoop-common:check
+2026-07-09T11:06:02.7237445Z > Task :sdks:java:io:hadoop-common:build
+2026-07-09T11:06:02.7240434Z gradle/actions: Writing build results to /runner/_work/_temp/.gradle-actions/build-results/__self_4-1783595096713.json
+2026-07-09T11:06:02.8240922Z 
+2026-07-09T11:06:02.8244773Z [Incubating] Problems report is available at: file:///runner/_work/beam/beam/build/reports/problems/problems-report.html
+2026-07-09T11:06:02.8247910Z 
+2026-07-09T11:06:02.8250313Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-07-09T11:06:02.8253783Z 
+2026-07-09T11:06:02.8258212Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-09T11:06:02.8260987Z 
+2026-07-09T11:06:02.8263274Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-09T11:06:02.8266921Z 
+2026-07-09T11:06:02.8267454Z BUILD SUCCESSFUL in 1m 17s
+2026-07-09T11:06:02.8268950Z 43 actionable tasks: 7 executed, 1 from cache, 35 up-to-date
+2026-07-09T11:06:03.0277724Z The remote build cache was disabled during the build due to errors.
+2026-07-09T11:06:03.3430003Z Prepare all required actions
+2026-07-09T11:06:03.3519091Z ##[group]Run ./.github/actions/gradle-command-self-hosted-action
+2026-07-09T11:06:03.3520807Z with:
+2026-07-09T11:06:03.3521736Z   gradle-command: :sdks:java:io:hadoop-format:build
+2026-07-09T11:06:03.3523336Z   arguments: -PdisableSpotlessCheck=true \
+-PdisableCheckStyle=true \
+
+2026-07-09T11:06:03.3524894Z   max-workers: 8
+2026-07-09T11:06:03.3525733Z env:
+2026-07-09T11:06:03.3526457Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:06:03.3527886Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:06:03.3529786Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:06:03.3531875Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:06:03.3533946Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:06:03.3535484Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:06:03.3536527Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:06:03.3538194Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:06:03.3540043Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:06:03.3541381Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:06:03.3542356Z ##[endgroup]
+2026-07-09T11:06:03.3596440Z ##[group]Run # This step is a workaround to avoid a decryption issue of Beam's
+2026-07-09T11:06:03.3597979Z [36;1m# This step is a workaround to avoid a decryption issue of Beam's[0m
+2026-07-09T11:06:03.3599023Z [36;1m# net.linguica.gradle.maven.settings plugin and github's provided maven[0m
+2026-07-09T11:06:03.3599774Z [36;1m# settings.xml file[0m
+2026-07-09T11:06:03.3600952Z [36;1mif [ -f ~/.m2/settings.xml ]; then[0m
+2026-07-09T11:06:03.3601776Z [36;1m  rm ~/.m2/settings.xml[0m
+2026-07-09T11:06:03.3602262Z [36;1mfi[0m
+2026-07-09T11:06:03.3602941Z [36;1m./gradlew :sdks:java:io:hadoop-format:build --max-workers=8 --continue --no-daemon \[0m
+2026-07-09T11:06:03.3604083Z [36;1m -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false \[0m
+2026-07-09T11:06:03.3605740Z [36;1m-PdisableSpotlessCheck=true \[0m
+2026-07-09T11:06:03.3606312Z [36;1m-PdisableCheckStyle=true \[0m
+2026-07-09T11:06:03.3623974Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T11:06:03.3624637Z env:
+2026-07-09T11:06:03.3625083Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:06:03.3625813Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:06:03.3626541Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:06:03.3627572Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:06:03.3628622Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:06:03.3629213Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:06:03.3629765Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:06:03.3631251Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:06:03.3632149Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:06:03.3633400Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:06:03.3633924Z ##[endgroup]
+2026-07-09T11:06:04.9537063Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-07-09T11:06:07.2517335Z Daemon will be stopped at the end of the build 
+2026-07-09T11:06:08.0533145Z Configuration on demand is an incubating feature.
+2026-07-09T11:06:13.4516739Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:19.7524783Z 
+2026-07-09T11:06:19.7557423Z > Configure project :buildSrc
+2026-07-09T11:06:19.7559229Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror for buildSrc.
+2026-07-09T11:06:20.4516350Z 
+2026-07-09T11:06:20.4518329Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-09T11:06:20.7517514Z > Task :buildSrc:compileGroovy UP-TO-DATE
+2026-07-09T11:06:20.7518795Z > Task :buildSrc:pluginDescriptors UP-TO-DATE
+2026-07-09T11:06:20.7519721Z > Task :buildSrc:processResources UP-TO-DATE
+2026-07-09T11:06:20.7521763Z > Task :buildSrc:classes UP-TO-DATE
+2026-07-09T11:06:20.7522785Z > Task :buildSrc:jar UP-TO-DATE
+2026-07-09T11:06:23.8519941Z 
+2026-07-09T11:06:23.8532481Z > Configure project :
+2026-07-09T11:06:23.8534635Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:25.8515536Z 
+2026-07-09T11:06:25.8521090Z > Configure project :sdks:java:io:hadoop-format
+2026-07-09T11:06:25.8522792Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:28.5514939Z 
+2026-07-09T11:06:28.5516767Z > Configure project :sdks:java:core
+2026-07-09T11:06:28.5518760Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:28.8522115Z 
+2026-07-09T11:06:28.8542905Z > Configure project :sdks:java:io:hadoop-common
+2026-07-09T11:06:28.8552234Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:29.8544314Z 
+2026-07-09T11:06:29.8555263Z > Configure project :model:pipeline
+2026-07-09T11:06:29.8557062Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:30.1543249Z 
+2026-07-09T11:06:30.1544408Z > Configure project :model:fn-execution
+2026-07-09T11:06:30.1550073Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:30.4535571Z 
+2026-07-09T11:06:30.4537458Z > Configure project :model:job-management
+2026-07-09T11:06:30.4539779Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:30.7521474Z 
+2026-07-09T11:06:30.7547593Z > Configure project :sdks:java:transform-service
+2026-07-09T11:06:30.7582068Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:30.9515311Z 
+2026-07-09T11:06:30.9516670Z > Configure project :sdks:java:transform-service:launcher
+2026-07-09T11:06:30.9518298Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:32.9517919Z 
+2026-07-09T11:06:32.9519332Z > Configure project :sdks:java:extensions:avro
+2026-07-09T11:06:32.9521850Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:33.1514733Z 
+2026-07-09T11:06:33.1535089Z > Configure project :sdks:java:io:common
+2026-07-09T11:06:33.1536919Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:33.4537891Z 
+2026-07-09T11:06:33.4539653Z > Configure project :sdks:java:testing:test-utils
+2026-07-09T11:06:33.4552917Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:33.6522772Z 
+2026-07-09T11:06:33.6556087Z > Configure project :sdks:java:io:jdbc
+2026-07-09T11:06:33.6558771Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:34.0514297Z 
+2026-07-09T11:06:34.0533012Z > Configure project :runners:core-java
+2026-07-09T11:06:34.0537565Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:34.4532183Z 
+2026-07-09T11:06:34.4580674Z > Configure project :examples:java
+2026-07-09T11:06:34.4582751Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:34.9516217Z 
+2026-07-09T11:06:34.9545364Z > Configure project :release
+2026-07-09T11:06:34.9547137Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:34.9548432Z 
+2026-07-09T11:06:34.9550396Z > Configure project :runners:direct-java
+2026-07-09T11:06:34.9553096Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:35.1537491Z 
+2026-07-09T11:06:35.1576297Z > Configure project :runners:local-java
+2026-07-09T11:06:35.1577766Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:35.5519950Z 
+2026-07-09T11:06:35.5521661Z > Configure project :runners:java-fn-execution
+2026-07-09T11:06:35.5531209Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:36.3539146Z 
+2026-07-09T11:06:36.3548030Z > Configure project :sdks:java:harness
+2026-07-09T11:06:36.3550654Z Running in CI. Mirroring Maven Central repositories via Google Maven Mirror.
+2026-07-09T11:06:37.4602494Z 
+2026-07-09T11:06:37.4605500Z > Task :sdks:java:core:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4607937Z > Task :model:pipeline:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4645909Z > Task :sdks:java:transform-service:launcher:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4648716Z > Task :sdks:java:io:hadoop-common:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4670781Z > Task :model:fn-execution:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4672870Z > Task :runners:core-java:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4675364Z > Task :model:job-management:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.4677237Z > Task :runners:core-java:processResources NO-SOURCE
+2026-07-09T11:06:37.4678734Z > Task :sdks:java:io:hadoop-common:processResources NO-SOURCE
+2026-07-09T11:06:37.4685428Z > Task :model:fn-execution:extractProto UP-TO-DATE
+2026-07-09T11:06:37.4712002Z > Task :model:job-management:extractProto UP-TO-DATE
+2026-07-09T11:06:37.5520978Z > Task :runners:java-fn-execution:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.5599933Z > Task :runners:direct-java:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.5716434Z > Task :runners:java-fn-execution:processResources NO-SOURCE
+2026-07-09T11:06:37.5718750Z > Task :model:fn-execution:processResources UP-TO-DATE
+2026-07-09T11:06:37.6553149Z > Task :sdks:java:harness:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.6641671Z > Task :model:job-management:processResources UP-TO-DATE
+2026-07-09T11:06:37.6648976Z > Task :sdks:java:core:generateGrammarSource UP-TO-DATE
+2026-07-09T11:06:37.6656448Z > Task :runners:local-java:createCheckerFrameworkManifest UP-TO-DATE
+2026-07-09T11:06:37.6659511Z > Task :sdks:java:harness:processResources NO-SOURCE
+2026-07-09T11:06:37.6722603Z > Task :runners:direct-java:processResources NO-SOURCE
+2026-07-09T11:06:37.6785595Z > Task :runners:local-java:processResources NO-SOURCE
+2026-07-09T11:06:37.6789132Z > Task :sdks:java:core:processResources UP-TO-DATE
+2026-07-09T11:06:37.7554358Z > Task :sdks:java:core:generateTestGrammarSource NO-SOURCE
+2026-07-09T11:06:37.7621077Z > Task :sdks:java:io:jdbc:createCheckerFrameworkManifest
+2026-07-09T11:06:37.7703361Z > Task :sdks:java:io:hadoop-format:createCheckerFrameworkManifest
+2026-07-09T11:06:37.7791917Z > Task :sdks:java:testing:test-utils:createCheckerFrameworkManifest
+2026-07-09T11:06:37.7877775Z > Task :sdks:java:io:common:createCheckerFrameworkManifest
+2026-07-09T11:06:37.7912543Z > Task :sdks:java:extensions:avro:createCheckerFrameworkManifest
+2026-07-09T11:06:37.8521128Z > Task :sdks:java:core:processTestResources UP-TO-DATE
+2026-07-09T11:06:37.8652962Z > Task :sdks:java:testing:test-utils:processResources NO-SOURCE
+2026-07-09T11:06:37.8723372Z > Task :sdks:java:io:jdbc:processResources NO-SOURCE
+2026-07-09T11:06:37.8803219Z > Task :sdks:java:extensions:avro:processResources NO-SOURCE
+2026-07-09T11:06:37.8873918Z > Task :sdks:java:io:common:processResources NO-SOURCE
+2026-07-09T11:06:37.8942262Z > Task :sdks:java:io:hadoop-format:processResources NO-SOURCE
+2026-07-09T11:06:37.8998227Z > Task :sdks:java:extensions:avro:processTestResources NO-SOURCE
+2026-07-09T11:06:37.9052979Z > Task :model:pipeline:extractIncludeProto UP-TO-DATE
+2026-07-09T11:06:37.9120690Z > Task :sdks:java:transform-service:launcher:compileJava UP-TO-DATE
+2026-07-09T11:06:37.9123826Z > Task :model:pipeline:extractProto UP-TO-DATE
+2026-07-09T11:06:37.9535934Z > Task :sdks:java:transform-service:launcher:processResources UP-TO-DATE
+2026-07-09T11:06:37.9539590Z > Task :sdks:java:transform-service:launcher:classes UP-TO-DATE
+2026-07-09T11:06:37.9542912Z > Task :sdks:java:transform-service:launcher:jar UP-TO-DATE
+2026-07-09T11:06:38.0722017Z > Task :sdks:java:io:hadoop-format:processTestResources
+2026-07-09T11:06:38.0743948Z > Task :sdks:java:io:hadoop-format:createTargetDirectoryForCassandra
+2026-07-09T11:06:38.0746951Z > Task :model:pipeline:generateProto UP-TO-DATE
+2026-07-09T11:06:38.3639013Z > Task :model:pipeline:compileJava UP-TO-DATE
+2026-07-09T11:06:38.4565347Z > Task :model:pipeline:processResources UP-TO-DATE
+2026-07-09T11:06:38.4602507Z > Task :model:pipeline:classes UP-TO-DATE
+2026-07-09T11:06:38.4651112Z > Task :model:pipeline:jar UP-TO-DATE
+2026-07-09T11:06:38.6516527Z > Task :model:job-management:extractIncludeProto UP-TO-DATE
+2026-07-09T11:06:38.6564090Z > Task :model:pipeline:shadowJar UP-TO-DATE
+2026-07-09T11:06:38.6612908Z > Task :model:fn-execution:extractIncludeProto UP-TO-DATE
+2026-07-09T11:06:38.6643297Z > Task :model:fn-execution:generateProto UP-TO-DATE
+2026-07-09T11:06:38.7535673Z > Task :model:job-management:generateProto UP-TO-DATE
+2026-07-09T11:06:38.8532199Z > Task :model:job-management:compileJava UP-TO-DATE
+2026-07-09T11:06:38.8571549Z > Task :model:job-management:classes UP-TO-DATE
+2026-07-09T11:06:38.8582623Z > Task :model:fn-execution:compileJava UP-TO-DATE
+2026-07-09T11:06:38.8626952Z > Task :model:fn-execution:classes UP-TO-DATE
+2026-07-09T11:06:39.0517834Z > Task :model:job-management:shadowJar UP-TO-DATE
+2026-07-09T11:06:39.0581166Z > Task :model:fn-execution:shadowJar UP-TO-DATE
+2026-07-09T11:06:39.7533953Z > Task :sdks:java:core:compileJava UP-TO-DATE
+2026-07-09T11:06:39.7535732Z > Task :sdks:java:core:classes UP-TO-DATE
+2026-07-09T11:06:40.0563652Z > Task :sdks:java:core:shadowJar UP-TO-DATE
+2026-07-09T11:06:40.1530144Z > Task :sdks:java:extensions:avro:generateAvroProtocol NO-SOURCE
+2026-07-09T11:06:40.1563547Z > Task :sdks:java:extensions:avro:generateAvroJava NO-SOURCE
+2026-07-09T11:06:40.3548504Z > Task :runners:local-java:compileJava UP-TO-DATE
+2026-07-09T11:06:40.3622889Z > Task :runners:local-java:classes UP-TO-DATE
+2026-07-09T11:06:40.4537591Z > Task :runners:local-java:jar UP-TO-DATE
+2026-07-09T11:06:41.5560244Z > Task :sdks:java:io:hadoop-common:compileJava UP-TO-DATE
+2026-07-09T11:06:41.5593542Z > Task :sdks:java:io:hadoop-common:classes UP-TO-DATE
+2026-07-09T11:06:41.5595308Z > Task :runners:core-java:compileJava UP-TO-DATE
+2026-07-09T11:06:41.5596742Z > Task :runners:core-java:classes UP-TO-DATE
+2026-07-09T11:06:41.6522889Z > Task :sdks:java:io:hadoop-common:jar UP-TO-DATE
+2026-07-09T11:06:41.6532501Z > Task :runners:core-java:jar UP-TO-DATE
+2026-07-09T11:06:41.7523431Z > Task :sdks:java:extensions:avro:compileJava FROM-CACHE
+2026-07-09T11:06:41.7525538Z > Task :sdks:java:extensions:avro:classes UP-TO-DATE
+2026-07-09T11:06:41.8546575Z > Task :sdks:java:io:common:compileJava FROM-CACHE
+2026-07-09T11:06:41.8563079Z > Task :sdks:java:io:common:classes UP-TO-DATE
+2026-07-09T11:06:42.3552193Z > Task :sdks:java:io:common:jar
+2026-07-09T11:06:42.6572893Z > Task :sdks:java:testing:test-utils:compileJava FROM-CACHE
+2026-07-09T11:06:42.6667436Z > Task :sdks:java:testing:test-utils:classes UP-TO-DATE
+2026-07-09T11:06:42.6713127Z > Task :sdks:java:harness:compileJava UP-TO-DATE
+2026-07-09T11:06:42.6715196Z > Task :sdks:java:harness:classes UP-TO-DATE
+2026-07-09T11:06:42.7522535Z > Task :sdks:java:harness:jar UP-TO-DATE
+2026-07-09T11:06:42.8554737Z > Task :sdks:java:testing:test-utils:jar
+2026-07-09T11:06:44.1542493Z > Task :runners:java-fn-execution:compileJava UP-TO-DATE
+2026-07-09T11:06:44.1584519Z > Task :runners:java-fn-execution:classes UP-TO-DATE
+2026-07-09T11:06:44.1585921Z > Task :runners:java-fn-execution:jar UP-TO-DATE
+2026-07-09T11:06:44.4683124Z > Task :sdks:java:core:compileTestJava UP-TO-DATE
+2026-07-09T11:06:44.4762866Z > Task :sdks:java:core:testClasses UP-TO-DATE
+2026-07-09T11:06:44.5633737Z > Task :sdks:java:extensions:avro:jar
+2026-07-09T11:06:44.5653620Z > Task :sdks:java:extensions:avro:generateTestAvroProtocol NO-SOURCE
+2026-07-09T11:06:44.6603247Z > Task :sdks:java:extensions:avro:generateTestAvroJava FROM-CACHE
+2026-07-09T11:06:44.7545903Z > Task :runners:direct-java:compileJava UP-TO-DATE
+2026-07-09T11:06:44.7582606Z > Task :runners:direct-java:classes UP-TO-DATE
+2026-07-09T11:06:44.9520722Z > Task :sdks:java:core:shadowTestJar UP-TO-DATE
+2026-07-09T11:06:45.1554168Z > Task :runners:direct-java:shadowJar UP-TO-DATE
+2026-07-09T11:06:46.0593784Z > Task :sdks:java:extensions:avro:compileTestJava FROM-CACHE
+2026-07-09T11:06:46.0596523Z > Task :sdks:java:extensions:avro:testClasses UP-TO-DATE
+2026-07-09T11:06:46.4612663Z > Task :sdks:java:extensions:avro:testJar
+2026-07-09T11:07:10.0532510Z > Task :sdks:java:io:jdbc:compileJava
+2026-07-09T11:07:11.6515773Z > Task :sdks:java:io:hadoop-format:compileJava
+2026-07-09T11:08:02.2539059Z Could not store entry f9b0b7fa5ea6e48418463aa6d8086a69 in remote build cache: Storing entry at 'https://beam-cache.apache.org/cache/f9b0b7fa5ea6e48418463aa6d8086a69' response status 403: Forbidden
+2026-07-09T11:08:02.3527970Z 
+2026-07-09T11:08:02.3536501Z > Task :sdks:java:io:hadoop-format:classes
+2026-07-09T11:08:02.3537752Z > Task :sdks:java:io:hadoop-format:jar
+2026-07-09T11:08:02.3538850Z > Task :sdks:java:io:hadoop-format:assemble
+2026-07-09T11:08:09.0534360Z > Task :sdks:java:io:hadoop-format:analyzeClassesDependencies
+2026-07-09T11:08:09.0542520Z > Task :sdks:java:io:hadoop-format:checkstyleMain SKIPPED
+2026-07-09T11:08:16.4522520Z 
+2026-07-09T11:08:16.4523799Z > Task :sdks:java:io:hadoop-format:javadoc
+2026-07-09T11:08:16.4528555Z /runner/_work/beam/beam/sdks/java/io/hadoop-format/src/main/java/org/apache/beam/sdk/io/hadoop/format/HadoopFormatIO.java:1271: warning: Tag {@link}: nested link
+2026-07-09T11:08:16.4532317Z        * @see HadoopFormatIO for required hadoop {@link Configuration} properties
+2026-07-09T11:08:16.4533945Z                                                  ^
+2026-07-09T11:08:16.4536257Z /runner/_work/beam/beam/sdks/java/io/hadoop-format/src/main/java/org/apache/beam/sdk/io/hadoop/format/HadoopFormatIO.java:1288: warning: Tag {@link}: nested link
+2026-07-09T11:08:16.4538691Z        * @see HadoopFormatIO for required hadoop {@link Configuration} properties
+2026-07-09T11:08:16.4540055Z                                                  ^
+2026-07-09T11:08:16.8515574Z 2 warnings
+2026-07-09T11:08:32.3577701Z Note: Some input files use or override a deprecated API.
+2026-07-09T11:08:32.3578573Z 
+2026-07-09T11:08:32.3685241Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-09T11:08:32.3686404Z > Task :sdks:java:io:jdbc:compileJava
+2026-07-09T11:08:32.3710382Z Note: Some input files use unchecked or unsafe operations.
+2026-07-09T11:08:32.3772586Z Note: Recompile with -Xlint:unchecked for details.
+2026-07-09T11:08:33.3542161Z 
+2026-07-09T11:08:33.3603213Z > Task :sdks:java:io:jdbc:classes
+2026-07-09T11:08:33.5552560Z > Task :sdks:java:io:jdbc:jar
+2026-07-09T11:08:41.9516053Z > Task :sdks:java:io:hadoop-format:spotbugsMain
+2026-07-09T11:08:49.2514666Z 
+2026-07-09T11:08:49.2517056Z Note: Some input files use or override a deprecated API.
+2026-07-09T11:08:49.2519386Z Note: Recompile with -Xlint:deprecation for details.
+2026-07-09T11:08:49.2520722Z > Task :sdks:java:io:hadoop-format:compileTestJava
+2026-07-09T11:08:50.8514026Z 
+2026-07-09T11:08:50.8518077Z > Task :sdks:java:io:hadoop-format:testClasses
+2026-07-09T11:08:50.8519856Z > Task :sdks:java:io:hadoop-format:analyzeTestClassesDependencies SKIPPED
+2026-07-09T11:08:50.8521881Z > Task :sdks:java:io:hadoop-format:analyzeDependencies
+2026-07-09T11:08:50.8523247Z > Task :sdks:java:io:hadoop-format:checkstyleTest SKIPPED
+2026-07-09T11:08:50.8524638Z > Task :sdks:java:io:hadoop-format:spotbugsTest SKIPPED
+2026-07-09T11:09:03.8532610Z 
+2026-07-09T11:09:03.8534071Z > Task :sdks:java:io:hadoop-format:test
+2026-07-09T11:09:03.8534812Z 
+2026-07-09T11:09:03.8535306Z HadoopFormatIOCassandraTest > classMethod FAILED
+2026-07-09T11:09:03.8536980Z     java.lang.UnsupportedOperationException at HadoopFormatIOCassandraTest.java:189
+2026-07-09T11:09:03.8538833Z 
+2026-07-09T11:09:03.8539833Z HadoopFormatIOCassandraTest > classMethod FAILED
+2026-07-09T11:09:03.8542225Z     java.lang.NullPointerException at HadoopFormatIOCassandraTest.java:217
+2026-07-09T11:10:15.1521823Z 
+2026-07-09T11:10:15.1523730Z HadoopFormatIOElasticTest > testHifIOWithElastic FAILED
+2026-07-09T11:10:15.1525429Z     java.lang.ExceptionInInitializerError at HadoopFormatIOElasticTest.java:109
+2026-07-09T11:10:15.1527328Z         Caused by: java.lang.reflect.InaccessibleObjectException at HadoopFormatIOElasticTest.java:109
+2026-07-09T11:10:15.6515924Z 
+2026-07-09T11:10:15.6517616Z HadoopFormatIOElasticTest > testHifIOWithElasticQuery FAILED
+2026-07-09T11:10:15.6519017Z     java.lang.NoClassDefFoundError at HadoopFormatIOElasticTest.java:144
+2026-07-09T11:10:15.6521055Z         Caused by: java.lang.ExceptionInInitializerError at HadoopFormatIOElasticTest.java:109
+2026-07-09T11:10:42.9514887Z 
+2026-07-09T11:10:42.9515800Z 66 tests completed, 4 failed
+2026-07-09T11:10:43.0515447Z 
+2026-07-09T11:10:43.0517174Z > Task :sdks:java:io:hadoop-format:test FAILED
+2026-07-09T11:10:43.1516461Z gradle/actions: Writing build results to /runner/_work/_temp/.gradle-actions/build-results/__self_5-1783595171169.json
+2026-07-09T11:10:43.2513558Z 
+2026-07-09T11:10:43.2513581Z 
+2026-07-09T11:10:43.2514911Z FAILURE: Build failed with an exception.
+2026-07-09T11:10:43.3421673Z 
+2026-07-09T11:10:43.3422366Z * What went wrong:
+2026-07-09T11:10:43.3423847Z Execution failed for task ':sdks:java:io:hadoop-format:test'.
+2026-07-09T11:10:43.3425527Z > There were failing tests. See the report at: file:///runner/_work/beam/beam/sdks/java/io/hadoop-format/build/reports/tests/test/index.html
+2026-07-09T11:10:43.3426387Z 
+2026-07-09T11:10:43.3426600Z BUILD FAILED in 4m 39s
+2026-07-09T11:10:43.3427493Z [Incubating] Problems report is available at: file:///runner/_work/beam/beam/build/reports/problems/problems-report.html
+2026-07-09T11:10:43.3428257Z 
+2026-07-09T11:10:43.3428752Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-07-09T11:10:43.3429371Z 
+2026-07-09T11:10:43.3431346Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-09T11:10:43.3433790Z 
+2026-07-09T11:10:43.3435037Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-09T11:10:43.3436346Z 81 actionable tasks: 20 executed, 5 from cache, 56 up-to-date
+2026-07-09T11:10:44.0516021Z The remote build cache was disabled during the build due to errors.
+2026-07-09T11:10:44.7817124Z ##[error]Process completed with exit code 1.
+2026-07-09T11:10:44.7973796Z ##[group]Run actions/upload-artifact@v7
+2026-07-09T11:10:44.7974906Z with:
+2026-07-09T11:10:44.7975309Z   name: JUnit Test Results
+2026-07-09T11:10:44.7976014Z   path: **/build/reports/tests/
+2026-07-09T11:10:44.7976700Z   if-no-files-found: warn
+2026-07-09T11:10:44.7977198Z   compression-level: 6
+2026-07-09T11:10:44.7978059Z   overwrite: false
+2026-07-09T11:10:44.7978939Z   include-hidden-files: false
+2026-07-09T11:10:44.7979427Z   archive: true
+2026-07-09T11:10:44.7979822Z env:
+2026-07-09T11:10:44.7980404Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:10:44.7981803Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:10:44.7982577Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:10:44.7984182Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:10:44.7985261Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:10:44.7985854Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:10:44.7986707Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:10:44.7987517Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:10:44.7988378Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:10:44.7989225Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:10:44.7989950Z ##[endgroup]
+2026-07-09T11:10:51.0296118Z With the provided path, there will be 30 files uploaded
+2026-07-09T11:10:51.0307789Z Artifact name is valid!
+2026-07-09T11:10:51.0308691Z Root directory input is valid!
+2026-07-09T11:10:51.3898113Z Uploading artifact: JUnit Test Results.zip
+2026-07-09T11:10:51.3899904Z Beginning upload of artifact content to blob storage
+2026-07-09T11:10:51.8392613Z Uploaded bytes 218420
+2026-07-09T11:10:51.8827859Z Finished uploading artifact content to blob storage!
+2026-07-09T11:10:51.8830345Z SHA256 digest of uploaded artifact is 51da4664906b419f269161222b95b0c7a33170dafd88348e16e323616a878650
+2026-07-09T11:10:51.8833067Z Finalizing artifact upload
+2026-07-09T11:10:52.1839856Z Artifact JUnit Test Results successfully finalized. Artifact ID 8196772528
+2026-07-09T11:10:52.1841235Z Artifact JUnit Test Results has been successfully uploaded! Final size is 218420 bytes. Artifact ID is 8196772528
+2026-07-09T11:10:52.2685363Z Artifact download URL: https://github.com/apache/beam/actions/runs/29013307044/artifacts/8196772528
+2026-07-09T11:10:52.3637182Z ##[group]Run EnricoMi/publish-unit-test-result-action@v2
+2026-07-09T11:10:52.3638050Z with:
+2026-07-09T11:10:52.3638464Z   comment_mode: off
+2026-07-09T11:10:52.3638943Z   files: **/build/test-results/**/*.xml
+2026-07-09T11:10:52.3639844Z   large_files: true
+2026-07-09T11:10:52.3647904Z   github_token: ***
+2026-07-09T11:10:52.3648407Z   github_retries: 10
+2026-07-09T11:10:52.3648852Z   ssl_verify: true
+2026-07-09T11:10:52.3649313Z   check_name: Test Results
+2026-07-09T11:10:52.3649821Z   fail_on: test failures
+2026-07-09T11:10:52.3650274Z   action_fail: false
+2026-07-09T11:10:52.3651466Z   action_fail_on_inconclusive: false
+2026-07-09T11:10:52.3652065Z   time_unit: seconds
+2026-07-09T11:10:52.3652534Z   report_suite_logs: none
+2026-07-09T11:10:52.3653000Z   ignore_runs: false
+2026-07-09T11:10:52.3653432Z   check_run: true
+2026-07-09T11:10:52.3653851Z   job_summary: true
+2026-07-09T11:10:52.3655802Z   compare_to_earlier_commit: true
+2026-07-09T11:10:52.3656539Z   pull_request_build: merge
+2026-07-09T11:10:52.3657112Z   check_run_annotations: all tests, skipped tests
+2026-07-09T11:10:52.3657743Z   seconds_between_github_reads: 0.25
+2026-07-09T11:10:52.3659337Z   seconds_between_github_writes: 2.0
+2026-07-09T11:10:52.3659934Z   json_thousands_separator:  
+2026-07-09T11:10:52.3660447Z   json_suite_details: false
+2026-07-09T11:10:52.3661744Z   json_test_case_results: false
+2026-07-09T11:10:52.3662277Z   search_pull_requests: false
+2026-07-09T11:10:52.3662764Z env:
+2026-07-09T11:10:52.3663174Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:10:52.3663871Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:10:52.3665100Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:10:52.3666169Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:10:52.3667282Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:10:52.3667894Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:10:52.3668488Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:10:52.3669313Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:10:52.3671726Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:10:52.3672385Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:10:52.3672928Z ##[endgroup]
+2026-07-09T11:10:52.3971051Z ##[command]/usr/local/bin/docker run --name ghcrioenricomipublishunittestresultactionv2240_43b204 --label b93d60 --workdir /github/workspace --rm -e "DEVELOCITY_ACCESS_KEY" -e "GRADLE_ENTERPRISE_CACHE_USERNAME" -e "GRADLE_ENTERPRISE_CACHE_PASSWORD" -e "KUBELET_GCLOUD_CONFIG_PATH" -e "GRADLE_ACTION_ID" -e "GRADLE_USER_HOME" -e "GRADLE_BUILD_ACTION_SETUP_COMPLETED" -e "DEVELOCITY_INJECTION_INIT_SCRIPT_NAME" -e "DEVELOCITY_INJECTION_CUSTOM_VALUE" -e "GITHUB_DEPENDENCY_GRAPH_ENABLED" -e "INPUT_COMMIT" -e "INPUT_COMMENT_MODE" -e "INPUT_FILES" -e "INPUT_LARGE_FILES" -e "INPUT_GITHUB_TOKEN" -e "INPUT_GITHUB_TOKEN_ACTOR" -e "INPUT_GITHUB_RETRIES" -e "INPUT_SSL_VERIFY" -e "INPUT_CHECK_NAME" -e "INPUT_COMMENT_TITLE" -e "INPUT_FAIL_ON" -e "INPUT_ACTION_FAIL" -e "INPUT_ACTION_FAIL_ON_INCONCLUSIVE" -e "INPUT_JUNIT_FILES" -e "INPUT_NUNIT_FILES" -e "INPUT_XUNIT_FILES" -e "INPUT_TRX_FILES" -e "INPUT_TIME_UNIT" -e "INPUT_TEST_FILE_PREFIX" -e "INPUT_REPORT_INDIVIDUAL_RUNS" -e "INPUT_REPORT_SUITE_LOGS" -e "INPUT_DEDUPLICATE_CLASSES_BY_FILE_NAME" -e "INPUT_IGNORE_RUNS" -e "INPUT_CHECK_RUN" -e "INPUT_JOB_SUMMARY" -e "INPUT_COMPARE_TO_EARLIER_COMMIT" -e "INPUT_PULL_REQUEST_BUILD" -e "INPUT_EVENT_FILE" -e "INPUT_EVENT_NAME" -e "INPUT_TEST_CHANGES_LIMIT" -e "INPUT_CHECK_RUN_ANNOTATIONS" -e "INPUT_CHECK_RUN_ANNOTATIONS_BRANCH" -e "INPUT_SECONDS_BETWEEN_GITHUB_READS" -e "INPUT_SECONDS_BETWEEN_GITHUB_WRITES" -e "INPUT_SECONDARY_RATE_LIMIT_WAIT_SECONDS" -e "INPUT_JSON_FILE" -e "INPUT_JSON_THOUSANDS_SEPARATOR" -e "INPUT_JSON_SUITE_DETAILS" -e "INPUT_JSON_TEST_CASE_RESULTS" -e "INPUT_SEARCH_PULL_REQUESTS" -e "HOME" -e "GITHUB_JOB" -e "GITHUB_REF" -e "GITHUB_SHA" -e "GITHUB_REPOSITORY" -e "GITHUB_REPOSITORY_OWNER" -e "GITHUB_REPOSITORY_OWNER_ID" -e "GITHUB_RUN_ID" -e "GITHUB_RUN_NUMBER" -e "GITHUB_RETENTION_DAYS" -e "GITHUB_RUN_ATTEMPT" -e "GITHUB_ACTOR_ID" -e "GITHUB_ACTOR" -e "GITHUB_WORKFLOW" -e "GITHUB_HEAD_REF" -e "GITHUB_BASE_REF" -e "GITHUB_EVENT_NAME" -e "GITHUB_SERVER_URL" -e "GITHUB_API_URL" -e "GITHUB_GRAPHQL_URL" -e "GITHUB_REF_NAME" -e "GITHUB_REF_PROTECTED" -e "GITHUB_REF_TYPE" -e "GITHUB_WORKFLOW_REF" -e "GITHUB_WORKFLOW_SHA" -e "GITHUB_REPOSITORY_ID" -e "GITHUB_TRIGGERING_ACTOR" -e "GITHUB_WORKSPACE" -e "GITHUB_EVENT_PATH" -e "GITHUB_PATH" -e "GITHUB_ENV" -e "GITHUB_STEP_SUMMARY" -e "GITHUB_STATE" -e "GITHUB_OUTPUT" -e "GITHUB_ACTION" -e "GITHUB_ACTION_REPOSITORY" -e "GITHUB_ACTION_REF" -e "RUNNER_OS" -e "RUNNER_ARCH" -e "RUNNER_NAME" -e "RUNNER_ENVIRONMENT" -e "RUNNER_TOOL_CACHE" -e "RUNNER_TEMP" -e "RUNNER_WORKSPACE" -e "ACTIONS_RUNTIME_URL" -e "ACTIONS_RUNTIME_TOKEN" -e "ACTIONS_CACHE_URL" -e "ACTIONS_RESULTS_URL" -e "ACTIONS_ORCHESTRATION_ID" -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/runner/_work/_temp":"/github/runner_temp" -v "/runner/_work/_temp/_github_home":"/github/home" -v "/runner/_work/_temp/_github_workflow":"/github/workflow" -v "/runner/_work/_temp/_runner_file_commands":"/github/file_commands" -v "/runner/_work/beam/beam":"/github/workspace" ghcr.io/enricomi/publish-unit-test-result-action:v2.24.0
+2026-07-09T11:10:59.8040271Z 2026-07-09 11:10:59 +0000 - publish -  INFO - Available memory to read files: 50.3 GiB
+2026-07-09T11:11:00.3353786Z 2026-07-09 11:11:00 +0000 - publish -  INFO - Reading files **/build/test-results/**/*.xml (15 files, 1.5 MiB)
+2026-07-09T11:11:00.3805592Z 2026-07-09 11:11:00 +0000 - publish -  INFO - Detected 15 JUnit XML files (1.5 MiB)
+2026-07-09T11:11:00.3806933Z 2026-07-09 11:11:00 +0000 - publish -  INFO - Finished reading 15 files in 0.05 seconds
+2026-07-09T11:11:01.3670170Z 2026-07-09 11:11:01 +0000 - publish -  INFO - Publishing failure results for commit 7fb07784bf2c7b01480d65cc1d8319599982f58b
+2026-07-09T11:11:02.0554327Z 2026-07-09 11:11:02 +0000 - publish -  INFO - Created check https://github.com/apache/beam/runs/86104371651
+2026-07-09T11:11:02.0569085Z 2026-07-09 11:11:02 +0000 - publish -  INFO - Created job summary
+2026-07-09T11:11:02.0570956Z 2026-07-09 11:11:02 +0000 - publish -  INFO - Commenting on pull requests disabled
+2026-07-09T11:11:06.8784253Z ##[group]Run actions/upload-artifact@v7
+2026-07-09T11:11:06.8785383Z with:
+2026-07-09T11:11:06.8786006Z   name: SpotBugs Results
+2026-07-09T11:11:06.8786885Z   path: **/build/reports/spotbugs/*.html
+2026-07-09T11:11:06.8788038Z   if-no-files-found: warn
+2026-07-09T11:11:06.8788526Z   compression-level: 6
+2026-07-09T11:11:06.8788977Z   overwrite: false
+2026-07-09T11:11:06.8790079Z   include-hidden-files: false
+2026-07-09T11:11:06.8791485Z   archive: true
+2026-07-09T11:11:06.8791926Z env:
+2026-07-09T11:11:06.8792330Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:11:06.8792983Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:11:06.8793744Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:11:06.8795032Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:11:06.8796551Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:11:06.8797627Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:11:06.8798267Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:11:06.8799499Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:11:06.8800993Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:11:06.8802739Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:11:06.8803643Z ##[endgroup]
+2026-07-09T11:11:12.7556993Z With the provided path, there will be 3 files uploaded
+2026-07-09T11:11:12.7571413Z Artifact name is valid!
+2026-07-09T11:11:12.7573024Z Root directory input is valid!
+2026-07-09T11:11:13.0284246Z Uploading artifact: SpotBugs Results.zip
+2026-07-09T11:11:13.0397975Z Beginning upload of artifact content to blob storage
+2026-07-09T11:11:13.2909052Z Uploaded bytes 4543
+2026-07-09T11:11:13.3370946Z Finished uploading artifact content to blob storage!
+2026-07-09T11:11:13.3373081Z SHA256 digest of uploaded artifact is fde77072dbbe5c1b43a1c73ea41ae735f29dbeccfb1860ec003d51b1a28d1bb5
+2026-07-09T11:11:13.3374678Z Finalizing artifact upload
+2026-07-09T11:11:13.6286408Z Artifact SpotBugs Results successfully finalized. Artifact ID 8196780823
+2026-07-09T11:11:13.6290390Z Artifact SpotBugs Results has been successfully uploaded! Final size is 4543 bytes. Artifact ID is 8196780823
+2026-07-09T11:11:13.6296783Z Artifact download URL: https://github.com/apache/beam/actions/runs/29013307044/artifacts/8196780823
+2026-07-09T11:11:13.6756449Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-07-09T11:11:13.6760896Z ##[group]Run jwgmeligmeyling/spotbugs-github-action@v1.2
+2026-07-09T11:11:13.6762009Z with:
+2026-07-09T11:11:13.6762767Z   name: Publish SpotBugs
+2026-07-09T11:11:13.6763645Z   path: **/build/reports/spotbugs/*.html
+2026-07-09T11:11:13.6764664Z   title: SpotBugs Source Code Analyzer report
+2026-07-09T11:11:13.6774593Z   token: ***
+2026-07-09T11:11:13.6775414Z env:
+2026-07-09T11:11:13.6776147Z   DEVELOCITY_ACCESS_KEY: 
+2026-07-09T11:11:13.6777116Z   GRADLE_ENTERPRISE_CACHE_USERNAME: ***
+2026-07-09T11:11:13.6778478Z   GRADLE_ENTERPRISE_CACHE_PASSWORD: ***
+2026-07-09T11:11:13.6781076Z   KUBELET_GCLOUD_CONFIG_PATH: /var/lib/kubelet/pods/17cd35ab-7156-4e6e-b8ee-25a02f9a50d9/volumes/kubernetes.io~empty-dir/gcloud
+2026-07-09T11:11:13.6783211Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-07-09T11:11:13.6784344Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-07-09T11:11:13.6785400Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-07-09T11:11:13.6787008Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-07-09T11:11:13.6788657Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-07-09T11:11:13.6789992Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-07-09T11:11:13.6791406Z ##[endgroup]
+2026-07-09T11:11:13.9010989Z (node:8392) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-07-09T11:11:13.9015989Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-07-09T11:11:20.8839587Z With the provided path, there will be 3 results uploaded
+2026-07-09T11:11:20.8845911Z Creating annotations for /runner/_work/beam/beam/sdks/java/io/hadoop-common/build/reports/spotbugs/main.html
+2026-07-09T11:11:20.8882608Z /runner/_work/beam/beam/sdks/java/io/hadoop-common/build/reports/spotbugs/main.html has 0 violations
+2026-07-09T11:11:20.8884426Z Creating annotations for /runner/_work/beam/beam/sdks/java/io/hadoop-file-system/build/reports/spotbugs/main.html
+2026-07-09T11:11:20.8894353Z /runner/_work/beam/beam/sdks/java/io/hadoop-file-system/build/reports/spotbugs/main.html has 0 violations
+2026-07-09T11:11:20.8895758Z Creating annotations for /runner/_work/beam/beam/sdks/java/io/hadoop-format/build/reports/spotbugs/main.html
+2026-07-09T11:11:20.8916091Z /runner/_work/beam/beam/sdks/java/io/hadoop-format/build/reports/spotbugs/main.html has 0 violations
+2026-07-09T11:11:22.1061546Z Post job cleanup.
+2026-07-09T11:11:22.1278864Z Post job cleanup.
+2026-07-09T11:11:22.8205807Z In post-action step
+2026-07-09T11:11:22.8221431Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-07-09T11:11:23.0028794Z ##[group]Stopping Gradle daemons
+2026-07-09T11:11:23.0031051Z Stopping Gradle daemons for /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3
+2026-07-09T11:11:23.0064208Z [command]/home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3/bin/gradle --stop
+2026-07-09T11:11:24.0718478Z No Gradle daemons are running.
+2026-07-09T11:11:24.0928411Z ##[endgroup]
+2026-07-09T11:11:24.0929362Z Not performing cache-cleanup due to build failure
+2026-07-09T11:11:24.0931079Z ##[group]Caching Gradle state
+2026-07-09T11:11:26.9928546Z [command]/usr/bin/tar --posix -cf cache.tgz --exclude cache.tgz -P -C /runner/_work/beam/beam --files-from manifest.txt -z
+2026-07-09T11:11:28.2006891Z ##[warning]Cache reservation failed: cache write denied: token has no writable scopes
+2026-07-09T11:11:28.2012844Z Failed to save cache entry with path '/home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/,/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/' and key: gradle-kotlin-dsl-v1-4023dec8049c69d10a563f776fa0a197: ReserveCacheError: Unable to reserve cache with key gradle-kotlin-dsl-v1-4023dec8049c69d10a563f776fa0a197, another job may be creating this cache.
+2026-07-09T11:11:28.9609606Z [command]/usr/bin/tar --posix -cf cache.tgz --exclude cache.tgz -P -C /runner/_work/beam/beam --files-from manifest.txt -z
+2026-07-09T11:11:29.3166193Z [command]/usr/bin/tar --posix -cf cache.tgz --exclude cache.tgz -P -C /runner/_work/beam/beam --files-from manifest.txt -z
+2026-07-09T11:11:39.4448368Z ##[warning]Cache reservation failed: cache write denied: token has no writable scopes
+2026-07-09T11:11:39.4654155Z Failed to save cache entry with path '/home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/' and key: gradle-transforms-v1-c1fb853f434659f0a2f84d393367ef25: ReserveCacheError: Unable to reserve cache with key gradle-transforms-v1-c1fb853f434659f0a2f84d393367ef25, another job may be creating this cache.
+2026-07-09T11:13:35.6318921Z ##[warning]Cache reservation failed: cache write denied: token has no writable scopes
+2026-07-09T11:13:36.2630124Z Failed to save cache entry with path '/home/runner/.gradle/caches/modules-*/files-*/*/*/*/*' and key: gradle-dependencies-v1-3283e32fc43a761e9f4a8fb6afee5240: ReserveCacheError: Unable to reserve cache with key gradle-dependencies-v1-3283e32fc43a761e9f4a8fb6afee5240, another job may be creating this cache.
+2026-07-09T11:13:37.6715896Z [command]/usr/bin/tar --posix -cf cache.tgz --exclude cache.tgz -P -C /runner/_work/beam/beam --files-from manifest.txt -z
+2026-07-09T11:16:54.1917048Z ##[warning]Cache reservation failed: cache write denied: token has no writable scopes
+2026-07-09T11:16:55.1241936Z Failed to save cache entry with path '/home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle' and key: gradle-home-v1|Linux-X64|beam_PreCommit_Java_Hadoop_IO_Direct[1cd245ae167f23d7d42badafad2850b3]-eba9ffa57e353a496d4bbc453e7c7a573b605713: ReserveCacheError: Unable to reserve cache with key gradle-home-v1|Linux-X64|beam_PreCommit_Java_Hadoop_IO_Direct[1cd245ae167f23d7d42badafad2850b3]-eba9ffa57e353a496d4bbc453e7c7a573b605713, another job may be creating this cache.
+2026-07-09T11:16:55.1263256Z ##[endgroup]
+2026-07-09T11:16:55.1289049Z Generating Job Summary
+2026-07-09T11:16:55.1330941Z Completed post-action step
+2026-07-09T11:16:55.1959143Z Post job cleanup.
+2026-07-09T11:16:55.2159284Z Post job cleanup.
+2026-07-09T11:16:55.5116626Z [command]/usr/bin/git version
+2026-07-09T11:16:55.5259301Z git version 2.54.0
+2026-07-09T11:16:55.5375188Z Temporarily overriding HOME='/runner/_work/_temp/0ac110b3-751e-4cde-8a67-1734a922c761' before making global git config changes
+2026-07-09T11:16:55.5378360Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-09T11:16:55.5571092Z [command]/usr/bin/git config --global --add safe.directory /runner/_work/beam/beam
+2026-07-09T11:16:55.5673334Z Removing SSH command configuration
+2026-07-09T11:16:55.5692712Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-09T11:16:55.5848716Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-09T11:16:55.7085424Z Removing HTTP extra header
+2026-07-09T11:16:55.7087673Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-09T11:16:55.7167275Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-09T11:16:55.8008099Z Removing includeIf entries pointing to credentials config files
+2026-07-09T11:16:55.8010162Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-09T11:16:55.8031046Z includeif.gitdir:/runner/_work/beam/beam/.git.path
+2026-07-09T11:16:55.8061939Z includeif.gitdir:/runner/_work/beam/beam/.git/worktrees/*.path
+2026-07-09T11:16:55.8086160Z includeif.gitdir:/github/workspace/.git.path
+2026-07-09T11:16:55.8142633Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-09T11:16:55.8184522Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/runner/_work/beam/beam/.git.path
+2026-07-09T11:16:55.8186657Z /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8233975Z [command]/usr/bin/git config --local --unset includeif.gitdir:/runner/_work/beam/beam/.git.path /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8275960Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/runner/_work/beam/beam/.git/worktrees/*.path
+2026-07-09T11:16:55.8373106Z /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8415779Z [command]/usr/bin/git config --local --unset includeif.gitdir:/runner/_work/beam/beam/.git/worktrees/*.path /runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8533473Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-09T11:16:55.8603119Z /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8645234Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8715404Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-09T11:16:55.8785699Z /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8798480Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config
+2026-07-09T11:16:55.8915324Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-09T11:16:55.9564908Z Removing credentials config '/runner/_work/_temp/git-credentials-87ec65b9-2f04-4c80-a3d4-63742c563a76.config'
+2026-07-09T11:16:55.9770170Z A job completed hook has been configured by the self-hosted runner administrator
+2026-07-09T11:16:55.9865764Z ##[group]Run '/etc/arc/hooks/job-completed.sh'
+2026-07-09T11:16:55.9886885Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-07-09T11:16:55.9887835Z ##[endgroup]
+2026-07-09T11:16:56.0176043Z [0;37m2026-07-09 11:16:56.015  DEBUG --- Running ARC Job Completed Hooks[0m
+2026-07-09T11:16:56.0252592Z [0;37m2026-07-09 11:16:56.023  DEBUG --- Running hook: /etc/arc/hooks/job-completed.d/update-status[0m
+2026-07-09T11:16:56.0632149Z Cleaning up orphan processes
+2026-07-09T11:16:56.0736230Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: jwgmeligmeyling/spotbugs-github-action@v1.2. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
