@@ -1,0 +1,1286 @@
+﻿2026-07-27T16:43:27.7000809Z Current runner version: '2.336.0'
+2026-07-27T16:43:27.7026616Z ##[group]Runner Image Provisioner
+2026-07-27T16:43:27.7027532Z Hosted Compute Agent
+2026-07-27T16:43:27.7028147Z Version: 20260707.563
+2026-07-27T16:43:27.7029112Z Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+2026-07-27T16:43:27.7029843Z Build Date: 2026-07-07T19:33:50Z
+2026-07-27T16:43:27.7030576Z Worker ID: {4e5db9bf-8378-4cb3-973b-b88b53e569cc}
+2026-07-27T16:43:27.7031376Z Azure Region: westus
+2026-07-27T16:43:27.7031957Z ##[endgroup]
+2026-07-27T16:43:27.7033547Z ##[group]Operating System
+2026-07-27T16:43:27.7034213Z Ubuntu
+2026-07-27T16:43:27.7034792Z 24.04.4
+2026-07-27T16:43:27.7035388Z LTS
+2026-07-27T16:43:27.7035928Z ##[endgroup]
+2026-07-27T16:43:27.7036482Z ##[group]Runner Image
+2026-07-27T16:43:27.7037163Z Image: ubuntu-24.04
+2026-07-27T16:43:27.7037785Z Version: 20260720.247.2
+2026-07-27T16:43:27.7039448Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-27T16:43:27.7040948Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+2026-07-27T16:43:27.7041980Z ##[endgroup]
+2026-07-27T16:43:27.7044819Z ##[group]GITHUB_TOKEN Permissions
+2026-07-27T16:43:27.7047006Z Actions: read
+2026-07-27T16:43:27.7047629Z ArtifactMetadata: read
+2026-07-27T16:43:27.7048546Z Attestations: read
+2026-07-27T16:43:27.7049160Z Checks: read
+2026-07-27T16:43:27.7049774Z CodeQuality: read
+2026-07-27T16:43:27.7050409Z Contents: read
+2026-07-27T16:43:27.7050975Z Deployments: read
+2026-07-27T16:43:27.7051555Z Discussions: read
+2026-07-27T16:43:27.7052196Z Drives: read
+2026-07-27T16:43:27.7052789Z Issues: read
+2026-07-27T16:43:27.7053392Z Metadata: read
+2026-07-27T16:43:27.7053967Z Models: read
+2026-07-27T16:43:27.7054630Z Packages: read
+2026-07-27T16:43:27.7055254Z Pages: read
+2026-07-27T16:43:27.7055852Z PullRequests: read
+2026-07-27T16:43:27.7056472Z RepositoryProjects: read
+2026-07-27T16:43:27.7057131Z SecurityEvents: read
+2026-07-27T16:43:27.7057720Z Statuses: read
+2026-07-27T16:43:27.7058463Z VulnerabilityAlerts: read
+2026-07-27T16:43:27.7059123Z ##[endgroup]
+2026-07-27T16:43:27.7061195Z Secret source: Dependabot
+2026-07-27T16:43:27.7062351Z Prepare workflow directory
+2026-07-27T16:43:27.7396720Z Prepare all required actions
+2026-07-27T16:43:27.7445032Z Getting action download info
+2026-07-27T16:43:28.1061828Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-07-27T16:43:28.5349942Z Download action repository 'graalvm/setup-graalvm@v1.6.3' (SHA:0def53c0fd8534bc13416c9469f5be45265824fd)
+2026-07-27T16:43:28.9703627Z Download action repository 'ilammy/msvc-dev-cmd@v1' (SHA:0b201ec74fa43914dc39ae48a89fd1d8cb592756)
+2026-07-27T16:43:29.3384246Z Complete job name: Verify GraalVM 21 compatibility on ubuntu-latest
+2026-07-27T16:43:29.4411439Z ##[group]Run actions/checkout@v7
+2026-07-27T16:43:29.4413309Z with:
+2026-07-27T16:43:29.4414193Z   repository: nitrite/nitrite-java
+2026-07-27T16:43:29.4423052Z   token: ***
+2026-07-27T16:43:29.4423952Z   ssh-strict: true
+2026-07-27T16:43:29.4424840Z   ssh-user: git
+2026-07-27T16:43:29.4425736Z   persist-credentials: true
+2026-07-27T16:43:29.4426709Z   clean: true
+2026-07-27T16:43:29.4427600Z   sparse-checkout-cone-mode: true
+2026-07-27T16:43:29.4428873Z   fetch-depth: 1
+2026-07-27T16:43:29.4429729Z   fetch-tags: false
+2026-07-27T16:43:29.4430628Z   show-progress: true
+2026-07-27T16:43:29.4431530Z   lfs: false
+2026-07-27T16:43:29.4432364Z   submodules: false
+2026-07-27T16:43:29.4433276Z   set-safe-directory: true
+2026-07-27T16:43:29.4434296Z   allow-unsafe-pr-checkout: false
+2026-07-27T16:43:29.4435622Z ##[endgroup]
+2026-07-27T16:43:29.5478239Z Syncing repository: nitrite/nitrite-java
+2026-07-27T16:43:29.5481252Z ##[group]Getting Git version info
+2026-07-27T16:43:29.5482809Z Working directory is '/home/runner/work/nitrite-java/nitrite-java'
+2026-07-27T16:43:29.5484913Z [command]/usr/bin/git version
+2026-07-27T16:43:29.5510792Z git version 2.54.0
+2026-07-27T16:43:29.5534535Z ##[endgroup]
+2026-07-27T16:43:29.5544715Z Temporarily overriding HOME='/home/runner/work/_temp/567b61c5-d8c3-4f0c-8a09-92fea2ad90ed' before making global git config changes
+2026-07-27T16:43:29.5547749Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-27T16:43:29.5553998Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nitrite-java/nitrite-java
+2026-07-27T16:43:29.5605500Z Deleting the contents of '/home/runner/work/nitrite-java/nitrite-java'
+2026-07-27T16:43:29.5610184Z ##[group]Determining repository object format
+2026-07-27T16:43:29.5612622Z ##[endgroup]
+2026-07-27T16:43:29.5614201Z ##[group]Initializing the repository
+2026-07-27T16:43:29.5628410Z [command]/usr/bin/git init /home/runner/work/nitrite-java/nitrite-java
+2026-07-27T16:43:29.5699493Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-27T16:43:29.5702374Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-27T16:43:29.5704742Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-27T16:43:29.5707073Z hint: call:
+2026-07-27T16:43:29.5708444Z hint:
+2026-07-27T16:43:29.5709945Z hint: 	git config --global init.defaultBranch <name>
+2026-07-27T16:43:29.5711820Z hint:
+2026-07-27T16:43:29.5713513Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-27T16:43:29.5716346Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-27T16:43:29.5718221Z hint:
+2026-07-27T16:43:29.5719365Z hint: 	git branch -m <name>
+2026-07-27T16:43:29.5720343Z hint:
+2026-07-27T16:43:29.5721609Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-27T16:43:29.5723739Z Initialized empty Git repository in /home/runner/work/nitrite-java/nitrite-java/.git/
+2026-07-27T16:43:29.5729555Z [command]/usr/bin/git remote add origin https://github.com/nitrite/nitrite-java
+2026-07-27T16:43:29.5775406Z ##[endgroup]
+2026-07-27T16:43:29.5777094Z ##[group]Disabling automatic garbage collection
+2026-07-27T16:43:29.5779402Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-27T16:43:29.5813562Z ##[endgroup]
+2026-07-27T16:43:29.5815320Z ##[group]Setting up auth
+2026-07-27T16:43:29.5816421Z Removing SSH command configuration
+2026-07-27T16:43:29.5819803Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-27T16:43:29.5857653Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-27T16:43:29.6200223Z Removing HTTP extra header
+2026-07-27T16:43:29.6206935Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-27T16:43:29.6259404Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-27T16:43:29.6520626Z Removing includeIf entries pointing to credentials config files
+2026-07-27T16:43:29.6526064Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-27T16:43:29.6566576Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-27T16:43:29.6824053Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-27T16:43:29.6867614Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git.path /home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:43:29.6904188Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:43:29.6943157Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:43:29.6980449Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:43:29.7012662Z ##[endgroup]
+2026-07-27T16:43:29.7014126Z ##[group]Fetching the repository
+2026-07-27T16:43:29.7019354Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0490472325ea247446758fcc5a78ed8d96d6281b:refs/remotes/pull/1274/merge
+2026-07-27T16:43:30.4447550Z From https://github.com/nitrite/nitrite-java
+2026-07-27T16:43:30.4449602Z  * [new ref]         0490472325ea247446758fcc5a78ed8d96d6281b -> pull/1274/merge
+2026-07-27T16:43:30.4479056Z ##[endgroup]
+2026-07-27T16:43:30.4481110Z ##[group]Determining the checkout info
+2026-07-27T16:43:30.4483421Z ##[endgroup]
+2026-07-27T16:43:30.4485703Z [command]/usr/bin/git sparse-checkout disable
+2026-07-27T16:43:30.4538713Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-27T16:43:30.4575024Z ##[group]Checking out the ref
+2026-07-27T16:43:30.4579006Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1274/merge
+2026-07-27T16:43:30.5251171Z Note: switching to 'refs/remotes/pull/1274/merge'.
+2026-07-27T16:43:30.5252133Z 
+2026-07-27T16:43:30.5252898Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-27T16:43:30.5255223Z changes and commit them, and you can discard any commits you make in this
+2026-07-27T16:43:30.5257766Z state without impacting any branches by switching back to a branch.
+2026-07-27T16:43:30.5259437Z 
+2026-07-27T16:43:30.5260461Z If you want to create a new branch to retain commits you create, you may
+2026-07-27T16:43:30.5262849Z do so (now or later) by using -c with the switch command. Example:
+2026-07-27T16:43:30.5264204Z 
+2026-07-27T16:43:30.5264803Z   git switch -c <new-branch-name>
+2026-07-27T16:43:30.5265877Z 
+2026-07-27T16:43:30.5266462Z Or undo this operation with:
+2026-07-27T16:43:30.5267379Z 
+2026-07-27T16:43:30.5267884Z   git switch -
+2026-07-27T16:43:30.5268773Z 
+2026-07-27T16:43:30.5269865Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-27T16:43:30.5271508Z 
+2026-07-27T16:43:30.5273365Z HEAD is now at 0490472 Merge 3d429b03d85a5dcca2a3a5281d7b8318657253cf into 1f829465c8206470ca990c6739376a73d5e0a1fa
+2026-07-27T16:43:30.5278759Z ##[endgroup]
+2026-07-27T16:43:30.5315363Z [command]/usr/bin/git log -1 --format=%H
+2026-07-27T16:43:30.5346142Z 0490472325ea247446758fcc5a78ed8d96d6281b
+2026-07-27T16:43:30.5743333Z ##[group]Run graalvm/setup-graalvm@v1.6.3
+2026-07-27T16:43:30.5744454Z with:
+2026-07-27T16:43:30.5745264Z   java-version: 21
+2026-07-27T16:43:30.5746163Z   distribution: graalvm-community
+2026-07-27T16:43:30.5747161Z   java-package: jdk
+2026-07-27T16:43:30.5755774Z   github-token: ***
+2026-07-27T16:43:30.5756653Z   set-java-home: true
+2026-07-27T16:43:30.5757560Z   check-for-updates: true
+2026-07-27T16:43:30.5758629Z   native-image-musl: false
+2026-07-27T16:43:30.5759618Z   native-image-job-reports: false
+2026-07-27T16:43:30.5760689Z   native-image-pr-reports: false
+2026-07-27T16:43:30.5761845Z   native-image-pr-reports-update-existing: false
+2026-07-27T16:43:30.5763087Z   native-image-enable-sbom: false
+2026-07-27T16:43:30.5764074Z ##[endgroup]
+2026-07-27T16:43:32.5775552Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/25ee97a9-a5f9-4824-bdeb-e73ed5e03302 -f /home/runner/work/_temp/8cd7dfa4-1e86-427b-94ac-88e3bc94044b/.gz
+2026-07-27T16:43:36.3729904Z Adding graalvm-community-jdk-21.0.2_linux-x64_bin 21.0.2 to tool-cache ...
+2026-07-27T16:43:37.1717204Z ##[group]Successfully set up 'graalvm-community-openjdk-21.0.2+13.1'
+2026-07-27T16:43:37.1718886Z [command]/opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1/bin/java --version
+2026-07-27T16:43:37.2345921Z openjdk 21.0.2 2024-01-16
+2026-07-27T16:43:37.2347118Z OpenJDK Runtime Environment GraalVM CE 21.0.2+13.1 (build 21.0.2+13-jvmci-23.1-b30)
+2026-07-27T16:43:37.2348601Z OpenJDK 64-Bit Server VM GraalVM CE 21.0.2+13.1 (build 21.0.2+13-jvmci-23.1-b30, mixed mode, sharing)
+2026-07-27T16:43:37.3707892Z ##[endgroup]
+2026-07-27T16:43:37.3959160Z ##[group]Run mvn -B -ff -ntp clean install -DskipTests
+2026-07-27T16:43:37.3959662Z [36;1mmvn -B -ff -ntp clean install -DskipTests[0m
+2026-07-27T16:43:37.4010765Z shell: /usr/bin/bash -e {0}
+2026-07-27T16:43:37.4011047Z env:
+2026-07-27T16:43:37.4011573Z   GRAALVM_HOME: /opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1
+2026-07-27T16:43:37.4012462Z   JAVA_HOME: /opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1
+2026-07-27T16:43:37.4013040Z ##[endgroup]
+2026-07-27T16:43:39.0151201Z [INFO] Scanning for projects...
+2026-07-27T16:43:42.4834946Z [WARNING] 
+2026-07-27T16:43:42.4859901Z [WARNING] Some problems were encountered while building the effective model for org.dizitart:nitrite-native-tests:jar:4.4.3
+2026-07-27T16:43:42.4873140Z [WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-install-plugin is missing. @ line 73, column 21
+2026-07-27T16:43:42.4874506Z [WARNING] 
+2026-07-27T16:43:42.4875564Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-07-27T16:43:42.4876608Z [WARNING] 
+2026-07-27T16:43:42.4877546Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-07-27T16:43:42.4878737Z [WARNING] 
+2026-07-27T16:43:42.4916311Z [INFO] Kotlin smart defaults are enabled for potassium-nitrite
+2026-07-27T16:43:42.4939275Z [INFO] Using jvmTarget=11 (derived from maven.compiler.release=11)
+2026-07-27T16:43:42.4957342Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:43:42.4969168Z [INFO] Reactor Build Order:
+2026-07-27T16:43:42.4999006Z [INFO] 
+2026-07-27T16:43:42.4999633Z [INFO] Nitrite Database                                                   [pom]
+2026-07-27T16:43:42.5000400Z [INFO] Nitrite                                                            [jar]
+2026-07-27T16:43:42.5001109Z [INFO] Nitrite BOM                                                        [pom]
+2026-07-27T16:43:42.5001830Z [INFO] Nitrite MVStore Adapter                                            [jar]
+2026-07-27T16:43:42.5002583Z [INFO] Nitrite Jackson Mapper                                             [jar]
+2026-07-27T16:43:42.5003358Z [INFO] Nitrite Native Tests                                               [jar]
+2026-07-27T16:43:42.5004086Z [INFO] Nitrite RocksDB Adapter                                            [jar]
+2026-07-27T16:43:42.5004801Z [INFO] Nitrite Spatial                                                    [jar]
+2026-07-27T16:43:42.5005502Z [INFO] Nitrite Support                                                    [jar]
+2026-07-27T16:43:42.5006196Z [INFO] Potassium Nitrite                                                  [jar]
+2026-07-27T16:43:42.5059195Z [INFO] 
+2026-07-27T16:43:42.5060197Z [INFO] ---------------------< org.dizitart:nitrite-java >----------------------
+2026-07-27T16:43:42.5061069Z [INFO] Building Nitrite Database 4.4.3                                   [1/10]
+2026-07-27T16:43:42.5061702Z [INFO]   from pom.xml
+2026-07-27T16:43:42.5062224Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-07-27T16:43:42.7028728Z [INFO] 
+2026-07-27T16:43:42.7029264Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-java ---
+2026-07-27T16:43:42.9617617Z [INFO] 
+2026-07-27T16:43:42.9618519Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-java ---
+2026-07-27T16:43:43.1944816Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-java/4.4.3/nitrite-java-4.4.3.pom
+2026-07-27T16:43:43.1991635Z [INFO] 
+2026-07-27T16:43:43.1992157Z [INFO] ------------------------< org.dizitart:nitrite >------------------------
+2026-07-27T16:43:43.1992916Z [INFO] Building Nitrite 4.4.3                                            [2/10]
+2026-07-27T16:43:43.1993507Z [INFO]   from nitrite/pom.xml
+2026-07-27T16:43:43.1994370Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:43:46.5293192Z [INFO] 
+2026-07-27T16:43:46.5300339Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite ---
+2026-07-27T16:43:46.5322637Z [INFO] 
+2026-07-27T16:43:46.5323317Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite ---
+2026-07-27T16:43:47.1140202Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite/target/jacoco.exec,excludes=**/index/fulltext/languages/*
+2026-07-27T16:43:47.1142076Z [INFO] 
+2026-07-27T16:43:47.1142485Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite ---
+2026-07-27T16:43:51.1777509Z [INFO] Delombok complete.
+2026-07-27T16:43:51.1780398Z [INFO] 
+2026-07-27T16:43:51.1781082Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite ---
+2026-07-27T16:43:51.6487880Z [INFO] Copying 1 resource from src/main/resources to target/classes
+2026-07-27T16:43:51.6531951Z [INFO] 
+2026-07-27T16:43:51.6532459Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite ---
+2026-07-27T16:43:53.0384900Z [INFO] Recompiling the module because of changed source code.
+2026-07-27T16:43:53.0456507Z [INFO] Compiling 284 source files with javac [debug release 11] to target/classes
+2026-07-27T16:43:55.9045623Z [INFO] 
+2026-07-27T16:43:55.9046476Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite ---
+2026-07-27T16:43:55.9097307Z [INFO] Copying 3 resources from src/test/resources to target/test-classes
+2026-07-27T16:43:55.9103936Z [INFO] 
+2026-07-27T16:43:55.9104468Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite ---
+2026-07-27T16:43:55.9367195Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:43:55.9377729Z [INFO] Compiling 311 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:43:58.9893692Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite/src/test/java/org/dizitart/no2/collection/NitriteDocumentTest.java: Some input files use unchecked or unsafe operations.
+2026-07-27T16:43:58.9895930Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite/src/test/java/org/dizitart/no2/collection/NitriteDocumentTest.java: Recompile with -Xlint:unchecked for details.
+2026-07-27T16:43:58.9897177Z [INFO] 
+2026-07-27T16:43:58.9897606Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite ---
+2026-07-27T16:43:59.4682636Z [INFO] Tests are skipped.
+2026-07-27T16:43:59.4682960Z [INFO] 
+2026-07-27T16:43:59.4683358Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite ---
+2026-07-27T16:43:59.4704690Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:43:59.4705563Z [INFO] 
+2026-07-27T16:43:59.4706419Z [INFO] --- animal-sniffer:1.27:check (check-android-compat) @ nitrite ---
+2026-07-27T16:43:59.5910502Z [INFO] Checking unresolved references to net.sf.androidscents.signature:android-api-level-26:8.0.0_r2
+2026-07-27T16:43:59.8529709Z [INFO] 
+2026-07-27T16:43:59.8548920Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite ---
+2026-07-27T16:44:00.5035365Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3.jar
+2026-07-27T16:44:00.5791565Z [INFO] 
+2026-07-27T16:44:00.5810946Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite ---
+2026-07-27T16:44:05.1136292Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3-javadoc.jar
+2026-07-27T16:44:05.1895174Z [INFO] 
+2026-07-27T16:44:05.1895794Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite ---
+2026-07-27T16:44:05.3135031Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3-sources.jar
+2026-07-27T16:44:05.3685968Z [INFO] 
+2026-07-27T16:44:05.3687110Z [INFO] --- install:3.1.4:install (default-install) @ nitrite ---
+2026-07-27T16:44:05.3696460Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite/4.4.3/nitrite-4.4.3.pom
+2026-07-27T16:44:05.3704466Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite/4.4.3/nitrite-4.4.3.jar
+2026-07-27T16:44:05.3712988Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite/4.4.3/nitrite-4.4.3-javadoc.jar
+2026-07-27T16:44:05.3721643Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite/target/nitrite-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite/4.4.3/nitrite-4.4.3-sources.jar
+2026-07-27T16:44:05.3735352Z [INFO] 
+2026-07-27T16:44:05.3736064Z [INFO] ----------------------< org.dizitart:nitrite-bom >----------------------
+2026-07-27T16:44:05.3736940Z [INFO] Building Nitrite BOM 4.4.3                                        [3/10]
+2026-07-27T16:44:05.3737676Z [INFO]   from nitrite-bom/pom.xml
+2026-07-27T16:44:05.3738532Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-07-27T16:44:05.3745140Z [INFO] 
+2026-07-27T16:44:05.3745699Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-bom ---
+2026-07-27T16:44:05.3754260Z [INFO] 
+2026-07-27T16:44:05.3754956Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-bom ---
+2026-07-27T16:44:05.3760491Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-bom/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-bom/4.4.3/nitrite-bom-4.4.3.pom
+2026-07-27T16:44:05.3769577Z [INFO] 
+2026-07-27T16:44:05.3786409Z [INFO] ----------------< org.dizitart:nitrite-mvstore-adapter >----------------
+2026-07-27T16:44:05.3793381Z [INFO] Building Nitrite MVStore Adapter 4.4.3                            [4/10]
+2026-07-27T16:44:05.3794179Z [INFO]   from nitrite-mvstore-adapter/pom.xml
+2026-07-27T16:44:05.3796517Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:05.5320855Z [INFO] 
+2026-07-27T16:44:05.5329649Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:05.5330420Z [INFO] 
+2026-07-27T16:44:05.5331040Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:05.5332447Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/jacoco.exec,excludes=**/compat/v1/**/*
+2026-07-27T16:44:05.5333446Z [INFO] 
+2026-07-27T16:44:05.5333789Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:06.4048742Z [INFO] Delombok complete.
+2026-07-27T16:44:06.4058871Z [INFO] 
+2026-07-27T16:44:06.4082938Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:06.4083964Z [INFO] Copying 2 resources from src/main/resources to target/classes
+2026-07-27T16:44:06.4084645Z [INFO] 
+2026-07-27T16:44:06.4085230Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:06.4171162Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:06.4177233Z [INFO] Compiling 50 source files with javac [debug release 11] to target/classes
+2026-07-27T16:44:07.5534879Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/src/main/java/org/dizitart/no2/mvstore/compat/v1/mvstore/fs/FilePath.java: Some input files use unchecked or unsafe operations.
+2026-07-27T16:44:07.5537680Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/src/main/java/org/dizitart/no2/mvstore/compat/v1/mvstore/fs/FilePath.java: Recompile with -Xlint:unchecked for details.
+2026-07-27T16:44:07.5540112Z [INFO] 
+2026-07-27T16:44:07.5540934Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:07.5563534Z [INFO] Copying 6 resources from src/test/resources to target/test-classes
+2026-07-27T16:44:07.5574617Z [INFO] 
+2026-07-27T16:44:07.5575261Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:07.5672763Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:07.5676734Z [INFO] Compiling 119 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:09.2313817Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/src/test/java/org/dizitart/no2/integration/repository/data/ElemMatch.java: Some input files use unchecked or unsafe operations.
+2026-07-27T16:44:09.2317022Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/src/test/java/org/dizitart/no2/integration/repository/data/ElemMatch.java: Recompile with -Xlint:unchecked for details.
+2026-07-27T16:44:09.2318511Z [INFO] 
+2026-07-27T16:44:09.2319262Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:09.2351333Z [INFO] Tests are skipped.
+2026-07-27T16:44:09.2352251Z [INFO] 
+2026-07-27T16:44:09.2352689Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:09.2361233Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:09.2361809Z [INFO] 
+2026-07-27T16:44:09.2362227Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:09.2453840Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3.jar
+2026-07-27T16:44:09.2640178Z [INFO] 
+2026-07-27T16:44:09.2647245Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:11.5527336Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3-javadoc.jar
+2026-07-27T16:44:11.5829594Z [INFO] 
+2026-07-27T16:44:11.5849453Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:11.5907835Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3-sources.jar
+2026-07-27T16:44:11.6047771Z [INFO] 
+2026-07-27T16:44:11.6048733Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-mvstore-adapter ---
+2026-07-27T16:44:11.6061610Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-mvstore-adapter/4.4.3/nitrite-mvstore-adapter-4.4.3.pom
+2026-07-27T16:44:11.6070704Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite-mvstore-adapter/4.4.3/nitrite-mvstore-adapter-4.4.3.jar
+2026-07-27T16:44:11.6076810Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite-mvstore-adapter/4.4.3/nitrite-mvstore-adapter-4.4.3-javadoc.jar
+2026-07-27T16:44:11.6084164Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-mvstore-adapter/target/nitrite-mvstore-adapter-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite-mvstore-adapter/4.4.3/nitrite-mvstore-adapter-4.4.3-sources.jar
+2026-07-27T16:44:11.6098156Z [INFO] 
+2026-07-27T16:44:11.6098902Z [INFO] ----------------< org.dizitart:nitrite-jackson-mapper >-----------------
+2026-07-27T16:44:11.6099681Z [INFO] Building Nitrite Jackson Mapper 4.4.3                             [5/10]
+2026-07-27T16:44:11.6100305Z [INFO]   from nitrite-jackson-mapper/pom.xml
+2026-07-27T16:44:11.6101217Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:11.7176496Z [INFO] 
+2026-07-27T16:44:11.7177222Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:11.7191626Z [INFO] 
+2026-07-27T16:44:11.7192593Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:11.7206802Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/jacoco.exec
+2026-07-27T16:44:11.7208899Z [INFO] 
+2026-07-27T16:44:11.7209404Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:11.7986851Z [INFO] Delombok complete.
+2026-07-27T16:44:11.7987322Z [INFO] 
+2026-07-27T16:44:11.7987850Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:11.8000349Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/src/main/resources
+2026-07-27T16:44:11.8001409Z [INFO] 
+2026-07-27T16:44:11.8001906Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:11.8059129Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:11.8061740Z [INFO] Compiling 5 source files with javac [debug release 11] to target/classes
+2026-07-27T16:44:12.0122556Z [INFO] 
+2026-07-27T16:44:12.0123198Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.0137690Z [INFO] Copying 3 resources from src/test/resources to target/test-classes
+2026-07-27T16:44:12.0142627Z [INFO] 
+2026-07-27T16:44:12.0143486Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.0229186Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:12.0233716Z [INFO] Compiling 63 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:12.8473114Z [INFO] 
+2026-07-27T16:44:12.8473688Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.8500313Z [INFO] Tests are skipped.
+2026-07-27T16:44:12.8505074Z [INFO] 
+2026-07-27T16:44:12.8508012Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.8509276Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:12.8509993Z [INFO] 
+2026-07-27T16:44:12.8510676Z [INFO] --- animal-sniffer:1.27:check (check-android-compat) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.8523831Z [INFO] Checking unresolved references to net.sf.androidscents.signature:android-api-level-26:8.0.0_r2
+2026-07-27T16:44:12.9279151Z [INFO] 
+2026-07-27T16:44:12.9280015Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:12.9317007Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3.jar
+2026-07-27T16:44:12.9378902Z [INFO] 
+2026-07-27T16:44:12.9399503Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:14.2656433Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3-javadoc.jar
+2026-07-27T16:44:14.2749011Z [INFO] 
+2026-07-27T16:44:14.2750032Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:14.2784108Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3-sources.jar
+2026-07-27T16:44:14.2812937Z [INFO] 
+2026-07-27T16:44:14.2813720Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-jackson-mapper ---
+2026-07-27T16:44:14.2822061Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-jackson-mapper/4.4.3/nitrite-jackson-mapper-4.4.3.pom
+2026-07-27T16:44:14.2829113Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite-jackson-mapper/4.4.3/nitrite-jackson-mapper-4.4.3.jar
+2026-07-27T16:44:14.2833742Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite-jackson-mapper/4.4.3/nitrite-jackson-mapper-4.4.3-javadoc.jar
+2026-07-27T16:44:14.2837760Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-jackson-mapper/target/nitrite-jackson-mapper-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite-jackson-mapper/4.4.3/nitrite-jackson-mapper-4.4.3-sources.jar
+2026-07-27T16:44:14.2847576Z [INFO] 
+2026-07-27T16:44:14.2848046Z [INFO] -----------------< org.dizitart:nitrite-native-tests >------------------
+2026-07-27T16:44:14.2848965Z [INFO] Building Nitrite Native Tests 4.4.3                               [6/10]
+2026-07-27T16:44:14.2849590Z [INFO]   from nitrite-native-tests/pom.xml
+2026-07-27T16:44:14.2850150Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:14.5429982Z [INFO] 
+2026-07-27T16:44:14.5430691Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-native-tests ---
+2026-07-27T16:44:14.5437664Z [INFO] 
+2026-07-27T16:44:14.5438648Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-native-tests ---
+2026-07-27T16:44:14.5446549Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-native-tests/src/main/resources
+2026-07-27T16:44:14.5447737Z [INFO] 
+2026-07-27T16:44:14.5448848Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-native-tests ---
+2026-07-27T16:44:14.5467762Z [INFO] No sources to compile
+2026-07-27T16:44:14.5468829Z [INFO] 
+2026-07-27T16:44:14.5469677Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-native-tests ---
+2026-07-27T16:44:14.5480813Z [INFO] Copying 4 resources from src/test/resources to target/test-classes
+2026-07-27T16:44:14.5489741Z [INFO] 
+2026-07-27T16:44:14.5490518Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-native-tests ---
+2026-07-27T16:44:14.5542905Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:14.5547949Z [INFO] Compiling 9 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:14.8177299Z [INFO] 
+2026-07-27T16:44:14.8177897Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-native-tests ---
+2026-07-27T16:44:14.8210328Z [INFO] Tests are skipped.
+2026-07-27T16:44:14.8210948Z [INFO] 
+2026-07-27T16:44:14.8213360Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-native-tests ---
+2026-07-27T16:44:14.8220547Z [WARNING] JAR will be empty - no content was marked for inclusion!
+2026-07-27T16:44:14.8227031Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-native-tests/target/nitrite-native-tests-4.4.3.jar
+2026-07-27T16:44:14.8247630Z [INFO] 
+2026-07-27T16:44:14.8248153Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-native-tests ---
+2026-07-27T16:44:14.8263451Z [INFO] Skipping javadoc generation
+2026-07-27T16:44:14.8263960Z [INFO] 
+2026-07-27T16:44:14.8264521Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-native-tests ---
+2026-07-27T16:44:14.8270822Z [INFO] Skipping source per configuration.
+2026-07-27T16:44:14.8273260Z [INFO] 
+2026-07-27T16:44:14.8273786Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-native-tests ---
+2026-07-27T16:44:14.8274870Z [INFO] Skipping artifact installation
+2026-07-27T16:44:14.8275890Z [INFO] 
+2026-07-27T16:44:14.8282187Z [INFO] ----------------< org.dizitart:nitrite-rocksdb-adapter >----------------
+2026-07-27T16:44:14.8296024Z [INFO] Building Nitrite RocksDB Adapter 4.4.3                            [7/10]
+2026-07-27T16:44:14.8296736Z [INFO]   from nitrite-rocksdb-adapter/pom.xml
+2026-07-27T16:44:14.8297710Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:15.2722680Z [INFO] 
+2026-07-27T16:44:15.2723110Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.2730460Z [INFO] 
+2026-07-27T16:44:15.2730982Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.2738713Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/jacoco.exec
+2026-07-27T16:44:15.2740072Z [INFO] 
+2026-07-27T16:44:15.2740481Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.4465848Z [INFO] Delombok complete.
+2026-07-27T16:44:15.4466308Z [INFO] 
+2026-07-27T16:44:15.4490010Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.4491257Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/src/main/resources
+2026-07-27T16:44:15.4492180Z [INFO] 
+2026-07-27T16:44:15.4492711Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.4542897Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:15.4551815Z [INFO] Compiling 22 source files with javac [debug release 11] to target/classes
+2026-07-27T16:44:15.8263266Z [INFO] 
+2026-07-27T16:44:15.8263957Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.8289276Z [INFO] Copying 3 resources from src/test/resources to target/test-classes
+2026-07-27T16:44:15.8292187Z [INFO] 
+2026-07-27T16:44:15.8292925Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:15.8382638Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:15.8386109Z [INFO] Compiling 124 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:17.2655277Z [INFO] 
+2026-07-27T16:44:17.2656154Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:17.2689679Z [INFO] Tests are skipped.
+2026-07-27T16:44:17.2694938Z [INFO] 
+2026-07-27T16:44:17.2695856Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:17.2708402Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:17.2739154Z [INFO] 
+2026-07-27T16:44:17.2739877Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:17.2740881Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3.jar
+2026-07-27T16:44:17.2792220Z [INFO] 
+2026-07-27T16:44:17.2792774Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:18.6147840Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3-javadoc.jar
+2026-07-27T16:44:18.6602822Z [INFO] 
+2026-07-27T16:44:18.6603820Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:18.6689641Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3-sources.jar
+2026-07-27T16:44:18.6763810Z [INFO] 
+2026-07-27T16:44:18.6764625Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-rocksdb-adapter ---
+2026-07-27T16:44:18.6775291Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-rocksdb-adapter/4.4.3/nitrite-rocksdb-adapter-4.4.3.pom
+2026-07-27T16:44:18.6787244Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite-rocksdb-adapter/4.4.3/nitrite-rocksdb-adapter-4.4.3.jar
+2026-07-27T16:44:18.6790916Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite-rocksdb-adapter/4.4.3/nitrite-rocksdb-adapter-4.4.3-javadoc.jar
+2026-07-27T16:44:18.6795175Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-rocksdb-adapter/target/nitrite-rocksdb-adapter-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite-rocksdb-adapter/4.4.3/nitrite-rocksdb-adapter-4.4.3-sources.jar
+2026-07-27T16:44:18.6809482Z [INFO] 
+2026-07-27T16:44:18.6822083Z [INFO] --------------------< org.dizitart:nitrite-spatial >--------------------
+2026-07-27T16:44:18.6823115Z [INFO] Building Nitrite Spatial 4.4.3                                    [8/10]
+2026-07-27T16:44:18.6827627Z [INFO]   from nitrite-spatial/pom.xml
+2026-07-27T16:44:18.6828564Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:18.7949791Z [INFO] 
+2026-07-27T16:44:18.7950610Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-spatial ---
+2026-07-27T16:44:18.7988951Z [INFO] 
+2026-07-27T16:44:18.7989867Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite-spatial ---
+2026-07-27T16:44:18.8019996Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/jacoco.exec
+2026-07-27T16:44:18.8026586Z [INFO] 
+2026-07-27T16:44:18.8027247Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite-spatial ---
+2026-07-27T16:44:18.9067228Z [INFO] Delombok complete.
+2026-07-27T16:44:18.9067674Z [INFO] 
+2026-07-27T16:44:18.9068208Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-spatial ---
+2026-07-27T16:44:18.9081801Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/src/main/resources
+2026-07-27T16:44:18.9082924Z [INFO] 
+2026-07-27T16:44:18.9083676Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-spatial ---
+2026-07-27T16:44:18.9145415Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:18.9149323Z [INFO] Compiling 17 source files with javac [debug release 11] to target/classes
+2026-07-27T16:44:19.1580838Z [INFO] 
+2026-07-27T16:44:19.1582021Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-spatial ---
+2026-07-27T16:44:19.1590624Z [INFO] Copying 1 resource from src/test/resources to target/test-classes
+2026-07-27T16:44:19.1593227Z [INFO] 
+2026-07-27T16:44:19.1593785Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-spatial ---
+2026-07-27T16:44:19.1643995Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:19.1650905Z [INFO] Compiling 9 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:19.4649683Z [INFO] 
+2026-07-27T16:44:19.4650830Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-spatial ---
+2026-07-27T16:44:19.4667652Z [INFO] Tests are skipped.
+2026-07-27T16:44:19.4668122Z [INFO] 
+2026-07-27T16:44:19.4668761Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite-spatial ---
+2026-07-27T16:44:19.4673389Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:19.4674001Z [INFO] 
+2026-07-27T16:44:19.4674649Z [INFO] --- animal-sniffer:1.27:check (check-android-compat) @ nitrite-spatial ---
+2026-07-27T16:44:19.4680263Z [INFO] Checking unresolved references to net.sf.androidscents.signature:android-api-level-26:8.0.0_r2
+2026-07-27T16:44:19.5661555Z [INFO] 
+2026-07-27T16:44:19.5662571Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-spatial ---
+2026-07-27T16:44:19.5693276Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3.jar
+2026-07-27T16:44:19.5751339Z [INFO] 
+2026-07-27T16:44:19.5751916Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-spatial ---
+2026-07-27T16:44:20.8553925Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3-javadoc.jar
+2026-07-27T16:44:20.8675301Z [INFO] 
+2026-07-27T16:44:20.8675992Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-spatial ---
+2026-07-27T16:44:20.8706438Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3-sources.jar
+2026-07-27T16:44:20.8740492Z [INFO] 
+2026-07-27T16:44:20.8741223Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-spatial ---
+2026-07-27T16:44:20.8755681Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-spatial/4.4.3/nitrite-spatial-4.4.3.pom
+2026-07-27T16:44:20.8767169Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite-spatial/4.4.3/nitrite-spatial-4.4.3.jar
+2026-07-27T16:44:20.8770259Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite-spatial/4.4.3/nitrite-spatial-4.4.3-javadoc.jar
+2026-07-27T16:44:20.8772807Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-spatial/target/nitrite-spatial-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite-spatial/4.4.3/nitrite-spatial-4.4.3-sources.jar
+2026-07-27T16:44:20.8779169Z [INFO] 
+2026-07-27T16:44:20.8779810Z [INFO] --------------------< org.dizitart:nitrite-support >--------------------
+2026-07-27T16:44:20.8780636Z [INFO] Building Nitrite Support 4.4.3                                    [9/10]
+2026-07-27T16:44:20.8781305Z [INFO]   from nitrite-support/pom.xml
+2026-07-27T16:44:20.8781920Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:20.8830869Z [INFO] 
+2026-07-27T16:44:20.8831544Z [INFO] --- clean:3.2.0:clean (default-clean) @ nitrite-support ---
+2026-07-27T16:44:20.8850580Z [INFO] 
+2026-07-27T16:44:20.8851443Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ nitrite-support ---
+2026-07-27T16:44:20.8853247Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/jacoco.exec
+2026-07-27T16:44:20.8854792Z [INFO] 
+2026-07-27T16:44:20.8855411Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ nitrite-support ---
+2026-07-27T16:44:20.9813605Z [INFO] Delombok complete.
+2026-07-27T16:44:20.9814059Z [INFO] 
+2026-07-27T16:44:20.9816809Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-support ---
+2026-07-27T16:44:20.9827165Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-support/src/main/resources
+2026-07-27T16:44:20.9828458Z [INFO] 
+2026-07-27T16:44:20.9829194Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-support ---
+2026-07-27T16:44:20.9882479Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:20.9886146Z [INFO] Compiling 10 source files with javac [debug release 11] to target/classes
+2026-07-27T16:44:21.2671292Z [INFO] 
+2026-07-27T16:44:21.2671778Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-support ---
+2026-07-27T16:44:21.2693548Z [INFO] Copying 1 resource from src/test/resources to target/test-classes
+2026-07-27T16:44:21.2696000Z [INFO] 
+2026-07-27T16:44:21.2696968Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-support ---
+2026-07-27T16:44:21.2776293Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:21.2779661Z [INFO] Compiling 15 source files with javac [debug release 11] to target/test-classes
+2026-07-27T16:44:21.6629108Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-support/src/test/java/org/dizitart/no2/support/data/Company.java: /home/runner/work/nitrite-java/nitrite-java/nitrite-support/src/test/java/org/dizitart/no2/support/data/Company.java uses unchecked or unsafe operations.
+2026-07-27T16:44:21.6632315Z [INFO] /home/runner/work/nitrite-java/nitrite-java/nitrite-support/src/test/java/org/dizitart/no2/support/data/Company.java: Recompile with -Xlint:unchecked for details.
+2026-07-27T16:44:21.6633497Z [INFO] 
+2026-07-27T16:44:21.6634170Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-support ---
+2026-07-27T16:44:21.6654436Z [INFO] Tests are skipped.
+2026-07-27T16:44:21.6655096Z [INFO] 
+2026-07-27T16:44:21.6655537Z [INFO] --- jacoco:0.8.15:report (report) @ nitrite-support ---
+2026-07-27T16:44:21.6664061Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:21.6664890Z [INFO] 
+2026-07-27T16:44:21.6665716Z [INFO] --- animal-sniffer:1.27:check (check-android-compat) @ nitrite-support ---
+2026-07-27T16:44:21.6668948Z [INFO] Checking unresolved references to net.sf.androidscents.signature:android-api-level-26:8.0.0_r2
+2026-07-27T16:44:21.7618178Z [INFO] 
+2026-07-27T16:44:21.7619311Z [INFO] --- jar:3.5.0:jar (default-jar) @ nitrite-support ---
+2026-07-27T16:44:21.7652141Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3.jar
+2026-07-27T16:44:21.7692133Z [INFO] 
+2026-07-27T16:44:21.7708999Z [INFO] --- javadoc:3.12.0:jar (attach-javadocs) @ nitrite-support ---
+2026-07-27T16:44:23.0521354Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3-javadoc.jar
+2026-07-27T16:44:23.0632307Z [INFO] 
+2026-07-27T16:44:23.0633195Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ nitrite-support ---
+2026-07-27T16:44:23.0657598Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3-sources.jar
+2026-07-27T16:44:23.0708540Z [INFO] 
+2026-07-27T16:44:23.0709192Z [INFO] --- install:3.1.4:install (default-install) @ nitrite-support ---
+2026-07-27T16:44:23.0716079Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-support/pom.xml to /home/runner/.m2/repository/org/dizitart/nitrite-support/4.4.3/nitrite-support-4.4.3.pom
+2026-07-27T16:44:23.0730221Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/nitrite-support/4.4.3/nitrite-support-4.4.3.jar
+2026-07-27T16:44:23.0732872Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/nitrite-support/4.4.3/nitrite-support-4.4.3-javadoc.jar
+2026-07-27T16:44:23.0735737Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/nitrite-support/target/nitrite-support-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/nitrite-support/4.4.3/nitrite-support-4.4.3-sources.jar
+2026-07-27T16:44:23.0739826Z [INFO] 
+2026-07-27T16:44:23.0740542Z [INFO] -------------------< org.dizitart:potassium-nitrite >-------------------
+2026-07-27T16:44:23.0741540Z [INFO] Building Potassium Nitrite 4.4.3                                 [10/10]
+2026-07-27T16:44:23.0742352Z [INFO]   from potassium-nitrite/pom.xml
+2026-07-27T16:44:23.0743104Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:23.5093038Z [INFO] 
+2026-07-27T16:44:23.5093926Z [INFO] --- clean:3.2.0:clean (default-clean) @ potassium-nitrite ---
+2026-07-27T16:44:23.5215546Z [INFO] 
+2026-07-27T16:44:23.5216109Z [INFO] --- jacoco:0.8.15:prepare-agent (default) @ potassium-nitrite ---
+2026-07-27T16:44:23.5387437Z [INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/jacoco.exec
+2026-07-27T16:44:23.5389125Z [INFO] 
+2026-07-27T16:44:23.5389595Z [INFO] --- lombok:1.18.20.0:delombok (delombok) @ potassium-nitrite ---
+2026-07-27T16:44:23.5505950Z [WARNING] Skipping Delombok; no source to process.
+2026-07-27T16:44:23.5507116Z [INFO] 
+2026-07-27T16:44:23.5507596Z [INFO] --- kotlin:2.4.10:kapt (default-kapt) @ potassium-nitrite ---
+2026-07-27T16:44:23.6519028Z [WARNING] Annotation processors discovery from compile classpath is deprecated.
+2026-07-27T16:44:23.6519875Z Set 'kapt.include.compile.classpath=false' to disable discovery.
+2026-07-27T16:44:23.6521091Z The following files, containing annotation processors, are not present in KAPT classpath:
+2026-07-27T16:44:23.6522018Z   '/home/runner/.m2/repository/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar'
+2026-07-27T16:44:23.6523004Z Add corresponding dependencies to the <annotationProcessorPaths> section of the kapt configuration.
+2026-07-27T16:44:23.7175963Z [INFO] Applied plugin: 'kotlinx-serialization'
+2026-07-27T16:44:24.9805104Z [INFO] starting the daemon as: /opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1/bin/java -cp /home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-impl/2.4.10/kotlin-build-tools-impl-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-api/2.4.10/kotlin-build-tools-api-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/2.4.10/kotlin-stdlib-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-cri-impl/2.4.10/kotlin-build-tools-cri-impl-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/2.4.10/kotlin-compiler-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-script-runtime/2.4.10/kotlin-script-runtime-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.4.10/kotlin-daemon-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-compiler-runner/2.4.10/kotlin-compiler-runner-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-daemon-client/2.4.10/kotlin-daemon-client-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/2.4.10/kotlin-scripting-compiler-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-common/2.4.10/kotlin-scripting-common-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-jvm/2.4.10/kotlin-scripting-jvm-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/2.4.10/kotlin-scripting-compiler-impl-embeddable-2.4.10.jar -Djava.awt.headless=true -Djava.rmi.server.hostname=127.0.0.1 -Xmx3998m -XX:ReservedCodeCacheSize=320m -ea -Dkotlin.daemon.custom.run.files.path.for.tests=/home/runner/.kotlin/daemon -XX:+UseCodeCacheFlushing -XX:+UseParallelGC -Dkotlin.daemon.initiator.marker.file=/tmp/kotlin-compiler-client-9666763743996104152-is-running --add-exports java.base/sun.nio.ch=ALL-UNNAMED org.jetbrains.kotlin.daemon.KotlinCompileDaemon --daemon-logsPath /tmp --daemon-logsFileSizeLimit=1048576 --daemon-logsFileCountLimit=3 --daemon-runFilesPath /home/runner/.kotlin/daemon --daemon-autoshutdownIdleSeconds=7200 --daemon-shutdownDelayMilliseconds=1800000 --daemon-compilerClasspath /home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-impl/2.4.10/kotlin-build-tools-impl-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-api/2.4.10/kotlin-build-tools-api-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/2.4.10/kotlin-stdlib-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-build-tools-cri-impl/2.4.10/kotlin-build-tools-cri-impl-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/2.4.10/kotlin-compiler-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-script-runtime/2.4.10/kotlin-script-runtime-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.4.10/kotlin-daemon-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-compiler-runner/2.4.10/kotlin-compiler-runner-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-daemon-client/2.4.10/kotlin-daemon-client-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/2.4.10/kotlin-scripting-compiler-embeddable-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-common/2.4.10/kotlin-scripting-common-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-jvm/2.4.10/kotlin-scripting-jvm-2.4.10.jar:/home/runner/.m2/repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/2.4.10/kotlin-scripting-compiler-impl-embeddable-2.4.10.jar
+2026-07-27T16:44:24.9879990Z [INFO] #1 retrying connecting to the daemon 
+2026-07-27T16:44:24.9881641Z [INFO] Options for KOTLIN DAEMON: CompilationOptions(compilerMode=NON_INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=null, generateCompilerRefIndex=false)
+2026-07-27T16:44:26.1608500Z [INFO] 
+2026-07-27T16:44:26.1609129Z [INFO] --- resources:3.3.0:resources (default-resources) @ potassium-nitrite ---
+2026-07-27T16:44:26.3964981Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/main/resources
+2026-07-27T16:44:26.3966057Z [INFO] 
+2026-07-27T16:44:26.3966592Z [INFO] --- kotlin:2.4.10:compile (default-compile) @ potassium-nitrite ---
+2026-07-27T16:44:26.3994433Z [INFO] Applied plugin: 'kotlinx-serialization'
+2026-07-27T16:44:26.4047639Z [WARNING] Using experimental Kotlin incremental compilation
+2026-07-27T16:44:26.4292079Z [INFO] Options for KOTLIN DAEMON: IncrementalCompilationOptions(super=CompilationOptions(compilerMode=INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=null, generateCompilerRefIndex=false), sourceChanges=org.jetbrains.kotlin.buildtools.api.SourcesChanges$ToBeCalculated@2d67fdb9, classpathChanges=NotAvailableDueToMissingClasspathSnapshot, workingDir=/home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/kotlin-ic/compile, multiModuleICSettings=null, icFeatures=IncrementalCompilationFeatures(usePreciseJavaTracking=false, withAbiSnapshot=false, preciseCompilationResultsBackup=false, keepIncrementalCompilationCachesInMemory=false, enableUnsafeIncrementalCompilationForMultiplatform=false, enableMonotonousIncrementalCompileSetExpansion=true), outputFiles=null)
+2026-07-27T16:44:31.9230539Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/main/kotlin/org/dizitart/kno2/serialization/KotlinXSerializationMapper.kt:42:62 Unchecked cast of 'Source (of fun <Source, Target : Any> tryConvert) & Any' to 'Target (of fun <Source, Target : Any> tryConvert)'.
+2026-07-27T16:44:31.9233347Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/main/kotlin/org/dizitart/kno2/serialization/KotlinXSerializationMapper.kt:65:26 This class is not recommended for use in Kotlin. Use 'kotlin.Char' instead.
+2026-07-27T16:44:32.1253203Z [INFO] 
+2026-07-27T16:44:32.1253788Z [INFO] --- compiler:3.15.0:compile (default-compile) @ potassium-nitrite ---
+2026-07-27T16:44:32.1776381Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:32.1845605Z [INFO] 
+2026-07-27T16:44:32.1846642Z [INFO] --- kotlin:2.4.10:compile (compile) @ potassium-nitrite ---
+2026-07-27T16:44:32.1868980Z [INFO] Applied plugin: 'kotlinx-serialization'
+2026-07-27T16:44:32.1912617Z [WARNING] Using experimental Kotlin incremental compilation
+2026-07-27T16:44:32.2080441Z [INFO] Options for KOTLIN DAEMON: IncrementalCompilationOptions(super=CompilationOptions(compilerMode=INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=null, generateCompilerRefIndex=false), sourceChanges=org.jetbrains.kotlin.buildtools.api.SourcesChanges$ToBeCalculated@2d67fdb9, classpathChanges=ToBeComputedByIncrementalCompiler, workingDir=/home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/kotlin-ic/compile, multiModuleICSettings=null, icFeatures=IncrementalCompilationFeatures(usePreciseJavaTracking=false, withAbiSnapshot=false, preciseCompilationResultsBackup=false, keepIncrementalCompilationCachesInMemory=false, enableUnsafeIncrementalCompilationForMultiplatform=false, enableMonotonousIncrementalCompileSetExpansion=true), outputFiles=null)
+2026-07-27T16:44:32.2615590Z [INFO] 
+2026-07-27T16:44:32.2616415Z [INFO] --- kotlin:2.4.10:test-kapt (default-test-kapt) @ potassium-nitrite ---
+2026-07-27T16:44:32.2698844Z [WARNING] Annotation processors discovery from compile classpath is deprecated.
+2026-07-27T16:44:32.2700008Z Set 'kapt.include.compile.classpath=false' to disable discovery.
+2026-07-27T16:44:32.2701143Z The following files, containing annotation processors, are not present in KAPT classpath:
+2026-07-27T16:44:32.2702519Z   '/home/runner/.m2/repository/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar'
+2026-07-27T16:44:32.2703767Z   '/home/runner/.m2/repository/org/apache/logging/log4j/log4j-core/2.26.1/log4j-core-2.26.1.jar'
+2026-07-27T16:44:32.2705031Z Add corresponding dependencies to the <annotationProcessorPaths> section of the kapt configuration.
+2026-07-27T16:44:32.2709485Z [INFO] Applied plugin: 'kotlinx-serialization'
+2026-07-27T16:44:32.2940168Z [INFO] Options for KOTLIN DAEMON: CompilationOptions(compilerMode=NON_INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=null, generateCompilerRefIndex=false)
+2026-07-27T16:44:32.3913071Z [INFO] 
+2026-07-27T16:44:32.3919793Z [INFO] --- resources:3.3.0:testResources (default-testResources) @ potassium-nitrite ---
+2026-07-27T16:44:32.3952072Z [INFO] Copying 1 resource
+2026-07-27T16:44:32.3970694Z [INFO] 
+2026-07-27T16:44:32.3971379Z [INFO] --- kotlin:2.4.10:test-compile (default-test-compile) @ potassium-nitrite ---
+2026-07-27T16:44:32.4009152Z [INFO] Applied plugin: 'kotlinx-serialization'
+2026-07-27T16:44:32.4084723Z [WARNING] Using experimental Kotlin incremental compilation
+2026-07-27T16:44:32.4254085Z [INFO] Options for KOTLIN DAEMON: IncrementalCompilationOptions(super=CompilationOptions(compilerMode=INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=null, generateCompilerRefIndex=false), sourceChanges=org.jetbrains.kotlin.buildtools.api.SourcesChanges$ToBeCalculated@2d67fdb9, classpathChanges=NotAvailableDueToMissingClasspathSnapshot, workingDir=/home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/kotlin-ic/test, multiModuleICSettings=null, icFeatures=IncrementalCompilationFeatures(usePreciseJavaTracking=false, withAbiSnapshot=false, preciseCompilationResultsBackup=false, keepIncrementalCompilationCachesInMemory=false, enableUnsafeIncrementalCompilationForMultiplatform=false, enableMonotonousIncrementalCompileSetExpansion=true), outputFiles=null)
+2026-07-27T16:44:37.5429591Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/KotlinXSerializationMapperTest.kt:193:59 'interface Clock : Any' is deprecated. Use kotlin.time.Clock instead.
+2026-07-27T16:44:37.5460094Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/KotlinXSerializationMapperTest.kt:214:59 'interface Clock : Any' is deprecated. Use kotlin.time.Clock instead.
+2026-07-27T16:44:37.5463113Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/KotlinXSerializationMapperTest.kt:230:39 'class Instant : Comparable<Instant>' is deprecated. Use kotlin.time.Instant instead.
+2026-07-27T16:44:37.5490032Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/ObjectFilterTest.kt:295:40 Redundant call of conversion method.
+2026-07-27T16:44:37.5519837Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/ObjectFilterTest.kt:313:40 Redundant call of conversion method.
+2026-07-27T16:44:37.5550064Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/TransactionTest.kt:783:40 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Transaction'.
+2026-07-27T16:44:37.5552619Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/TransactionTest.kt:784:40 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Transaction'.
+2026-07-27T16:44:37.5555014Z [WARNING] file:///home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/src/test/kotlin/org/dizitart/kno2/TransactionTest.kt:807:28 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Transaction'.
+2026-07-27T16:44:37.6546364Z [INFO] 
+2026-07-27T16:44:37.6547071Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ potassium-nitrite ---
+2026-07-27T16:44:37.6639645Z [INFO] Recompiling the module because of changed dependency.
+2026-07-27T16:44:37.6662886Z [INFO] 
+2026-07-27T16:44:37.6663682Z [INFO] --- surefire:3.5.6:test (default-test) @ potassium-nitrite ---
+2026-07-27T16:44:37.7029596Z [INFO] Tests are skipped.
+2026-07-27T16:44:37.7041473Z [INFO] 
+2026-07-27T16:44:37.7042713Z [INFO] --- jacoco:0.8.15:report (report) @ potassium-nitrite ---
+2026-07-27T16:44:37.7049914Z [INFO] Skipping JaCoCo execution due to missing execution data file.
+2026-07-27T16:44:37.7050530Z [INFO] 
+2026-07-27T16:44:37.7051014Z [INFO] --- animal-sniffer:1.27:check (check-android-compat) @ potassium-nitrite ---
+2026-07-27T16:44:37.7193977Z [INFO] Checking unresolved references to net.sf.androidscents.signature:android-api-level-26:8.0.0_r2
+2026-07-27T16:44:38.0650816Z [INFO] 
+2026-07-27T16:44:38.0651805Z [INFO] --- dokka:2.2.0:dokka (default) @ potassium-nitrite ---
+2026-07-27T16:44:42.6551243Z [INFO] Initializing plugins
+2026-07-27T16:44:43.0219802Z [INFO] Loaded plugins: [org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin, org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin, org.jetbrains.dokka.base.DokkaBase]
+2026-07-27T16:44:43.0221247Z [INFO] Loaded: [
+2026-07-27T16:44:43.0221768Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/preGenerationCheck,
+2026-07-27T16:44:43.0222612Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/immediateHtmlCommandConsumer,
+2026-07-27T16:44:43.0223467Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/pageTransformer,
+2026-07-27T16:44:43.0224211Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/htmlPreprocessors,
+2026-07-27T16:44:43.0224957Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/outputWriter,
+2026-07-27T16:44:43.0225762Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/externalLocationProviderFactory,
+2026-07-27T16:44:43.0226648Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/locationProviderFactory,
+2026-07-27T16:44:43.0227390Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/renderer,
+2026-07-27T16:44:43.0228092Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/pageMergerStrategy,
+2026-07-27T16:44:43.0229044Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/commentsToContentConverter,
+2026-07-27T16:44:43.0229917Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableToPageTranslator,
+2026-07-27T16:44:43.0230765Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableTransformer,
+2026-07-27T16:44:43.0232015Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/signatureProvider,
+2026-07-27T16:44:43.0232746Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/preMergeDocumentableTransformer,
+2026-07-27T16:44:43.0233302Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableMerger,
+2026-07-27T16:44:43.0233780Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/generation,
+2026-07-27T16:44:43.0234459Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/sourceToDocumentableTranslator,
+2026-07-27T16:44:43.0235084Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentParsers,
+2026-07-27T16:44:43.0235721Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentCreators,
+2026-07-27T16:44:43.0236417Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/sampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:43.0237158Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider,
+2026-07-27T16:44:43.0237927Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder,
+2026-07-27T16:44:43.0239130Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/kotlinToJavaService,
+2026-07-27T16:44:43.0240048Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:43.0240957Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector,
+2026-07-27T16:44:43.0241810Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/fullClassHierarchyBuilder,
+2026-07-27T16:44:43.0242682Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/documentableSourceLanguageParser,
+2026-07-27T16:44:43.0243461Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:43.0244140Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/inheritDocTagContentProviders,
+2026-07-27T16:44:43.0244795Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:43.0245407Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/projectProvider,
+2026-07-27T16:44:43.0245926Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/postActions,
+2026-07-27T16:44:43.0246536Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinAnalysis,
+2026-07-27T16:44:43.0247182Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetIdUniquenessChecker,
+2026-07-27T16:44:43.0247849Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootIndependentChecker,
+2026-07-27T16:44:43.0248600Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pathToRootConsumer,
+2026-07-27T16:44:43.0249051Z 	Extension: org.jetbrains.dokka.base.DokkaBase/replaceVersionConsumer,
+2026-07-27T16:44:43.0249516Z 	Extension: org.jetbrains.dokka.base.DokkaBase/resolveLinkConsumer,
+2026-07-27T16:44:43.0249977Z 	Extension: org.jetbrains.dokka.base.DokkaBase/defaultSamplesTransformer,
+2026-07-27T16:44:43.0250433Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetMerger,
+2026-07-27T16:44:43.0250840Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pageMerger,
+2026-07-27T16:44:43.0251233Z 	Extension: org.jetbrains.dokka.base.DokkaBase/rootCreator,
+2026-07-27T16:44:43.0251685Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourcesetDependencyAppender,
+2026-07-27T16:44:43.0252164Z 	Extension: org.jetbrains.dokka.base.DokkaBase/packageListCreator,
+2026-07-27T16:44:43.0252584Z 	Extension: org.jetbrains.dokka.base.DokkaBase/assetsInstaller,
+2026-07-27T16:44:43.0252990Z 	Extension: org.jetbrains.dokka.base.DokkaBase/stylesInstaller,
+2026-07-27T16:44:43.0253397Z 	Extension: org.jetbrains.dokka.base.DokkaBase/scriptsInstaller,
+2026-07-27T16:44:43.0253841Z 	Extension: org.jetbrains.dokka.base.DokkaBase/customResourceInstaller,
+2026-07-27T16:44:43.0254855Z 	Extension: org.jetbrains.dokka.base.DokkaBase/navigationPageInstaller,
+2026-07-27T16:44:43.0255496Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceLinksTransformer,
+2026-07-27T16:44:43.0256184Z 	Extension: org.jetbrains.dokka.base.DokkaBase/baseSearchbarDataInstaller,
+2026-07-27T16:44:43.0256837Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fileWriter,
+2026-07-27T16:44:43.0257732Z 	Extension: org.jetbrains.dokka.base.DokkaBase/dokkaLocationProvider,
+2026-07-27T16:44:43.0258637Z 	Extension: org.jetbrains.dokka.base.DokkaBase/javadocLocationProvider,
+2026-07-27T16:44:43.0259319Z 	Extension: org.jetbrains.dokka.base.DokkaBase/locationProvider,
+2026-07-27T16:44:43.0259923Z 	Extension: org.jetbrains.dokka.base.DokkaBase/htmlRenderer,
+2026-07-27T16:44:43.0260522Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sameMethodNameMerger,
+2026-07-27T16:44:43.0261197Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fallbackMerger,
+2026-07-27T16:44:43.0261930Z 	Extension: org.jetbrains.dokka.base.DokkaBase/docTagToContentConverter,
+2026-07-27T16:44:43.0262747Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableToPageTranslator,
+2026-07-27T16:44:43.0263511Z 	Extension: org.jetbrains.dokka.base.DokkaBase/extensionsExtractor,
+2026-07-27T16:44:43.0263973Z 	Extension: org.jetbrains.dokka.base.DokkaBase/undocumentedCodeReporter,
+2026-07-27T16:44:43.0264435Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritorsExtractor,
+2026-07-27T16:44:43.0264899Z 	Extension: org.jetbrains.dokka.base.DokkaBase/actualTypealiasAdder,
+2026-07-27T16:44:43.0265439Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinSignatureProvider,
+2026-07-27T16:44:43.0265942Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritedEntriesVisbilityFilter,
+2026-07-27T16:44:43.0266463Z 	Extension: org.jetbrains.dokka.base.DokkaBase/obviousFunctionsVisbilityFilter,
+2026-07-27T16:44:43.0266965Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableVisibilityFilter,
+2026-07-27T16:44:43.0267450Z 	Extension: org.jetbrains.dokka.base.DokkaBase/jvmMappedMethodsFilter,
+2026-07-27T16:44:43.0267941Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinArrayDocumentableReplacer,
+2026-07-27T16:44:43.0268821Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedBySuppressTagDocumentableFilter,
+2026-07-27T16:44:43.0269383Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedDocumentableFilter,
+2026-07-27T16:44:43.0269877Z 	Extension: org.jetbrains.dokka.base.DokkaBase/deprecatedDocumentableFilter,
+2026-07-27T16:44:43.0270335Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyPackagesFilter,
+2026-07-27T16:44:43.0270764Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyModulesFilter,
+2026-07-27T16:44:43.0271231Z 	Extension: org.jetbrains.dokka.base.DokkaBase/modulesAndPackagesDocumentation,
+2026-07-27T16:44:43.0271693Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableMerger,
+2026-07-27T16:44:43.0272108Z 	Extension: org.jetbrains.dokka.base.DokkaBase/singleGeneration,
+2026-07-27T16:44:43.0273073Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/psiToDocumentableTranslator,
+2026-07-27T16:44:43.0274335Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolToDocumentableTranslator,
+2026-07-27T16:44:43.0275247Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentParser,
+2026-07-27T16:44:43.0275954Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentParser,
+2026-07-27T16:44:43.0276642Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentCreator,
+2026-07-27T16:44:43.0277326Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentCreator,
+2026-07-27T16:44:43.0278158Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:43.0279306Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolExternalDocumentableProvider,
+2026-07-27T16:44:43.0280383Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolInheritanceBuilder,
+2026-07-27T16:44:43.0281150Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinToJavaMapper,
+2026-07-27T16:44:43.0282083Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:43.0282954Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSyntheticDocumentableDetector,
+2026-07-27T16:44:43.0283800Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolFullClassHierarchyBuilder,
+2026-07-27T16:44:43.0284586Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolAnalyzerImpl,
+2026-07-27T16:44:43.0285346Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:43.0286113Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/inheritDocTagProvider,
+2026-07-27T16:44:43.0286859Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:43.0287587Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/projectProvider,
+2026-07-27T16:44:43.0288500Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/disposeKotlinAnalysisPostAction,
+2026-07-27T16:44:43.0289281Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/defaultKotlinAnalysis
+2026-07-27T16:44:43.0289770Z ]
+2026-07-27T16:44:43.0289956Z [INFO] Suppressed: [
+2026-07-27T16:44:43.0290091Z 
+2026-07-27T16:44:43.0290187Z ]
+2026-07-27T16:44:43.0290451Z [INFO] Dokka is performing: documentation for potassium-nitrite
+2026-07-27T16:44:43.0290779Z [INFO] Validity check
+2026-07-27T16:44:43.0291007Z [INFO] Creating documentation models
+2026-07-27T16:44:47.4519652Z [INFO] Transforming documentation model before merging
+2026-07-27T16:44:47.4729153Z [INFO] Merging documentation models
+2026-07-27T16:44:47.4742006Z [INFO] Transforming documentation model after merging
+2026-07-27T16:44:47.4869311Z [INFO] Creating pages
+2026-07-27T16:44:47.5989603Z [INFO] Transforming pages
+2026-07-27T16:44:47.6386042Z [INFO] Rendering
+2026-07-27T16:44:48.7320680Z [INFO] Running post-actions
+2026-07-27T16:44:48.7371965Z [INFO] Unused extension points found: ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/kotlinToJavaService, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector
+2026-07-27T16:44:48.7375276Z [INFO] Generation completed successfully
+2026-07-27T16:44:48.7375748Z [INFO] 
+2026-07-27T16:44:48.7375900Z 
+2026-07-27T16:44:48.7376047Z  === TIME MEASUREMENT ===
+2026-07-27T16:44:48.7376272Z 
+2026-07-27T16:44:48.7376456Z                            Initializing plugins:  368
+2026-07-27T16:44:48.7376926Z                                  Validity check:    0
+2026-07-27T16:44:48.7377414Z                   Creating documentation models: 4429
+2026-07-27T16:44:48.7377945Z Transforming documentation model before merging:   21
+2026-07-27T16:44:48.7378654Z                    Merging documentation models:    1
+2026-07-27T16:44:48.7379136Z  Transforming documentation model after merging:   13
+2026-07-27T16:44:48.7379625Z                                  Creating pages:  111
+2026-07-27T16:44:48.7380089Z                              Transforming pages:   41
+2026-07-27T16:44:48.7380525Z                                       Rendering: 1093
+2026-07-27T16:44:48.7380823Z 
+2026-07-27T16:44:48.7380954Z [INFO] 
+2026-07-27T16:44:48.7381367Z [INFO] --- dokka:2.2.0:javadoc (default) @ potassium-nitrite ---
+2026-07-27T16:44:49.0094788Z [INFO] Initializing plugins
+2026-07-27T16:44:49.1192931Z [INFO] Loaded plugins: [org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin, org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin, org.jetbrains.dokka.base.DokkaBase, org.jetbrains.dokka.javadoc.JavadocPlugin, org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin]
+2026-07-27T16:44:49.1195707Z [INFO] Loaded: [
+2026-07-27T16:44:49.1196219Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/postActions,
+2026-07-27T16:44:49.1197081Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableTransformer,
+2026-07-27T16:44:49.1198070Z 	ExtensionPoint: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocPreprocessors,
+2026-07-27T16:44:49.1199234Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/preMergeDocumentableTransformer,
+2026-07-27T16:44:49.1200196Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/preGenerationCheck,
+2026-07-27T16:44:49.1201097Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/immediateHtmlCommandConsumer,
+2026-07-27T16:44:49.1201955Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/pageTransformer,
+2026-07-27T16:44:49.1202733Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/htmlPreprocessors,
+2026-07-27T16:44:49.1203496Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/outputWriter,
+2026-07-27T16:44:49.1204364Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/externalLocationProviderFactory,
+2026-07-27T16:44:49.1205269Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/locationProviderFactory,
+2026-07-27T16:44:49.1206062Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/renderer,
+2026-07-27T16:44:49.1206810Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/pageMergerStrategy,
+2026-07-27T16:44:49.1207665Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/commentsToContentConverter,
+2026-07-27T16:44:49.1208741Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableToPageTranslator,
+2026-07-27T16:44:49.1209597Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/signatureProvider,
+2026-07-27T16:44:49.1210389Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableMerger,
+2026-07-27T16:44:49.1211136Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/generation,
+2026-07-27T16:44:49.1211968Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/sourceToDocumentableTranslator,
+2026-07-27T16:44:49.1212971Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentParsers,
+2026-07-27T16:44:49.1214000Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentCreators,
+2026-07-27T16:44:49.1215177Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/sampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:49.1216749Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider,
+2026-07-27T16:44:49.1218046Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder,
+2026-07-27T16:44:49.1219622Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/kotlinToJavaService,
+2026-07-27T16:44:49.1221143Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:49.1222740Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector,
+2026-07-27T16:44:49.1224238Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/fullClassHierarchyBuilder,
+2026-07-27T16:44:49.1227097Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/documentableSourceLanguageParser,
+2026-07-27T16:44:49.1230654Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:49.1231885Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/inheritDocTagContentProviders,
+2026-07-27T16:44:49.1233454Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:49.1234502Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/projectProvider,
+2026-07-27T16:44:49.1235681Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinAnalysis,
+2026-07-27T16:44:49.1244137Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/alphaVersionNotifier,
+2026-07-27T16:44:49.1245218Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/alphaVersionNotifier,
+2026-07-27T16:44:49.1246388Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/disposeKotlinAnalysisPostAction,
+2026-07-27T16:44:49.1247734Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableTransformer,
+2026-07-27T16:44:49.1260271Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/jvmNameTransformer,
+2026-07-27T16:44:49.1261195Z 	Extension: org.jetbrains.dokka.base.DokkaBase/extensionsExtractor,
+2026-07-27T16:44:49.1261965Z 	Extension: org.jetbrains.dokka.base.DokkaBase/undocumentedCodeReporter,
+2026-07-27T16:44:49.1262742Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritorsExtractor,
+2026-07-27T16:44:49.1263485Z 	Extension: org.jetbrains.dokka.base.DokkaBase/actualTypealiasAdder,
+2026-07-27T16:44:49.1264328Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/deprecatedPageCreator,
+2026-07-27T16:44:49.1265120Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/indexGenerator,
+2026-07-27T16:44:49.1265975Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/allClassessPageInstaller,
+2026-07-27T16:44:49.1266830Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/rootCreator,
+2026-07-27T16:44:49.1267620Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/treeViewInstaller,
+2026-07-27T16:44:49.1268607Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/resourcesInstaller,
+2026-07-27T16:44:49.1269440Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/packageListCreator,
+2026-07-27T16:44:49.1270334Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/documentableSourceSetFilter,
+2026-07-27T16:44:49.1271275Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritedEntriesVisbilityFilter,
+2026-07-27T16:44:49.1272181Z 	Extension: org.jetbrains.dokka.base.DokkaBase/obviousFunctionsVisbilityFilter,
+2026-07-27T16:44:49.1273063Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableVisibilityFilter,
+2026-07-27T16:44:49.1274077Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/suppressJvmMappedMethodsFilter,
+2026-07-27T16:44:49.1275122Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinArrayDocumentableReplacer,
+2026-07-27T16:44:49.1276084Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedBySuppressTagDocumentableFilter,
+2026-07-27T16:44:49.1277056Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedDocumentableFilter,
+2026-07-27T16:44:49.1277939Z 	Extension: org.jetbrains.dokka.base.DokkaBase/deprecatedDocumentableFilter,
+2026-07-27T16:44:49.1278872Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyPackagesFilter,
+2026-07-27T16:44:49.1279621Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyModulesFilter,
+2026-07-27T16:44:49.1280437Z 	Extension: org.jetbrains.dokka.base.DokkaBase/modulesAndPackagesDocumentation,
+2026-07-27T16:44:49.1281344Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocMultiplatformCheck,
+2026-07-27T16:44:49.1282238Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetIdUniquenessChecker,
+2026-07-27T16:44:49.1283388Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootIndependentChecker,
+2026-07-27T16:44:49.1284418Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pathToRootConsumer,
+2026-07-27T16:44:49.1285133Z 	Extension: org.jetbrains.dokka.base.DokkaBase/replaceVersionConsumer,
+2026-07-27T16:44:49.1285877Z 	Extension: org.jetbrains.dokka.base.DokkaBase/resolveLinkConsumer,
+2026-07-27T16:44:49.1286679Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/emptySampleTransformer,
+2026-07-27T16:44:49.1287747Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetMerger,
+2026-07-27T16:44:49.1288858Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pageMerger,
+2026-07-27T16:44:49.1289527Z 	Extension: org.jetbrains.dokka.base.DokkaBase/rootCreator,
+2026-07-27T16:44:49.1290280Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourcesetDependencyAppender,
+2026-07-27T16:44:49.1291286Z 	Extension: org.jetbrains.dokka.base.DokkaBase/packageListCreator,
+2026-07-27T16:44:49.1292006Z 	Extension: org.jetbrains.dokka.base.DokkaBase/assetsInstaller,
+2026-07-27T16:44:49.1292703Z 	Extension: org.jetbrains.dokka.base.DokkaBase/stylesInstaller,
+2026-07-27T16:44:49.1293410Z 	Extension: org.jetbrains.dokka.base.DokkaBase/scriptsInstaller,
+2026-07-27T16:44:49.1294155Z 	Extension: org.jetbrains.dokka.base.DokkaBase/customResourceInstaller,
+2026-07-27T16:44:49.1294932Z 	Extension: org.jetbrains.dokka.base.DokkaBase/navigationPageInstaller,
+2026-07-27T16:44:49.1295731Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceLinksTransformer,
+2026-07-27T16:44:49.1296546Z 	Extension: org.jetbrains.dokka.base.DokkaBase/baseSearchbarDataInstaller,
+2026-07-27T16:44:49.1297289Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fileWriter,
+2026-07-27T16:44:49.1297987Z 	Extension: org.jetbrains.dokka.base.DokkaBase/dokkaLocationProvider,
+2026-07-27T16:44:49.1298909Z 	Extension: org.jetbrains.dokka.base.DokkaBase/javadocLocationProvider,
+2026-07-27T16:44:49.1299799Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocLocationProviderFactory,
+2026-07-27T16:44:49.1300727Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/dokkaJavadocPlugin,
+2026-07-27T16:44:49.1301533Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sameMethodNameMerger,
+2026-07-27T16:44:49.1302250Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fallbackMerger,
+2026-07-27T16:44:49.1302983Z 	Extension: org.jetbrains.dokka.base.DokkaBase/docTagToContentConverter,
+2026-07-27T16:44:49.1303784Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/pageTranslator,
+2026-07-27T16:44:49.1304638Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocSignatureProvider,
+2026-07-27T16:44:49.1305466Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableMerger,
+2026-07-27T16:44:49.1306193Z 	Extension: org.jetbrains.dokka.base.DokkaBase/singleGeneration,
+2026-07-27T16:44:49.1307125Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/psiToDocumentableTranslator,
+2026-07-27T16:44:49.1308582Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolToDocumentableTranslator,
+2026-07-27T16:44:49.1309795Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentParser,
+2026-07-27T16:44:49.1324622Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentParser,
+2026-07-27T16:44:49.1325844Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentCreator,
+2026-07-27T16:44:49.1326977Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentCreator,
+2026-07-27T16:44:49.1328589Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:49.1330066Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolExternalDocumentableProvider,
+2026-07-27T16:44:49.1331407Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolInheritanceBuilder,
+2026-07-27T16:44:49.1332705Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinToJavaMapper,
+2026-07-27T16:44:49.1334015Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:49.1335495Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSyntheticDocumentableDetector,
+2026-07-27T16:44:49.1337163Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolFullClassHierarchyBuilder,
+2026-07-27T16:44:49.1338722Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolAnalyzerImpl,
+2026-07-27T16:44:49.1340055Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:49.1341659Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/inheritDocTagProvider,
+2026-07-27T16:44:49.1343010Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:49.1344218Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/projectProvider,
+2026-07-27T16:44:49.1345497Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/defaultKotlinAnalysis
+2026-07-27T16:44:49.1346376Z ]
+2026-07-27T16:44:49.1346649Z [INFO] Suppressed: [
+2026-07-27T16:44:49.1347570Z 	Extension: org.jetbrains.dokka.base.DokkaBase/htmlRenderer by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/dokkaJavadocPlugin,
+2026-07-27T16:44:49.1349729Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableToPageTranslator by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/pageTranslator,
+2026-07-27T16:44:49.1357601Z 	Extension: org.jetbrains.dokka.base.DokkaBase/locationProvider by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocLocationProviderFactory,
+2026-07-27T16:44:49.1359816Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/javaSignatureProvider by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocSignatureProvider,
+2026-07-27T16:44:49.1361743Z 	Extension: org.jetbrains.dokka.base.DokkaBase/defaultSamplesTransformer by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/emptySampleTransformer,
+2026-07-27T16:44:49.1363643Z 	Extension: org.jetbrains.dokka.base.DokkaBase/jvmMappedMethodsFilter by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/suppressJvmMappedMethodsFilter,
+2026-07-27T16:44:49.1365449Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinSignatureProvider by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/javaSignatureProvider,
+2026-07-27T16:44:49.1367430Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableToPageTranslator by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableToPageTranslator
+2026-07-27T16:44:49.1368824Z ]
+2026-07-27T16:44:49.1369227Z [INFO] Dokka is performing: documentation for potassium-nitrite
+2026-07-27T16:44:49.1369771Z [INFO] Validity check
+2026-07-27T16:44:49.1370122Z [INFO] Creating documentation models
+2026-07-27T16:44:50.1721304Z [INFO] Transforming documentation model before merging
+2026-07-27T16:44:50.1847508Z [INFO] Merging documentation models
+2026-07-27T16:44:50.1848202Z [INFO] Transforming documentation model after merging
+2026-07-27T16:44:50.2070805Z [INFO] Creating pages
+2026-07-27T16:44:50.2552435Z [INFO] Transforming pages
+2026-07-27T16:44:50.2583203Z [INFO] Rendering
+2026-07-27T16:44:50.9159459Z [INFO] Running post-actions
+2026-07-27T16:44:50.9179603Z [INFO] KotlinAsJava plugin is in Alpha version, use at your own risk, expect bugs and migration issues
+2026-07-27T16:44:50.9190754Z [INFO] The Javadoc output format is still in Alpha so you may find bugs and experience migration issues when using it. Successful integration with tools that accept Java's Javadoc HTML as input is not guaranteed. You use it at your own risk.
+2026-07-27T16:44:50.9196784Z [INFO] Unused extension points found: ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/immediateHtmlCommandConsumer, ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/htmlPreprocessors, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/sampleAnalysisEnvironmentCreator, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/documentableSourceLanguageParser
+2026-07-27T16:44:50.9202363Z [INFO] Generation completed successfully
+2026-07-27T16:44:50.9202781Z [INFO] 
+2026-07-27T16:44:50.9203239Z 
+2026-07-27T16:44:50.9203384Z  === TIME MEASUREMENT ===
+2026-07-27T16:44:50.9203622Z 
+2026-07-27T16:44:50.9203797Z                            Initializing plugins:  110
+2026-07-27T16:44:50.9204273Z                                  Validity check:    0
+2026-07-27T16:44:50.9204734Z                   Creating documentation models: 1052
+2026-07-27T16:44:50.9205236Z Transforming documentation model before merging:   13
+2026-07-27T16:44:50.9205752Z                    Merging documentation models:    0
+2026-07-27T16:44:50.9206260Z  Transforming documentation model after merging:   22
+2026-07-27T16:44:50.9206774Z                                  Creating pages:   49
+2026-07-27T16:44:50.9207217Z                              Transforming pages:    3
+2026-07-27T16:44:50.9207650Z                                       Rendering:  656
+2026-07-27T16:44:50.9207939Z 
+2026-07-27T16:44:50.9208057Z [INFO] 
+2026-07-27T16:44:50.9208743Z [INFO] --- dokka:2.2.0:javadocJar (default) @ potassium-nitrite ---
+2026-07-27T16:44:50.9331400Z [INFO] Initializing plugins
+2026-07-27T16:44:51.0350921Z [INFO] Loaded plugins: [org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin, org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin, org.jetbrains.dokka.base.DokkaBase, org.jetbrains.dokka.javadoc.JavadocPlugin, org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin]
+2026-07-27T16:44:51.0354499Z [INFO] Loaded: [
+2026-07-27T16:44:51.0355213Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/postActions,
+2026-07-27T16:44:51.0356198Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableTransformer,
+2026-07-27T16:44:51.0357197Z 	ExtensionPoint: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocPreprocessors,
+2026-07-27T16:44:51.0358165Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/preMergeDocumentableTransformer,
+2026-07-27T16:44:51.0359396Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/preGenerationCheck,
+2026-07-27T16:44:51.0360375Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/immediateHtmlCommandConsumer,
+2026-07-27T16:44:51.0361396Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/pageTransformer,
+2026-07-27T16:44:51.0362683Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/htmlPreprocessors,
+2026-07-27T16:44:51.0369283Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/outputWriter,
+2026-07-27T16:44:51.0370192Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/externalLocationProviderFactory,
+2026-07-27T16:44:51.0371141Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/locationProviderFactory,
+2026-07-27T16:44:51.0371932Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/renderer,
+2026-07-27T16:44:51.0372700Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/pageMergerStrategy,
+2026-07-27T16:44:51.0373575Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/commentsToContentConverter,
+2026-07-27T16:44:51.0374500Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableToPageTranslator,
+2026-07-27T16:44:51.0375348Z 	ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/signatureProvider,
+2026-07-27T16:44:51.0376134Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/documentableMerger,
+2026-07-27T16:44:51.0376886Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/generation,
+2026-07-27T16:44:51.0377700Z 	ExtensionPoint: org.jetbrains.dokka.CoreExtensions/sourceToDocumentableTranslator,
+2026-07-27T16:44:51.0378841Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentParsers,
+2026-07-27T16:44:51.0379877Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/docCommentCreators,
+2026-07-27T16:44:51.0381583Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/sampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:51.0382894Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider,
+2026-07-27T16:44:51.0384200Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder,
+2026-07-27T16:44:51.0385811Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/kotlinToJavaService,
+2026-07-27T16:44:51.0387325Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:51.0389095Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector,
+2026-07-27T16:44:51.0390580Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/fullClassHierarchyBuilder,
+2026-07-27T16:44:51.0392098Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/documentableSourceLanguageParser,
+2026-07-27T16:44:51.0393470Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:51.0394641Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/inheritDocTagContentProviders,
+2026-07-27T16:44:51.0395790Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:51.0396847Z 	ExtensionPoint: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/projectProvider,
+2026-07-27T16:44:51.0397919Z 	ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinAnalysis,
+2026-07-27T16:44:51.0399316Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/alphaVersionNotifier,
+2026-07-27T16:44:51.0400274Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/alphaVersionNotifier,
+2026-07-27T16:44:51.0401427Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/disposeKotlinAnalysisPostAction,
+2026-07-27T16:44:51.0402617Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableTransformer,
+2026-07-27T16:44:51.0403702Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/jvmNameTransformer,
+2026-07-27T16:44:51.0404546Z 	Extension: org.jetbrains.dokka.base.DokkaBase/extensionsExtractor,
+2026-07-27T16:44:51.0405293Z 	Extension: org.jetbrains.dokka.base.DokkaBase/undocumentedCodeReporter,
+2026-07-27T16:44:51.0406020Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritorsExtractor,
+2026-07-27T16:44:51.0406723Z 	Extension: org.jetbrains.dokka.base.DokkaBase/actualTypealiasAdder,
+2026-07-27T16:44:51.0407505Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/deprecatedPageCreator,
+2026-07-27T16:44:51.0408498Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/indexGenerator,
+2026-07-27T16:44:51.0409311Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/allClassessPageInstaller,
+2026-07-27T16:44:51.0410132Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/rootCreator,
+2026-07-27T16:44:51.0410885Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/treeViewInstaller,
+2026-07-27T16:44:51.0411712Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/resourcesInstaller,
+2026-07-27T16:44:51.0412498Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/packageListCreator,
+2026-07-27T16:44:51.0413372Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/documentableSourceSetFilter,
+2026-07-27T16:44:51.0414282Z 	Extension: org.jetbrains.dokka.base.DokkaBase/inheritedEntriesVisbilityFilter,
+2026-07-27T16:44:51.0415152Z 	Extension: org.jetbrains.dokka.base.DokkaBase/obviousFunctionsVisbilityFilter,
+2026-07-27T16:44:51.0415971Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableVisibilityFilter,
+2026-07-27T16:44:51.0416955Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/suppressJvmMappedMethodsFilter,
+2026-07-27T16:44:51.0417971Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinArrayDocumentableReplacer,
+2026-07-27T16:44:51.0419494Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedBySuppressTagDocumentableFilter,
+2026-07-27T16:44:51.0420409Z 	Extension: org.jetbrains.dokka.base.DokkaBase/suppressedDocumentableFilter,
+2026-07-27T16:44:51.0421195Z 	Extension: org.jetbrains.dokka.base.DokkaBase/deprecatedDocumentableFilter,
+2026-07-27T16:44:51.0422142Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyPackagesFilter,
+2026-07-27T16:44:51.0422844Z 	Extension: org.jetbrains.dokka.base.DokkaBase/emptyModulesFilter,
+2026-07-27T16:44:51.0423612Z 	Extension: org.jetbrains.dokka.base.DokkaBase/modulesAndPackagesDocumentation,
+2026-07-27T16:44:51.0424515Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocMultiplatformCheck,
+2026-07-27T16:44:51.0425370Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetIdUniquenessChecker,
+2026-07-27T16:44:51.0426548Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootIndependentChecker,
+2026-07-27T16:44:51.0427629Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pathToRootConsumer,
+2026-07-27T16:44:51.0428545Z 	Extension: org.jetbrains.dokka.base.DokkaBase/replaceVersionConsumer,
+2026-07-27T16:44:51.0429301Z 	Extension: org.jetbrains.dokka.base.DokkaBase/resolveLinkConsumer,
+2026-07-27T16:44:51.0430117Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/emptySampleTransformer,
+2026-07-27T16:44:51.0430953Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceSetMerger,
+2026-07-27T16:44:51.0431601Z 	Extension: org.jetbrains.dokka.base.DokkaBase/pageMerger,
+2026-07-27T16:44:51.0432255Z 	Extension: org.jetbrains.dokka.base.DokkaBase/rootCreator,
+2026-07-27T16:44:51.0432986Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourcesetDependencyAppender,
+2026-07-27T16:44:51.0433753Z 	Extension: org.jetbrains.dokka.base.DokkaBase/packageListCreator,
+2026-07-27T16:44:51.0434448Z 	Extension: org.jetbrains.dokka.base.DokkaBase/assetsInstaller,
+2026-07-27T16:44:51.0435131Z 	Extension: org.jetbrains.dokka.base.DokkaBase/stylesInstaller,
+2026-07-27T16:44:51.0435826Z 	Extension: org.jetbrains.dokka.base.DokkaBase/scriptsInstaller,
+2026-07-27T16:44:51.0436566Z 	Extension: org.jetbrains.dokka.base.DokkaBase/customResourceInstaller,
+2026-07-27T16:44:51.0437304Z 	Extension: org.jetbrains.dokka.base.DokkaBase/navigationPageInstaller,
+2026-07-27T16:44:51.0438011Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sourceLinksTransformer,
+2026-07-27T16:44:51.0438956Z 	Extension: org.jetbrains.dokka.base.DokkaBase/baseSearchbarDataInstaller,
+2026-07-27T16:44:51.0439685Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fileWriter,
+2026-07-27T16:44:51.0440310Z 	Extension: org.jetbrains.dokka.base.DokkaBase/dokkaLocationProvider,
+2026-07-27T16:44:51.0441043Z 	Extension: org.jetbrains.dokka.base.DokkaBase/javadocLocationProvider,
+2026-07-27T16:44:51.0441895Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocLocationProviderFactory,
+2026-07-27T16:44:51.0442810Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/dokkaJavadocPlugin,
+2026-07-27T16:44:51.0443402Z 	Extension: org.jetbrains.dokka.base.DokkaBase/sameMethodNameMerger,
+2026-07-27T16:44:51.0443837Z 	Extension: org.jetbrains.dokka.base.DokkaBase/fallbackMerger,
+2026-07-27T16:44:51.0444299Z 	Extension: org.jetbrains.dokka.base.DokkaBase/docTagToContentConverter,
+2026-07-27T16:44:51.0444961Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/pageTranslator,
+2026-07-27T16:44:51.0445761Z 	Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocSignatureProvider,
+2026-07-27T16:44:51.0446465Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableMerger,
+2026-07-27T16:44:51.0447099Z 	Extension: org.jetbrains.dokka.base.DokkaBase/singleGeneration,
+2026-07-27T16:44:51.0447868Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/psiToDocumentableTranslator,
+2026-07-27T16:44:51.0449197Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolToDocumentableTranslator,
+2026-07-27T16:44:51.0450637Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentParser,
+2026-07-27T16:44:51.0451737Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentParser,
+2026-07-27T16:44:51.0452815Z 	Extension: org.jetbrains.dokka.analysis.java.JavaAnalysisPlugin/javaDocCommentCreator,
+2026-07-27T16:44:51.0454165Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinDocCommentCreator,
+2026-07-27T16:44:51.0455580Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSampleAnalysisEnvironmentCreator,
+2026-07-27T16:44:51.0457046Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolExternalDocumentableProvider,
+2026-07-27T16:44:51.0458642Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolInheritanceBuilder,
+2026-07-27T16:44:51.0459925Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinToJavaMapper,
+2026-07-27T16:44:51.0461316Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/moduleAndPackageDocumentationReader,
+2026-07-27T16:44:51.0462784Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolSyntheticDocumentableDetector,
+2026-07-27T16:44:51.0464201Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolFullClassHierarchyBuilder,
+2026-07-27T16:44:51.0465532Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/symbolAnalyzerImpl,
+2026-07-27T16:44:51.0466830Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/kotlinLightMethodChecker,
+2026-07-27T16:44:51.0468157Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/inheritDocTagProvider,
+2026-07-27T16:44:51.0469601Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/sourceRootsExtractor,
+2026-07-27T16:44:51.0470812Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/projectProvider,
+2026-07-27T16:44:51.0472028Z 	Extension: org.jetbrains.dokka.analysis.kotlin.symbols.plugin.SymbolsAnalysisPlugin/defaultKotlinAnalysis
+2026-07-27T16:44:51.0472832Z ]
+2026-07-27T16:44:51.0473111Z [INFO] Suppressed: [
+2026-07-27T16:44:51.0474038Z 	Extension: org.jetbrains.dokka.base.DokkaBase/htmlRenderer by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/dokkaJavadocPlugin,
+2026-07-27T16:44:51.0475897Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableToPageTranslator by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/pageTranslator,
+2026-07-27T16:44:51.0477786Z 	Extension: org.jetbrains.dokka.base.DokkaBase/locationProvider by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocLocationProviderFactory,
+2026-07-27T16:44:51.0479909Z 	Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/javaSignatureProvider by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/javadocSignatureProvider,
+2026-07-27T16:44:51.0481828Z 	Extension: org.jetbrains.dokka.base.DokkaBase/defaultSamplesTransformer by Extension: org.jetbrains.dokka.javadoc.JavadocPlugin/emptySampleTransformer,
+2026-07-27T16:44:51.0483739Z 	Extension: org.jetbrains.dokka.base.DokkaBase/jvmMappedMethodsFilter by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/suppressJvmMappedMethodsFilter,
+2026-07-27T16:44:51.0485653Z 	Extension: org.jetbrains.dokka.base.DokkaBase/kotlinSignatureProvider by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/javaSignatureProvider,
+2026-07-27T16:44:51.0487603Z 	Extension: org.jetbrains.dokka.base.DokkaBase/documentableToPageTranslator by Extension: org.jetbrains.dokka.kotlinAsJava.KotlinAsJavaPlugin/kotlinAsJavaDocumentableToPageTranslator
+2026-07-27T16:44:51.0489087Z ]
+2026-07-27T16:44:51.0489501Z [INFO] Dokka is performing: documentation for potassium-nitrite
+2026-07-27T16:44:51.0490024Z [INFO] Validity check
+2026-07-27T16:44:51.0490646Z [INFO] Creating documentation models
+2026-07-27T16:44:52.0493191Z [INFO] Transforming documentation model before merging
+2026-07-27T16:44:52.0617943Z [INFO] Merging documentation models
+2026-07-27T16:44:52.0618916Z [INFO] Transforming documentation model after merging
+2026-07-27T16:44:52.0790588Z [INFO] Creating pages
+2026-07-27T16:44:52.1242916Z [INFO] Transforming pages
+2026-07-27T16:44:52.1275858Z [INFO] Rendering
+2026-07-27T16:44:52.7691265Z [INFO] Running post-actions
+2026-07-27T16:44:52.7719343Z [INFO] KotlinAsJava plugin is in Alpha version, use at your own risk, expect bugs and migration issues
+2026-07-27T16:44:52.7739338Z [INFO] The Javadoc output format is still in Alpha so you may find bugs and experience migration issues when using it. Successful integration with tools that accept Java's Javadoc HTML as input is not guaranteed. You use it at your own risk.
+2026-07-27T16:44:52.7762084Z [INFO] Unused extension points found: ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/immediateHtmlCommandConsumer, ExtensionPoint: org.jetbrains.dokka.base.DokkaBase/htmlPreprocessors, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/sampleAnalysisEnvironmentCreator, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.KotlinAnalysisPlugin/externalDocumentableProvider, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/inheritanceBuilder, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/syntheticDocumentableDetector, ExtensionPoint: org.jetbrains.dokka.analysis.kotlin.internal.InternalKotlinAnalysisPlugin/documentableSourceLanguageParser
+2026-07-27T16:44:52.7765308Z [INFO] Generation completed successfully
+2026-07-27T16:44:52.7765829Z [INFO] 
+2026-07-27T16:44:52.7765983Z 
+2026-07-27T16:44:52.7766138Z  === TIME MEASUREMENT ===
+2026-07-27T16:44:52.7766358Z 
+2026-07-27T16:44:52.7766538Z                            Initializing plugins:  102
+2026-07-27T16:44:52.7767006Z                                  Validity check:    1
+2026-07-27T16:44:52.7767471Z                   Creating documentation models: 1014
+2026-07-27T16:44:52.7768000Z Transforming documentation model before merging:   12
+2026-07-27T16:44:52.7768639Z                    Merging documentation models:    0
+2026-07-27T16:44:52.7769128Z  Transforming documentation model after merging:   17
+2026-07-27T16:44:52.7769616Z                                  Creating pages:   45
+2026-07-27T16:44:52.7770018Z                              Transforming pages:    4
+2026-07-27T16:44:52.7770296Z                                       Rendering:  641
+2026-07-27T16:44:52.7770470Z 
+2026-07-27T16:44:52.8012065Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3-javadoc.jar
+2026-07-27T16:44:52.8805434Z [INFO] 
+2026-07-27T16:44:52.8806089Z [INFO] --- jar:3.5.0:jar (default-jar) @ potassium-nitrite ---
+2026-07-27T16:44:52.9966832Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3.jar
+2026-07-27T16:44:53.0294784Z [INFO] 
+2026-07-27T16:44:53.0295369Z [INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ potassium-nitrite ---
+2026-07-27T16:44:53.1231082Z [INFO] Building jar: /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3-sources.jar
+2026-07-27T16:44:53.1557570Z [INFO] 
+2026-07-27T16:44:53.1558823Z [INFO] --- install:3.0.1:install (default-install) @ potassium-nitrite ---
+2026-07-27T16:44:53.2972712Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/pom.xml to /home/runner/.m2/repository/org/dizitart/potassium-nitrite/4.4.3/potassium-nitrite-4.4.3.pom
+2026-07-27T16:44:53.2977585Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3.jar to /home/runner/.m2/repository/org/dizitart/potassium-nitrite/4.4.3/potassium-nitrite-4.4.3.jar
+2026-07-27T16:44:53.2980883Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3-javadoc.jar to /home/runner/.m2/repository/org/dizitart/potassium-nitrite/4.4.3/potassium-nitrite-4.4.3-javadoc.jar
+2026-07-27T16:44:53.2987050Z [INFO] Installing /home/runner/work/nitrite-java/nitrite-java/potassium-nitrite/target/potassium-nitrite-4.4.3-sources.jar to /home/runner/.m2/repository/org/dizitart/potassium-nitrite/4.4.3/potassium-nitrite-4.4.3-sources.jar
+2026-07-27T16:44:53.2998847Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:53.3000582Z [INFO] Reactor Summary for Nitrite Database 4.4.3:
+2026-07-27T16:44:53.3001330Z [INFO] 
+2026-07-27T16:44:53.3002074Z [INFO] Nitrite Database ................................... SUCCESS [  0.694 s]
+2026-07-27T16:44:53.3002980Z [INFO] Nitrite ............................................ SUCCESS [ 22.175 s]
+2026-07-27T16:44:53.3003849Z [INFO] Nitrite BOM ........................................ SUCCESS [  0.003 s]
+2026-07-27T16:44:53.3004736Z [INFO] Nitrite MVStore Adapter ............................ SUCCESS [  6.233 s]
+2026-07-27T16:44:53.3005649Z [INFO] Nitrite Jackson Mapper ............................. SUCCESS [  2.675 s]
+2026-07-27T16:44:53.3006504Z [INFO] Nitrite Native Tests ............................... SUCCESS [  0.543 s]
+2026-07-27T16:44:53.3007283Z [INFO] Nitrite RocksDB Adapter ............................ SUCCESS [  3.853 s]
+2026-07-27T16:44:53.3008044Z [INFO] Nitrite Spatial .................................... SUCCESS [  2.197 s]
+2026-07-27T16:44:53.3009221Z [INFO] Nitrite Support .................................... SUCCESS [  2.196 s]
+2026-07-27T16:44:53.3016952Z [INFO] Potassium Nitrite .................................. SUCCESS [ 30.226 s]
+2026-07-27T16:44:53.3017737Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:53.3018454Z [INFO] BUILD SUCCESS
+2026-07-27T16:44:53.3018934Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:53.3019491Z [INFO] Total time:  01:14 min
+2026-07-27T16:44:53.3019876Z [INFO] Finished at: 2026-07-27T16:44:53Z
+2026-07-27T16:44:53.3020427Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:53.6698239Z ##[group]Run mvn -B -ff -ntp -PnativeTest verify
+2026-07-27T16:44:53.6698824Z [36;1mmvn -B -ff -ntp -PnativeTest verify[0m
+2026-07-27T16:44:53.6748022Z shell: /usr/bin/bash -e {0}
+2026-07-27T16:44:53.6748392Z env:
+2026-07-27T16:44:53.6748913Z   GRAALVM_HOME: /opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1
+2026-07-27T16:44:53.6749737Z   JAVA_HOME: /opt/hostedtoolcache/graalvm-community-jdk-21.0.2_linux-x64_bin/21.0.2/x64/graalvm-community-openjdk-21.0.2+13.1
+2026-07-27T16:44:53.6750266Z ##[endgroup]
+2026-07-27T16:44:54.8785917Z [INFO] Scanning for projects...
+2026-07-27T16:44:56.7923689Z [WARNING] 
+2026-07-27T16:44:56.7924880Z [WARNING] Some problems were encountered while building the effective model for org.dizitart:nitrite-native-tests:jar:4.4.3
+2026-07-27T16:44:56.7929780Z [WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-install-plugin is missing. @ line 73, column 21
+2026-07-27T16:44:56.7931090Z [WARNING] 
+2026-07-27T16:44:56.7931970Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-07-27T16:44:56.7932842Z [WARNING] 
+2026-07-27T16:44:56.7933863Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-07-27T16:44:56.7935068Z [WARNING] 
+2026-07-27T16:44:56.8147437Z [INFO] 
+2026-07-27T16:44:56.8148472Z [INFO] -----------------< org.dizitart:nitrite-native-tests >------------------
+2026-07-27T16:44:56.8149500Z [INFO] Building Nitrite Native Tests 4.4.3
+2026-07-27T16:44:56.8150301Z [INFO]   from pom.xml
+2026-07-27T16:44:56.8151017Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-27T16:44:57.0214675Z [INFO] 
+2026-07-27T16:44:57.0215691Z [INFO] --- resources:3.4.0:resources (default-resources) @ nitrite-native-tests ---
+2026-07-27T16:44:57.1248208Z [INFO] skip non existing resourceDirectory /home/runner/work/nitrite-java/nitrite-java/nitrite-native-tests/src/main/resources
+2026-07-27T16:44:57.1255186Z [INFO] 
+2026-07-27T16:44:57.1255750Z [INFO] --- compiler:3.15.0:compile (default-compile) @ nitrite-native-tests ---
+2026-07-27T16:44:57.2057949Z [INFO] No sources to compile
+2026-07-27T16:44:57.2069385Z [INFO] 
+2026-07-27T16:44:57.2073140Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ nitrite-native-tests ---
+2026-07-27T16:44:57.2126332Z [INFO] Copying 4 resources from src/test/resources to target/test-classes
+2026-07-27T16:44:57.2160213Z [INFO] 
+2026-07-27T16:44:57.2161571Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nitrite-native-tests ---
+2026-07-27T16:44:57.2765776Z [INFO] Nothing to compile - all classes are up to date.
+2026-07-27T16:44:57.2766590Z [INFO] 
+2026-07-27T16:44:57.2767275Z [INFO] --- surefire:3.5.6:test (default-test) @ nitrite-native-tests ---
+2026-07-27T16:44:57.3767732Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-27T16:44:57.5660592Z [INFO] 
+2026-07-27T16:44:57.5661216Z [INFO] -------------------------------------------------------
+2026-07-27T16:44:57.5661836Z [INFO]  T E S T S
+2026-07-27T16:44:57.5662237Z [INFO] -------------------------------------------------------
+2026-07-27T16:44:58.1446177Z [INFO] Running org.dizitart.nitrite.test.collection.CollectionTest
+2026-07-27T16:44:58.2758708Z SLF4J(W): No SLF4J providers were found.
+2026-07-27T16:44:58.2759809Z SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+2026-07-27T16:44:58.2761005Z SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+2026-07-27T16:44:58.4697060Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.302 s -- in org.dizitart.nitrite.test.collection.CollectionTest
+2026-07-27T16:44:58.4719780Z [INFO] Running org.dizitart.nitrite.test.transaction.TransactionTest
+2026-07-27T16:44:58.5600997Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.103 s -- in org.dizitart.nitrite.test.transaction.TransactionTest
+2026-07-27T16:44:58.5602495Z [INFO] Running org.dizitart.nitrite.test.compat.CompatTest
+2026-07-27T16:44:58.6239972Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s -- in org.dizitart.nitrite.test.compat.CompatTest
+2026-07-27T16:44:58.6241474Z [INFO] Running org.dizitart.nitrite.test.migration.MigrationTest
+2026-07-27T16:44:58.7198099Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.089 s -- in org.dizitart.nitrite.test.migration.MigrationTest
+2026-07-27T16:44:58.7219282Z [INFO] Running org.dizitart.nitrite.test.repository.RepositoryTest
+2026-07-27T16:44:58.7690174Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in org.dizitart.nitrite.test.repository.RepositoryTest
+2026-07-27T16:44:58.7934016Z [INFO] 
+2026-07-27T16:44:58.7934349Z [INFO] Results:
+2026-07-27T16:44:58.7934662Z [INFO] 
+2026-07-27T16:44:58.7939659Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+2026-07-27T16:44:58.7940198Z [INFO] 
+2026-07-27T16:44:58.7976621Z [INFO] 
+2026-07-27T16:44:58.7977410Z [INFO] --- native:1.1.6:test (native-test) @ nitrite-native-tests ---
+2026-07-27T16:44:58.8076138Z [INFO] Using configuration from maven-surefire-plugin, execution id "default-test"
+2026-07-27T16:44:58.8127727Z [INFO] ====================
+2026-07-27T16:44:58.8128622Z [INFO] Initializing project: Nitrite Native Tests
+2026-07-27T16:44:58.8129323Z [INFO] ====================
+2026-07-27T16:44:58.8142133Z [WARNING] No jdk toolchain configuration found
+2026-07-27T16:44:58.8160142Z [INFO] Found GraalVM installation from GRAALVM_HOME variable.
+2026-07-27T16:44:58.9109966Z [INFO] Downloaded GraalVM reachability metadata repository from file:/home/runner/.m2/repository/org/graalvm/buildtools/graalvm-reachability-metadata/1.1.6/graalvm-reachability-metadata-1.1.6-repository.zip
+2026-07-27T16:44:59.3034070Z [INFO] Using GraalVM reachability metadata repository version 1.0.7
+2026-07-27T16:44:59.3317662Z [INFO] [graalvm reachability metadata repository for org.slf4j:slf4j-api:2.0.18]: Configuration directory not found. Trying latest version.
+2026-07-27T16:44:59.3340435Z [INFO] [graalvm reachability metadata repository for org.slf4j:slf4j-api:2.0.18]: Configuration directory is org.slf4j/slf4j-api/1.7.36
+2026-07-27T16:44:59.3359854Z [INFO] [graalvm reachability metadata repository for commons-codec:commons-codec:1.22.0]: Configuration directory is commons-codec/commons-codec/1.10
+2026-07-27T16:44:59.3490541Z [INFO] [graalvm reachability metadata repository for org.junit.jupiter:junit-jupiter-api:6.0.0]: Configuration directory not found. Trying latest version.
+2026-07-27T16:44:59.3492475Z [INFO] [graalvm reachability metadata repository for org.junit.jupiter:junit-jupiter-api:6.0.0]: Configuration directory is org.junit.jupiter/junit-jupiter-api/5.8.2
+2026-07-27T16:44:59.3494295Z [INFO] [graalvm reachability metadata repository for org.opentest4j:opentest4j:1.3.0]: Configuration directory is org.opentest4j/opentest4j/1.2.0
+2026-07-27T16:44:59.3499184Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-commons:6.0.0]: Configuration directory not found. Trying latest version.
+2026-07-27T16:44:59.3501096Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-commons:6.0.0]: Configuration directory is org.junit.platform/junit-platform-commons/1.8.2
+2026-07-27T16:44:59.3503126Z [INFO] [graalvm reachability metadata repository for org.apiguardian:apiguardian-api:1.1.2]: Configuration directory is org.apiguardian/apiguardian-api/1.1.2
+2026-07-27T16:44:59.3507047Z [INFO] [graalvm reachability metadata repository for org.jspecify:jspecify:1.0.0]: Configuration directory is org.jspecify/jspecify/1.0.0
+2026-07-27T16:44:59.3508999Z [INFO] [graalvm reachability metadata repository for org.junit.jupiter:junit-jupiter-engine:6.0.0]: Configuration directory is org.junit.jupiter/junit-jupiter-engine/5.8.2
+2026-07-27T16:44:59.3528518Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-engine:6.0.0]: Configuration directory not found. Trying latest version.
+2026-07-27T16:44:59.3530546Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-engine:6.0.0]: Configuration directory is org.junit.platform/junit-platform-engine/1.10.4
+2026-07-27T16:44:59.3532470Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-launcher:6.0.0]: Configuration directory is org.junit.platform/junit-platform-launcher/1.9.2
+2026-07-27T16:44:59.3537204Z [INFO] [graalvm reachability metadata repository for org.junit.platform:junit-platform-launcher:6.0.0]: Configuration directory is org.junit.platform/junit-platform-reporting/1.9.2
+2026-07-27T16:44:59.5919772Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:59.5920546Z [INFO] BUILD FAILURE
+2026-07-27T16:44:59.5921033Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:59.5927707Z [INFO] Total time:  4.734 s
+2026-07-27T16:44:59.5959513Z [INFO] Finished at: 2026-07-27T16:44:59Z
+2026-07-27T16:44:59.5980351Z [INFO] ------------------------------------------------------------------------
+2026-07-27T16:44:59.5983071Z [ERROR] Failed to execute goal org.graalvm.buildtools:native-maven-plugin:1.1.6:test (native-test) on project nitrite-native-tests: Execution native-test of goal org.graalvm.buildtools:native-maven-plugin:1.1.6:test failed: A required class was missing while executing org.graalvm.buildtools:native-maven-plugin:1.1.6:test: org/apache/maven/shared/utils/logging/MessageUtils
+2026-07-27T16:44:59.5985609Z [ERROR] -----------------------------------------------------
+2026-07-27T16:44:59.5986498Z [ERROR] realm =    extension>org.graalvm.buildtools:native-maven-plugin:1.1.6
+2026-07-27T16:44:59.5988040Z [ERROR] strategy = org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy
+2026-07-27T16:44:59.5989745Z [ERROR] urls[0] = file:/home/runner/.m2/repository/org/graalvm/buildtools/native-maven-plugin/1.1.6/native-maven-plugin-1.1.6.jar
+2026-07-27T16:44:59.5990968Z [ERROR] urls[1] = file:/home/runner/.m2/repository/org/graalvm/buildtools/utils/1.1.6/utils-1.1.6.jar
+2026-07-27T16:44:59.5991918Z [ERROR] urls[2] = file:/home/runner/.m2/repository/com/github/openjson/openjson/1.0.13/openjson-1.0.13.jar
+2026-07-27T16:44:59.6002065Z [ERROR] urls[3] = file:/home/runner/.m2/repository/org/graalvm/buildtools/graalvm-reachability-metadata/1.1.6/graalvm-reachability-metadata-1.1.6.jar
+2026-07-27T16:44:59.6003259Z [ERROR] urls[4] = file:/home/runner/.m2/repository/org/cyclonedx/cyclonedx-maven-plugin/2.9.1/cyclonedx-maven-plugin-2.9.1.jar
+2026-07-27T16:44:59.6004108Z [ERROR] urls[5] = file:/home/runner/.m2/repository/org/cyclonedx/cyclonedx-core-java/9.0.5/cyclonedx-core-java-9.0.5.jar
+2026-07-27T16:44:59.6004799Z [ERROR] urls[6] = file:/home/runner/.m2/repository/commons-io/commons-io/2.16.1/commons-io-2.16.1.jar
+2026-07-27T16:44:59.6005504Z [ERROR] urls[7] = file:/home/runner/.m2/repository/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar
+2026-07-27T16:44:59.6006269Z [ERROR] urls[8] = file:/home/runner/.m2/repository/com/github/package-url/packageurl-java/1.5.0/packageurl-java-1.5.0.jar
+2026-07-27T16:44:59.6007144Z [ERROR] urls[9] = file:/home/runner/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.17.2/jackson-dataformat-xml-2.17.2.jar
+2026-07-27T16:44:59.6007982Z [ERROR] urls[10] = file:/home/runner/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar
+2026-07-27T16:44:59.6009021Z [ERROR] urls[11] = file:/home/runner/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar
+2026-07-27T16:44:59.6009839Z [ERROR] urls[12] = file:/home/runner/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar
+2026-07-27T16:44:59.6010563Z [ERROR] urls[13] = file:/home/runner/.m2/repository/org/codehaus/woodstox/stax2-api/4.2.2/stax2-api-4.2.2.jar
+2026-07-27T16:44:59.6011478Z [ERROR] urls[14] = file:/home/runner/.m2/repository/com/fasterxml/woodstox/woodstox-core/6.7.0/woodstox-core-6.7.0.jar
+2026-07-27T16:44:59.6012240Z [ERROR] urls[15] = file:/home/runner/.m2/repository/com/networknt/json-schema-validator/1.5.1/json-schema-validator-1.5.1.jar
+2026-07-27T16:44:59.6012947Z [ERROR] urls[16] = file:/home/runner/.m2/repository/com/ethlo/time/itu/1.10.2/itu-1.10.2.jar
+2026-07-27T16:44:59.6013701Z [ERROR] urls[17] = file:/home/runner/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.17.1/jackson-dataformat-yaml-2.17.1.jar
+2026-07-27T16:44:59.6014436Z [ERROR] urls[18] = file:/home/runner/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar
+2026-07-27T16:44:59.6015031Z [ERROR] urls[19] = file:/home/runner/.m2/repository/commons-codec/commons-codec/1.17.1/commons-codec-1.17.1.jar
+2026-07-27T16:44:59.6015715Z [ERROR] urls[20] = file:/home/runner/.m2/repository/org/apache/commons/commons-lang3/3.17.0/commons-lang3-3.17.0.jar
+2026-07-27T16:44:59.6016502Z [ERROR] urls[21] = file:/home/runner/.m2/repository/org/apache/maven/shared/maven-dependency-tree/3.3.0/maven-dependency-tree-3.3.0.jar
+2026-07-27T16:44:59.6017374Z [ERROR] urls[22] = file:/home/runner/.m2/repository/org/apache/maven/shared/maven-dependency-analyzer/1.14.1/maven-dependency-analyzer-1.14.1.jar
+2026-07-27T16:44:59.6018070Z [ERROR] urls[23] = file:/home/runner/.m2/repository/org/ow2/asm/asm/9.7/asm-9.7.jar
+2026-07-27T16:44:59.6018865Z [ERROR] urls[24] = file:/home/runner/.m2/repository/org/twdata/maven/mojo-executor/2.4.1/mojo-executor-2.4.1.jar
+2026-07-27T16:44:59.6019531Z [ERROR] urls[25] = file:/home/runner/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.jar
+2026-07-27T16:44:59.6020021Z [ERROR] Number of foreign imports: 1
+2026-07-27T16:44:59.6020420Z [ERROR] import: Entry[import  from realm ClassRealm[maven.api, parent: null]]
+2026-07-27T16:44:59.6020965Z [ERROR] 
+2026-07-27T16:44:59.6021352Z [ERROR] -----------------------------------------------------: org.apache.maven.shared.utils.logging.MessageUtils
+2026-07-27T16:44:59.6021789Z [ERROR] -> [Help 1]
+2026-07-27T16:44:59.6021991Z [ERROR] 
+2026-07-27T16:44:59.6022296Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-07-27T16:44:59.6022752Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-07-27T16:44:59.6023082Z [ERROR] 
+2026-07-27T16:44:59.6023467Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-07-27T16:44:59.6024102Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginContainerException
+2026-07-27T16:44:59.6184690Z ##[error]Process completed with exit code 1.
+2026-07-27T16:44:59.6326175Z Post job cleanup.
+2026-07-27T16:44:59.7220698Z [command]/usr/bin/git version
+2026-07-27T16:44:59.7262538Z git version 2.54.0
+2026-07-27T16:44:59.7299591Z Temporarily overriding HOME='/home/runner/work/_temp/60024bad-f9c7-45eb-9311-d881e04b89c1' before making global git config changes
+2026-07-27T16:44:59.7300846Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-27T16:44:59.7305063Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nitrite-java/nitrite-java
+2026-07-27T16:44:59.7338997Z Removing SSH command configuration
+2026-07-27T16:44:59.7345676Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-27T16:44:59.7383928Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-27T16:44:59.7643656Z Removing HTTP extra header
+2026-07-27T16:44:59.7650892Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-27T16:44:59.7689153Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-27T16:44:59.7968759Z Removing includeIf entries pointing to credentials config files
+2026-07-27T16:44:59.7975623Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-27T16:44:59.8009631Z includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git.path
+2026-07-27T16:44:59.8010874Z includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git/worktrees/*.path
+2026-07-27T16:44:59.8011984Z includeif.gitdir:/github/workspace/.git.path
+2026-07-27T16:44:59.8012894Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-27T16:44:59.8020958Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git.path
+2026-07-27T16:44:59.8049449Z /home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:44:59.8059745Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-2f998727\-a731\-4168\-9959\-f8d1d7cdfc18\.config
+2026-07-27T16:44:59.8113118Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git/worktrees/*.path
+2026-07-27T16:44:59.8142547Z /home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:44:59.8151721Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/nitrite-java/nitrite-java/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-2f998727\-a731\-4168\-9959\-f8d1d7cdfc18\.config
+2026-07-27T16:44:59.8194889Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-27T16:44:59.8232786Z /github/runner_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:44:59.8242865Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-2f998727\-a731\-4168\-9959\-f8d1d7cdfc18\.config
+2026-07-27T16:44:59.8290144Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-27T16:44:59.8316413Z /github/runner_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config
+2026-07-27T16:44:59.8325903Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-2f998727\-a731\-4168\-9959\-f8d1d7cdfc18\.config
+2026-07-27T16:44:59.8371353Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-27T16:44:59.8633397Z Removing credentials config '/home/runner/work/_temp/git-credentials-2f998727-a731-4168-9959-f8d1d7cdfc18.config'
+2026-07-27T16:44:59.8792524Z Cleaning up orphan processes
+2026-07-27T16:44:59.9107940Z Terminate orphan process: pid (2780) (java)

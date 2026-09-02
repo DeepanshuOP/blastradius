@@ -1,0 +1,1753 @@
+﻿2026-07-13T20:46:05.0173201Z Current runner version: '2.335.1'
+2026-07-13T20:46:05.0201413Z ##[group]Runner Image Provisioner
+2026-07-13T20:46:05.0202534Z Hosted Compute Agent
+2026-07-13T20:46:05.0203243Z Version: 20260624.560
+2026-07-13T20:46:05.0203966Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-13T20:46:05.0204916Z Build Date: 2026-06-24T18:26:47Z
+2026-07-13T20:46:05.0205734Z Worker ID: {a6ba5db7-e048-4e8c-a9ce-ad46738eff21}
+2026-07-13T20:46:05.0206659Z Azure Region: westcentralus
+2026-07-13T20:46:05.0207468Z ##[endgroup]
+2026-07-13T20:46:05.0209125Z ##[group]Operating System
+2026-07-13T20:46:05.0210132Z Ubuntu
+2026-07-13T20:46:05.0210751Z 24.04.4
+2026-07-13T20:46:05.0211345Z LTS
+2026-07-13T20:46:05.0212062Z ##[endgroup]
+2026-07-13T20:46:05.0212741Z ##[group]Runner Image
+2026-07-13T20:46:05.0213508Z Image: ubuntu-24.04
+2026-07-13T20:46:05.0214215Z Version: 20260705.232.1
+2026-07-13T20:46:05.0215857Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260705.232/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-13T20:46:05.0217814Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260705.232
+2026-07-13T20:46:05.0219072Z ##[endgroup]
+2026-07-13T20:46:05.0223130Z ##[group]GITHUB_TOKEN Permissions
+2026-07-13T20:46:05.0225574Z Actions: read
+2026-07-13T20:46:05.0226329Z ArtifactMetadata: read
+2026-07-13T20:46:05.0227039Z Attestations: read
+2026-07-13T20:46:05.0227799Z Checks: read
+2026-07-13T20:46:05.0228448Z CodeQuality: read
+2026-07-13T20:46:05.0229351Z Contents: read
+2026-07-13T20:46:05.0230159Z Deployments: read
+2026-07-13T20:46:05.0230859Z Discussions: read
+2026-07-13T20:46:05.0231557Z Drives: read
+2026-07-13T20:46:05.0232214Z Issues: read
+2026-07-13T20:46:05.0232884Z Metadata: read
+2026-07-13T20:46:05.0233575Z Models: read
+2026-07-13T20:46:05.0234300Z Packages: read
+2026-07-13T20:46:05.0234932Z Pages: read
+2026-07-13T20:46:05.0235674Z PullRequests: read
+2026-07-13T20:46:05.0236415Z RepositoryProjects: read
+2026-07-13T20:46:05.0237229Z SecurityEvents: read
+2026-07-13T20:46:05.0237932Z Statuses: read
+2026-07-13T20:46:05.0238599Z VulnerabilityAlerts: read
+2026-07-13T20:46:05.0239676Z ##[endgroup]
+2026-07-13T20:46:05.0242113Z Secret source: Dependabot
+2026-07-13T20:46:05.0243022Z Prepare workflow directory
+2026-07-13T20:46:05.0615840Z Prepare all required actions
+2026-07-13T20:46:05.0659953Z Getting action download info
+2026-07-13T20:46:05.3732808Z Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-13T20:46:05.4358459Z Download action repository 'actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a' (SHA:0f481fcb613427c0f801b606911222b5b6f3083a)
+2026-07-13T20:46:06.2349469Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-07-13T20:46:06.4758758Z Uses: openremote/openremote/.github/workflows/integration-tests.yml@refs/pull/3022/merge (1ace025efec4d94e21b83890b4497dd7ad8ea9ca)
+2026-07-13T20:46:06.4762671Z ##[group] Inputs
+2026-07-13T20:46:06.4763333Z   skip: false
+2026-07-13T20:46:06.4763695Z ##[endgroup]
+2026-07-13T20:46:06.4764068Z Complete job name: Test / Integration Tests
+2026-07-13T20:46:06.5353004Z ##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+2026-07-13T20:46:06.5353792Z with:
+2026-07-13T20:46:06.5354107Z   lfs: true
+2026-07-13T20:46:06.5354452Z   repository: openremote/openremote
+2026-07-13T20:46:06.5357398Z   token: ***
+2026-07-13T20:46:06.5357732Z   ssh-strict: true
+2026-07-13T20:46:06.5358071Z   ssh-user: git
+2026-07-13T20:46:06.5358417Z   persist-credentials: true
+2026-07-13T20:46:06.5358796Z   clean: true
+2026-07-13T20:46:06.5359340Z   sparse-checkout-cone-mode: true
+2026-07-13T20:46:06.5359749Z   fetch-depth: 1
+2026-07-13T20:46:06.5360084Z   fetch-tags: false
+2026-07-13T20:46:06.5360423Z   show-progress: true
+2026-07-13T20:46:06.5360768Z   submodules: false
+2026-07-13T20:46:06.5361116Z   set-safe-directory: true
+2026-07-13T20:46:06.5361498Z   allow-unsafe-pr-checkout: false
+2026-07-13T20:46:06.5362359Z ##[endgroup]
+2026-07-13T20:46:06.6120403Z Syncing repository: openremote/openremote
+2026-07-13T20:46:06.6121944Z ##[group]Getting Git version info
+2026-07-13T20:46:06.6122523Z Working directory is '/home/runner/work/openremote/openremote'
+2026-07-13T20:46:06.6123358Z [command]/usr/bin/git version
+2026-07-13T20:46:06.6140079Z git version 2.54.0
+2026-07-13T20:46:06.6165931Z [command]/usr/bin/git lfs version
+2026-07-13T20:46:06.6379743Z git-lfs/3.7.1 (GitHub; linux amd64; go 1.24.4)
+2026-07-13T20:46:06.6389802Z ##[endgroup]
+2026-07-13T20:46:06.6399517Z Temporarily overriding HOME='/home/runner/work/_temp/040f05a2-0c8a-4090-ba4f-6d089cc600a3' before making global git config changes
+2026-07-13T20:46:06.6400641Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T20:46:06.6403322Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-07-13T20:46:06.6454283Z Deleting the contents of '/home/runner/work/openremote/openremote'
+2026-07-13T20:46:06.6456984Z ##[group]Determining repository object format
+2026-07-13T20:46:06.6458430Z ##[endgroup]
+2026-07-13T20:46:06.6459575Z ##[group]Initializing the repository
+2026-07-13T20:46:06.6461816Z [command]/usr/bin/git init /home/runner/work/openremote/openremote
+2026-07-13T20:46:06.6540060Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-13T20:46:06.6541294Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-13T20:46:06.6542155Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-13T20:46:06.6542736Z hint: call:
+2026-07-13T20:46:06.6543045Z hint:
+2026-07-13T20:46:06.6543446Z hint: 	git config --global init.defaultBranch <name>
+2026-07-13T20:46:06.6544003Z hint:
+2026-07-13T20:46:06.6544672Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-13T20:46:06.6545412Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-13T20:46:06.6546005Z hint:
+2026-07-13T20:46:06.6546337Z hint: 	git branch -m <name>
+2026-07-13T20:46:06.6546712Z hint:
+2026-07-13T20:46:06.6547287Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-13T20:46:06.6548073Z Initialized empty Git repository in /home/runner/work/openremote/openremote/.git/
+2026-07-13T20:46:06.6549626Z [command]/usr/bin/git remote add origin https://github.com/openremote/openremote
+2026-07-13T20:46:06.6573471Z ##[endgroup]
+2026-07-13T20:46:06.6574088Z ##[group]Disabling automatic garbage collection
+2026-07-13T20:46:06.6575892Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-13T20:46:06.6596641Z ##[endgroup]
+2026-07-13T20:46:06.6597334Z ##[group]Setting up auth
+2026-07-13T20:46:06.6597768Z Removing SSH command configuration
+2026-07-13T20:46:06.6601972Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T20:46:06.6625272Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T20:46:06.6820414Z Removing HTTP extra header
+2026-07-13T20:46:06.6824015Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T20:46:06.6847195Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T20:46:06.7021191Z Removing includeIf entries pointing to credentials config files
+2026-07-13T20:46:06.7024556Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T20:46:06.7047246Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T20:46:06.7226933Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-13T20:46:06.7254431Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T20:46:06.7340065Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T20:46:06.7344300Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T20:46:06.7346728Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T20:46:06.7348371Z ##[endgroup]
+2026-07-13T20:46:06.7350135Z [command]/usr/bin/git lfs install --local
+2026-07-13T20:46:06.8591690Z Updated Git hooks.
+2026-07-13T20:46:06.8592963Z Git LFS initialized.
+2026-07-13T20:46:06.8607204Z ##[group]Fetching the repository
+2026-07-13T20:46:06.8608294Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1ace025efec4d94e21b83890b4497dd7ad8ea9ca:refs/remotes/pull/3022/merge
+2026-07-13T20:46:08.8560982Z From https://github.com/openremote/openremote
+2026-07-13T20:46:08.8563021Z  * [new ref]         1ace025efec4d94e21b83890b4497dd7ad8ea9ca -> pull/3022/merge
+2026-07-13T20:46:08.8579922Z ##[endgroup]
+2026-07-13T20:46:08.8581213Z ##[group]Determining the checkout info
+2026-07-13T20:46:08.8582592Z ##[endgroup]
+2026-07-13T20:46:08.8583705Z ##[group]Fetching LFS objects
+2026-07-13T20:46:08.8586080Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/3022/merge
+2026-07-13T20:46:08.8767668Z Fetching reference refs/remotes/pull/3022/merge
+2026-07-13T20:46:11.8415632Z ##[endgroup]
+2026-07-13T20:46:11.8419075Z [command]/usr/bin/git sparse-checkout disable
+2026-07-13T20:46:11.8453316Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-13T20:46:11.8476405Z ##[group]Checking out the ref
+2026-07-13T20:46:11.8478878Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/3022/merge
+2026-07-13T20:46:12.0662634Z Note: switching to 'refs/remotes/pull/3022/merge'.
+2026-07-13T20:46:12.0663079Z 
+2026-07-13T20:46:12.0663374Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-13T20:46:12.0664097Z changes and commit them, and you can discard any commits you make in this
+2026-07-13T20:46:12.0664649Z state without impacting any branches by switching back to a branch.
+2026-07-13T20:46:12.0664973Z 
+2026-07-13T20:46:12.0665188Z If you want to create a new branch to retain commits you create, you may
+2026-07-13T20:46:12.0665717Z do so (now or later) by using -c with the switch command. Example:
+2026-07-13T20:46:12.0666105Z 
+2026-07-13T20:46:12.0666278Z   git switch -c <new-branch-name>
+2026-07-13T20:46:12.0679958Z 
+2026-07-13T20:46:12.0680193Z Or undo this operation with:
+2026-07-13T20:46:12.0680449Z 
+2026-07-13T20:46:12.0680900Z   git switch -
+2026-07-13T20:46:12.0681063Z 
+2026-07-13T20:46:12.0681334Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-13T20:46:12.0681763Z 
+2026-07-13T20:46:12.0682207Z HEAD is now at 1ace025 Merge 0c77879e975fa00620b86b068d59966cf3dbc960 into e3f64140f13c445a77ddf32a735ada095d2fa31e
+2026-07-13T20:46:12.0971683Z ##[endgroup]
+2026-07-13T20:46:12.1003211Z [command]/usr/bin/git log -1 --format=%H
+2026-07-13T20:46:12.1025137Z 1ace025efec4d94e21b83890b4497dd7ad8ea9ca
+2026-07-13T20:46:12.1247959Z ##[group]Run actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a
+2026-07-13T20:46:12.1248272Z with:
+2026-07-13T20:46:12.1248444Z   distribution: temurin
+2026-07-13T20:46:12.1248647Z   java-version: 21
+2026-07-13T20:46:12.1248818Z   cache: gradle
+2026-07-13T20:46:12.1249116Z   java-package: jdk
+2026-07-13T20:46:12.1249464Z   check-latest: false
+2026-07-13T20:46:12.1249634Z   set-default: true
+2026-07-13T20:46:12.1249804Z   verify-signature: false
+2026-07-13T20:46:12.1249987Z   server-id: github
+2026-07-13T20:46:12.1250159Z   server-username: GITHUB_ACTOR
+2026-07-13T20:46:12.1250358Z   server-password: GITHUB_TOKEN
+2026-07-13T20:46:12.1250551Z   overwrite-settings: true
+2026-07-13T20:46:12.1250738Z   job-status: success
+2026-07-13T20:46:12.1252534Z   token: ***
+2026-07-13T20:46:12.1252721Z   show-download-progress: false
+2026-07-13T20:46:12.1252931Z ##[endgroup]
+2026-07-13T20:46:12.2366625Z ##[group]Installed distributions
+2026-07-13T20:46:12.2423876Z Resolved Java 21.0.11+10 from tool-cache
+2026-07-13T20:46:12.2424262Z Setting Java 21.0.11+10 as the default
+2026-07-13T20:46:12.2432194Z Creating toolchains.xml for JDK version 21 from temurin
+2026-07-13T20:46:12.2485119Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-13T20:46:12.2485454Z 
+2026-07-13T20:46:12.2485645Z Java configuration:
+2026-07-13T20:46:12.2485942Z   Distribution: temurin
+2026-07-13T20:46:12.2486202Z   Version: 21.0.11+10
+2026-07-13T20:46:12.2486580Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T20:46:12.2486925Z 
+2026-07-13T20:46:12.2487271Z ##[endgroup]
+2026-07-13T20:46:12.2511869Z Creating settings.xml with server-id: github
+2026-07-13T20:46:12.2512198Z Writing to /home/runner/.m2/settings.xml
+2026-07-13T20:46:12.2512749Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-07-13T20:46:12.7233002Z gradle cache is not found
+2026-07-13T20:46:12.7367477Z ##[group]Run docker compose -f profile/dev-testing.yml pull
+2026-07-13T20:46:12.7367894Z [36;1mdocker compose -f profile/dev-testing.yml pull[0m
+2026-07-13T20:46:12.7511627Z shell: /usr/bin/bash -e {0}
+2026-07-13T20:46:12.7511856Z env:
+2026-07-13T20:46:12.7512114Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T20:46:12.7512530Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T20:46:12.7512835Z   MAVEN_ARGS: -ntp
+2026-07-13T20:46:12.7513004Z ##[endgroup]
+2026-07-13T20:46:12.8679842Z time="2026-07-13T20:46:12Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-13T20:46:12.8735560Z time="2026-07-13T20:46:12Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-13T20:46:12.8832316Z  keycloak Pulling 
+2026-07-13T20:46:12.8832710Z  postgresql Pulling 
+2026-07-13T20:46:13.8457449Z  cf242d89e8f2 Pulling fs layer 
+2026-07-13T20:46:13.8525059Z  ea29d36b883e Pulling fs layer 
+2026-07-13T20:46:13.8526136Z  a9bb58c3bdd8 Pulling fs layer 
+2026-07-13T20:46:13.8526747Z  393f8747e4b4 Pulling fs layer 
+2026-07-13T20:46:13.8527223Z  20b69ee379c9 Pulling fs layer 
+2026-07-13T20:46:13.8527445Z  34f6e9793683 Pulling fs layer 
+2026-07-13T20:46:13.8527742Z  cc5389c8389e Pulling fs layer 
+2026-07-13T20:46:13.8527967Z  76f9ee5e648e Pulling fs layer 
+2026-07-13T20:46:13.8528169Z  393efe950606 Pulling fs layer 
+2026-07-13T20:46:13.8528427Z  3fdba431f168 Pulling fs layer 
+2026-07-13T20:46:13.8528645Z  bd6208a6da27 Pulling fs layer 
+2026-07-13T20:46:13.8528830Z  cc5389c8389e Waiting 
+2026-07-13T20:46:13.8529001Z  76f9ee5e648e Waiting 
+2026-07-13T20:46:13.8529349Z  393efe950606 Waiting 
+2026-07-13T20:46:13.8529714Z  3fdba431f168 Waiting 
+2026-07-13T20:46:13.8529969Z  bd6208a6da27 Waiting 
+2026-07-13T20:46:13.8530232Z  20b69ee379c9 Waiting 
+2026-07-13T20:46:13.8530484Z  393f8747e4b4 Waiting 
+2026-07-13T20:46:13.8530652Z  34f6e9793683 Waiting 
+2026-07-13T20:46:14.0868050Z  ea29d36b883e Downloading [>                                                  ]  80.64kB/7.221MB
+2026-07-13T20:46:14.1414666Z  cf242d89e8f2 Downloading [>                                                  ]  526.9kB/856.3MB
+2026-07-13T20:46:14.1453592Z  a9bb58c3bdd8 Downloading [>                                                  ]  526.9kB/77.15MB
+2026-07-13T20:46:14.1891559Z  ea29d36b883e Downloading [===========>                                       ]  1.713MB/7.221MB
+2026-07-13T20:46:14.2437806Z  cf242d89e8f2 Downloading [>                                                  ]  5.275MB/856.3MB
+2026-07-13T20:46:14.2484800Z  a9bb58c3bdd8 Downloading [===>                                               ]  5.268MB/77.15MB
+2026-07-13T20:46:14.2532468Z  ea29d36b883e Verifying Checksum 
+2026-07-13T20:46:14.2533113Z  ea29d36b883e Download complete 
+2026-07-13T20:46:14.2552687Z  ea29d36b883e Extracting [>                                                  ]   98.3kB/7.221MB
+2026-07-13T20:46:14.3441318Z  cf242d89e8f2 Downloading [=>                                                 ]  31.28MB/856.3MB
+2026-07-13T20:46:14.3493938Z  a9bb58c3bdd8 Downloading [====================>                              ]  31.87MB/77.15MB
+2026-07-13T20:46:14.3820226Z  ea29d36b883e Extracting [==============>                                    ]  2.064MB/7.221MB
+2026-07-13T20:46:14.4457595Z  cf242d89e8f2 Downloading [===>                                               ]   66.5MB/856.3MB
+2026-07-13T20:46:14.4519972Z  a9bb58c3bdd8 Downloading [=============================================>     ]   70.8MB/77.15MB
+2026-07-13T20:46:14.4670108Z  a9bb58c3bdd8 Verifying Checksum 
+2026-07-13T20:46:14.4671686Z  a9bb58c3bdd8 Download complete 
+2026-07-13T20:46:14.4828030Z  ea29d36b883e Extracting [=========================================>         ]  5.997MB/7.221MB
+2026-07-13T20:46:14.5425244Z  393f8747e4b4 Downloading [>                                                  ]  538.9kB/177.9MB
+2026-07-13T20:46:14.5461046Z  cf242d89e8f2 Downloading [======>                                            ]  104.4MB/856.3MB
+2026-07-13T20:46:14.5622493Z  ea29d36b883e Extracting [==================================================>]  7.221MB/7.221MB
+2026-07-13T20:46:14.5737645Z  ea29d36b883e Pull complete 
+2026-07-13T20:46:14.6037238Z  a9bb58c3bdd8 Extracting [>                                                  ]  557.1kB/77.15MB
+2026-07-13T20:46:14.6434373Z  393f8747e4b4 Downloading [=>                                                 ]  5.367MB/177.9MB
+2026-07-13T20:46:14.6449577Z  cf242d89e8f2 Downloading [========>                                          ]  145.9MB/856.3MB
+2026-07-13T20:46:14.6880776Z  20b69ee379c9 Downloading [==================================================>]     551B/551B
+2026-07-13T20:46:14.6881294Z  20b69ee379c9 Verifying Checksum 
+2026-07-13T20:46:14.6881627Z  20b69ee379c9 Download complete 
+2026-07-13T20:46:14.7130047Z  a9bb58c3bdd8 Extracting [=>                                                 ]  2.228MB/77.15MB
+2026-07-13T20:46:14.7450331Z  393f8747e4b4 Downloading [=========>                                         ]  32.61MB/177.9MB
+2026-07-13T20:46:14.7461778Z  cf242d89e8f2 Downloading [==========>                                        ]  176.3MB/856.3MB
+2026-07-13T20:46:14.8194546Z  a9bb58c3bdd8 Extracting [====>                                              ]  7.242MB/77.15MB
+2026-07-13T20:46:14.8463328Z  393f8747e4b4 Downloading [==================>                                ]  66.33MB/177.9MB
+2026-07-13T20:46:14.8471362Z  cf242d89e8f2 Downloading [============>                                      ]  213.7MB/856.3MB
+2026-07-13T20:46:14.9017573Z  34f6e9793683 Downloading [>                                                  ]  32.13kB/2.419MB
+2026-07-13T20:46:14.9194870Z  a9bb58c3bdd8 Extracting [=======>                                           ]  12.26MB/77.15MB
+2026-07-13T20:46:14.9474409Z  cf242d89e8f2 Downloading [==============>                                    ]  249.5MB/856.3MB
+2026-07-13T20:46:14.9475319Z  393f8747e4b4 Downloading [==========================>                        ]  95.22MB/177.9MB
+2026-07-13T20:46:15.0022783Z  34f6e9793683 Downloading [=================>                                 ]  848.2kB/2.419MB
+2026-07-13T20:46:15.0210709Z  a9bb58c3bdd8 Extracting [===========>                                       ]  18.38MB/77.15MB
+2026-07-13T20:46:15.0458726Z  34f6e9793683 Verifying Checksum 
+2026-07-13T20:46:15.0459607Z  34f6e9793683 Download complete 
+2026-07-13T20:46:15.0474948Z  cf242d89e8f2 Downloading [================>                                  ]  283.6MB/856.3MB
+2026-07-13T20:46:15.0477265Z  393f8747e4b4 Downloading [==================================>                ]    123MB/177.9MB
+2026-07-13T20:46:15.1272140Z  a9bb58c3bdd8 Extracting [===============>                                   ]  24.51MB/77.15MB
+2026-07-13T20:46:15.1487821Z  cf242d89e8f2 Downloading [==================>                                ]    321MB/856.3MB
+2026-07-13T20:46:15.1490676Z  393f8747e4b4 Downloading [===========================================>       ]  153.4MB/177.9MB
+2026-07-13T20:46:15.2142279Z  393f8747e4b4 Verifying Checksum 
+2026-07-13T20:46:15.2148933Z  393f8747e4b4 Download complete 
+2026-07-13T20:46:15.2278323Z  a9bb58c3bdd8 Extracting [===================>                               ]  30.64MB/77.15MB
+2026-07-13T20:46:15.2494755Z  cf242d89e8f2 Downloading [====================>                              ]  352.5MB/856.3MB
+2026-07-13T20:46:15.3143467Z  cc5389c8389e Downloading [>                                                  ]  245.1kB/23.87MB
+2026-07-13T20:46:15.3327935Z  a9bb58c3bdd8 Extracting [=========================>                         ]  38.99MB/77.15MB
+2026-07-13T20:46:15.3504151Z  cf242d89e8f2 Downloading [======================>                            ]  383.5MB/856.3MB
+2026-07-13T20:46:15.4158297Z  cc5389c8389e Downloading [======>                                            ]  3.194MB/23.87MB
+2026-07-13T20:46:15.4287329Z  76f9ee5e648e Downloading [==================================================>]     163B/163B
+2026-07-13T20:46:15.4291960Z  76f9ee5e648e Verifying Checksum 
+2026-07-13T20:46:15.4301013Z  76f9ee5e648e Download complete 
+2026-07-13T20:46:15.4344089Z  a9bb58c3bdd8 Extracting [=============================>                     ]  46.24MB/77.15MB
+2026-07-13T20:46:15.4519771Z  cf242d89e8f2 Downloading [========================>                          ]  421.4MB/856.3MB
+2026-07-13T20:46:15.5159892Z  cc5389c8389e Downloading [================================================>  ]   23.1MB/23.87MB
+2026-07-13T20:46:15.5176938Z  cc5389c8389e Verifying Checksum 
+2026-07-13T20:46:15.5177584Z  cc5389c8389e Download complete 
+2026-07-13T20:46:15.5368622Z  a9bb58c3bdd8 Extracting [=================================>                 ]  51.81MB/77.15MB
+2026-07-13T20:46:15.5523998Z  cf242d89e8f2 Downloading [==========================>                        ]  458.3MB/856.3MB
+2026-07-13T20:46:15.6389415Z  a9bb58c3bdd8 Extracting [=====================================>             ]  58.49MB/77.15MB
+2026-07-13T20:46:15.6436887Z  393efe950606 Downloading [==================================================>]     146B/146B
+2026-07-13T20:46:15.6441406Z  393efe950606 Download complete 
+2026-07-13T20:46:15.6533409Z  cf242d89e8f2 Downloading [=============================>                     ]  499.4MB/856.3MB
+2026-07-13T20:46:15.7300268Z  3fdba431f168 Downloading [==================================================>]     150B/150B
+2026-07-13T20:46:15.7301003Z  3fdba431f168 Verifying Checksum 
+2026-07-13T20:46:15.7301639Z  3fdba431f168 Download complete 
+2026-07-13T20:46:15.7455868Z  a9bb58c3bdd8 Extracting [===========================================>       ]  66.85MB/77.15MB
+2026-07-13T20:46:15.7532696Z  cf242d89e8f2 Downloading [===============================>                   ]  537.8MB/856.3MB
+2026-07-13T20:46:15.8539420Z  cf242d89e8f2 Downloading [=================================>                 ]  576.7MB/856.3MB
+2026-07-13T20:46:15.8560992Z  bd6208a6da27 Downloading [==================================================>]     168B/168B
+2026-07-13T20:46:15.8561590Z  bd6208a6da27 Verifying Checksum 
+2026-07-13T20:46:15.8562600Z  bd6208a6da27 Download complete 
+2026-07-13T20:46:15.8879900Z  a9bb58c3bdd8 Extracting [=============================================>     ]  70.75MB/77.15MB
+2026-07-13T20:46:15.9549608Z  cf242d89e8f2 Downloading [===================================>               ]  615.7MB/856.3MB
+2026-07-13T20:46:16.0477312Z  a9bb58c3bdd8 Extracting [================================================>  ]  74.09MB/77.15MB
+2026-07-13T20:46:16.0553935Z  cf242d89e8f2 Downloading [======================================>            ]  657.8MB/856.3MB
+2026-07-13T20:46:16.1557155Z  cf242d89e8f2 Downloading [========================================>          ]  685.1MB/856.3MB
+2026-07-13T20:46:16.2563557Z  cf242d89e8f2 Downloading [=========================================>         ]    714MB/856.3MB
+2026-07-13T20:46:16.3573052Z  cf242d89e8f2 Downloading [===========================================>       ]  745.5MB/856.3MB
+2026-07-13T20:46:16.3631975Z  a9bb58c3bdd8 Extracting [================================================>  ]   75.2MB/77.15MB
+2026-07-13T20:46:16.4088476Z  a9bb58c3bdd8 Extracting [==================================================>]  77.15MB/77.15MB
+2026-07-13T20:46:16.4583453Z  cf242d89e8f2 Downloading [=============================================>     ]    776MB/856.3MB
+2026-07-13T20:46:16.5584196Z  cf242d89e8f2 Downloading [===============================================>   ]    808MB/856.3MB
+2026-07-13T20:46:16.6587775Z  cf242d89e8f2 Downloading [================================================>  ]  837.4MB/856.3MB
+2026-07-13T20:46:16.7238995Z  cf242d89e8f2 Verifying Checksum 
+2026-07-13T20:46:16.7239511Z  cf242d89e8f2 Download complete 
+2026-07-13T20:46:16.9235611Z  cf242d89e8f2 Extracting [>                                                  ]  557.1kB/856.3MB
+2026-07-13T20:46:17.0258062Z  cf242d89e8f2 Extracting [>                                                  ]  10.58MB/856.3MB
+2026-07-13T20:46:17.1359513Z  cf242d89e8f2 Extracting [=>                                                 ]  17.83MB/856.3MB
+2026-07-13T20:46:17.2361630Z  cf242d89e8f2 Extracting [=>                                                 ]  25.62MB/856.3MB
+2026-07-13T20:46:17.3419312Z  cf242d89e8f2 Extracting [=>                                                 ]  32.31MB/856.3MB
+2026-07-13T20:46:17.4433352Z  cf242d89e8f2 Extracting [==>                                                ]  40.67MB/856.3MB
+2026-07-13T20:46:17.5485719Z  cf242d89e8f2 Extracting [===>                                               ]  51.81MB/856.3MB
+2026-07-13T20:46:17.6530984Z  cf242d89e8f2 Extracting [===>                                               ]  62.95MB/856.3MB
+2026-07-13T20:46:17.7556538Z  cf242d89e8f2 Extracting [====>                                              ]  74.09MB/856.3MB
+2026-07-13T20:46:17.8600175Z  cf242d89e8f2 Extracting [====>                                              ]  85.23MB/856.3MB
+2026-07-13T20:46:17.9637295Z  cf242d89e8f2 Extracting [=====>                                             ]  96.37MB/856.3MB
+2026-07-13T20:46:18.0643231Z  cf242d89e8f2 Extracting [======>                                            ]    107MB/856.3MB
+2026-07-13T20:46:18.1676249Z  cf242d89e8f2 Extracting [======>                                            ]  118.1MB/856.3MB
+2026-07-13T20:46:18.2710061Z  cf242d89e8f2 Extracting [=======>                                           ]  129.2MB/856.3MB
+2026-07-13T20:46:18.3753094Z  cf242d89e8f2 Extracting [========>                                          ]  140.4MB/856.3MB
+2026-07-13T20:46:18.4769910Z  cf242d89e8f2 Extracting [========>                                          ]    151MB/856.3MB
+2026-07-13T20:46:18.5805980Z  cf242d89e8f2 Extracting [=========>                                         ]  162.1MB/856.3MB
+2026-07-13T20:46:18.6817569Z  cf242d89e8f2 Extracting [==========>                                        ]  172.7MB/856.3MB
+2026-07-13T20:46:18.7889726Z  cf242d89e8f2 Extracting [==========>                                        ]  183.8MB/856.3MB
+2026-07-13T20:46:18.8938145Z  cf242d89e8f2 Extracting [===========>                                       ]    195MB/856.3MB
+2026-07-13T20:46:18.9946361Z  cf242d89e8f2 Extracting [============>                                      ]  205.6MB/856.3MB
+2026-07-13T20:46:19.0988964Z  cf242d89e8f2 Extracting [============>                                      ]  216.7MB/856.3MB
+2026-07-13T20:46:19.1995727Z  cf242d89e8f2 Extracting [=============>                                     ]  227.3MB/856.3MB
+2026-07-13T20:46:19.3010081Z  cf242d89e8f2 Extracting [=============>                                     ]  237.9MB/856.3MB
+2026-07-13T20:46:19.4054521Z  cf242d89e8f2 Extracting [==============>                                    ]    249MB/856.3MB
+2026-07-13T20:46:19.5077433Z  cf242d89e8f2 Extracting [===============>                                   ]  259.6MB/856.3MB
+2026-07-13T20:46:19.6097112Z  cf242d89e8f2 Extracting [===============>                                   ]  269.6MB/856.3MB
+2026-07-13T20:46:19.7124956Z  cf242d89e8f2 Extracting [================>                                  ]  279.6MB/856.3MB
+2026-07-13T20:46:19.8166099Z  cf242d89e8f2 Extracting [================>                                  ]  290.2MB/856.3MB
+2026-07-13T20:46:19.9198126Z  cf242d89e8f2 Extracting [=================>                                 ]  299.7MB/856.3MB
+2026-07-13T20:46:20.0242945Z  cf242d89e8f2 Extracting [=================>                                 ]  306.9MB/856.3MB
+2026-07-13T20:46:20.1269848Z  cf242d89e8f2 Extracting [==================>                                ]  313.6MB/856.3MB
+2026-07-13T20:46:20.2293474Z  cf242d89e8f2 Extracting [==================>                                ]  320.9MB/856.3MB
+2026-07-13T20:46:20.3315681Z  cf242d89e8f2 Extracting [===================>                               ]  330.9MB/856.3MB
+2026-07-13T20:46:20.4350550Z  cf242d89e8f2 Extracting [===================>                               ]    342MB/856.3MB
+2026-07-13T20:46:20.5370265Z  cf242d89e8f2 Extracting [====================>                              ]  353.2MB/856.3MB
+2026-07-13T20:46:20.6386602Z  cf242d89e8f2 Extracting [=====================>                             ]  364.3MB/856.3MB
+2026-07-13T20:46:20.7467087Z  cf242d89e8f2 Extracting [=====================>                             ]  370.4MB/856.3MB
+2026-07-13T20:46:20.8477147Z  cf242d89e8f2 Extracting [======================>                            ]  381.6MB/856.3MB
+2026-07-13T20:46:20.9503993Z  cf242d89e8f2 Extracting [======================>                            ]  392.7MB/856.3MB
+2026-07-13T20:46:21.0563817Z  cf242d89e8f2 Extracting [=======================>                           ]  404.4MB/856.3MB
+2026-07-13T20:46:21.1585198Z  cf242d89e8f2 Extracting [========================>                          ]  415.6MB/856.3MB
+2026-07-13T20:46:21.2600689Z  cf242d89e8f2 Extracting [========================>                          ]  426.7MB/856.3MB
+2026-07-13T20:46:21.3621817Z  cf242d89e8f2 Extracting [=========================>                         ]  437.8MB/856.3MB
+2026-07-13T20:46:21.4649643Z  cf242d89e8f2 Extracting [==========================>                        ]    449MB/856.3MB
+2026-07-13T20:46:21.5660618Z  cf242d89e8f2 Extracting [==========================>                        ]  460.1MB/856.3MB
+2026-07-13T20:46:21.6696181Z  cf242d89e8f2 Extracting [===========================>                       ]  471.3MB/856.3MB
+2026-07-13T20:46:21.7718162Z  cf242d89e8f2 Extracting [============================>                      ]  482.4MB/856.3MB
+2026-07-13T20:46:21.8762185Z  cf242d89e8f2 Extracting [============================>                      ]  493.6MB/856.3MB
+2026-07-13T20:46:21.9780888Z  cf242d89e8f2 Extracting [=============================>                     ]  504.7MB/856.3MB
+2026-07-13T20:46:22.0822428Z  cf242d89e8f2 Extracting [==============================>                    ]  515.8MB/856.3MB
+2026-07-13T20:46:22.1840627Z  cf242d89e8f2 Extracting [==============================>                    ]  525.9MB/856.3MB
+2026-07-13T20:46:22.2876260Z  cf242d89e8f2 Extracting [===============================>                   ]  536.4MB/856.3MB
+2026-07-13T20:46:22.3946765Z  cf242d89e8f2 Extracting [===============================>                   ]  544.8MB/856.3MB
+2026-07-13T20:46:22.5019579Z  cf242d89e8f2 Extracting [================================>                  ]  552.6MB/856.3MB
+2026-07-13T20:46:22.6057086Z  cf242d89e8f2 Extracting [================================>                  ]  563.2MB/856.3MB
+2026-07-13T20:46:22.7103350Z  cf242d89e8f2 Extracting [=================================>                 ]  573.8MB/856.3MB
+2026-07-13T20:46:22.8112552Z  cf242d89e8f2 Extracting [=================================>                 ]    581MB/856.3MB
+2026-07-13T20:46:22.9163552Z  cf242d89e8f2 Extracting [==================================>                ]  588.8MB/856.3MB
+2026-07-13T20:46:23.0181752Z  cf242d89e8f2 Extracting [==================================>                ]  599.4MB/856.3MB
+2026-07-13T20:46:23.1205301Z  cf242d89e8f2 Extracting [===================================>               ]    610MB/856.3MB
+2026-07-13T20:46:23.2225221Z  cf242d89e8f2 Extracting [====================================>              ]  622.2MB/856.3MB
+2026-07-13T20:46:23.3236116Z  cf242d89e8f2 Extracting [=====================================>             ]  633.9MB/856.3MB
+2026-07-13T20:46:23.4273638Z  cf242d89e8f2 Extracting [=====================================>             ]    644MB/856.3MB
+2026-07-13T20:46:23.5502968Z  cf242d89e8f2 Extracting [======================================>            ]    654MB/856.3MB
+2026-07-13T20:46:23.6536433Z  cf242d89e8f2 Extracting [======================================>            ]  659.6MB/856.3MB
+2026-07-13T20:46:23.7638282Z  cf242d89e8f2 Extracting [======================================>            ]    664MB/856.3MB
+2026-07-13T20:46:23.8675881Z  cf242d89e8f2 Extracting [======================================>            ]  664.6MB/856.3MB
+2026-07-13T20:46:23.9755797Z  cf242d89e8f2 Extracting [======================================>            ]  665.1MB/856.3MB
+2026-07-13T20:46:24.0758356Z  cf242d89e8f2 Extracting [======================================>            ]  667.4MB/856.3MB
+2026-07-13T20:46:24.1807625Z  cf242d89e8f2 Extracting [=======================================>           ]  669.6MB/856.3MB
+2026-07-13T20:46:24.2851895Z  cf242d89e8f2 Extracting [=======================================>           ]  675.2MB/856.3MB
+2026-07-13T20:46:24.3920262Z  cf242d89e8f2 Extracting [=======================================>           ]  680.7MB/856.3MB
+2026-07-13T20:46:24.4963297Z  cf242d89e8f2 Extracting [========================================>          ]  686.3MB/856.3MB
+2026-07-13T20:46:24.6036323Z  cf242d89e8f2 Extracting [========================================>          ]  691.9MB/856.3MB
+2026-07-13T20:46:24.7131836Z  cf242d89e8f2 Extracting [========================================>          ]  697.4MB/856.3MB
+2026-07-13T20:46:24.8242764Z  cf242d89e8f2 Extracting [=========================================>         ]    703MB/856.3MB
+2026-07-13T20:46:24.9331090Z  cf242d89e8f2 Extracting [=========================================>         ]  708.6MB/856.3MB
+2026-07-13T20:46:25.0441980Z  cf242d89e8f2 Extracting [=========================================>         ]  714.1MB/856.3MB
+2026-07-13T20:46:25.1447801Z  cf242d89e8f2 Extracting [=========================================>         ]  719.2MB/856.3MB
+2026-07-13T20:46:25.2533352Z  cf242d89e8f2 Extracting [==========================================>        ]  724.7MB/856.3MB
+2026-07-13T20:46:25.3613240Z  cf242d89e8f2 Extracting [==========================================>        ]  730.3MB/856.3MB
+2026-07-13T20:46:25.4638952Z  cf242d89e8f2 Extracting [==========================================>        ]  735.3MB/856.3MB
+2026-07-13T20:46:25.5657433Z  cf242d89e8f2 Extracting [===========================================>       ]  740.9MB/856.3MB
+2026-07-13T20:46:25.6697779Z  cf242d89e8f2 Extracting [===========================================>       ]  746.5MB/856.3MB
+2026-07-13T20:46:25.7775339Z  cf242d89e8f2 Extracting [===========================================>       ]    752MB/856.3MB
+2026-07-13T20:46:25.8848029Z  cf242d89e8f2 Extracting [============================================>      ]  757.6MB/856.3MB
+2026-07-13T20:46:26.0060935Z  cf242d89e8f2 Extracting [============================================>      ]  761.5MB/856.3MB
+2026-07-13T20:46:26.1233177Z  cf242d89e8f2 Extracting [============================================>      ]  763.7MB/856.3MB
+2026-07-13T20:46:26.2633879Z  cf242d89e8f2 Extracting [============================================>      ]  765.4MB/856.3MB
+2026-07-13T20:46:26.3833279Z  cf242d89e8f2 Extracting [============================================>      ]  768.2MB/856.3MB
+2026-07-13T20:46:26.4869579Z  cf242d89e8f2 Extracting [=============================================>     ]    771MB/856.3MB
+2026-07-13T20:46:26.5903341Z  cf242d89e8f2 Extracting [=============================================>     ]  776.5MB/856.3MB
+2026-07-13T20:46:26.6959952Z  cf242d89e8f2 Extracting [=============================================>     ]  782.1MB/856.3MB
+2026-07-13T20:46:26.8032459Z  cf242d89e8f2 Extracting [=============================================>     ]  787.7MB/856.3MB
+2026-07-13T20:46:26.9124677Z  cf242d89e8f2 Extracting [==============================================>    ]  793.2MB/856.3MB
+2026-07-13T20:46:27.0215231Z  cf242d89e8f2 Extracting [==============================================>    ]  798.8MB/856.3MB
+2026-07-13T20:46:27.1252211Z  cf242d89e8f2 Extracting [==============================================>    ]  803.8MB/856.3MB
+2026-07-13T20:46:27.2263477Z  cf242d89e8f2 Extracting [===============================================>   ]  808.8MB/856.3MB
+2026-07-13T20:46:27.3363920Z  cf242d89e8f2 Extracting [===============================================>   ]  814.4MB/856.3MB
+2026-07-13T20:46:27.4454305Z  cf242d89e8f2 Extracting [===============================================>   ]    820MB/856.3MB
+2026-07-13T20:46:27.5472110Z  cf242d89e8f2 Extracting [================================================>  ]    825MB/856.3MB
+2026-07-13T20:46:27.6524045Z  cf242d89e8f2 Extracting [================================================>  ]  830.6MB/856.3MB
+2026-07-13T20:46:27.7561737Z  cf242d89e8f2 Extracting [================================================>  ]  836.1MB/856.3MB
+2026-07-13T20:46:27.8640216Z  cf242d89e8f2 Extracting [=================================================> ]    840MB/856.3MB
+2026-07-13T20:46:27.9647276Z  cf242d89e8f2 Extracting [=================================================> ]  843.9MB/856.3MB
+2026-07-13T20:46:28.0890597Z  cf242d89e8f2 Extracting [=================================================> ]  846.7MB/856.3MB
+2026-07-13T20:46:28.2760404Z  cf242d89e8f2 Extracting [=================================================> ]    854MB/856.3MB
+2026-07-13T20:46:28.7690707Z  a9bb58c3bdd8 Pull complete 
+2026-07-13T20:46:28.7697250Z  cf242d89e8f2 Extracting [=================================================> ]  854.5MB/856.3MB
+2026-07-13T20:46:29.0173115Z  cf242d89e8f2 Extracting [=================================================> ]  855.1MB/856.3MB
+2026-07-13T20:46:29.2190218Z  393f8747e4b4 Extracting [>                                                  ]  557.1kB/177.9MB
+2026-07-13T20:46:29.3150120Z  cf242d89e8f2 Extracting [=================================================> ]  856.2MB/856.3MB
+2026-07-13T20:46:29.3226097Z  393f8747e4b4 Extracting [======>                                            ]  22.28MB/177.9MB
+2026-07-13T20:46:29.3309864Z  cf242d89e8f2 Extracting [==================================================>]  856.3MB/856.3MB
+2026-07-13T20:46:29.4245963Z  393f8747e4b4 Extracting [============>                                      ]  44.56MB/177.9MB
+2026-07-13T20:46:29.5353459Z  393f8747e4b4 Extracting [===============>                                   ]  55.71MB/177.9MB
+2026-07-13T20:46:29.6352473Z  393f8747e4b4 Extracting [=====================>                             ]   75.2MB/177.9MB
+2026-07-13T20:46:29.7363365Z  393f8747e4b4 Extracting [============================>                      ]  103.1MB/177.9MB
+2026-07-13T20:46:29.8764225Z  393f8747e4b4 Extracting [================================>                  ]  114.2MB/177.9MB
+2026-07-13T20:46:29.8765248Z  cf242d89e8f2 Pull complete 
+2026-07-13T20:46:29.9959563Z  393f8747e4b4 Extracting [=====================================>             ]  134.3MB/177.9MB
+2026-07-13T20:46:30.0976868Z  393f8747e4b4 Extracting [=============================================>     ]  161.5MB/177.9MB
+2026-07-13T20:46:30.1644715Z  393f8747e4b4 Extracting [==================================================>]  177.9MB/177.9MB
+2026-07-13T20:46:30.7150976Z  postgresql Pulled 
+2026-07-13T20:46:38.4006182Z  393f8747e4b4 Pull complete 
+2026-07-13T20:46:38.4015908Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-07-13T20:46:38.4020558Z  20b69ee379c9 Extracting [==================================================>]     551B/551B
+2026-07-13T20:46:38.4194061Z  20b69ee379c9 Pull complete 
+2026-07-13T20:46:38.4207231Z  34f6e9793683 Extracting [>                                                  ]  32.77kB/2.419MB
+2026-07-13T20:46:38.4380099Z  34f6e9793683 Extracting [==================================================>]  2.419MB/2.419MB
+2026-07-13T20:46:38.4382944Z  34f6e9793683 Extracting [==================================================>]  2.419MB/2.419MB
+2026-07-13T20:46:38.5301833Z  34f6e9793683 Pull complete 
+2026-07-13T20:46:38.5986639Z  cc5389c8389e Extracting [>                                                  ]  262.1kB/23.87MB
+2026-07-13T20:46:38.7758977Z  cc5389c8389e Extracting [===>                                               ]  1.573MB/23.87MB
+2026-07-13T20:46:39.0036850Z  cc5389c8389e Extracting [==============>                                    ]  7.078MB/23.87MB
+2026-07-13T20:46:39.1050735Z  cc5389c8389e Extracting [===================================>               ]  16.78MB/23.87MB
+2026-07-13T20:46:39.2428354Z  cc5389c8389e Extracting [===========================================>       ]  20.97MB/23.87MB
+2026-07-13T20:46:39.6809119Z  cc5389c8389e Extracting [==============================================>    ]  22.28MB/23.87MB
+2026-07-13T20:46:39.9673038Z  cc5389c8389e Extracting [===============================================>   ]  22.54MB/23.87MB
+2026-07-13T20:46:40.0001299Z  cc5389c8389e Extracting [==================================================>]  23.87MB/23.87MB
+2026-07-13T20:46:40.3951002Z  cc5389c8389e Pull complete 
+2026-07-13T20:46:40.3960872Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-07-13T20:46:40.3964276Z  76f9ee5e648e Extracting [==================================================>]     163B/163B
+2026-07-13T20:46:40.4464920Z  76f9ee5e648e Pull complete 
+2026-07-13T20:46:40.4475362Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-07-13T20:46:40.4481409Z  393efe950606 Extracting [==================================================>]     146B/146B
+2026-07-13T20:46:40.4535960Z  393efe950606 Pull complete 
+2026-07-13T20:46:40.4545196Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-07-13T20:46:40.4547719Z  3fdba431f168 Extracting [==================================================>]     150B/150B
+2026-07-13T20:46:40.4607033Z  3fdba431f168 Pull complete 
+2026-07-13T20:46:40.4617010Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-07-13T20:46:40.4620707Z  bd6208a6da27 Extracting [==================================================>]     168B/168B
+2026-07-13T20:46:40.4674512Z  bd6208a6da27 Pull complete 
+2026-07-13T20:46:40.4725028Z  keycloak Pulled 
+2026-07-13T20:46:40.4796743Z ##[group]Run # Run Integration Tests
+2026-07-13T20:46:40.4797005Z [36;1m# Run Integration Tests[0m
+2026-07-13T20:46:40.4797277Z [36;1m# Make temp dir with 777 mask as docker seems to run as root[0m
+2026-07-13T20:46:40.4797551Z [36;1mmkdir -pm 777 tmp[0m
+2026-07-13T20:46:40.4797731Z [36;1m[0m
+2026-07-13T20:46:40.4797877Z [36;1m# Start the stack[0m
+2026-07-13T20:46:40.4798126Z [36;1mdocker compose -f profile/dev-testing.yml up -d --no-build[0m
+2026-07-13T20:46:40.4798552Z [36;1m[0m
+2026-07-13T20:46:40.4798698Z [36;1m# Run the tests[0m
+2026-07-13T20:46:40.4798874Z [36;1m./gradlew :test:test[0m
+2026-07-13T20:46:40.4826488Z shell: /usr/bin/bash -e {0}
+2026-07-13T20:46:40.4826684Z env:
+2026-07-13T20:46:40.4826927Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T20:46:40.4827306Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T20:46:40.4827594Z   MAVEN_ARGS: -ntp
+2026-07-13T20:46:40.4827782Z ##[endgroup]
+2026-07-13T20:46:40.5320590Z time="2026-07-13T20:46:40Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-13T20:46:40.5378515Z time="2026-07-13T20:46:40Z" level=warning msg="The \"OR_HOSTNAME\" variable is not set. Defaulting to a blank string."
+2026-07-13T20:46:40.5514961Z  Network profile_default  Creating
+2026-07-13T20:46:40.5818515Z  Network profile_default  Created
+2026-07-13T20:46:40.5822011Z  Volume "profile_postgresql-data"  Creating
+2026-07-13T20:46:40.5831887Z  Volume "profile_postgresql-data"  Created
+2026-07-13T20:46:40.5836029Z  Container profile-postgresql-1  Creating
+2026-07-13T20:46:40.5983032Z  Container profile-postgresql-1  Created
+2026-07-13T20:46:40.5988572Z  Container profile-keycloak-1  Creating
+2026-07-13T20:46:40.6072861Z  Container profile-keycloak-1  Created
+2026-07-13T20:46:40.6081217Z  Container profile-postgresql-1  Starting
+2026-07-13T20:46:40.7311397Z  Container profile-postgresql-1  Started
+2026-07-13T20:46:40.7312160Z  Container profile-postgresql-1  Waiting
+2026-07-13T20:46:46.2321773Z  Container profile-postgresql-1  Healthy
+2026-07-13T20:46:46.2322142Z  Container profile-keycloak-1  Starting
+2026-07-13T20:46:46.3586848Z  Container profile-keycloak-1  Started
+2026-07-13T20:46:48.2116348Z Fetching distribution.
+2026-07-13T20:46:48.2117853Z Downloading https://services.gradle.org/distributions/gradle-9.6.1-bin.zip
+2026-07-13T20:46:50.2260642Z .............10%.............20%..............30%.............40%..............50%.............60%.............70%..............80%.............90%..............100%
+2026-07-13T20:46:51.2318898Z 
+2026-07-13T20:46:51.2320864Z Welcome to Gradle 9.6.1!
+2026-07-13T20:46:51.2321401Z 
+2026-07-13T20:46:51.2322714Z Here are the highlights of this release:
+2026-07-13T20:46:51.2330574Z  - Improved Configuration Cache hit rates
+2026-07-13T20:46:51.2334638Z  - Additional CLI rendering options
+2026-07-13T20:46:51.2335250Z  - Important project hierarchy lookup deprecations
+2026-07-13T20:46:51.2335704Z 
+2026-07-13T20:46:51.2336083Z For more details see https://docs.gradle.org/9.6.1/release-notes.html
+2026-07-13T20:46:51.2336563Z 
+2026-07-13T20:46:51.3314405Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-07-13T20:46:54.5323507Z Calculating task graph as no cached configuration is available for tasks: :test:test
+2026-07-13T20:47:34.0370143Z > Task :buildSrc:compileJava NO-SOURCE
+2026-07-13T20:47:42.8323025Z > Task :buildSrc:compileGroovy
+2026-07-13T20:47:42.8323905Z > Task :buildSrc:processResources NO-SOURCE
+2026-07-13T20:47:42.8324496Z > Task :buildSrc:classes
+2026-07-13T20:47:42.8324924Z > Task :buildSrc:jar
+2026-07-13T20:47:46.6318963Z 
+2026-07-13T20:47:46.6319825Z > Configure project :
+2026-07-13T20:47:46.6320394Z Unshallowing repo because the build is being executed on CI
+2026-07-13T20:48:04.4340374Z Unshallowing repo because the build is being executed on CI
+2026-07-13T20:48:05.3359554Z File encryption plugin config found, configuring git pre commit hook and decrypt task dependency
+2026-07-13T20:49:56.0316595Z 
+2026-07-13T20:49:56.0370972Z > Task :agent:protobufDummy UP-TO-DATE
+2026-07-13T20:49:56.0399580Z > Task :model:processResources
+2026-07-13T20:49:56.0429733Z > Task :container:processResources
+2026-07-13T20:49:56.0439625Z > Task :manager:setVersionProperties
+2026-07-13T20:49:56.0452737Z > Task :manager:processResources
+2026-07-13T20:49:56.0479724Z > Task :agent:processProtoResources
+2026-07-13T20:49:56.1313897Z > Task :agent:processResources
+2026-07-13T20:49:56.1314749Z > Task :setup:processIntegrationResources
+2026-07-13T20:49:56.1315550Z > Task :test:processResources
+2026-07-13T20:49:56.1327694Z > Task :test:processTestResources
+2026-07-13T20:49:57.8314440Z > Task :agent:extractIncludeProto
+2026-07-13T20:50:01.9336052Z > Task :agent:generateProto
+2026-07-13T20:50:05.5314463Z > Task :model:compileJava
+2026-07-13T20:50:05.5319031Z > Task :model:classes
+2026-07-13T20:50:05.7317791Z > Task :model:jar
+2026-07-13T20:50:07.7313331Z 
+2026-07-13T20:50:07.7407817Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:138: warning: [removal] PersistenceUnitTransactionType in jakarta.persistence.spi has been deprecated and marked for removal
+2026-07-13T20:50:07.7417819Z         public PersistenceUnitTransactionType getTransactionType() {
+2026-07-13T20:50:07.7418281Z                ^
+2026-07-13T20:50:07.7420705Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:139: warning: [removal] PersistenceUnitTransactionType in jakarta.persistence.spi has been deprecated and marked for removal
+2026-07-13T20:50:07.7422741Z             return PersistenceUnitTransactionType.RESOURCE_LOCAL;
+2026-07-13T20:50:07.7423168Z                    ^
+2026-07-13T20:50:07.7424610Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceService.java:596: warning: [deprecation] DATASOURCE in JdbcSettings has been deprecated
+2026-07-13T20:50:07.7426456Z         Object dataSourceProperty = persistenceUnitProperties.get(AvailableSettings.DATASOURCE);
+2026-07-13T20:50:07.7427116Z                                                                                    ^
+2026-07-13T20:50:07.7428778Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceEventInterceptor.java:54: warning: [deprecation] CallbackException in org.hibernate has been deprecated
+2026-07-13T20:50:07.7430676Z         throws CallbackException {
+2026-07-13T20:50:07.7430982Z                ^
+2026-07-13T20:50:07.7432523Z ##[warning]/home/runner/work/openremote/openremote/container/src/main/java/org/openremote/container/persistence/PersistenceEventInterceptor.java:69: warning: [deprecation] CallbackException in org.hibernate has been deprecated
+2026-07-13T20:50:07.7434270Z         throws CallbackException {
+2026-07-13T20:50:07.7434570Z                ^
+2026-07-13T20:50:07.7434805Z 5 warnings
+2026-07-13T20:50:07.7435067Z > Task :container:compileJava
+2026-07-13T20:50:08.7315240Z 
+2026-07-13T20:50:08.7321759Z > Task :container:compileGroovy NO-SOURCE
+2026-07-13T20:50:08.7323105Z > Task :container:classes
+2026-07-13T20:50:08.7324764Z > Task :container:jar
+2026-07-13T20:50:32.0313632Z 
+2026-07-13T20:50:32.0327597Z > Task :agent:compileJava
+2026-07-13T20:50:32.0349531Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:80: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0370081Z   private static volatile io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-07-13T20:50:32.0379785Z                                                                             ^
+2026-07-13T20:50:32.0406414Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:88: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0440039Z   public static io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-07-13T20:50:32.0454219Z                                                                   ^
+2026-07-13T20:50:32.0491257Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:85: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0519926Z       requestType = ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest.class,
+2026-07-13T20:50:32.0549956Z                                              ^
+2026-07-13T20:50:32.0551984Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:90: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0554796Z     io.grpc.MethodDescriptor<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest, ttn.lorawan.v3.EndDeviceOuterClass.EndDevice> getProvisionMethod;
+2026-07-13T20:50:32.0555826Z                                                       ^
+2026-07-13T20:50:32.0557572Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:95: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0560156Z               io.grpc.MethodDescriptor.<ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest, ttn.lorawan.v3.EndDeviceOuterClass.EndDevice>newBuilder()
+2026-07-13T20:50:32.0561137Z                                                                  ^
+2026-07-13T20:50:32.0562910Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:100: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0565021Z                   ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest.getDefaultInstance()))
+2026-07-13T20:50:32.0565683Z                                            ^
+2026-07-13T20:50:32.0567416Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:552: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0569701Z           serviceImpl.provision((ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest) request,
+2026-07-13T20:50:32.0570415Z                                                           ^
+2026-07-13T20:50:32.0572198Z ##[warning]/home/runner/work/openremote/openremote/agent/build/generated/sources/proto/main/grpc/ttn/lorawan/v3/JsEndDeviceRegistryGrpc.java:595: warning: [deprecation] ProvisionEndDevicesRequest in Joinserver has been deprecated
+2026-07-13T20:50:32.0574190Z               ttn.lorawan.v3.Joinserver.ProvisionEndDevicesRequest,
+2026-07-13T20:50:32.0574717Z                                        ^
+2026-07-13T20:50:32.3314206Z 8 warnings
+2026-07-13T20:50:35.7319754Z 
+2026-07-13T20:50:35.7320307Z > Task :agent:compileGroovy NO-SOURCE
+2026-07-13T20:50:35.7325500Z > Task :agent:classes
+2026-07-13T20:50:37.0314395Z > Task :agent:jar
+2026-07-13T20:50:41.0325287Z 
+2026-07-13T20:50:41.0332340Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/security/ManagerBasicIdentityProvider.java:41: warning: [deprecation] BasicIdentityProvider in org.openremote.container.security.basic has been deprecated
+2026-07-13T20:50:41.0353071Z public class ManagerBasicIdentityProvider extends BasicIdentityProvider implements ManagerIdentityProvider {
+2026-07-13T20:50:41.0379714Z                                                   ^
+2026-07-13T20:50:41.0409688Z > Task :manager:compileJava
+2026-07-13T20:50:41.2322623Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/gateway/GatewayClientConnector.java:335: warning: [deprecation] getSshHostname() in GatewayTunnelStartRequestEvent has been deprecated
+2026-07-13T20:50:41.2325034Z                     tunnelHostname = startRequestEvent.getSshHostname();
+2026-07-13T20:50:41.2349678Z                                                       ^
+2026-07-13T20:50:41.2351662Z ##[warning]/home/runner/work/openremote/openremote/manager/src/main/java/org/openremote/manager/gateway/GatewayClientConnector.java:336: warning: [deprecation] getSshPort() in GatewayTunnelStartRequestEvent has been deprecated
+2026-07-13T20:50:41.2353799Z                     tunnelPort = startRequestEvent.getSshPort();
+2026-07-13T20:50:41.2354212Z                                                   ^
+2026-07-13T20:50:41.3320234Z 3 warnings
+2026-07-13T20:50:43.3316325Z 
+2026-07-13T20:50:43.3344633Z > Task :manager:compileGroovy NO-SOURCE
+2026-07-13T20:50:43.3370807Z > Task :manager:classes
+2026-07-13T20:50:43.4314311Z > Task :manager:jar
+2026-07-13T20:50:44.6342027Z > Task :test:compileJava
+2026-07-13T20:50:45.0314371Z > Task :setup:compileIntegrationJava
+2026-07-13T20:50:45.0314785Z > Task :setup:integrationClasses
+2026-07-13T20:50:50.0314451Z > Task :test:compileGroovy
+2026-07-13T20:50:50.0329337Z > Task :test:classes
+2026-07-13T20:50:51.1321924Z > Task :test:compileTestJava
+2026-07-13T20:51:03.4330484Z > Task :test:compileTestGroovy
+2026-07-13T20:51:03.4339652Z > Task :test:testClasses
+2026-07-13T20:51:05.4313081Z 
+2026-07-13T20:51:05.4314468Z > Task :test:test
+2026-07-13T20:51:05.4314817Z 
+2026-07-13T20:51:08.4341591Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime without timezone as LocalDateTime took: 535ms
+2026-07-13T20:51:08.5320492Z [0K[1morg.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest[m
+2026-07-13T20:51:08.5349440Z 
+2026-07-13T20:51:08.5370242Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime without timezone as LocalDateTime[32m PASSED[m
+2026-07-13T20:51:08.5410277Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime with Z and converts to server timezone took: 60ms
+2026-07-13T20:51:08.5440105Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime with Z and converts to server timezone[32m PASSED[m
+2026-07-13T20:51:08.5461777Z org.openremote.manager.datapoint.AssetDatapointQueryDeserializationTest > AssetDatapointQuery deserializes fromTime with explicit numeric offset and converts to server timezone took: 4ms
+2026-07-13T20:51:08.5480330Z [0K[1m  Test [22mAssetDatapointQuery deserializes fromTime with explicit numeric offset and converts to server timezone[32m PASSED[m
+2026-07-13T20:51:27.6326907Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications as new super user in other realm took: 1344ms
+2026-07-13T20:51:27.6328325Z 
+2026-07-13T20:51:27.6329017Z [0K[1morg.openremote.test.alarm.AlarmResourceTest[m
+2026-07-13T20:51:27.6329604Z 
+2026-07-13T20:51:27.6330706Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', assigneeId '#assigneeId' and '#emailNotifications' emailNotifications as new super user in other realm[m
+2026-07-13T20:51:27.6331735Z 
+2026-07-13T20:51:27.7317643Z [0K[1m    Test [22mshould create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1.3s)[m
+2026-07-13T20:51:28.7314743Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm took: 1046ms
+2026-07-13T20:51:28.7317544Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:29.7314598Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications as new super user in other realm took: 1038ms
+2026-07-13T20:51:29.7316641Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:30.8315014Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications as new super user in other realm took: 1036ms
+2026-07-13T20:51:30.8316638Z [0K[1m    Test [22mshould create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:31.8314254Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm took: 1038ms
+2026-07-13T20:51:31.8316069Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:32.8314742Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications as new super user in other realm took: 1039ms
+2026-07-13T20:51:32.8317347Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:33.9314674Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications as new super user in other realm took: 1100ms
+2026-07-13T20:51:33.9317267Z [0K[1m    Test [22mshould create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications as new super user in other realm[32m PASSED[33m (1.1s)[m
+2026-07-13T20:51:35.0315169Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm took: 1035ms
+2026-07-13T20:51:35.0316907Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:36.0315528Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '1' emailNotifications as new super user in other realm took: 1042ms
+2026-07-13T20:51:36.0319322Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '1' emailNotifications as new super user in other realm[32m PASSED[33m (1s)[m
+2026-07-13T20:51:37.1314360Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications took: 1038ms
+2026-07-13T20:51:37.1314947Z 
+2026-07-13T20:51:37.1315638Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', assigneeId '#assigneeId' and '#emailNotifications' emailNotifications[m
+2026-07-13T20:51:37.1316511Z 
+2026-07-13T20:51:37.1317004Z [0K[1m    Test [22mshould create an alarm with title 'Low Alarm', content 'Test Description', severity 'LOW', assigneeId 'null' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:38.1314425Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications took: 1034ms
+2026-07-13T20:51:38.1316002Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 1 Alarm', content 'Test Description', severity 'LOW', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:39.1313930Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications took: 1032ms
+2026-07-13T20:51:39.1315487Z [0K[1m    Test [22mshould create an alarm with title 'Low Assigned 2 Alarm', content 'Test Description', severity 'LOW', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:40.2339272Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications took: 1053ms
+2026-07-13T20:51:40.2341234Z [0K[1m    Test [22mshould create an alarm with title 'Medium Unassigned Alarm', content 'Another Description', severity 'MEDIUM', assigneeId 'null' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:41.2314791Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications took: 1040ms
+2026-07-13T20:51:41.2316431Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 1 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:42.2315039Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications took: 1030ms
+2026-07-13T20:51:42.2317830Z [0K[1m    Test [22mshould create an alarm with title 'Medium Assigned 2 Alarm', content 'Assigned Description', severity 'MEDIUM', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:43.3313929Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications took: 1042ms
+2026-07-13T20:51:43.3315332Z [0K[1m    Test [22mshould create an alarm with title 'High Unassigned Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'null' and '1' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:44.3315161Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications took: 1039ms
+2026-07-13T20:51:44.3316746Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 1 Alarm', content 'Critical Description', severity 'HIGH', assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' and '0' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:45.4314675Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '1' emailNotifications took: 1051ms
+2026-07-13T20:51:45.4317637Z [0K[1m    Test [22mshould create an alarm with title 'High Assigned 2 Alarm', content 'Critical Description', severity 'HIGH', assigneeId 'a6bc43b4-b752-45a9-9e84-580ead727159' and '1' emailNotifications[32m PASSED[33m (1s)[m
+2026-07-13T20:51:45.4319641Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Test Alarm', content 'Test Description', severity 'LOW', and source 'MANUAL' took: 24ms
+2026-07-13T20:51:45.4320496Z 
+2026-07-13T20:51:45.4321241Z [0K[1m  should create an alarm with title '#title', content '#content', severity '#severity', and source '#source'[m
+2026-07-13T20:51:45.4322630Z 
+2026-07-13T20:51:45.4323402Z [0K[1m    Test [22mshould create an alarm with title 'Test Alarm', content 'Test Description', severity 'LOW', and source 'MANUAL'[32m PASSED[m
+2026-07-13T20:51:45.4324702Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Another Alarm', content 'Another Description', severity 'MEDIUM', and source 'MANUAL' took: 26ms
+2026-07-13T20:51:45.4326162Z [0K[1m    Test [22mshould create an alarm with title 'Another Alarm', content 'Another Description', severity 'MEDIUM', and source 'MANUAL'[32m PASSED[m
+2026-07-13T20:51:45.5324356Z org.openremote.test.alarm.AlarmResourceTest > should create an alarm with title 'Critical Alarm', content 'Critical Description', severity 'HIGH', and source 'MANUAL' took: 79ms
+2026-07-13T20:51:45.5326410Z [0K[1m    Test [22mshould create an alarm with title 'Critical Alarm', content 'Critical Description', severity 'HIGH', and source 'MANUAL'[32m PASSED[m
+2026-07-13T20:51:45.6331613Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm with title 'null', content 'Test Description', severity 'LOW', and status 'OPEN' took: 44ms
+2026-07-13T20:51:45.6350389Z 
+2026-07-13T20:51:45.6352211Z [0K[1m  should not create an alarm with title '#title', content '#content', severity '#severity', and status '#status'[m
+2026-07-13T20:51:45.6352842Z 
+2026-07-13T20:51:45.6355102Z [0K[1m    Test [22mshould not create an alarm with title 'null', content 'Test Description', severity 'LOW', and status 'OPEN'[32m PASSED[m
+2026-07-13T20:51:45.6362877Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm with title 'Another Test Alarm', content 'Another Description', severity 'null', and status 'RESOLVED' took: 31ms
+2026-07-13T20:51:45.6379716Z [0K[1m    Test [22mshould not create an alarm with title 'Another Test Alarm', content 'Another Description', severity 'null', and status 'RESOLVED'[32m PASSED[m
+2026-07-13T20:51:45.6380913Z org.openremote.test.alarm.AlarmResourceTest > should not create an alarm as regular user took: 40ms
+2026-07-13T20:51:45.6383724Z 
+2026-07-13T20:51:45.6384382Z [0K[1m  Test [22mshould not create an alarm as regular user[32m PASSED[m
+2026-07-13T20:51:45.8316397Z org.openremote.test.alarm.AlarmResourceTest > should return created alarms took: 199ms
+2026-07-13T20:51:45.8317859Z [0K[1m  Test [22mshould return created alarms[32m PASSED[m
+2026-07-13T20:51:45.9321012Z org.openremote.test.alarm.AlarmResourceTest > should not return alarms took: 31ms
+2026-07-13T20:51:45.9330503Z [0K[1m  Test [22mshould not return alarms[32m PASSED[m
+2026-07-13T20:51:46.0317358Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' took: 97ms
+2026-07-13T20:51:46.0318792Z 
+2026-07-13T20:51:46.0320163Z [0K[1m  should update an alarm with title '#title', content '#content', severity '#severity', status '#status' and assigneeId '#assigneeId'[m
+2026-07-13T20:51:46.0321072Z 
+2026-07-13T20:51:46.0322130Z [0K[1m    Test [22mshould update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null'[32m PASSED[m
+2026-07-13T20:51:46.0324001Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' took: 38ms
+2026-07-13T20:51:46.0325854Z [0K[1m    Test [22mshould update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f'[32m PASSED[m
+2026-07-13T20:51:46.1314234Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' as an new super user in other realm took: 52ms
+2026-07-13T20:51:46.1321500Z 
+2026-07-13T20:51:46.1322691Z [0K[1m  should update an alarm with title '#title', content '#content', severity '#severity', status '#status' and assigneeId '#assigneeId' as an new super user in other realm[m
+2026-07-13T20:51:46.1323587Z 
+2026-07-13T20:51:46.1324634Z [0K[1m    Test [22mshould update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', status 'OPEN' and assigneeId 'null' as an new super user in other realm[32m PASSED[m
+2026-07-13T20:51:46.1326793Z org.openremote.test.alarm.AlarmResourceTest > should update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' as an new super user in other realm took: 39ms
+2026-07-13T20:51:46.1329809Z [0K[1m    Test [22mshould update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', status 'CLOSED' and assigneeId '311af434-c8b4-41f7-a91d-be6a40c0ef9f' as an new super user in other realm[32m PASSED[m
+2026-07-13T20:51:46.1331300Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with id 0 took: 38ms
+2026-07-13T20:51:46.1331887Z 
+2026-07-13T20:51:46.1332304Z [0K[1m  Test [22mshould not update an alarm with id 0[32m PASSED[m
+2026-07-13T20:51:46.2325011Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', and status 'OPEN' took: 40ms
+2026-07-13T20:51:46.2330068Z 
+2026-07-13T20:51:46.2330982Z [0K[1m  should not update an alarm with title '#title', content '#content', severity '#severity', and status '#status'[m
+2026-07-13T20:51:46.2331701Z 
+2026-07-13T20:51:46.2332561Z [0K[1m    Test [22mshould not update an alarm with title 'Updated Alarm', content 'Test Description', severity 'HIGH', and status 'OPEN'[32m PASSED[m
+2026-07-13T20:51:46.2334064Z org.openremote.test.alarm.AlarmResourceTest > should not update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', and status 'CLOSED' took: 30ms
+2026-07-13T20:51:46.2335855Z [0K[1m    Test [22mshould not update an alarm with title 'Another Alarm', content 'Updated Description', severity 'MEDIUM', and status 'CLOSED'[32m PASSED[m
+2026-07-13T20:51:46.3313974Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarm without proper permissions took: 40ms
+2026-07-13T20:51:46.3314797Z 
+2026-07-13T20:51:46.3315575Z [0K[1m  Test [22mshould not delete alarm without proper permissions[32m PASSED[m
+2026-07-13T20:51:46.3316600Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarms without proper permissions took: 55ms
+2026-07-13T20:51:46.3320507Z [0K[1m  Test [22mshould not delete alarms without proper permissions[32m PASSED[m
+2026-07-13T20:51:46.4315025Z org.openremote.test.alarm.AlarmResourceTest > should not bulk delete alarms from another realm took: 97ms
+2026-07-13T20:51:46.4315836Z [0K[1m  Test [22mshould not bulk delete alarms from another realm[32m PASSED[m
+2026-07-13T20:51:46.5344571Z org.openremote.test.alarm.AlarmResourceTest > should not bulk delete any alarms when one alarm belongs to another realm took: 71ms
+2026-07-13T20:51:46.5363004Z [0K[1m  Test [22mshould not bulk delete any alarms when one alarm belongs to another realm[32m PASSED[m
+2026-07-13T20:51:46.5364085Z org.openremote.test.alarm.AlarmResourceTest > should not delete null or empty alarms took: 43ms
+2026-07-13T20:51:46.5365023Z [0K[1m  Test [22mshould not delete null or empty alarms[32m PASSED[m
+2026-07-13T20:51:46.6320512Z org.openremote.test.alarm.AlarmResourceTest > should not delete alarms with invalid ID took: 32ms
+2026-07-13T20:51:46.6321596Z [0K[1m  Test [22mshould not delete alarms with invalid ID[32m PASSED[m
+2026-07-13T20:51:46.6322497Z org.openremote.test.alarm.AlarmResourceTest > should not delete non-existing alarms took: 38ms
+2026-07-13T20:51:46.6323125Z [0K[1m  Test [22mshould not delete non-existing alarms[32m PASSED[m
+2026-07-13T20:51:46.8313623Z org.openremote.test.alarm.AlarmResourceTest > should delete one alarm as admin took: 232ms
+2026-07-13T20:51:46.8314356Z [0K[1m  Test [22mshould delete one alarm as admin[32m PASSED[m
+2026-07-13T20:51:46.9314031Z org.openremote.test.alarm.AlarmResourceTest > should delete one alarm as new super user in other realm took: 52ms
+2026-07-13T20:51:46.9315494Z [0K[1m  Test [22mshould delete one alarm as new super user in other realm[32m PASSED[m
+2026-07-13T20:51:46.9316502Z org.openremote.test.alarm.AlarmResourceTest > should delete multiple alarms as admin took: 43ms
+2026-07-13T20:51:46.9317452Z [0K[1m  Test [22mshould delete multiple alarms as admin[32m PASSED[m
+2026-07-13T20:51:47.0314329Z org.openremote.test.alarm.AlarmResourceTest > should delete multiple alarms as super user in other realm took: 51ms
+2026-07-13T20:51:47.0315641Z [0K[1m  Test [22mshould delete multiple alarms as super user in other realm[32m PASSED[m
+2026-07-13T20:51:47.0316557Z org.openremote.test.alarm.AlarmResourceTest > should get open alarms took: 58ms
+2026-07-13T20:51:47.0317364Z [0K[1m  Test [22mshould get open alarms[32m PASSED[m
+2026-07-13T20:51:47.1320524Z org.openremote.test.alarm.AlarmResourceTest > should be able to link alarms to assets as admin took: 85ms
+2026-07-13T20:51:47.1330628Z [0K[1m  Test [22mshould be able to link alarms to assets as admin[32m PASSED[m
+2026-07-13T20:51:47.1331565Z org.openremote.test.alarm.AlarmResourceTest > should not be able to link alarms without proper permissions took: 28ms
+2026-07-13T20:51:47.1332640Z [0K[1m  Test [22mshould not be able to link alarms without proper permissions[32m PASSED[m
+2026-07-13T20:51:47.2320370Z org.openremote.test.alarm.AlarmResourceTest > should not create invalid alarm links took: 86ms
+2026-07-13T20:51:47.2350019Z [0K[1m  Test [22mshould not create invalid alarm links[32m PASSED[m
+2026-07-13T20:51:49.7314132Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies predicted datapoints when timestamps match took: 2499ms
+2026-07-13T20:51:49.7316042Z 
+2026-07-13T20:51:49.7316995Z [0K[1morg.openremote.test.assets.ApplyPredictedDataPointsServiceTest[m
+2026-07-13T20:51:49.7317648Z 
+2026-07-13T20:51:49.7318251Z [0K[1m  Test [22mApplies predicted datapoints when timestamps match[32m PASSED[31m (2.4s)[m
+2026-07-13T20:51:51.7313664Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies the last past datapoint when current value is older took: 1983ms
+2026-07-13T20:51:51.7314637Z [0K[1m  Test [22mApplies the last past datapoint when current value is older[32m PASSED[33m (1.9s)[m
+2026-07-13T20:51:53.2313837Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Skips past datapoints when current value is newer took: 1453ms
+2026-07-13T20:51:53.2315130Z [0K[1m  Test [22mSkips past datapoints when current value is newer[32m PASSED[33m (1.4s)[m
+2026-07-13T20:51:54.3313856Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when required meta is missing took: 1175ms
+2026-07-13T20:51:54.3315565Z [0K[1m  Test [22mDoes not apply values when required meta is missing[32m PASSED[33m (1.1s)[m
+2026-07-13T20:51:55.4330796Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when only HAS_PREDICTED_DATA_POINTS is set took: 1041ms
+2026-07-13T20:51:55.4372830Z [0K[1m  Test [22mDoes not apply values when only HAS_PREDICTED_DATA_POINTS is set[32m PASSED[33m (1s)[m
+2026-07-13T20:51:56.4322396Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values when only APPLY_PREDICTED_DATA_POINTS is set took: 1017ms
+2026-07-13T20:51:56.4324300Z [0K[1m  Test [22mDoes not apply values when only APPLY_PREDICTED_DATA_POINTS is set[32m PASSED[33m (1s)[m
+2026-07-13T20:51:57.6313839Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Applies values after adding required meta to existing attribute took: 1218ms
+2026-07-13T20:51:57.6315387Z [0K[1m  Test [22mApplies values after adding required meta to existing attribute[32m PASSED[33m (1.2s)[m
+2026-07-13T20:51:58.8320821Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not apply values after removing required meta from attribute took: 1182ms
+2026-07-13T20:51:58.8322380Z [0K[1m  Test [22mDoes not apply values after removing required meta from attribute[32m PASSED[33m (1.1s)[m
+2026-07-13T20:52:00.3314404Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not emit attribute events after attribute deletion took: 1526ms
+2026-07-13T20:52:00.3316945Z [0K[1m  Test [22mDoes not emit attribute events after attribute deletion[32m PASSED[33m (1.5s)[m
+2026-07-13T20:52:01.6316628Z org.openremote.test.assets.ApplyPredictedDataPointsServiceTest > Does not emit attribute events after asset deletion took: 1290ms
+2026-07-13T20:52:01.6318070Z [0K[1m  Test [22mDoes not emit attribute events after asset deletion[32m PASSED[33m (1.2s)[m
+2026-07-13T20:52:14.8313354Z org.openremote.test.assets.AssetDatapointExportTest > Test CSV export functionality for asset data points took: 13174ms
+2026-07-13T20:52:14.8313789Z 
+2026-07-13T20:52:14.8314202Z [0K[1morg.openremote.test.assets.AssetDatapointExportTest[m
+2026-07-13T20:52:14.8314457Z 
+2026-07-13T20:52:14.8314728Z [0K[1m  Test [22mTest CSV export functionality for asset data points[32m PASSED[31m (13.1s)[m
+2026-07-13T20:52:26.3313351Z org.openremote.test.assets.AssetDatapointExportTest > Export query is not vulnerable to SQL injection via attributeRefs took: 11466ms
+2026-07-13T20:52:26.3314314Z [0K[1m  Test [22mExport query is not vulnerable to SQL injection via attributeRefs[32m PASSED[31m (11.4s)[m
+2026-07-13T20:52:27.8314691Z org.openremote.test.assets.AssetDatapointExportTest > Crosstab exports treat asset names with SQL delimiters as CSV labels took: 1564ms
+2026-07-13T20:52:27.8316167Z [0K[1m  Test [22mCrosstab exports treat asset names with SQL delimiters as CSV labels[32m PASSED[33m (1.5s)[m
+2026-07-13T20:52:28.9329362Z org.openremote.test.assets.AssetDatapointExportTest > Export query is not vulnerable to SQL injection via REST API took: 1038ms
+2026-07-13T20:52:28.9335737Z [0K[1m  Test [22mExport query is not vulnerable to SQL injection via REST API[32m PASSED[33m (1s)[m
+2026-07-13T20:52:30.1324616Z org.openremote.test.assets.AssetDatapointExportTest > Restricted users cannot export datapoints for linked non-restricted attributes took: 1188ms
+2026-07-13T20:52:30.1331971Z [0K[1m  Test [22mRestricted users cannot export datapoints for linked non-restricted attributes[32m PASSED[33m (1.1s)[m
+2026-07-13T20:52:31.2313857Z org.openremote.test.assets.AssetDatapointExportTest > Restricted users cannot get datapoint periods for linked non-restricted attributes took: 1131ms
+2026-07-13T20:52:31.2315511Z [0K[1m  Test [22mRestricted users cannot get datapoint periods for linked non-restricted attributes[32m PASSED[33m (1.1s)[m
+2026-07-13T20:52:45.9351207Z org.openremote.test.assets.AssetDatapointPurgeTest > Test TimescaleDB hypercore compression and purge took: 14753ms
+2026-07-13T20:52:45.9379506Z 
+2026-07-13T20:52:45.9381274Z [0K[1morg.openremote.test.assets.AssetDatapointPurgeTest[m
+2026-07-13T20:52:45.9381935Z 
+2026-07-13T20:52:45.9382894Z [0K[1m  Test [22mTest TimescaleDB hypercore compression and purge[32m PASSED[31m (14.7s)[m
+2026-07-13T20:52:56.5313701Z org.openremote.test.assets.AssetDatapointQueryTest > Test lttb datapoint query took: 10539ms
+2026-07-13T20:52:56.5314257Z 
+2026-07-13T20:52:56.5314821Z [0K[1morg.openremote.test.assets.AssetDatapointQueryTest[m
+2026-07-13T20:52:56.5315173Z 
+2026-07-13T20:52:56.5315488Z [0K[1m  Test [22mTest lttb datapoint query[32m PASSED[31m (10.5s)[m
+2026-07-13T20:52:57.5332198Z org.openremote.test.assets.AssetDatapointQueryTest > Lttb should not accept anything else than boolean and number took: 1007ms
+2026-07-13T20:52:57.5334374Z [0K[1m  Test [22mLttb should not accept anything else than boolean and number[32m PASSED[33m (1s)[m
+2026-07-13T20:52:58.5314037Z org.openremote.test.assets.AssetDatapointQueryTest > Interval query should be returned correctly and in chronological order took: 1013ms
+2026-07-13T20:52:58.5316390Z [0K[1m  Test [22mInterval query should be returned correctly and in chronological order[32m PASSED[33m (1s)[m
+2026-07-13T20:52:59.5314107Z org.openremote.test.assets.AssetDatapointQueryTest > All query should return the correct data when the maximum is respected took: 1002ms
+2026-07-13T20:52:59.5315568Z [0K[1m  Test [22mAll query should return the correct data when the maximum is respected[32m PASSED[33m (1s)[m
+2026-07-13T20:53:01.9347852Z org.openremote.test.assets.AssetDatapointTest > Test number and toggle attribute storage, retrieval and purging took: 2352ms
+2026-07-13T20:53:01.9378469Z 
+2026-07-13T20:53:01.9381209Z [0K[1morg.openremote.test.assets.AssetDatapointTest[m
+2026-07-13T20:53:01.9406195Z 
+2026-07-13T20:53:01.9442947Z [0K[1m  Test [22mTest number and toggle attribute storage, retrieval and purging[32m PASSED[31m (2.3s)[m
+2026-07-13T20:53:02.8320718Z org.openremote.test.assets.AssetDatapointTest > Test anonymous predicted datapoint writes are allowed for public write attributes took: 942ms
+2026-07-13T20:53:02.8340231Z [0K[1m  Test [22mTest anonymous predicted datapoint writes are allowed for public write attributes[32m PASSED[m
+2026-07-13T20:53:03.8317717Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint writes are denied without WRITE_ATTRIBUTES role took: 946ms
+2026-07-13T20:53:03.8322364Z [0K[1m  Test [22mTest predicted datapoint writes are denied without WRITE_ATTRIBUTES role[32m PASSED[m
+2026-07-13T20:53:04.8314454Z org.openremote.test.assets.AssetDatapointTest > Test restricted predicted datapoint writes require restricted write meta took: 1048ms
+2026-07-13T20:53:04.8316851Z [0K[1m  Test [22mTest restricted predicted datapoint writes require restricted write meta[32m PASSED[33m (1s)[m
+2026-07-13T20:53:06.4342418Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint change events are received via websocket API took: 1584ms
+2026-07-13T20:53:06.4347739Z [0K[1m  Test [22mTest predicted datapoint change events are received via websocket API[32m PASSED[33m (1.5s)[m
+2026-07-13T20:53:07.7314015Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint websocket subscription is denied without READ_ASSETS role took: 1329ms
+2026-07-13T20:53:07.7315859Z [0K[1m  Test [22mTest predicted datapoint websocket subscription is denied without READ_ASSETS role[32m PASSED[33m (1.3s)[m
+2026-07-13T20:53:08.6322244Z org.openremote.test.assets.AssetDatapointTest > Test predicted datapoint websocket subscription is denied for a different realm took: 922ms
+2026-07-13T20:53:08.7321209Z [0K[1m  Test [22mTest predicted datapoint websocket subscription is denied for a different realm[32m PASSED[m
+2026-07-13T20:53:10.0333979Z org.openremote.test.assets.AssetDatapointTest > Test restricted user does not receive predicted datapoint events for unlinked assets took: 1390ms
+2026-07-13T20:53:10.0341325Z [0K[1m  Test [22mTest restricted user does not receive predicted datapoint events for unlinked assets[32m PASSED[33m (1.3s)[m
+2026-07-13T20:53:11.4331582Z org.openremote.test.assets.AssetDatapointTest > Test restricted user does not receive predicted datapoint events for non-restricted attributes took: 1424ms
+2026-07-13T20:53:11.5314537Z [0K[1m  Test [22mTest restricted user does not receive predicted datapoint events for non-restricted attributes[32m PASSED[33m (1.4s)[m
+2026-07-13T20:53:12.7313601Z org.openremote.test.assets.AssetIntegrityTest > Test asset changes as superuser took: 1230ms
+2026-07-13T20:53:12.7314040Z 
+2026-07-13T20:53:12.7314433Z [0K[1morg.openremote.test.assets.AssetIntegrityTest[m
+2026-07-13T20:53:12.7314661Z 
+2026-07-13T20:53:12.7314875Z [0K[1m  Test [22mTest asset changes as superuser[32m PASSED[33m (1.2s)[m
+2026-07-13T20:53:13.9323405Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject unknown child asset ids as superuser took: 1168ms
+2026-07-13T20:53:13.9324702Z [0K[1m  Test [22mBatch parent updates reject unknown child asset ids as superuser[32m PASSED[33m (1.1s)[m
+2026-07-13T20:53:14.8317003Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject unknown parent asset ids as superuser took: 907ms
+2026-07-13T20:53:14.8319643Z [0K[1m  Test [22mBatch parent updates reject unknown parent asset ids as superuser[32m PASSED[m
+2026-07-13T20:53:15.7318760Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject self-parent requests as superuser took: 962ms
+2026-07-13T20:53:15.7320539Z [0K[1m  Test [22mBatch parent updates reject self-parent requests as superuser[32m PASSED[m
+2026-07-13T20:53:16.6314268Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject mixed child realms as superuser took: 883ms
+2026-07-13T20:53:16.6316996Z [0K[1m  Test [22mBatch parent updates reject mixed child realms as superuser[32m PASSED[m
+2026-07-13T20:53:17.5313900Z org.openremote.test.assets.AssetIntegrityTest > Batch parent update rejects null or empty child lists as superuser took: 920ms
+2026-07-13T20:53:17.5315503Z [0K[1m  Test [22mBatch parent update rejects null or empty child lists as superuser[32m PASSED[m
+2026-07-13T20:53:18.5313681Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject moving an asset under its own descendant as superuser took: 978ms
+2026-07-13T20:53:18.5315559Z [0K[1m  Test [22mBatch parent updates reject moving an asset under its own descendant as superuser[32m PASSED[m
+2026-07-13T20:53:19.5326470Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject group child-type mismatches as superuser took: 971ms
+2026-07-13T20:53:19.5327854Z [0K[1m  Test [22mBatch parent updates reject group child-type mismatches as superuser[32m PASSED[m
+2026-07-13T20:53:20.9314075Z org.openremote.test.assets.AssetIntegrityTest > Batch parent updates reject moving a local asset under a gateway asset as superuser took: 1431ms
+2026-07-13T20:53:20.9315601Z [0K[1m  Test [22mBatch parent updates reject moving a local asset under a gateway asset as superuser[32m PASSED[33m (1.4s)[m
+2026-07-13T20:53:22.2313497Z org.openremote.test.assets.AssetIntegrityTest > Batch parent clear rejects gateway descendant assets as superuser took: 1251ms
+2026-07-13T20:53:23.6313375Z [0K[1m  Test [22mBatch parent clear rejects gateway descendant assets as superuser[32m PASSED[33m (1.2s)[m
+2026-07-13T20:53:23.6314008Z org.openremote.test.assets.AssetIntegrityTest > Test writing attributes with timestamps took: 1425ms
+2026-07-13T20:53:23.6314578Z [0K[1m  Test [22mTest writing attributes with timestamps[32m PASSED[33m (1.4s)[m
+2026-07-13T20:53:25.0313778Z org.openremote.test.assets.AssetPermissionsTest > Access assets as superuser took: 1400ms
+2026-07-13T20:53:25.0314144Z 
+2026-07-13T20:53:25.0314551Z [0K[1morg.openremote.test.assets.AssetPermissionsTest[m
+2026-07-13T20:53:25.0314764Z 
+2026-07-13T20:53:25.0314969Z [0K[1m  Test [22mAccess assets as superuser[32m PASSED[33m (1.4s)[m
+2026-07-13T20:53:26.3313280Z org.openremote.test.assets.AssetPermissionsTest > Access assets as testuser1 took: 1322ms
+2026-07-13T20:53:27.6315963Z [0K[1m  Test [22mAccess assets as testuser1[32m PASSED[33m (1.3s)[m
+2026-07-13T20:53:27.6316795Z org.openremote.test.assets.AssetPermissionsTest > Access assets as testuser2 took: 1278ms
+2026-07-13T20:53:27.6318092Z [0K[1m  Test [22mAccess assets as testuser2[32m PASSED[33m (1.2s)[m
+2026-07-13T20:53:28.8313612Z org.openremote.test.assets.AssetPermissionsTest > Access assets as restricted testuser3 took: 1173ms
+2026-07-13T20:53:28.8314475Z [0K[1m  Test [22mAccess assets as restricted testuser3[32m PASSED[33m (1.1s)[m
+2026-07-13T20:53:30.1313229Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates within the authenticated realm succeed for testuser1 took: 1315ms
+2026-07-13T20:53:30.1314226Z [0K[1m  Test [22mBatch parent updates within the authenticated realm succeed for testuser1[32m PASSED[33m (1.3s)[m
+2026-07-13T20:53:31.3313443Z org.openremote.test.assets.AssetPermissionsTest > Batch parent clear across accessible realms succeeds for superuser took: 1203ms
+2026-07-13T20:53:31.3314424Z [0K[1m  Test [22mBatch parent clear across accessible realms succeeds for superuser[32m PASSED[33m (1.2s)[m
+2026-07-13T20:53:32.2313658Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates reject foreign child assets for testuser1 took: 941ms
+2026-07-13T20:53:32.2318636Z [0K[1m  Test [22mBatch parent updates reject foreign child assets for testuser1[32m PASSED[m
+2026-07-13T20:53:33.1313452Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates reject foreign parents for testuser1 took: 905ms
+2026-07-13T20:53:33.1314337Z [0K[1m  Test [22mBatch parent updates reject foreign parents for testuser1[32m PASSED[m
+2026-07-13T20:53:34.0313778Z org.openremote.test.assets.AssetPermissionsTest > Batch parent updates are forbidden for restricted testuser3 took: 910ms
+2026-07-13T20:53:34.0315201Z [0K[1m  Test [22mBatch parent updates are forbidden for restricted testuser3[32m PASSED[m
+2026-07-13T20:53:34.9313756Z org.openremote.test.assets.AssetPermissionsTest > Batch parent clear is forbidden for restricted testuser3 took: 888ms
+2026-07-13T20:53:34.9315066Z [0K[1m  Test [22mBatch parent clear is forbidden for restricted testuser3[32m PASSED[m
+2026-07-13T20:53:35.8313336Z org.openremote.test.assets.AssetPermissionsTest > Access assets as anonymous user took: 907ms
+2026-07-13T20:53:35.8314299Z [0K[1m  Test [22mAccess assets as anonymous user[32m PASSED[m
+2026-07-13T20:53:35.8314930Z org.openremote.test.assets.AssetQueryPredicateTest > Rectangular Geofence Test took: 10ms
+2026-07-13T20:53:35.8315355Z 
+2026-07-13T20:53:35.8315629Z [0K[1morg.openremote.test.assets.AssetQueryPredicateTest[m
+2026-07-13T20:53:35.8315941Z 
+2026-07-13T20:53:35.8316169Z [0K[1m  Test [22mRectangular Geofence Test[32m PASSED[m
+2026-07-13T20:53:35.9313450Z org.openremote.test.assets.AssetQueryPredicateTest > Radial geofence test took: 46ms
+2026-07-13T20:53:35.9314467Z [0K[1m  Test [22mRadial geofence test[32m PASSED[m
+2026-07-13T20:53:35.9315315Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON Polygon geofence test took: 20ms
+2026-07-13T20:53:35.9316074Z [0K[1m  Test [22mGeoJSON Polygon geofence test[32m PASSED[m
+2026-07-13T20:53:35.9316692Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON Polygon with hole geofence test took: 19ms
+2026-07-13T20:53:35.9317420Z [0K[1m  Test [22mGeoJSON Polygon with hole geofence test[32m PASSED[m
+2026-07-13T20:53:35.9318059Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON MultiPolygon geofence test took: 5ms
+2026-07-13T20:53:35.9319365Z [0K[1m  Test [22mGeoJSON MultiPolygon geofence test[32m PASSED[m
+2026-07-13T20:53:35.9320034Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON Feature geofence test took: 3ms
+2026-07-13T20:53:35.9320790Z [0K[1m  Test [22mGeoJSON Feature geofence test[32m PASSED[m
+2026-07-13T20:53:36.0313953Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON FeatureCollection geofence test took: 16ms
+2026-07-13T20:53:36.0315161Z [0K[1m  Test [22mGeoJSON FeatureCollection geofence test[32m PASSED[m
+2026-07-13T20:53:36.0315608Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON negated geofence test took: 2ms
+2026-07-13T20:53:36.0316058Z [0K[1m  Test [22mGeoJSON negated geofence test[32m PASSED[m
+2026-07-13T20:53:36.0316478Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON simplified Austria border test took: 2ms
+2026-07-13T20:53:36.0316969Z [0K[1m  Test [22mGeoJSON simplified Austria border test[32m PASSED[m
+2026-07-13T20:53:36.0317417Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON centre point calculation test took: 3ms
+2026-07-13T20:53:36.0317896Z [0K[1m  Test [22mGeoJSON centre point calculation test[32m PASSED[m
+2026-07-13T20:53:36.0318319Z org.openremote.test.assets.AssetQueryPredicateTest > GeoJSON invalid input handling test took: 4ms
+2026-07-13T20:53:36.0318776Z [0K[1m  Test [22mGeoJSON invalid input handling test[32m PASSED[m
+2026-07-13T20:53:37.1313271Z org.openremote.test.assets.AssetQueryTest > Query assets 1 took: 79ms
+2026-07-13T20:53:37.1313877Z 
+2026-07-13T20:53:37.1314627Z [0K[1morg.openremote.test.assets.AssetQueryTest[m
+2026-07-13T20:53:37.1315173Z 
+2026-07-13T20:53:37.1315935Z [0K[1m  Test [22mQuery assets 1[32m PASSED[m
+2026-07-13T20:53:37.2340784Z org.openremote.test.assets.AssetQueryTest > Query assets 2 took: 44ms
+2026-07-13T20:53:37.2350371Z [0K[1m  Test [22mQuery assets 2[32m PASSED[m
+2026-07-13T20:53:37.2379649Z org.openremote.test.assets.AssetQueryTest > Query logic groups took: 10ms
+2026-07-13T20:53:37.2390760Z [0K[1m  Test [22mQuery logic groups[32m PASSED[m
+2026-07-13T20:53:37.2391512Z org.openremote.test.assets.AssetQueryTest > Location queries took: 54ms
+2026-07-13T20:53:37.2392401Z [0K[1m  Test [22mLocation queries[32m PASSED[m
+2026-07-13T20:53:37.4314281Z org.openremote.test.assets.AssetQueryTest > Calendar queries took: 82ms
+2026-07-13T20:53:37.4323997Z [0K[1m  Test [22mCalendar queries[32m PASSED[m
+2026-07-13T20:53:37.4324730Z org.openremote.test.assets.AssetQueryTest > DateTime queries took: 18ms
+2026-07-13T20:53:37.4325464Z [0K[1m  Test [22mDateTime queries[32m PASSED[m
+2026-07-13T20:53:37.4333949Z org.openremote.test.assets.AssetQueryTest > Limit and offset queries took: 26ms
+2026-07-13T20:53:37.4334800Z [0K[1m  Test [22mLimit and offset queries[32m PASSED[m
+2026-07-13T20:53:38.4313190Z org.openremote.test.assets.AssetTreeTest > Get asset tree data via resource took: 982ms
+2026-07-13T20:53:38.4313526Z 
+2026-07-13T20:53:38.4313913Z [0K[1morg.openremote.test.assets.AssetTreeTest[m
+2026-07-13T20:53:38.4314110Z 
+2026-07-13T20:53:38.4314289Z [0K[1m  Test [22mGet asset tree data via resource[32m PASSED[m
+2026-07-13T20:53:39.8313408Z org.openremote.test.assets.AssetTreeTest > Get asset tree data via events took: 1496ms
+2026-07-13T20:53:39.8314446Z [0K[1m  Test [22mGet asset tree data via events[32m PASSED[33m (1.4s)[m
+2026-07-13T20:53:41.5315151Z org.openremote.test.assets.AssetUserLinkingTest > Link assets and users as superuser took: 1596ms
+2026-07-13T20:53:41.5319573Z 
+2026-07-13T20:53:41.5320320Z [0K[1morg.openremote.test.assets.AssetUserLinkingTest[m
+2026-07-13T20:53:41.5320825Z 
+2026-07-13T20:53:41.5321333Z [0K[1m  Test [22mLink assets and users as superuser[32m PASSED[33m (1.5s)[m
+2026-07-13T20:53:45.1313836Z org.openremote.test.assets.AttributeLinkingTest > Check processing of asset attributes that are linked to other attributes took: 3637ms
+2026-07-13T20:53:45.1314475Z 
+2026-07-13T20:53:45.1315396Z [0K[1morg.openremote.test.assets.AttributeLinkingTest[m
+2026-07-13T20:53:45.1315715Z 
+2026-07-13T20:53:45.1316128Z [0K[1m  Test [22mCheck processing of asset attributes that are linked to other attributes[32m PASSED[31m (3.6s)[m
+2026-07-13T20:53:45.1316781Z org.openremote.test.assets.ForecastServiceTest > Test forecast calculation after server restart - no initial forecast data took: 1ms
+2026-07-13T20:53:45.1317383Z 
+2026-07-13T20:53:45.1317609Z [0K[1morg.openremote.test.assets.ForecastServiceTest[m
+2026-07-13T20:53:45.1318097Z 
+2026-07-13T20:53:45.1318616Z [0K[1m  Test [22mTest forecast calculation after server restart - no initial forecast data[33m SKIPPED[m
+2026-07-13T20:53:45.1319755Z org.openremote.test.assets.ForecastServiceTest > Test forecast calculation after server restart - forecast data partially available took: 0ms
+2026-07-13T20:53:45.1320969Z [0K[1m  Test [22mTest forecast calculation after server restart - forecast data partially available[33m SKIPPED[m
+2026-07-13T20:53:46.8313422Z org.openremote.test.assets.ForecastServiceTest > Test adding updating and deleting an asset took: 1688ms
+2026-07-13T20:53:46.8314253Z [0K[1m  Test [22mTest adding updating and deleting an asset[32m PASSED[33m (1.6s)[m
+2026-07-13T20:53:46.8314769Z org.openremote.test.benchmark.AttributeEventBenchmarkTest > Attribute processing benchmark took: 0ms
+2026-07-13T20:53:46.8315086Z 
+2026-07-13T20:53:46.8315296Z [0K[1morg.openremote.test.benchmark.AttributeEventBenchmarkTest[m
+2026-07-13T20:53:46.8315536Z 
+2026-07-13T20:53:46.8315711Z [0K[1m  Test [22mAttribute processing benchmark[33m SKIPPED[m
+2026-07-13T20:53:57.4313696Z org.openremote.test.console.ConsoleTest > Console config endpoint returns 404 when console_config.json is missing took: 10663ms
+2026-07-13T20:53:57.4314379Z 
+2026-07-13T20:53:57.4314854Z [0K[1morg.openremote.test.console.ConsoleTest[m
+2026-07-13T20:53:57.4315143Z 
+2026-07-13T20:53:57.5313916Z [0K[1m  Test [22mConsole config endpoint returns 404 when console_config.json is missing[32m PASSED[31m (10.6s)[m
+2026-07-13T20:54:08.7313767Z org.openremote.test.console.ConsoleTest > Console config endpoint returns 200 when console_config.json exists took: 11282ms
+2026-07-13T20:54:08.7315124Z [0K[1m  Test [22mConsole config endpoint returns 200 when console_config.json exists[32m PASSED[31m (11.2s)[m
+2026-07-13T20:54:18.6313735Z org.openremote.test.console.ConsoleTest > Apps endpoint returns built-in and custom apps took: 9885ms
+2026-07-13T20:54:18.6314948Z [0K[1m  Test [22mApps endpoint returns built-in and custom apps[32m PASSED[31m (9.8s)[m
+2026-07-13T20:54:28.7313446Z org.openremote.test.console.ConsoleTest > Apps endpoint treats missing app doc root as empty took: 10120ms
+2026-07-13T20:54:28.7314825Z [0K[1m  Test [22mApps endpoint treats missing app doc root as empty[32m PASSED[31m (10.1s)[m
+2026-07-13T20:54:39.2313142Z org.openremote.test.console.ConsoleTest > Apps info endpoint returns info for custom apps took: 10478ms
+2026-07-13T20:54:39.2314002Z [0K[1m  Test [22mApps info endpoint returns info for custom apps[32m PASSED[31m (10.4s)[m
+2026-07-13T20:54:50.2314350Z org.openremote.test.console.ConsoleTest > Console registration rejects existing console mutation without current ownership took: 11023ms
+2026-07-13T20:54:50.2316097Z [0K[1m  Test [22mConsole registration rejects existing console mutation without current ownership[32m PASSED[31m (11s)[m
+2026-07-13T20:54:51.2313446Z org.openremote.test.console.ConsoleTest > Console registration rejects client supplied IDs for new legacy consoles took: 1005ms
+2026-07-13T20:54:51.2314509Z [0K[1m  Test [22mConsole registration rejects client supplied IDs for new legacy consoles[32m PASSED[33m (1s)[m
+2026-07-13T20:54:59.8313855Z org.openremote.test.console.ConsoleTest > Check full console behaviour took: 8510ms
+2026-07-13T20:54:59.8319755Z [0K[1m  Test [22mCheck full console behaviour[32m PASSED[31m (8.5s)[m
+2026-07-13T20:55:01.8313496Z org.openremote.test.dashboard.DashboardTest > Test dashboard creation and access rights took: 2000ms
+2026-07-13T20:55:01.8314275Z 
+2026-07-13T20:55:01.8314881Z [0K[1morg.openremote.test.dashboard.DashboardTest[m
+2026-07-13T20:55:01.8315222Z 
+2026-07-13T20:55:01.8315613Z [0K[1m  Test [22mTest dashboard creation and access rights[32m PASSED[31m (2s)[m
+2026-07-13T20:55:01.8316316Z org.openremote.test.flow.FlowModelTest > Ignore duplicate wires took: 6ms
+2026-07-13T20:55:01.8316733Z 
+2026-07-13T20:55:01.8317003Z [0K[1morg.openremote.test.flow.FlowModelTest[m
+2026-07-13T20:55:01.8317562Z 
+2026-07-13T20:55:01.8317815Z [0K[1m  Test [22mIgnore duplicate wires[32m PASSED[m
+2026-07-13T20:55:01.8318439Z org.openremote.test.flow.FlowModelTest > Throw when duplicate constructor wires took: 1ms
+2026-07-13T20:55:01.8319372Z [0K[1m  Test [22mThrow when duplicate constructor wires[32m PASSED[m
+2026-07-13T20:55:09.3313255Z org.openremote.test.gateway.GatewayTest > Gateway asset provisioning and local manager logic test took: 7472ms
+2026-07-13T20:55:09.3313642Z 
+2026-07-13T20:55:09.3314031Z [0K[1morg.openremote.test.gateway.GatewayTest[m
+2026-07-13T20:55:09.3314215Z 
+2026-07-13T20:55:09.3314503Z [0K[1m  Test [22mGateway asset provisioning and local manager logic test[32m PASSED[31m (7.4s)[m
+2026-07-13T20:55:18.6313289Z org.openremote.test.gateway.GatewayTest > Verify gateway client service took: 9305ms
+2026-07-13T20:55:18.6314016Z [0K[1m  Test [22mVerify gateway client service[32m PASSED[31m (9.3s)[m
+2026-07-13T20:55:18.6314436Z org.openremote.test.gateway.GatewayTest > Verify gateway tunnel factory took: 0ms
+2026-07-13T20:55:18.6314886Z [0K[1m  Test [22mVerify gateway tunnel factory[33m SKIPPED[m
+2026-07-13T20:55:20.3313585Z org.openremote.test.gateway.GatewayTest > Verify GatewayAssetSyncRules took: 1700ms
+2026-07-13T20:55:20.3314381Z [0K[1m  Test [22mVerify GatewayAssetSyncRules[32m PASSED[33m (1.7s)[m
+2026-07-13T20:55:20.3314849Z org.openremote.test.gateway.GatewayTest > Gateway Tunneling Edge Gateway Integration test took: 0ms
+2026-07-13T20:55:20.3315395Z [0K[1m  Test [22mGateway Tunneling Edge Gateway Integration test[33m SKIPPED[m
+2026-07-13T20:55:21.6313613Z org.openremote.test.map.MapResourceTest > Retrieve map settings took: 74ms
+2026-07-13T20:55:21.6314023Z 
+2026-07-13T20:55:21.6314484Z [0K[1morg.openremote.test.map.MapResourceTest[m
+2026-07-13T20:55:21.6314775Z 
+2026-07-13T20:55:21.6315010Z [0K[1m  Test [22mRetrieve map settings[32m PASSED[m
+2026-07-13T20:55:22.2313614Z org.openremote.test.map.MapResourceTest > Upload custom map tiles took: 599ms
+2026-07-13T20:55:22.2314338Z [0K[1m  Test [22mUpload custom map tiles[32m PASSED[m
+2026-07-13T20:55:22.2314720Z org.openremote.test.map.MapResourceTest > Configure custom tile server URL took: 26ms
+2026-07-13T20:55:22.2315159Z [0K[1m  Test [22mConfigure custom tile server URL[32m PASSED[m
+2026-07-13T20:55:32.1343348Z org.openremote.test.metrics.MetricsEndpointTest > Test metrics endpoint existence and content took: 9883ms
+2026-07-13T20:55:32.1382262Z 
+2026-07-13T20:55:32.1383442Z [0K[1morg.openremote.test.metrics.MetricsEndpointTest[m
+2026-07-13T20:55:32.1383965Z 
+2026-07-13T20:55:32.1384496Z [0K[1m  Test [22mTest metrics endpoint existence and content[32m PASSED[31m (9.8s)[m
+2026-07-13T20:55:43.1313620Z org.openremote.test.model.AssetModelTest > Check AttributeMap equality checking took: 6ms
+2026-07-13T20:55:43.1314137Z 
+2026-07-13T20:55:43.1314609Z [0K[1morg.openremote.test.model.AssetModelTest[m
+2026-07-13T20:55:43.1314892Z 
+2026-07-13T20:55:43.1315232Z [0K[1m  Test [22mCheck AttributeMap equality checking[32m PASSED[m
+2026-07-13T20:55:43.4314382Z org.openremote.test.model.AssetModelTest > Serialise/Deserialise asset and attribute events and test validation took: 278ms
+2026-07-13T20:55:43.4316117Z [0K[1m  Test [22mSerialise/Deserialise asset and attribute events and test validation[32m PASSED[m
+2026-07-13T20:55:43.4317196Z org.openremote.test.model.AssetModelTest > Retrieving all asset model info took: 72ms
+2026-07-13T20:55:43.4318580Z [0K[1m  Test [22mRetrieving all asset model info[32m PASSED[m
+2026-07-13T20:55:43.5313264Z org.openremote.test.model.AssetModelTest > Retrieving a specific asset model info took: 64ms
+2026-07-13T20:55:43.5314261Z [0K[1m  Test [22mRetrieving a specific asset model info[32m PASSED[m
+2026-07-13T20:55:43.5314806Z org.openremote.test.model.AssetModelTest > Serialize/Deserialize asset model took: 34ms
+2026-07-13T20:55:43.5315434Z [0K[1m  Test [22mSerialize/Deserialize asset model[32m PASSED[m
+2026-07-13T20:55:43.5316327Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for text took: 3ms
+2026-07-13T20:55:43.5316641Z 
+2026-07-13T20:55:43.5316814Z [0K[1m  Get valueDescriptor schema and hash for #name[m
+2026-07-13T20:55:43.5316989Z 
+2026-07-13T20:55:43.5317200Z [0K[1m    Test [22mGet valueDescriptor schema and hash for text[32m PASSED[m
+2026-07-13T20:55:43.5317640Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for text[] took: 0ms
+2026-07-13T20:55:43.5318147Z [0K[1m    Test [22mGet valueDescriptor schema and hash for text[][32m PASSED[m
+2026-07-13T20:55:43.5318615Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for text[][] took: 1ms
+2026-07-13T20:55:43.5319122Z [0K[1m    Test [22mGet valueDescriptor schema and hash for text[][][32m PASSED[m
+2026-07-13T20:55:43.6313422Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for agentLink took: 23ms
+2026-07-13T20:55:43.6314832Z [0K[1m    Test [22mGet valueDescriptor schema and hash for agentLink[32m PASSED[m
+2026-07-13T20:55:43.6315796Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for attributeLink took: 4ms
+2026-07-13T20:55:43.6316848Z [0K[1m    Test [22mGet valueDescriptor schema and hash for attributeLink[32m PASSED[m
+2026-07-13T20:55:43.6317899Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for valueConstraint[] took: 4ms
+2026-07-13T20:55:43.6319017Z [0K[1m    Test [22mGet valueDescriptor schema and hash for valueConstraint[][32m PASSED[m
+2026-07-13T20:55:43.6320357Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for forecastConfiguration took: 1ms
+2026-07-13T20:55:43.6321492Z [0K[1m    Test [22mGet valueDescriptor schema and hash for forecastConfiguration[32m PASSED[m
+2026-07-13T20:55:43.6322474Z org.openremote.test.model.AssetModelTest > Get valueDescriptor schema and hash for valueFormat took: 3ms
+2026-07-13T20:55:43.6323500Z [0K[1m    Test [22mGet valueDescriptor schema and hash for valueFormat[32m PASSED[m
+2026-07-13T20:55:43.6324356Z org.openremote.test.model.AssetModelTest > Get unknown valueDescriptor schema took: 1ms
+2026-07-13T20:55:43.6325191Z 
+2026-07-13T20:55:43.6325620Z [0K[1m  Test [22mGet unknown valueDescriptor schema[32m PASSED[m
+2026-07-13T20:55:43.6326458Z org.openremote.test.model.GeoJSONMultiPolygonTest > Simple MultiPolygon serialization took: 4ms
+2026-07-13T20:55:43.6327098Z 
+2026-07-13T20:55:43.6327527Z [0K[1morg.openremote.test.model.GeoJSONMultiPolygonTest[m
+2026-07-13T20:55:43.6327992Z 
+2026-07-13T20:55:43.6328392Z [0K[1m  Test [22mSimple MultiPolygon serialization[32m PASSED[m
+2026-07-13T20:55:43.6329539Z org.openremote.test.model.GeoJSONMultiPolygonTest > MultiPolygon from GeoJSONPolygon objects took: 3ms
+2026-07-13T20:55:43.6330551Z [0K[1m  Test [22mMultiPolygon from GeoJSONPolygon objects[32m PASSED[m
+2026-07-13T20:55:43.6331434Z org.openremote.test.model.GeoJSONMultiPolygonTest > MultiPolygon with polygons with holes took: 1ms
+2026-07-13T20:55:43.6332416Z [0K[1m  Test [22mMultiPolygon with polygons with holes[32m PASSED[m
+2026-07-13T20:55:43.6333273Z org.openremote.test.model.GeoJSONMultiPolygonTest > MultiPolygon from raw double arrays took: 0ms
+2026-07-13T20:55:43.6334192Z [0K[1m  Test [22mMultiPolygon from raw double arrays[32m PASSED[m
+2026-07-13T20:55:43.6335004Z org.openremote.test.model.GeoJSONMultiPolygonTest > MultiPolygon validation errors took: 1ms
+2026-07-13T20:55:43.6336236Z [0K[1m  Test [22mMultiPolygon validation errors[32m PASSED[m
+2026-07-13T20:55:43.6337119Z org.openremote.test.model.GeoJSONMultiPolygonTest > MultiPolygon getPolygon bounds checking took: 1ms
+2026-07-13T20:55:43.6338079Z [0K[1m  Test [22mMultiPolygon getPolygon bounds checking[32m PASSED[m
+2026-07-13T20:55:43.6338960Z org.openremote.test.model.GeoJSONPolygonTest > Simple polygon serialization and deserialization took: 3ms
+2026-07-13T20:55:43.6339900Z 
+2026-07-13T20:55:43.6340300Z [0K[1morg.openremote.test.model.GeoJSONPolygonTest[m
+2026-07-13T20:55:43.6340726Z 
+2026-07-13T20:55:43.6341206Z [0K[1m  Test [22mSimple polygon serialization and deserialization[32m PASSED[m
+2026-07-13T20:55:43.6342846Z org.openremote.test.model.GeoJSONPolygonTest > Polygon with hole took: 4ms
+2026-07-13T20:55:43.6343562Z [0K[1m  Test [22mPolygon with hole[32m PASSED[m
+2026-07-13T20:55:43.6344238Z org.openremote.test.model.GeoJSONPolygonTest > Polygon from double array constructor took: 1ms
+2026-07-13T20:55:43.6345144Z [0K[1m  Test [22mPolygon from double array constructor[32m PASSED[m
+2026-07-13T20:55:43.6345944Z org.openremote.test.model.GeoJSONPolygonTest > Polygon coordinate clamping took: 1ms
+2026-07-13T20:55:43.6346742Z [0K[1m  Test [22mPolygon coordinate clamping[32m PASSED[m
+2026-07-13T20:55:43.6347417Z org.openremote.test.model.GeoJSONPolygonTest > Polygon validation errors took: 1ms
+2026-07-13T20:55:43.6348154Z [0K[1m  Test [22mPolygon validation errors[32m PASSED[m
+2026-07-13T20:55:43.6348839Z org.openremote.test.model.GeoJSONPolygonTest > Polygon with 3D coordinates took: 2ms
+2026-07-13T20:55:43.6350001Z [0K[1m  Test [22mPolygon with 3D coordinates[32m PASSED[m
+2026-07-13T20:55:58.7332370Z org.openremote.test.mqtt.MqttBrokerTest > Mqtt broker event test took: 15073ms
+2026-07-13T20:55:58.7333282Z 
+2026-07-13T20:55:58.7333996Z [0K[1morg.openremote.test.mqtt.MqttBrokerTest[m
+2026-07-13T20:55:58.7336831Z 
+2026-07-13T20:55:58.7337989Z [0K[1m  Test [22mMqtt broker event test[32m PASSED[31m (15s)[m
+2026-07-13T20:56:03.0314052Z org.openremote.test.notification.NotificationTest > Check push notification functionality took: 4288ms
+2026-07-13T20:56:03.0314477Z 
+2026-07-13T20:56:03.0314879Z [0K[1morg.openremote.test.notification.NotificationTest[m
+2026-07-13T20:56:03.0315086Z 
+2026-07-13T20:56:03.0315317Z [0K[1m  Test [22mCheck push notification functionality[32m PASSED[31m (4.2s)[m
+2026-07-13T20:56:13.0313518Z org.openremote.test.notification.NotificationTest > Check email notification functionality took: 10067ms
+2026-07-13T20:56:13.0314859Z [0K[1m  Test [22mCheck email notification functionality[32m PASSED[31m (10s)[m
+2026-07-13T20:56:23.6313787Z org.openremote.test.notification.NotificationTest > Check localized notification functionality took: 10581ms
+2026-07-13T20:56:23.6315090Z [0K[1m  Test [22mCheck localized notification functionality[32m PASSED[31m (10.5s)[m
+2026-07-13T20:56:32.4313637Z org.openremote.test.protocol.BasicProtocolTest > Check basic protocol linking/un-linking and value writing took: 8747ms
+2026-07-13T20:56:32.4314071Z 
+2026-07-13T20:56:32.4314460Z [0K[1morg.openremote.test.protocol.BasicProtocolTest[m
+2026-07-13T20:56:32.4314678Z 
+2026-07-13T20:56:32.4314967Z [0K[1m  Test [22mCheck basic protocol linking/un-linking and value writing[32m PASSED[31m (8.7s)[m
+2026-07-13T20:56:33.8313664Z org.openremote.test.protocol.BasicProtocolTest > Protocol asset discovery requires asset write permission took: 1455ms
+2026-07-13T20:56:33.8315045Z [0K[1m  Test [22mProtocol asset discovery requires asset write permission[32m PASSED[33m (1.4s)[m
+2026-07-13T20:56:38.4313991Z org.openremote.test.protocol.BasicProtocolTest > Protocol asset discovery allows asset write permission took: 4552ms
+2026-07-13T20:56:38.4315187Z [0K[1m  Test [22mProtocol asset discovery allows asset write permission[32m PASSED[31m (4.5s)[m
+2026-07-13T20:56:39.6314185Z org.openremote.test.protocol.BasicProtocolTest > Anonymous users cannot run protocol asset import took: 1196ms
+2026-07-13T20:56:39.6316139Z [0K[1m  Test [22mAnonymous users cannot run protocol asset import[32m PASSED[33m (1.1s)[m
+2026-07-13T20:56:41.0313418Z org.openremote.test.protocol.BasicProtocolTest > Anonymous users cannot run protocol asset discovery took: 1429ms
+2026-07-13T20:56:41.0314724Z [0K[1m  Test [22mAnonymous users cannot run protocol asset discovery[32m PASSED[33m (1.4s)[m
+2026-07-13T20:56:41.0315499Z org.openremote.test.protocol.KNXImportTest > Check KNX protocol import took: 0ms
+2026-07-13T20:56:41.0316340Z 
+2026-07-13T20:56:41.0316600Z [0K[1morg.openremote.test.protocol.KNXImportTest[m
+2026-07-13T20:56:41.0316898Z 
+2026-07-13T20:56:41.0317150Z [0K[1m  Test [22mCheck KNX protocol import[33m SKIPPED[m
+2026-07-13T20:56:42.9314030Z org.openremote.test.protocol.KNXImportXXETest > KNX asset import still processes valid ETS project files took: 1847ms
+2026-07-13T20:56:42.9314908Z 
+2026-07-13T20:56:42.9315652Z [0K[1morg.openremote.test.protocol.KNXImportXXETest[m
+2026-07-13T20:56:42.9316201Z 
+2026-07-13T20:56:42.9316850Z [0K[1m  Test [22mKNX asset import still processes valid ETS project files[32m PASSED[33m (1.8s)[m
+2026-07-13T20:56:43.3321047Z org.openremote.test.protocol.KNXImportXXETest > KNX asset import must not resolve external entities from uploaded ETS XML took: 463ms
+2026-07-13T20:56:43.3322696Z [0K[1m  Test [22mKNX asset import must not resolve external entities from uploaded ETS XML[32m PASSED[m
+2026-07-13T20:56:45.2314472Z org.openremote.test.protocol.KNXProtocolTest > Check KNX protocol took: 1909ms
+2026-07-13T20:56:45.2315841Z 
+2026-07-13T20:56:45.2317208Z [0K[1morg.openremote.test.protocol.KNXProtocolTest[m
+2026-07-13T20:56:45.2317848Z 
+2026-07-13T20:56:45.2318315Z [0K[1m  Test [22mCheck KNX protocol[32m PASSED[33m (1.9s)[m
+2026-07-13T20:56:59.9312954Z org.openremote.test.protocol.TcpClientTest > Check client took: 14718ms
+2026-07-13T20:57:00.0312659Z 
+2026-07-13T20:57:00.0313805Z [0K[1morg.openremote.test.protocol.TcpClientTest[m
+2026-07-13T20:57:00.0314175Z 
+2026-07-13T20:57:00.0314431Z [0K[1m  Test [22mCheck client[32m PASSED[31m (14.7s)[m
+2026-07-13T20:57:15.9325864Z org.openremote.test.protocol.http.HttpClientProtocolTest > Check HTTP client protocol and linked attribute deployment took: 15940ms
+2026-07-13T20:57:15.9363427Z 
+2026-07-13T20:57:15.9367399Z [0K[1morg.openremote.test.protocol.http.HttpClientProtocolTest[m
+2026-07-13T20:57:15.9405425Z 
+2026-07-13T20:57:15.9418813Z [0K[1m  Test [22mCheck HTTP client protocol and linked attribute deployment[32m PASSED[31m (15.9s)[m
+2026-07-13T20:57:20.8313230Z org.openremote.test.protocol.http.HttpClientProtocolTest > Check HTTP client dynamic time feature took: 4935ms
+2026-07-13T20:57:20.8314071Z [0K[1m  Test [22mCheck HTTP client dynamic time feature[32m PASSED[31m (4.9s)[m
+2026-07-13T20:57:28.8313253Z org.openremote.test.protocol.http.HttpServerProtocolTest > Check HTTP server protocol and JAX-RS deployment took: 7981ms
+2026-07-13T20:57:28.8313787Z 
+2026-07-13T20:57:28.8314514Z [0K[1morg.openremote.test.protocol.http.HttpServerProtocolTest[m
+2026-07-13T20:57:28.8314887Z 
+2026-07-13T20:57:28.8315285Z [0K[1m  Test [22mCheck HTTP server protocol and JAX-RS deployment[32m PASSED[31m (7.9s)[m
+2026-07-13T20:57:28.8315889Z org.openremote.test.protocol.http.WebTargetTest > OAuth grant serialisation and deserialisation took: 2ms
+2026-07-13T20:57:28.8316239Z 
+2026-07-13T20:57:28.8316418Z [0K[1morg.openremote.test.protocol.http.WebTargetTest[m
+2026-07-13T20:57:28.8316625Z 
+2026-07-13T20:57:28.8316829Z [0K[1m  Test [22mOAuth grant serialisation and deserialisation[32m PASSED[m
+2026-07-13T20:57:28.8317252Z org.openremote.test.protocol.http.WebTargetTest > Check Basic authentication took: 3ms
+2026-07-13T20:57:28.8317677Z [0K[1m  Test [22mCheck Basic authentication[32m PASSED[m
+2026-07-13T20:57:28.8318180Z org.openremote.test.protocol.http.WebTargetTest > Check OAuth resource owner credentials (password) grant authentication took: 3ms
+2026-07-13T20:57:28.8319123Z [0K[1m  Test [22mCheck OAuth resource owner credentials (password) grant authentication[32m PASSED[m
+2026-07-13T20:57:28.8320140Z org.openremote.test.protocol.http.WebTargetTest > Check OAuth client credentials grant authentication took: 2ms
+2026-07-13T20:57:28.8320706Z [0K[1m  Test [22mCheck OAuth client credentials grant authentication[32m PASSED[m
+2026-07-13T20:57:28.8321167Z org.openremote.test.protocol.http.WebTargetTest > Check OAuth token reuse functionality took: 1ms
+2026-07-13T20:57:28.8321812Z [0K[1m  Test [22mCheck OAuth token reuse functionality[32m PASSED[m
+2026-07-13T20:57:28.8322242Z org.openremote.test.protocol.http.WebTargetTest > Check permanent failure functionality took: 2ms
+2026-07-13T20:57:28.8322699Z [0K[1m  Test [22mCheck permanent failure functionality[32m PASSED[m
+2026-07-13T20:57:28.8323082Z org.openremote.test.protocol.http.WebTargetTest > Check header handling took: 1ms
+2026-07-13T20:57:28.8323474Z [0K[1m  Test [22mCheck header handling[32m PASSED[m
+2026-07-13T20:57:28.8323825Z org.openremote.test.protocol.http.WebTargetTest > Check redirect handling took: 1ms
+2026-07-13T20:57:28.8324227Z [0K[1m  Test [22mCheck redirect handling[32m PASSED[m
+2026-07-13T20:57:28.8324618Z org.openremote.test.protocol.http.WebTargetTest > Check query parameter handling took: 2ms
+2026-07-13T20:57:28.8325073Z [0K[1m  Test [22mCheck query parameter handling[32m PASSED[m
+2026-07-13T20:57:28.8325483Z org.openremote.test.protocol.http.WebTargetTest > Check dynamic query parameter handling took: 2ms
+2026-07-13T20:57:28.8325960Z [0K[1m  Test [22mCheck dynamic query parameter handling[32m PASSED[m
+2026-07-13T20:57:30.0313706Z org.openremote.test.protocol.io.NettyIOClientTest > Concurrency test for reconnect logic took: 1111ms
+2026-07-13T20:57:30.0314275Z 
+2026-07-13T20:57:30.0314799Z [0K[1morg.openremote.test.protocol.io.NettyIOClientTest[m
+2026-07-13T20:57:30.0315142Z 
+2026-07-13T20:57:30.0315523Z [0K[1m  Test [22mConcurrency test for reconnect logic[32m PASSED[33m (1.1s)[m
+2026-07-13T20:57:32.0313286Z org.openremote.test.protocol.lorawan.chirpstack.ChirpStackTest > ChirpStack CSV Import Test took: 1673ms
+2026-07-13T20:57:32.0313684Z 
+2026-07-13T20:57:32.0314129Z [0K[1morg.openremote.test.protocol.lorawan.chirpstack.ChirpStackTest[m
+2026-07-13T20:57:32.0314398Z 
+2026-07-13T20:57:32.0314605Z [0K[1m  Test [22mChirpStack CSV Import Test[32m PASSED[33m (1.6s)[m
+2026-07-13T20:57:34.3313902Z org.openremote.test.protocol.lorawan.chirpstack.ChirpStackTest > ChirpStack Auto Discovery Test took: 2216ms
+2026-07-13T20:57:34.3314775Z [0K[1m  Test [22mChirpStack Auto Discovery Test[32m PASSED[31m (2.2s)[m
+2026-07-13T20:57:38.1313210Z org.openremote.test.protocol.lorawan.tts.TheThingsStackTest > TheThingsStack CSV Import Test took: 1853ms
+2026-07-13T20:57:38.1313784Z 
+2026-07-13T20:57:38.1314326Z [0K[1morg.openremote.test.protocol.lorawan.tts.TheThingsStackTest[m
+2026-07-13T20:57:38.1314668Z 
+2026-07-13T20:57:38.1315015Z [0K[1m  Test [22mTheThingsStack CSV Import Test[32m PASSED[33m (1.8s)[m
+2026-07-13T20:57:40.8313502Z org.openremote.test.protocol.lorawan.tts.TheThingsStackTest > TheThingsStack Auto-Discovery Test took: 2600ms
+2026-07-13T20:57:40.8314623Z [0K[1m  Test [22mTheThingsStack Auto-Discovery Test[32m PASSED[31m (2.6s)[m
+2026-07-13T20:57:51.9313624Z org.openremote.test.protocol.mail.MailClientProtocolTest > Basic agent and attribute linking took: 9057ms
+2026-07-13T20:57:51.9314071Z 
+2026-07-13T20:57:51.9314529Z [0K[1morg.openremote.test.protocol.mail.MailClientProtocolTest[m
+2026-07-13T20:57:51.9314773Z 
+2026-07-13T20:57:51.9314985Z [0K[1m  Test [22mBasic agent and attribute linking[32m PASSED[31m (9s)[m
+2026-07-13T20:57:59.4313309Z org.openremote.test.protocol.mail.MailClientTest > POP3 mail receiving test took: 7475ms
+2026-07-13T20:57:59.4314047Z 
+2026-07-13T20:57:59.4314786Z [0K[1morg.openremote.test.protocol.mail.MailClientTest[m
+2026-07-13T20:57:59.4315349Z 
+2026-07-13T20:57:59.4316167Z [0K[1m  Test [22mPOP3 mail receiving test[32m PASSED[31m (7.4s)[m
+2026-07-13T20:58:03.6313586Z org.openremote.test.protocol.mail.MailClientTest > IMAP mail receiving test took: 4262ms
+2026-07-13T20:58:03.6314599Z [0K[1m  Test [22mIMAP mail receiving test[32m PASSED[31m (4.2s)[m
+2026-07-13T20:58:09.7331580Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Integration Test - Basic Operations took: 5130ms
+2026-07-13T20:58:09.7356548Z 
+2026-07-13T20:58:09.7360902Z [0K[1morg.openremote.test.protocol.modbus.ModbusSerialTest[m
+2026-07-13T20:58:09.7362165Z 
+2026-07-13T20:58:09.7362752Z [0K[1m  Test [22mModbus Serial Integration Test - Basic Operations[32m PASSED[31m (5.1s)[m
+2026-07-13T20:58:12.3315108Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - Batching with Illegal Registers took: 2595ms
+2026-07-13T20:58:12.3351707Z [0K[1m  Test [22mModbus Serial Test - Batching with Illegal Registers[32m PASSED[31m (2.5s)[m
+2026-07-13T20:58:14.8321997Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - Multiple Unit IDs via AgentLink took: 2469ms
+2026-07-13T20:58:14.8324185Z [0K[1m  Test [22mModbus Serial Test - Multiple Unit IDs via AgentLink[32m PASSED[31m (2.4s)[m
+2026-07-13T20:58:17.9313662Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - Byte and Word Order Configurations took: 3067ms
+2026-07-13T20:58:20.7314914Z [0K[1m  Test [22mModbus Serial Test - Byte and Word Order Configurations[32m PASSED[31m (3s)[m
+2026-07-13T20:58:20.7316002Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - 64-bit Data Types (LINT, ULINT, LREAL) took: 2816ms
+2026-07-13T20:58:20.7317107Z [0K[1m  Test [22mModbus Serial Test - 64-bit Data Types (LINT, ULINT, LREAL)[32m PASSED[31m (2.8s)[m
+2026-07-13T20:58:23.0313842Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - Multi-Register Write (registersAmount) took: 2324ms
+2026-07-13T20:58:23.0315529Z [0K[1m  Test [22mModbus Serial Test - Multi-Register Write (registersAmount)[32m PASSED[31m (2.3s)[m
+2026-07-13T20:58:33.3314725Z org.openremote.test.protocol.modbus.ModbusSerialTest > Modbus Serial Test - Write With Polling Rate took: 10307ms
+2026-07-13T20:58:33.3316089Z [0K[1m  Test [22mModbus Serial Test - Write With Polling Rate[32m PASSED[31m (10.3s)[m
+2026-07-13T20:58:35.6313449Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Integration Test - Basic Operations took: 2257ms
+2026-07-13T20:58:35.6313882Z 
+2026-07-13T20:58:35.6314278Z [0K[1morg.openremote.test.protocol.modbus.ModbusTcpTest[m
+2026-07-13T20:58:35.6314516Z 
+2026-07-13T20:58:35.6314783Z [0K[1m  Test [22mModbus TCP Integration Test - Basic Operations[32m PASSED[31m (2.2s)[m
+2026-07-13T20:58:37.2313587Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Register Batching took: 1572ms
+2026-07-13T20:58:37.2314807Z [0K[1m  Test [22mModbus TCP Test - Register Batching[32m PASSED[33m (1.5s)[m
+2026-07-13T20:58:39.4312864Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - 64-bit Data Types (LINT, ULINT, LREAL) took: 2235ms
+2026-07-13T20:58:39.4313771Z [0K[1m  Test [22mModbus TCP Test - 64-bit Data Types (LINT, ULINT, LREAL)[32m PASSED[31m (2.2s)[m
+2026-07-13T20:58:40.9313455Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Byte and Word Order took: 1465ms
+2026-07-13T20:58:40.9314619Z [0K[1m  Test [22mModbus TCP Test - Byte and Word Order[32m PASSED[33m (1.4s)[m
+2026-07-13T20:58:42.1312827Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Multi-Register Write (registersAmount) took: 1231ms
+2026-07-13T20:58:42.1313733Z [0K[1m  Test [22mModbus TCP Test - Multi-Register Write (registersAmount)[32m PASSED[33m (1.2s)[m
+2026-07-13T20:58:46.3317315Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Write With Polling Rate took: 4163ms
+2026-07-13T20:58:46.3318742Z [0K[1m  Test [22mModbus TCP Test - Write With Polling Rate[32m PASSED[31m (4.1s)[m
+2026-07-13T20:58:47.6314099Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Write-Only Attribute (No Read Configuration) took: 1312ms
+2026-07-13T20:58:47.6315085Z [0K[1m  Test [22mModbus TCP Test - Write-Only Attribute (No Read Configuration)[32m PASSED[33m (1.3s)[m
+2026-07-13T20:58:48.8313283Z org.openremote.test.protocol.modbus.ModbusTcpTest > Modbus TCP Test - Partial Read Configuration Should Be Ignored took: 1251ms
+2026-07-13T20:58:48.8314243Z [0K[1m  Test [22mModbus TCP Test - Partial Read Configuration Should Be Ignored[32m PASSED[33m (1.2s)[m
+2026-07-13T20:58:56.5313567Z org.openremote.test.protocol.mqtt.MQTTClientProtocolTest > Check MQTT client took: 6441ms
+2026-07-13T20:58:56.5314295Z 
+2026-07-13T20:58:56.5316807Z [0K[1morg.openremote.test.protocol.mqtt.MQTTClientProtocolTest[m
+2026-07-13T20:58:56.5317372Z 
+2026-07-13T20:58:56.5317789Z [0K[1m  Test [22mCheck MQTT client[32m PASSED[31m (6.4s)[m
+2026-07-13T20:58:57.5313588Z org.openremote.test.protocol.mqtt.MQTTClientProtocolTest > Check MQTT client protocol and linked attribute deployment took: 920ms
+2026-07-13T20:58:57.5314494Z [0K[1m  Test [22mCheck MQTT client protocol and linked attribute deployment[32m PASSED[m
+2026-07-13T20:59:00.6313537Z org.openremote.test.protocol.mqtt.MQTTClientProtocolTest > Check MQTT client protocol message match filter support took: 3101ms
+2026-07-13T20:59:00.6314468Z [0K[1m  Test [22mCheck MQTT client protocol message match filter support[32m PASSED[31m (3.1s)[m
+2026-07-13T20:59:01.7322180Z org.openremote.test.protocol.mqtt.MQTTClientProtocolTest > Check MQTT client protocol wildcard subscriptions took: 1097ms
+2026-07-13T20:59:01.7340333Z [0K[1m  Test [22mCheck MQTT client protocol wildcard subscriptions[32m PASSED[33m (1s)[m
+2026-07-13T20:59:01.7374078Z org.openremote.test.protocol.mqtt.MQTTClientProtocolTest > Check MQTT client protocol mTLS support took: 0ms
+2026-07-13T20:59:01.7386636Z [0K[1m  Test [22mCheck MQTT client protocol mTLS support[33m SKIPPED[m
+2026-07-13T20:59:03.1321317Z org.openremote.test.protocol.openweathermap.OpenWeatherMapProtocolTest > OpenWeatherMap Integration Tests took: 1462ms
+2026-07-13T20:59:03.1329779Z 
+2026-07-13T20:59:03.1330623Z [0K[1morg.openremote.test.protocol.openweathermap.OpenWeatherMapProtocolTest[m
+2026-07-13T20:59:03.1331004Z 
+2026-07-13T20:59:03.1331227Z [0K[1m  Test [22mOpenWeatherMap Integration Tests[32m PASSED[33m (1.4s)[m
+2026-07-13T20:59:04.6325699Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol without replay took: 28ms
+2026-07-13T20:59:04.6326438Z 
+2026-07-13T20:59:04.6327035Z [0K[1morg.openremote.test.protocol.simulator.SimulatorProtocolTest[m
+2026-07-13T20:59:04.6327460Z 
+2026-07-13T20:59:04.6327811Z [0K[1m  Test [22mCheck Simulator Agent protocol without replay[32m PASSED[m
+2026-07-13T20:59:04.7314365Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol follows replay data end took: 23ms
+2026-07-13T20:59:04.7316054Z [0K[1m  Test [22mCheck Simulator Agent protocol follows replay data end[32m PASSED[m
+2026-07-13T20:59:05.4313439Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol with replay took: 710ms
+2026-07-13T20:59:05.4314282Z [0K[1m  Test [22mCheck Simulator Agent protocol with replay[32m PASSED[m
+2026-07-13T20:59:05.6313804Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol with replay startDate took: 248ms
+2026-07-13T20:59:05.6315496Z [0K[1m  Test [22mCheck Simulator Agent protocol with replay startDate[32m PASSED[m
+2026-07-13T20:59:06.9315089Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol with custom recurrence schedule took: 1307ms
+2026-07-13T20:59:06.9318225Z [0K[1m  Test [22mCheck Simulator Agent protocol with custom recurrence schedule[32m PASSED[33m (1.3s)[m
+2026-07-13T20:59:07.4313641Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol adds predicted datapoints for the current and next occurrence took: 520ms
+2026-07-13T20:59:07.4314760Z [0K[1m  Test [22mCheck Simulator Agent protocol adds predicted datapoints for the current and next occurrence[32m PASSED[m
+2026-07-13T20:59:07.7313159Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol adds predicted datapoints for one-time occurrence took: 298ms
+2026-07-13T20:59:07.7314198Z [0K[1m  Test [22mCheck Simulator Agent protocol adds predicted datapoints for one-time occurrence[32m PASSED[m
+2026-07-13T20:59:08.1313874Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol adds predicted datapoints recurringly until took: 332ms
+2026-07-13T20:59:08.1315518Z [0K[1m  Test [22mCheck Simulator Agent protocol adds predicted datapoints recurringly until[32m PASSED[m
+2026-07-13T20:59:08.4322005Z org.openremote.test.protocol.simulator.SimulatorProtocolTest > Check Simulator Agent protocol adds predicted datapoints recurringly for Europe/Amsterdam timezone took: 362ms
+2026-07-13T20:59:08.4324212Z [0K[1m  Test [22mCheck Simulator Agent protocol adds predicted datapoints recurringly for Europe/Amsterdam timezone[32m PASSED[m
+2026-07-13T20:59:12.1313318Z org.openremote.test.protocol.udp.UdpClientProtocolTest > Check UDP client protocol and linked attribute deployment took: 3660ms
+2026-07-13T20:59:12.1313995Z 
+2026-07-13T20:59:12.1314568Z [0K[1morg.openremote.test.protocol.udp.UdpClientProtocolTest[m
+2026-07-13T20:59:12.1314841Z 
+2026-07-13T20:59:12.1315133Z [0K[1m  Test [22mCheck UDP client protocol and linked attribute deployment[32m PASSED[31m (3.6s)[m
+2026-07-13T20:59:18.6320505Z org.openremote.test.protocol.udp.UdpClientTest > Check client took: 6490ms
+2026-07-13T20:59:18.6321336Z 
+2026-07-13T20:59:18.6322251Z [0K[1morg.openremote.test.protocol.udp.UdpClientTest[m
+2026-07-13T20:59:18.6322742Z 
+2026-07-13T20:59:18.6323190Z [0K[1m  Test [22mCheck client[32m PASSED[31m (6.4s)[m
+2026-07-13T20:59:20.9313094Z org.openremote.test.protocol.velbus.VelbusBasicTest > Input Button Processor Test took: 2324ms
+2026-07-13T20:59:20.9313461Z 
+2026-07-13T20:59:20.9313866Z [0K[1morg.openremote.test.protocol.velbus.VelbusBasicTest[m
+2026-07-13T20:59:20.9314087Z 
+2026-07-13T20:59:20.9314285Z [0K[1m  Test [22mInput Button Processor Test[32m PASSED[31m (2.3s)[m
+2026-07-13T20:59:24.1313628Z org.openremote.test.protocol.velbus.VelbusBasicTest > Thermostat Processor Test took: 3117ms
+2026-07-13T20:59:24.1314424Z [0K[1m  Test [22mThermostat Processor Test[32m PASSED[31m (3.1s)[m
+2026-07-13T20:59:25.3312988Z org.openremote.test.protocol.velbus.VelbusBasicTest > Programs Processor Test took: 1198ms
+2026-07-13T20:59:25.3313730Z [0K[1m  Test [22mPrograms Processor Test[32m PASSED[33m (1.1s)[m
+2026-07-13T20:59:26.1313302Z org.openremote.test.protocol.velbus.VelbusBasicTest > OLED Processor Test took: 813ms
+2026-07-13T20:59:26.1314023Z [0K[1m  Test [22mOLED Processor Test[32m PASSED[m
+2026-07-13T20:59:28.4313531Z org.openremote.test.protocol.velbus.VelbusBasicTest > Relay Processor Test took: 2322ms
+2026-07-13T20:59:28.4314328Z [0K[1m  Test [22mRelay Processor Test[32m PASSED[31m (2.3s)[m
+2026-07-13T20:59:29.0313690Z org.openremote.test.protocol.velbus.VelbusBasicTest > Counter Processor Test took: 614ms
+2026-07-13T20:59:29.0314396Z [0K[1m  Test [22mCounter Processor Test[32m PASSED[m
+2026-07-13T20:59:31.7313405Z org.openremote.test.protocol.velbus.VelbusBasicTest > Analog Output Processor Test took: 2710ms
+2026-07-13T20:59:31.7314197Z [0K[1m  Test [22mAnalog Output Processor Test[32m PASSED[31m (2.7s)[m
+2026-07-13T20:59:34.2313302Z org.openremote.test.protocol.velbus.VelbusBasicTest > Blind Processor Test took: 2519ms
+2026-07-13T20:59:34.2314045Z [0K[1m  Test [22mBlind Processor Test[32m PASSED[31m (2.5s)[m
+2026-07-13T20:59:35.0313164Z org.openremote.test.protocol.velbus.VelbusBasicTest > Analog Input Processor Test took: 813ms
+2026-07-13T20:59:35.0314407Z [0K[1m  Test [22mAnalog Input Processor Test[32m PASSED[m
+2026-07-13T20:59:36.1312940Z org.openremote.test.protocol.velbus.VelbusBasicTest > VMBPIRO Test took: 1007ms
+2026-07-13T20:59:36.1313625Z [0K[1m  Test [22mVMBPIRO Test[32m PASSED[33m (1s)[m
+2026-07-13T20:59:37.1313134Z org.openremote.test.protocol.velbus.VelbusBasicTest > VMB1TS Test took: 1008ms
+2026-07-13T20:59:37.1314067Z [0K[1m  Test [22mVMB1TS Test[32m PASSED[33m (1s)[m
+2026-07-13T20:59:44.5313512Z org.openremote.test.protocol.velbus.VelbusProtocolTest > Check VELBUS agent and device asset deployment took: 7428ms
+2026-07-13T20:59:44.5313938Z 
+2026-07-13T20:59:44.5314360Z [0K[1morg.openremote.test.protocol.velbus.VelbusProtocolTest[m
+2026-07-13T20:59:44.5314590Z 
+2026-07-13T20:59:44.5314831Z [0K[1m  Test [22mCheck VELBUS agent and device asset deployment[32m PASSED[31m (7.4s)[m
+2026-07-13T20:59:47.1346618Z org.openremote.test.protocol.velbus.VelbusProtocolTest > Check linked attribute import took: 2560ms
+2026-07-13T20:59:47.1363991Z [0K[1m  Test [22mCheck linked attribute import[32m PASSED[31m (2.5s)[m
+2026-07-13T20:59:49.0313135Z org.openremote.test.protocol.velbus.VelbusProtocolTest > Check VELBUS import does not resolve external entities from local files took: 1893ms
+2026-07-13T20:59:49.0314161Z [0K[1m  Test [22mCheck VELBUS import does not resolve external entities from local files[32m PASSED[33m (1.8s)[m
+2026-07-13T20:59:50.5313628Z org.openremote.test.protocol.velbus.VelbusProtocolTest > Protocol asset import requires asset write permission took: 1495ms
+2026-07-13T20:59:50.5314573Z [0K[1m  Test [22mProtocol asset import requires asset write permission[32m PASSED[33m (1.4s)[m
+2026-07-13T20:59:55.7314334Z org.openremote.test.protocol.websocket.WebsocketClientProtocolTest > Check websocket client protocol and linked attribute deployment took: 5283ms
+2026-07-13T20:59:55.7315162Z 
+2026-07-13T20:59:55.7315891Z [0K[1morg.openremote.test.protocol.websocket.WebsocketClientProtocolTest[m
+2026-07-13T20:59:55.7316355Z 
+2026-07-13T20:59:55.7316843Z [0K[1m  Test [22mCheck websocket client protocol and linked attribute deployment[32m PASSED[31m (5.2s)[m
+2026-07-13T20:59:58.0320615Z org.openremote.test.protocol.websocket.WebsocketClientTest > Check restricted client took: 2246ms
+2026-07-13T20:59:58.0321154Z 
+2026-07-13T20:59:58.0322690Z [0K[1morg.openremote.test.protocol.websocket.WebsocketClientTest[m
+2026-07-13T20:59:58.0323356Z 
+2026-07-13T20:59:58.0323853Z [0K[1m  Test [22mCheck restricted client[32m PASSED[31m (2.2s)[m
+2026-07-13T21:00:03.1313059Z org.openremote.test.protocol.websocket.WebsocketClientTest > Check client took: 5084ms
+2026-07-13T21:00:03.1313775Z [0K[1m  Test [22mCheck client[32m PASSED[31m (5s)[m
+2026-07-13T21:00:17.1313382Z org.openremote.test.provisioning.UserAndAssetProvisioningTest > Check basic functionality took: 14028ms
+2026-07-13T21:00:17.1313832Z 
+2026-07-13T21:00:17.1314281Z [0K[1morg.openremote.test.provisioning.UserAndAssetProvisioningTest[m
+2026-07-13T21:00:17.1314580Z 
+2026-07-13T21:00:17.1314769Z [0K[1m  Test [22mCheck basic functionality[32m PASSED[31m (14s)[m
+2026-07-13T21:00:19.1313858Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'LOW', assignee 'null' and '0' emailNotifications based on attribute event took: 656ms
+2026-07-13T21:00:19.1314445Z 
+2026-07-13T21:00:19.1314812Z [0K[1morg.openremote.test.rules.AlarmRuleTest[m
+2026-07-13T21:00:19.1315119Z 
+2026-07-13T21:00:19.1315727Z [0K[1m  rule in realm with alarm action creates an alarm with severity '#severity', assignee '#assigneeId' and '#emailNotifications' emailNotifications based on attribute event[m
+2026-07-13T21:00:19.1316443Z 
+2026-07-13T21:00:19.1316982Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'LOW', assignee 'null' and '0' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:19.7314198Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'LOW', assignee 'c261d3cd-4a72-4ab2-8fe8-ec8e28ffca91' and '0' emailNotifications based on attribute event took: 629ms
+2026-07-13T21:00:19.7315686Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'LOW', assignee 'c261d3cd-4a72-4ab2-8fe8-ec8e28ffca91' and '0' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:20.3313788Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'MEDIUM', assignee 'null' and '0' emailNotifications based on attribute event took: 619ms
+2026-07-13T21:00:20.3316114Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'MEDIUM', assignee 'null' and '0' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:20.9313839Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'MEDIUM', assignee '2e0d0f55-dd0b-434a-a98d-37be36999341' and '0' emailNotifications based on attribute event took: 620ms
+2026-07-13T21:00:20.9315643Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'MEDIUM', assignee '2e0d0f55-dd0b-434a-a98d-37be36999341' and '0' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:21.6314214Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'HIGH', assignee 'null' and '1' emailNotifications based on attribute event took: 616ms
+2026-07-13T21:00:21.6316092Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'HIGH', assignee 'null' and '1' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:22.2347239Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'HIGH', assignee '800a2a0f-09ff-454c-9c82-8de37b7bc71f' and '1' emailNotifications based on attribute event took: 643ms
+2026-07-13T21:00:22.3314202Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'HIGH', assignee '800a2a0f-09ff-454c-9c82-8de37b7bc71f' and '1' emailNotifications based on attribute event[31m FAILED[31m
+2026-07-13T21:00:22.3329451Z 
+2026-07-13T21:00:22.3359680Z     Condition not satisfied:
+2026-07-13T21:00:22.3389534Z     
+2026-07-13T21:00:22.3389879Z     assetLinks.size() == 1
+2026-07-13T21:00:22.3419655Z     |          |      |
+2026-07-13T21:00:22.3449545Z     []         0      false
+2026-07-13T21:00:22.3473657Z         at org.openremote.test.rules.AlarmRuleTest.rule in realm with alarm action creates an alarm with severity '#severity', assignee '#assigneeId' and '#emailNotifications' emailNotifications based on attribute event(AlarmRuleTest.groovy:182)
+2026-07-13T21:00:22.3479796Z [m
+2026-07-13T21:00:22.8313657Z org.openremote.test.rules.AlarmRuleTest > rule in realm with alarm action creates an alarm with severity 'HIGH', assignee 'fd4cda52-76b2-4b45-9b13-472c45d40fd3' and '1' emailNotifications based on attribute event took: 618ms
+2026-07-13T21:00:22.8315139Z [0K[1m    Test [22mrule in realm with alarm action creates an alarm with severity 'HIGH', assignee 'fd4cda52-76b2-4b45-9b13-472c45d40fd3' and '1' emailNotifications based on attribute event[32m PASSED[m
+2026-07-13T21:00:28.5314917Z org.openremote.test.rules.AlarmRuleTest > rule does not create alarm when rules service is restarted took: 5639ms
+2026-07-13T21:00:28.5328723Z 
+2026-07-13T21:00:28.5330652Z [0K[1m  Test [22mrule does not create alarm when rules service is restarted[32m PASSED[31m (5.6s)[m
+2026-07-13T21:00:32.1321752Z org.openremote.test.rules.BasicRulesDeploymentTest > Check basic rules engine deployment took: 3662ms
+2026-07-13T21:00:32.1328838Z 
+2026-07-13T21:00:32.1360270Z [0K[1morg.openremote.test.rules.BasicRulesDeploymentTest[m
+2026-07-13T21:00:32.1372824Z 
+2026-07-13T21:00:32.1373518Z [0K[1m  Test [22mCheck basic rules engine deployment[32m PASSED[31m (3.6s)[m
+2026-07-13T21:00:32.2318681Z org.openremote.test.rules.BasicRulesFactsTest > Handle named facts took: 61ms
+2026-07-13T21:00:32.2319459Z 
+2026-07-13T21:00:32.2340114Z [0K[1morg.openremote.test.rules.BasicRulesFactsTest[m
+2026-07-13T21:00:32.2342652Z 
+2026-07-13T21:00:32.2345148Z [0K[1m  Test [22mHandle named facts[32m PASSED[m
+2026-07-13T21:00:32.2355012Z org.openremote.test.rules.BasicRulesFactsTest > Handle anonymous facts took: 32ms
+2026-07-13T21:00:32.2355920Z [0K[1m  Test [22mHandle anonymous facts[32m PASSED[m
+2026-07-13T21:00:32.2357032Z org.openremote.test.rules.BasicRulesFactsTest > Handle anonymous facts with value equality took: 18ms
+2026-07-13T21:00:32.2358024Z [0K[1m  Test [22mHandle anonymous facts with value equality[32m PASSED[m
+2026-07-13T21:00:32.3313540Z org.openremote.test.rules.BasicRulesFactsTest > Handle anonymous and named facts of same type took: 18ms
+2026-07-13T21:00:32.3314729Z [0K[1m  Test [22mHandle anonymous and named facts of same type[32m PASSED[m
+2026-07-13T21:00:32.3315490Z org.openremote.test.rules.BasicRulesFactsTest > Handle temporary named facts took: 7ms
+2026-07-13T21:00:32.3316222Z [0K[1m  Test [22mHandle temporary named facts[32m PASSED[m
+2026-07-13T21:00:32.3316883Z org.openremote.test.rules.BasicRulesFactsTest > Handle temporary anonymous facts took: 17ms
+2026-07-13T21:00:32.3317605Z [0K[1m  Test [22mHandle temporary anonymous facts[32m PASSED[m
+2026-07-13T21:00:44.4315006Z org.openremote.test.rules.BasicRulesProcessingTest > Check firing when deploying a new ruleset took: 12066ms
+2026-07-13T21:00:44.4317128Z 
+2026-07-13T21:00:44.4317810Z [0K[1morg.openremote.test.rules.BasicRulesProcessingTest[m
+2026-07-13T21:00:44.4318235Z 
+2026-07-13T21:00:44.4318716Z [0K[1m  Test [22mCheck firing when deploying a new ruleset[32m PASSED[31m (12s)[m
+2026-07-13T21:00:47.9314048Z org.openremote.test.rules.BasicRulesProcessingTest > Handle attribute event with no meta, asset create, update, delete took: 3538ms
+2026-07-13T21:00:47.9315156Z [0K[1m  Test [22mHandle attribute event with no meta, asset create, update, delete[32m PASSED[31m (3.5s)[m
+2026-07-13T21:00:47.9315756Z org.openremote.test.rules.BasicRulesProcessingTest > Stop processing when engine in error state took: 0ms
+2026-07-13T21:00:47.9316337Z [0K[1m  Test [22mStop processing when engine in error state[33m SKIPPED[m
+2026-07-13T21:00:47.9316842Z org.openremote.test.rules.BasicRulesTimedExecutionTest > Check firing of timer rules with realtime clock took: 0ms
+2026-07-13T21:00:47.9317191Z 
+2026-07-13T21:00:47.9317385Z [0K[1morg.openremote.test.rules.BasicRulesTimedExecutionTest[m
+2026-07-13T21:00:47.9317618Z 
+2026-07-13T21:00:47.9317832Z [0K[1m  Test [22mCheck firing of timer rules with realtime clock[33m SKIPPED[m
+2026-07-13T21:00:47.9318330Z org.openremote.test.rules.BasicRulesTimedExecutionTest > Check firing of timer rules with pseudo clock took: 0ms
+2026-07-13T21:00:47.9318871Z [0K[1m  Test [22mCheck firing of timer rules with pseudo clock[33m SKIPPED[m
+2026-07-13T21:00:50.6331030Z org.openremote.test.rules.BasicRulesetResourceTest > Access rules as superuser took: 2672ms
+2026-07-13T21:00:50.6359609Z 
+2026-07-13T21:00:50.6383876Z [0K[1morg.openremote.test.rules.BasicRulesetResourceTest[m
+2026-07-13T21:00:50.6384357Z 
+2026-07-13T21:00:50.6384808Z [0K[1m  Test [22mAccess rules as superuser[32m PASSED[31m (2.6s)[m
+2026-07-13T21:00:51.9315657Z org.openremote.test.rules.BasicRulesetResourceTest > Access rules as testuser1 took: 1299ms
+2026-07-13T21:00:51.9316828Z [0K[1m  Test [22mAccess rules as testuser1[32m PASSED[33m (1.2s)[m
+2026-07-13T21:00:53.1326875Z org.openremote.test.rules.BasicRulesetResourceTest > Access rules as testuser2 took: 1225ms
+2026-07-13T21:00:53.1344447Z [0K[1m  Test [22mAccess rules as testuser2[32m PASSED[33m (1.2s)[m
+2026-07-13T21:00:54.2313633Z org.openremote.test.rules.BasicRulesetResourceTest > Access rules as testuser3 took: 1059ms
+2026-07-13T21:00:54.2314544Z [0K[1m  Test [22mAccess rules as testuser3[32m PASSED[33m (1s)[m
+2026-07-13T21:00:55.1313609Z org.openremote.test.rules.BasicRulesetResourceTest > JavaScript ruleset create requests are rejected took: 972ms
+2026-07-13T21:00:55.1314456Z [0K[1m  Test [22mJavaScript ruleset create requests are rejected[32m PASSED[m
+2026-07-13T21:00:56.1313355Z org.openremote.test.rules.BasicRulesetResourceTest > JavaScript ruleset update requests are rejected took: 962ms
+2026-07-13T21:00:56.1314198Z [0K[1m  Test [22mJavaScript ruleset update requests are rejected[32m PASSED[m
+2026-07-13T21:00:57.2313534Z org.openremote.test.rules.BasicRulesetResourceTest > Legacy JavaScript rulesets remain readable and deletable took: 1088ms
+2026-07-13T21:00:57.2314908Z [0K[1m  Test [22mLegacy JavaScript rulesets remain readable and deletable[32m PASSED[33m (1s)[m
+2026-07-13T21:01:01.5313455Z org.openremote.test.rules.ChildAssetControlRulesTest > Child asset control rule test took: 4308ms
+2026-07-13T21:01:01.5313844Z 
+2026-07-13T21:01:01.5314268Z [0K[1morg.openremote.test.rules.ChildAssetControlRulesTest[m
+2026-07-13T21:01:01.5314495Z 
+2026-07-13T21:01:01.5314719Z [0K[1m  Test [22mChild asset control rule test[32m PASSED[31m (4.3s)[m
+2026-07-13T21:01:11.9313569Z org.openremote.test.rules.GroovyRulesRuntimeTest > Groovy modulo operator evaluates during rule execution took: 10376ms
+2026-07-13T21:01:11.9314233Z 
+2026-07-13T21:01:11.9314772Z [0K[1morg.openremote.test.rules.GroovyRulesRuntimeTest[m
+2026-07-13T21:01:11.9315098Z 
+2026-07-13T21:01:11.9315525Z [0K[1m  Test [22mGroovy modulo operator evaluates during rule execution[32m PASSED[31m (10.3s)[m
+2026-07-13T21:01:22.1313582Z org.openremote.test.rules.GroovyRulesRuntimeTest > Groovy rulesets are not compiled or executed when Groovy execution is disabled took: 10217ms
+2026-07-13T21:01:22.1315057Z [0K[1m  Test [22mGroovy rulesets are not compiled or executed when Groovy execution is disabled[32m PASSED[31m (10.2s)[m
+2026-07-13T21:01:34.5313036Z org.openremote.test.rules.GroupSummationRuleTest > Group summation rule test took: 12366ms
+2026-07-13T21:01:34.5313451Z 
+2026-07-13T21:01:34.5314017Z [0K[1morg.openremote.test.rules.GroupSummationRuleTest[m
+2026-07-13T21:01:34.5314358Z 
+2026-07-13T21:01:34.5314651Z [0K[1m  Test [22mGroup summation rule test[32m PASSED[31m (12.3s)[m
+2026-07-13T21:01:39.0313202Z org.openremote.test.rules.RuleResetImmediate > Brightness repeatedly above threshold triggers rule again only with reset immediate took: 4493ms
+2026-07-13T21:01:39.0313674Z 
+2026-07-13T21:01:39.0314062Z [0K[1morg.openremote.test.rules.RuleResetImmediate[m
+2026-07-13T21:01:39.0314295Z 
+2026-07-13T21:01:39.0314672Z [0K[1m  Test [22mBrightness repeatedly above threshold triggers rule again only with reset immediate[32m PASSED[31m (4.4s)[m
+2026-07-13T21:01:44.2313684Z org.openremote.test.rules.RulesEngineFiringTest > Check rules engine are not running in parallel took: 5202ms
+2026-07-13T21:01:44.2314306Z 
+2026-07-13T21:01:44.2314819Z [0K[1morg.openremote.test.rules.RulesEngineFiringTest[m
+2026-07-13T21:01:44.2315143Z 
+2026-07-13T21:01:44.2315574Z [0K[1m  Test [22mCheck rules engine are not running in parallel[32m PASSED[31m (5.2s)[m
+2026-07-13T21:01:50.6313232Z org.openremote.test.rules.RulesEngineFiringTest > Check schedule fire tolerates concurrent timer clearing took: 6461ms
+2026-07-13T21:01:50.6314136Z [0K[1m  Test [22mCheck schedule fire tolerates concurrent timer clearing[32m PASSED[31m (6.4s)[m
+2026-07-13T21:01:59.1313814Z org.openremote.test.rules.RulesEngineFiringTest > Check rules engine are not running in parallel on engine restart with new firing after rule execution took: 8512ms
+2026-07-13T21:01:59.1315297Z [0K[1m  Test [22mCheck rules engine are not running in parallel on engine restart with new firing after rule execution[32m PASSED[31m (8.5s)[m
+2026-07-13T21:02:04.8313560Z org.openremote.test.rules.RulesEngineFiringTest > Check rules engine are not running in parallel on engine restart with new firing during current rule execution took: 5638ms
+2026-07-13T21:02:04.8315411Z [0K[1m  Test [22mCheck rules engine are not running in parallel on engine restart with new firing during current rule execution[32m PASSED[31m (5.6s)[m
+2026-07-13T21:02:04.8316215Z org.openremote.test.rules.RulesServiceStateOrderingTest > pre-init buffer should keep the newest rule state event for the same attribute took: 6ms
+2026-07-13T21:02:04.8316660Z 
+2026-07-13T21:02:04.8316875Z [0K[1morg.openremote.test.rules.RulesServiceStateOrderingTest[m
+2026-07-13T21:02:04.8317092Z 
+2026-07-13T21:02:04.8317387Z [0K[1m  Test [22mpre-init buffer should keep the newest rule state event for the same attribute[32m PASSED[m
+2026-07-13T21:02:04.8318216Z org.openremote.test.rules.RulesServiceStateOrderingTest > pre-init buffer should keep a later retract even when its value timestamp is older took: 3ms
+2026-07-13T21:02:04.8318965Z [0K[1m  Test [22mpre-init buffer should keep a later retract even when its value timestamp is older[32m PASSED[m
+2026-07-13T21:02:12.1314156Z org.openremote.test.rules.RulesServiceStateOrderingTest > rules service should keep the newest rule state when committed events arrive out of order took: 7331ms
+2026-07-13T21:02:12.1316240Z [0K[1m  Test [22mrules service should keep the newest rule state when committed events arrive out of order[32m PASSED[31m (7.3s)[m
+2026-07-13T21:02:23.2313658Z org.openremote.test.rules.RulesServiceStateOrderingTest > rules service should still retract a cached rule state when a later retract arrives with an older value timestamp took: 11112ms
+2026-07-13T21:02:23.3313584Z [0K[1m  Test [22mrules service should still retract a cached rule state when a later retract arrives with an older value timestamp[32m PASSED[31m (11.1s)[m
+2026-07-13T21:02:28.4313347Z org.openremote.test.rules.residence.FlowRulesTest > Execute flow rules took: 5186ms
+2026-07-13T21:02:28.4314036Z 
+2026-07-13T21:02:28.4314796Z [0K[1morg.openremote.test.rules.residence.FlowRulesTest[m
+2026-07-13T21:02:28.4315335Z 
+2026-07-13T21:02:28.4315770Z [0K[1m  Test [22mExecute flow rules[32m PASSED[31m (5.1s)[m
+2026-07-13T21:02:30.6313805Z org.openremote.test.rules.residence.FlowRulesTest > Test multi-input processors and DERIVATIVE, INTEGRAL, HISTORIC_VALUE took: 2155ms
+2026-07-13T21:02:30.6314774Z [0K[1m  Test [22mTest multi-input processors and DERIVATIVE, INTEGRAL, HISTORIC_VALUE[32m PASSED[31m (2.1s)[m
+2026-07-13T21:02:41.3313268Z org.openremote.test.rules.residence.JsonRulesTest > Turn all lights off when console exits the residence geofence took: 10737ms
+2026-07-13T21:02:41.3313697Z 
+2026-07-13T21:02:41.3314092Z [0K[1morg.openremote.test.rules.residence.JsonRulesTest[m
+2026-07-13T21:02:41.3314339Z 
+2026-07-13T21:02:41.3314629Z [0K[1m  Test [22mTurn all lights off when console exits the residence geofence[32m PASSED[31m (10.7s)[m
+2026-07-13T21:02:45.5313240Z org.openremote.test.rules.residence.JsonRulesTest > Trigger actions when an attribute is not updated for a specified duration took: 4203ms
+2026-07-13T21:02:45.5314238Z [0K[1m  Test [22mTrigger actions when an attribute is not updated for a specified duration[32m PASSED[31m (4.2s)[m
+2026-07-13T21:02:54.9313270Z org.openremote.test.rules.residence.JsonRulesTest > Trigger actions when attribute conditions match for specified durations took: 9344ms
+2026-07-13T21:02:54.9314263Z [0K[1m  Test [22mTrigger actions when attribute conditions match for specified durations[32m PASSED[31m (9.3s)[m
+2026-07-13T21:02:58.7313099Z org.openremote.test.rules.residence.JsonRulesTest > Trigger actions based on multiple LHS conditions took: 3823ms
+2026-07-13T21:02:58.7313989Z [0K[1m  Test [22mTrigger actions based on multiple LHS conditions[32m PASSED[31m (3.8s)[m
+2026-07-13T21:03:05.7313885Z org.openremote.test.rules.residence.JsonRulesTest > Trigger actions based on the position of the sun took: 6974ms
+2026-07-13T21:03:05.7314772Z [0K[1m  Test [22mTrigger actions based on the position of the sun[32m PASSED[31m (6.9s)[m
+2026-07-13T21:03:07.9313237Z org.openremote.test.rules.residence.JsonRulesTest > Trigger webhook when thing asset has changed took: 2265ms
+2026-07-13T21:03:07.9314765Z [0K[1m  Test [22mTrigger webhook when thing asset has changed[32m PASSED[31m (2.2s)[m
+2026-07-13T21:03:07.9315436Z org.openremote.test.rules.residence.ResidenceAutoVentilationTest > Auto ventilation with CO2 detection took: 0ms
+2026-07-13T21:03:07.9315802Z 
+2026-07-13T21:03:08.0313339Z [0K[1morg.openremote.test.rules.residence.ResidenceAutoVentilationTest[m
+2026-07-13T21:03:08.0313659Z 
+2026-07-13T21:03:08.0313869Z [0K[1m  Test [22mAuto ventilation with CO2 detection[33m SKIPPED[m
+2026-07-13T21:03:11.3313273Z org.openremote.test.rules.residence.ResidenceNotifyAlarmTriggerTest > Trigger notification when presence is detected and alarm enabled took: 3357ms
+2026-07-13T21:03:11.3313793Z 
+2026-07-13T21:03:11.3314252Z [0K[1morg.openremote.test.rules.residence.ResidenceNotifyAlarmTriggerTest[m
+2026-07-13T21:03:11.3314535Z 
+2026-07-13T21:03:11.3314854Z [0K[1m  Test [22mTrigger notification when presence is detected and alarm enabled[32m PASSED[31m (3.3s)[m
+2026-07-13T21:03:11.3315504Z org.openremote.test.rules.residence.ResidencePresenceDetectionTest > Presence detection with motion sensor took: 0ms
+2026-07-13T21:03:11.3315871Z 
+2026-07-13T21:03:11.3316115Z [0K[1morg.openremote.test.rules.residence.ResidencePresenceDetectionTest[m
+2026-07-13T21:03:11.3316370Z 
+2026-07-13T21:03:11.3316557Z [0K[1m  Test [22mPresence detection with motion sensor[33m SKIPPED[m
+2026-07-13T21:03:11.3317155Z org.openremote.test.rules.residence.ResidencePresenceDetectionTest > Presence detection with motion sensor and confirmation with CO2 level took: 0ms
+2026-07-13T21:03:11.3317880Z [0K[1m  Test [22mPresence detection with motion sensor and confirmation with CO2 level[33m SKIPPED[m
+2026-07-13T21:03:11.3318452Z org.openremote.test.rules.residence.ResidenceSmartSwitchTest > Set mode ON_AT and begin/end cycle time in future took: 0ms
+2026-07-13T21:03:11.3318805Z 
+2026-07-13T21:03:11.3319018Z [0K[1morg.openremote.test.rules.residence.ResidenceSmartSwitchTest[m
+2026-07-13T21:03:11.3319440Z 
+2026-07-13T21:03:11.3319643Z [0K[1m  Test [22mSet mode ON_AT and begin/end cycle time in future[33m SKIPPED[m
+2026-07-13T21:03:11.3320151Z org.openremote.test.rules.residence.ResidenceSmartSwitchTest > Set mode ON_AT and begin/end cycle time in past took: 0ms
+2026-07-13T21:03:11.3320698Z [0K[1m  Test [22mSet mode ON_AT and begin/end cycle time in past[33m SKIPPED[m
+2026-07-13T21:03:11.3321208Z org.openremote.test.rules.residence.ResidenceSmartSwitchTest > Set mode READY_AT and begin/end cycle time in future took: 0ms
+2026-07-13T21:03:11.3321792Z [0K[1m  Test [22mSet mode READY_AT and begin/end cycle time in future[33m SKIPPED[m
+2026-07-13T21:03:11.3322323Z org.openremote.test.rules.residence.ResidenceSmartSwitchTest > Set mode READY_AT and begin/end cycle time in past took: 0ms
+2026-07-13T21:03:11.3322881Z [0K[1m  Test [22mSet mode READY_AT and begin/end cycle time in past[33m SKIPPED[m
+2026-07-13T21:03:11.3323411Z org.openremote.test.rules.residence.ResidenceSmartSwitchTest > Set mode READY_AT and insufficient begin/end cycle time took: 0ms
+2026-07-13T21:03:11.3324002Z [0K[1m  Test [22mSet mode READY_AT and insufficient begin/end cycle time[33m SKIPPED[m
+2026-07-13T21:03:13.3313165Z org.openremote.test.security.IdentityProviderTest > Realm operations took: 976ms
+2026-07-13T21:03:13.3319748Z 
+2026-07-13T21:03:13.3320506Z [0K[1morg.openremote.test.security.IdentityProviderTest[m
+2026-07-13T21:03:13.3321696Z 
+2026-07-13T21:03:13.3322066Z [0K[1m  Test [22mRealm operations[32m PASSED[m
+2026-07-13T21:03:13.8313866Z org.openremote.test.security.IdentityProviderTest > Configure Keycloak chaining took: 572ms
+2026-07-13T21:03:13.8315226Z [0K[1m  Test [22mConfigure Keycloak chaining[32m PASSED[m
+2026-07-13T21:03:14.9313830Z org.openremote.test.services.ExternalServiceTest > Test external service resource and local manager external service registry logic took: 1066ms
+2026-07-13T21:03:14.9314603Z 
+2026-07-13T21:03:14.9315328Z [0K[1morg.openremote.test.services.ExternalServiceTest[m
+2026-07-13T21:03:14.9315750Z 
+2026-07-13T21:03:14.9316973Z [0K[1m  Test [22mTest external service resource and local manager external service registry logic[32m PASSED[33m (1s)[m
+2026-07-13T21:03:25.7313981Z org.openremote.test.syslog.SysLogServiceTest > Get events applies filters and pagination took: 25ms
+2026-07-13T21:03:25.7314785Z 
+2026-07-13T21:03:25.7315570Z [0K[1morg.openremote.test.syslog.SysLogServiceTest[m
+2026-07-13T21:03:25.7315920Z 
+2026-07-13T21:03:25.7316252Z [0K[1m  Test [22mGet events applies filters and pagination[32m PASSED[m
+2026-07-13T21:03:35.4313638Z org.openremote.test.syslog.SyslogResourceTest > Users with rules read role cannot retrieve syslog events took: 9700ms
+2026-07-13T21:03:35.4314047Z 
+2026-07-13T21:03:35.4314444Z [0K[1morg.openremote.test.syslog.SyslogResourceTest[m
+2026-07-13T21:03:35.4314647Z 
+2026-07-13T21:03:35.4314935Z [0K[1m  Test [22mUsers with rules read role cannot retrieve syslog events[32m PASSED[31m (9.7s)[m
+2026-07-13T21:03:45.0317001Z org.openremote.test.syslog.SyslogResourceTest > Users with logs read role can retrieve syslog events took: 9599ms
+2026-07-13T21:03:45.0318522Z [0K[1m  Test [22mUsers with logs read role can retrieve syslog events[32m PASSED[31m (9.5s)[m
+2026-07-13T21:03:45.0319689Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0.0', '1.0.0') should return 0 took: 3ms
+2026-07-13T21:03:45.0320408Z 
+2026-07-13T21:03:45.0320882Z [0K[1morg.openremote.test.system.VersionUtilTest[m
+2026-07-13T21:03:45.0321470Z 
+2026-07-13T21:03:45.0321944Z [0K[1m  compareVersions('#v1', '#v2') should return #expected[m
+2026-07-13T21:03:45.0322432Z 
+2026-07-13T21:03:45.0322971Z [0K[1m    Test [22mcompareVersions('1.0.0', '1.0.0') should return 0[32m PASSED[m
+2026-07-13T21:03:45.0323967Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0.0', '1.0.1') should return -1 took: 0ms
+2026-07-13T21:03:45.0325000Z [0K[1m    Test [22mcompareVersions('1.0.0', '1.0.1') should return -1[32m PASSED[m
+2026-07-13T21:03:45.0325945Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0.1', '1.0.0') should return 1 took: 0ms
+2026-07-13T21:03:45.0326916Z [0K[1m    Test [22mcompareVersions('1.0.1', '1.0.0') should return 1[32m PASSED[m
+2026-07-13T21:03:45.0327851Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0', '1.0.0') should return 0 took: 0ms
+2026-07-13T21:03:45.0328839Z [0K[1m    Test [22mcompareVersions('1.0', '1.0.0') should return 0[32m PASSED[m
+2026-07-13T21:03:45.0329922Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0.0', '1.0') should return 0 took: 0ms
+2026-07-13T21:03:45.0330914Z [0K[1m    Test [22mcompareVersions('1.0.0', '1.0') should return 0[32m PASSED[m
+2026-07-13T21:03:45.0331845Z org.openremote.test.system.VersionUtilTest > compareVersions('2.0.0', '1.9.9') should return 1 took: 0ms
+2026-07-13T21:03:45.0332867Z [0K[1m    Test [22mcompareVersions('2.0.0', '1.9.9') should return 1[32m PASSED[m
+2026-07-13T21:03:45.0333829Z org.openremote.test.system.VersionUtilTest > compareVersions('1.9.9', '2.0.0') should return -1 took: 1ms
+2026-07-13T21:03:45.0334866Z [0K[1m    Test [22mcompareVersions('1.9.9', '2.0.0') should return -1[32m PASSED[m
+2026-07-13T21:03:45.0335800Z org.openremote.test.system.VersionUtilTest > compareVersions('1.2.3', '1.2.3.4') should return -1 took: 0ms
+2026-07-13T21:03:45.0336827Z [0K[1m    Test [22mcompareVersions('1.2.3', '1.2.3.4') should return -1[32m PASSED[m
+2026-07-13T21:03:45.0337785Z org.openremote.test.system.VersionUtilTest > compareVersions('1.2.3.4', '1.2.3') should return 1 took: 0ms
+2026-07-13T21:03:45.0338889Z [0K[1m    Test [22mcompareVersions('1.2.3.4', '1.2.3') should return 1[32m PASSED[m
+2026-07-13T21:03:45.0340052Z org.openremote.test.system.VersionUtilTest > compareVersions('10.0.0', '2.0.0') should return 1 took: 0ms
+2026-07-13T21:03:45.0341069Z [0K[1m    Test [22mcompareVersions('10.0.0', '2.0.0') should return 1[32m PASSED[m
+2026-07-13T21:03:45.0342385Z org.openremote.test.system.VersionUtilTest > compareVersions('2.0.0', '10.0.0') should return -1 took: 1ms
+2026-07-13T21:03:45.0343533Z [0K[1m    Test [22mcompareVersions('2.0.0', '10.0.0') should return -1[32m PASSED[m
+2026-07-13T21:03:45.0344762Z org.openremote.test.system.VersionUtilTest > compareVersions('1.0', '1.0.0.0') should return 0 took: 0ms
+2026-07-13T21:03:45.0345886Z [0K[1m    Test [22mcompareVersions('1.0', '1.0.0.0') should return 0[32m PASSED[m
+2026-07-13T21:03:45.0347131Z org.openremote.test.system.VersionUtilTest > compareVersions with qualifiers: '1.0.0' vs '1.0.0-SNAPSHOT' took: 1ms
+2026-07-13T21:03:45.0348219Z 
+2026-07-13T21:03:45.0348774Z [0K[1m  compareVersions with qualifiers: '#v1' vs '#v2'[m
+2026-07-13T21:03:45.0349597Z 
+2026-07-13T21:03:45.0350300Z [0K[1m    Test [22mcompareVersions with qualifiers: '1.0.0' vs '1.0.0-SNAPSHOT'[32m PASSED[m
+2026-07-13T21:03:45.0351489Z org.openremote.test.system.VersionUtilTest > compareVersions with qualifiers: '1.1.0-SNAPSHOT' vs '1.0.0' took: 0ms
+2026-07-13T21:03:45.0352886Z [0K[1m    Test [22mcompareVersions with qualifiers: '1.1.0-SNAPSHOT' vs '1.0.0'[32m PASSED[m
+2026-07-13T21:03:45.0354077Z org.openremote.test.system.VersionUtilTest > compareVersions with qualifiers: '2.0-beta' vs '1.9' took: 0ms
+2026-07-13T21:03:45.0355273Z [0K[1m    Test [22mcompareVersions with qualifiers: '2.0-beta' vs '1.9'[32m PASSED[m
+2026-07-13T21:03:45.0356510Z org.openremote.test.system.VersionUtilTest > compareVersions with qualifiers: '1.0-alpha' vs '1.0-beta' took: 0ms
+2026-07-13T21:03:45.0357778Z [0K[1m    Test [22mcompareVersions with qualifiers: '1.0-alpha' vs '1.0-beta'[32m PASSED[m
+2026-07-13T21:03:45.0358996Z org.openremote.test.system.VersionUtilTest > compareVersions should handle empty segments took: 1ms
+2026-07-13T21:03:45.0359957Z 
+2026-07-13T21:03:45.0360568Z [0K[1m  Test [22mcompareVersions should handle empty segments[32m PASSED[m
+2026-07-13T21:03:45.0361770Z org.openremote.test.system.VersionUtilTest > compareVersions should throw NullPointerException for null inputs took: 1ms
+2026-07-13T21:03:45.0363033Z [0K[1m  Test [22mcompareVersions should throw NullPointerException for null inputs[32m PASSED[m
+2026-07-13T21:03:45.0364259Z org.openremote.test.system.VersionUtilTest > isVersionGreater should work correctly took: 0ms
+2026-07-13T21:03:45.0365361Z [0K[1m  Test [22misVersionGreater should work correctly[32m PASSED[m
+2026-07-13T21:03:45.0366548Z org.openremote.test.system.VersionUtilTest > isVersionGreaterOrEqual should work correctly took: 0ms
+2026-07-13T21:03:45.0367743Z [0K[1m  Test [22misVersionGreaterOrEqual should work correctly[32m PASSED[m
+2026-07-13T21:03:45.0368918Z org.openremote.test.system.VersionUtilTest > isVersionEqual should work correctly took: 2ms
+2026-07-13T21:03:45.0370208Z [0K[1m  Test [22misVersionEqual should work correctly[32m PASSED[m
+2026-07-13T21:03:45.0371175Z org.openremote.test.system.VersionUtilTest > isVersionLess should work correctly took: 0ms
+2026-07-13T21:03:45.0372256Z [0K[1m  Test [22misVersionLess should work correctly[32m PASSED[m
+2026-07-13T21:03:45.0373429Z org.openremote.test.system.VersionUtilTest > isVersionLessOrEqual should work correctly took: 1ms
+2026-07-13T21:03:45.0374563Z [0K[1m  Test [22misVersionLessOrEqual should work correctly[32m PASSED[m
+2026-07-13T21:03:45.0375741Z org.openremote.test.system.VersionUtilTest > parsePart should handle various formats took: 0ms
+2026-07-13T21:03:45.0376844Z [0K[1m  Test [22mparsePart should handle various formats[32m PASSED[m
+2026-07-13T21:03:45.0377908Z org.openremote.test.system.VersionUtilTest > loadVersion should load manager version from resources took: 1ms
+2026-07-13T21:03:45.0379421Z [0K[1m  Test [22mloadVersion should load manager version from resources[32m PASSED[m
+2026-07-13T21:03:46.4313405Z org.openremote.test.users.UserResourceTest > User queries took: 125ms
+2026-07-13T21:03:46.4339884Z 
+2026-07-13T21:03:46.4340592Z [0K[1morg.openremote.test.users.UserResourceTest[m
+2026-07-13T21:03:46.4341015Z 
+2026-07-13T21:03:46.4341724Z [0K[1m  Test [22mUser queries[32m PASSED[m
+2026-07-13T21:03:46.5313295Z org.openremote.test.users.UserResourceTest > Get and update roles took: 109ms
+2026-07-13T21:03:46.5314307Z [0K[1m  Test [22mGet and update roles[32m PASSED[m
+2026-07-13T21:03:46.7314435Z org.openremote.test.users.UserResourceTest > Get and update users took: 210ms
+2026-07-13T21:03:46.7315837Z [0K[1m  Test [22mGet and update users[32m PASSED[m
+2026-07-13T21:03:46.7316700Z org.openremote.test.users.UserResourceTest > Get user requires realm administration rights took: 16ms
+2026-07-13T21:03:46.7318212Z [0K[1m  Test [22mGet user requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:46.7319347Z org.openremote.test.users.UserResourceTest > Get user client roles requires realm administration rights took: 25ms
+2026-07-13T21:03:46.7320486Z [0K[1m  Test [22mGet user client roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:46.8335774Z org.openremote.test.users.UserResourceTest > Get user realm roles requires realm administration rights took: 19ms
+2026-07-13T21:03:46.8337157Z [0K[1m  Test [22mGet user realm roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:46.8338041Z org.openremote.test.users.UserResourceTest > Get user sessions requires realm administration rights took: 15ms
+2026-07-13T21:03:46.8338987Z [0K[1m  Test [22mGet user sessions requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:46.8340353Z org.openremote.test.users.UserResourceTest > Get user sessions rejects users outside the requested realm took: 7ms
+2026-07-13T21:03:46.8341367Z [0K[1m  Test [22mGet user sessions rejects users outside the requested realm[32m PASSED[m
+2026-07-13T21:03:46.8342061Z org.openremote.test.users.UserResourceTest > Request password reset took: 18ms
+2026-07-13T21:03:46.8342683Z [0K[1m  Test [22mRequest password reset[32m PASSED[m
+2026-07-13T21:03:46.9328260Z org.openremote.test.users.UserResourceTest > Update user realm roles requires realm administration rights took: 51ms
+2026-07-13T21:03:46.9330030Z [0K[1m  Test [22mUpdate user realm roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:46.9330857Z org.openremote.test.users.UserResourceTest > Create invalid users took: 77ms
+2026-07-13T21:03:46.9331609Z [0K[1m  Test [22mCreate invalid users[32m PASSED[m
+2026-07-13T21:03:47.0332000Z org.openremote.test.users.UserResourceTest > Create user requires realm administration rights took: 74ms
+2026-07-13T21:03:47.0341451Z [0K[1m  Test [22mCreate user requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:47.1313230Z org.openremote.test.users.UserResourceTest > Reset secret requires realm administration rights took: 50ms
+2026-07-13T21:03:47.1314040Z [0K[1m  Test [22mReset secret requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:47.2315355Z org.openremote.test.users.UserResourceTest > Update user client roles requires realm administration rights took: 151ms
+2026-07-13T21:03:47.2319877Z [0K[1m  Test [22mUpdate user client roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:47.3313682Z org.openremote.test.users.UserResourceTest > Update default client roles requires realm administration rights took: 69ms
+2026-07-13T21:03:47.3329443Z [0K[1m  Test [22mUpdate default client roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:47.3337779Z org.openremote.test.users.UserResourceTest > Update client roles requires realm administration rights took: 68ms
+2026-07-13T21:03:47.3378516Z [0K[1m  Test [22mUpdate client roles requires realm administration rights[32m PASSED[m
+2026-07-13T21:03:53.2391861Z 
+2026-07-13T21:03:53.2529455Z 
+2026-07-13T21:03:53.2829971Z 365 tests completed, 1 failed, 18 skipped
+2026-07-13T21:03:53.2830456Z --------------------------------------------------------------------
+2026-07-13T21:03:53.3009947Z |  Results: FAILURE (365 tests, 346 passed, 1 failed, 18 skipped)  |
+2026-07-13T21:03:53.3161529Z --------------------------------------------------------------------
+2026-07-13T21:03:53.3311920Z 
+2026-07-13T21:03:53.3610393Z [0K[1;31mFAILURE: [39mExecuted 365 tests in 12m 48s (1 failed, 18 skipped)[m
+2026-07-13T21:03:53.3759452Z 
+2026-07-13T21:03:56.2314181Z 
+2026-07-13T21:03:56.2314911Z > Task :test:test FAILED
+2026-07-13T21:03:56.2315133Z 
+2026-07-13T21:03:56.2315810Z [Incubating] Problems report is available at: file:///home/runner/work/openremote/openremote/build/reports/problems/problems-report.html
+2026-07-13T21:03:56.3312664Z 
+2026-07-13T21:03:56.3315733Z FAILURE: Build failed with an exception.
+2026-07-13T21:03:56.3316216Z 
+2026-07-13T21:03:56.3316361Z 
+2026-07-13T21:03:56.3316812Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-07-13T21:03:56.3317511Z * What went wrong:
+2026-07-13T21:03:56.3317749Z 
+2026-07-13T21:03:56.3318015Z Execution failed for task ':test:test'.
+2026-07-13T21:03:56.3318877Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-07-13T21:03:56.3320340Z > There were failing tests. See the report at: file:///home/runner/work/openremote/openremote/test/build/reports/tests/test/index.html
+2026-07-13T21:03:56.3321050Z 
+2026-07-13T21:03:56.3321186Z 
+2026-07-13T21:03:56.3321859Z For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-07-13T21:03:56.3322820Z * Try:
+2026-07-13T21:03:56.3323165Z 27 actionable tasks: 27 executed
+2026-07-13T21:03:56.3323751Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-07-13T21:03:56.3324341Z Configuration cache entry stored.
+2026-07-13T21:03:56.3324676Z 
+2026-07-13T21:03:56.3324988Z BUILD FAILED in 17m 8s
+2026-07-13T21:03:56.7813582Z ##[error]Process completed with exit code 1.
+2026-07-13T21:03:56.7876039Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-07-13T21:03:56.7876362Z with:
+2026-07-13T21:03:56.7876533Z   name: or-integration-test-results
+2026-07-13T21:03:56.7876749Z   path: test/build/reports/tests
+2026-07-13T21:03:56.7876944Z   if-no-files-found: warn
+2026-07-13T21:03:56.7877126Z   compression-level: 6
+2026-07-13T21:03:56.7877294Z   overwrite: false
+2026-07-13T21:03:56.7877458Z   include-hidden-files: false
+2026-07-13T21:03:56.7877641Z   archive: true
+2026-07-13T21:03:56.7877789Z env:
+2026-07-13T21:03:56.7878020Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T21:03:56.7878409Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T21:03:56.7878705Z   MAVEN_ARGS: -ntp
+2026-07-13T21:03:56.7878871Z ##[endgroup]
+2026-07-13T21:03:56.9542515Z With the provided path, there will be 382 files uploaded
+2026-07-13T21:03:56.9546236Z Artifact name is valid!
+2026-07-13T21:03:56.9546794Z Root directory input is valid!
+2026-07-13T21:03:57.2365231Z Uploading artifact: or-integration-test-results.zip
+2026-07-13T21:03:57.2414878Z Beginning upload of artifact content to blob storage
+2026-07-13T21:03:58.8486325Z Uploaded bytes 6136669
+2026-07-13T21:03:58.9104177Z Finished uploading artifact content to blob storage!
+2026-07-13T21:03:58.9106576Z SHA256 digest of uploaded artifact is 33ab262add39716728e1e15021dfa267e420242bc70a40b16fe9384ef43b7f8f
+2026-07-13T21:03:58.9108630Z Finalizing artifact upload
+2026-07-13T21:03:59.2405135Z Artifact or-integration-test-results successfully finalized. Artifact ID 8292751179
+2026-07-13T21:03:59.2406107Z Artifact or-integration-test-results has been successfully uploaded! Final size is 6136669 bytes. Artifact ID is 8292751179
+2026-07-13T21:03:59.2410516Z Artifact download URL: https://github.com/openremote/openremote/actions/runs/29283674131/artifacts/8292751179
+2026-07-13T21:03:59.2553921Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-07-13T21:03:59.2554236Z with:
+2026-07-13T21:03:59.2554415Z   name: or-integration-test-outputs
+2026-07-13T21:03:59.2554920Z   path: test/build/classes/java/main/**
+test/build/classes/java/test/**
+test/build/jacoco/*.exec
+test/build/reports/tests/test/**
+test/build/test-results/test/**
+
+2026-07-13T21:03:59.2555418Z   if-no-files-found: warn
+2026-07-13T21:03:59.2555610Z   compression-level: 6
+2026-07-13T21:03:59.2555784Z   overwrite: false
+2026-07-13T21:03:59.2555958Z   include-hidden-files: false
+2026-07-13T21:03:59.2556153Z   archive: true
+2026-07-13T21:03:59.2556307Z env:
+2026-07-13T21:03:59.2556547Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T21:03:59.2557081Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-07-13T21:03:59.2557384Z   MAVEN_ARGS: -ntp
+2026-07-13T21:03:59.2557556Z ##[endgroup]
+2026-07-13T21:03:59.4401163Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-07-13T21:03:59.4403464Z The least common ancestor is /home/runner/work/openremote/openremote/test/build. This will be the root directory of the artifact
+2026-07-13T21:03:59.4404331Z With the provided path, there will be 471 files uploaded
+2026-07-13T21:03:59.4407833Z Artifact name is valid!
+2026-07-13T21:03:59.4408220Z Root directory input is valid!
+2026-07-13T21:03:59.7195426Z Uploading artifact: or-integration-test-outputs.zip
+2026-07-13T21:03:59.7225234Z Beginning upload of artifact content to blob storage
+2026-07-13T21:04:01.6003871Z Uploaded bytes 8388608
+2026-07-13T21:04:02.0953635Z Uploaded bytes 16777216
+2026-07-13T21:04:02.2485089Z Uploaded bytes 19239244
+2026-07-13T21:04:02.3109929Z Finished uploading artifact content to blob storage!
+2026-07-13T21:04:02.3112415Z SHA256 digest of uploaded artifact is 785a59e6fe3aa6af95080eed0dbb5182804f6141d924bb3353964cd1e84cf73a
+2026-07-13T21:04:02.3114475Z Finalizing artifact upload
+2026-07-13T21:04:02.6703063Z Artifact or-integration-test-outputs successfully finalized. Artifact ID 8292752509
+2026-07-13T21:04:02.6704012Z Artifact or-integration-test-outputs has been successfully uploaded! Final size is 19239244 bytes. Artifact ID is 8292752509
+2026-07-13T21:04:02.6708301Z Artifact download URL: https://github.com/openremote/openremote/actions/runs/29283674131/artifacts/8292752509
+2026-07-13T21:04:02.6903035Z Post job cleanup.
+2026-07-13T21:04:02.8039569Z Post job cleanup.
+2026-07-13T21:04:02.8683294Z [command]/usr/bin/git version
+2026-07-13T21:04:02.8713814Z git version 2.54.0
+2026-07-13T21:04:02.8740396Z Temporarily overriding HOME='/home/runner/work/_temp/2c91544d-ca24-42ad-9e2d-15570fa7bd79' before making global git config changes
+2026-07-13T21:04:02.8741379Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T21:04:02.8749833Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/openremote/openremote
+2026-07-13T21:04:02.8774096Z Removing SSH command configuration
+2026-07-13T21:04:02.8778615Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T21:04:02.8804609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T21:04:02.9010651Z Removing HTTP extra header
+2026-07-13T21:04:02.9015096Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T21:04:02.9045444Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T21:04:02.9243067Z Removing includeIf entries pointing to credentials config files
+2026-07-13T21:04:02.9249962Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T21:04:02.9302731Z includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-07-13T21:04:02.9303455Z includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-07-13T21:04:02.9304238Z includeif.gitdir:/github/workspace/.git.path
+2026-07-13T21:04:02.9304786Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-13T21:04:02.9311118Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git.path
+2026-07-13T21:04:02.9331315Z /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9340828Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git.path /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9372056Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path
+2026-07-13T21:04:02.9391964Z /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9400186Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/openremote/openremote/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9450429Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-13T21:04:02.9471079Z /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9480004Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9509868Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-13T21:04:02.9522438Z /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9529854Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config
+2026-07-13T21:04:02.9560656Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T21:04:02.9753337Z Removing credentials config '/home/runner/work/_temp/git-credentials-61efb5d6-451e-4dfb-8841-d89b59864e92.config'
+2026-07-13T21:04:02.9871941Z Cleaning up orphan processes
+2026-07-13T21:04:03.0229601Z Terminate orphan process: pid (3012) (java)

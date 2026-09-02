@@ -1,0 +1,952 @@
+﻿2026-08-15T22:54:07.1928034Z Current runner version: '2.336.0'
+2026-08-15T22:54:07.1951416Z ##[group]Runner Image Provisioner
+2026-08-15T22:54:07.1952379Z Hosted Compute Agent
+2026-08-15T22:54:07.1953019Z Version: 20260729.566
+2026-08-15T22:54:07.1953711Z Commit: cf7153fe6e25b664e8693c24944bf2b00355d109
+2026-08-15T22:54:07.1954572Z Build Date: 2026-07-29T19:17:02Z
+2026-08-15T22:54:07.1955345Z Worker ID: {4baae7e0-a0c2-40f2-8607-e3f5b7eca376}
+2026-08-15T22:54:07.1956145Z Azure Region: northcentralus
+2026-08-15T22:54:07.1956829Z ##[endgroup]
+2026-08-15T22:54:07.1958339Z ##[group]Operating System
+2026-08-15T22:54:07.1959058Z Microsoft Windows Server 2025
+2026-08-15T22:54:07.1959756Z 10.0.26100
+2026-08-15T22:54:07.1960321Z Datacenter
+2026-08-15T22:54:07.1960908Z ##[endgroup]
+2026-08-15T22:54:07.1961494Z ##[group]Runner Image
+2026-08-15T22:54:07.1962120Z Image: windows-2025-vs2026
+2026-08-15T22:54:07.1962874Z Version: 20260810.198.2
+2026-08-15T22:54:07.1964758Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260810.198/images/windows/Windows2025-VS2026-Readme.md
+2026-08-15T22:54:07.1966946Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260810.198
+2026-08-15T22:54:07.1968118Z ##[endgroup]
+2026-08-15T22:54:07.1972157Z ##[group]GITHUB_TOKEN Permissions
+2026-08-15T22:54:07.1975099Z Actions: read
+2026-08-15T22:54:07.1975782Z ArtifactMetadata: read
+2026-08-15T22:54:07.1976460Z Attestations: read
+2026-08-15T22:54:07.1977095Z Checks: read
+2026-08-15T22:54:07.1977689Z CodeQuality: read
+2026-08-15T22:54:07.1978280Z Contents: read
+2026-08-15T22:54:07.1978899Z Deployments: read
+2026-08-15T22:54:07.1979477Z Discussions: read
+2026-08-15T22:54:07.1979944Z Drives: read
+2026-08-15T22:54:07.1980352Z Issues: read
+2026-08-15T22:54:07.1980741Z Metadata: read
+2026-08-15T22:54:07.1981116Z Models: read
+2026-08-15T22:54:07.1981596Z Packages: read
+2026-08-15T22:54:07.1981975Z Pages: read
+2026-08-15T22:54:07.1982377Z PullRequests: read
+2026-08-15T22:54:07.1982809Z RepositoryProjects: read
+2026-08-15T22:54:07.1983260Z SecurityEvents: read
+2026-08-15T22:54:07.1983682Z Statuses: read
+2026-08-15T22:54:07.1984080Z VulnerabilityAlerts: read
+2026-08-15T22:54:07.1984518Z ##[endgroup]
+2026-08-15T22:54:07.1986090Z Secret source: None
+2026-08-15T22:54:07.1986808Z Prepare workflow directory
+2026-08-15T22:54:07.2277786Z Prepare all required actions
+2026-08-15T22:54:07.2322390Z Getting action download info
+2026-08-15T22:54:07.4383381Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-08-15T22:54:07.5284395Z Download action repository 'actions/setup-java@v5' (SHA:b6effb05e454b25005698d916606bdc6ffcbf961)
+2026-08-15T22:54:07.9022256Z Download action repository 'gradle/actions@v6' (SHA:9c971963bec38e04b3d30dcc455b5382be2fdbfb)
+2026-08-15T22:54:08.9553405Z Download action repository 'actions/setup-go@v6' (SHA:924ae3a1cded613372ab5595356fb5720e22ba16)
+2026-08-15T22:54:09.2452793Z Download action repository 'mikepenz/action-junit-report@v6' (SHA:d9f48fc87bc235f7e214acf696ca5abc0a986f16)
+2026-08-15T22:54:09.6386318Z Complete job name: build (maven, 17, windows-latest)
+2026-08-15T22:54:09.7634381Z ##[group]Run actions/checkout@v6
+2026-08-15T22:54:09.7635114Z with:
+2026-08-15T22:54:09.7635364Z   repository: diffplug/spotless
+2026-08-15T22:54:09.7638059Z   token: ***
+2026-08-15T22:54:09.7638290Z   ssh-strict: true
+2026-08-15T22:54:09.7638516Z   ssh-user: git
+2026-08-15T22:54:09.7638750Z   persist-credentials: true
+2026-08-15T22:54:09.7638993Z   clean: true
+2026-08-15T22:54:09.7639225Z   sparse-checkout-cone-mode: true
+2026-08-15T22:54:09.7639487Z   fetch-depth: 1
+2026-08-15T22:54:09.7639715Z   fetch-tags: false
+2026-08-15T22:54:09.7639942Z   show-progress: true
+2026-08-15T22:54:09.7640179Z   lfs: false
+2026-08-15T22:54:09.7640385Z   submodules: false
+2026-08-15T22:54:09.7640612Z   set-safe-directory: true
+2026-08-15T22:54:09.7640869Z   allow-unsafe-pr-checkout: false
+2026-08-15T22:54:09.7641477Z ##[endgroup]
+2026-08-15T22:54:09.8802506Z Syncing repository: diffplug/spotless
+2026-08-15T22:54:09.8804020Z ##[group]Getting Git version info
+2026-08-15T22:54:09.8804469Z Working directory is 'D:\a\spotless\spotless'
+2026-08-15T22:54:09.9273926Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-08-15T22:54:10.0686988Z git version 2.55.0.windows.3
+2026-08-15T22:54:10.0725341Z ##[endgroup]
+2026-08-15T22:54:10.0742821Z Temporarily overriding HOME='D:\a\_temp\a0e1514b-4506-4945-9379-767eb07db762' before making global git config changes
+2026-08-15T22:54:10.0743532Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-15T22:54:10.0771032Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\spotless\spotless
+2026-08-15T22:54:10.1000768Z Deleting the contents of 'D:\a\spotless\spotless'
+2026-08-15T22:54:10.1005470Z ##[group]Determining repository object format
+2026-08-15T22:54:10.1007131Z ##[endgroup]
+2026-08-15T22:54:10.1007826Z ##[group]Initializing the repository
+2026-08-15T22:54:10.1014023Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\spotless\spotless
+2026-08-15T22:54:10.1368425Z Initialized empty Git repository in D:/a/spotless/spotless/.git/
+2026-08-15T22:54:10.1398727Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/diffplug/spotless
+2026-08-15T22:54:10.1629055Z ##[endgroup]
+2026-08-15T22:54:10.1629532Z ##[group]Disabling automatic garbage collection
+2026-08-15T22:54:10.1636492Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-08-15T22:54:10.1860792Z ##[endgroup]
+2026-08-15T22:54:10.1861225Z ##[group]Setting up auth
+2026-08-15T22:54:10.1862145Z Removing SSH command configuration
+2026-08-15T22:54:10.1870503Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-08-15T22:54:10.2111921Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-08-15T22:54:10.9674721Z Removing HTTP extra header
+2026-08-15T22:54:10.9682926Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-15T22:54:10.9913130Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-08-15T22:54:11.4391772Z Removing includeIf entries pointing to credentials config files
+2026-08-15T22:54:11.4400473Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-15T22:54:11.4634107Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-08-15T22:54:11.8813906Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-08-15T22:54:11.9043835Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/spotless/spotless/.git.path D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T22:54:11.9272267Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/spotless/spotless/.git/worktrees/*.path D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T22:54:11.9498951Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T22:54:11.9745475Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T22:54:11.9971035Z ##[endgroup]
+2026-08-15T22:54:11.9971541Z ##[group]Fetching the repository
+2026-08-15T22:54:11.9983866Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +95f5091f3eb816d288b25d54cc79c6292e4689e3:refs/remotes/pull/3000/merge
+2026-08-15T22:54:12.8371606Z From https://github.com/diffplug/spotless
+2026-08-15T22:54:12.8372239Z  * [new ref]         95f5091f3eb816d288b25d54cc79c6292e4689e3 -> pull/3000/merge
+2026-08-15T22:54:12.8404119Z ##[endgroup]
+2026-08-15T22:54:12.8404619Z ##[group]Determining the checkout info
+2026-08-15T22:54:12.8405146Z ##[endgroup]
+2026-08-15T22:54:12.8413351Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-08-15T22:54:12.8691166Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-08-15T22:54:12.8914779Z ##[group]Checking out the ref
+2026-08-15T22:54:12.8921744Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/3000/merge
+2026-08-15T22:54:13.1795488Z Note: switching to 'refs/remotes/pull/3000/merge'.
+2026-08-15T22:54:13.1795889Z 
+2026-08-15T22:54:13.1796138Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-08-15T22:54:13.1796732Z changes and commit them, and you can discard any commits you make in this
+2026-08-15T22:54:13.1797345Z state without impacting any branches by switching back to a branch.
+2026-08-15T22:54:13.1797686Z 
+2026-08-15T22:54:13.1797907Z If you want to create a new branch to retain commits you create, you may
+2026-08-15T22:54:13.1798458Z do so (now or later) by using -c with the switch command. Example:
+2026-08-15T22:54:13.1798771Z 
+2026-08-15T22:54:13.1798971Z   git switch -c <new-branch-name>
+2026-08-15T22:54:13.1799194Z 
+2026-08-15T22:54:13.1799304Z Or undo this operation with:
+2026-08-15T22:54:13.1799503Z 
+2026-08-15T22:54:13.1799597Z   git switch -
+2026-08-15T22:54:13.1799769Z 
+2026-08-15T22:54:13.1800022Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-08-15T22:54:13.1800526Z 
+2026-08-15T22:54:13.1800982Z HEAD is now at 95f5091 Merge 9d3106e91420e4391587bf1419dc1a204fbd0d0c into a42094e6c70d40d6ab163b3356ef0bfa28994602
+2026-08-15T22:54:13.1849406Z ##[endgroup]
+2026-08-15T22:54:13.2116432Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-08-15T22:54:13.2326608Z 95f5091f3eb816d288b25d54cc79c6292e4689e3
+2026-08-15T22:54:13.2717314Z ##[group]Run actions/setup-java@v5
+2026-08-15T22:54:13.2717572Z with:
+2026-08-15T22:54:13.2717722Z   distribution: temurin
+2026-08-15T22:54:13.2717888Z   java-version: 17
+2026-08-15T22:54:13.2718036Z   java-package: jdk
+2026-08-15T22:54:13.2718184Z   check-latest: false
+2026-08-15T22:54:13.2718346Z   set-default: true
+2026-08-15T22:54:13.2718499Z   verify-signature: false
+2026-08-15T22:54:13.2718657Z   server-id: github
+2026-08-15T22:54:13.2718809Z   server-username: GITHUB_ACTOR
+2026-08-15T22:54:13.2719012Z   server-password: GITHUB_TOKEN
+2026-08-15T22:54:13.2719185Z   overwrite-settings: true
+2026-08-15T22:54:13.2719346Z   job-status: success
+2026-08-15T22:54:13.2721401Z   token: ***
+2026-08-15T22:54:13.2721565Z   show-download-progress: false
+2026-08-15T22:54:13.2721748Z ##[endgroup]
+2026-08-15T22:54:13.4148471Z ##[group]Installed distributions
+2026-08-15T22:54:13.4196990Z Resolved Java 17.0.20+8 from tool-cache
+2026-08-15T22:54:13.4197514Z Setting Java 17.0.20+8 as the default
+2026-08-15T22:54:13.4215613Z Creating toolchains.xml for JDK version 17 from temurin
+2026-08-15T22:54:13.4281915Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-08-15T22:54:13.4284417Z 
+2026-08-15T22:54:13.4284566Z Java configuration:
+2026-08-15T22:54:13.4284792Z   Distribution: temurin
+2026-08-15T22:54:13.4285041Z   Version: 17.0.20+8
+2026-08-15T22:54:13.4285401Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T22:54:13.4285655Z 
+2026-08-15T22:54:13.4286214Z ##[endgroup]
+2026-08-15T22:54:13.4312522Z Creating settings.xml with server-id: github
+2026-08-15T22:54:13.4312818Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-08-15T22:54:13.4313361Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-08-15T22:54:13.4653833Z ##[group]Run gradle/actions/setup-gradle@v6
+2026-08-15T22:54:13.4654113Z with:
+2026-08-15T22:54:13.4654271Z   cache-provider: enhanced
+2026-08-15T22:54:13.4654448Z   cache-disabled: false
+2026-08-15T22:54:13.4654609Z   cache-read-only: true
+2026-08-15T22:54:13.4654768Z   cache-write-only: false
+2026-08-15T22:54:13.4654941Z   cache-overwrite-existing: false
+2026-08-15T22:54:13.4655134Z   cache-cleanup: on-success
+2026-08-15T22:54:13.4655339Z   gradle-home-cache-includes: caches
+notifications
+
+2026-08-15T22:54:13.4655564Z   add-job-summary: always
+2026-08-15T22:54:13.4655741Z   add-job-summary-as-pr-comment: never
+2026-08-15T22:54:13.4655952Z   dependency-graph: disabled
+2026-08-15T22:54:13.4656173Z   dependency-graph-report-dir: dependency-graph-reports
+2026-08-15T22:54:13.4656434Z   dependency-graph-continue-on-failure: true
+2026-08-15T22:54:13.4656650Z   build-scan-publish: false
+2026-08-15T22:54:13.4656824Z   validate-wrappers: true
+2026-08-15T22:54:13.4657036Z   allow-snapshot-wrappers: false
+2026-08-15T22:54:13.4657229Z   gradle-home-cache-strict-match: false
+2026-08-15T22:54:13.4657515Z   workflow-job-context: {
+  "kind": "maven",
+  "jre": 17,
+  "os": "windows-latest"
+}
+2026-08-15T22:54:13.4660043Z   github-token: ***
+2026-08-15T22:54:13.4660204Z env:
+2026-08-15T22:54:13.4660435Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T22:54:13.4660821Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T22:54:13.4661135Z   MAVEN_ARGS: -ntp
+2026-08-15T22:54:13.4661285Z ##[endgroup]
+2026-08-15T22:54:15.1597398Z Setting GRADLE_USER_HOME to D:\a\.gradle to leverage (potentially) faster drive.
+2026-08-15T22:54:15.1641667Z Merged default JDK locations into C:\Users\runneradmin\.m2\toolchains.xml
+2026-08-15T22:54:15.1647486Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-08-15T22:54:15.2351067Z ##[group]Restore Gradle state from cache
+2026-08-15T22:54:15.4592712Z Cache hit for restore-key: gradle-home-v2|Windows-X64|build[1e2618ab896ec580f0a7506e6d6593f7]-a42094e6c70d40d6ab163b3356ef0bfa28994602
+2026-08-15T22:54:16.0530848Z Received 30627158 of 30627158 (100.0%), 59.2 MBs/sec
+2026-08-15T22:54:16.0532630Z Cache Size: ~29 MB (30627158 B)
+2026-08-15T22:54:16.0556588Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/9f481af3-d31c-4774-9b97-9548440d6972/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:16.9774640Z Cache restored successfully
+2026-08-15T22:54:16.9795958Z Restored cache entry with key gradle-home-v2|Windows-X64|build[1e2618ab896ec580f0a7506e6d6593f7]-95f5091f3eb816d288b25d54cc79c6292e4689e3 in 1743ms
+2026-08-15T22:54:17.2854375Z Cache hit for: gradle-wrapper-zips-v2-9db0835d029c62b1a3d29bf9e5532cf5
+2026-08-15T22:54:17.2863647Z Cache hit for: gradle-instrumented-jars-v2-daa0d421a72ed08fb55ec9059104e303
+2026-08-15T22:54:17.2869763Z Cache hit for: gradle-dependencies-v2-779fb2e3e370d7bd63af1de1f466a0f1
+2026-08-15T22:54:17.2911540Z Cache hit for: gradle-build-cache-v2-2e83b74aa3df19cd322c60e24b4e2409
+2026-08-15T22:54:17.2917299Z Cache hit for: gradle-generated-gradle-jars-v2-b1c8c91f1defd0ba6d2b2ac7f0e028ec
+2026-08-15T22:54:17.2945987Z Cache hit for: gradle-transforms-v2-af0191dc0d0373634d8ba42794141fa0
+2026-08-15T22:54:17.2965116Z Cache hit for: gradle-groovy-dsl-v2-437faa181b2dc2b3927efe77648cfd79
+2026-08-15T22:54:17.3011938Z Cache hit for: gradle-generated-gradle-jars-v2-8e79c31f3eb4e570a88142dd102a0a2f
+2026-08-15T22:54:17.3525368Z Received 149241 of 149241 (100.0%), 4.6 MBs/sec
+2026-08-15T22:54:17.3526222Z Cache Size: ~0 MB (149241 B)
+2026-08-15T22:54:17.3540688Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/d5783ae5-b17d-4a25-ad6a-5880f0782318/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:17.4972096Z Cache restored successfully
+2026-08-15T22:54:17.5145817Z Received 26491 of 26491 (100.0%), 0.2 MBs/sec
+2026-08-15T22:54:17.5146741Z Cache Size: ~0 MB (26491 B)
+2026-08-15T22:54:17.5259105Z Restored cache entry with key gradle-instrumented-jars-v2-daa0d421a72ed08fb55ec9059104e303 in 544ms
+2026-08-15T22:54:17.5504755Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/417d9285-e23c-4bdc-ad44-7598411b42f6/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:17.5894288Z Cache restored successfully
+2026-08-15T22:54:17.5897687Z Restored cache entry with key gradle-generated-gradle-jars-v2-b1c8c91f1defd0ba6d2b2ac7f0e028ec in 609ms
+2026-08-15T22:54:17.6368945Z Received 1869848 of 1869848 (100.0%), 8.4 MBs/sec
+2026-08-15T22:54:17.6370394Z Cache Size: ~2 MB (1869848 B)
+2026-08-15T22:54:17.6418500Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/35382737-5abe-4689-9bde-04d09c22092b/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:17.6492177Z Received 228714 of 228714 (100.0%), 0.9 MBs/sec
+2026-08-15T22:54:17.6498253Z Cache Size: ~0 MB (228714 B)
+2026-08-15T22:54:17.6595861Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/af78aae2-8ea0-4b71-8ba0-6ded9dc9ec29/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:17.8796632Z Cache restored successfully
+2026-08-15T22:54:17.9933229Z Restored cache entry with key gradle-build-cache-v2-2e83b74aa3df19cd322c60e24b4e2409 in 1011ms
+2026-08-15T22:54:18.1366953Z Cache restored successfully
+2026-08-15T22:54:18.2058153Z Restored cache entry with key gradle-groovy-dsl-v2-437faa181b2dc2b3927efe77648cfd79 in 1223ms
+2026-08-15T22:54:18.4591231Z Received 41895854 of 41895854 (100.0%), 38.2 MBs/sec
+2026-08-15T22:54:18.4594288Z Cache Size: ~40 MB (41895854 B)
+2026-08-15T22:54:18.4983740Z Received 88080384 of 137095041 (64.2%), 75.3 MBs/sec
+2026-08-15T22:54:18.4984120Z Received 58720256 of 441774729 (13.3%), 50.6 MBs/sec
+2026-08-15T22:54:18.4984409Z Received 25687951 of 29882255 (86.0%), 22.4 MBs/sec
+2026-08-15T22:54:18.5550435Z Received 29882255 of 29882255 (100.0%), 24.8 MBs/sec
+2026-08-15T22:54:18.5552718Z Cache Size: ~28 MB (29882255 B)
+2026-08-15T22:54:18.6698071Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/ac9340e8-9b9a-4e20-adb9-fad20ca6de67/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:18.6775462Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/e96c5228-1b02-4747-867b-12f56c7a29cc/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:19.4072725Z Cache restored successfully
+2026-08-15T22:54:19.4221972Z Restored cache entry with key gradle-generated-gradle-jars-v2-8e79c31f3eb4e570a88142dd102a0a2f in 2442ms
+2026-08-15T22:54:19.9889889Z Received 134217728 of 137095041 (97.9%), 49.2 MBs/sec
+2026-08-15T22:54:19.9891423Z Received 134217728 of 441774729 (30.4%), 49.4 MBs/sec
+2026-08-15T22:54:19.9964829Z Received 137095041 of 137095041 (100.0%), 50.0 MBs/sec
+2026-08-15T22:54:19.9967327Z Cache Size: ~131 MB (137095041 B)
+2026-08-15T22:54:19.9969221Z Cache restored successfully
+2026-08-15T22:54:19.9990415Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/6932c096-449a-439f-91f8-57354b984a9b/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:20.0011136Z Restored cache entry with key gradle-transforms-v2-af0191dc0d0373634d8ba42794141fa0 in 3018ms
+2026-08-15T22:54:20.8723174Z Cache restored successfully
+2026-08-15T22:54:20.8861242Z Restored cache entry with key gradle-wrapper-zips-v2-9db0835d029c62b1a3d29bf9e5532cf5 in 3903ms
+2026-08-15T22:54:20.9853714Z Received 289406976 of 441774729 (65.5%), 76.8 MBs/sec
+2026-08-15T22:54:22.0285236Z Received 419430400 of 441774729 (94.9%), 86.9 MBs/sec
+2026-08-15T22:54:22.1454060Z Received 441774729 of 441774729 (100.0%), 88.8 MBs/sec
+2026-08-15T22:54:22.1454864Z Cache Size: ~421 MB (441774729 B)
+2026-08-15T22:54:22.1460155Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/8f0af174-592b-4242-a7d6-e1c211a4b307/cache.tzst -P -C D:/a/spotless/spotless --force-local --use-compress-program "zstd -d"
+2026-08-15T22:54:23.1897199Z Cache restored successfully
+2026-08-15T22:54:23.2211776Z Restored cache entry with key gradle-dependencies-v2-779fb2e3e370d7bd63af1de1f466a0f1 in 6239ms
+2026-08-15T22:54:23.2223168Z ##[endgroup]
+2026-08-15T22:54:23.2693130Z ##[group]All Gradle Wrapper jars are valid
+2026-08-15T22:54:23.2694263Z ✓ Found known Gradle Wrapper JAR files:
+2026-08-15T22:54:23.2695218Z   55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c gradle\wrapper\gradle-wrapper.jar
+2026-08-15T22:54:23.2695873Z ##[endgroup]
+2026-08-15T22:54:23.3586082Z ##[group]Run ./gradlew :plugin-maven:build -x spotlessCheck
+2026-08-15T22:54:23.3586559Z [36;1m./gradlew :plugin-maven:build -x spotlessCheck[0m
+2026-08-15T22:54:23.3680802Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-08-15T22:54:23.3681116Z env:
+2026-08-15T22:54:23.3681402Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T22:54:23.3681843Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T22:54:23.3682230Z   MAVEN_ARGS: -ntp
+2026-08-15T22:54:23.3682450Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-08-15T22:54:23.3682715Z   GRADLE_USER_HOME: D:\a\.gradle
+2026-08-15T22:54:23.3682942Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-08-15T22:54:23.3683330Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-08-15T22:54:23.3683714Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-08-15T22:54:23.3684017Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-08-15T22:54:23.3684472Z ##[endgroup]
+2026-08-15T22:54:25.3025606Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-08-15T22:54:28.7991220Z Calculating task graph as no cached configuration is available for tasks: :plugin-maven:build
+2026-08-15T22:54:32.4939663Z Type-safe project accessors is an incubating feature.
+2026-08-15T22:54:45.5983195Z > Task :plugin-maven:generateMavenPluginHelpMojoSources SKIPPED
+2026-08-15T22:54:45.7036592Z > Task :plugin-maven:changelogCheck
+2026-08-15T22:54:45.8173358Z > Task :plugin-maven:processTestResources
+2026-08-15T22:54:45.8190851Z > Task :lib:processResources
+2026-08-15T22:54:45.8386706Z > Task :plugin-maven:processResources
+2026-08-15T22:54:45.8428336Z > Task :lib:processCompatCleanthatApiResources NO-SOURCE
+2026-08-15T22:54:45.8436794Z > Task :lib:processCompatCleanthat2Dot1Resources NO-SOURCE
+2026-08-15T22:54:45.8438609Z > Task :lib:compileCompatCleanthatApiJava NO-SOURCE
+2026-08-15T22:54:45.8441770Z > Task :lib:compatCleanthatApiClasses UP-TO-DATE
+2026-08-15T22:54:45.8444223Z > Task :lib:processCompatDiktatApiResources NO-SOURCE
+2026-08-15T22:54:45.8444985Z > Task :lib:processCompatDiktat1Dot2Dot5Resources NO-SOURCE
+2026-08-15T22:54:45.8446151Z > Task :lib:compileCompatCleanthat2Dot1Java NO-SOURCE
+2026-08-15T22:54:45.8446849Z > Task :lib:processCompatDiktat2Dot0Dot0Resources NO-SOURCE
+2026-08-15T22:54:45.8447501Z > Task :lib:compatCleanthat2Dot1Classes UP-TO-DATE
+2026-08-15T22:54:45.8448565Z > Task :lib:processCompatKtLintApiResources NO-SOURCE
+2026-08-15T22:54:45.8449098Z > Task :lib:processCompatKtLint1Dot0Dot0Resources NO-SOURCE
+2026-08-15T22:54:46.0198410Z > Task :lib:compileCompatDiktatApiJava FROM-CACHE
+2026-08-15T22:54:46.0215460Z > Task :lib:compileCompatKtLintApiJava FROM-CACHE
+2026-08-15T22:54:46.0422885Z > Task :lib:compatDiktatApiClasses UP-TO-DATE
+2026-08-15T22:54:46.0445679Z > Task :lib:generatePomFileForPluginMavenPublication
+2026-08-15T22:54:46.0447904Z > Task :lib:compatKtLintApiClasses UP-TO-DATE
+2026-08-15T22:54:46.0582311Z > Task :lib:compileCompatKtLint1Dot0Dot0Java FROM-CACHE
+2026-08-15T22:54:46.0583357Z > Task :lib:compatKtLint1Dot0Dot0Classes UP-TO-DATE
+2026-08-15T22:54:46.0584467Z > Task :lib:compileCompatDiktat2Dot0Dot0Java FROM-CACHE
+2026-08-15T22:54:46.0613292Z > Task :lib:compatDiktat2Dot0Dot0Classes UP-TO-DATE
+2026-08-15T22:54:46.0728106Z > Task :lib-extra:generatePomFileForPluginMavenPublication
+2026-08-15T22:54:46.1592889Z > Task :lib:compileCompatDiktat1Dot2Dot5Java FROM-CACHE
+2026-08-15T22:54:46.1594030Z > Task :lib:compatDiktat1Dot2Dot5Classes UP-TO-DATE
+2026-08-15T22:54:46.1594753Z > Task :plugin-maven:generatePomFileForPluginMavenPublication
+2026-08-15T22:54:46.1595307Z > Task :lib-extra:processResources
+2026-08-15T22:54:46.5515824Z > Task :lib:compileJava FROM-CACHE
+2026-08-15T22:54:46.5516398Z > Task :lib:classes
+2026-08-15T22:54:46.8130877Z > Task :lib:compileCleanthatJava FROM-CACHE
+2026-08-15T22:54:46.8543765Z > Task :lib:compileDiktatJava FROM-CACHE
+2026-08-15T22:54:46.9138488Z > Task :lib:compileFlexmarkJava FROM-CACHE
+2026-08-15T22:54:46.9172409Z > Task :lib:compileGherkinJava FROM-CACHE
+2026-08-15T22:54:46.9181092Z > Task :lib:compileSortPomJava FROM-CACHE
+2026-08-15T22:54:47.0016531Z > Task :lib:compileGoogleJavaFormatJava FROM-CACHE
+2026-08-15T22:54:47.0023694Z > Task :lib:compileGsonJava FROM-CACHE
+2026-08-15T22:54:47.1110875Z > Task :lib:compileJacksonJava FROM-CACHE
+2026-08-15T22:54:47.1125603Z > Task :lib:compileJavaParserJava FROM-CACHE
+2026-08-15T22:54:47.1136892Z > Task :lib:compileKtfmtJava FROM-CACHE
+2026-08-15T22:54:47.1159867Z > Task :lib:compileKtlintJava FROM-CACHE
+2026-08-15T22:54:47.1255678Z > Task :testlib:compileJava FROM-CACHE
+2026-08-15T22:54:47.1261926Z > Task :lib:compilePrinceOfSpaceJava FROM-CACHE
+2026-08-15T22:54:47.2273559Z > Task :lib:compilePalantirJavaFormatJava FROM-CACHE
+2026-08-15T22:54:47.2275387Z > Task :lib:compileScalafmtJava FROM-CACHE
+2026-08-15T22:54:47.2289640Z > Task :lib:compileTableTestFormatterJava FROM-CACHE
+2026-08-15T22:54:47.2327665Z > Task :lib:compileZjsonPatchJava FROM-CACHE
+2026-08-15T22:54:47.4080814Z > Task :lib:javadoc FROM-CACHE
+2026-08-15T22:54:47.4956644Z > Task :testlib:processResources
+2026-08-15T22:54:47.4987266Z > Task :testlib:classes
+2026-08-15T22:54:47.7109081Z > Task :lib:javadocJar
+2026-08-15T22:54:47.7128847Z > Task :lib:jar
+2026-08-15T22:54:47.7944649Z > Task :testlib:jar
+2026-08-15T22:54:47.7948392Z > Task :lib:sourcesJar
+2026-08-15T22:54:47.8936952Z > Task :lib:generateMetadataFileForPluginMavenPublication
+2026-08-15T22:54:47.9928182Z > Task :lib:publishPluginMavenPublicationToMavenLocal
+2026-08-15T22:54:47.9934194Z > Task :lib:publishToMavenLocal
+2026-08-15T22:54:51.9376235Z > Task :lib-extra:compileJava
+2026-08-15T22:54:51.9459273Z > Task :lib-extra:classes
+2026-08-15T22:54:59.2951301Z > Task :plugin-maven:compileJava
+2026-08-15T22:54:59.2956110Z > Task :plugin-maven:classes
+2026-08-15T22:55:01.3439153Z 
+2026-08-15T22:55:01.3463137Z > Task :plugin-maven:generateMavenPluginDescriptor
+2026-08-15T22:55:01.3541605Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:01.3573673Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:01.3598569Z Found unsupported javadoc inline tag 'link' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/SpotlessInstallPrePushHookMojo.java:37
+2026-08-15T22:55:01.3633650Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/AbstractSpotlessMojo.java:245
+2026-08-15T22:55:01.3846598Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/AbstractSpotlessMojo.java:245
+2026-08-15T22:55:01.3974974Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:46
+2026-08-15T22:55:01.4313656Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:46
+2026-08-15T22:55:01.4520758Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:39
+2026-08-15T22:55:01.4542845Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:39
+2026-08-15T22:55:01.4560134Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:39
+2026-08-15T22:55:01.4563512Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/TableTestFormatter.java:39
+2026-08-15T22:55:01.4599921Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:01.4605768Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/java/CleanthatJava.java:40
+2026-08-15T22:55:01.4612390Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/AbstractSpotlessMojo.java:245
+2026-08-15T22:55:01.4638451Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/SpotlessCheckMojo.java:64
+2026-08-15T22:55:01.4662216Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/SpotlessCheckMojo.java:64
+2026-08-15T22:55:01.4693301Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:01.4764904Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:01.5131324Z Found unsupported javadoc inline tag 'code' in file:/D:/a/spotless/spotless/plugin-maven/src/main/java/com/diffplug/spotless/maven/generic/AbstractBiome.java:45
+2026-08-15T22:55:02.4984328Z 
+2026-08-15T22:55:02.5004528Z > Task :plugin-maven:jar
+2026-08-15T22:55:02.9240072Z > Task :lib-extra:compileCdtJava
+2026-08-15T22:55:03.1189396Z > Task :plugin-maven:sourcesJar
+2026-08-15T22:55:04.9533250Z Note: D:\a\spotless\spotless\lib-extra\src\jdt\java\com\diffplug\spotless\extra\glue\jdt\DefaultJavaElementComparator.java uses unchecked or unsafe operations.
+2026-08-15T22:55:04.9534782Z 
+2026-08-15T22:55:04.9535052Z > Task :lib-extra:compileJdtJava
+2026-08-15T22:55:04.9553455Z Note: Recompile with -Xlint:unchecked for details.
+2026-08-15T22:55:13.1112537Z 
+2026-08-15T22:55:13.1185510Z > Task :lib-extra:compileGroovyJava
+2026-08-15T22:55:13.2152985Z > Task :lib-extra:jar
+2026-08-15T22:55:15.8031877Z Note: D:\a\spotless\spotless\plugin-maven\src\test\java\com\diffplug\spotless\maven\incremental\PluginFingerprintTest.java uses or overrides a deprecated API.
+2026-08-15T22:55:15.8032737Z 
+2026-08-15T22:55:15.9512978Z Note: Recompile with -Xlint:deprecation for details.
+2026-08-15T22:55:15.9513576Z > Task :plugin-maven:compileTestJava
+2026-08-15T22:55:16.4072168Z 
+2026-08-15T22:55:16.4089908Z > Task :plugin-maven:testClasses
+2026-08-15T22:55:16.4112881Z > Task :plugin-maven:spotbugsTest SKIPPED
+2026-08-15T22:55:16.4128883Z > Task :lib-extra:sourcesJar
+2026-08-15T22:55:23.7959265Z > Task :lib-extra:javadoc
+2026-08-15T22:55:23.9040198Z > Task :lib-extra:javadocJar
+2026-08-15T22:55:23.9260719Z > Task :lib-extra:generateMetadataFileForPluginMavenPublication
+2026-08-15T22:55:23.9329144Z > Task :lib-extra:publishPluginMavenPublicationToMavenLocal
+2026-08-15T22:55:23.9355821Z > Task :lib-extra:publishToMavenLocal
+2026-08-15T22:55:24.0019182Z > Task :plugin-maven:javadoc
+2026-08-15T22:55:24.1424488Z > Task :plugin-maven:javadocJar
+2026-08-15T22:55:24.1432424Z > Task :plugin-maven:assemble
+2026-08-15T22:55:24.1441643Z > Task :plugin-maven:generateMetadataFileForPluginMavenPublication
+2026-08-15T22:55:24.1476077Z > Task :plugin-maven:publishPluginMavenPublicationToMavenLocal
+2026-08-15T22:55:24.1503804Z > Task :plugin-maven:publishToMavenLocal
+2026-08-15T22:55:26.1971407Z 
+2026-08-15T22:55:26.1976640Z > Task :plugin-maven:test
+2026-08-15T22:55:26.1982966Z 
+2026-08-15T22:55:26.1989737Z 
+2026-08-15T22:55:27.2930303Z 
+2026-08-15T22:55:27.2930867Z > Task :plugin-maven:spotbugsMain
+2026-08-15T22:55:29.8946157Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-08-15T22:55:30.0022824Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-08-15T22:55:32.0390278Z 
+2026-08-15T22:55:32.0646417Z > Task :plugin-maven:test
+2026-08-15T22:55:32.1199241Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseCdtUsesConfiguredCacheDirectory()[32m PASSED[31m (2.1s)[m
+2026-08-15T22:55:32.1227233Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m grEclipseUsesConfiguredCacheDirectory()[32m PASSED[m
+2026-08-15T22:55:32.2099938Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m defaultP2CacheDirectoryUsesMavenLocalRepository()[32m PASSED[m
+2026-08-15T22:55:32.2143364Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m grEclipseUsesDefaultCacheDirectory()[32m PASSED[m
+2026-08-15T22:55:32.3228653Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesConfiguredCacheDirectory()[31m FAILED[31m
+2026-08-15T22:55:32.3237133Z 
+2026-08-15T22:55:32.3298382Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T22:55:32.3320017Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T22:55:32.3324219Z [m
+2026-08-15T22:55:32.3329851Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesDefaultCacheDirectory()[31m FAILED[31m
+2026-08-15T22:55:32.3338096Z 
+2026-08-15T22:55:32.3413115Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T22:55:32.3434362Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T22:55:32.3438301Z [m
+2026-08-15T22:55:32.3439127Z [0K[1mcom.diffplug.spotless.maven.FileLocatorTest[22m locateConfFileWithIncorrectSeparators()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:55:32.4653407Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseCdtUsesDefaultCacheDirectory()[32m PASSED[m
+2026-08-15T22:55:32.4661151Z [0K[1mcom.diffplug.spotless.maven.FileLocatorTest[22m locateEmptyString()[32m PASSED[m
+2026-08-15T22:55:32.4666770Z [0K[1mcom.diffplug.spotless.maven.FileLocatorTest[22m locateXmlFile()[32m PASSED[m
+2026-08-15T22:55:32.5149846Z [0K[1mcom.diffplug.spotless.maven.FileLocatorTest[22m locatePropertiesFile()[32m PASSED[m
+2026-08-15T22:55:32.5156381Z [0K[1mcom.diffplug.spotless.maven.FileLocatorTest[22m locateNull()[32m PASSED[m
+2026-08-15T22:55:39.7930609Z [0K[1mcom.diffplug.spotless.maven.IdeHookTest[22m clean()[32m PASSED[31m (7.4s)[m
+2026-08-15T22:55:42.3929058Z [0K[1mcom.diffplug.spotless.maven.IdeHookTest[22m dirty()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:55:45.4029953Z [0K[1mcom.diffplug.spotless.maven.IdeHookTest[22m outofbounds()[32m PASSED[31m (2.9s)[m
+2026-08-15T22:55:47.9017035Z [0K[1mcom.diffplug.spotless.maven.IdeHookTest[22m notAbsolute()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:55:50.4961584Z [0K[1mcom.diffplug.spotless.maven.MultipleFormatsTest[22m testMultipleFormatsWithDifferentIncludes()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:56:07.2978221Z [0K[1mcom.diffplug.spotless.maven.SpotlessCheckMojoTest[22m testSpotlessCheckBindingToVerifyPhase()[32m PASSED[31m (16.7s)[m
+2026-08-15T22:56:09.4936836Z [0K[1mcom.diffplug.spotless.maven.SpotlessCheckMojoTest[22m testSkipSpotlessCheckWithFormattingViolations()[32m PASSED[31m (2.2s)[m
+2026-08-15T22:56:12.0944678Z [0K[1mcom.diffplug.spotless.maven.SpotlessCheckMojoTest[22m testSpotlessCheckWithFormattingViolations()[32m PASSED[31m (2.6s)[m
+2026-08-15T22:56:12.4953772Z [0K[1mcom.diffplug.spotless.maven.GitRatchetMavenTest[22m singleProjectExhaustive()[32m PASSED[31m (39.8s)[m
+2026-08-15T22:56:14.4948602Z [0K[1mcom.diffplug.spotless.maven.SpotlessCheckMojoTest[22m testSpotlessCheckWithoutFormattingViolations()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:56:15.6950806Z [0K[1mcom.diffplug.spotless.maven.GitRatchetMavenTest[22m worktreeSupport()[32m PASSED[31m (3.1s)[m
+2026-08-15T22:56:18.4078029Z [0K[1mcom.diffplug.spotless.maven.antlr4.Antlr4FormatterTest[22m applyUsingDefaultVersionSelfclosing()[32m PASSED[31m (3.8s)[m
+2026-08-15T22:56:21.0062605Z [0K[1mcom.diffplug.spotless.maven.antlr4.Antlr4FormatterTest[22m applyUsingDefaultVersion()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:56:23.4974738Z [0K[1mcom.diffplug.spotless.maven.antlr4.Antlr4FormatterTest[22m applyUsingCustomVersion()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:56:28.6990900Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m configPathFile()[32m PASSED[31m (5.1s)[m
+2026-08-15T22:56:33.7988365Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m version2X()[32m PASSED[31m (5.1s)[m
+2026-08-15T22:56:38.5952950Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asJsonStep()[32m PASSED[31m (4.8s)[m
+2026-08-15T22:56:41.3172509Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asJavaScriptStep()[32m PASSED[31m (2.6s)[m
+2026-08-15T22:56:45.5943078Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m downloadDirRelative()[32m PASSED[31m (4.2s)[m
+2026-08-15T22:56:48.1949346Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asTypeScriptStep()[32m PASSED[31m (2.6s)[m
+2026-08-15T22:56:50.8046194Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m failureWhenExeNotFound()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:56:51.8942739Z [0K[1mcom.diffplug.spotless.maven.GitRatchetMavenTest[22m singleProjectExhaustiveGlobal()[32m PASSED[31m (36.1s)[m
+2026-08-15T22:56:53.4976048Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m failureWhenNotParseable()[32m PASSED[31m (2.7s)[m
+2026-08-15T22:56:57.3960612Z [0K[1mcom.diffplug.spotless.maven.IncludesExcludesTest[22m testDefaultIncludesJava()[32m PASSED[31m (5.5s)[m
+2026-08-15T22:56:57.8984643Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m preservesIgnoredFiles()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:57:00.5952075Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m configPathLineWidth120()[32m PASSED[31m (2.7s)[m
+2026-08-15T22:57:04.6949038Z [0K[1mcom.diffplug.spotless.maven.IncludesExcludesTest[22m testExclude()[32m PASSED[31m (7.3s)[m
+2026-08-15T22:57:04.9951759Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asCssStepStable()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:57:07.6986592Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m canSetLanguageForGenericStep()[32m PASSED[31m (2.6s)[m
+2026-08-15T22:57:09.3068807Z [0K[1mcom.diffplug.spotless.maven.IncludesExcludesTest[22m testInclude()[32m PASSED[31m (4.6s)[m
+2026-08-15T22:57:11.9948426Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m downloadDirAbsolute()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:57:13.6985298Z [0K[1mcom.diffplug.spotless.maven.IncludesExcludesTest[22m testDefaultIncludesScala()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:57:16.3976396Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asCssStepExperimental()[32m PASSED[31m (4.4s)[m
+2026-08-15T22:57:18.0966633Z [0K[1mcom.diffplug.spotless.maven.MavenProvisionerTest[22m testSingleDependencyIncludingTransitives()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:57:18.8956266Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m asGenericStep()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:57:21.3955702Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m configPathAbsolute()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:57:23.1958199Z [0K[1mcom.diffplug.spotless.maven.MavenProvisionerTest[22m testMultipleDependenciesExcludingTransitives()[32m PASSED[31m (5.1s)[m
+2026-08-15T22:57:23.7966155Z [0K[1mcom.diffplug.spotless.maven.biome.BiomeMavenTest[22m configPathLineWidth80()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:57:30.4984430Z [0K[1mcom.diffplug.spotless.maven.generic.EclipseWtpTest[22m testType()[32m PASSED[31m (6.6s)[m
+2026-08-15T22:57:31.3234082Z [0K[1mcom.diffplug.spotless.maven.generic.Jsr223Test[22m buildInNashorn()[33m SKIPPED[m
+2026-08-15T22:57:36.1960383Z [0K[1mcom.diffplug.spotless.maven.MultiModuleProjectTest[22m testConfigurationDependency()[32m PASSED[31m (12.9s)[m
+2026-08-15T22:57:36.1962292Z [0K[1mcom.diffplug.spotless.maven.generic.Jsr223Test[22m groovyFromJarState()[32m PASSED[31m (4.8s)[m
+2026-08-15T22:57:38.6983824Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m unsupportedModuleInfo()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:57:39.3955629Z [0K[1mcom.diffplug.spotless.maven.SpecificFilesTest[22m multiFile()[32m PASSED[31m (3.1s)[m
+2026-08-15T22:57:40.8956504Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromFileFormat()[32m PASSED[31m (2.2s)[m
+2026-08-15T22:57:42.4958748Z [0K[1mcom.diffplug.spotless.maven.SpecificFilesTest[22m regexp()[32m PASSED[31m (3.1s)[m
+2026-08-15T22:57:43.6968154Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m onlyIfContentMatchesAppliesWhenPatternMatches()[32m PASSED[31m (2.7s)[m
+2026-08-15T22:57:45.7981409Z [0K[1mcom.diffplug.spotless.maven.SpecificFilesTest[22m singleFile()[32m PASSED[31m (3.3s)[m
+2026-08-15T22:57:45.9970592Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromFileGlobal()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:57:47.7976469Z [0K[1mcom.diffplug.spotless.maven.SpotlessInstallPrePushHookMojoTest[22m should_create_pre_hook_file_when_hook_file_does_not_exists()[32m PASSED[31m (2s)[m
+2026-08-15T22:57:48.4962976Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromContentFormat()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:57:49.8981727Z [0K[1mcom.diffplug.spotless.maven.SpotlessInstallPrePushHookMojoTest[22m should_append_to_existing_pre_hook_file_when_hook_file_exists()[32m PASSED[31m (2s)[m
+2026-08-15T22:57:50.8979558Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromContentGroovy()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:57:53.2972858Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromContentKotlin()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:57:55.7969821Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m multipleNamedLicenseHeadersSelectByContentPattern()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:57:56.8965812Z [0K[1mcom.diffplug.spotless.maven.SpotlessInstallPrePushHookMojoTest[22m should_execute_pre_push_script()[32m PASSED[31m (6.9s)[m
+2026-08-15T22:57:58.3966381Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m onlyIfContentMatchesSkipsWhenPatternDoesNotMatch()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:00.7957134Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m unsupportedPackageInfo()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:58:00.9967602Z [0K[1mcom.diffplug.spotless.maven.asciidoc.AdocfmtMavenTest[22m testAdocfmt()[32m PASSED[31m (4.1s)[m
+2026-08-15T22:58:03.0979362Z [0K[1mcom.diffplug.spotless.maven.asciidoc.AdocfmtMavenTest[22m missingIncludesFails()[32m PASSED[31m (2s)[m
+2026-08-15T22:58:03.1963056Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromFileJava()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:05.5959483Z [0K[1mcom.diffplug.spotless.maven.generic.EndWithNewlineTest[22m fromContentWithSelfclosingTag()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:05.7971256Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromContentJava()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:08.0008354Z [0K[1mcom.diffplug.spotless.maven.generic.EndWithNewlineTest[22m fromContent()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:58:08.2985812Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderTest[22m fromContentCpp()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:08.6023229Z [0K[1mcom.diffplug.spotless.maven.generic.NativeCmdTest[22m fromStdInToStdOut()[33m SKIPPED[m
+2026-08-15T22:58:10.4963414Z [0K[1mcom.diffplug.spotless.maven.generic.IndentTest[22m fromContentToTabs()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:11.0964238Z [0K[1mcom.diffplug.spotless.maven.generic.ReplaceTest[22m fromContent()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:12.8978676Z [0K[1mcom.diffplug.spotless.maven.generic.IndentTest[22m fromContentToSpaces()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:13.5006987Z [0K[1mcom.diffplug.spotless.maven.generic.TrimTrailingWhitespaceTest[22m fromContentToTabs()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:58:15.8982586Z [0K[1mcom.diffplug.spotless.maven.groovy.ImportOrderTest[22m file()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:18.4982958Z [0K[1mcom.diffplug.spotless.maven.groovy.ImportOrderTest[22m order()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:20.9968862Z [0K[1mcom.diffplug.spotless.maven.groovy.ImportOrderTest[22m standard()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:22.7034104Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderRatchetTest[22m normal()[32m PASSED[31m (9.7s)[m
+2026-08-15T22:58:23.3975244Z [0K[1mcom.diffplug.spotless.maven.groovy.RemoveSemicolonsTest[22m testRemoveSemicolonsString()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:25.7972345Z [0K[1mcom.diffplug.spotless.maven.groovy.RemoveSemicolonsTest[22m testRemoveSemicolons()[32m PASSED[31m (2.4s)[m
+2026-08-15T22:58:28.3963303Z [0K[1mcom.diffplug.spotless.maven.groovy.RemoveSemicolonsTest[22m testNotRemoveSemicolonsString()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:30.8969458Z [0K[1mcom.diffplug.spotless.maven.groovy.RemoveSemicolonsTest > Issue2780[22m testComments()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:33.5139030Z [0K[1mcom.diffplug.spotless.maven.groovy.RemoveSemicolonsTest > Issue2780[22m testMultilineStrings()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:58:33.7049543Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m isUpToDateReturnsFalseForUnknownFile()[32m PASSED[m
+2026-08-15T22:58:33.7052047Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m closeWritesTheIndex()[32m PASSED[m
+2026-08-15T22:58:33.7055770Z [0K[1mcom.diffplug.spotless.maven.generic.LicenseHeaderRatchetTest[22m ratchetFrom()[32m PASSED[31m (11s)[m
+2026-08-15T22:58:33.7166206Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m isUpToDateReturnsTrueWhenOnDiskFileIsSameAsInTheIndex()[32m PASSED[m
+2026-08-15T22:58:33.7225477Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m isUpToDateReturnsFalseWhenOnDiskFileIsNewerThanInTheIndex()[32m PASSED[m
+2026-08-15T22:58:33.8168725Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m setUpToDateUpdatesTheIndex()[32m PASSED[m
+2026-08-15T22:58:33.8482400Z [0K[1mcom.diffplug.spotless.maven.incremental.IndexBasedCheckerTest[22m isUpToDateReturnsFalseWhenOnDiskFileIsOlderThanInTheIndex()[32m PASSED[m
+2026-08-15T22:58:33.9028387Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m differentFingerprintForDifferentPluginVersions()[32m PASSED[m
+2026-08-15T22:58:33.9030265Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m emptyFingerprint()[32m PASSED[m
+2026-08-15T22:58:33.9032109Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m differentFingerprintForFormattersWithDifferentSteps()[32m PASSED[m
+2026-08-15T22:58:33.9034007Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m buildsFingerprintForProjectWithSpotlessPluginInPluginManagement()[32m PASSED[m
+2026-08-15T22:58:33.9986504Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m sameFingerprintWhenVersionAndFormattersAreTheSame()[32m PASSED[m
+2026-08-15T22:58:33.9992300Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m buildsFingerprintForProjectWithSpotlessPluginInBuildPlugins()[32m PASSED[m
+2026-08-15T22:58:33.9994832Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m differentFingerprintForFormattersWithDifferentLineEndings()[32m PASSED[m
+2026-08-15T22:58:34.0000946Z [0K[1mcom.diffplug.spotless.maven.incremental.PluginFingerprintTest[22m failsForProjectWithoutSpotlessPlugin()[32m PASSED[m
+2026-08-15T22:58:35.9967423Z [0K[1mcom.diffplug.spotless.maven.generic.LineEndingsTest[22m fromContentToWindows()[32m PASSED[31m (2.2s)[m
+2026-08-15T22:58:37.7964767Z [0K[1mcom.diffplug.spotless.maven.generic.LineEndingsTest[22m fromContentToUnix()[32m PASSED[33m (1.7s)[m
+2026-08-15T22:58:39.3980491Z [0K[1mcom.diffplug.spotless.maven.generic.ReplaceRegexTest[22m fromContent()[32m PASSED[33m (1.6s)[m
+2026-08-15T22:58:41.1967947Z [0K[1mcom.diffplug.spotless.maven.generic.ToggleOffOnTest[22m toggleOffOnCustom()[32m PASSED[33m (1.8s)[m
+2026-08-15T22:58:42.7970315Z [0K[1mcom.diffplug.spotless.maven.generic.ToggleOffOnTest[22m toggleOffOn()[32m PASSED[33m (1.6s)[m
+2026-08-15T22:58:50.6966711Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testEnableDraft()[32m PASSED[31m (16.6s)[m
+2026-08-15T22:58:52.6986955Z [0K[1mcom.diffplug.spotless.maven.gherkin.GherkinTest[22m testFormatJson_WithSimple_defaultConfig_sortByKeys()[32m PASSED[31m (9.8s)[m
+2026-08-15T22:58:53.8983683Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testMultipleMutators_defaultIsJdk7()[32m PASSED[31m (3.2s)[m
+2026-08-15T22:58:58.2979396Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testIncludeOnlyLiteralsFirstInComparisons()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:59:01.2988956Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testLiteralsFirstInComparisons()[32m PASSED[31m (3s)[m
+2026-08-15T22:59:03.9978913Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testExcludeOptionalNotEmpty()[32m PASSED[31m (2.7s)[m
+2026-08-15T22:59:06.5983417Z [0K[1mcom.diffplug.spotless.maven.java.CleanthatJavaRefactorerTest[22m testMultipleMutators_Jdk11IntroducedOptionalisPresent()[32m PASSED[31m (2.6s)[m
+2026-08-15T22:59:09.9000239Z [0K[1mcom.diffplug.spotless.maven.java.ExpandWildcardImportsStepTest[22m expandWildcardImports()[32m PASSED[31m (3.2s)[m
+2026-08-15T22:59:13.3979342Z [0K[1mcom.diffplug.spotless.maven.groovy.GrEclipseTest[22m doesNotFormatJavaFiles()[32m PASSED[31m (20.6s)[m
+2026-08-15T22:59:18.7121601Z [0K[1mcom.diffplug.spotless.maven.java.ExpandWildcardImportsStepTest[22m expandWildcardImports_withPomDependencyTransitiveJars()[32m PASSED[31m (8.8s)[m
+2026-08-15T22:59:20.2173102Z [0K[1mcom.diffplug.spotless.maven.groovy.GrEclipseTest[22m testEclipse()[32m PASSED[31m (6.7s)[m
+2026-08-15T22:59:20.2267401Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexConfigTest[22m returnsCorrectProjectDir()[32m PASSED[m
+2026-08-15T22:59:20.2278700Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexConfigTest[22m returnsCorrectPluginFingerprint()[32m PASSED[m
+2026-08-15T22:59:20.2288352Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexConfigTest[22m returnsEmptyPluginFingerprint()[32m PASSED[m
+2026-08-15T22:59:20.2294894Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexConfigTest[22m returnsCorrectIndexFile()[32m PASSED[m
+2026-08-15T22:59:20.5065609Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readIndexWithSingleEntry()[32m PASSED[m
+2026-08-15T22:59:20.5085197Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m setLastModifiedTimeThrowsForNonProjectFile()[32m PASSED[m
+2026-08-15T22:59:20.5100970Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readIndexWithMultipleEntries()[32m PASSED[m
+2026-08-15T22:59:20.5116888Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m deleteExistingIndex()[32m PASSED[m
+2026-08-15T22:59:20.5120014Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readFallsBackToEmptyIndexWhenUnparseableTimestamp()[32m PASSED[m
+2026-08-15T22:59:20.5125446Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m rewritesIndexFileThatReferencesNonExistingFile()[32m PASSED[m
+2026-08-15T22:59:20.5135931Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m writeIndexWhenParentDirDoesNotExist()[32m PASSED[m
+2026-08-15T22:59:20.6070366Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m getLastModifiedTimeReturnsEmptyOptionalForUnknownFile()[32m PASSED[m
+2026-08-15T22:59:20.6090015Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m deleteNonExistingIndex()[32m PASSED[m
+2026-08-15T22:59:20.6105715Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m writeIndexWithoutUpdatesDoesNotUpdateTheFile()[32m PASSED[m
+2026-08-15T22:59:20.6125388Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readEmptyIndex()[32m PASSED[m
+2026-08-15T22:59:20.6132634Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readFallsBackToEmptyIndexWhenIncorrectSeparator()[32m PASSED[m
+2026-08-15T22:59:20.6193887Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m writeFailsWhenIndexFilesDoesNotHaveParentDir()[32m PASSED[m
+2026-08-15T22:59:20.7004288Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m writeIndexContainingUpdates()[32m PASSED[m
+2026-08-15T22:59:20.7006171Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readFallsBackToEmptyIndexOnFingerprintMismatch()[32m PASSED[m
+2026-08-15T22:59:20.7027020Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m setLastModifiedTimeUpdatesModifiedTime()[32m PASSED[m
+2026-08-15T22:59:20.8021521Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readFallsBackToEmptyIndexWhenIndexFileIsEmpty()[32m PASSED[m
+2026-08-15T22:59:20.8094925Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m getLastModifiedTimeReturnsEmptyOptionalForNonProjectFile()[32m PASSED[m
+2026-08-15T22:59:20.8100853Z [0K[1mcom.diffplug.spotless.maven.incremental.FileIndexTest[22m readFallsBackToEmptyIndexWhenIndexFileDoesNotExist()[32m PASSED[m
+2026-08-15T22:59:20.8110107Z [0K[1mcom.diffplug.spotless.maven.incremental.NoopCheckerTest[22m doesNothingWhenIndexFileDoesNotExist()[32m PASSED[m
+2026-08-15T22:59:20.9044336Z [0K[1mcom.diffplug.spotless.maven.incremental.NoopCheckerTest[22m neverUpToDate()[32m PASSED[m
+2026-08-15T22:59:20.9988841Z [0K[1mcom.diffplug.spotless.maven.incremental.NoopCheckerTest[22m deletesExistingIndexFileWhenCreated()[32m PASSED[m
+2026-08-15T22:59:28.3015185Z [0K[1mcom.diffplug.spotless.maven.java.ExpandWildcardImportsStepTest[22m expandWildcardImports_withDirectJarDependency()[32m PASSED[31m (9.5s)[m
+2026-08-15T22:59:28.9984184Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m spotlessApplyRecordsCorrectlyFormattedFiles()[32m PASSED[31m (7.9s)[m
+2026-08-15T22:59:36.7981012Z [0K[1mcom.diffplug.spotless.maven.java.ExpandWildcardImportsStepTest[22m expandWildcardImports_withPomTypeDependency()[32m PASSED[31m (8.5s)[m
+2026-08-15T22:59:40.8986605Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m spotlessCheckRecordsUnformattedFiles()[32m PASSED[31m (11.8s)[m
+2026-08-15T22:59:45.3006104Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m enableUpToDateCheckingWithPluginDependenciesMaven3_6_3()[32m PASSED[31m (4.3s)[m
+2026-08-15T22:59:45.8123651Z [0K[1mcom.diffplug.spotless.maven.java.ExpandWildcardImportsStepTest[22m expandWildcardImports_withMixedPomAndJarDependencies()[32m PASSED[31m (8.9s)[m
+2026-08-15T22:59:48.4033525Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m explicitlyDisableUpToDateChecking()[32m PASSED[31m (3.1s)[m
+2026-08-15T22:59:48.7003663Z [0K[1mcom.diffplug.spotless.maven.java.ForbidWildcardImportsMultiFileStepTest[22m testApplyAggregatesLintsAcrossAllFiles()[32m PASSED[31m (2.9s)[m
+2026-08-15T22:59:51.2054679Z [0K[1mcom.diffplug.spotless.maven.java.FormatAnnotationsStepTest[22m testFormatAnnotations()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:59:51.3986803Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m disableUpToDateCheckingCustomIndexFile()[32m PASSED[31m (3s)[m
+2026-08-15T22:59:53.7986511Z [0K[1mcom.diffplug.spotless.maven.java.FormatAnnotationsStepTest[22m testFormatAnnotationsAccessModifiers()[32m PASSED[31m (2.5s)[m
+2026-08-15T22:59:54.4994953Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m explicitlyEnableUpToDateChecking()[32m PASSED[31m (3.1s)[m
+2026-08-15T22:59:56.2080096Z [0K[1mcom.diffplug.spotless.maven.java.ImportOrderTest[22m file()[32m PASSED[31m (2.3s)[m
+2026-08-15T22:59:58.7036397Z [0K[1mcom.diffplug.spotless.maven.java.ImportOrderTest[22m order()[32m PASSED[31m (2.4s)[m
+2026-08-15T23:00:01.3058740Z [0K[1mcom.diffplug.spotless.maven.java.ImportOrderTest[22m wildcardsLast()[32m PASSED[31m (2.5s)[m
+2026-08-15T23:00:02.7994389Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m spotlessApplyRecordsUnformattedFiles()[32m PASSED[31m (8.2s)[m
+2026-08-15T23:00:03.7001036Z [0K[1mcom.diffplug.spotless.maven.java.ImportOrderTest[22m standard()[32m PASSED[31m (2.4s)[m
+2026-08-15T23:00:06.1982917Z [0K[1mcom.diffplug.spotless.maven.java.LintSuppressionTest[22m testMultipleSuppressionsWork()[32m PASSED[31m (2.4s)[m
+2026-08-15T23:00:08.7005353Z [0K[1mcom.diffplug.spotless.maven.java.LintSuppressionTest[22m testSuppressByFilePath()[32m PASSED[31m (2.5s)[m
+2026-08-15T23:00:10.8991426Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m spotlessCheckRecordsCorrectlyFormattedFiles()[32m PASSED[31m (8.1s)[m
+2026-08-15T23:00:11.4014493Z [0K[1mcom.diffplug.spotless.maven.java.LintSuppressionTest[22m testSuppressByStep()[32m PASSED[31m (2.7s)[m
+2026-08-15T23:00:13.9988021Z [0K[1mcom.diffplug.spotless.maven.java.LintSuppressionTest[22m testSuppressByShortCode()[32m PASSED[31m (2.5s)[m
+2026-08-15T23:00:14.0006031Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m upToDateCheckingEnabledByDefault()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:00:16.6044455Z [0K[1mcom.diffplug.spotless.maven.java.LintSuppressionTest[22m testNoSuppressionFailsOnWildcardImports()[32m PASSED[31m (2.5s)[m
+2026-08-15T23:00:18.0991816Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m enableUpToDateCheckingCustomIndexFile()[32m PASSED[31m (4s)[m
+2026-08-15T23:00:19.4986514Z [0K[1mcom.diffplug.spotless.maven.java.RemoveUnusedImportsStepTest[22m testRemoveUnusedInports()[32m PASSED[31m (2.8s)[m
+2026-08-15T23:00:21.1082969Z [0K[1mcom.diffplug.spotless.maven.incremental.UpToDateCheckingTest[22m enableUpToDateCheckingWithPluginDependencies()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:00:26.0990837Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_JsonPatch_replaceWithObject()[32m PASSED[31m (6.5s)[m
+2026-08-15T23:00:26.1000315Z [0K[1mcom.diffplug.spotless.maven.java.EclipseFormatStepTest[22m testEclipse()[32m PASSED[31m (4.9s)[m
+2026-08-15T23:00:28.6130567Z [0K[1mcom.diffplug.spotless.maven.java.ForbidModuleImportsStepTest[22m testForbidModuleImports()[32m PASSED[31m (2.5s)[m
+2026-08-15T23:00:28.7996160Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithGson_defaultConfig_nestedObject()[32m PASSED[31m (2.7s)[m
+2026-08-15T23:00:31.4995798Z [0K[1mcom.diffplug.spotless.maven.java.ForbidWildcardImportsStepTest[22m testForbidWildcardImports()[32m PASSED[31m (2.8s)[m
+2026-08-15T23:00:32.0100852Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithSimple_defaultConfig_nestedObject()[32m PASSED[31m (3.2s)[m
+2026-08-15T23:00:35.7987244Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithJackson_sortByKeys()[32m PASSED[31m (3.7s)[m
+2026-08-15T23:00:36.4991156Z [0K[1mcom.diffplug.spotless.maven.java.GoogleJavaFormatTest[22m specificVersionReflowLongStrings()[32m PASSED[31m (5s)[m
+2026-08-15T23:00:38.9989234Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_JsonPatch_replaceString()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:00:39.6988635Z [0K[1mcom.diffplug.spotless.maven.java.GoogleJavaFormatTest[22m specificVersionSpecificStyle()[32m PASSED[31m (3.2s)[m
+2026-08-15T23:00:41.5998567Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithGson_sortByKeys()[32m PASSED[31m (2.6s)[m
+2026-08-15T23:00:43.5109480Z [0K[1mcom.diffplug.spotless.maven.java.GoogleJavaFormatTest[22m specificVersionDefaultStyle()[32m PASSED[31m (3.7s)[m
+2026-08-15T23:00:44.0057798Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithSimple_defaultConfig_sortByKeys()[32m PASSED[31m (2.3s)[m
+2026-08-15T23:00:46.6991144Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithGson_defaultConfig_sortByKeys()[32m PASSED[31m (2.6s)[m
+2026-08-15T23:00:46.6993236Z [0K[1mcom.diffplug.spotless.maven.java.GoogleJavaFormatTest[22m specificVersionSkipJavadocFormatting()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:00:49.5990535Z [0K[1mcom.diffplug.spotless.maven.json.JsonTest[22m testFormatJson_WithJackson_sortByKeys_spaceAfterKeySeparator()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:00:49.9990688Z [0K[1mcom.diffplug.spotless.maven.java.GoogleJavaFormatTest[22m specificVersionReorderImports()[32m PASSED[31m (3.3s)[m
+2026-08-15T23:00:52.9005412Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m noCustomConfiguration()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:00:55.3001667Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m customTestSourceDirConfiguration()[32m PASSED[31m (2.3s)[m
+2026-08-15T23:00:57.0998890Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testKtfmtWithManageTrailingCommasOption()[32m PASSED[31m (7.4s)[m
+2026-08-15T23:00:58.0001099Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m customSourceDirAndTestSourceDirConfiguration()[32m PASSED[31m (2.7s)[m
+2026-08-15T23:01:00.9057168Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m nestedCustomSourceDirAndTestSourceDirConfiguration()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:01:03.6006816Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testKtfmt()[32m PASSED[31m (6.4s)[m
+2026-08-15T23:01:03.7003607Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m customSourceDirConfiguration()[32m PASSED[31m (2.7s)[m
+2026-08-15T23:01:06.8001945Z [0K[1mcom.diffplug.spotless.maven.java.JavaDefaultIncludesTest[22m sameCustomSourceDirAndTestSourceDirConfiguration()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:01:08.2061019Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testKtfmtStyle()[32m PASSED[31m (4.5s)[m
+2026-08-15T23:01:12.0002817Z [0K[1mcom.diffplug.spotless.maven.java.PalantirJavaFormatTest[22m formatJavaDoc()[32m PASSED[31m (5.1s)[m
+2026-08-15T23:01:12.1020093Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testKtfmtStyleWithMaxWidthOption()[32m PASSED[31m (3.9s)[m
+2026-08-15T23:01:16.0004318Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testContinuation()[32m PASSED[31m (3.8s)[m
+2026-08-15T23:01:18.3997182Z [0K[1mcom.diffplug.spotless.maven.java.PalantirJavaFormatTest[22m specificVersionDefaultStyle()[32m PASSED[31m (6.4s)[m
+2026-08-15T23:01:20.0001325Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtfmtTest[22m testKtfmtWithMaxWidthOption()[32m PASSED[31m (4s)[m
+2026-08-15T23:01:21.4001091Z [0K[1mcom.diffplug.spotless.maven.java.PalantirJavaFormatTest[22m specificJava11Version2()[32m PASSED[31m (3s)[m
+2026-08-15T23:01:28.0030204Z [0K[1mcom.diffplug.spotless.maven.markdown.FlexmarkMavenTest[22m testFlexmarkWithOptions()[32m PASSED[31m (8s)[m
+2026-08-15T23:01:29.5009125Z [0K[1mcom.diffplug.spotless.maven.kotlin.DiktatTest[22m testDiktatWithVersion()[32m PASSED[31m (8s)[m
+2026-08-15T23:01:31.4037023Z [0K[1mcom.diffplug.spotless.maven.markdown.FlexmarkMavenTest[22m testFlexmarkWithSimpleConfig()[32m PASSED[31m (3.3s)[m
+2026-08-15T23:01:34.2007469Z [0K[1mcom.diffplug.spotless.maven.markdown.FlexmarkMavenTest[22m testFlexmarkWithComplexConfig()[32m PASSED[31m (2.8s)[m
+2026-08-15T23:01:39.8074653Z [0K[1mcom.diffplug.spotless.maven.kotlin.DiktatTest[22m testDiktat()[32m PASSED[31m (10.2s)[m
+2026-08-15T23:01:44.8004347Z [0K[1mcom.diffplug.spotless.maven.kotlin.DiktatTest[22m testDiktatConfig()[32m PASSED[31m (5s)[m
+2026-08-15T23:01:53.0017545Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testEditorConfigOverrideWithUnsetCodeStyleDoesNotOverrideEditorConfigCodeStyleWithDefault()[32m PASSED[31m (8.2s)[m
+2026-08-15T23:01:56.2007117Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testSetEditorConfigCanOverrideEditorConfigFile()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:01:59.1012162Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testKtlint()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:02:01.7032709Z [0K[1mcom.diffplug.spotless.maven.npm.NpmTestsWithDynamicallyInstalledNpmInstallationTest[22m useDownloadedNpmInstallation()[32m PASSED[31m (27.4s)[m
+2026-08-15T23:02:02.5012904Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testKtlintEditorConfigOverride()[32m PASSED[31m (3.4s)[m
+2026-08-15T23:02:08.9046842Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testWithCustomRuleSetApply()[32m PASSED[31m (6.3s)[m
+2026-08-15T23:02:11.5021240Z [0K[1mcom.diffplug.spotless.maven.scala.ScalafmtTest[22m testScalafmtVersionFromConfig()[32m PASSED[31m (9.8s)[m
+2026-08-15T23:02:13.0013470Z [0K[1mcom.diffplug.spotless.maven.kotlin.KtlintTest[22m testReadCodeStyleFromEditorConfigFile()[32m PASSED[31m (4s)[m
+2026-08-15T23:02:15.9008446Z [0K[1mcom.diffplug.spotless.maven.scala.ScalafmtTest[22m testScalafmtWithCustomConfig()[32m PASSED[31m (4.3s)[m
+2026-08-15T23:02:16.6035952Z [0K[1mcom.diffplug.spotless.maven.pom.SortPomMavenTest[22m testSortPomWithDefaultConfig()[32m PASSED[31m (3.5s)[m
+2026-08-15T23:02:19.1012145Z [0K[1mcom.diffplug.spotless.maven.scala.ScalafmtTest[22m testScalafmtWithDefaultConfig()[32m PASSED[31m (3.1s)[m
+2026-08-15T23:02:20.7015769Z [0K[1mcom.diffplug.spotless.maven.sql.SqlTest[22m testDbeaverWithAlternativeConfig()[32m PASSED[33m (1.5s)[m
+2026-08-15T23:02:22.2018939Z [0K[1mcom.diffplug.spotless.maven.sql.SqlTest[22m testDbeaverWithDefaultConfig()[32m PASSED[33m (1.5s)[m
+2026-08-15T23:02:25.1018081Z [0K[1mcom.diffplug.spotless.maven.yaml.YamlTest[22m testFormatYaml_WithJackson_defaultConfig_separatorComments()[32m PASSED[31m (2.9s)[m
+2026-08-15T23:02:26.9016828Z [0K[1mcom.diffplug.spotless.maven.yaml.YamlTest[22m testFormatYaml_WithJackson_defaultConfig_multipleDocuments()[32m PASSED[33m (1.7s)[m
+2026-08-15T23:02:28.6021872Z [0K[1mcom.diffplug.spotless.maven.yaml.YamlTest[22m testFormatYaml_WithJackson_defaultConfig_arrayBrackets()[32m PASSED[33m (1.7s)[m
+2026-08-15T23:02:31.2011612Z 
+2026-08-15T23:02:31.2013642Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-08-15T23:02:31.9393253Z 
+2026-08-15T23:02:31.9397747Z > Task :plugin-maven:test
+2026-08-15T23:02:31.9401865Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesConfiguredCacheDirectory()[31m FAILED[31m
+2026-08-15T23:02:31.9403135Z 
+2026-08-15T23:02:31.9407849Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:31.9413615Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T23:02:31.9414647Z [m
+2026-08-15T23:02:31.9415939Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesDefaultCacheDirectory()[31m FAILED[31m
+2026-08-15T23:02:31.9416698Z 
+2026-08-15T23:02:31.9422768Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:31.9435136Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T23:02:31.9436523Z [m
+2026-08-15T23:02:34.7011823Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-08-15T23:02:34.7012699Z 
+2026-08-15T23:02:35.4039516Z 
+2026-08-15T23:02:35.4128100Z > Task :plugin-maven:test
+2026-08-15T23:02:35.4146329Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesConfiguredCacheDirectory()[31m FAILED[31m
+2026-08-15T23:02:35.4147182Z 
+2026-08-15T23:02:35.4296520Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:35.4303094Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T23:02:35.4304517Z [m
+2026-08-15T23:02:35.4305580Z [0K[1mcom.diffplug.spotless.maven.FormatterStepFactoryTest[22m eclipseUsesDefaultCacheDirectory()[31m FAILED[31m
+2026-08-15T23:02:35.4306415Z 
+2026-08-15T23:02:35.4314820Z   java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:35.4321955Z       at com.diffplug.spotless.maven.FormatterStepFactoryTest.assertP2ProvisionerReceives(FormatterStepFactoryTest.java:121)
+2026-08-15T23:02:35.4323566Z [m
+2026-08-15T23:02:35.5632035Z 
+2026-08-15T23:02:35.5632071Z 
+2026-08-15T23:02:35.5634579Z [0K[1;31mFAILURE: [39mExecuted 233 tests in 7m 10s (6 failed, 2 skipped)[m
+2026-08-15T23:02:35.5635412Z 233 tests completed, 6 failed, 2 skipped
+2026-08-15T23:02:35.5636188Z 
+2026-08-15T23:02:35.7012998Z 
+2026-08-15T23:02:35.7013643Z > Task :plugin-maven:test FAILED
+2026-08-15T23:02:35.7014276Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run-1786834469843.json
+2026-08-15T23:02:35.8141579Z 
+2026-08-15T23:02:35.8141615Z 
+2026-08-15T23:02:35.8142817Z FAILURE: Build failed with an exception.
+2026-08-15T23:02:35.8144206Z [Incubating] Problems report is available at: file:///D:/a/spotless/spotless/build/reports/problems/problems-report.html
+2026-08-15T23:02:35.8144894Z 
+2026-08-15T23:02:35.8145054Z * What went wrong:
+2026-08-15T23:02:35.8145470Z Execution failed for task ':plugin-maven:test'.
+2026-08-15T23:02:35.8146290Z > There were failing tests. See the report at: file:///D:/a/spotless/spotless/plugin-maven/build/reports/tests/test/index.html
+2026-08-15T23:02:35.8146913Z 
+2026-08-15T23:02:35.8147396Z BUILD FAILED in 8m 12s
+2026-08-15T23:02:35.8147818Z 60 actionable tasks: 36 executed, 24 from cache
+2026-08-15T23:02:35.9066153Z 
+2026-08-15T23:02:35.9066691Z Publishing Build Scan to Develocity...
+2026-08-15T23:02:36.1077601Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-scans\__run-1786834469843.json
+2026-08-15T23:02:36.2205489Z https://gradle.com/s/d3xbobh4xdbtu
+2026-08-15T23:02:36.2220281Z 
+2026-08-15T23:02:36.2222029Z Configuration cache entry stored.
+2026-08-15T23:02:36.7317652Z ##[error]Process completed with exit code 1.
+2026-08-15T23:02:36.7613350Z ##[group]Run mikepenz/action-junit-report@v6
+2026-08-15T23:02:36.7613699Z with:
+2026-08-15T23:02:36.7613909Z   check_name: JUnit maven 17 windows-latest
+2026-08-15T23:02:36.7614202Z   report_paths: */build/test-results/*/TEST-*.xml
+2026-08-15T23:02:36.7614492Z   check_retries: true
+2026-08-15T23:02:36.7616611Z   token: ***
+2026-08-15T23:02:36.7616803Z   group_reports: true
+2026-08-15T23:02:36.7617011Z   annotate_only: false
+2026-08-15T23:02:36.7617209Z   check_annotations: true
+2026-08-15T23:02:36.7617411Z   update_check: false
+2026-08-15T23:02:36.7617604Z   fail_on_failure: false
+2026-08-15T23:02:36.7617819Z   fail_on_parse_error: false
+2026-08-15T23:02:36.7618028Z   require_tests: false
+2026-08-15T23:02:36.7618227Z   require_passed_tests: false
+2026-08-15T23:02:36.7618445Z   include_passed: false
+2026-08-15T23:02:36.7618654Z   include_skipped: true
+2026-08-15T23:02:36.7618858Z   bread_crumb_delimiter: /
+2026-08-15T23:02:36.7619066Z   transformers: []
+2026-08-15T23:02:36.7619289Z   job_summary: true
+2026-08-15T23:02:36.7619488Z   detailed_summary: false
+2026-08-15T23:02:36.7619710Z   flaky_summary: false
+2026-08-15T23:02:36.7619920Z   verbose_summary: true
+2026-08-15T23:02:36.7620124Z   skip_success_summary: false
+2026-08-15T23:02:36.7620347Z   include_empty_in_summary: true
+2026-08-15T23:02:36.7620577Z   include_time_in_summary: false
+2026-08-15T23:02:36.7620811Z   simplified_summary: false
+2026-08-15T23:02:36.7621023Z   group_suite: false
+2026-08-15T23:02:36.7621215Z   comment: false
+2026-08-15T23:02:36.7621407Z   updateComment: true
+2026-08-15T23:02:36.7621615Z   annotate_notice: false
+2026-08-15T23:02:36.7621820Z   follow_symlink: false
+2026-08-15T23:02:36.7622013Z   job_name: build
+2026-08-15T23:02:36.7622206Z   truncate_stack_traces: true
+2026-08-15T23:02:36.7622436Z   resolve_ignore_classname: false
+2026-08-15T23:02:36.7622672Z   skip_comment_without_tests: false
+2026-08-15T23:02:36.7622893Z env:
+2026-08-15T23:02:36.7623179Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T23:02:36.7623627Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-8\x64
+2026-08-15T23:02:36.7623969Z   MAVEN_ARGS: -ntp
+2026-08-15T23:02:36.7624380Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-08-15T23:02:36.7624655Z   GRADLE_USER_HOME: D:\a\.gradle
+2026-08-15T23:02:36.7624897Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-08-15T23:02:36.7625272Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-08-15T23:02:36.7625680Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-08-15T23:02:36.7625957Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-08-15T23:02:36.7626193Z ##[endgroup]
+2026-08-15T23:02:36.8740459Z ##[group]📘 Reading input values
+2026-08-15T23:02:36.8743733Z ##[endgroup]
+2026-08-15T23:02:36.8744414Z ##[group]📦 Process test results
+2026-08-15T23:02:36.8744752Z Preparing 1 report as configured.
+2026-08-15T23:02:36.9628481Z plugin-maven\src\test\java\com\diffplug\spotless\maven\FormatterStepFactoryTest.java:56 | java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2 0.032s
+2026-08-15T23:02:36.9635017Z plugin-maven\src\test\java\com\diffplug\spotless\maven\FormatterStepFactoryTest.java:71 | java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2 0.009s
+2026-08-15T23:02:36.9659845Z ℹ️ Posting with conclusion 'failure' to https://github.com/diffplug/spotless/pull/3000 (sha: 9d3106e91420e4391587bf1419dc1a204fbd0d0c)
+2026-08-15T23:02:36.9661088Z ##[endgroup]
+2026-08-15T23:02:36.9661776Z ##[group]🚀 Publish results
+2026-08-15T23:02:36.9663227Z ℹ️ - JUnit maven 17 windows-latest - 229 tests run, 225 passed, 2 skipped, 2 failed.
+2026-08-15T23:02:36.9672973Z    🧪 - plugin-maven\src\test\java\com\diffplug\spotless\maven\FormatterStepFactoryTest.java | java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:36.9684429Z    🧪 - plugin-maven\src\test\java\com\diffplug\spotless\maven\FormatterStepFactoryTest.java | java.util.NoSuchElementException: Resolved to an empty result: org.eclipse.jdt:org.eclipse.jdt.core:3.46.0, net.java.dev.jna:jna-platform:5.18.1, org.eclipse.jdt:ecj:3.46.0, org.eclipse.platform:org.eclipse.core.commands:3.12.500, org.eclipse.platform:org.eclipse.core.contenttype:3.9.800, org.eclipse.platform:org.eclipse.core.expressions:3.9.600, org.eclipse.platform:org.eclipse.core.filesystem:1.11.400, org.eclipse.platform:org.eclipse.core.jobs:3.15.800, org.eclipse.platform:org.eclipse.core.resources:3.24.0, org.eclipse.platform:org.eclipse.core.runtime:3.34.200, org.eclipse.platform:org.eclipse.equinox.app:1.7.600, org.eclipse.platform:org.eclipse.equinox.common:3.20.400, org.eclipse.platform:org.eclipse.equinox.preferences:3.12.100, org.eclipse.platform:org.eclipse.equinox.registry:3.12.600, org.eclipse.platform:org.eclipse.equinox.supplement:1.12.300, org.eclipse.platform:org.eclipse.osgi:3.24.200, org.eclipse.platform:org.eclipse.text:3.14.700, org.osgi:org.osgi.service.prefs:1.1.2
+2026-08-15T23:02:36.9690149Z ℹ️ - JUnit maven 17 windows-latest - Creating check (Annotations: 2)
+2026-08-15T23:02:37.1834542Z ##[error]❌ Failed to create checks using the provided token. (HttpError: Resource not accessible by integration - https://docs.github.com/rest/checks/runs#create-a-check-run)
+2026-08-15T23:02:37.1838716Z ##[warning]⚠️ This usually indicates insufficient permissions. More details: https://github.com/mikepenz/action-junit-report/issues/23
+2026-08-15T23:02:37.1850678Z ##[endgroup]
+2026-08-15T23:02:37.2416430Z Post job cleanup.
+2026-08-15T23:02:37.4882033Z In post-action step
+2026-08-15T23:02:37.4893049Z Enhanced Caching: This build is using the proprietary 'gradle-actions-caching' provider for optimized caching support. See https://github.com/gradle/actions/blob/main/DISTRIBUTION.md for terms of use and opt-out instructions.
+2026-08-15T23:02:37.5608301Z Cache is read-only: will not save state for use in subsequent builds.
+2026-08-15T23:02:37.5613121Z ##[group]Generating Job Summary
+2026-08-15T23:02:37.5618505Z 
+2026-08-15T23:02:37.5618686Z 
+2026-08-15T23:02:37.5618980Z <table>
+2026-08-15T23:02:37.5619261Z     <tr>
+2026-08-15T23:02:37.5619550Z         <th>Gradle Root Project</th>
+2026-08-15T23:02:37.5619959Z         <th>Requested Tasks</th>
+2026-08-15T23:02:37.5620319Z         <th>Gradle Version</th>
+2026-08-15T23:02:37.5620677Z         <th>Build Outcome</th>
+2026-08-15T23:02:37.5621322Z         <th>Build&nbsp;Scan®</th>
+2026-08-15T23:02:37.5621699Z     </tr>
+2026-08-15T23:02:37.5622004Z     <tr>
+2026-08-15T23:02:37.5622266Z         <td>spotless</td>
+2026-08-15T23:02:37.5622581Z         <td>:plugin-maven:build</td>
+2026-08-15T23:02:37.5622946Z         <td align='center'>9.4.1</td>
+2026-08-15T23:02:37.5623289Z         <td align='center'>:x:</td>
+2026-08-15T23:02:37.5624352Z         <td><a href="https://gradle.com/s/d3xbobh4xdbtu" rel="nofollow" target="_blank"><img src="https://img.shields.io/badge/Build%20Scan%C2%AE-06A0CE?logo=Gradle" alt="Build Scan published" /></a></td>
+2026-08-15T23:02:37.5625580Z     </tr>
+2026-08-15T23:02:37.5625847Z </table>
+2026-08-15T23:02:37.5626318Z     
+2026-08-15T23:02:37.5626600Z ============================
+2026-08-15T23:02:37.5627201Z <h4>Gradle State Caching - ⚡ Enhanced (read-only)</h4>
+2026-08-15T23:02:37.5627525Z 
+2026-08-15T23:02:37.5628563Z **[Enhanced Caching](https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#enhanced-caching)** uses the proprietary `gradle-actions-caching` provider. See [DISTRIBUTION.md](https://github.com/gradle/actions/blob/main/DISTRIBUTION.md) for terms of use and opt-out instructions.
+2026-08-15T23:02:37.5629667Z 
+2026-08-15T23:02:37.5630004Z <details>
+2026-08-15T23:02:37.5630353Z <summary>Entries: 9 restored (652Mb), 0 saved (0Mb) - Expand for more details</summary>
+2026-08-15T23:02:37.5630629Z 
+2026-08-15T23:02:37.5631302Z [Cache was read-only](https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#using-the-cache-read-only) — by default, the action only writes to the cache for jobs running on the default branch.
+2026-08-15T23:02:37.5631874Z 
+2026-08-15T23:02:37.5631962Z <table>
+2026-08-15T23:02:37.5632229Z     <tr><td></td><th>Count</th><th>Total Size (Mb)</th><th>Total Time (ms)</th></tr>
+2026-08-15T23:02:37.5632555Z     <tr><td>Entries Restored</td>
+2026-08-15T23:02:37.5632776Z         <td>9</td>
+2026-08-15T23:02:37.5632972Z         <td>652</td>
+2026-08-15T23:02:37.5633163Z         <td>20732</td>
+2026-08-15T23:02:37.5633377Z     </tr>
+2026-08-15T23:02:37.5633582Z     <tr><td>Entries Saved</td>
+2026-08-15T23:02:37.5633793Z         <td>0</td>
+2026-08-15T23:02:37.5633972Z         <td>0</td>
+2026-08-15T23:02:37.5634159Z         <td>0</td>
+2026-08-15T23:02:37.5634333Z     </tr>
+2026-08-15T23:02:37.5634492Z </table>
+2026-08-15T23:02:37.5634590Z 
+2026-08-15T23:02:37.5634667Z <pre>
+2026-08-15T23:02:37.5634854Z Entry: Gradle User Home
+2026-08-15T23:02:37.5635299Z     Requested Key : gradle-home-v2|Windows-X64|build[1e2618ab896ec580f0a7506e6d6593f7]-95f5091f3eb816d288b25d54cc79c6292e4689e3
+2026-08-15T23:02:37.5635960Z     Restored  Key : gradle-home-v2|Windows-X64|build[1e2618ab896ec580f0a7506e6d6593f7]-a42094e6c70d40d6ab163b3356ef0bfa28994602
+2026-08-15T23:02:37.5636409Z               Size: 29 MB (30627158 B)
+2026-08-15T23:02:37.5636642Z               Time: 1743 ms
+2026-08-15T23:02:37.5636886Z               (Entry restored: partial match found)
+2026-08-15T23:02:37.5637225Z     Saved     Key : 
+2026-08-15T23:02:37.5637497Z               Size: 
+2026-08-15T23:02:37.5639986Z               Time: 
+2026-08-15T23:02:37.5640407Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5640816Z ---
+2026-08-15T23:02:37.5641212Z Entry: caches\9.4.1\generated-gradle-jars\gradle-api-9.4.1.jar
+2026-08-15T23:02:37.5641922Z     Requested Key : gradle-generated-gradle-jars-v2-8e79c31f3eb4e570a88142dd102a0a2f
+2026-08-15T23:02:37.5642716Z     Restored  Key : gradle-generated-gradle-jars-v2-8e79c31f3eb4e570a88142dd102a0a2f
+2026-08-15T23:02:37.5643311Z               Size: 40 MB (41895854 B)
+2026-08-15T23:02:37.5643675Z               Time: 2442 ms
+2026-08-15T23:02:37.5644026Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5644433Z     Saved     Key : 
+2026-08-15T23:02:37.5644736Z               Size: 
+2026-08-15T23:02:37.5645016Z               Time: 
+2026-08-15T23:02:37.5645346Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5645746Z ---
+2026-08-15T23:02:37.5646161Z Entry: caches\9.4.1\generated-gradle-jars\gradle-test-kit-9.4.1.jar
+2026-08-15T23:02:37.5646909Z     Requested Key : gradle-generated-gradle-jars-v2-b1c8c91f1defd0ba6d2b2ac7f0e028ec
+2026-08-15T23:02:37.5647823Z     Restored  Key : gradle-generated-gradle-jars-v2-b1c8c91f1defd0ba6d2b2ac7f0e028ec
+2026-08-15T23:02:37.5648450Z               Size: 0 MB (26491 B)
+2026-08-15T23:02:37.5648790Z               Time: 609 ms
+2026-08-15T23:02:37.5649152Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5649544Z     Saved     Key : 
+2026-08-15T23:02:37.5649818Z               Size: 
+2026-08-15T23:02:37.5650444Z               Time: 
+2026-08-15T23:02:37.5650800Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5651190Z ---
+2026-08-15T23:02:37.5651560Z Entry: wrapper\dists\gradle-9.4.1-bin\arn2x92ynaizyzdaamcbpbhtj
+2026-08-15T23:02:37.5652191Z     Requested Key : gradle-wrapper-zips-v2-9db0835d029c62b1a3d29bf9e5532cf5
+2026-08-15T23:02:37.5652635Z     Restored  Key : gradle-wrapper-zips-v2-9db0835d029c62b1a3d29bf9e5532cf5
+2026-08-15T23:02:37.5653153Z               Size: 131 MB (137095041 B)
+2026-08-15T23:02:37.5653381Z               Time: 3903 ms
+2026-08-15T23:02:37.5653617Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5653870Z     Saved     Key : 
+2026-08-15T23:02:37.5654048Z               Size: 
+2026-08-15T23:02:37.5654215Z               Time: 
+2026-08-15T23:02:37.5654415Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5654642Z ---
+2026-08-15T23:02:37.5654808Z Entry: dependencies
+2026-08-15T23:02:37.5655101Z     Requested Key : gradle-dependencies-v2-779fb2e3e370d7bd63af1de1f466a0f1
+2026-08-15T23:02:37.5655500Z     Restored  Key : gradle-dependencies-v2-779fb2e3e370d7bd63af1de1f466a0f1
+2026-08-15T23:02:37.5655803Z               Size: 421 MB (441774729 B)
+2026-08-15T23:02:37.5656021Z               Time: 6239 ms
+2026-08-15T23:02:37.5656246Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5656476Z     Saved     Key : 
+2026-08-15T23:02:37.5656654Z               Size: 
+2026-08-15T23:02:37.5656831Z               Time: 
+2026-08-15T23:02:37.5657028Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5657256Z ---
+2026-08-15T23:02:37.5657425Z Entry: instrumented-jars
+2026-08-15T23:02:37.5657745Z     Requested Key : gradle-instrumented-jars-v2-daa0d421a72ed08fb55ec9059104e303
+2026-08-15T23:02:37.5658182Z     Restored  Key : gradle-instrumented-jars-v2-daa0d421a72ed08fb55ec9059104e303
+2026-08-15T23:02:37.5658509Z               Size: 0 MB (149241 B)
+2026-08-15T23:02:37.5658730Z               Time: 544 ms
+2026-08-15T23:02:37.5658944Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5659172Z     Saved     Key : 
+2026-08-15T23:02:37.5659346Z               Size: 
+2026-08-15T23:02:37.5659518Z               Time: 
+2026-08-15T23:02:37.5659706Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5659931Z ---
+2026-08-15T23:02:37.5660088Z Entry: build-cache
+2026-08-15T23:02:37.5660925Z     Requested Key : gradle-build-cache-v2-2e83b74aa3df19cd322c60e24b4e2409
+2026-08-15T23:02:37.5661338Z     Restored  Key : gradle-build-cache-v2-2e83b74aa3df19cd322c60e24b4e2409
+2026-08-15T23:02:37.5661644Z               Size: 2 MB (1869848 B)
+2026-08-15T23:02:37.5661868Z               Time: 1011 ms
+2026-08-15T23:02:37.5662083Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5662322Z     Saved     Key : 
+2026-08-15T23:02:37.5662504Z               Size: 
+2026-08-15T23:02:37.5662682Z               Time: 
+2026-08-15T23:02:37.5662877Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5663105Z ---
+2026-08-15T23:02:37.5663266Z Entry: groovy-dsl
+2026-08-15T23:02:37.5663540Z     Requested Key : gradle-groovy-dsl-v2-437faa181b2dc2b3927efe77648cfd79
+2026-08-15T23:02:37.5663922Z     Restored  Key : gradle-groovy-dsl-v2-437faa181b2dc2b3927efe77648cfd79
+2026-08-15T23:02:37.5664219Z               Size: 0 MB (228714 B)
+2026-08-15T23:02:37.5664451Z               Time: 1223 ms
+2026-08-15T23:02:37.5664671Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5664911Z     Saved     Key : 
+2026-08-15T23:02:37.5665096Z               Size: 
+2026-08-15T23:02:37.5665286Z               Time: 
+2026-08-15T23:02:37.5665581Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5665967Z ---
+2026-08-15T23:02:37.5684482Z Entry: transforms
+2026-08-15T23:02:37.5684976Z     Requested Key : gradle-transforms-v2-af0191dc0d0373634d8ba42794141fa0
+2026-08-15T23:02:37.5685648Z     Restored  Key : gradle-transforms-v2-af0191dc0d0373634d8ba42794141fa0
+2026-08-15T23:02:37.5686166Z               Size: 28 MB (29882255 B)
+2026-08-15T23:02:37.5686535Z               Time: 3018 ms
+2026-08-15T23:02:37.5686902Z               (Entry restored: exact match found)
+2026-08-15T23:02:37.5687306Z     Saved     Key : 
+2026-08-15T23:02:37.5687593Z               Size: 
+2026-08-15T23:02:37.5687879Z               Time: 
+2026-08-15T23:02:37.5688423Z               (Entry not saved: cache is read-only)
+2026-08-15T23:02:37.5688800Z </pre>
+2026-08-15T23:02:37.5689050Z </details>
+2026-08-15T23:02:37.5689208Z 
+2026-08-15T23:02:37.5689567Z ##[endgroup]
+2026-08-15T23:02:37.5689859Z Completed post-action step
+2026-08-15T23:02:37.6562162Z Post job cleanup.
+2026-08-15T23:02:37.8072088Z Post job cleanup.
+2026-08-15T23:02:37.9596661Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-08-15T23:02:37.9815760Z git version 2.55.0.windows.3
+2026-08-15T23:02:37.9865922Z Temporarily overriding HOME='D:\a\_temp\bd0e0edd-10bf-4a1a-9465-402115aaefda' before making global git config changes
+2026-08-15T23:02:37.9866901Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-15T23:02:37.9874345Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\spotless\spotless
+2026-08-15T23:02:38.0103791Z Removing SSH command configuration
+2026-08-15T23:02:38.0112427Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-08-15T23:02:38.0345456Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-08-15T23:02:38.4596534Z Removing HTTP extra header
+2026-08-15T23:02:38.4605126Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-15T23:02:38.4851986Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-08-15T23:02:38.9189651Z Removing includeIf entries pointing to credentials config files
+2026-08-15T23:02:38.9200015Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-15T23:02:38.9404909Z includeif.gitdir:D:/a/spotless/spotless/.git.path
+2026-08-15T23:02:38.9405493Z includeif.gitdir:D:/a/spotless/spotless/.git/worktrees/*.path
+2026-08-15T23:02:38.9405979Z includeif.gitdir:/github/workspace/.git.path
+2026-08-15T23:02:38.9406482Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-15T23:02:38.9437470Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/spotless/spotless/.git.path
+2026-08-15T23:02:38.9637087Z D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:38.9670160Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/spotless/spotless/.git.path D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:38.9899719Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/spotless/spotless/.git/worktrees/*.path
+2026-08-15T23:02:39.0097332Z D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.0129629Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/spotless/spotless/.git/worktrees/*.path D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.0434501Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-08-15T23:02:39.0676565Z /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.0708129Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.0952275Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-15T23:02:39.1155266Z /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.1186847Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config
+2026-08-15T23:02:39.1428773Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-08-15T23:02:39.5369207Z Removing credentials config 'D:\a\_temp\git-credentials-ad9fc381-7f32-4172-aba1-01ca341c423e.config'
+2026-08-15T23:02:39.5538516Z Cleaning up orphan processes
+2026-08-15T23:02:39.5735999Z Terminate orphan process: pid (7140) (java)
+2026-08-15T23:02:39.6070717Z Terminate orphan process: pid (968) (java)
+2026-08-15T23:02:39.6140048Z Terminate orphan process: pid (1904) (conhost)
+2026-08-15T23:02:39.6650020Z Terminate orphan process: pid (7656) (java)

@@ -1,0 +1,605 @@
+﻿2026-06-30T07:30:04.7837514Z Current runner version: '2.335.1'
+2026-06-30T07:30:04.7863131Z ##[group]Runner Image Provisioner
+2026-06-30T07:30:04.7864147Z Hosted Compute Agent
+2026-06-30T07:30:04.7864759Z Version: 20260611.554
+2026-06-30T07:30:04.7865399Z Commit: 5e0782fdc9014723d3be820dd114dd31555c2bd1
+2026-06-30T07:30:04.7866221Z Build Date: 2026-06-11T21:40:46Z
+2026-06-30T07:30:04.7866975Z Worker ID: {1db00b99-b907-4fda-9359-dfe304dbc8d4}
+2026-06-30T07:30:04.7868210Z Azure Region: centralus
+2026-06-30T07:30:04.7869053Z ##[endgroup]
+2026-06-30T07:30:04.7870639Z ##[group]Operating System
+2026-06-30T07:30:04.7871395Z Ubuntu
+2026-06-30T07:30:04.7872130Z 24.04.4
+2026-06-30T07:30:04.7872739Z LTS
+2026-06-30T07:30:04.7873298Z ##[endgroup]
+2026-06-30T07:30:04.7873901Z ##[group]Runner Image
+2026-06-30T07:30:04.7874579Z Image: ubuntu-24.04
+2026-06-30T07:30:04.7875181Z Version: 20260622.220.1
+2026-06-30T07:30:04.7876586Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260622.220/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-30T07:30:04.7878132Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260622.220
+2026-06-30T07:30:04.7879199Z ##[endgroup]
+2026-06-30T07:30:04.7880390Z ##[group]GITHUB_TOKEN Permissions
+2026-06-30T07:30:04.7882875Z Contents: read
+2026-06-30T07:30:04.7883507Z Metadata: read
+2026-06-30T07:30:04.7884066Z ##[endgroup]
+2026-06-30T07:30:04.7886279Z Secret source: None
+2026-06-30T07:30:04.7887274Z Prepare workflow directory
+2026-06-30T07:30:04.8223663Z Prepare all required actions
+2026-06-30T07:30:04.8261025Z Getting action download info
+2026-06-30T07:30:05.1236609Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-30T07:30:05.3563258Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-06-30T07:30:05.9888252Z Download action repository 'gradle/actions@417ae3ccd767c252f5661f1ace9f835f9654f2b5' (SHA:417ae3ccd767c252f5661f1ace9f835f9654f2b5)
+2026-06-30T07:30:06.8002290Z Complete job name: build
+2026-06-30T07:30:06.8857944Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:30:06.8869197Z ##[group]Run actions/checkout@v4
+2026-06-30T07:30:06.8870455Z with:
+2026-06-30T07:30:06.8871360Z   repository: baomidou/mybatis-plus
+2026-06-30T07:30:06.8881990Z   token: ***
+2026-06-30T07:30:06.8882877Z   ssh-strict: true
+2026-06-30T07:30:06.8883791Z   ssh-user: git
+2026-06-30T07:30:06.8884720Z   persist-credentials: true
+2026-06-30T07:30:06.8885731Z   clean: true
+2026-06-30T07:30:06.8887022Z   sparse-checkout-cone-mode: true
+2026-06-30T07:30:06.8888252Z   fetch-depth: 1
+2026-06-30T07:30:06.8889299Z   fetch-tags: false
+2026-06-30T07:30:06.8890474Z   show-progress: true
+2026-06-30T07:30:06.8891553Z   lfs: false
+2026-06-30T07:30:06.8892943Z   submodules: false
+2026-06-30T07:30:06.8894002Z   set-safe-directory: true
+2026-06-30T07:30:06.8895569Z ##[endgroup]
+2026-06-30T07:30:06.9902589Z Syncing repository: baomidou/mybatis-plus
+2026-06-30T07:30:06.9905744Z ##[group]Getting Git version info
+2026-06-30T07:30:06.9907510Z Working directory is '/home/runner/work/mybatis-plus/mybatis-plus'
+2026-06-30T07:30:06.9909894Z [command]/usr/bin/git version
+2026-06-30T07:30:06.9931337Z git version 2.54.0
+2026-06-30T07:30:06.9983587Z ##[endgroup]
+2026-06-30T07:30:06.9997613Z Temporarily overriding HOME='/home/runner/work/_temp/a17a9b31-8ccd-4157-a6d7-c3bd0b5eb9d2' before making global git config changes
+2026-06-30T07:30:07.0001069Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-30T07:30:07.0004697Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mybatis-plus/mybatis-plus
+2026-06-30T07:30:07.0047507Z Deleting the contents of '/home/runner/work/mybatis-plus/mybatis-plus'
+2026-06-30T07:30:07.0051334Z ##[group]Initializing the repository
+2026-06-30T07:30:07.0056022Z [command]/usr/bin/git init /home/runner/work/mybatis-plus/mybatis-plus
+2026-06-30T07:30:07.0131501Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-30T07:30:07.0134066Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-30T07:30:07.0136313Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-30T07:30:07.0138196Z hint: call:
+2026-06-30T07:30:07.0139187Z hint:
+2026-06-30T07:30:07.0140463Z hint: 	git config --global init.defaultBranch <name>
+2026-06-30T07:30:07.0142066Z hint:
+2026-06-30T07:30:07.0143444Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-30T07:30:07.0145513Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-30T07:30:07.0147214Z hint:
+2026-06-30T07:30:07.0148281Z hint: 	git branch -m <name>
+2026-06-30T07:30:07.0149450Z hint:
+2026-06-30T07:30:07.0151015Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-30T07:30:07.0157920Z Initialized empty Git repository in /home/runner/work/mybatis-plus/mybatis-plus/.git/
+2026-06-30T07:30:07.0168399Z [command]/usr/bin/git remote add origin https://github.com/baomidou/mybatis-plus
+2026-06-30T07:30:07.0208199Z ##[endgroup]
+2026-06-30T07:30:07.0210328Z ##[group]Disabling automatic garbage collection
+2026-06-30T07:30:07.0212107Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-30T07:30:07.0244193Z ##[endgroup]
+2026-06-30T07:30:07.0245911Z ##[group]Setting up auth
+2026-06-30T07:30:07.0249870Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-30T07:30:07.0283047Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-30T07:30:07.0597226Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-30T07:30:07.0630529Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-30T07:30:07.0860379Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-30T07:30:07.0893691Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-30T07:30:07.1125059Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-30T07:30:07.1160324Z ##[endgroup]
+2026-06-30T07:30:07.1162608Z ##[group]Fetching the repository
+2026-06-30T07:30:07.1170130Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +50d8d0db06021d2b083ffe0aafce060b0a5a3101:refs/remotes/pull/7106/merge
+2026-06-30T07:30:07.9611381Z From https://github.com/baomidou/mybatis-plus
+2026-06-30T07:30:07.9612750Z  * [new ref]         50d8d0db06021d2b083ffe0aafce060b0a5a3101 -> pull/7106/merge
+2026-06-30T07:30:07.9651857Z ##[endgroup]
+2026-06-30T07:30:07.9658962Z ##[group]Determining the checkout info
+2026-06-30T07:30:07.9660165Z ##[endgroup]
+2026-06-30T07:30:07.9660780Z [command]/usr/bin/git sparse-checkout disable
+2026-06-30T07:30:07.9702513Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-30T07:30:07.9773386Z ##[group]Checking out the ref
+2026-06-30T07:30:07.9774504Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/7106/merge
+2026-06-30T07:30:08.0631247Z Note: switching to 'refs/remotes/pull/7106/merge'.
+2026-06-30T07:30:08.0631886Z 
+2026-06-30T07:30:08.0632308Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-30T07:30:08.0632986Z changes and commit them, and you can discard any commits you make in this
+2026-06-30T07:30:08.0633610Z state without impacting any branches by switching back to a branch.
+2026-06-30T07:30:08.0634192Z 
+2026-06-30T07:30:08.0704916Z If you want to create a new branch to retain commits you create, you may
+2026-06-30T07:30:08.0705880Z do so (now or later) by using -c with the switch command. Example:
+2026-06-30T07:30:08.0706349Z 
+2026-06-30T07:30:08.0706548Z   git switch -c <new-branch-name>
+2026-06-30T07:30:08.0706901Z 
+2026-06-30T07:30:08.0707092Z Or undo this operation with:
+2026-06-30T07:30:08.0707393Z 
+2026-06-30T07:30:08.0707560Z   git switch -
+2026-06-30T07:30:08.0707817Z 
+2026-06-30T07:30:08.0708208Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-30T07:30:08.0708743Z 
+2026-06-30T07:30:08.0709291Z HEAD is now at 50d8d0d Merge 69b5e487d20b8b4ad95e1a9be9f84d9aa25b4f36 into 87abd9fd4eb9898a58a804fb35d124f46dadc5fa
+2026-06-30T07:30:08.0710749Z ##[endgroup]
+2026-06-30T07:30:08.0711456Z [command]/usr/bin/git log -1 --format=%H
+2026-06-30T07:30:08.0721550Z 50d8d0db06021d2b083ffe0aafce060b0a5a3101
+2026-06-30T07:30:08.1013517Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:30:08.1015265Z ##[group]Run actions/setup-java@v4
+2026-06-30T07:30:08.1015592Z with:
+2026-06-30T07:30:08.1015851Z   java-version: 21
+2026-06-30T07:30:08.1016130Z   distribution: temurin
+2026-06-30T07:30:08.1016417Z   java-package: jdk
+2026-06-30T07:30:08.1016690Z   check-latest: false
+2026-06-30T07:30:08.1016966Z   server-id: github
+2026-06-30T07:30:08.1017247Z   server-username: GITHUB_ACTOR
+2026-06-30T07:30:08.1017571Z   server-password: GITHUB_TOKEN
+2026-06-30T07:30:08.1017895Z   overwrite-settings: true
+2026-06-30T07:30:08.1018192Z   job-status: success
+2026-06-30T07:30:08.1021277Z   token: ***
+2026-06-30T07:30:08.1021535Z ##[endgroup]
+2026-06-30T07:30:08.2573127Z ##[group]Installed distributions
+2026-06-30T07:30:08.2844481Z Resolved Java 21.0.11+10 from tool-cache
+2026-06-30T07:30:08.2845103Z Setting Java 21.0.11+10 as the default
+2026-06-30T07:30:08.2858758Z (node:2281) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-06-30T07:30:08.2859931Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-30T07:30:08.2863638Z Creating toolchains.xml for JDK version 21 from temurin
+2026-06-30T07:30:08.2972008Z Writing to /home/runner/.m2/toolchains.xml
+2026-06-30T07:30:08.2982478Z 
+2026-06-30T07:30:08.3002492Z Java configuration:
+2026-06-30T07:30:08.3002966Z   Distribution: temurin
+2026-06-30T07:30:08.3003510Z   Version: 21.0.11+10
+2026-06-30T07:30:08.3004184Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-30T07:30:08.3004741Z 
+2026-06-30T07:30:08.3005399Z ##[endgroup]
+2026-06-30T07:30:08.3022435Z Creating settings.xml with server-id: github
+2026-06-30T07:30:08.3022964Z Writing to /home/runner/.m2/settings.xml
+2026-06-30T07:30:08.3222960Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:30:08.3224679Z ##[group]Run gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5
+2026-06-30T07:30:08.3225335Z with:
+2026-06-30T07:30:08.3225764Z   cache-disabled: false
+2026-06-30T07:30:08.3226199Z   cache-read-only: true
+2026-06-30T07:30:08.3226685Z   cache-write-only: false
+2026-06-30T07:30:08.3227176Z   cache-overwrite-existing: false
+2026-06-30T07:30:08.3227695Z   gradle-home-cache-includes: caches
+notifications
+
+2026-06-30T07:30:08.3228114Z   gradle-home-cache-cleanup: false
+2026-06-30T07:30:08.3228467Z   add-job-summary: always
+2026-06-30T07:30:08.3229007Z   add-job-summary-as-pr-comment: never
+2026-06-30T07:30:08.3229402Z   dependency-graph: disabled
+2026-06-30T07:30:08.3229761Z   dependency-graph-continue-on-failure: true
+2026-06-30T07:30:08.3230138Z   build-scan-publish: false
+2026-06-30T07:30:08.3230457Z   generate-job-summary: true
+2026-06-30T07:30:08.3230792Z   gradle-home-cache-strict-match: false
+2026-06-30T07:30:08.3231146Z   workflow-job-context: null
+2026-06-30T07:30:08.3234485Z   github-token: ***
+2026-06-30T07:30:08.3234787Z env:
+2026-06-30T07:30:08.3235180Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-30T07:30:08.3235767Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-30T07:30:08.3236220Z ##[endgroup]
+2026-06-30T07:30:08.4988068Z (node:2295) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-06-30T07:30:08.4989389Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-30T07:30:09.8708266Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-06-30T07:30:09.8710249Z ##[group]Restore Gradle state from cache
+2026-06-30T07:30:09.9961851Z ##[warning]Failed to restore v9-gradle|Linux|build[04d8ed242d6e4f9366abd4632caf0523]-50d8d0db06021d2b083ffe0aafce060b0a5a3101: Error: Cache service responded with 400
+2026-06-30T07:30:10.0016261Z Gradle User Home cache not found. Will initialize empty.
+2026-06-30T07:30:10.0017108Z ##[endgroup]
+2026-06-30T07:30:10.0146012Z ##[group]Run ./gradlew build
+2026-06-30T07:30:10.0146371Z [36;1m./gradlew build[0m
+2026-06-30T07:30:10.0273226Z shell: /usr/bin/bash -e {0}
+2026-06-30T07:30:10.0273535Z env:
+2026-06-30T07:30:10.0273880Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-30T07:30:10.0274402Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
+2026-06-30T07:30:10.0274837Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-06-30T07:30:10.0275159Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-06-30T07:30:10.0275468Z ##[endgroup]
+2026-06-30T07:30:10.4344608Z Downloading https://services.gradle.org/distributions/gradle-8.13-bin.zip
+2026-06-30T07:30:13.0274088Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+2026-06-30T07:30:14.4465486Z 
+2026-06-30T07:30:14.4482441Z Welcome to Gradle 8.13!
+2026-06-30T07:30:14.4482829Z 
+2026-06-30T07:30:14.4483376Z Here are the highlights of this release:
+2026-06-30T07:30:14.4483901Z  - Daemon JVM auto-provisioning
+2026-06-30T07:30:14.4484411Z  - Enhancements for Scala plugin and JUnit testing
+2026-06-30T07:30:14.4484997Z  - Improvements for build authors and plugin developers
+2026-06-30T07:30:14.4485354Z 
+2026-06-30T07:30:14.4485669Z For more details see https://docs.gradle.org/8.13/release-notes.html
+2026-06-30T07:30:14.4486433Z 
+2026-06-30T07:30:14.6465738Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-30T07:30:38.1514507Z > Task :mybatis-plus:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-30T07:30:38.5477151Z > Task :mybatis-plus-extension:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-30T07:30:38.6484134Z > Task :mybatis-plus-spring:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-30T07:30:38.6498977Z > Task :mybatis-plus-annotation:generateEffectiveLombokConfig
+2026-06-30T07:30:38.6502613Z > Task :mybatis-plus-core:generateEffectiveLombokConfig
+2026-06-30T07:30:40.9460644Z > Task :mybatis-plus-annotation:compileJava
+2026-06-30T07:30:45.3518129Z 
+2026-06-30T07:30:45.3521516Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/MybatisSqlSessionFactoryBuilder.java:114: warning: [deprecation] setSqlSessionFactory(SqlSessionFactory) in GlobalConfig has been deprecated
+2026-06-30T07:30:45.3523613Z > Task :mybatis-plus-core:compileJava
+2026-06-30T07:30:45.3582477Z         globalConfig.setSqlSessionFactory(sqlSessionFactory);
+2026-06-30T07:30:45.3612862Z                     ^
+2026-06-30T07:30:45.5462926Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableFieldInfo.java:227: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.5483094Z                 TypeAliasRegistry registry = tableInfo.getConfiguration().getTypeAliasRegistry();
+2026-06-30T07:30:45.5484132Z                                                       ^
+2026-06-30T07:30:45.7486425Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:167: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7513025Z             Configuration oldConfiguration = targetTableInfo.getConfiguration();
+2026-06-30T07:30:45.7535261Z                                                             ^
+2026-06-30T07:30:45.7537162Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:226: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7539106Z         Configuration configuration = tableInfo.getConfiguration();
+2026-06-30T07:30:45.7539871Z                                                ^
+2026-06-30T07:30:45.7542279Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:397: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7544564Z         AnnotationHandler annotationHandler = GlobalConfigUtils.getGlobalConfig(tableInfo.getConfiguration()).getAnnotationHandler();
+2026-06-30T07:30:45.7545823Z                                                                                          ^
+2026-06-30T07:30:45.7547558Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:424: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7549855Z         AnnotationHandler annotationHandler = GlobalConfigUtils.getGlobalConfig(tableInfo.getConfiguration()).getAnnotationHandler();
+2026-06-30T07:30:45.7551117Z                                                                                          ^
+2026-06-30T07:30:45.7553055Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:451: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7555435Z         AnnotationHandler annotationHandler = GlobalConfigUtils.getGlobalConfig(tableInfo.getConfiguration()).getAnnotationHandler();
+2026-06-30T07:30:45.7556706Z                                                                                          ^
+2026-06-30T07:30:45.7558469Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/metadata/TableInfoHelper.java:600: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:30:45.7560681Z         AnnotationHandler annotationHandler = GlobalConfigUtils.getGlobalConfig(tableInfo.getConfiguration()).getAnnotationHandler();
+2026-06-30T07:30:45.7562082Z                                                                                          ^
+2026-06-30T07:30:45.8475680Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/MybatisXMLConfigBuilder.java:269: warning: [deprecation] setMultipleResultSetsEnabled(boolean) in Configuration has been deprecated
+2026-06-30T07:30:45.8502963Z         configuration.setMultipleResultSetsEnabled(booleanValueOf(props.getProperty("multipleResultSetsEnabled"), true));
+2026-06-30T07:30:45.8532540Z                      ^
+2026-06-30T07:30:45.9462093Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/toolkit/MybatisUtils.java:134: warning: [deprecation] getSqlSessionFactory() in GlobalConfig has been deprecated
+2026-06-30T07:30:45.9464734Z         SqlSessionFactory sqlSessionFactory = GlobalConfigUtils.getGlobalConfig(sqlSession.getConfiguration()).getSqlSessionFactory();
+2026-06-30T07:30:45.9465922Z                                                                                                               ^
+2026-06-30T07:30:46.4483265Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/MybatisParameterHandler.java:141: warning: [deprecation] openInsertFill() in MetaObjectHandler has been deprecated
+2026-06-30T07:30:46.4493187Z             if (metaObjectHandler.openInsertFill() && metaObjectHandler.openInsertFill(mappedStatement) && tableInfo.isWithInsertFill()) {
+2026-06-30T07:30:46.4494375Z                                  ^
+2026-06-30T07:30:46.4496062Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/MybatisParameterHandler.java:149: warning: [deprecation] openUpdateFill() in MetaObjectHandler has been deprecated
+2026-06-30T07:30:46.4498426Z             if (metaObjectHandler.openUpdateFill() && metaObjectHandler.openUpdateFill(mappedStatement) && tableInfo.isWithUpdateFill()) {
+2026-06-30T07:30:46.4499595Z                                  ^
+2026-06-30T07:30:46.7463484Z Note: /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/override/MybatisMapperMethod.java uses unchecked or unsafe operations.
+2026-06-30T07:30:46.7522503Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T07:30:46.7562191Z 12 warnings
+2026-06-30T07:30:58.1469126Z 
+2026-06-30T07:30:58.1480767Z > Task :mybatis-plus-extension:generateEffectiveLombokConfig
+2026-06-30T07:30:58.1481529Z > Task :mybatis-plus-spring:generateEffectiveLombokConfig
+2026-06-30T07:30:58.1482766Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-4.9:processResources NO-SOURCE
+2026-06-30T07:30:58.1483861Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:processResources NO-SOURCE
+2026-06-30T07:30:58.1484686Z > Task :mybatis-plus:generateEffectiveLombokConfig
+2026-06-30T07:30:58.1485229Z > Task :mybatis-plus:processResources NO-SOURCE
+2026-06-30T07:30:59.2509127Z > Task :mybatis-plus:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.2529608Z > Task :mybatis-plus:cleanTest UP-TO-DATE
+2026-06-30T07:30:59.2575115Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:generateEffectiveLombokConfig
+2026-06-30T07:30:59.2600346Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:processResources NO-SOURCE
+2026-06-30T07:30:59.3518332Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:generateEffectiveLombokConfig
+2026-06-30T07:30:59.3572876Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-4.9:generateEffectiveLombokConfig
+2026-06-30T07:30:59.4472815Z > Task :mybatis-plus:processTestResources
+2026-06-30T07:30:59.4502692Z > Task :mybatis-plus:generateTestEffectiveLombokConfig
+2026-06-30T07:30:59.4532601Z > Task :mybatis-plus-annotation:processResources NO-SOURCE
+2026-06-30T07:30:59.4538161Z > Task :mybatis-plus-annotation:classes
+2026-06-30T07:30:59.4593632Z > Task :mybatis-plus-annotation:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.5483023Z > Task :mybatis-plus-annotation:jar
+2026-06-30T07:30:59.5512289Z > Task :mybatis-plus-core:processResources
+2026-06-30T07:30:59.5534990Z > Task :mybatis-plus-core:classes
+2026-06-30T07:30:59.5572376Z > Task :mybatis-plus-core:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.6464166Z > Task :mybatis-plus-core:jar
+2026-06-30T07:30:59.6472967Z > Task :mybatis-plus-extension:processResources NO-SOURCE
+2026-06-30T07:30:59.6474179Z > Task :mybatis-plus-extension:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.6475086Z > Task :mybatis-plus-spring:processResources
+2026-06-30T07:30:59.6475962Z > Task :mybatis-plus-spring:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.7469857Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.7493695Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.7522791Z > Task :mybatis-plus-annotation:assemble
+2026-06-30T07:30:59.7582655Z > Task :mybatis-plus-annotation:cleanTest UP-TO-DATE
+2026-06-30T07:30:59.7595401Z > Task :mybatis-plus-annotation:generateTestEffectiveLombokConfig
+2026-06-30T07:30:59.7604623Z > Task :mybatis-plus-annotation:compileTestJava NO-SOURCE
+2026-06-30T07:30:59.7606016Z > Task :mybatis-plus-annotation:processTestResources NO-SOURCE
+2026-06-30T07:30:59.7606696Z > Task :mybatis-plus-annotation:testClasses UP-TO-DATE
+2026-06-30T07:30:59.7607257Z > Task :mybatis-plus-annotation:test NO-SOURCE
+2026-06-30T07:30:59.7607743Z > Task :mybatis-plus-annotation:check UP-TO-DATE
+2026-06-30T07:30:59.7608199Z > Task :mybatis-plus-annotation:build
+2026-06-30T07:30:59.7608712Z > Task :mybatis-plus-bom:generateEffectiveLombokConfig
+2026-06-30T07:30:59.7609220Z > Task :mybatis-plus-bom:compileJava NO-SOURCE
+2026-06-30T07:30:59.7609711Z > Task :mybatis-plus-bom:processResources NO-SOURCE
+2026-06-30T07:30:59.7610209Z > Task :mybatis-plus-bom:classes UP-TO-DATE
+2026-06-30T07:30:59.7610755Z > Task :mybatis-plus-bom:generatePomFileForMavenJavaPublication
+2026-06-30T07:30:59.7611295Z > Task :mybatis-plus-bom:jar
+2026-06-30T07:30:59.7612314Z > Task :mybatis-plus-bom:assemble
+2026-06-30T07:30:59.7612793Z > Task :mybatis-plus-bom:cleanTest UP-TO-DATE
+2026-06-30T07:30:59.7613346Z > Task :mybatis-plus-bom:generateTestEffectiveLombokConfig
+2026-06-30T07:30:59.7613913Z > Task :mybatis-plus-bom:compileTestJava NO-SOURCE
+2026-06-30T07:30:59.7614446Z > Task :mybatis-plus-bom:processTestResources NO-SOURCE
+2026-06-30T07:30:59.7615000Z > Task :mybatis-plus-bom:testClasses UP-TO-DATE
+2026-06-30T07:30:59.7615491Z > Task :mybatis-plus-bom:test NO-SOURCE
+2026-06-30T07:30:59.7615948Z > Task :mybatis-plus-bom:check UP-TO-DATE
+2026-06-30T07:30:59.7616382Z > Task :mybatis-plus-bom:build
+2026-06-30T07:30:59.7616733Z > Task :mybatis-plus-core:assemble
+2026-06-30T07:30:59.7617115Z > Task :mybatis-plus-core:cleanTest UP-TO-DATE
+2026-06-30T07:30:59.8476039Z > Task :mybatis-plus-core:processTestResources
+2026-06-30T07:30:59.8522799Z > Task :mybatis-plus-extension:cleanTest UP-TO-DATE
+2026-06-30T07:30:59.8609554Z > Task :mybatis-plus-extension:processTestResources
+2026-06-30T07:30:59.8662688Z > Task :mybatis-plus-generator:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-06-30T07:30:59.9466275Z > Task :mybatis-plus-core:generateTestEffectiveLombokConfig
+2026-06-30T07:31:04.4463732Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/core/MethodTest.java:39: warning: [deprecation] SelectPage in com.baomidou.mybatisplus.core.injector.methods has been deprecated
+2026-06-30T07:31:04.4465341Z 
+2026-06-30T07:31:04.4550587Z > Task :mybatis-plus-core:compileTestJava
+2026-06-30T07:31:04.4551906Z             .add(new SelectPage())
+2026-06-30T07:31:04.4572316Z                      ^
+2026-06-30T07:31:04.5460885Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/core/toolkit/MybatisUtilsTest.java:30: warning: [deprecation] setSqlSessionFactory(SqlSessionFactory) in GlobalConfig has been deprecated
+2026-06-30T07:31:04.5473045Z         GlobalConfigUtils.getGlobalConfig(configuration).setSqlSessionFactory(Mockito.mock(SqlSessionFactory.class));
+2026-06-30T07:31:04.5502506Z                                                         ^
+2026-06-30T07:31:04.9460521Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/MybatisParameterHandlerTest.java:69: warning: [deprecation] DefaultIdentifierGenerator() in DefaultIdentifierGenerator has been deprecated
+2026-06-30T07:31:04.9473270Z         GlobalConfigUtils.getGlobalConfig(configuration).setIdentifierGenerator(new DefaultIdentifierGenerator()).setMetaObjectHandler(new MetaObjectHandler() {
+2026-06-30T07:31:04.9502717Z                                                                                 ^
+2026-06-30T07:31:05.3491142Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/metadata/TableInfoHelperTest.java:318: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:31:05.3522929Z         final ResultMap resultMap = tableInfo.getConfiguration().getResultMap(tableInfo.getResultMap());
+2026-06-30T07:31:05.3542216Z                                              ^
+2026-06-30T07:31:05.4459405Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/MybatisConfigurationTest.java:38: warning: [deprecation] isMultipleResultSetsEnabled() in Configuration has been deprecated
+2026-06-30T07:31:05.4464349Z         Assertions.assertTrue(configuration.isMultipleResultSetsEnabled());
+2026-06-30T07:31:05.4512706Z                                            ^
+2026-06-30T07:31:05.4543614Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/MybatisConfigurationTest.java:71: warning: [deprecation] isMultipleResultSetsEnabled() in Configuration has been deprecated
+2026-06-30T07:31:05.4580120Z         Assertions.assertTrue(configuration.isMultipleResultSetsEnabled());
+2026-06-30T07:31:05.4602688Z                                            ^
+2026-06-30T07:31:05.4633775Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/MybatisConfigurationTest.java:131: warning: [deprecation] <T>addNewMapper(Class<T>) in MybatisConfiguration has been deprecated
+2026-06-30T07:31:05.4635735Z         mybatisConfiguration.addNewMapper(BMapper.class);
+2026-06-30T07:31:05.4662372Z                             ^
+2026-06-30T07:31:05.4692273Z   where T is a type-variable:
+2026-06-30T07:31:05.4722452Z     T extends Object declared in method <T>addNewMapper(Class<T>)
+2026-06-30T07:31:05.4757891Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/MybatisConfigurationTest.java:132: warning: [deprecation] <T>addNewMapper(Class<T>) in MybatisConfiguration has been deprecated
+2026-06-30T07:31:05.4759950Z         mybatisConfiguration.addNewMapper(AMapper.class);
+2026-06-30T07:31:05.4782355Z                             ^
+2026-06-30T07:31:05.4805449Z   where T is a type-variable:
+2026-06-30T07:31:05.4813744Z     T extends Object declared in method <T>addNewMapper(Class<T>)
+2026-06-30T07:31:05.6485360Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:118: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6512970Z         Assertions.assertEquals(c.getSex(), ReflectionKit.getFieldValue(c, "sex"));
+2026-06-30T07:31:05.6574111Z                                                          ^
+2026-06-30T07:31:05.6583876Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:119: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6586013Z         Assertions.assertEquals(c.getAge(), ReflectionKit.getFieldValue(c, "age"));
+2026-06-30T07:31:05.6586897Z                                                          ^
+2026-06-30T07:31:05.6588583Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:124: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6590689Z         Assertions.assertEquals(entityByLombok.getPId(), ReflectionKit.getFieldValue(entityByLombok, "pId"));
+2026-06-30T07:31:05.6591889Z                                                                       ^
+2026-06-30T07:31:05.6593631Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:125: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6596748Z         Assertions.assertEquals(entityByLombok.getParentId(), ReflectionKit.getFieldValue(entityByLombok, "parentId"));
+2026-06-30T07:31:05.6597894Z                                                                            ^
+2026-06-30T07:31:05.6599748Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:130: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6602025Z         Assertions.assertEquals(entity.getParentId(), ReflectionKit.getFieldValue(entity, "parentId"));
+2026-06-30T07:31:05.6602920Z                                                                    ^
+2026-06-30T07:31:05.6604531Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-core/src/test/java/com/baomidou/mybatisplus/test/toolkit/ReflectionKitTest.java:131: warning: [deprecation] getFieldValue(Object,String) in ReflectionKit has been deprecated
+2026-06-30T07:31:05.6606400Z         Assertions.assertEquals(entity.getpId(), ReflectionKit.getFieldValue(entity, "pId"));
+2026-06-30T07:31:05.6607141Z                                                               ^
+2026-06-30T07:31:06.1513683Z Note: Some input files use or override a deprecated API that is marked for removal.
+2026-06-30T07:31:06.1522596Z Note: Recompile with -Xlint:removal for details.
+2026-06-30T07:31:06.1562156Z 14 warnings
+2026-06-30T07:31:09.0458894Z 
+2026-06-30T07:31:09.0562671Z > Task :mybatis-plus-core:testClasses
+2026-06-30T07:31:09.3462945Z > Task :mybatis-plus-extension:compileKotlin
+2026-06-30T07:31:12.1473425Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-30T07:31:13.5473147Z > Task :mybatis-plus-core:test
+2026-06-30T07:31:15.5458107Z 
+2026-06-30T07:31:15.5483092Z > Task :mybatis-plus-extension:compileJava
+2026-06-30T07:31:15.5513701Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/activerecord/AbstractModel.java:243: warning: [deprecation] sqlSession(Class<?>) in SqlHelper has been deprecated
+2026-06-30T07:31:15.5515395Z         return SqlHelper.sqlSession(this.entityClass);
+2026-06-30T07:31:15.5542339Z                         ^
+2026-06-30T07:31:15.5543793Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/activerecord/AbstractModel.java:262: warning: [deprecation] getSqlStatement(String) in TableInfo has been deprecated
+2026-06-30T07:31:15.5545108Z         return SqlHelper.table(this.entityClass).getSqlStatement(sqlMethod);
+2026-06-30T07:31:15.5545509Z                                                 ^
+2026-06-30T07:31:15.5546487Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/activerecord/AbstractModel.java:279: warning: [deprecation] currentSessionFactory(Class<?>) in GlobalConfigUtils has been deprecated
+2026-06-30T07:31:15.5548608Z         CompatibleHelper.getCompatibleSet().closeSqlSession(sqlSession, GlobalConfigUtils.currentSessionFactory(this.entityClass));
+2026-06-30T07:31:15.5549589Z                                                                                          ^
+2026-06-30T07:31:15.5551008Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/toolkit/SqlHelper.java:322: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:31:15.5552752Z         return (M) tableInfo.getConfiguration().getMapper(mapperClass, sqlSession);
+2026-06-30T07:31:15.5553349Z                             ^
+2026-06-30T07:31:15.5554774Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/toolkit/SqlHelper.java:340: warning: [deprecation] currentSessionFactory(Class<?>) in GlobalConfigUtils has been deprecated
+2026-06-30T07:31:15.5557852Z             CompatibleHelper.getCompatibleSet().closeSqlSession(sqlSession, GlobalConfigUtils.currentSessionFactory(entityClass));
+2026-06-30T07:31:15.5558913Z                                                                                              ^
+2026-06-30T07:31:15.5560441Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/toolkit/JdbcUtils.java:100: warning: [deprecation] GAUSS in DbType has been deprecated
+2026-06-30T07:31:15.5562008Z             return DbType.GAUSS;
+2026-06-30T07:31:15.5562403Z                          ^
+2026-06-30T07:31:15.5564120Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/ddl/history/MysqlDdlGenerator.java:35: warning: [deprecation] existTable(String,Function<String,Boolean>) in IDdlGenerator has been deprecated
+2026-06-30T07:31:15.5566237Z     public boolean existTable(String databaseName, Function<String, Boolean> executeFunction) {
+2026-06-30T07:31:15.5566972Z                    ^
+2026-06-30T07:31:15.5568889Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/ddl/history/SQLiteDdlGenerator.java:33: warning: [deprecation] existTable(String,Function<String,Boolean>) in IDdlGenerator has been deprecated
+2026-06-30T07:31:15.5570943Z     public boolean existTable(String databaseName, Function<String, Boolean> executeFunction) {
+2026-06-30T07:31:15.5602102Z                    ^
+2026-06-30T07:31:15.5603978Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/ddl/history/PostgreDdlGenerator.java:90: warning: [deprecation] existTable(String,Function<String,Boolean>) in IDdlGenerator has been deprecated
+2026-06-30T07:31:15.5606167Z     public boolean existTable(String databaseName, Function<String, Boolean> executeFunction) {
+2026-06-30T07:31:15.5606934Z                    ^
+2026-06-30T07:31:15.5608658Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/ddl/history/OracleDdlGenerator.java:72: warning: [deprecation] existTable(String,Function<String,Boolean>) in IDdlGenerator has been deprecated
+2026-06-30T07:31:15.5610781Z     public boolean existTable(String databaseName, Function<String, Boolean> executeFunction) {
+2026-06-30T07:31:15.5611505Z                    ^
+2026-06-30T07:31:15.5612888Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/plugins/pagination/DialectFactory.java:68: warning: [deprecation] GBASEDBT in DbType has been deprecated
+2026-06-30T07:31:15.5614305Z                 || dbType == DbType.GBASEDBT
+2026-06-30T07:31:15.5614760Z                                    ^
+2026-06-30T07:31:15.5616278Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/plugins/pagination/DialectFactory.java:69: warning: [deprecation] GBASE_INFORMIX in DbType has been deprecated
+2026-06-30T07:31:15.5617870Z                 || dbType == DbType.GBASE_INFORMIX
+2026-06-30T07:31:15.5618338Z                                    ^
+2026-06-30T07:31:15.5619711Z Note: /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/main/java/com/baomidou/mybatisplus/extension/repository/AbstractRepository.java uses unchecked or unsafe operations.
+2026-06-30T07:31:15.5621174Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T07:31:15.5621826Z 12 warnings
+2026-06-30T07:31:16.7458442Z 
+2026-06-30T07:31:16.7459092Z > Task :mybatis-plus-spring:compileKotlin NO-SOURCE
+2026-06-30T07:31:17.6458084Z 
+2026-06-30T07:31:17.6484009Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/toolkit/SqlRunner.java:274: warning: [deprecation] currentSessionFactory(Class<?>) in GlobalConfigUtils has been deprecated
+2026-06-30T07:31:17.6486509Z > Task :mybatis-plus-spring:compileJava
+2026-06-30T07:31:17.6507900Z         return Optional.ofNullable(clazz).map(GlobalConfigUtils::currentSessionFactory).orElse(SqlHelper.FACTORY);
+2026-06-30T07:31:17.6532359Z                                               ^
+2026-06-30T07:31:17.6534608Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:44: warning: [deprecation] CompatibleSet in com.baomidou.mybatisplus.extension.spi has been deprecated
+2026-06-30T07:31:17.6536509Z public class SpringCompatibleSet implements CompatibleSet {
+2026-06-30T07:31:17.6537096Z                                             ^
+2026-06-30T07:31:17.6538811Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:44: warning: [deprecation] CompatibleSet in com.baomidou.mybatisplus.extension.spi has been deprecated
+2026-06-30T07:31:17.6540681Z public class SpringCompatibleSet implements CompatibleSet {
+2026-06-30T07:31:17.6541245Z                                             ^
+2026-06-30T07:31:17.6543510Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:44: warning: [deprecation] CompatibleSet in com.baomidou.mybatisplus.extension.spi has been deprecated
+2026-06-30T07:31:17.6545320Z public class SpringCompatibleSet implements CompatibleSet {
+2026-06-30T07:31:17.6545879Z                                             ^
+2026-06-30T07:31:17.6547558Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:44: warning: [deprecation] CompatibleSet in com.baomidou.mybatisplus.extension.spi has been deprecated
+2026-06-30T07:31:17.6549357Z public class SpringCompatibleSet implements CompatibleSet {
+2026-06-30T07:31:17.6549938Z                                             ^
+2026-06-30T07:31:17.6551632Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:44: warning: [deprecation] CompatibleSet in com.baomidou.mybatisplus.extension.spi has been deprecated
+2026-06-30T07:31:17.6553655Z public class SpringCompatibleSet implements CompatibleSet {
+2026-06-30T07:31:17.6554225Z                                             ^
+2026-06-30T07:31:17.6555807Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-spring/src/main/java/com/baomidou/mybatisplus/extension/spi/SpringCompatibleSet.java:100: warning: [deprecation] getInputStream(String) in CompatibleSet has been deprecated
+2026-06-30T07:31:17.6557565Z     public InputStream getInputStream(String path) throws Exception {
+2026-06-30T07:31:17.6558149Z                        ^
+2026-06-30T07:31:17.6558492Z 7 warnings
+2026-06-30T07:31:17.9471223Z 
+2026-06-30T07:31:17.9472399Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:compileJava
+2026-06-30T07:31:17.9473472Z > Task :mybatis-plus-generator:generateEffectiveLombokConfig
+2026-06-30T07:31:19.4457206Z 
+2026-06-30T07:31:19.4458323Z Note: Some input files use unchecked or unsafe operations.
+2026-06-30T07:31:19.4459166Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-4.9:compileJava
+2026-06-30T07:31:19.4459707Z 
+2026-06-30T07:31:19.4459935Z > Task :mybatis-plus:compileKotlin NO-SOURCE
+2026-06-30T07:31:19.4460412Z > Task :mybatis-plus:compileJava NO-SOURCE
+2026-06-30T07:31:19.4460765Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T07:31:19.4461113Z > Task :mybatis-plus:classes UP-TO-DATE
+2026-06-30T07:31:19.4461398Z > Task :mybatis-plus:jar
+2026-06-30T07:31:19.4461639Z > Task :mybatis-plus:assemble
+2026-06-30T07:31:22.3468240Z 
+2026-06-30T07:31:22.3494158Z Note: /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-jsqlparser-support/mybatis-plus-jsqlparser/src/main/java/com/baomidou/mybatisplus/extension/parser/cache/FstFactory.java uses or overrides a deprecated API that is marked for removal.
+2026-06-30T07:31:22.3496593Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:compileJava
+2026-06-30T07:31:22.3498642Z Note: Recompile with -Xlint:removal for details.
+2026-06-30T07:31:22.3499510Z Note: Some input files use unchecked or unsafe operations.
+2026-06-30T07:31:22.3500404Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T07:31:27.0507060Z 
+2026-06-30T07:31:27.0528642Z > Task :mybatis-plus-extension:classes
+2026-06-30T07:31:27.1495804Z > Task :mybatis-plus-extension:jar
+2026-06-30T07:31:27.1517419Z > Task :mybatis-plus-extension:generateTestEffectiveLombokConfig
+2026-06-30T07:31:27.1548780Z > Task :mybatis-plus-spring:classes
+2026-06-30T07:31:27.1563001Z > Task :mybatis-plus-spring:jar
+2026-06-30T07:31:27.1574952Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:classes
+2026-06-30T07:31:27.1591085Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser:jar
+2026-06-30T07:31:27.1592075Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:classes
+2026-06-30T07:31:27.2473483Z > Task :mybatis-plus-jsqlparser-support:mybatis-plus-jsqlparser-common:jar
+2026-06-30T07:31:27.2474517Z > Task :mybatis-plus-core:check
+2026-06-30T07:31:27.2542661Z > Task :mybatis-plus-core:build
+2026-06-30T07:31:27.2590618Z > Task :mybatis-plus-extension:assemble
+2026-06-30T07:31:27.2591607Z > Task :mybatis-plus-extension:compileTestKotlin NO-SOURCE
+2026-06-30T07:31:30.1458667Z > Task :mybatis-plus:compileTestKotlin
+2026-06-30T07:31:30.2458216Z 
+2026-06-30T07:31:30.2460597Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/test/java/com/baomidou/mybatisplus/test/DdlHelperTest.java:115: warning: [deprecation] PostgreDdlGenerator() in PostgreDdlGenerator has been deprecated
+2026-06-30T07:31:30.2462498Z > Task :mybatis-plus-extension:compileTestJava
+2026-06-30T07:31:30.2478827Z         var ddlGenerator = new PostgreDdlGenerator();
+2026-06-30T07:31:30.2502647Z                            ^
+2026-06-30T07:31:30.3474655Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus-extension/src/test/java/com/baomidou/mybatisplus/test/plugins/pagination/DialectFactoryTest.java:33: warning: [deprecation] GAUSS in DbType has been deprecated
+2026-06-30T07:31:30.3494341Z         Assertions.assertInstanceOf(OracleDialect.class, DialectFactory.getDialect(DbType.GAUSS));
+2026-06-30T07:31:30.3501123Z                                                                                          ^
+2026-06-30T07:31:30.3508285Z 2 warnings
+2026-06-30T07:31:33.8458421Z 
+2026-06-30T07:31:33.8468959Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/DbTypeTest.java:23: warning: [deprecation] GAUSS in DbType has been deprecated
+2026-06-30T07:31:33.8470641Z > Task :mybatis-plus:compileTestJava
+2026-06-30T07:31:33.8473301Z         Assertions.assertEquals(DbType.GAUSS, DbType.getDbType("gauss"));
+2026-06-30T07:31:33.8474862Z                                       ^
+2026-06-30T07:31:33.8476308Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/DbTypeTest.java:24: warning: [deprecation] GAUSS in DbType has been deprecated
+2026-06-30T07:31:33.8478090Z         Assertions.assertEquals(DbType.GAUSS, DbType.getDbType("Gauss"));
+2026-06-30T07:31:33.8478859Z                                       ^
+2026-06-30T07:31:33.8480609Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/toolkit/JdbcUtilsTest.java:31: warning: [deprecation] GAUSS in DbType has been deprecated
+2026-06-30T07:31:33.8481969Z         Assertions.assertEquals(DbType.GAUSS, JdbcUtils.getDbType("jdbc:zenith://127.0.0.1:8000/baomidou"));
+2026-06-30T07:31:33.8482488Z                                       ^
+2026-06-30T07:31:34.1459708Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/phoenix/PhoenixTest.java:52: warning: [deprecation] sqlSessionBatch(Class<?>) in SqlHelper has been deprecated
+2026-06-30T07:31:34.1463899Z         try (SqlSession sqlSession = SqlHelper.sqlSessionBatch(PhoenixTestInfo.class)) {
+2026-06-30T07:31:34.1465112Z                                               ^
+2026-06-30T07:31:34.1466735Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/phoenix/PhoenixTest.java:53: warning: [deprecation] getSqlStatement(String) in TableInfo has been deprecated
+2026-06-30T07:31:34.1468723Z             String sqlStatement = SqlHelper.table(PhoenixTestInfo.class).getSqlStatement(UPSERT_ONE.getMethod());
+2026-06-30T07:31:34.1469777Z                                                                         ^
+2026-06-30T07:31:34.1471927Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/logicdel/LogicDelTest.java:134: warning: [deprecation] LogicDeleteBatchByIds in com.baomidou.mybatisplus.extension.injector.methods has been deprecated
+2026-06-30T07:31:34.1473860Z                 methodList.add(new LogicDeleteBatchByIds("testDeleteBatch"));
+2026-06-30T07:31:34.1474889Z                                    ^
+2026-06-30T07:31:34.3485469Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/customfill/CustomFillConfig.java:72: warning: [deprecation] getConfiguration() in TableInfo has been deprecated
+2026-06-30T07:31:34.3533763Z                         AnnotationHandler annotationHandler = GlobalConfigUtils.getGlobalConfig(TableInfoHelper.getTableInfo(clazz).getConfiguration()).getAnnotationHandler();
+2026-06-30T07:31:34.3590396Z                                                                                                                                    ^
+2026-06-30T07:31:34.3603957Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/config/MybatisPlusConfig.java:59: warning: [deprecation] DataChangeRecorderInnerInterceptor in com.baomidou.mybatisplus.extension.plugins.inner has been deprecated
+2026-06-30T07:31:34.3629019Z         mybatisPlusInterceptor.addInnerInterceptor(new DataChangeRecorderInnerInterceptor());
+2026-06-30T07:31:34.3654231Z                                                        ^
+2026-06-30T07:31:34.3693671Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/config/MybatisPlusConfigLogicDelete.java:70: warning: [deprecation] LogicDeleteByIdWithFill in com.baomidou.mybatisplus.extension.injector.methods has been deprecated
+2026-06-30T07:31:34.3722153Z                 methodList.add(new LogicDeleteByIdWithFill());
+2026-06-30T07:31:34.3722866Z                                    ^
+2026-06-30T07:31:34.3753563Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/H2UserTest.java:82: warning: [deprecation] DataChangeRecorderInnerInterceptor in com.baomidou.mybatisplus.extension.plugins.inner has been deprecated
+2026-06-30T07:31:34.3782340Z                         if (innerInterceptor instanceof DataChangeRecorderInnerInterceptor) {
+2026-06-30T07:31:34.3812097Z                                                         ^
+2026-06-30T07:31:34.3814106Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/H2UserTest.java:83: warning: [deprecation] DataChangeRecorderInnerInterceptor in com.baomidou.mybatisplus.extension.plugins.inner has been deprecated
+2026-06-30T07:31:34.3842697Z                             ((DataChangeRecorderInnerInterceptor) innerInterceptor).setBatchUpdateLimit(limitation).openBatchUpdateLimitation();
+2026-06-30T07:31:34.3872112Z                               ^
+2026-06-30T07:31:34.3903436Z /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/H2UserTest.java:297: warning: [deprecation] DataChangeRecorderInnerInterceptor in com.baomidou.mybatisplus.extension.plugins.inner has been deprecated
+2026-06-30T07:31:34.3906396Z         if (e instanceof DataChangeRecorderInnerInterceptor.DataUpdateLimitationException) {
+2026-06-30T07:31:34.3932197Z                          ^
+2026-06-30T07:31:34.8458916Z Note: /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/PageTest.java uses or overrides a deprecated API that is marked for removal.
+2026-06-30T07:31:34.8482469Z Note: Recompile with -Xlint:removal for details.
+2026-06-30T07:31:34.8513055Z Note: /home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/h2/customfill/CustomFillConfig.java uses unchecked or unsafe operations.
+2026-06-30T07:31:34.8542235Z Note: Recompile with -Xlint:unchecked for details.
+2026-06-30T07:31:34.8542961Z 12 warnings
+2026-06-30T07:31:35.3459069Z 
+2026-06-30T07:31:35.3459899Z > Task :mybatis-plus:testClasses
+2026-06-30T07:31:39.6458701Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-06-30T07:31:40.8458046Z 
+2026-06-30T07:31:40.8459052Z > Task :mybatis-plus:test
+2026-06-30T07:31:40.8459615Z 
+2026-06-30T07:31:40.8459981Z AutoResultMapTest > test() FAILED
+2026-06-30T07:31:40.8460716Z     java.lang.AssertionError at AutoResultMapTest.java:24
+2026-06-30T07:31:50.5462466Z 
+2026-06-30T07:31:50.5512706Z ResultMapTest > test() FAILED
+2026-06-30T07:31:50.5513287Z     java.lang.AssertionError at ResultMapTest.java:30
+2026-06-30T07:31:52.8457946Z 
+2026-06-30T07:31:52.8459468Z 07:31:52.806 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@632a7680, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8461610Z 07:31:52.806 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@780e6b63, started on Tue Jun 30 07:31:50 UTC 2026
+2026-06-30T07:31:52.8463353Z 07:31:52.807 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@7ae49d52, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8464729Z 07:31:52.808 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@75cfb958, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8466097Z 07:31:52.808 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@19266ca3, started on Tue Jun 30 07:31:50 UTC 2026
+2026-06-30T07:31:52.8467417Z 07:31:52.808 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@5dff108c, started on Tue Jun 30 07:31:43 UTC 2026
+2026-06-30T07:31:52.8468728Z 07:31:52.810 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@77e2a5d3, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8470045Z 07:31:52.810 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@217abcc9, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8471367Z 07:31:52.810 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@c9518ee, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8473444Z 07:31:52.810 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@41fbe8c0, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8475484Z 07:31:52.811 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@15549dd7, started on Tue Jun 30 07:31:42 UTC 2026
+2026-06-30T07:31:52.8477517Z 07:31:52.812 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@331fe6d4, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8479874Z 07:31:52.812 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@62243a7a, started on Tue Jun 30 07:31:49 UTC 2026
+2026-06-30T07:31:52.8481547Z 07:31:52.814 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@75c2a35, started on Tue Jun 30 07:31:52 UTC 2026
+2026-06-30T07:31:52.8483210Z 07:31:52.814 [SpringContextShutdownHook] DEBUG o.s.c.s.GenericApplicationContext - Closing org.springframework.context.support.GenericApplicationContext@746da54f, started on Tue Jun 30 07:31:42 UTC 2026
+2026-06-30T07:31:52.9473109Z 
+2026-06-30T07:31:52.9473135Z 
+2026-06-30T07:31:52.9512595Z 1239 tests completed, 2 failed, 1 skipped
+2026-06-30T07:31:52.9513167Z > Task :mybatis-plus:test
+2026-06-30T07:31:53.4465145Z 
+2026-06-30T07:31:53.4483719Z > Task :mybatis-plus:test FAILED
+2026-06-30T07:31:53.4484513Z 
+2026-06-30T07:31:53.4485401Z [Incubating] Problems report is available at: file:///home/runner/work/mybatis-plus/mybatis-plus/build/reports/problems/problems-report.html
+2026-06-30T07:31:53.5457104Z 
+2026-06-30T07:31:53.5472124Z 
+2026-06-30T07:31:53.5483196Z FAILURE: Build failed with an exception.
+2026-06-30T07:31:53.5484014Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-06-30T07:31:53.5496608Z 
+2026-06-30T07:31:53.5522300Z * What went wrong:
+2026-06-30T07:31:53.5522532Z 
+2026-06-30T07:31:53.5548280Z Execution failed for task ':mybatis-plus:test'.
+2026-06-30T07:31:53.5549340Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-06-30T07:31:53.5552889Z > There were failing tests. See the report at: file:///home/runner/work/mybatis-plus/mybatis-plus/mybatis-plus/build/reports/tests/test/index.html
+2026-06-30T07:31:53.5553729Z 
+2026-06-30T07:31:53.5554451Z For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-06-30T07:31:53.5555256Z 
+2026-06-30T07:31:53.5555378Z * Try:
+2026-06-30T07:31:53.5555675Z > Run with --scan to get full insights.
+2026-06-30T07:31:53.5555949Z 
+2026-06-30T07:31:53.5556077Z BUILD FAILED in 1m 43s
+2026-06-30T07:31:53.5556428Z 55 actionable tasks: 50 executed, 5 up-to-date
+2026-06-30T07:31:53.8784836Z ##[error]Process completed with exit code 1.
+2026-06-30T07:31:53.8940281Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:31:53.8943228Z Post job cleanup.
+2026-06-30T07:31:54.0610840Z In post-action step
+2026-06-30T07:31:54.0617380Z Cache is read-only: will not save state for use in subsequent builds.
+2026-06-30T07:31:54.0620156Z (node:2768) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-06-30T07:31:54.0621032Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-30T07:31:54.0626010Z Generating Job Summary
+2026-06-30T07:31:54.0662659Z Completed post-action step
+2026-06-30T07:31:54.0834575Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:31:54.0835742Z Post job cleanup.
+2026-06-30T07:31:54.2162469Z (node:2780) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-06-30T07:31:54.2163651Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-06-30T07:31:54.2400296Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-06-30T07:31:54.2401480Z Post job cleanup.
+2026-06-30T07:31:54.3259690Z [command]/usr/bin/git version
+2026-06-30T07:31:54.3296719Z git version 2.54.0
+2026-06-30T07:31:54.3331311Z Temporarily overriding HOME='/home/runner/work/_temp/a13cc907-689f-4340-8f3f-f66660e8bae1' before making global git config changes
+2026-06-30T07:31:54.3332616Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-30T07:31:54.3336820Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mybatis-plus/mybatis-plus
+2026-06-30T07:31:54.3374414Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-30T07:31:54.3409414Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-30T07:31:54.3682547Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-30T07:31:54.3707045Z http.https://github.com/.extraheader
+2026-06-30T07:31:54.3718172Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-30T07:31:54.3750447Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-30T07:31:54.3980502Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-30T07:31:54.4012074Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-30T07:31:54.4396193Z Cleaning up orphan processes
+2026-06-30T07:31:54.4709551Z Terminate orphan process: pid (2387) (java)
+2026-06-30T07:31:54.4747512Z Terminate orphan process: pid (2537) (java)
+2026-06-30T07:31:54.4757700Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

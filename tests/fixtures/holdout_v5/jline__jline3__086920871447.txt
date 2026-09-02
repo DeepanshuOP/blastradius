@@ -1,0 +1,512 @@
+﻿2026-07-13T20:00:56.2228506Z Current runner version: '2.335.1'
+2026-07-13T20:00:56.2245491Z ##[group]Runner Image Provisioner
+2026-07-13T20:00:56.2246052Z Hosted Compute Agent
+2026-07-13T20:00:56.2246376Z Version: 20260624.560
+2026-07-13T20:00:56.2246724Z Commit: 925d229a51159bc391ae97e54a2dd1fe20af789d
+2026-07-13T20:00:56.2247143Z Build Date: 2026-06-24T18:26:47Z
+2026-07-13T20:00:56.2247521Z Worker ID: {92c85b7b-b5d8-4c0e-92cb-66ec8972f98a}
+2026-07-13T20:00:56.2247912Z Azure Region: westus3
+2026-07-13T20:00:56.2248230Z ##[endgroup]
+2026-07-13T20:00:56.2248941Z ##[group]Operating System
+2026-07-13T20:00:56.2249292Z Ubuntu
+2026-07-13T20:00:56.2249580Z 22.04.5
+2026-07-13T20:00:56.2249849Z LTS
+2026-07-13T20:00:56.2250154Z ##[endgroup]
+2026-07-13T20:00:56.2250454Z ##[group]Runner Image
+2026-07-13T20:00:56.2250801Z Image: ubuntu-22.04
+2026-07-13T20:00:56.2251111Z Version: 20260705.219.1
+2026-07-13T20:00:56.2251810Z Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20260705.219/images/ubuntu/Ubuntu2204-Readme.md
+2026-07-13T20:00:56.2252613Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20260705.219
+2026-07-13T20:00:56.2253306Z ##[endgroup]
+2026-07-13T20:00:56.2254999Z ##[group]GITHUB_TOKEN Permissions
+2026-07-13T20:00:56.2256375Z Actions: write
+2026-07-13T20:00:56.2256695Z ArtifactMetadata: write
+2026-07-13T20:00:56.2257012Z Attestations: write
+2026-07-13T20:00:56.2257348Z Checks: write
+2026-07-13T20:00:56.2257644Z CodeQuality: write
+2026-07-13T20:00:56.2257967Z Contents: write
+2026-07-13T20:00:56.2258282Z CopilotRequests: write
+2026-07-13T20:00:56.2258600Z Deployments: write
+2026-07-13T20:00:56.2258925Z Discussions: write
+2026-07-13T20:00:56.2259223Z Drives: write
+2026-07-13T20:00:56.2259510Z Issues: write
+2026-07-13T20:00:56.2259816Z Metadata: read
+2026-07-13T20:00:56.2260144Z Models: read
+2026-07-13T20:00:56.2260446Z Packages: write
+2026-07-13T20:00:56.2260746Z Pages: write
+2026-07-13T20:00:56.2261043Z PullRequests: write
+2026-07-13T20:00:56.2261380Z RepositoryProjects: write
+2026-07-13T20:00:56.2261718Z SecurityEvents: write
+2026-07-13T20:00:56.2262025Z Statuses: write
+2026-07-13T20:00:56.2262354Z VulnerabilityAlerts: read
+2026-07-13T20:00:56.2262678Z ##[endgroup]
+2026-07-13T20:00:56.2264098Z Secret source: Actions
+2026-07-13T20:00:56.2264644Z Prepare workflow directory
+2026-07-13T20:00:56.2457237Z Prepare all required actions
+2026-07-13T20:00:56.2481172Z Getting action download info
+2026-07-13T20:00:56.5566431Z Download action repository 'actions/checkout@v7' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+2026-07-13T20:00:56.6593864Z Download action repository 'actions/setup-java@v5' (SHA:0f481fcb613427c0f801b606911222b5b6f3083a)
+2026-07-13T20:00:57.4128739Z Download action repository 'actions/cache@v6' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+2026-07-13T20:00:57.7004148Z Complete job name: compile (ubuntu-22.04, 22)
+2026-07-13T20:00:57.7403579Z ##[group]Run actions/checkout@v7
+2026-07-13T20:00:57.7404299Z with:
+2026-07-13T20:00:57.7404820Z   repository: jline/jline3
+2026-07-13T20:00:57.7409749Z   token: ***
+2026-07-13T20:00:57.7410242Z   ssh-strict: true
+2026-07-13T20:00:57.7410736Z   ssh-user: git
+2026-07-13T20:00:57.7411240Z   persist-credentials: true
+2026-07-13T20:00:57.7411792Z   clean: true
+2026-07-13T20:00:57.7412288Z   sparse-checkout-cone-mode: true
+2026-07-13T20:00:57.7412874Z   fetch-depth: 1
+2026-07-13T20:00:57.7413555Z   fetch-tags: false
+2026-07-13T20:00:57.7414047Z   show-progress: true
+2026-07-13T20:00:57.7414569Z   lfs: false
+2026-07-13T20:00:57.7415049Z   submodules: false
+2026-07-13T20:00:57.7415558Z   set-safe-directory: true
+2026-07-13T20:00:57.7416147Z   allow-unsafe-pr-checkout: false
+2026-07-13T20:00:57.7416823Z ##[endgroup]
+2026-07-13T20:00:57.8051930Z Syncing repository: jline/jline3
+2026-07-13T20:00:57.8054429Z ##[group]Getting Git version info
+2026-07-13T20:00:57.8055736Z Working directory is '/home/runner/work/jline3/jline3'
+2026-07-13T20:00:57.8057419Z [command]/usr/bin/git version
+2026-07-13T20:00:57.8058303Z git version 2.54.0
+2026-07-13T20:00:57.8061271Z ##[endgroup]
+2026-07-13T20:00:57.8070897Z Temporarily overriding HOME='/home/runner/work/_temp/7411a9cf-fd3d-4149-bacc-d83dc70d18b0' before making global git config changes
+2026-07-13T20:00:57.8073385Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T20:00:57.8075277Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/jline3/jline3
+2026-07-13T20:00:57.8090352Z Deleting the contents of '/home/runner/work/jline3/jline3'
+2026-07-13T20:00:57.8092730Z ##[group]Determining repository object format
+2026-07-13T20:00:57.8093989Z ##[endgroup]
+2026-07-13T20:00:57.8094823Z ##[group]Initializing the repository
+2026-07-13T20:00:57.8096187Z [command]/usr/bin/git init /home/runner/work/jline3/jline3
+2026-07-13T20:00:57.8169731Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-13T20:00:57.8170859Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-13T20:00:57.8172073Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-13T20:00:57.8172927Z hint: call:
+2026-07-13T20:00:57.8173527Z hint:
+2026-07-13T20:00:57.8174317Z hint: 	git config --global init.defaultBranch <name>
+2026-07-13T20:00:57.8175000Z hint:
+2026-07-13T20:00:57.8175639Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-13T20:00:57.8176678Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-13T20:00:57.8177490Z hint:
+2026-07-13T20:00:57.8177954Z hint: 	git branch -m <name>
+2026-07-13T20:00:57.8178489Z hint:
+2026-07-13T20:00:57.8179178Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-13T20:00:57.8180263Z Initialized empty Git repository in /home/runner/work/jline3/jline3/.git/
+2026-07-13T20:00:57.8181989Z [command]/usr/bin/git remote add origin https://github.com/jline/jline3
+2026-07-13T20:00:57.8189553Z ##[endgroup]
+2026-07-13T20:00:57.8190411Z ##[group]Disabling automatic garbage collection
+2026-07-13T20:00:57.8191247Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-13T20:00:57.8204858Z ##[endgroup]
+2026-07-13T20:00:57.8205695Z ##[group]Setting up auth
+2026-07-13T20:00:57.8206272Z Removing SSH command configuration
+2026-07-13T20:00:57.8207983Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T20:00:57.8222769Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T20:00:57.8359399Z Removing HTTP extra header
+2026-07-13T20:00:57.8362981Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T20:00:57.8378037Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T20:00:57.8465622Z Removing includeIf entries pointing to credentials config files
+2026-07-13T20:00:57.8469451Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T20:00:57.8484975Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T20:00:57.8578127Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-13T20:00:57.8595757Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/jline3/jline3/.git.path /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:00:57.8609130Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/jline3/jline3/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:00:57.8622570Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:00:57.8670086Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:00:57.8681469Z ##[endgroup]
+2026-07-13T20:00:57.8682350Z ##[group]Fetching the repository
+2026-07-13T20:00:57.8685765Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +36af29c8c1bd5acdaf6151da41e885a71d3c57c9:refs/remotes/pull/2082/merge
+2026-07-13T20:00:59.6315668Z From https://github.com/jline/jline3
+2026-07-13T20:00:59.6316252Z  * [new ref]         36af29c8c1bd5acdaf6151da41e885a71d3c57c9 -> pull/2082/merge
+2026-07-13T20:00:59.6326266Z ##[endgroup]
+2026-07-13T20:00:59.6326656Z ##[group]Determining the checkout info
+2026-07-13T20:00:59.6327016Z ##[endgroup]
+2026-07-13T20:00:59.6330023Z [command]/usr/bin/git sparse-checkout disable
+2026-07-13T20:00:59.6348911Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-13T20:00:59.6360288Z ##[group]Checking out the ref
+2026-07-13T20:00:59.6361832Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2082/merge
+2026-07-13T20:00:59.6795023Z Note: switching to 'refs/remotes/pull/2082/merge'.
+2026-07-13T20:00:59.6795401Z 
+2026-07-13T20:00:59.6795648Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-07-13T20:00:59.6796056Z changes and commit them, and you can discard any commits you make in this
+2026-07-13T20:00:59.6796393Z state without impacting any branches by switching back to a branch.
+2026-07-13T20:00:59.6796558Z 
+2026-07-13T20:00:59.6796779Z If you want to create a new branch to retain commits you create, you may
+2026-07-13T20:00:59.6797053Z do so (now or later) by using -c with the switch command. Example:
+2026-07-13T20:00:59.6797196Z 
+2026-07-13T20:00:59.6797281Z   git switch -c <new-branch-name>
+2026-07-13T20:00:59.6797406Z 
+2026-07-13T20:00:59.6797488Z Or undo this operation with:
+2026-07-13T20:00:59.6797593Z 
+2026-07-13T20:00:59.6797661Z   git switch -
+2026-07-13T20:00:59.6797771Z 
+2026-07-13T20:00:59.6798120Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-07-13T20:00:59.6798413Z 
+2026-07-13T20:00:59.6798782Z HEAD is now at 36af29c Merge 8d68f1f14bc1827b7fc8a277e43bc03b5087ba38 into ae0f582d066b6d0e534509d6bf1420fb136350b2
+2026-07-13T20:00:59.6799855Z ##[endgroup]
+2026-07-13T20:00:59.6820890Z [command]/usr/bin/git log -1 --format=%H
+2026-07-13T20:00:59.6831666Z 36af29c8c1bd5acdaf6151da41e885a71d3c57c9
+2026-07-13T20:00:59.7008298Z ##[group]Run actions/setup-java@v5
+2026-07-13T20:00:59.7008480Z with:
+2026-07-13T20:00:59.7008621Z   java-version: 22
+2026-07-13T20:00:59.7008762Z   distribution: temurin
+2026-07-13T20:00:59.7008907Z   java-package: jdk
+2026-07-13T20:00:59.7009044Z   check-latest: false
+2026-07-13T20:00:59.7009185Z   set-default: true
+2026-07-13T20:00:59.7009360Z   verify-signature: false
+2026-07-13T20:00:59.7009507Z   server-id: github
+2026-07-13T20:00:59.7009646Z   server-username: GITHUB_ACTOR
+2026-07-13T20:00:59.7009808Z   server-password: GITHUB_TOKEN
+2026-07-13T20:00:59.7009968Z   overwrite-settings: true
+2026-07-13T20:00:59.7010119Z   job-status: success
+2026-07-13T20:00:59.7011507Z   token: ***
+2026-07-13T20:00:59.7011650Z   show-download-progress: false
+2026-07-13T20:00:59.7011811Z ##[endgroup]
+2026-07-13T20:00:59.7916485Z ##[group]Installed distributions
+2026-07-13T20:00:59.7962143Z Trying to resolve the latest version from remote
+2026-07-13T20:01:00.2870607Z Resolved latest version as 22.0.2+9
+2026-07-13T20:01:00.2870942Z Trying to download...
+2026-07-13T20:01:00.2871580Z Downloading Java 22.0.2+9 (Temurin-Hotspot) from https://github.com/adoptium/temurin22-binaries/releases/download/jdk-22.0.2%2B9/OpenJDK22U-jdk_x64_linux_hotspot_22.0.2_9.tar.gz ...
+2026-07-13T20:01:01.1288407Z Extracting Java archive...
+2026-07-13T20:01:01.1350477Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/96c5c618-f366-4e44-8ead-19c15358f6d3 -f /home/runner/work/_temp/f274c702-0b3b-4dfd-9b26-ecb18d09d819
+2026-07-13T20:01:04.8340086Z Java 22.0.2+9 was downloaded
+2026-07-13T20:01:04.8340257Z Setting Java 22.0.2+9 as the default
+2026-07-13T20:01:04.8344202Z Creating toolchains.xml for JDK version 22 from temurin
+2026-07-13T20:01:04.8386778Z Writing to /home/runner/.m2/toolchains.xml
+2026-07-13T20:01:04.8387038Z 
+2026-07-13T20:01:04.8387118Z Java configuration:
+2026-07-13T20:01:04.8387291Z   Distribution: temurin
+2026-07-13T20:01:04.8387468Z   Version: 22.0.2+9
+2026-07-13T20:01:04.8387752Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:04.8387971Z 
+2026-07-13T20:01:04.8389737Z ##[endgroup]
+2026-07-13T20:01:04.8408355Z Creating settings.xml with server-id: github
+2026-07-13T20:01:04.8408538Z Writing to /home/runner/.m2/settings.xml
+2026-07-13T20:01:04.8408901Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-07-13T20:01:04.9452641Z ##[group]Run actions/cache@v6
+2026-07-13T20:01:04.9452778Z with:
+2026-07-13T20:01:04.9452889Z   path: ~/.m2/repository
+2026-07-13T20:01:04.9453262Z   key: Linux-maven-22-c9d05f378fca0744be9658149263963ee10a917d103a79d240deb99fbc2faef2
+2026-07-13T20:01:04.9453506Z   restore-keys: Linux-maven-22-
+Linux-maven-
+
+2026-07-13T20:01:04.9453663Z   enableCrossOsArchive: false
+2026-07-13T20:01:04.9453792Z   fail-on-cache-miss: false
+2026-07-13T20:01:04.9453917Z   lookup-only: false
+2026-07-13T20:01:04.9454028Z   save-always: false
+2026-07-13T20:01:04.9454135Z env:
+2026-07-13T20:01:04.9454290Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:04.9454534Z   JAVA_HOME_22_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:04.9454737Z   MAVEN_ARGS: -ntp
+2026-07-13T20:01:04.9454845Z ##[endgroup]
+2026-07-13T20:01:05.2499471Z Cache hit for: Linux-maven-22-c9d05f378fca0744be9658149263963ee10a917d103a79d240deb99fbc2faef2
+2026-07-13T20:01:06.4908066Z Received 46137344 of 213754821 (21.6%), 44.0 MBs/sec
+2026-07-13T20:01:07.2873676Z Received 213754821 of 213754821 (100.0%), 113.3 MBs/sec
+2026-07-13T20:01:07.2874647Z Cache Size: ~204 MB (213754821 B)
+2026-07-13T20:01:07.2917984Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2598fd7d-e796-4701-947e-456911a2fc87/cache.tzst -P -C /home/runner/work/jline3/jline3 --use-compress-program unzstd
+2026-07-13T20:01:07.4590334Z Cache restored successfully
+2026-07-13T20:01:07.4786339Z Cache restored from key: Linux-maven-22-c9d05f378fca0744be9658149263963ee10a917d103a79d240deb99fbc2faef2
+2026-07-13T20:01:07.5181578Z ##[group]Run actions/cache@v6
+2026-07-13T20:01:07.5181726Z with:
+2026-07-13T20:01:07.5181832Z   path: ~/.mvx/tools
+2026-07-13T20:01:07.5182045Z   key: Linux-mvx-tools-beeb3c1837c38ce08d068efb512dff2c714d72b5cca39e7942b3b7b0dd7a6def
+2026-07-13T20:01:07.5182307Z   restore-keys: Linux-mvx-tools-
+
+2026-07-13T20:01:07.5182452Z   enableCrossOsArchive: false
+2026-07-13T20:01:07.5182584Z   fail-on-cache-miss: false
+2026-07-13T20:01:07.5182712Z   lookup-only: false
+2026-07-13T20:01:07.5182823Z   save-always: false
+2026-07-13T20:01:07.5182930Z env:
+2026-07-13T20:01:07.5183284Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:07.5183530Z   JAVA_HOME_22_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:07.5183724Z   MAVEN_ARGS: -ntp
+2026-07-13T20:01:07.5183833Z ##[endgroup]
+2026-07-13T20:01:07.8270934Z Cache hit for: Linux-mvx-tools-beeb3c1837c38ce08d068efb512dff2c714d72b5cca39e7942b3b7b0dd7a6def
+2026-07-13T20:01:09.0645355Z Received 62914560 of 151586102 (41.5%), 60.0 MBs/sec
+2026-07-13T20:01:09.7942257Z Received 151586102 of 151586102 (100.0%), 83.6 MBs/sec
+2026-07-13T20:01:09.7943612Z Cache Size: ~145 MB (151586102 B)
+2026-07-13T20:01:09.8008769Z [command]/usr/bin/tar -xf /home/runner/work/_temp/cd2d97d9-1428-4c50-95a5-8e71d1f2f518/cache.tzst -P -C /home/runner/work/jline3/jline3 --use-compress-program unzstd
+2026-07-13T20:01:10.3589498Z Cache restored successfully
+2026-07-13T20:01:10.3744702Z Cache restored from key: Linux-mvx-tools-beeb3c1837c38ce08d068efb512dff2c714d72b5cca39e7942b3b7b0dd7a6def
+2026-07-13T20:01:10.3815580Z ##[group]Run ./mvx mvn --no-transfer-progress verify
+2026-07-13T20:01:10.3815853Z [36;1m./mvx mvn --no-transfer-progress verify[0m
+2026-07-13T20:01:10.5198574Z shell: /usr/bin/bash -e {0}
+2026-07-13T20:01:10.5198808Z env:
+2026-07-13T20:01:10.5199089Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:10.5199502Z   JAVA_HOME_22_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/22.0.2-9/x64
+2026-07-13T20:01:10.5199842Z   MAVEN_ARGS: -ntp
+2026-07-13T20:01:10.5200032Z   MVX_USE_SYSTEM_JAVA: true
+2026-07-13T20:01:10.5200165Z   MVX_PARALLEL_DOWNLOADS: 1
+2026-07-13T20:01:10.5200293Z   MVX_DOWNLOAD_TIMEOUT: 300
+2026-07-13T20:01:10.5200425Z   MVX_HTTP_TIMEOUT: 300
+2026-07-13T20:01:10.5200567Z ##[endgroup]
+2026-07-13T20:01:10.5868984Z Downloading mvx 0.13.0 for linux-amd64...
+2026-07-13T20:01:10.5869564Z Downloading from: https://github.com/gnodet/mvx/releases/download/v0.13.0/mvx-linux-amd64
+2026-07-13T20:01:12.5765045Z [INFO] Maveniverse Nisse 0.9.3 loaded
+2026-07-13T20:01:15.7661983Z [INFO] Nisse injecting 27 properties into User Properties
+2026-07-13T20:01:15.7744285Z [INFO] Scanning for projects...
+2026-07-13T20:01:15.8470876Z [WARNING] 
+2026-07-13T20:01:15.8495335Z [WARNING] Some problems were encountered while building the effective model for org.jline:jline-graal:jar:0.1.0-1-SNAPSHOT
+2026-07-13T20:01:15.8524862Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:exec-maven-plugin is missing. @ org.jline:jline-graal:${nisse.jgit.dynamicVersion}, /home/runner/work/jline3/jline3/graal/pom.xml, line 80, column 21
+2026-07-13T20:01:15.8525813Z [WARNING] 
+2026-07-13T20:01:15.8526405Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-07-13T20:01:15.8527058Z [WARNING] 
+2026-07-13T20:01:15.8527541Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-07-13T20:01:15.8528067Z [WARNING] 
+2026-07-13T20:01:15.8528446Z [INFO] Nisse inlining following properties:
+2026-07-13T20:01:15.8528863Z [INFO]  * ${nisse.jgit.dynamicVersion}=0.1.0-1-SNAPSHOT
+2026-07-13T20:01:15.8529266Z [INFO] Checking POMs for inlining:
+2026-07-13T20:01:15.8533225Z [INFO]  * org.jline:jline-parent needs inlining
+2026-07-13T20:01:15.8553544Z [INFO]  * org.jline:jline-native needs inlining
+2026-07-13T20:01:15.8582641Z [INFO]  * org.jline:jline-terminal needs inlining
+2026-07-13T20:01:15.8583361Z [INFO]  * org.jline:jline-terminal-ffm needs inlining
+2026-07-13T20:01:15.8583796Z [INFO]  * org.jline:jline-terminal-jni needs inlining
+2026-07-13T20:01:15.8584214Z [INFO]  * org.jline:jline-reader needs inlining
+2026-07-13T20:01:15.8584604Z [INFO]  * org.jline:jline-shell needs inlining
+2026-07-13T20:01:15.8585012Z [INFO]  * org.jline:jline-style needs inlining
+2026-07-13T20:01:15.8585397Z [INFO]  * org.jline:jline-builtins needs inlining
+2026-07-13T20:01:15.8585799Z [INFO]  * org.jline:jline-console-ui needs inlining
+2026-07-13T20:01:15.8586201Z [INFO]  * org.jline:jline-prompt needs inlining
+2026-07-13T20:01:15.8586581Z [INFO]  * org.jline:jline-console needs inlining
+2026-07-13T20:01:15.8586966Z [INFO]  * org.jline:jline-picocli needs inlining
+2026-07-13T20:01:15.8587356Z [INFO]  * org.jline:jline-groovy needs inlining
+2026-07-13T20:01:15.8587749Z [INFO]  * org.jline:jline-remote-ssh needs inlining
+2026-07-13T20:01:15.8588168Z [INFO]  * org.jline:jline-remote-telnet needs inlining
+2026-07-13T20:01:15.8588580Z [INFO]  * org.jline:jline-demo needs inlining
+2026-07-13T20:01:15.8588960Z [INFO]  * org.jline:jline-graal needs inlining
+2026-07-13T20:01:15.8589377Z [INFO]  * org.jline:jansi-core needs inlining
+2026-07-13T20:01:15.8598523Z [INFO]  * org.jline:jline needs inlining
+2026-07-13T20:01:15.8606337Z [INFO]  * org.jline:jansi needs inlining
+2026-07-13T20:01:15.8786455Z [INFO] Njord 0.7.5 session created
+2026-07-13T20:01:15.8854473Z [INFO] ------------------------------------------------------------------------
+2026-07-13T20:01:15.8878663Z [INFO] Reactor Build Order:
+2026-07-13T20:01:15.8894351Z [INFO] 
+2026-07-13T20:01:15.8903599Z [INFO] JLine                                                              [pom]
+2026-07-13T20:01:15.8904018Z [INFO] JLine Native Library                                               [jar]
+2026-07-13T20:01:15.8904434Z [INFO] JLine Terminal                                                     [jar]
+2026-07-13T20:01:15.8904939Z [INFO] JLine FFM Terminal                                                 [jar]
+2026-07-13T20:01:15.8905400Z [INFO] JLine JNI Terminal                                                 [jar]
+2026-07-13T20:01:15.8905835Z [INFO] JLine Reader                                                       [jar]
+2026-07-13T20:01:15.8906288Z [INFO] JLine Shell                                                        [jar]
+2026-07-13T20:01:15.8906707Z [INFO] JLine Style                                                        [jar]
+2026-07-13T20:01:15.8908153Z [INFO] JLine Builtins                                                     [jar]
+2026-07-13T20:01:15.8908591Z [INFO] JLine Console UI (Deprecated)                                      [jar]
+2026-07-13T20:01:15.8909060Z [INFO] JLine Prompt                                                       [jar]
+2026-07-13T20:01:15.8909486Z [INFO] JLine Console                                                      [jar]
+2026-07-13T20:01:15.8909901Z [INFO] JLine Picocli                                                      [jar]
+2026-07-13T20:01:15.8910313Z [INFO] JLine Groovy                                                       [jar]
+2026-07-13T20:01:15.8910729Z [INFO] JLine Remote SSH                                                   [jar]
+2026-07-13T20:01:15.8911155Z [INFO] JLine Remote Telnet                                                [jar]
+2026-07-13T20:01:15.8911578Z [INFO] JLine Demo                                                         [jar]
+2026-07-13T20:01:15.8911991Z [INFO] JLine Native Demo                                                  [jar]
+2026-07-13T20:01:15.8912402Z [INFO] Jansi Core                                                         [jar]
+2026-07-13T20:01:15.8912803Z [INFO] JLine Bundle                                                       [jar]
+2026-07-13T20:01:15.8913303Z [INFO] Jansi Bundle                                                       [jar]
+2026-07-13T20:01:15.9114932Z [INFO] 
+2026-07-13T20:01:15.9115316Z [INFO] -----------------------< org.jline:jline-parent >-----------------------
+2026-07-13T20:01:15.9115610Z [INFO] Building JLine 0.1.0-1-SNAPSHOT                                   [1/21]
+2026-07-13T20:01:15.9115835Z [INFO]   from .inlined-pom.xml
+2026-07-13T20:01:15.9116050Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-07-13T20:01:15.9605016Z [INFO] 
+2026-07-13T20:01:15.9644062Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-parent ---
+2026-07-13T20:01:16.0709935Z [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+2026-07-13T20:01:16.0830165Z [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+2026-07-13T20:01:16.0831708Z [INFO] 
+2026-07-13T20:01:16.0832374Z [INFO] --- spotless:3.8.0:check (default) @ jline-parent ---
+2026-07-13T20:01:16.3559069Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-13T20:01:16.4524319Z [INFO] Sorting file /tmp/pom13549825064651663651.xml
+2026-07-13T20:01:16.5196977Z [INFO] Pom file is already sorted, exiting
+2026-07-13T20:01:16.5213557Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-13T20:01:16.5214833Z [INFO] 
+2026-07-13T20:01:16.5215204Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-parent ---
+2026-07-13T20:01:16.7238533Z [WARNING] Ignoring project type pom - supportedProjectTypes = [jar, bundle]
+2026-07-13T20:01:16.7239221Z [INFO] 
+2026-07-13T20:01:16.7239728Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-parent ---
+2026-07-13T20:01:16.7756396Z [INFO] No sources to compile
+2026-07-13T20:01:16.7762620Z [INFO] 
+2026-07-13T20:01:16.7773698Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-parent ---
+2026-07-13T20:01:16.8761215Z [INFO] 
+2026-07-13T20:01:16.8765051Z [INFO] -----------------------< org.jline:jline-native >-----------------------
+2026-07-13T20:01:16.8766909Z [INFO] Building JLine Native Library 0.1.0-1-SNAPSHOT                    [2/21]
+2026-07-13T20:01:16.8770187Z [INFO]   from native/.inlined-pom.xml
+2026-07-13T20:01:16.8772599Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-13T20:01:16.9177523Z [INFO] 
+2026-07-13T20:01:16.9195373Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-native ---
+2026-07-13T20:01:16.9208530Z [INFO] 
+2026-07-13T20:01:16.9209043Z [INFO] --- spotless:3.8.0:check (default) @ jline-native ---
+2026-07-13T20:01:16.9284782Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-13T20:01:17.4845291Z [INFO] Spotless.Java is keeping 8 files clean - 0 needs changes to be clean, 8 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-13T20:01:17.4863806Z [INFO] Sorting file /tmp/pom5519772284334183160.xml
+2026-07-13T20:01:17.4942512Z [INFO] Pom file is already sorted, exiting
+2026-07-13T20:01:17.4950252Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-13T20:01:17.4950962Z [INFO] 
+2026-07-13T20:01:17.4951347Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-native ---
+2026-07-13T20:01:17.5294088Z [INFO] Copying 2 resources from src/main/resources to target/classes
+2026-07-13T20:01:17.5394416Z [INFO] Copying 18 resources from src/main/resources to target/classes
+2026-07-13T20:01:17.5398415Z [INFO] The encoding used to copy filtered properties files has not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+2026-07-13T20:01:17.5399793Z [INFO] 
+2026-07-13T20:01:17.5409742Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-native ---
+2026-07-13T20:01:17.5628765Z [INFO] Recompiling the module because of changed source code.
+2026-07-13T20:01:17.5664791Z [INFO] Compiling 6 source files with javac [forked debug release 11] to target/classes
+2026-07-13T20:01:18.4368459Z [INFO] JDK-8318913 workaround: patched module-info.class requires version from [11] to [11] on 1 JDK modules [java.base]
+2026-07-13T20:01:18.4389148Z [INFO] 
+2026-07-13T20:01:18.4389614Z [INFO] --- exec:3.6.3:java (generate-graalvm-info) @ jline-native ---
+2026-07-13T20:01:18.5204634Z [INFO] 
+2026-07-13T20:01:18.5226418Z [INFO] --- bundle:6.0.2:manifest (default) @ jline-native ---
+2026-07-13T20:01:18.5236406Z [INFO] No MANIFEST.MF file found, generating manifest.
+2026-07-13T20:01:18.7456653Z [INFO] Writing manifest: /home/runner/work/jline3/jline3/native/target/classes/META-INF/MANIFEST.MF
+2026-07-13T20:01:18.7483733Z [INFO] 
+2026-07-13T20:01:18.7513603Z [INFO] --- resources:3.5.0:testResources (default-testResources) @ jline-native ---
+2026-07-13T20:01:18.7530855Z [INFO] skip non existing resourceDirectory /home/runner/work/jline3/jline3/native/src/test/resources
+2026-07-13T20:01:18.7543569Z [INFO] 
+2026-07-13T20:01:18.7543989Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ jline-native ---
+2026-07-13T20:01:18.7564021Z [INFO] Recompiling the module because of changed dependency.
+2026-07-13T20:01:18.7569632Z [INFO] Compiling 2 source files with javac [forked debug release 11 module-path] to target/test-classes
+2026-07-13T20:01:19.2609051Z [INFO] 
+2026-07-13T20:01:19.2609422Z [INFO] --- surefire:3.5.6:test (default-test) @ jline-native ---
+2026-07-13T20:01:19.3229934Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-07-13T20:01:19.4045809Z [INFO] 
+2026-07-13T20:01:19.4070926Z [INFO] -------------------------------------------------------
+2026-07-13T20:01:19.4071547Z [INFO]  T E S T S
+2026-07-13T20:01:19.4071901Z [INFO] -------------------------------------------------------
+2026-07-13T20:01:19.5145746Z WARNING: Unknown module: org.jline.terminal specified to --add-opens
+2026-07-13T20:01:19.8091242Z [INFO] Running org.jline.nativ.JLineLibraryTest
+2026-07-13T20:01:19.8788196Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in org.jline.nativ.JLineLibraryTest
+2026-07-13T20:01:19.8814312Z [INFO] Running org.jline.nativ.JLineNativeLoaderTest
+2026-07-13T20:01:19.9244276Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 s -- in org.jline.nativ.JLineNativeLoaderTest
+2026-07-13T20:01:20.0748423Z [INFO] 
+2026-07-13T20:01:20.0748769Z [INFO] Results:
+2026-07-13T20:01:20.0748953Z [INFO] 
+2026-07-13T20:01:20.0763732Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+2026-07-13T20:01:20.0763946Z [INFO] 
+2026-07-13T20:01:20.0769948Z [INFO] 
+2026-07-13T20:01:20.0770454Z [INFO] --- jar:3.5.0:jar (default-jar) @ jline-native ---
+2026-07-13T20:01:20.1743645Z [INFO] Building jar: /home/runner/work/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT.jar
+2026-07-13T20:01:20.2818896Z [INFO] 
+2026-07-13T20:01:20.2823811Z [INFO] --- source:3.4.0:jar-no-fork (source-jar) @ jline-native ---
+2026-07-13T20:01:20.2929791Z [INFO] Building jar: /home/runner/work/jline3/jline3/native/target/jline-native-0.1.0-1-SNAPSHOT-sources.jar
+2026-07-13T20:01:20.3230003Z [INFO] 
+2026-07-13T20:01:20.3230726Z [INFO] ----------------------< org.jline:jline-terminal >----------------------
+2026-07-13T20:01:20.3231351Z [INFO] Building JLine Terminal 0.1.0-1-SNAPSHOT                          [3/21]
+2026-07-13T20:01:20.3231820Z [INFO]   from terminal/.inlined-pom.xml
+2026-07-13T20:01:20.3233251Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-07-13T20:01:20.3352393Z [INFO] 
+2026-07-13T20:01:20.3359393Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ jline-terminal ---
+2026-07-13T20:01:20.3393554Z [INFO] 
+2026-07-13T20:01:20.3403715Z [INFO] --- spotless:3.8.0:check (default) @ jline-terminal ---
+2026-07-13T20:01:20.3478454Z [INFO] Index file does not exist. Fallback to an empty index
+2026-07-13T20:01:22.2360197Z [INFO] Spotless.Java is keeping 138 files clean - 0 needs changes to be clean, 138 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-13T20:01:22.3411568Z [INFO] Sorting file /tmp/pom692479990646994411.xml
+2026-07-13T20:01:22.3464309Z [INFO] Pom file is already sorted, exiting
+2026-07-13T20:01:22.3465268Z [INFO] Spotless.Pom is keeping 1 files clean - 0 needs changes to be clean, 1 were already clean, 0 were skipped because caching determined they were already clean
+2026-07-13T20:01:22.3473556Z [INFO] 
+2026-07-13T20:01:22.3473994Z [INFO] --- resources:3.5.0:resources (default-resources) @ jline-terminal ---
+2026-07-13T20:01:22.3503576Z [INFO] Copying 24 resources from src/main/resources to target/classes
+2026-07-13T20:01:22.3533628Z [INFO] 
+2026-07-13T20:01:22.3563819Z [INFO] --- compiler:3.15.0:compile (default-compile) @ jline-terminal ---
+2026-07-13T20:01:22.3794099Z [INFO] Recompiling the module because of changed dependency.
+2026-07-13T20:01:22.3794447Z [INFO] Compiling 93 source files with javac [forked debug release 11 module-path] to target/classes
+2026-07-13T20:01:24.0482917Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0483669Z [WARNING] COMPILATION WARNING : 
+2026-07-13T20:01:24.0484040Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0485108Z [WARNING] /home/runner/work/jline3/jline3/terminal/src/main/java/org/jline/utils/ExecHelper.java:[82,29] [try] auto-closeable resource out is never referenced in body of corresponding try statement
+2026-07-13T20:01:24.0485865Z [INFO] 1 warning
+2026-07-13T20:01:24.0486340Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0486767Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0487048Z [ERROR] COMPILATION ERROR : 
+2026-07-13T20:01:24.0487306Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0487598Z [ERROR] error: warnings found and -Werror specified
+2026-07-13T20:01:24.0487849Z [INFO] 1 error
+2026-07-13T20:01:24.0488081Z [INFO] -------------------------------------------------------------
+2026-07-13T20:01:24.0488461Z [INFO] ------------------------------------------------------------------------
+2026-07-13T20:01:24.0488762Z [INFO] Reactor Summary for JLine 0.1.0-1-SNAPSHOT:
+2026-07-13T20:01:24.0489015Z [INFO] 
+2026-07-13T20:01:24.0490585Z [INFO] JLine .............................................. SUCCESS [  0.965 s]
+2026-07-13T20:01:24.0490985Z [INFO] JLine Native Library ............................... SUCCESS [  3.448 s]
+2026-07-13T20:01:24.0491362Z [INFO] JLine Terminal ..................................... FAILURE [  3.726 s]
+2026-07-13T20:01:24.0491661Z [INFO] JLine FFM Terminal ................................. SKIPPED
+2026-07-13T20:01:24.0491906Z [INFO] JLine JNI Terminal ................................. SKIPPED
+2026-07-13T20:01:24.0492366Z [INFO] JLine Reader ....................................... SKIPPED
+2026-07-13T20:01:24.0497001Z [INFO] JLine Shell ........................................ SKIPPED
+2026-07-13T20:01:24.0503713Z [INFO] JLine Style ........................................ SKIPPED
+2026-07-13T20:01:24.0505105Z [INFO] JLine Builtins ..................................... SKIPPED
+2026-07-13T20:01:24.0505439Z [INFO] JLine Console UI (Deprecated) ...................... SKIPPED
+2026-07-13T20:01:24.0505756Z [INFO] JLine Prompt ....................................... SKIPPED
+2026-07-13T20:01:24.0505963Z [INFO] JLine Console ...................................... SKIPPED
+2026-07-13T20:01:24.0506173Z [INFO] JLine Picocli ...................................... SKIPPED
+2026-07-13T20:01:24.0506376Z [INFO] JLine Groovy ....................................... SKIPPED
+2026-07-13T20:01:24.0506577Z [INFO] JLine Remote SSH ................................... SKIPPED
+2026-07-13T20:01:24.0506861Z [INFO] JLine Remote Telnet ................................ SKIPPED
+2026-07-13T20:01:24.0507173Z [INFO] JLine Demo ......................................... SKIPPED
+2026-07-13T20:01:24.0507485Z [INFO] JLine Native Demo .................................. SKIPPED
+2026-07-13T20:01:24.0507794Z [INFO] Jansi Core ......................................... SKIPPED
+2026-07-13T20:01:24.0508099Z [INFO] JLine Bundle ....................................... SKIPPED
+2026-07-13T20:01:24.0508411Z [INFO] Jansi Bundle ....................................... SKIPPED
+2026-07-13T20:01:24.0508740Z [INFO] ------------------------------------------------------------------------
+2026-07-13T20:01:24.0508947Z [INFO] BUILD FAILURE
+2026-07-13T20:01:24.0509115Z [INFO] ------------------------------------------------------------------------
+2026-07-13T20:01:24.0509320Z [INFO] Total time:  8.279 s
+2026-07-13T20:01:24.0509460Z [INFO] Finished at: 2026-07-13T20:01:24Z
+2026-07-13T20:01:24.0509647Z [INFO] ------------------------------------------------------------------------
+2026-07-13T20:01:24.0509866Z [INFO] Nisse property inliner cleanup of 21 inlined POMs
+2026-07-13T20:01:24.0510038Z [INFO] Njord session closed
+2026-07-13T20:01:24.0510381Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project jline-terminal: Compilation failure
+2026-07-13T20:01:24.0510754Z [ERROR] error: warnings found and -Werror specified
+2026-07-13T20:01:24.0511041Z [ERROR] 
+2026-07-13T20:01:24.0511145Z [ERROR] -> [Help 1]
+2026-07-13T20:01:24.0511258Z [ERROR] 
+2026-07-13T20:01:24.0511426Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-07-13T20:01:24.0511739Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-07-13T20:01:24.0511919Z [ERROR] 
+2026-07-13T20:01:24.0512137Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-07-13T20:01:24.0512472Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+2026-07-13T20:01:24.0512690Z [ERROR] 
+2026-07-13T20:01:24.0512934Z [ERROR] After correcting the problems, you can resume the build with the command
+2026-07-13T20:01:24.0513290Z [ERROR]   mvn <args> -rf :jline-terminal
+2026-07-13T20:01:24.0627144Z Error: exit status 1
+2026-07-13T20:01:24.0627397Z Usage:
+2026-07-13T20:01:24.0627576Z   mvx mvn [args...] [flags]
+2026-07-13T20:01:24.0627720Z 
+2026-07-13T20:01:24.0627812Z Flags:
+2026-07-13T20:01:24.0628020Z   -h, --help   help for mvn
+2026-07-13T20:01:24.0628158Z 
+2026-07-13T20:01:24.0628237Z Global Flags:
+2026-07-13T20:01:24.0628440Z   -q, --quiet     quiet output (errors only)
+2026-07-13T20:01:24.0628704Z   -v, --verbose   verbose output
+2026-07-13T20:01:24.0628859Z 
+2026-07-13T20:01:24.0628954Z Error: exit status 1
+2026-07-13T20:01:24.0642350Z ##[error]Process completed with exit code 1.
+2026-07-13T20:01:24.0715365Z Post job cleanup.
+2026-07-13T20:01:24.1514611Z Post job cleanup.
+2026-07-13T20:01:24.2014963Z [command]/usr/bin/git version
+2026-07-13T20:01:24.2036133Z git version 2.54.0
+2026-07-13T20:01:24.2054955Z Temporarily overriding HOME='/home/runner/work/_temp/1c399c9b-8bcb-48d8-99f5-662e0d7f19f1' before making global git config changes
+2026-07-13T20:01:24.2055365Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-13T20:01:24.2061986Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/jline3/jline3
+2026-07-13T20:01:24.2077123Z Removing SSH command configuration
+2026-07-13T20:01:24.2080259Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-13T20:01:24.2096486Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-13T20:01:24.2195374Z Removing HTTP extra header
+2026-07-13T20:01:24.2198795Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-13T20:01:24.2214217Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-13T20:01:24.2309599Z Removing includeIf entries pointing to credentials config files
+2026-07-13T20:01:24.2314797Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-07-13T20:01:24.2326890Z includeif.gitdir:/home/runner/work/jline3/jline3/.git.path
+2026-07-13T20:01:24.2327347Z includeif.gitdir:/home/runner/work/jline3/jline3/.git/worktrees/*.path
+2026-07-13T20:01:24.2327845Z includeif.gitdir:/github/workspace/.git.path
+2026-07-13T20:01:24.2328201Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-13T20:01:24.2341082Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/jline3/jline3/.git.path
+2026-07-13T20:01:24.2342946Z /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2348934Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/jline3/jline3/.git.path /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2364515Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/jline3/jline3/.git/worktrees/*.path
+2026-07-13T20:01:24.2374417Z /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2378856Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/jline3/jline3/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2392750Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-07-13T20:01:24.2401927Z /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2405268Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2417887Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-07-13T20:01:24.2426502Z /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2430109Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config
+2026-07-13T20:01:24.2443567Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-07-13T20:01:24.2535748Z Removing credentials config '/home/runner/work/_temp/git-credentials-e6264e5a-9fd4-410e-bd61-c796d3ad323e.config'
+2026-07-13T20:01:24.2631461Z Cleaning up orphan processes

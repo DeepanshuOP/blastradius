@@ -1,0 +1,495 @@
+﻿2026-08-12T17:49:00.2692453Z Current runner version: '2.336.0'
+2026-08-12T17:49:00.2726315Z ##[group]Runner Image Provisioner
+2026-08-12T17:49:00.2727676Z Hosted Compute Agent
+2026-08-12T17:49:00.2728816Z Version: 20260707.563
+2026-08-12T17:49:00.2729929Z Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+2026-08-12T17:49:00.2731147Z Build Date: 2026-07-07T19:33:50Z
+2026-08-12T17:49:00.2732392Z Worker ID: {0b07c865-c964-4451-b00a-112a67135de8}
+2026-08-12T17:49:00.2734123Z Azure Region: centralus
+2026-08-12T17:49:00.2735147Z ##[endgroup]
+2026-08-12T17:49:00.2737985Z ##[group]Operating System
+2026-08-12T17:49:00.2739079Z Ubuntu
+2026-08-12T17:49:00.2740001Z 24.04.4
+2026-08-12T17:49:00.2740850Z LTS
+2026-08-12T17:49:00.2741778Z ##[endgroup]
+2026-08-12T17:49:00.2742897Z ##[group]Runner Image
+2026-08-12T17:49:00.2744387Z Image: ubuntu-24.04
+2026-08-12T17:49:00.2745384Z Version: 20260720.247.2
+2026-08-12T17:49:00.2747595Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+2026-08-12T17:49:00.2750319Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+2026-08-12T17:49:00.2752088Z ##[endgroup]
+2026-08-12T17:49:00.2754481Z ##[group]GITHUB_TOKEN Permissions
+2026-08-12T17:49:00.2757443Z Contents: read
+2026-08-12T17:49:00.2758594Z Metadata: read
+2026-08-12T17:49:00.2759694Z ##[endgroup]
+2026-08-12T17:49:00.2762716Z Secret source: None
+2026-08-12T17:49:00.2765121Z Prepare workflow directory
+2026-08-12T17:49:00.3147006Z Prepare all required actions
+2026-08-12T17:49:00.3217717Z Getting action download info
+2026-08-12T17:49:00.6029818Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-08-12T17:49:01.1144203Z Download action repository 'actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95' (SHA:03ad4de0992f5dab5e18fcb136590ce7c4a0ac95)
+2026-08-12T17:49:01.9250854Z Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-08-12T17:49:02.1319987Z Complete job name: JDK 17 ubuntu
+2026-08-12T17:49:02.2137097Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-08-12T17:49:02.2138491Z with:
+2026-08-12T17:49:02.2139002Z   repository: apple/servicetalk
+2026-08-12T17:49:02.2147088Z   token: ***
+2026-08-12T17:49:02.2147597Z   ssh-strict: true
+2026-08-12T17:49:02.2148106Z   ssh-user: git
+2026-08-12T17:49:02.2148630Z   persist-credentials: true
+2026-08-12T17:49:02.2149232Z   clean: true
+2026-08-12T17:49:02.2149747Z   sparse-checkout-cone-mode: true
+2026-08-12T17:49:02.2150424Z   fetch-depth: 1
+2026-08-12T17:49:02.2150920Z   fetch-tags: false
+2026-08-12T17:49:02.2151445Z   show-progress: true
+2026-08-12T17:49:02.2151980Z   lfs: false
+2026-08-12T17:49:02.2152457Z   submodules: false
+2026-08-12T17:49:02.2152989Z   set-safe-directory: true
+2026-08-12T17:49:02.2153863Z   allow-unsafe-pr-checkout: false
+2026-08-12T17:49:02.2154832Z ##[endgroup]
+2026-08-12T17:49:02.3192145Z Syncing repository: apple/servicetalk
+2026-08-12T17:49:02.3194624Z ##[group]Getting Git version info
+2026-08-12T17:49:02.3195785Z Working directory is '/home/runner/work/servicetalk/servicetalk'
+2026-08-12T17:49:02.3197317Z [command]/usr/bin/git version
+2026-08-12T17:49:02.3256091Z git version 2.54.0
+2026-08-12T17:49:02.3278677Z ##[endgroup]
+2026-08-12T17:49:02.3290710Z Temporarily overriding HOME='/home/runner/work/_temp/39402f49-cb46-4ae9-93f8-ca1c9841598b' before making global git config changes
+2026-08-12T17:49:02.3295353Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-12T17:49:02.3298972Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/servicetalk/servicetalk
+2026-08-12T17:49:02.3344459Z Deleting the contents of '/home/runner/work/servicetalk/servicetalk'
+2026-08-12T17:49:02.3347603Z ##[group]Determining repository object format
+2026-08-12T17:49:02.3350144Z ##[endgroup]
+2026-08-12T17:49:02.3352165Z ##[group]Initializing the repository
+2026-08-12T17:49:02.3355026Z [command]/usr/bin/git init /home/runner/work/servicetalk/servicetalk
+2026-08-12T17:49:02.3438569Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-08-12T17:49:02.3441518Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-08-12T17:49:02.3445072Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-08-12T17:49:02.3453593Z hint: call:
+2026-08-12T17:49:02.3455304Z hint:
+2026-08-12T17:49:02.3456887Z hint: 	git config --global init.defaultBranch <name>
+2026-08-12T17:49:02.3458853Z hint:
+2026-08-12T17:49:02.3460874Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-08-12T17:49:02.3464538Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-08-12T17:49:02.3467270Z hint:
+2026-08-12T17:49:02.3468650Z hint: 	git branch -m <name>
+2026-08-12T17:49:02.3470410Z hint:
+2026-08-12T17:49:02.3472487Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-08-12T17:49:02.3476257Z Initialized empty Git repository in /home/runner/work/servicetalk/servicetalk/.git/
+2026-08-12T17:49:02.3482239Z [command]/usr/bin/git remote add origin https://github.com/apple/servicetalk
+2026-08-12T17:49:02.3502601Z ##[endgroup]
+2026-08-12T17:49:02.3505296Z ##[group]Disabling automatic garbage collection
+2026-08-12T17:49:02.3507615Z [command]/usr/bin/git config --local gc.auto 0
+2026-08-12T17:49:02.3535103Z ##[endgroup]
+2026-08-12T17:49:02.3536152Z ##[group]Setting up auth
+2026-08-12T17:49:02.3537350Z Removing SSH command configuration
+2026-08-12T17:49:02.3541125Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-12T17:49:02.3575609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-12T17:49:02.3925882Z Removing HTTP extra header
+2026-08-12T17:49:02.3928156Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-12T17:49:02.3948656Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-12T17:49:02.4147984Z Removing includeIf entries pointing to credentials config files
+2026-08-12T17:49:02.4152727Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-12T17:49:02.4189325Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-12T17:49:02.4407466Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-08-12T17:49:02.4447238Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path /home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:02.4475769Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:02.4508737Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:02.4538363Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:02.4563584Z ##[endgroup]
+2026-08-12T17:49:02.4564657Z ##[group]Fetching the repository
+2026-08-12T17:49:02.4571736Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6d38a4d4434830206173391ad0f69f58de006fcb:refs/remotes/pull/3604/merge
+2026-08-12T17:49:04.1353768Z From https://github.com/apple/servicetalk
+2026-08-12T17:49:04.1356825Z  * [new ref]         6d38a4d4434830206173391ad0f69f58de006fcb -> pull/3604/merge
+2026-08-12T17:49:04.1390448Z ##[endgroup]
+2026-08-12T17:49:04.1392361Z ##[group]Determining the checkout info
+2026-08-12T17:49:04.1394839Z ##[endgroup]
+2026-08-12T17:49:04.1396883Z [command]/usr/bin/git sparse-checkout disable
+2026-08-12T17:49:04.1442388Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-08-12T17:49:04.1469563Z ##[group]Checking out the ref
+2026-08-12T17:49:04.1474731Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/3604/merge
+2026-08-12T17:49:04.3991110Z Note: switching to 'refs/remotes/pull/3604/merge'.
+2026-08-12T17:49:04.3992114Z 
+2026-08-12T17:49:04.3992768Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-08-12T17:49:04.3994760Z changes and commit them, and you can discard any commits you make in this
+2026-08-12T17:49:04.3996512Z state without impacting any branches by switching back to a branch.
+2026-08-12T17:49:04.3997464Z 
+2026-08-12T17:49:04.3998115Z If you want to create a new branch to retain commits you create, you may
+2026-08-12T17:49:04.4000031Z do so (now or later) by using -c with the switch command. Example:
+2026-08-12T17:49:04.4001524Z 
+2026-08-12T17:49:04.4002106Z   git switch -c <new-branch-name>
+2026-08-12T17:49:04.4003049Z 
+2026-08-12T17:49:04.4003841Z Or undo this operation with:
+2026-08-12T17:49:04.4004785Z 
+2026-08-12T17:49:04.4005370Z   git switch -
+2026-08-12T17:49:04.4006183Z 
+2026-08-12T17:49:04.4007366Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-08-12T17:49:04.4009029Z 
+2026-08-12T17:49:04.4010963Z HEAD is now at 6d38a4d Merge d38e24a21606d06d90049378eaed352c29cc9df4 into c2c1fe78c6e34722540708f94f9881dfabaab8d3
+2026-08-12T17:49:04.4017051Z ##[endgroup]
+2026-08-12T17:49:04.4052650Z [command]/usr/bin/git log -1 --format=%H
+2026-08-12T17:49:04.4076951Z 6d38a4d4434830206173391ad0f69f58de006fcb
+2026-08-12T17:49:04.4509175Z ##[group]Run actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95
+2026-08-12T17:49:04.4510538Z with:
+2026-08-12T17:49:04.4511283Z   java-version: 17
+17
+
+2026-08-12T17:49:04.4512106Z   distribution: zulu
+2026-08-12T17:49:04.4512890Z   cache: gradle
+2026-08-12T17:49:04.4513858Z   java-package: jdk
+2026-08-12T17:49:04.4514663Z   check-latest: false
+2026-08-12T17:49:04.4515490Z   set-default: true
+2026-08-12T17:49:04.4516282Z   verify-signature: false
+2026-08-12T17:49:04.4517132Z   server-id: github
+2026-08-12T17:49:04.4517943Z   server-username: GITHUB_ACTOR
+2026-08-12T17:49:04.4518864Z   server-password: GITHUB_TOKEN
+2026-08-12T17:49:04.4519783Z   overwrite-settings: true
+2026-08-12T17:49:04.4520642Z   job-status: success
+2026-08-12T17:49:04.4528600Z   token: ***
+2026-08-12T17:49:04.4529398Z   show-download-progress: false
+2026-08-12T17:49:04.4530307Z ##[endgroup]
+2026-08-12T17:49:04.5996410Z ##[group]Installed distributions
+2026-08-12T17:49:04.6024173Z Trying to resolve the latest version from remote
+2026-08-12T17:49:04.8268396Z Resolved latest version as 17.0.20+8
+2026-08-12T17:49:04.8268730Z Trying to download...
+2026-08-12T17:49:04.8269975Z Downloading Java 17.0.20+8 (Zulu) from https://cdn.azul.com/zulu/bin/zulu17.68.17-ca-jdk17.0.20-linux_x64.tar.gz ...
+2026-08-12T17:49:10.6767034Z Extracting Java archive...
+2026-08-12T17:49:10.6888021Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/fae99915-3670-4716-a924-6567884ce818 -f /home/runner/work/_temp/afa2a336-e9e9-40a7-998a-607f27d06646
+2026-08-12T17:49:13.2917790Z Java 17.0.20+8 was downloaded
+2026-08-12T17:49:13.2925033Z Setting Java 17.0.20+8 as the default
+2026-08-12T17:49:13.2928638Z Creating toolchains.xml for JDK version 17 from zulu
+2026-08-12T17:49:13.3006139Z Writing to /home/runner/.m2/toolchains.xml
+2026-08-12T17:49:13.3006856Z 
+2026-08-12T17:49:13.3007194Z Java configuration:
+2026-08-12T17:49:13.3007607Z   Distribution: zulu
+2026-08-12T17:49:13.3008335Z   Version: 17.0.20+8
+2026-08-12T17:49:13.3008829Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:13.3009246Z 
+2026-08-12T17:49:13.3024052Z Resolved Java 17.0.20+8 from tool-cache
+2026-08-12T17:49:13.3024773Z Setting Java 17.0.20+8 as the default
+2026-08-12T17:49:13.3028396Z Creating toolchains.xml for JDK version 17 from zulu
+2026-08-12T17:49:13.3073008Z Updating existing file /home/runner/.m2/toolchains.xml
+2026-08-12T17:49:13.3073757Z 
+2026-08-12T17:49:13.3073922Z Java configuration:
+2026-08-12T17:49:13.3074309Z   Distribution: zulu
+2026-08-12T17:49:13.3074704Z   Version: 17.0.20+8
+2026-08-12T17:49:13.3075199Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:13.3075583Z 
+2026-08-12T17:49:13.3076038Z ##[endgroup]
+2026-08-12T17:49:13.3105043Z Creating settings.xml with server-id: github
+2026-08-12T17:49:13.3105421Z Writing to /home/runner/.m2/settings.xml
+2026-08-12T17:49:13.3106126Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-08-12T17:49:14.2246186Z Cache hit for: setup-java-Linux-x64-gradle-776357ad68939b42bd6e1ae0944092bb15da36f0138ae2d36e6ced990a116c71
+2026-08-12T17:49:15.3824299Z Received 88080384 of 136158231 (64.7%), 84.0 MBs/sec
+2026-08-12T17:49:15.6958253Z Received 136158231 of 136158231 (100.0%), 98.7 MBs/sec
+2026-08-12T17:49:15.6959348Z Cache Size: ~130 MB (136158231 B)
+2026-08-12T17:49:15.6998655Z [command]/usr/bin/tar -xf /home/runner/work/_temp/3e40cafe-58cf-40b2-be4b-0e5d9e1103e4/cache.tzst -P -C /home/runner/work/servicetalk/servicetalk --use-compress-program unzstd
+2026-08-12T17:49:16.6160776Z Cache restored successfully
+2026-08-12T17:49:16.6226944Z Cache restored from key: setup-java-Linux-x64-gradle-776357ad68939b42bd6e1ae0944092bb15da36f0138ae2d36e6ced990a116c71
+2026-08-12T17:49:17.2732495Z Cache hit for: setup-java-Linux-x64-gradle-wrapper-583723a565979d96bb810c1a078d6acd72064ea5cbe74e577b74347b31f2a617
+2026-08-12T17:49:18.4142186Z Received 100663296 of 185868750 (54.2%), 95.8 MBs/sec
+2026-08-12T17:49:19.4142216Z Received 181674446 of 185868750 (97.7%), 86.5 MBs/sec
+2026-08-12T17:49:19.7687299Z Received 185868750 of 185868750 (100.0%), 75.2 MBs/sec
+2026-08-12T17:49:19.7687933Z Cache Size: ~177 MB (185868750 B)
+2026-08-12T17:49:19.7810282Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c62eea07-9466-4c04-9653-0e91844fead5/cache.tzst -P -C /home/runner/work/servicetalk/servicetalk --use-compress-program unzstd
+2026-08-12T17:49:21.5905784Z Cache restored successfully
+2026-08-12T17:49:21.5990627Z gradle-wrapper cache restored from key: setup-java-Linux-x64-gradle-wrapper-583723a565979d96bb810c1a078d6acd72064ea5cbe74e577b74347b31f2a617
+2026-08-12T17:49:21.6208231Z ##[group]Run echo "Gradle will run on JDK 17:"
+2026-08-12T17:49:21.6208655Z [36;1mecho "Gradle will run on JDK 17:"[0m
+2026-08-12T17:49:21.6208981Z [36;1mjava -version[0m
+2026-08-12T17:49:21.6209242Z [36;1mecho "Tests will run on JDK 17:"[0m
+2026-08-12T17:49:21.6209567Z [36;1mif [ -d "$JAVA_HOME_17_X64" ]; then[0m
+2026-08-12T17:49:21.6209895Z [36;1m  "$JAVA_HOME_17_X64/bin/java" -version[0m
+2026-08-12T17:49:21.6210178Z [36;1mfi[0m
+2026-08-12T17:49:21.6261096Z shell: /usr/bin/bash -e {0}
+2026-08-12T17:49:21.6261387Z env:
+2026-08-12T17:49:21.6261671Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.6262101Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.6262471Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:21.6262686Z ##[endgroup]
+2026-08-12T17:49:21.6350534Z Gradle will run on JDK 17:
+2026-08-12T17:49:21.6576684Z openjdk version "17.0.20" 2026-07-21 LTS
+2026-08-12T17:49:21.6577517Z OpenJDK Runtime Environment Zulu17.68+17-CA (build 17.0.20+8-LTS)
+2026-08-12T17:49:21.6578333Z OpenJDK 64-Bit Server VM Zulu17.68+17-CA (build 17.0.20+8-LTS, mixed mode, sharing)
+2026-08-12T17:49:21.6614686Z Tests will run on JDK 17:
+2026-08-12T17:49:21.6839595Z openjdk version "17.0.20" 2026-07-21 LTS
+2026-08-12T17:49:21.6840651Z OpenJDK Runtime Environment Zulu17.68+17-CA (build 17.0.20+8-LTS)
+2026-08-12T17:49:21.6842074Z OpenJDK 64-Bit Server VM Zulu17.68+17-CA (build 17.0.20+8-LTS, mixed mode, sharing)
+2026-08-12T17:49:21.6914986Z ##[group]Run echo "TEST_JAVA_VERSION=17" >> "$GITHUB_ENV"
+2026-08-12T17:49:21.6915433Z [36;1mecho "TEST_JAVA_VERSION=17" >> "$GITHUB_ENV"[0m
+2026-08-12T17:49:21.6961211Z shell: /usr/bin/bash -e {0}
+2026-08-12T17:49:21.6961473Z env:
+2026-08-12T17:49:21.6961756Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.6962176Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.6962527Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:21.6962744Z ##[endgroup]
+2026-08-12T17:49:21.7098449Z ##[group]Run chmod +x gradlew
+2026-08-12T17:49:21.7098760Z [36;1mchmod +x gradlew[0m
+2026-08-12T17:49:21.7141496Z shell: /usr/bin/bash -e {0}
+2026-08-12T17:49:21.7141757Z env:
+2026-08-12T17:49:21.7142035Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.7142494Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.7142849Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:21.7143069Z   TEST_JAVA_VERSION: 17
+2026-08-12T17:49:21.7143527Z ##[endgroup]
+2026-08-12T17:49:21.7250952Z ##[group]Run ./gradlew --parallel clean
+2026-08-12T17:49:21.7251302Z [36;1m./gradlew --parallel clean[0m
+2026-08-12T17:49:21.7294379Z shell: /usr/bin/bash -e {0}
+2026-08-12T17:49:21.7294634Z env:
+2026-08-12T17:49:21.7294916Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.7295353Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:21.7295697Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:21.7295918Z   TEST_JAVA_VERSION: 17
+2026-08-12T17:49:21.7296136Z ##[endgroup]
+2026-08-12T17:49:22.3174038Z 
+2026-08-12T17:49:22.3186010Z Welcome to Gradle 9.6.1!
+2026-08-12T17:49:22.3206989Z 
+2026-08-12T17:49:22.3207527Z Here are the highlights of this release:
+2026-08-12T17:49:22.3208453Z  - Improved Configuration Cache hit rates
+2026-08-12T17:49:22.3209261Z  - Additional CLI rendering options
+2026-08-12T17:49:22.3210077Z  - Important project hierarchy lookup deprecations
+2026-08-12T17:49:22.3210702Z 
+2026-08-12T17:49:22.3211221Z For more details see https://docs.gradle.org/9.6.1/release-notes.html
+2026-08-12T17:49:22.3211788Z 
+2026-08-12T17:49:22.4166123Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-08-12T17:49:23.8172863Z Configuration on demand is an incubating feature.
+2026-08-12T17:49:27.1194472Z > Task :buildSrc:compileJava NO-SOURCE
+2026-08-12T17:49:27.5176558Z > Task :buildSrc:compileGroovy FROM-CACHE
+2026-08-12T17:49:27.5206340Z > Task :buildSrc:pluginDescriptors
+2026-08-12T17:49:27.6227922Z > Task :buildSrc:processResources
+2026-08-12T17:49:27.6232048Z > Task :buildSrc:classes
+2026-08-12T17:49:27.7211131Z > Task :buildSrc:jar
+2026-08-12T17:49:29.4166619Z 
+2026-08-12T17:49:29.4194773Z > Configure project :
+2026-08-12T17:49:29.4224966Z This machine doesn't have any pre-configured repositories, will use: MavenRepo, Gradle Central Plugin Repository
+2026-08-12T17:49:36.9167623Z 
+2026-08-12T17:49:36.9194466Z > Task :servicetalk-annotations:clean UP-TO-DATE
+2026-08-12T17:49:36.9203808Z > Task :servicetalk-bom:clean UP-TO-DATE
+2026-08-12T17:49:36.9210197Z > Task :servicetalk-buffer-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9214012Z > Task :servicetalk-benchmarks:clean UP-TO-DATE
+2026-08-12T17:49:36.9249377Z > Task :servicetalk-circuit-breaker-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9250442Z > Task :servicetalk-circuit-breaker-resilience4j:clean UP-TO-DATE
+2026-08-12T17:49:36.9251340Z > Task :clean UP-TO-DATE
+2026-08-12T17:49:36.9252043Z > Task :servicetalk-client-api-internal:clean UP-TO-DATE
+2026-08-12T17:49:36.9252916Z > Task :servicetalk-buffer-netty:clean UP-TO-DATE
+2026-08-12T17:49:36.9254043Z > Task :servicetalk-capacity-limiter-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9254952Z > Task :servicetalk-concurrent-api-internal:clean UP-TO-DATE
+2026-08-12T17:49:36.9256261Z > Task :servicetalk-client-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9257075Z > Task :servicetalk-concurrent-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9257944Z > Task :servicetalk-concurrent-jdkflow:clean UP-TO-DATE
+2026-08-12T17:49:36.9258800Z > Task :servicetalk-concurrent-internal:clean UP-TO-DATE
+2026-08-12T17:49:36.9259673Z > Task :servicetalk-concurrent-test-internal:clean UP-TO-DATE
+2026-08-12T17:49:36.9260589Z > Task :servicetalk-concurrent-api-test:clean UP-TO-DATE
+2026-08-12T17:49:36.9261435Z > Task :servicetalk-context-api:clean UP-TO-DATE
+2026-08-12T17:49:36.9262274Z > Task :servicetalk-data-jackson:clean UP-TO-DATE
+2026-08-12T17:49:36.9263135Z > Task :servicetalk-data-jackson-jersey:clean UP-TO-DATE
+2026-08-12T17:49:36.9267362Z > Task :servicetalk-concurrent:clean UP-TO-DATE
+2026-08-12T17:49:36.9279802Z > Task :servicetalk-data-jackson-jersey3-jakarta9:clean UP-TO-DATE
+2026-08-12T17:49:36.9294018Z > Task :servicetalk-data-jackson3:clean UP-TO-DATE
+2026-08-12T17:49:36.9295018Z > Task :servicetalk-data-jackson3-jersey4-jakarta11:clean UP-TO-DATE
+2026-08-12T17:49:36.9296035Z > Task :servicetalk-data-protobuf:clean UP-TO-DATE
+2026-08-12T17:49:36.9296904Z > Task :servicetalk-data-protobuf-jersey:clean UP-TO-DATE
+2026-08-12T17:49:36.9298220Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:clean UP-TO-DATE
+2026-08-12T17:49:36.9299340Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:clean UP-TO-DATE
+2026-08-12T17:49:36.9300356Z > Task :servicetalk-concurrent-reactivestreams:clean UP-TO-DATE
+2026-08-12T17:49:36.9301246Z > Task :servicetalk-dependencies:clean UP-TO-DATE
+2026-08-12T17:49:36.9302112Z > Task :servicetalk-dns-discovery-netty:clean UP-TO-DATE
+2026-08-12T17:49:37.0169643Z > Task :servicetalk-encoding-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0202233Z > Task :servicetalk-encoding-api-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0210250Z > Task :servicetalk-data-jackson-jersey3-jakarta10:clean UP-TO-DATE
+2026-08-12T17:49:37.0233821Z > Task :servicetalk-gradle-plugin-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0234856Z > Task :servicetalk-grpc-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0235674Z > Task :servicetalk-grpc-health:clean UP-TO-DATE
+2026-08-12T17:49:37.0236512Z > Task :servicetalk-encoding-netty:clean UP-TO-DATE
+2026-08-12T17:49:37.0237475Z > Task :servicetalk-data-protobuf-jersey3-jakarta10:clean UP-TO-DATE
+2026-08-12T17:49:37.0238533Z > Task :servicetalk-grpc-protobuf:clean UP-TO-DATE
+2026-08-12T17:49:37.0239326Z > Task :servicetalk-grpc-utils:clean UP-TO-DATE
+2026-08-12T17:49:37.0240098Z > Task :servicetalk-grpc-protoc:clean UP-TO-DATE
+2026-08-12T17:49:37.0240882Z > Task :servicetalk-grpc-netty:clean UP-TO-DATE
+2026-08-12T17:49:37.0241672Z > Task :servicetalk-grpc-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0242459Z > Task :servicetalk-http-netty:clean UP-TO-DATE
+2026-08-12T17:49:37.0243493Z > Task :servicetalk-http-router-jersey:clean UP-TO-DATE
+2026-08-12T17:49:37.0244378Z > Task :servicetalk-http-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0245274Z > Task :servicetalk-http-router-jersey3-jakarta10:clean UP-TO-DATE
+2026-08-12T17:49:37.0246381Z > Task :servicetalk-http-router-jersey-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0247462Z > Task :servicetalk-http-router-jersey4-jakarta11:clean UP-TO-DATE
+2026-08-12T17:49:37.0248541Z > Task :servicetalk-http-router-jersey3-jakarta10-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0249517Z > Task :servicetalk-http-router-predicate:clean UP-TO-DATE
+2026-08-12T17:49:37.0250515Z > Task :servicetalk-http-router-jersey3-jakarta9:clean UP-TO-DATE
+2026-08-12T17:49:37.0251621Z > Task :servicetalk-http-router-jersey3-jakarta9-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0252779Z > Task :servicetalk-http-security-jersey3-jakarta10:clean UP-TO-DATE
+2026-08-12T17:49:37.0254341Z > Task :servicetalk-http-security-jersey3-jakarta9:clean UP-TO-DATE
+2026-08-12T17:49:37.0255469Z > Task :servicetalk-http-security-jersey:clean UP-TO-DATE
+2026-08-12T17:49:37.0256657Z > Task :servicetalk-http-router-jersey4-jakarta11-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0279444Z > Task :servicetalk-loadbalancer:clean UP-TO-DATE
+2026-08-12T17:49:37.0280631Z > Task :servicetalk-loadbalancer-experimental:clean UP-TO-DATE
+2026-08-12T17:49:37.0281702Z > Task :servicetalk-http-security-jersey4-jakarta11:clean UP-TO-DATE
+2026-08-12T17:49:37.0284726Z > Task :servicetalk-log4j2-mdc:clean UP-TO-DATE
+2026-08-12T17:49:37.0285650Z > Task :servicetalk-log4j2-mdc-utils:clean UP-TO-DATE
+2026-08-12T17:49:37.0286497Z > Task :servicetalk-http-utils:clean UP-TO-DATE
+2026-08-12T17:49:37.0287581Z > Task :servicetalk-loadbalancer-experimental-provider:clean UP-TO-DATE
+2026-08-12T17:49:37.0288771Z > Task :servicetalk-logging-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0298108Z > Task :servicetalk-oio-api-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0299080Z > Task :servicetalk-logging-slf4j-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0300064Z > Task :servicetalk-opentracing-asynccontext:clean UP-TO-DATE
+2026-08-12T17:49:37.0301116Z > Task :servicetalk-opentelemetry-http:clean UP-TO-DATE
+2026-08-12T17:49:37.0301988Z > Task :servicetalk-oio-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0302832Z > Task :servicetalk-opentracing-inmemory:clean UP-TO-DATE
+2026-08-12T17:49:37.0304099Z > Task :servicetalk-opentracing-inmemory-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0305395Z > Task :servicetalk-opentracing-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0306434Z > Task :servicetalk-opentelemetry-asynccontext:clean UP-TO-DATE
+2026-08-12T17:49:37.0307464Z > Task :servicetalk-opentracing-log4j2:clean UP-TO-DATE
+2026-08-12T17:49:37.0308344Z > Task :servicetalk-router-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0309248Z > Task :servicetalk-router-utils-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0310179Z > Task :servicetalk-opentracing-http:clean UP-TO-DATE
+2026-08-12T17:49:37.0311072Z > Task :servicetalk-serialization-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0316977Z > Task :servicetalk-opentracing-zipkin-publisher:clean UP-TO-DATE
+2026-08-12T17:49:37.0318439Z > Task :servicetalk-serializer-utils:clean UP-TO-DATE
+2026-08-12T17:49:37.0319341Z > Task :servicetalk-tcp-netty-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0320228Z > Task :servicetalk-serializer-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0321073Z > Task :servicetalk-test-resources:clean UP-TO-DATE
+2026-08-12T17:49:37.0322014Z > Task :servicetalk-traffic-resilience-http:clean UP-TO-DATE
+2026-08-12T17:49:37.0322939Z > Task :servicetalk-transport-netty:clean UP-TO-DATE
+2026-08-12T17:49:37.0324232Z > Task :servicetalk-transport-netty-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0325324Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-compression:clean UP-TO-DATE
+2026-08-12T17:49:37.0326393Z > Task :servicetalk-transport-api:clean UP-TO-DATE
+2026-08-12T17:49:37.0327224Z > Task :servicetalk-utils-internal:clean UP-TO-DATE
+2026-08-12T17:49:37.0328279Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-deadline:clean UP-TO-DATE
+2026-08-12T17:49:37.0329574Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-debugging:clean UP-TO-DATE
+2026-08-12T17:49:37.0330846Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-health:clean UP-TO-DATE
+2026-08-12T17:49:37.0332110Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-helloworld:clean UP-TO-DATE
+2026-08-12T17:49:37.0333682Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-errors:clean UP-TO-DATE
+2026-08-12T17:49:37.0335411Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-execution-strategy:clean UP-TO-DATE
+2026-08-12T17:49:37.0337013Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-request-response-context:clean UP-TO-DATE
+2026-08-12T17:49:37.0338517Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-keepalive:clean UP-TO-DATE
+2026-08-12T17:49:37.0339815Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-routeguide:clean UP-TO-DATE
+2026-08-12T17:49:37.0341373Z > Task :servicetalk-examples:http:servicetalk-examples-http-compression:clean UP-TO-DATE
+2026-08-12T17:49:37.0342910Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-protoc-options:clean UP-TO-DATE
+2026-08-12T17:49:37.0345232Z > Task :servicetalk-examples:http:servicetalk-examples-http-files:clean UP-TO-DATE
+2026-08-12T17:49:37.0347802Z > Task :servicetalk-examples:http:servicetalk-examples-http-helloworld:clean UP-TO-DATE
+2026-08-12T17:49:37.0349154Z > Task :servicetalk-examples:http:servicetalk-examples-http-http2:clean UP-TO-DATE
+2026-08-12T17:49:37.0350407Z > Task :servicetalk-examples:grpc:servicetalk-examples-grpc-observer:clean UP-TO-DATE
+2026-08-12T17:49:37.0351709Z > Task :servicetalk-examples:http:servicetalk-examples-http-jaxrs:clean UP-TO-DATE
+2026-08-12T17:49:37.0353047Z > Task :servicetalk-examples:http:servicetalk-examples-http-loadbalancer:clean UP-TO-DATE
+2026-08-12T17:49:37.0354792Z > Task :servicetalk-examples:http:servicetalk-examples-http-metadata:clean UP-TO-DATE
+2026-08-12T17:49:37.0356086Z > Task :servicetalk-examples:http:servicetalk-examples-http-mutual-tls:clean UP-TO-DATE
+2026-08-12T17:49:37.0357415Z > Task :servicetalk-examples:http:servicetalk-examples-http-observer:clean UP-TO-DATE
+2026-08-12T17:49:37.0358755Z > Task :servicetalk-examples:http:servicetalk-examples-http-debugging:clean UP-TO-DATE
+2026-08-12T17:49:37.0360284Z > Task :servicetalk-examples:http:servicetalk-examples-http-redirects:clean UP-TO-DATE
+2026-08-12T17:49:37.0361729Z > Task :servicetalk-examples:http:servicetalk-examples-http-opentracing:clean UP-TO-DATE
+2026-08-12T17:49:37.0363176Z > Task :servicetalk-examples:http:servicetalk-examples-http-opentelemetry-tracing:clean UP-TO-DATE
+2026-08-12T17:49:37.0365043Z > Task :servicetalk-examples:http:servicetalk-examples-http-service-composition:clean UP-TO-DATE
+2026-08-12T17:49:37.0366469Z > Task :servicetalk-examples:http:servicetalk-examples-http-retry:clean UP-TO-DATE
+2026-08-12T17:49:37.0367937Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-bytes:clean UP-TO-DATE
+2026-08-12T17:49:37.0369428Z > Task :servicetalk-examples:http:servicetalk-examples-http-timeout:clean UP-TO-DATE
+2026-08-12T17:49:37.0370911Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-json:clean UP-TO-DATE
+2026-08-12T17:49:37.0372446Z > Task :servicetalk-examples:http:servicetalk-examples-http-traffic-resilience:clean UP-TO-DATE
+2026-08-12T17:49:37.0374107Z > Task :servicetalk-examples:http:servicetalk-examples-http-uds:clean UP-TO-DATE
+2026-08-12T17:49:37.0375603Z > Task :servicetalk-examples:http:serialization:servicetalk-examples-http-serialization-protobuf:clean UP-TO-DATE
+2026-08-12T17:49:37.1183663Z 
+2026-08-12T17:49:37.1244639Z [Incubating] Problems report is available at: file:///home/runner/work/servicetalk/servicetalk/build/reports/problems/problems-report.html
+2026-08-12T17:49:37.1273527Z 
+2026-08-12T17:49:37.1274076Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+2026-08-12T17:49:37.1274682Z 
+2026-08-12T17:49:37.1275371Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-08-12T17:49:37.1276258Z 
+2026-08-12T17:49:37.1277129Z For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-08-12T17:49:37.1278117Z 
+2026-08-12T17:49:37.1278285Z BUILD SUCCESSFUL in 15s
+2026-08-12T17:49:37.1278800Z 127 actionable tasks: 3 executed, 1 from cache, 123 up-to-date
+2026-08-12T17:49:37.1279921Z Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
+2026-08-12T17:49:37.4788225Z ##[group]Run sudo -E env "PATH=$PATH" bash -c "ulimit -l 65536 && ulimit -a && ./gradlew --no-daemon --parallel test"
+2026-08-12T17:49:37.4789025Z [36;1msudo -E env "PATH=$PATH" bash -c "ulimit -l 65536 && ulimit -a && ./gradlew --no-daemon --parallel test"[0m
+2026-08-12T17:49:37.4831887Z shell: /usr/bin/bash -e {0}
+2026-08-12T17:49:37.4832137Z env:
+2026-08-12T17:49:37.4832420Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:37.4833005Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:37.4833579Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:37.4833802Z   TEST_JAVA_VERSION: 17
+2026-08-12T17:49:37.4834051Z   JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF-8
+2026-08-12T17:49:37.4834340Z ##[endgroup]
+2026-08-12T17:49:37.4982731Z real-time non-blocking time  (microseconds, -R) unlimited
+2026-08-12T17:49:37.4984216Z core file size              (blocks, -c) 0
+2026-08-12T17:49:37.4984613Z data seg size               (kbytes, -d) unlimited
+2026-08-12T17:49:37.4984951Z scheduling priority                 (-e) 0
+2026-08-12T17:49:37.4985264Z file size                   (blocks, -f) unlimited
+2026-08-12T17:49:37.4985595Z pending signals                     (-i) 63838
+2026-08-12T17:49:37.4985899Z max locked memory           (kbytes, -l) 65536
+2026-08-12T17:49:37.4986204Z max memory size             (kbytes, -m) unlimited
+2026-08-12T17:49:37.4986529Z open files                          (-n) 1024
+2026-08-12T17:49:37.4986834Z pipe size                (512 bytes, -p) 8
+2026-08-12T17:49:37.4987141Z POSIX message queues         (bytes, -q) 819200
+2026-08-12T17:49:37.4987457Z real-time priority                  (-r) 0
+2026-08-12T17:49:37.4987757Z stack size                  (kbytes, -s) 8192
+2026-08-12T17:49:37.4988070Z cpu time                   (seconds, -t) unlimited
+2026-08-12T17:49:37.4988393Z max user processes                  (-u) 63838
+2026-08-12T17:49:37.4988705Z virtual memory              (kbytes, -v) unlimited
+2026-08-12T17:49:37.4989022Z file locks                          (-x) unlimited
+2026-08-12T17:49:37.5999907Z Fetching distribution (retrying 2 times, with an initial back off of 500 ms).
+2026-08-12T17:49:37.6000954Z Downloading https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+2026-08-12T17:49:38.2103819Z 
+2026-08-12T17:49:38.2107305Z Attempt 1/3 failed. Reason: Unexpected end of file from server
+2026-08-12T17:49:38.7112542Z Downloading https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+2026-08-12T17:49:38.9866075Z 
+2026-08-12T17:49:38.9868118Z Attempt 2/3 failed. Reason: Unexpected end of file from server
+2026-08-12T17:49:39.9872218Z Downloading https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+2026-08-12T17:49:40.1719930Z 
+2026-08-12T17:49:40.1723102Z Attempt 3/3 failed. Reason: Server returned HTTP response code: 503 for URL: https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+2026-08-12T17:49:40.1752002Z ##[error]Exception in thread "main" java.io.IOException: Server returned HTTP response code: 503 for URL: https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+2026-08-12T17:49:40.1759962Z 	at org.gradle.wrapper.Download.download(SourceFile:1)
+2026-08-12T17:49:40.1760402Z 	at org.gradle.wrapper.Install.forceFetch(SourceFile)
+2026-08-12T17:49:40.1760873Z 	at org.gradle.wrapper.Install.lambda$createDist$0(SourceFile:9)
+2026-08-12T17:49:40.1761326Z 	at org.gradle.wrapper.Install.createDist(SourceFile:24)
+2026-08-12T17:49:40.1761847Z 	at org.gradle.wrapper.GradleWrapperMain.lambda$prepareWrapper$0(SourceFile:2)
+2026-08-12T17:49:40.1762370Z 	at org.gradle.wrapper.GradleWrapperMain.main(SourceFile:2)
+2026-08-12T17:49:40.1810092Z ##[error]Process completed with exit code 1.
+2026-08-12T17:49:40.1895215Z ##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+2026-08-12T17:49:40.1895648Z with:
+2026-08-12T17:49:40.1895863Z   name: test-results-ubuntu-17
+2026-08-12T17:49:40.1896146Z   path: **/build/test-results/test/TEST-*.xml
+2026-08-12T17:49:40.1896441Z   if-no-files-found: warn
+2026-08-12T17:49:40.1896687Z   compression-level: 6
+2026-08-12T17:49:40.1896916Z   overwrite: false
+2026-08-12T17:49:40.1897136Z   include-hidden-files: false
+2026-08-12T17:49:40.1897382Z   archive: true
+2026-08-12T17:49:40.1897575Z env:
+2026-08-12T17:49:40.1897831Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:40.1898249Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.20-8/x64
+2026-08-12T17:49:40.1898764Z   MAVEN_ARGS: -ntp
+2026-08-12T17:49:40.1898973Z   TEST_JAVA_VERSION: 17
+2026-08-12T17:49:40.1899189Z ##[endgroup]
+2026-08-12T17:49:40.8996916Z ##[warning]No files were found with the provided path: **/build/test-results/test/TEST-*.xml. No artifacts will be uploaded.
+2026-08-12T17:49:40.9173662Z Post job cleanup.
+2026-08-12T17:49:41.0489746Z Post job cleanup.
+2026-08-12T17:49:41.1291965Z [command]/usr/bin/git version
+2026-08-12T17:49:41.1334032Z git version 2.54.0
+2026-08-12T17:49:41.1371264Z Temporarily overriding HOME='/home/runner/work/_temp/3c43339f-21f1-4e57-b57f-441293f40124' before making global git config changes
+2026-08-12T17:49:41.1372634Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-12T17:49:41.1377552Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/servicetalk/servicetalk
+2026-08-12T17:49:41.1407602Z Removing SSH command configuration
+2026-08-12T17:49:41.1413519Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-12T17:49:41.1447598Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-12T17:49:41.1671218Z Removing HTTP extra header
+2026-08-12T17:49:41.1677998Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-12T17:49:41.1709448Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-12T17:49:41.1929965Z Removing includeIf entries pointing to credentials config files
+2026-08-12T17:49:41.1936406Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-12T17:49:41.1961900Z includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path
+2026-08-12T17:49:41.1962952Z includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path
+2026-08-12T17:49:41.1964191Z includeif.gitdir:/github/workspace/.git.path
+2026-08-12T17:49:41.1964897Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-12T17:49:41.1970967Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path
+2026-08-12T17:49:41.1993815Z /home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:41.2005661Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-1a707745\-ea36\-4bba\-a914\-b39e4898e4e9\.config
+2026-08-12T17:49:41.2042470Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path
+2026-08-12T17:49:41.2065911Z /home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:41.2078614Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/servicetalk/servicetalk/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-1a707745\-ea36\-4bba\-a914\-b39e4898e4e9\.config
+2026-08-12T17:49:41.2120775Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-08-12T17:49:41.2142808Z /github/runner_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:41.2152534Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-1a707745\-ea36\-4bba\-a914\-b39e4898e4e9\.config
+2026-08-12T17:49:41.2185533Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-12T17:49:41.2207642Z /github/runner_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config
+2026-08-12T17:49:41.2218744Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-1a707745\-ea36\-4bba\-a914\-b39e4898e4e9\.config
+2026-08-12T17:49:41.2255069Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-12T17:49:41.2496825Z Removing credentials config '/home/runner/work/_temp/git-credentials-1a707745-ea36-4bba-a914-b39e4898e4e9.config'
+2026-08-12T17:49:41.2636935Z Cleaning up orphan processes
+2026-08-12T17:49:41.2935573Z Terminate orphan process: pid (2295) (java)

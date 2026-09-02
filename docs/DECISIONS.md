@@ -123,3 +123,17 @@ therefore undetectable. Distinguishing rule: a method-position token is legitima
 names a developer-written source symbol (setup, init, run, TestAll all do); it is not
 legitimate if the test framework synthesised it (classMethod does not). Revisit trigger: a
 framework is added whose synthetic descriptors are not enumerable.
+
+### D-47: The binding rate is reported as two numbers, not one
+
+D-47 — The binding rate is reported as two numbers, not one. Measured on the post-fix key
+space of 5,985 distinct test ids: 5,622 / 5,985 (93.93%) bind, of which 3,819 / 5,985
+(63.81%) bind at full confidence via a fully-qualified class name and 1,803 / 5,985 (30.13%)
+bind at 0.5 confidence via a basename-only match on a bare class name. Gate 1.5 (binding
+>=70%, ROADMAP §37.1) is met on the combined figure and NOT met on the full-confidence subset
+alone. Both numbers appear wherever the binding rate appears; the combined figure is never
+reported without the split. The residual is an absence of package evidence in the logs, not a
+parser limitation: corpus-wide fqcn_incomplete (13,182) exceeds fqcn_recovered (6,230) by
+roughly 2:1 because most bare-class ids have no package anywhere in their log. This
+supersedes the previously published 5,629 / 6,014 = 93.60% reported as a single figure.
+Revisit trigger: a new package-recovery source is added to D-39's list.

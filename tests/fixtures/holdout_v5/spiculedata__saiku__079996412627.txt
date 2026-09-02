@@ -1,0 +1,753 @@
+﻿2026-06-07T22:17:25.0554760Z Current runner version: '2.334.0'
+2026-06-07T22:17:25.0571760Z ##[group]Runner Image Provisioner
+2026-06-07T22:17:25.0572320Z Hosted Compute Agent
+2026-06-07T22:17:25.0572690Z Version: 20260520.533
+2026-06-07T22:17:25.0573100Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-07T22:17:25.0573560Z Build Date: 2026-05-20T17:44:04Z
+2026-06-07T22:17:25.0575760Z Worker ID: {c5436407-3f11-43f2-b471-d1e936646696}
+2026-06-07T22:17:25.0577100Z Azure Region: westus
+2026-06-07T22:17:25.0578080Z ##[endgroup]
+2026-06-07T22:17:25.0581490Z ##[group]Operating System
+2026-06-07T22:17:25.0581990Z macOS
+2026-06-07T22:17:25.0582350Z 15.7.7
+2026-06-07T22:17:25.0582690Z 24G720
+2026-06-07T22:17:25.0583030Z ##[endgroup]
+2026-06-07T22:17:25.0583410Z ##[group]Runner Image
+2026-06-07T22:17:25.0583800Z Image: macos-15-arm64
+2026-06-07T22:17:25.0584210Z Version: 20260527.0100.1
+2026-06-07T22:17:25.0585070Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260527.0100/images/macos/macos-15-arm64-Readme.md
+2026-06-07T22:17:25.0586130Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260527.0100
+2026-06-07T22:17:25.0586820Z ##[endgroup]
+2026-06-07T22:17:25.0588800Z ##[group]GITHUB_TOKEN Permissions
+2026-06-07T22:17:25.0590470Z Actions: write
+2026-06-07T22:17:25.0590840Z ArtifactMetadata: write
+2026-06-07T22:17:25.0591230Z Attestations: write
+2026-06-07T22:17:25.0591610Z Checks: write
+2026-06-07T22:17:25.0591970Z CodeQuality: write
+2026-06-07T22:17:25.0592340Z Contents: write
+2026-06-07T22:17:25.0592710Z Deployments: write
+2026-06-07T22:17:25.0593070Z Discussions: write
+2026-06-07T22:17:25.0593450Z Issues: write
+2026-06-07T22:17:25.0593810Z Metadata: read
+2026-06-07T22:17:25.0594250Z Models: read
+2026-06-07T22:17:25.0594620Z Packages: write
+2026-06-07T22:17:25.0595060Z Pages: write
+2026-06-07T22:17:25.0595420Z PullRequests: write
+2026-06-07T22:17:25.0595820Z RepositoryProjects: write
+2026-06-07T22:17:25.0596240Z SecurityEvents: write
+2026-06-07T22:17:25.0596640Z Statuses: write
+2026-06-07T22:17:25.0597030Z VulnerabilityAlerts: read
+2026-06-07T22:17:25.0597430Z ##[endgroup]
+2026-06-07T22:17:25.0599490Z Secret source: Actions
+2026-06-07T22:17:25.0599970Z Prepare workflow directory
+2026-06-07T22:17:25.0969750Z Prepare all required actions
+2026-06-07T22:17:25.1015680Z Getting action download info
+2026-06-07T22:17:25.6273210Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-07T22:17:26.0430560Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-06-07T22:17:26.6387910Z Complete job name: build (JDK 21, macos-latest)
+2026-06-07T22:17:26.6965150Z ##[group]Run actions/checkout@v4
+2026-06-07T22:17:26.6969100Z with:
+2026-06-07T22:17:26.6969640Z   repository: spiculedata/saiku
+2026-06-07T22:17:26.6973630Z   token: ***
+2026-06-07T22:17:26.6974900Z   ssh-strict: true
+2026-06-07T22:17:26.6975290Z   ssh-user: git
+2026-06-07T22:17:26.6975680Z   persist-credentials: true
+2026-06-07T22:17:26.6976140Z   clean: true
+2026-06-07T22:17:26.6976520Z   sparse-checkout-cone-mode: true
+2026-06-07T22:17:26.6976970Z   fetch-depth: 1
+2026-06-07T22:17:26.6977340Z   fetch-tags: false
+2026-06-07T22:17:26.6977730Z   show-progress: true
+2026-06-07T22:17:26.6978130Z   lfs: false
+2026-06-07T22:17:26.6978500Z   submodules: false
+2026-06-07T22:17:26.6979510Z   set-safe-directory: true
+2026-06-07T22:17:26.6980400Z ##[endgroup]
+2026-06-07T22:17:27.0630770Z Syncing repository: spiculedata/saiku
+2026-06-07T22:17:27.0635800Z ##[group]Getting Git version info
+2026-06-07T22:17:27.0636700Z Working directory is '/Users/runner/work/saiku/saiku'
+2026-06-07T22:17:27.0639970Z [command]/opt/homebrew/bin/git version
+2026-06-07T22:17:27.0992430Z git version 2.54.0
+2026-06-07T22:17:27.1058680Z ##[endgroup]
+2026-06-07T22:17:27.1065880Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/9354bf92-d556-4d0a-b858-e1fd748999bc/.gitconfig'
+2026-06-07T22:17:27.1068380Z Temporarily overriding HOME='/Users/runner/work/_temp/9354bf92-d556-4d0a-b858-e1fd748999bc' before making global git config changes
+2026-06-07T22:17:27.1071100Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-07T22:17:27.1073270Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/saiku/saiku
+2026-06-07T22:17:27.1208640Z Deleting the contents of '/Users/runner/work/saiku/saiku'
+2026-06-07T22:17:27.1214580Z ##[group]Initializing the repository
+2026-06-07T22:17:27.1219960Z [command]/opt/homebrew/bin/git init /Users/runner/work/saiku/saiku
+2026-06-07T22:17:27.1498790Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-07T22:17:27.1500940Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-07T22:17:27.1502910Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-07T22:17:27.1504270Z hint: call:
+2026-06-07T22:17:27.1504950Z hint:
+2026-06-07T22:17:27.1505770Z hint: 	git config --global init.defaultBranch <name>
+2026-06-07T22:17:27.1506840Z hint:
+2026-06-07T22:17:27.1508800Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-07T22:17:27.1511390Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-07T22:17:27.1512740Z hint:
+2026-06-07T22:17:27.1513430Z hint: 	git branch -m <name>
+2026-06-07T22:17:27.1514510Z hint:
+2026-06-07T22:17:27.1515690Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-07T22:17:27.1518250Z Initialized empty Git repository in /Users/runner/work/saiku/saiku/.git/
+2026-06-07T22:17:27.1523730Z [command]/opt/homebrew/bin/git remote add origin https://github.com/spiculedata/saiku
+2026-06-07T22:17:27.1627570Z ##[endgroup]
+2026-06-07T22:17:27.1629020Z ##[group]Disabling automatic garbage collection
+2026-06-07T22:17:27.1630330Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-06-07T22:17:27.1711800Z ##[endgroup]
+2026-06-07T22:17:27.1714520Z ##[group]Setting up auth
+2026-06-07T22:17:27.1721590Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-07T22:17:27.1797630Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-07T22:17:27.3055320Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-07T22:17:27.3160580Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-07T22:17:27.4184390Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-07T22:17:27.4289390Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-07T22:17:27.5365990Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-07T22:17:27.5455100Z ##[endgroup]
+2026-06-07T22:17:27.5456320Z ##[group]Fetching the repository
+2026-06-07T22:17:27.5471280Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +201c1680ef923451f84422d29fac760c0f7d7428:refs/remotes/origin/development
+2026-06-07T22:17:29.3235190Z From https://github.com/spiculedata/saiku
+2026-06-07T22:17:29.3239760Z  * [new ref]         201c1680ef923451f84422d29fac760c0f7d7428 -> origin/development
+2026-06-07T22:17:29.3391940Z ##[endgroup]
+2026-06-07T22:17:29.3393090Z ##[group]Determining the checkout info
+2026-06-07T22:17:29.3394310Z ##[endgroup]
+2026-06-07T22:17:29.3395130Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-06-07T22:17:29.3500710Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-07T22:17:29.3612370Z ##[group]Checking out the ref
+2026-06-07T22:17:29.3615800Z [command]/opt/homebrew/bin/git checkout --progress --force -B development refs/remotes/origin/development
+2026-06-07T22:17:29.9289320Z Switched to a new branch 'development'
+2026-06-07T22:17:29.9311660Z branch 'development' set up to track 'origin/development'.
+2026-06-07T22:17:29.9453930Z ##[endgroup]
+2026-06-07T22:17:29.9501420Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-06-07T22:17:29.9614380Z 201c1680ef923451f84422d29fac760c0f7d7428
+2026-06-07T22:17:29.9866450Z ##[group]Run actions/setup-java@v4
+2026-06-07T22:17:29.9866680Z with:
+2026-06-07T22:17:29.9866830Z   distribution: temurin
+2026-06-07T22:17:29.9866990Z   java-version: 21
+2026-06-07T22:17:29.9867140Z   cache: maven
+2026-06-07T22:17:29.9867320Z   java-package: jdk
+2026-06-07T22:17:29.9867480Z   check-latest: false
+2026-06-07T22:17:29.9867650Z   server-id: github
+2026-06-07T22:17:29.9867820Z   server-username: GITHUB_ACTOR
+2026-06-07T22:17:29.9868040Z   server-password: GITHUB_TOKEN
+2026-06-07T22:17:29.9868270Z   overwrite-settings: true
+2026-06-07T22:17:29.9868470Z   job-status: success
+2026-06-07T22:17:29.9870650Z   token: ***
+2026-06-07T22:17:29.9870810Z ##[endgroup]
+2026-06-07T22:17:30.2224130Z ##[group]Installed distributions
+2026-06-07T22:17:30.2298650Z Resolved Java 21.0.11+10.0 from tool-cache
+2026-06-07T22:17:30.2300350Z Setting Java 21.0.11+10.0 as the default
+2026-06-07T22:17:30.2315210Z Creating toolchains.xml for JDK version 21 from temurin
+2026-06-07T22:17:30.2371430Z Writing to /Users/runner/.m2/toolchains.xml
+2026-06-07T22:17:30.2372370Z 
+2026-06-07T22:17:30.2372610Z Java configuration:
+2026-06-07T22:17:30.2373140Z   Distribution: temurin
+2026-06-07T22:17:30.2373670Z   Version: 21.0.11+10.0
+2026-06-07T22:17:30.2374990Z   Path: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10.0/arm64/Contents/Home
+2026-06-07T22:17:30.2375920Z 
+2026-06-07T22:17:30.2380120Z ##[endgroup]
+2026-06-07T22:17:30.2410810Z Creating settings.xml with server-id: github
+2026-06-07T22:17:30.2411780Z Writing to /Users/runner/.m2/settings.xml
+2026-06-07T22:17:30.7015550Z Cache hit for: setup-java-macOS-arm64-maven-d45b573031b60829a0ec6a18afa5e50bc5e1e439faaab8db1ee8e512c4aed2b1
+2026-06-07T22:17:32.0226860Z Received 0 of 333938557 (0.0%), 0.0 MBs/sec
+2026-06-07T22:17:33.0283290Z Received 54525952 of 333938557 (16.3%), 25.9 MBs/sec
+2026-06-07T22:17:34.0308260Z Received 125829120 of 333938557 (37.7%), 39.9 MBs/sec
+2026-06-07T22:17:35.0430940Z Received 134217728 of 333938557 (40.2%), 31.9 MBs/sec
+2026-06-07T22:17:36.0362450Z Received 213909504 of 333938557 (64.1%), 40.7 MBs/sec
+2026-06-07T22:17:37.0982420Z Received 268435456 of 333938557 (80.4%), 42.1 MBs/sec
+2026-06-07T22:17:37.9657830Z Received 333938557 of 333938557 (100.0%), 45.9 MBs/sec
+2026-06-07T22:17:37.9660080Z Cache Size: ~318 MB (333938557 B)
+2026-06-07T22:17:37.9941760Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/d8a6cd0d-ff2a-4f26-a0d7-ee54bd144fd3/cache.tzst -P -C /Users/runner/work/saiku/saiku --delay-directory-restore --use-compress-program unzstd
+2026-06-07T22:17:42.3984650Z Cache restored successfully
+2026-06-07T22:17:42.4290500Z Cache restored from key: setup-java-macOS-arm64-maven-d45b573031b60829a0ec6a18afa5e50bc5e1e439faaab8db1ee8e512c4aed2b1
+2026-06-07T22:17:42.4877250Z ##[group]Run mkdir -p ~/.m2
+2026-06-07T22:17:42.4877810Z [36;1mmkdir -p ~/.m2[0m
+2026-06-07T22:17:42.4878070Z [36;1mcat > ~/.m2/settings.xml <<EOF[0m
+2026-06-07T22:17:42.4878650Z [36;1m<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">[0m
+2026-06-07T22:17:42.4879080Z [36;1m  <servers>[0m
+2026-06-07T22:17:42.4879610Z [36;1m    <server><id>github-mondrian-saiku</id><username>${GH_PACKAGES_USER}</username><password>${GH_PACKAGES_TOKEN}</password></server>[0m
+2026-06-07T22:17:42.4880500Z [36;1m    <server><id>github-olap4j</id><username>${GH_PACKAGES_USER}</username><password>${GH_PACKAGES_TOKEN}</password></server>[0m
+2026-06-07T22:17:42.4881400Z [36;1m    <server><id>github-olap4j-xmlaserver</id><username>${GH_PACKAGES_USER}</username><password>${GH_PACKAGES_TOKEN}</password></server>[0m
+2026-06-07T22:17:42.4890320Z [36;1m    <server><id>github-saiku-query</id><username>${GH_PACKAGES_USER}</username><password>${GH_PACKAGES_TOKEN}</password></server>[0m
+2026-06-07T22:17:42.4892620Z [36;1m  </servers>[0m
+2026-06-07T22:17:42.4894390Z [36;1m</settings>[0m
+2026-06-07T22:17:42.4895370Z [36;1mEOF[0m
+2026-06-07T22:17:42.4993670Z shell: /bin/bash -e {0}
+2026-06-07T22:17:42.4993940Z env:
+2026-06-07T22:17:42.4994400Z   JAVA_HOME: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10.0/arm64/Contents/Home
+2026-06-07T22:17:42.4995110Z   JAVA_HOME_21_ARM64: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10.0/arm64/Contents/Home
+2026-06-07T22:17:42.4995600Z   GH_PACKAGES_USER: buggtb
+2026-06-07T22:17:42.4996350Z   GH_PACKAGES_TOKEN: ***
+2026-06-07T22:17:42.4996680Z ##[endgroup]
+2026-06-07T22:17:42.6418770Z ##[group]Run mvn -B -ntp -DskipITs=false verify
+2026-06-07T22:17:42.6420330Z [36;1mmvn -B -ntp -DskipITs=false verify[0m
+2026-06-07T22:17:42.6473560Z shell: /bin/bash -e {0}
+2026-06-07T22:17:42.6473970Z env:
+2026-06-07T22:17:42.6474550Z   JAVA_HOME: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10.0/arm64/Contents/Home
+2026-06-07T22:17:42.6475220Z   JAVA_HOME_21_ARM64: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10.0/arm64/Contents/Home
+2026-06-07T22:17:42.6475770Z ##[endgroup]
+2026-06-07T22:17:44.9104140Z [INFO] Scanning for projects...
+2026-06-07T22:17:45.9233020Z [WARNING] 
+2026-06-07T22:17:45.9262930Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-olap-util:jar:4.4.0
+2026-06-07T22:17:45.9264330Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9265350Z [WARNING] 
+2026-06-07T22:17:45.9302130Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-semantic:jar:4.4.0
+2026-06-07T22:17:45.9338200Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9347050Z [WARNING] 
+2026-06-07T22:17:45.9347980Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-service:jar:4.4.0
+2026-06-07T22:17:45.9349150Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9349930Z [WARNING] 
+2026-06-07T22:17:45.9350420Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-web:jar:4.4.0
+2026-06-07T22:17:45.9352660Z [WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.springframework.security:spring-security-core:jar -> duplicate declaration of version (?) @ line 245, column 21
+2026-06-07T22:17:45.9407060Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9411290Z [WARNING] 
+2026-06-07T22:17:45.9413630Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-core:pom:4.4.0
+2026-06-07T22:17:45.9447220Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9448100Z [WARNING] 
+2026-06-07T22:17:45.9448830Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-webapp:war:4.4.0
+2026-06-07T22:17:45.9478940Z [WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.hive:hive-jdbc:jar -> duplicate declaration of version (?) @ line 382, column 21
+2026-06-07T22:17:45.9480880Z [WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-antrun-plugin @ line 191, column 21
+2026-06-07T22:17:45.9482030Z [WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-war-plugin @ line 231, column 21
+2026-06-07T22:17:45.9483160Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9483840Z [WARNING] 
+2026-06-07T22:17:45.9487140Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku-launcher:jar:4.4.0
+2026-06-07T22:17:45.9489140Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ org.saikuanalytics:saiku:4.4.0, /Users/runner/work/saiku/saiku/pom.xml, line 196, column 21
+2026-06-07T22:17:45.9489910Z [WARNING] 
+2026-06-07T22:17:45.9490350Z [WARNING] Some problems were encountered while building the effective model for org.saikuanalytics:saiku:pom:4.4.0
+2026-06-07T22:17:45.9491080Z [WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:license-maven-plugin is missing. @ line 196, column 21
+2026-06-07T22:17:45.9491560Z [WARNING] 
+2026-06-07T22:17:45.9492110Z [WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+2026-06-07T22:17:45.9492650Z [WARNING] 
+2026-06-07T22:17:45.9493060Z [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+2026-06-07T22:17:45.9493620Z [WARNING] 
+2026-06-07T22:17:45.9494010Z [INFO] ------------------------------------------------------------------------
+2026-06-07T22:17:45.9494390Z [INFO] Reactor Build Order:
+2026-06-07T22:17:45.9494670Z [INFO] 
+2026-06-07T22:17:45.9495010Z [INFO] Saiku BOM                                                          [pom]
+2026-06-07T22:17:45.9495460Z [INFO] Saiku Module Project                                               [pom]
+2026-06-07T22:17:45.9495910Z [INFO] saiku - core libraries                                             [pom]
+2026-06-07T22:17:45.9496320Z [INFO] saiku olap util                                                    [jar]
+2026-06-07T22:17:45.9496780Z [INFO] saiku - semantic layer                                             [jar]
+2026-06-07T22:17:45.9497200Z [INFO] saiku - services                                                   [jar]
+2026-06-07T22:17:45.9497600Z [INFO] saiku - web                                                        [jar]
+2026-06-07T22:17:45.9498210Z [INFO] saiku - webapp                                                     [war]
+2026-06-07T22:17:45.9498580Z [INFO] saiku - launcher                                                   [jar]
+2026-06-07T22:17:45.9644040Z [INFO] 
+2026-06-07T22:17:45.9671320Z [INFO] --------------------< org.saikuanalytics:saiku-bom >--------------------
+2026-06-07T22:17:45.9673420Z [INFO] Building Saiku BOM 4.4.0                                           [1/9]
+2026-06-07T22:17:45.9673780Z [INFO]   from saiku-bom/pom.xml
+2026-06-07T22:17:45.9674140Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-06-07T22:17:45.9674450Z [INFO] 
+2026-06-07T22:17:45.9674850Z [INFO] ----------------------< org.saikuanalytics:saiku >----------------------
+2026-06-07T22:17:45.9675290Z [INFO] Building Saiku Module Project 4.4.0                                [2/9]
+2026-06-07T22:17:45.9675610Z [INFO]   from pom.xml
+2026-06-07T22:17:45.9676090Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-06-07T22:17:46.0642870Z [INFO] 
+2026-06-07T22:17:46.0752580Z [INFO] --- source:2.3:jar-no-fork (attach-sources) @ saiku ---
+2026-06-07T22:17:46.3540960Z [INFO] 
+2026-06-07T22:17:46.3558970Z [INFO] --- source:2.3:test-jar-no-fork (attach-sources) @ saiku ---
+2026-06-07T22:17:46.3560680Z [INFO] 
+2026-06-07T22:17:46.3561130Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku ---
+2026-06-07T22:17:46.8408890Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-07T22:17:46.8448730Z [INFO] 
+2026-06-07T22:17:46.8449440Z [INFO] -------------------< org.saikuanalytics:saiku-core >--------------------
+2026-06-07T22:17:46.8450070Z [INFO] Building saiku - core libraries 4.4.0                              [3/9]
+2026-06-07T22:17:46.8451000Z [INFO]   from saiku-core/pom.xml
+2026-06-07T22:17:46.8451420Z [INFO] --------------------------------[ pom ]---------------------------------
+2026-06-07T22:17:46.8573380Z [INFO] 
+2026-06-07T22:17:46.8682210Z [INFO] --- source:2.3:jar-no-fork (attach-sources) @ saiku-core ---
+2026-06-07T22:17:46.8788840Z [INFO] 
+2026-06-07T22:17:46.8890660Z [INFO] --- source:2.3:test-jar-no-fork (attach-sources) @ saiku-core ---
+2026-06-07T22:17:46.8891140Z [INFO] 
+2026-06-07T22:17:46.8891440Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku-core ---
+2026-06-07T22:17:46.8891920Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-07T22:17:46.8892290Z [INFO] 
+2026-06-07T22:17:46.8892600Z [INFO] -----------------< org.saikuanalytics:saiku-olap-util >-----------------
+2026-06-07T22:17:46.8893120Z [INFO] Building saiku olap util 4.4.0                                     [4/9]
+2026-06-07T22:17:46.8893540Z [INFO]   from saiku-core/saiku-olap-util/pom.xml
+2026-06-07T22:17:46.8893950Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-06-07T22:17:47.3785450Z [INFO] 
+2026-06-07T22:17:47.3854360Z [INFO] --- resources:2.7:resources (default-resources) @ saiku-olap-util ---
+2026-06-07T22:17:47.5629810Z [INFO] Using 'UTF-8' encoding to copy filtered resources.
+2026-06-07T22:17:47.5724630Z [INFO] skip non existing resourceDirectory /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/src/main/resources
+2026-06-07T22:17:47.5728310Z [INFO] 
+2026-06-07T22:17:47.5760780Z [INFO] --- compiler:3.15.0:compile (default-compile) @ saiku-olap-util ---
+2026-06-07T22:17:47.7353780Z [INFO] Recompiling the module because of changed source code.
+2026-06-07T22:17:47.7505060Z [INFO] Compiling 5 source files with javac [debug target 1.8] to target/classes
+2026-06-07T22:17:48.8628340Z [WARNING] bootstrap class path not set in conjunction with -source 8
+2026-06-07T22:17:48.8737480Z [WARNING] source value 8 is obsolete and will be removed in a future release
+2026-06-07T22:17:48.8847070Z [WARNING] target value 8 is obsolete and will be removed in a future release
+2026-06-07T22:17:48.8949140Z [WARNING] To suppress warnings about obsolete options, use -Xlint:-options.
+2026-06-07T22:17:48.9082020Z [INFO] Annotation processing is enabled because one or more processors were found
+2026-06-07T22:17:48.9200960Z   on the class path. A future release of javac may disable annotation processing
+2026-06-07T22:17:48.9272420Z   unless at least one processor is specified by name (-processor), or a search
+2026-06-07T22:17:48.9277220Z   path is specified (--processor-path, --processor-module-path), or annotation
+2026-06-07T22:17:48.9278900Z   processing is enabled explicitly (-proc:only, -proc:full).
+2026-06-07T22:17:48.9279380Z   Use -Xlint:-options to suppress this message.
+2026-06-07T22:17:48.9279940Z   Use -proc:none to disable annotation processing.
+2026-06-07T22:17:48.9281480Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/src/main/java/mondrian/olap4j/SaikuMondrianHelper.java: /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/src/main/java/mondrian/olap4j/SaikuMondrianHelper.java uses or overrides a deprecated API.
+2026-06-07T22:17:48.9306130Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/src/main/java/mondrian/olap4j/SaikuMondrianHelper.java: Recompile with -Xlint:deprecation for details.
+2026-06-07T22:17:48.9313280Z [INFO] 
+2026-06-07T22:17:48.9393850Z [INFO] --- resources:2.7:testResources (default-testResources) @ saiku-olap-util ---
+2026-06-07T22:17:48.9396280Z [INFO] Using 'UTF-8' encoding to copy filtered resources.
+2026-06-07T22:17:48.9397520Z [INFO] skip non existing resourceDirectory /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/src/test/resources
+2026-06-07T22:17:48.9398380Z [INFO] 
+2026-06-07T22:17:48.9399450Z [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ saiku-olap-util ---
+2026-06-07T22:17:48.9400640Z [INFO] No sources to compile
+2026-06-07T22:17:48.9401450Z [INFO] 
+2026-06-07T22:17:48.9405810Z [INFO] --- surefire:3.5.4:test (default-test) @ saiku-olap-util ---
+2026-06-07T22:17:49.0539850Z [INFO] No tests to run.
+2026-06-07T22:17:49.0641550Z [INFO] 
+2026-06-07T22:17:49.0715830Z [INFO] --- jar:3.5.0:jar (default-jar) @ saiku-olap-util ---
+2026-06-07T22:17:49.3281650Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/target/saiku-olap-util-4.4.0.jar
+2026-06-07T22:17:49.4416800Z [INFO] 
+2026-06-07T22:17:49.4450030Z [INFO] --- source:2.3:jar-no-fork (attach-sources) @ saiku-olap-util ---
+2026-06-07T22:17:49.4693720Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-olap-util/target/saiku-olap-util-4.4.0-sources.jar
+2026-06-07T22:17:49.4894700Z [INFO] 
+2026-06-07T22:17:49.4895970Z [INFO] --- source:2.3:test-jar-no-fork (attach-sources) @ saiku-olap-util ---
+2026-06-07T22:17:49.4896580Z [INFO] No sources in project. Archive not created.
+2026-06-07T22:17:49.4896920Z [INFO] 
+2026-06-07T22:17:49.4897350Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku-olap-util ---
+2026-06-07T22:17:49.7275990Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-07T22:17:50.0506700Z [INFO] Spotless.Java is keeping 5 files clean - 0 needs changes to be clean, 5 were already clean, 0 were skipped because caching determined they were already clean
+2026-06-07T22:17:50.0613710Z [INFO] 
+2026-06-07T22:17:50.0716230Z [INFO] -----------------< org.saikuanalytics:saiku-semantic >------------------
+2026-06-07T22:17:50.0833420Z [INFO] Building saiku - semantic layer 4.4.0                              [5/9]
+2026-06-07T22:17:50.0935690Z [INFO]   from saiku-core/saiku-semantic/pom.xml
+2026-06-07T22:17:50.0937390Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-06-07T22:17:50.1249730Z [INFO] 
+2026-06-07T22:17:50.1271290Z [INFO] --- resources:3.4.0:resources (default-resources) @ saiku-semantic ---
+2026-06-07T22:17:50.1711080Z [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2026-06-07T22:17:50.1715190Z [INFO] skip non existing resourceDirectory /Users/runner/work/saiku/saiku/saiku-core/saiku-semantic/src/main/resources
+2026-06-07T22:17:50.1715970Z [INFO] 
+2026-06-07T22:17:50.1716420Z [INFO] --- compiler:3.13.0:compile (default-compile) @ saiku-semantic ---
+2026-06-07T22:17:50.2703700Z [INFO] Recompiling the module because of changed source code.
+2026-06-07T22:17:50.2783730Z [INFO] Compiling 6 source files with javac [debug release 21] to target/classes
+2026-06-07T22:17:50.5898740Z [INFO] 
+2026-06-07T22:17:50.5899480Z [INFO] --- resources:3.4.0:testResources (default-testResources) @ saiku-semantic ---
+2026-06-07T22:17:50.5931720Z [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2026-06-07T22:17:50.5947000Z [INFO] Copying 1 resource from src/test/resources to target/test-classes
+2026-06-07T22:17:50.5995160Z [INFO] 
+2026-06-07T22:17:50.5996880Z [INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ saiku-semantic ---
+2026-06-07T22:17:50.6103070Z [INFO] Recompiling the module because of changed dependency.
+2026-06-07T22:17:50.6104070Z [INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+2026-06-07T22:17:50.7910700Z [INFO] 
+2026-06-07T22:17:50.8032030Z [INFO] --- surefire:3.2.5:test (default-test) @ saiku-semantic ---
+2026-06-07T22:17:51.0816480Z [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+2026-06-07T22:17:51.1462490Z [INFO] 
+2026-06-07T22:17:51.1470760Z [INFO] -------------------------------------------------------
+2026-06-07T22:17:51.1471440Z [INFO]  T E S T S
+2026-06-07T22:17:51.1471890Z [INFO] -------------------------------------------------------
+2026-06-07T22:17:51.7003010Z [INFO] Running org.saiku.semantic.SemanticLayerTest
+2026-06-07T22:17:52.1402600Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.425 s -- in org.saiku.semantic.SemanticLayerTest
+2026-06-07T22:17:52.1607100Z [INFO] 
+2026-06-07T22:17:52.1709820Z [INFO] Results:
+2026-06-07T22:17:52.1714390Z [INFO] 
+2026-06-07T22:17:52.1819180Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0
+2026-06-07T22:17:52.1920420Z [INFO] 
+2026-06-07T22:17:52.2024830Z [INFO] 
+2026-06-07T22:17:52.2092650Z [INFO] --- jar:3.5.0:jar (default-jar) @ saiku-semantic ---
+2026-06-07T22:17:52.2094300Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-semantic/target/saiku-semantic-4.4.0.jar
+2026-06-07T22:17:52.2095880Z [INFO] 
+2026-06-07T22:17:52.2096380Z [INFO] --- source:2.3:jar-no-fork (attach-sources) @ saiku-semantic ---
+2026-06-07T22:17:52.2097290Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-semantic/target/saiku-semantic-4.4.0-sources.jar
+2026-06-07T22:17:52.2097990Z [INFO] 
+2026-06-07T22:17:52.2098430Z [INFO] --- source:2.3:test-jar-no-fork (attach-sources) @ saiku-semantic ---
+2026-06-07T22:17:52.2099260Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-semantic/target/saiku-semantic-4.4.0-test-sources.jar
+2026-06-07T22:17:52.2099930Z [INFO] 
+2026-06-07T22:17:52.2128390Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku-semantic ---
+2026-06-07T22:17:52.2140720Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-07T22:17:52.3584640Z [INFO] Spotless.Java is keeping 7 files clean - 0 needs changes to be clean, 7 were already clean, 0 were skipped because caching determined they were already clean
+2026-06-07T22:17:52.3613970Z [INFO] 
+2026-06-07T22:17:52.3640170Z [INFO] ------------------< org.saikuanalytics:saiku-service >------------------
+2026-06-07T22:17:52.3666840Z [INFO] Building saiku - services 4.4.0                                    [6/9]
+2026-06-07T22:17:52.3667480Z [INFO]   from saiku-core/saiku-service/pom.xml
+2026-06-07T22:17:52.3667970Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-06-07T22:17:52.5789880Z [INFO] 
+2026-06-07T22:17:52.5791350Z [INFO] --- resources:3.3.1:resources (default-resources) @ saiku-service ---
+2026-06-07T22:17:52.6270500Z [INFO] Copying 1 resource from src/main/resources to target/classes
+2026-06-07T22:17:52.6355620Z [INFO] 
+2026-06-07T22:17:52.6357630Z [INFO] --- dependency:3.7.0:copy (copy) @ saiku-service ---
+2026-06-07T22:17:53.0906620Z [INFO] Configured Artifact: mondrian-data-foodmart-hsql:mondrian-data-foodmart-hsql:0.1:jar
+2026-06-07T22:17:53.1011160Z [INFO] Copying artifact 'mondrian-data-foodmart-hsql:mondrian-data-foodmart-hsql:jar:0.1' (/Users/runner/.m2/repository/mondrian-data-foodmart-hsql/mondrian-data-foodmart-hsql/0.1/mondrian-data-foodmart-hsql-0.1.jar) to /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/mondrian-data-foodmart-hsql-0.1.jar
+2026-06-07T22:17:53.1071840Z [INFO] 
+2026-06-07T22:17:53.1088240Z [INFO] --- antrun:3.1.0:run (test) @ saiku-service ---
+2026-06-07T22:17:53.3591120Z [INFO] Executing tasks
+2026-06-07T22:17:53.3722190Z [WARNING]      [echo] Prepare Test. Unzipping foodmart
+2026-06-07T22:17:53.3945730Z [INFO]     [unzip] Expanding: /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/mondrian-data-foodmart-hsql-0.1.jar into /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/test-classes
+2026-06-07T22:17:54.0407370Z [WARNING]      [echo] Unzipped!
+2026-06-07T22:17:54.0438460Z [INFO]     [unzip] Expanding: /Users/runner/work/saiku/saiku/util/foodmart_hsql.script.zip into /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/test
+2026-06-07T22:17:54.7480480Z [INFO]      [copy] Copying 1 file to /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/test/foodmart
+2026-06-07T22:17:54.7584400Z [INFO]      [copy] Copying 1 file to /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/test-classes/org/saiku
+2026-06-07T22:17:54.8272310Z [INFO] Executed tasks
+2026-06-07T22:17:54.8287920Z [INFO] 
+2026-06-07T22:17:54.8289520Z [INFO] --- compiler:3.13.0:compile (default-compile) @ saiku-service ---
+2026-06-07T22:17:54.8645350Z [INFO] Recompiling the module because of changed dependency.
+2026-06-07T22:17:54.8747380Z [INFO] Compiling 272 source files with javac [debug release 21] to target/classes
+2026-06-07T22:17:58.3073600Z [INFO] Annotation processing is enabled because one or more processors were found
+2026-06-07T22:17:58.3080630Z   on the class path. A future release of javac may disable annotation processing
+2026-06-07T22:17:58.3082250Z   unless at least one processor is specified by name (-processor), or a search
+2026-06-07T22:17:58.3083060Z   path is specified (--processor-path, --processor-module-path), or annotation
+2026-06-07T22:17:58.3083590Z   processing is enabled explicitly (-proc:only, -proc:full).
+2026-06-07T22:17:58.3084080Z   Use -Xlint:-options to suppress this message.
+2026-06-07T22:17:58.3084370Z   Use -proc:none to disable annotation processing.
+2026-06-07T22:17:58.3085250Z [WARNING] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/service/olap/ThinQueryService.java:[382,31] Double(double) in java.lang.Double has been deprecated and marked for removal
+2026-06-07T22:17:58.3086440Z [WARNING] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/service/olap/OlapQueryService.java:[212,31] Double(double) in java.lang.Double has been deprecated and marked for removal
+2026-06-07T22:17:58.3087570Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/database/Database.java: Some input files use or override a deprecated API.
+2026-06-07T22:17:58.3088670Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/database/Database.java: Recompile with -Xlint:deprecation for details.
+2026-06-07T22:17:58.3109930Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/database/JdbcUserDAO.java: Some input files use unchecked or unsafe operations.
+2026-06-07T22:17:58.3111040Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/main/java/org/saiku/database/JdbcUserDAO.java: Recompile with -Xlint:unchecked for details.
+2026-06-07T22:17:58.3111640Z [INFO] 
+2026-06-07T22:17:58.3112010Z [INFO] --- resources:3.3.1:testResources (default-testResources) @ saiku-service ---
+2026-06-07T22:17:58.3112490Z [INFO] Copying 23 resources from src/test/resources to target/test-classes
+2026-06-07T22:17:58.3627840Z [INFO] 
+2026-06-07T22:17:58.3642410Z [INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ saiku-service ---
+2026-06-07T22:17:58.3722680Z [INFO] Recompiling the module because of changed dependency.
+2026-06-07T22:17:58.3779570Z [INFO] Compiling 86 source files with javac [debug release 21] to target/test-classes
+2026-06-07T22:17:59.7105400Z [INFO] Annotation processing is enabled because one or more processors were found
+2026-06-07T22:17:59.7208790Z   on the class path. A future release of javac may disable annotation processing
+2026-06-07T22:17:59.7318180Z   unless at least one processor is specified by name (-processor), or a search
+2026-06-07T22:17:59.7440990Z   path is specified (--processor-path, --processor-module-path), or annotation
+2026-06-07T22:17:59.7544050Z   processing is enabled explicitly (-proc:only, -proc:full).
+2026-06-07T22:17:59.7692270Z   Use -Xlint:-options to suppress this message.
+2026-06-07T22:17:59.7822510Z   Use -proc:none to disable annotation processing.
+2026-06-07T22:17:59.7930360Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/test/java/org/saiku/service/datasource/MockHttpSession.java: /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/test/java/org/saiku/service/datasource/MockHttpSession.java uses unchecked or unsafe operations.
+2026-06-07T22:17:59.8066550Z [INFO] /Users/runner/work/saiku/saiku/saiku-core/saiku-service/src/test/java/org/saiku/service/datasource/MockHttpSession.java: Recompile with -Xlint:unchecked for details.
+2026-06-07T22:17:59.8176540Z [INFO] 
+2026-06-07T22:17:59.8299530Z [INFO] --- surefire:3.5.2:test (default-test) @ saiku-service ---
+2026-06-07T22:17:59.8401090Z [INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+2026-06-07T22:17:59.8606380Z [INFO] 
+2026-06-07T22:17:59.8707810Z [INFO] -------------------------------------------------------
+2026-06-07T22:17:59.8783370Z [INFO]  T E S T S
+2026-06-07T22:17:59.8885000Z [INFO] -------------------------------------------------------
+2026-06-07T22:18:00.3735790Z [INFO] Running org.saiku.datasources.connection.encrypt.DatasourcePasswordEncryptionTest
+2026-06-07T22:18:00.5549950Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 s -- in org.saiku.datasources.connection.encrypt.DatasourcePasswordEncryptionTest
+2026-06-07T22:18:00.5553870Z [INFO] Running org.saiku.database.DatabaseUpdateForEncryptionTest
+2026-06-07T22:18:00.6991520Z Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-06-07T22:18:04.1029730Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.542 s -- in org.saiku.database.DatabaseUpdateForEncryptionTest
+2026-06-07T22:18:04.1132450Z [INFO] Running org.saiku.database.dto.SaikuUserSerializationTest
+2026-06-07T22:18:04.1898760Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.089 s -- in org.saiku.database.dto.SaikuUserSerializationTest
+2026-06-07T22:18:04.1922500Z [INFO] Running org.saiku.repository.FilesystemRepositoryManagerFileAclTest
+2026-06-07T22:18:04.3755320Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.179 s -- in org.saiku.repository.FilesystemRepositoryManagerFileAclTest
+2026-06-07T22:18:04.3758300Z [INFO] Running org.saiku.repository.FilesystemRepositoryManagerAclTest
+2026-06-07T22:18:04.4015000Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in org.saiku.repository.FilesystemRepositoryManagerAclTest
+2026-06-07T22:18:04.4020880Z [INFO] Running org.saiku.repository.FilesystemRepositoryManagerSeedTest
+2026-06-07T22:18:04.4835970Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.079 s -- in org.saiku.repository.FilesystemRepositoryManagerSeedTest
+2026-06-07T22:18:04.4836860Z [INFO] Running org.saiku.repository.FilesystemRepositoryManagerMoveTest
+2026-06-07T22:18:04.5104960Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s -- in org.saiku.repository.FilesystemRepositoryManagerMoveTest
+2026-06-07T22:18:04.5190750Z [INFO] Running org.saiku.repository.IRepositoryObjectTypeInfoTest
+2026-06-07T22:18:04.5292620Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.saiku.repository.IRepositoryObjectTypeInfoTest
+2026-06-07T22:18:04.5344380Z [INFO] Running org.saiku.repository.FilesystemRepositoryManagerPathTraversalTest
+2026-06-07T22:18:04.5565390Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in org.saiku.repository.FilesystemRepositoryManagerPathTraversalTest
+2026-06-07T22:18:04.5685260Z [INFO] Running org.saiku.olap.dto.SaikuMeasureVisibleTest
+2026-06-07T22:18:04.5758560Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.saiku.olap.dto.SaikuMeasureVisibleTest
+2026-06-07T22:18:04.5797920Z [INFO] Running org.saiku.olap.query2.ThinCalculatedMemberVisibleTest
+2026-06-07T22:18:04.6055620Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.saiku.olap.query2.ThinCalculatedMemberVisibleTest
+2026-06-07T22:18:04.6163010Z [INFO] Running org.saiku.olap.query2.ThinNamedSetTest
+2026-06-07T22:18:04.6596750Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.056 s -- in org.saiku.olap.query2.ThinNamedSetTest
+2026-06-07T22:18:04.6729800Z [INFO] Running org.saiku.olap.query2.ThinQueryModelVisualTotalsTest
+2026-06-07T22:18:04.6849740Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.035 s -- in org.saiku.olap.query2.ThinQueryModelVisualTotalsTest
+2026-06-07T22:18:04.6852020Z [INFO] Running org.saiku.olap.result.ArrowCellsetWriterTest
+2026-06-07T22:18:04.8695980Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.197 s -- in org.saiku.olap.result.ArrowCellsetWriterTest
+2026-06-07T22:18:04.8703640Z [INFO] Running org.saiku.olap.util.formatter.FlattenedCellSetFormatterMixedDepthTest
+2026-06-07T22:18:04.9255720Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in org.saiku.olap.util.formatter.FlattenedCellSetFormatterMixedDepthTest
+2026-06-07T22:18:04.9263150Z [INFO] Running org.saiku.olap.util.formatter.CellPropertyExtractorTest
+2026-06-07T22:18:04.9267450Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.olap.util.formatter.CellPropertyExtractorTest
+2026-06-07T22:18:04.9268460Z [INFO] Running org.saiku.olap.util.formatter.HierarchicalCellSetFormatterMixedDepthTest
+2026-06-07T22:18:04.9269430Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.olap.util.formatter.HierarchicalCellSetFormatterMixedDepthTest
+2026-06-07T22:18:04.9275560Z [INFO] Running org.saiku.olap.util.formatter.CellSetFormatterCharacterizationTest
+2026-06-07T22:18:04.9276520Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.olap.util.formatter.CellSetFormatterCharacterizationTest
+2026-06-07T22:18:04.9277250Z [INFO] Running org.saiku.olap.util.TimeCalcParserTest
+2026-06-07T22:18:04.9897590Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.060 s -- in org.saiku.olap.util.TimeCalcParserTest
+2026-06-07T22:18:04.9898500Z [INFO] Running org.saiku.olap.query.QueryDeserializerXxeTest
+2026-06-07T22:18:05.0315790Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.035 s -- in org.saiku.olap.query.QueryDeserializerXxeTest
+2026-06-07T22:18:05.0439670Z [INFO] Running org.saiku.security.NoReHashPasswordEncoderTest
+2026-06-07T22:18:05.2249470Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 s -- in org.saiku.security.NoReHashPasswordEncoderTest
+2026-06-07T22:18:05.2350930Z [INFO] Running org.saiku.log.LogExtractorTest
+2026-06-07T22:18:05.2452990Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in org.saiku.log.LogExtractorTest
+2026-06-07T22:18:05.2554460Z [INFO] Running org.saiku.service.datasource.RepositoryDatasourceManagerTest
+2026-06-07T22:18:05.2661170Z saving internal file at /datasources/MOCK_DATA_MDYYYY-csv.json
+2026-06-07T22:18:05.2762570Z {
+2026-06-07T22:18:05.2866990Z version: '1.0',
+2026-06-07T22:18:05.2974120Z defaultSchema: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3096160Z schemas: [
+2026-06-07T22:18:05.3197330Z {
+2026-06-07T22:18:05.3227040Z name: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3250110Z tables:[{
+2026-06-07T22:18:05.3250570Z name: 'MOCK_DATA_MDYYYY1',
+2026-06-07T22:18:05.3251000Z type: 'custom',
+2026-06-07T22:18:05.3251390Z factory: 'org.apache.calcite.adapter.csv.CsvTableFactory',
+2026-06-07T22:18:05.3251870Z operand: {
+2026-06-07T22:18:05.3252550Z file: 'c:/temp/repo/workspace/c:/temp/repo/workspace_bruno/datasources/B_MOCK_DATA_MDYYYY-csv.json',flavor: 'scannable'
+2026-06-07T22:18:05.3253920Z }
+2026-06-07T22:18:05.3254310Z }]}
+2026-06-07T22:18:05.3254650Z ]
+2026-06-07T22:18:05.3254940Z }
+2026-06-07T22:18:05.3255390Z saving datasource at /datasources/MOCK_DATA_MDYYYY.sds
+2026-06-07T22:18:05.3255930Z saving internal file at /datasources/MOCK_DATA_MDYYYY-csv.json
+2026-06-07T22:18:05.3256330Z {
+2026-06-07T22:18:05.3256670Z version: '1.0',
+2026-06-07T22:18:05.3257000Z defaultSchema: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3289540Z schemas: [
+2026-06-07T22:18:05.3289970Z {
+2026-06-07T22:18:05.3290260Z name: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3297960Z tables:[{
+2026-06-07T22:18:05.3308920Z name: 'MOCK_DATA_MDYYYY1',
+2026-06-07T22:18:05.3309340Z type: 'custom',
+2026-06-07T22:18:05.3309870Z factory: 'org.apache.calcite.adapter.csv.CsvTableFactory',
+2026-06-07T22:18:05.3314020Z operand: {
+2026-06-07T22:18:05.3351830Z file: 'c:/temp/saikurepo/workspace/c:/temp/saikurepo/datasources/B_MOCK_DATA_MDYYYY-csv.json',flavor: 'scannable'
+2026-06-07T22:18:05.3352490Z }
+2026-06-07T22:18:05.3352840Z }]}
+2026-06-07T22:18:05.3353170Z ]
+2026-06-07T22:18:05.3353530Z }
+2026-06-07T22:18:05.3353870Z saving datasource at /datasources/MOCK_DATA_MDYYYY.sds
+2026-06-07T22:18:05.3354650Z saving internal file at /datasources/MOCK_DATA_MDYYYY-csv.json
+2026-06-07T22:18:05.3355050Z {
+2026-06-07T22:18:05.3355230Z version: '1.0',
+2026-06-07T22:18:05.3355510Z defaultSchema: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3356260Z schemas: [
+2026-06-07T22:18:05.3356460Z {
+2026-06-07T22:18:05.3356710Z name: 'MOCK_DATA_MDYYYY',
+2026-06-07T22:18:05.3356920Z tables:[{
+2026-06-07T22:18:05.3357180Z name: 'MOCK_DATA_MDYYYY1',
+2026-06-07T22:18:05.3357460Z type: 'custom',
+2026-06-07T22:18:05.3357750Z factory: 'org.apache.calcite.adapter.csv.CsvTableFactory',
+2026-06-07T22:18:05.3358180Z operand: {
+2026-06-07T22:18:05.3358670Z file: 'c:/temp/saikurepo/workspace/c:/temp/saikurepo/datasources/B_MOCK_DATA_MDYYYY-csv.json',flavor: 'scannable'
+2026-06-07T22:18:05.3359130Z }
+2026-06-07T22:18:05.3359360Z }]}
+2026-06-07T22:18:05.3359530Z ]
+2026-06-07T22:18:05.3359730Z }
+2026-06-07T22:18:05.3360000Z saving datasource at /datasources/MOCK_DATA_MDYYYY.sds
+2026-06-07T22:18:05.3360590Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in org.saiku.service.datasource.RepositoryDatasourceManagerTest
+2026-06-07T22:18:05.3361280Z [INFO] Running org.saiku.service.datasource.DatasourceServiceTest
+2026-06-07T22:18:05.3361910Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in org.saiku.service.datasource.DatasourceServiceTest
+2026-06-07T22:18:05.3362590Z [INFO] Running org.saiku.service.comments.CommentServiceTest
+2026-06-07T22:18:05.3363220Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.saiku.service.comments.CommentServiceTest
+2026-06-07T22:18:05.3363900Z [INFO] Running org.saiku.service.olap.DrillthroughMdxBuilderTest
+2026-06-07T22:18:05.3364470Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.DrillthroughMdxBuilderTest
+2026-06-07T22:18:05.3365220Z [INFO] Running org.saiku.service.olap.ai.AiReturnsResolverTest
+2026-06-07T22:18:05.3366070Z [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiReturnsResolverTest
+2026-06-07T22:18:05.3366620Z [INFO] Running org.saiku.service.olap.ai.MdxEchoGoldenTest
+2026-06-07T22:18:05.3424800Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s -- in org.saiku.service.olap.ai.MdxEchoGoldenTest
+2026-06-07T22:18:05.3441030Z [INFO] Running org.saiku.service.olap.ai.QuirksTestFixtureTest
+2026-06-07T22:18:05.3593350Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.saiku.service.olap.ai.QuirksTestFixtureTest
+2026-06-07T22:18:05.3690160Z [INFO] Running org.saiku.service.olap.ai.SchemaSnapshotTest
+2026-06-07T22:18:05.3938110Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 s -- in org.saiku.service.olap.ai.SchemaSnapshotTest
+2026-06-07T22:18:05.4055270Z [INFO] Running org.saiku.service.olap.ai.AiCubeRefCanonicalTest
+2026-06-07T22:18:05.4147320Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiCubeRefCanonicalTest
+2026-06-07T22:18:05.4148690Z [INFO] Running org.saiku.service.olap.ai.OlapAiCubeMetadataServiceTest
+2026-06-07T22:18:05.4161580Z [INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.saiku.service.olap.ai.OlapAiCubeMetadataServiceTest
+2026-06-07T22:18:05.4162870Z [INFO] Running org.saiku.service.olap.ai.ask.NlAskSpiTest
+2026-06-07T22:18:05.4163610Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.saiku.service.olap.ai.ask.NlAskSpiTest
+2026-06-07T22:18:05.4164300Z [INFO] Running org.saiku.service.olap.ai.ask.AnthropicNlAskProviderTest
+2026-06-07T22:18:05.6841630Z [INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.264 s -- in org.saiku.service.olap.ai.ask.AnthropicNlAskProviderTest
+2026-06-07T22:18:05.6944390Z [INFO] Running org.saiku.service.olap.ai.ask.OpenAINlAskProviderTest
+2026-06-07T22:18:05.7142820Z [INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in org.saiku.service.olap.ai.ask.OpenAINlAskProviderTest
+2026-06-07T22:18:05.7245290Z [INFO] Running org.saiku.service.olap.ai.ask.AiAskServiceTest
+2026-06-07T22:18:05.7446540Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in org.saiku.service.olap.ai.ask.AiAskServiceTest
+2026-06-07T22:18:05.7548700Z [INFO] Running org.saiku.service.olap.ai.ask.NlAskProviderFactoryTest
+2026-06-07T22:18:05.7650110Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in org.saiku.service.olap.ai.ask.NlAskProviderFactoryTest
+2026-06-07T22:18:05.7750610Z [INFO] Running org.saiku.service.olap.ai.AiQueryRequestPropertyTest
+2026-06-07T22:18:05.7952850Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s -- in org.saiku.service.olap.ai.AiQueryRequestPropertyTest
+2026-06-07T22:18:05.8054500Z [INFO] Running org.saiku.service.olap.ai.DraftSidecarEnrichmentProviderTest
+2026-06-07T22:18:05.8155270Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.saiku.service.olap.ai.DraftSidecarEnrichmentProviderTest
+2026-06-07T22:18:05.8255630Z [INFO] Running org.saiku.service.olap.ai.AiRequestSchemaValidatorTest
+2026-06-07T22:18:05.9944980Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.183 s -- in org.saiku.service.olap.ai.AiRequestSchemaValidatorTest
+2026-06-07T22:18:06.0072750Z [INFO] Running org.saiku.service.olap.ai.ThinQueryFilterMergeTest
+2026-06-07T22:18:06.0184100Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.saiku.service.olap.ai.ThinQueryFilterMergeTest
+2026-06-07T22:18:06.0314120Z [INFO] Running org.saiku.service.olap.ai.AiSchemaConverterRequiredFiltersTest
+2026-06-07T22:18:06.0438900Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiSchemaConverterRequiredFiltersTest
+2026-06-07T22:18:06.0541660Z [INFO] Running org.saiku.service.olap.ai.AiSchemaEnricherTest
+2026-06-07T22:18:06.0646440Z [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiSchemaEnricherTest
+2026-06-07T22:18:06.0753480Z [INFO] Running org.saiku.service.olap.ai.AiAutodocTest
+2026-06-07T22:18:06.0855070Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiAutodocTest
+2026-06-07T22:18:06.0957080Z [INFO] Running org.saiku.service.olap.ai.AiSchemaConverterTest
+2026-06-07T22:18:06.1122410Z [INFO] Tests run: 56, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in org.saiku.service.olap.ai.AiSchemaConverterTest
+2026-06-07T22:18:06.1226120Z [INFO] Running org.saiku.service.olap.ai.SemanticAnnotationParserTest
+2026-06-07T22:18:06.1329720Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.saiku.service.olap.ai.SemanticAnnotationParserTest
+2026-06-07T22:18:06.1431940Z [INFO] Running org.saiku.service.olap.ai.AiSchemaConverterMdxInjectionTest
+2026-06-07T22:18:06.1432720Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiSchemaConverterMdxInjectionTest
+2026-06-07T22:18:06.1434980Z [INFO] Running org.saiku.service.olap.ai.AiSchemaEnricherAnnotationsTest
+2026-06-07T22:18:06.1436970Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiSchemaEnricherAnnotationsTest
+2026-06-07T22:18:06.1543300Z [INFO] Running org.saiku.service.olap.ai.AiQueryDocsExamplesTest
+2026-06-07T22:18:06.1645100Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiQueryDocsExamplesTest
+2026-06-07T22:18:06.1760150Z [INFO] Running org.saiku.service.olap.ai.AiSchemaLevelAliasesTest
+2026-06-07T22:18:06.1866970Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.olap.ai.AiSchemaLevelAliasesTest
+2026-06-07T22:18:06.1965930Z [INFO] Running org.saiku.service.cache.SaikuQueryCacheTest
+2026-06-07T22:18:06.3370520Z [INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.279 s -- in org.saiku.service.cache.SaikuQueryCacheTest
+2026-06-07T22:18:06.3374400Z [INFO] Running org.saiku.service.util.xml.SecureXmlTest
+2026-06-07T22:18:06.4207650Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.080 s -- in org.saiku.service.util.xml.SecureXmlTest
+2026-06-07T22:18:06.4309400Z [INFO] Running org.saiku.service.util.MdxParameterSubstitutorTest
+2026-06-07T22:18:06.4318770Z [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in org.saiku.service.util.MdxParameterSubstitutorTest
+2026-06-07T22:18:06.4322620Z [INFO] Running org.saiku.service.util.exception.SaikuExceptionWrapTest
+2026-06-07T22:18:06.4324060Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.saiku.service.util.exception.SaikuExceptionWrapTest
+2026-06-07T22:18:06.4324820Z [INFO] Running org.saiku.service.async.AsyncQueryServiceTest
+2026-06-07T22:18:07.0297160Z [INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.593 s -- in org.saiku.service.async.AsyncQueryServiceTest
+2026-06-07T22:18:07.0399800Z [INFO] Running org.saiku.service.schema.generate.delta.DeltaReconcilerTest
+2026-06-07T22:18:07.0505980Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in org.saiku.service.schema.generate.delta.DeltaReconcilerTest
+2026-06-07T22:18:07.0607880Z [INFO] Running org.saiku.service.schema.generate.apply.OpApplierTest
+2026-06-07T22:18:07.0721160Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in org.saiku.service.schema.generate.apply.OpApplierTest
+2026-06-07T22:18:07.0823140Z [INFO] Running org.saiku.service.schema.generate.draft.DraftSchemaTest
+2026-06-07T22:18:07.0926360Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.draft.DraftSchemaTest
+2026-06-07T22:18:07.1030210Z [INFO] Running org.saiku.service.schema.generate.introspect.JdbcIntrospectorTest
+2026-06-07T22:18:07.1245210Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.066 s -- in org.saiku.service.schema.generate.introspect.JdbcIntrospectorTest
+2026-06-07T22:18:07.1247750Z [INFO] Running org.saiku.service.schema.generate.writer.GeneratedSidecarTest
+2026-06-07T22:18:07.1842110Z [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.056 s -- in org.saiku.service.schema.generate.writer.GeneratedSidecarTest
+2026-06-07T22:18:07.1843070Z [INFO] Running org.saiku.service.schema.generate.writer.MondrianSchemaWriterTest
+2026-06-07T22:18:07.2065460Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in org.saiku.service.schema.generate.writer.MondrianSchemaWriterTest
+2026-06-07T22:18:07.2087090Z [INFO] Running org.saiku.service.schema.generate.model.DbModelTest
+2026-06-07T22:18:07.2088260Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.model.DbModelTest
+2026-06-07T22:18:07.2089150Z [INFO] Running org.saiku.service.schema.generate.infer.TimeDimensionBuilderTest
+2026-06-07T22:18:07.2111430Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.saiku.service.schema.generate.infer.TimeDimensionBuilderTest
+2026-06-07T22:18:07.2117140Z [INFO] Running org.saiku.service.schema.generate.infer.SchemaInferrerTest
+2026-06-07T22:18:07.2507760Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.035 s -- in org.saiku.service.schema.generate.infer.SchemaInferrerTest
+2026-06-07T22:18:07.2508730Z [INFO] Running org.saiku.service.schema.generate.infer.MeasureBuilderTest
+2026-06-07T22:18:07.2512700Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.infer.MeasureBuilderTest
+2026-06-07T22:18:07.2530730Z [INFO] Running org.saiku.service.schema.generate.infer.SchemaInferrerGoldenTest
+2026-06-07T22:18:07.2565070Z [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.infer.SchemaInferrerGoldenTest
+2026-06-07T22:18:07.2572170Z [INFO] Running org.saiku.service.schema.generate.infer.TableClassifierTest
+2026-06-07T22:18:07.2584960Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.infer.TableClassifierTest
+2026-06-07T22:18:07.2589840Z [INFO] Running org.saiku.service.schema.generate.infer.DimensionBuilderTest
+2026-06-07T22:18:07.2643100Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.infer.DimensionBuilderTest
+2026-06-07T22:18:07.2644160Z [INFO] Running org.saiku.service.schema.generate.enrich.PiiFilterTest
+2026-06-07T22:18:07.2663830Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.enrich.PiiFilterTest
+2026-06-07T22:18:07.2675650Z [INFO] Running org.saiku.service.schema.generate.enrich.provider.AnthropicProviderParseTest
+2026-06-07T22:18:07.2692320Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in org.saiku.service.schema.generate.enrich.provider.AnthropicProviderParseTest
+2026-06-07T22:18:07.2832650Z [INFO] Running org.saiku.service.schema.generate.enrich.provider.LlmProviderFactoryTest
+2026-06-07T22:18:07.2971760Z [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.enrich.provider.LlmProviderFactoryTest
+2026-06-07T22:18:07.3074610Z [INFO] Running org.saiku.service.schema.generate.enrich.provider.AnthropicProviderContractTest
+2026-06-07T22:18:07.3083430Z [WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 s -- in org.saiku.service.schema.generate.enrich.provider.AnthropicProviderContractTest
+2026-06-07T22:18:07.3114370Z [INFO] Running org.saiku.service.schema.generate.enrich.provider.NoopProviderTest
+2026-06-07T22:18:07.3117010Z [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.saiku.service.schema.generate.enrich.provider.NoopProviderTest
+2026-06-07T22:18:07.3117930Z [INFO] Running org.saiku.service.schema.generate.enrich.LlmEnricherTest
+2026-06-07T22:18:07.3118820Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in org.saiku.service.schema.generate.enrich.LlmEnricherTest
+2026-06-07T22:18:07.3119600Z [INFO] Running org.saiku.service.schema.generate.enrich.SuggestionSetTest
+2026-06-07T22:18:07.3120420Z [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in org.saiku.service.schema.generate.enrich.SuggestionSetTest
+2026-06-07T22:18:07.3121260Z [INFO] Running org.saiku.service.schema.generate.session.RepositorySidecarStoreTest
+2026-06-07T22:18:07.3122090Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in org.saiku.service.schema.generate.session.RepositorySidecarStoreTest
+2026-06-07T22:18:07.3122960Z [INFO] Running org.saiku.service.schema.generate.session.SchemaGenOrchestratorTest
+2026-06-07T22:18:07.6429490Z [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.324 s -- in org.saiku.service.schema.generate.session.SchemaGenOrchestratorTest
+2026-06-07T22:18:07.6557420Z [INFO] Running org.saiku.service.schema.generate.session.SchemaGenSessionStoreTest
+2026-06-07T22:18:07.6674460Z [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in org.saiku.service.schema.generate.session.SchemaGenSessionStoreTest
+2026-06-07T22:18:07.6778890Z [INFO] Running org.saiku.service.history.DashboardHistoryServiceTest
+2026-06-07T22:18:07.7081100Z [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in org.saiku.service.history.DashboardHistoryServiceTest
+2026-06-07T22:18:07.7274480Z [INFO] 
+2026-06-07T22:18:07.7274720Z [INFO] Results:
+2026-06-07T22:18:07.7276660Z [INFO] 
+2026-06-07T22:18:07.7277090Z [WARNING] Tests run: 541, Failures: 0, Errors: 0, Skipped: 1
+2026-06-07T22:18:07.7277370Z [INFO] 
+2026-06-07T22:18:07.7312400Z [INFO] 
+2026-06-07T22:18:07.7316870Z [INFO] --- jar:3.5.0:jar (default-jar) @ saiku-service ---
+2026-06-07T22:18:07.7617050Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/saiku-service-4.4.0.jar
+2026-06-07T22:18:07.8372150Z [INFO] 
+2026-06-07T22:18:07.8416530Z [INFO] --- source:2.3:jar-no-fork (attach-sources) @ saiku-service ---
+2026-06-07T22:18:07.8743690Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/saiku-service-4.4.0-sources.jar
+2026-06-07T22:18:08.0067080Z [INFO] 
+2026-06-07T22:18:08.0067690Z [INFO] --- source:2.3:test-jar-no-fork (attach-sources) @ saiku-service ---
+2026-06-07T22:18:08.0188700Z [INFO] Building jar: /Users/runner/work/saiku/saiku/saiku-core/saiku-service/target/saiku-service-4.4.0-test-sources.jar
+2026-06-07T22:18:08.0561990Z [INFO] 
+2026-06-07T22:18:08.0562480Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku-service ---
+2026-06-07T22:18:08.0906900Z [INFO] Index file does not exist. Fallback to an empty index
+2026-06-07T22:18:11.8823700Z [INFO] Spotless.Java is keeping 358 files clean - 2 needs changes to be clean, 356 were already clean, 0 were skipped because caching determined they were already clean
+2026-06-07T22:18:11.9469110Z [INFO] ------------------------------------------------------------------------
+2026-06-07T22:18:11.9571600Z [INFO] Reactor Summary for Saiku Module Project 4.4.0:
+2026-06-07T22:18:11.9675120Z [INFO] 
+2026-06-07T22:18:11.9768580Z [INFO] Saiku BOM .......................................... SUCCESS [  0.001 s]
+2026-06-07T22:18:11.9842840Z [INFO] Saiku Module Project ............................... SUCCESS [  0.879 s]
+2026-06-07T22:18:11.9873500Z [INFO] saiku - core libraries ............................. SUCCESS [  0.027 s]
+2026-06-07T22:18:11.9880790Z [INFO] saiku olap util .................................... SUCCESS [  3.174 s]
+2026-06-07T22:18:11.9899050Z [INFO] saiku - semantic layer ............................. SUCCESS [  2.306 s]
+2026-06-07T22:18:11.9928550Z [INFO] saiku - services ................................... FAILURE [ 19.592 s]
+2026-06-07T22:18:11.9931160Z [INFO] saiku - web ........................................ SKIPPED
+2026-06-07T22:18:11.9932580Z [INFO] saiku - webapp ..................................... SKIPPED
+2026-06-07T22:18:11.9933810Z [INFO] saiku - launcher ................................... SKIPPED
+2026-06-07T22:18:11.9937340Z [INFO] ------------------------------------------------------------------------
+2026-06-07T22:18:11.9937750Z [INFO] BUILD FAILURE
+2026-06-07T22:18:11.9938110Z [INFO] ------------------------------------------------------------------------
+2026-06-07T22:18:11.9939050Z [INFO] Total time:  27.069 s
+2026-06-07T22:18:11.9939400Z [INFO] Finished at: 2026-06-07T22:18:11Z
+2026-06-07T22:18:11.9939810Z [INFO] ------------------------------------------------------------------------
+2026-06-07T22:18:11.9940590Z [ERROR] Failed to execute goal com.diffplug.spotless:spotless-maven-plugin:2.46.1:check (spotless-check) on project saiku-service: The following files had format violations:
+2026-06-07T22:18:11.9941270Z [ERROR]     src/test/java/org/saiku/olap/util/TimeCalcParserTest.java
+2026-06-07T22:18:11.9942810Z [ERROR]         @@ -26,28 +26,27 @@
+2026-06-07T22:18:11.9948180Z [ERROR]          ·*··most·assertions·feed·a·{@link·Document}·parsed·from·an·in-memory·string.·*/
+2026-06-07T22:18:11.9955590Z [ERROR]          public·class·TimeCalcParserTest·{
+2026-06-07T22:18:11.9956210Z [ERROR]          
+2026-06-07T22:18:11.9956570Z [ERROR]         -····private·static·final·String·BANK_SCHEMA_FRAGMENT·=
+2026-06-07T22:18:11.9957160Z [ERROR]         -············"<?xml·version=\"1.0\"·encoding=\"UTF-8\"?>\n"
+2026-06-07T22:18:11.9957540Z [ERROR]         -····················+·"<Schema·name='Bank'>\n"
+2026-06-07T22:18:11.9957900Z [ERROR]         -····················+·"··<Cube·name='Monthly·Revenue'>\n"
+2026-06-07T22:18:11.9958270Z [ERROR]         -····················+·"····<MeasureGroups/>\n"
+2026-06-07T22:18:11.9958630Z [ERROR]         -····················+·"····<TimeCalcs>\n"
+2026-06-07T22:18:11.9959120Z [ERROR]         -····················+·"······<TimeCalc·name='Revenue·YoY'·type='yoy'·measure='Revenue'\n"
+2026-06-07T22:18:11.9960150Z [ERROR]         -····················+·"················timeDimension='Calendar'·formatString='0.0%'/>\n"
+2026-06-07T22:18:11.9960790Z [ERROR]         -····················+·"······<TimeCalc·name='Revenue·PoP'·type='pop'·measure='Revenue'\n"
+2026-06-07T22:18:11.9961350Z [ERROR]         -····················+·"················timeDimension='Calendar'·formatString='0.0%'/>\n"
+2026-06-07T22:18:11.9961880Z [ERROR]         -····················+·"······<TimeCalc·name='Revenue·YTD'·type='ytd'·measure='Revenue'\n"
+2026-06-07T22:18:11.9962420Z [ERROR]         -····················+·"················timeDimension='Calendar'·formatString='#,###'/>\n"
+2026-06-07T22:18:11.9963360Z [ERROR]         -····················+·"······<TimeCalc·name='Revenue·R3'·type='rolling'·measure='Revenue'\n"
+2026-06-07T22:18:11.9963910Z [ERROR]         -····················+·"················timeDimension='Calendar'·window='3'·function='avg'\n"
+2026-06-07T22:18:11.9964390Z [ERROR]         -····················+·"················formatString='#,###'/>\n"
+2026-06-07T22:18:11.9964750Z [ERROR]         -····················+·"····</TimeCalcs>\n"
+2026-06-07T22:18:11.9965080Z [ERROR]         -····················+·"··</Cube>\n"
+2026-06-07T22:18:11.9965400Z [ERROR]         -····················+·"··<Cube·name='Accounts'>\n"
+2026-06-07T22:18:11.9965980Z [ERROR]         -····················+·"····<!--·no·TimeCalcs·here·—·parser·must·return·empty·list·for·this·cube·-->\n"
+2026-06-07T22:18:11.9966460Z [ERROR]         -····················+·"····<MeasureGroups/>\n"
+2026-06-07T22:18:11.9966780Z [ERROR]         -····················+·"··</Cube>\n"
+2026-06-07T22:18:11.9967080Z [ERROR]         -····················+·"</Schema>\n";
+2026-06-07T22:18:11.9967560Z [ERROR]         +····private·static·final·String·BANK_SCHEMA_FRAGMENT·=·"<?xml·version=\"1.0\"·encoding=\"UTF-8\"?>\n"
+2026-06-07T22:18:11.9968050Z [ERROR]         +············+·"<Schema·name='Bank'>\n"
+2026-06-07T22:18:11.9968400Z [ERROR]         +············+·"··<Cube·name='Monthly·Revenue'>\n"
+2026-06-07T22:18:11.9970810Z [ERROR]         +············+·"····<MeasureGroups/>\n"
+2026-06-07T22:18:11.9971650Z [ERROR]         +············+·"····<TimeCalcs>\n"
+2026-06-07T22:18:11.9973170Z [ERROR]         +············+·"······<TimeCalc·name='Revenue·YoY'·type='yoy'·measure='Revenue'\n"
+2026-06-07T22:18:11.9974560Z [ERROR]         +············+·"················timeDimension='Calendar'·formatString='0.0%'/>\n"
+2026-06-07T22:18:11.9976460Z [ERROR]         +············+·"······<TimeCalc·name='Revenue·PoP'·type='pop'·measure='Revenue'\n"
+2026-06-07T22:18:11.9977910Z [ERROR]         +············+·"················timeDimension='Calendar'·formatString='0.0%'/>\n"
+2026-06-07T22:18:11.9979500Z [ERROR]         +············+·"······<TimeCalc·name='Revenue·YTD'·type='ytd'·measure='Revenue'\n"
+2026-06-07T22:18:11.9980870Z [ERROR]         +············+·"················timeDimension='Calendar'·formatString='#,###'/>\n"
+2026-06-07T22:18:11.9982260Z [ERROR]         +············+·"······<TimeCalc·name='Revenue·R3'·type='rolling'·measure='Revenue'\n"
+2026-06-07T22:18:11.9983690Z [ERROR]         +············+·"················timeDimension='Calendar'·window='3'·function='avg'\n"
+2026-06-07T22:18:11.9985320Z [ERROR]         +············+·"················formatString='#,###'/>\n"
+2026-06-07T22:18:11.9985650Z [ERROR]         +············+·"····</TimeCalcs>\n"
+2026-06-07T22:18:11.9985950Z [ERROR]         +············+·"··</Cube>\n"
+2026-06-07T22:18:11.9986250Z [ERROR]         +············+·"··<Cube·name='Accounts'>\n"
+2026-06-07T22:18:11.9986900Z [ERROR]         +············+·"····<!--·no·TimeCalcs·here·—·parser·must·return·empty·list·for·this·cube·-->\n"
+2026-06-07T22:18:11.9987340Z [ERROR]         +············+·"····<MeasureGroups/>\n"
+2026-06-07T22:18:11.9987630Z [ERROR]         +············+·"··</Cube>\n"
+2026-06-07T22:18:11.9987900Z [ERROR]         +············+·"</Schema>\n";
+2026-06-07T22:18:11.9988100Z [ERROR]          
+2026-06-07T22:18:11.9988850Z [ERROR]          ····private·static·Document·doc(String·xml)·throws·IOException,·SAXException,·ParserConfigurationException·{
+2026-06-07T22:18:11.9989340Z [ERROR]     ... (11 more lines that didn't fit)
+2026-06-07T22:18:11.9989600Z [ERROR] Violations also present in:
+2026-06-07T22:18:11.9989900Z [ERROR]     src/main/java/org/saiku/olap/discover/OlapMetaExplorer.java
+2026-06-07T22:18:11.9990250Z [ERROR] Run 'mvn spotless:apply' to fix these violations.
+2026-06-07T22:18:11.9990500Z [ERROR] -> [Help 1]
+2026-06-07T22:18:11.9990650Z [ERROR] 
+2026-06-07T22:18:11.9990910Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-06-07T22:18:11.9991310Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-06-07T22:18:11.9992380Z [ERROR] 
+2026-06-07T22:18:11.9993320Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-06-07T22:18:11.9995660Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+2026-06-07T22:18:11.9996620Z [ERROR] 
+2026-06-07T22:18:11.9997310Z [ERROR] After correcting the problems, you can resume the build with the command
+2026-06-07T22:18:11.9998570Z [ERROR]   mvn <args> -rf :saiku-service
+2026-06-07T22:18:12.0527370Z ##[error]Process completed with exit code 1.
+2026-06-07T22:18:12.0757080Z Post job cleanup.
+2026-06-07T22:18:12.5317390Z Post job cleanup.
+2026-06-07T22:18:12.6674130Z [command]/opt/homebrew/bin/git version
+2026-06-07T22:18:12.6918600Z git version 2.54.0
+2026-06-07T22:18:12.6959350Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/cebcdf44-3b0c-486b-9966-eddc3ec4c898/.gitconfig'
+2026-06-07T22:18:12.6973860Z Temporarily overriding HOME='/Users/runner/work/_temp/cebcdf44-3b0c-486b-9966-eddc3ec4c898' before making global git config changes
+2026-06-07T22:18:12.6974800Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-07T22:18:12.6976620Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/saiku/saiku
+2026-06-07T22:18:12.7089040Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-07T22:18:12.7151440Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-07T22:18:12.8191410Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-07T22:18:12.8255500Z http.https://github.com/.extraheader
+2026-06-07T22:18:12.8316540Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-07T22:18:12.8386290Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-07T22:18:12.9894190Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-07T22:18:13.0206280Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-07T22:18:13.1789140Z Cleaning up orphan processes
+2026-06-07T22:18:14.0651220Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
