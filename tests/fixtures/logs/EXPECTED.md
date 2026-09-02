@@ -442,13 +442,17 @@ All labels were identified **by eye directly from raw log text** before writing 
 - **Build Tool:** Maven/Surefire 3.x
 - **Expected Outcomes:**
   - RAW: `[ERROR]   ScooterRentalGeofencingTest.arriveByAdjacentNoDropOffZonesDropsOutsideBothZones:398 » IllegalArgument Unexpected non-empty arriveByDestinationZones when arriveBy is false`
-    - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#arriveByAdjacentNoDropOffZonesDropsOutsideBothZones`
+    - Canonical `normalize_test_id()`: `org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveByAdjacentNoDropOffZonesDropsOutsideBothZones`
+    - Package amendment (D-27 grounded, D-39 source 2 "at" frame): `at org.opentripplanner.street.integration.ScooterRentalGeofencingTest.arriveByAdjacentNoDropOffZonesDropsOutsideBothZones(ScooterRentalGeofencingTest.java:398)`
   - RAW: `[ERROR]   ScooterRentalGeofencingTest.arriveBySearchBlocksRidingIntoNoTraversalZone:205 » IllegalArgument Unexpected non-empty arriveByDestinationZones when arriveBy is false`
-    - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#arriveBySearchBlocksRidingIntoNoTraversalZone`
+    - Canonical `normalize_test_id()`: `org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveBySearchBlocksRidingIntoNoTraversalZone`
+    - Package amendment (D-27 grounded, D-39 source 2 "at" frame): `at org.opentripplanner.street.integration.ScooterRentalGeofencingTest.arriveBySearchBlocksRidingIntoNoTraversalZone(ScooterRentalGeofencingTest.java:205)`
   - RAW: `[ERROR]   ScooterRentalGeofencingTest.arriveBySearchDropsOffOutsideNoDropOffZone:104->runSearch:639 » IllegalArgument Unexpected non-empty arriveByDestinationZones when arriveBy is false`
-    - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#arriveBySearchDropsOffOutsideNoDropOffZone`
+    - Canonical `normalize_test_id()`: `org.opentripplanner.street.integration.ScooterRentalGeofencingTest#arriveBySearchDropsOffOutsideNoDropOffZone`
+    - Package amendment (D-27 grounded, D-39 source 2 "at" frame): `at org.opentripplanner.street.integration.ScooterRentalGeofencingTest.arriveBySearchDropsOffOutsideNoDropOffZone(ScooterRentalGeofencingTest.java:104)`
   - RAW: `[ERROR]   ScooterRentalGeofencingTest.forwardAndArriveByBothFindPath:112->runSearch:639 » IllegalArgument Unexpected non-empty arriveByDestinationZones when arriveBy is false`
-    - Canonical `normalize_test_id()`: `ScooterRentalGeofencingTest#forwardAndArriveByBothFindPath`
+    - Canonical `normalize_test_id()`: `org.opentripplanner.street.integration.ScooterRentalGeofencingTest#forwardAndArriveByBothFindPath`
+    - Package amendment (D-27 grounded, D-39 source 2 "at" frame): `at org.opentripplanner.street.integration.ScooterRentalGeofencingTest.forwardAndArriveByBothFindPath(ScooterRentalGeofencingTest.java:112)`
 - **Expected Class:** TEST_FAILURE
 - **Confidence:** CERTAIN
 
