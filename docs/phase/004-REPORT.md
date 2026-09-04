@@ -79,5 +79,6 @@ git push && git rev-parse HEAD origin/main
 2. **HEAD SHA mismatch:** TRUE. A non-trivial number of `not_found` resolutions (181) remain, suggesting the file was either renamed, moved, or only present at the instance SHA, confirming that HEAD is not a perfect proxy.
 3. **pull_files truncation:** PENDING/TRUE. We noticed GitHub payload limits might truncate very large PRs, though our processing cleanly consumes the provided arrays.
 4. **Denominator coverage:** TRUE. The binding rate covers 5473/6014 ids (91%). We explicitly stated this denominator.
+   *(Correction: Total distinct ids denominator 6,014 is superseded by **5,985** post-fix per Phase 023 consolidation).*
 5. **RQ1 overlap may be near zero:** VERIFIED below.
 

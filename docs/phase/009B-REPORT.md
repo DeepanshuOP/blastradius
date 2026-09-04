@@ -50,6 +50,7 @@
 
 ## Datasheet Limitations List
 - Java-dominant; only 151 distinct Python test ids
+  *(Correction: Superseded by 870 distinct Python test_ids per Phase 020 survey & Phase 023 consolidation. The figure 151 has no on-disk provenance anywhere).*
 - 62.72% of failed runs have no resolvable base and emit no labels
 - parser precision 83.87% held out
 - co-change mined on 12 repos only

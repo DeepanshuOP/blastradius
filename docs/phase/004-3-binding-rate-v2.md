@@ -63,3 +63,4 @@ The major drivers are `apache/beam` and `sirixdb/sirix`.
 
 Gate 1.5 (≥70%) is **met**. The overall binding rate is now **93.64%**.
 This rate is computed over 5,473 distinct test identifiers, which represents **91.00%** of ALL 6,014 distinct test_ids in the corpus. The remaining 9% belong to repositories that were not cloned locally (Terminal A is continuing to clone repos).
+*(Correction: Distinct canonical test_ids 6,014 is superseded by **5,985** post-fix per Phase 023 consolidation).*

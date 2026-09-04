@@ -58,6 +58,7 @@
 
 ### Table 2: `outcomes.parquet`
 - **Corresponding on-disk artifact**: `data/interim/outcomes.parquet` (8,980 rows, 4 columns) & `data/interim/parsed_outcomes.parquet` (20,535 rows, 14 columns)
+  *(Correction: `parsed_outcomes.parquet` row count 20,535 is superseded by **20,451** post-fix per Phase 023 consolidation).*
 - **Shipped release artifact**: `release/v0.1/labels.parquet` (8,980 rows, identical schema and data to `data/interim/outcomes.parquet`)
 
 | Column Name | Declared Type (`docs/SCHEMAS.md`) | Actual Type (`outcomes.parquet` / `labels.parquet`) | Verdict | Notes / On-Disk Data Location |

@@ -234,6 +234,12 @@ Predictions were recorded before `parsed_outcomes.parquet` was opened.
 | Distinct Python `test_id` | 151 | **870 / 6,014** | under by 5.8× |
 | Distinct Java `test_id` | 1,049 | **5,144 / 6,014** | under by 4.9× |
 
+> **Correction / Superseded (Phase 023 consolidation)**:
+> - Rows in `parsed_outcomes.parquet`: 20,535 superseded by **20,451**
+> - Distinct `test_id` total: 6,014 superseded by **5,985**
+> - Distinct Java `test_id`: 5,144 superseded by **5,115** (5,115 / 5,985)
+> - Distinct Python `test_id`: 870 (870 / 5,985; 151 has no on-disk provenance)
+
 All four predictions were low by roughly the same factor — a systematic
 underestimate of corpus scale, not four independent misses.
 
@@ -243,6 +249,7 @@ Language split computed two independent ways, which agree exactly:
   maven + gradle **3,450 + 11,635 = 15,085 / 20,535** rows → 5,144 distinct.
 - by canonical shape: ids containing `::` → **870 / 6,014**; ids containing `#` →
   **5,144 / 6,014**; neither → **0 / 6,014**.
+*(Correction: Total rows 20,535 superseded by 20,451; total distinct ids 6,014 superseded by 5,985; Java distinct ids 5,144 superseded by 5,115).*
 
 **Hypothesis (c) is FALSIFIED — on its premise, not its arithmetic.**
 
@@ -260,6 +267,7 @@ Language split computed two independent ways, which agree exactly:
   `parsed_outcomes.parquet` by **zero**, and will not raise per-id row counts. Current
   ratios are already post-collapse: **5,450 / 870 = 6.26** rows per Python id,
   **15,085 / 5,144 = 2.93** rows per Java id.
+*(Correction: 5,144 Java ids superseded by 5,115; 20,535 total rows superseded by 20,451).*
 
 **D1's true blast radius is narrow.** The parquet is already compliant. Exposure is
 limited to consumers that read parser output *without* normalizing — chiefly
@@ -299,6 +307,7 @@ form survives normalization intact.)
 - Bare ids that **also** exist as a qualified id for the same `(repo, simple_class,
   method)`: **57 / 2,067**. These 57 are confirmed split keys — one real test counted
   twice, on both sides of every join in Phase 3.4.
+*(Correction: Bare-class Java ids 2,067 / 5,144 superseded by **2,043 / 5,115** [39.94%] per Phase 023 consolidation).*
 
 Confirmed fragmented pairs include:
 
@@ -319,6 +328,7 @@ parquet alone. They still bind at `confidence=0.5` through the basename-only bra
 `resolve_test_file()`, and `binding.parquet` currently reports **5,629 / 6,014 exact**,
 **167 / 6,014 ambiguous**, **218 / 6,014 not_found** — so a share of the 167 ambiguous
 bindings is the expected signature of a bare class name matching several files.
+*(Correction: Binding counts 5,629 exact / 167 ambiguous / 218 not_found over 6,014 superseded per Phase 023 & D-47 by 5,622 exact [93.93% combined / 63.81% full-confidence], 164 ambiguous [2.74%], 199 not_found [3.32%] over 5,985).*
 
 ---
 
@@ -411,7 +421,7 @@ But every parser emits `#`, `normalize_test_id()` produces `#`, and
 merge"* and that *"If a change would alter `test_id` output for any existing input, stop
 and flag it"* — asserts `#` in every Java case (`com.example.FooTest#testBar`,
 `com.example.FooTest$NestedTest#testNested`). All **5,144 / 6,014** Java ids on disk use
-`#`.
+`#`. *(Correction: 5,144 / 6,014 Java ids superseded by **5,115 / 5,985**).*
 
 So `SCHEMAS.md` and D-39 say `::`; the frozen contract test, the code, and the shipped
 `release/v0.1` data say `#`. Two of the three defects (D2, D3) are Java-identifier
@@ -448,6 +458,7 @@ here and no change is proposed.
 9. **D3 is the largest defect.** 2,067 / 5,144 distinct Java ids are bare-class; 57 are
    confirmed split keys with a qualified twin in the same repo, each counted twice
    across binding, the co-change join, RQ1 Axis 2, and `fault_revealing`.
+   *(Correction: Bare-class Java ids 2,067 / 5,144 superseded by **2,043 / 5,115** per Phase 023 consolidation; 20,535 total stored ids superseded by 20,451).*
 10. **ESCALATION 1:** `fqcn_incomplete` is NOT DECLARED in `SCHEMAS.md`. D-39 is blocked.
 11. **ESCALATION 2 (new):** D-39 and `SCHEMAS.md` mandate `::` for Java; the frozen
     contract test, the code, and shipped data all use `#`. Unresolved.

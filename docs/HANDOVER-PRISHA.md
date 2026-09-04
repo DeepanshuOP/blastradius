@@ -3,6 +3,7 @@
 ## 1. What to Copy (Measured Data Transfer)
 Copy these untracked directories into repository root (`/home/<user>/blastradius` on native ext4):
 - `data/raw/` (4.9 GB / 2,734,020,926 B, irreplaceable due to 90-day GitHub Actions log expiry)
+  *(Correction: 2.73 GB apparent content [transfer sizing] / 4.9 GiB on disk [destination free space; 304,534 small gzipped files inflate block usage]. Supersedes ambiguous paired 4.9 GB / 2,734,020,926 B figure.)*
 - `data/state/cursor.db` (131 MB / 136,785,920 B, required for point-in-time `--as-of` state reproduction)
 - `data/interim/*.parquet` (33 MB / 33,803,225 B, interim tables required for analysis and tables)
 - *Optional:* `data/clones/` (1.7 GB / 1,748,135,633 B, can alternatively be re-cloned)

@@ -12,7 +12,7 @@ These assets are not in git due to size and the 90-day GitHub Actions log retent
 
 | Path | Size (Bytes) | Size (Human) | SHA256 Checksum | In Git? | Description |
 |---|---:|---:|---|:---:|---|
-| `data/raw/` | 2,734,020,926 | 4.9 GB | *[Tree of 304,534 gzipped logs]* | No | Irreplaceable raw job logs and workflow runs |
+| `data/raw/` | 2,734,020,926 | 2.73 GB apparent / 4.9 GiB disk | *[Tree of 304,534 gzipped logs; 2.73 GB apparent content for transfer sizing, 4.9 GiB on disk for destination free space (supersedes unqualified 4.9 GB)]* | No | Irreplaceable raw job logs and workflow runs |
 | `data/state/cursor.db` | 136,785,920 | 131 MB | `66097674f0b298597288999de6122a8e4e50bd958517410b1f0fc2ac832c9051` | No | SQLite harvest cursor state for `--as-of` reproduction |
 | `data/interim/instances_raw.parquet` | 20,915,876 | 20.0 MB | `e46310f6f8cf97dce09058ac6a42b6dae54950338f45d1090d15bc933e45e3ad` | No | Harvested instance run metadata (165,349 rows) |
 | `data/interim/changesets.parquet` | 9,125,179 | 8.7 MB | `147026892141e5d57ba459b7e8a35a399968a4276752281eb23ccea50f2b0dd3` | No | Extracted pull request file changesets |

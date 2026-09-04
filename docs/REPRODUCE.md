@@ -9,7 +9,7 @@ This document provides the exact command sequence from a fresh clone to generate
 ## 0. Prerequisites & Non-Git Data Transfer
 
 The following assets are **not tracked in git** and cannot be regenerated from source due to GitHub Actions' 90-day log retention expiry clock. They **must be physically copied** into the repository root before running analysis or paper reproduction pipelines (see `docs/DATA_TRANSFER.md`):
-- `data/raw/` (4.9 GB, irreplaceable raw job logs and workflow responses)
+- `data/raw/` (2.73 GB apparent content [transfer sizing] / 4.9 GiB on disk [destination free space], irreplaceable raw job logs and workflow responses; supersedes unqualified 4.9 GB)
 - `data/state/cursor.db` (131 MB, required for point-in-time `--as-of` state reproduction)
 - `data/interim/instances_raw.parquet` (and other `data/interim/*.parquet` files, ~33 MB total, required for base resolution, fault labeling, and paper tables)
 - `vendor/graphify-br/` (31 MB flat vendored tree, tracked in git)

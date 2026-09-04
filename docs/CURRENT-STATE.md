@@ -73,7 +73,7 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 | exact_green count | 210 (INVARIANT-6) / 3,693 (EVIDENCE-ONLY) | docs/phase/017-REPORT.md §Phase 4 |
 | Verified base runs | 275 / 1,732 (108 Java, 167 Python) | docs/HANDOFF-019.md §2 |
 | Verified instances | 878 / 4,245 | docs/HANDOFF-019.md §2 |
-| data/raw size | 4.9 GB / 2,734,020,926 B (304,534 logs) | docs/phase/025-transfer-manifest.md §Data Inventory |
+| data/raw size | 2.73 GB apparent content (transfer) / 4.9 GiB on disk (free space; 2,734,020,926 B across 304,534 logs) | docs/phase/025-transfer-manifest.md §Data Inventory |
 | Fixture count | Dev: 40 logs (46 IDs); Holdout v5: 40 logs | docs/phase/013B-holdout-v5-protocol.md §Scope |
 | Holdout precision | Dev-fitted: 100%; v4 voided: 58.33%; v5: unscored | docs/DECISIONS.md §D-31, docs/phase/012B-REPORT.md §Phase 1 |
 | Quarantined verdicts | 375 base runs / 558 verdicts discarded | docs/HANDOFF-019.md §3 |
@@ -81,7 +81,7 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 ## 4. Conflicts Requiring a Ruling
 - **Strict instances & labels**: 778 / 4,194 (docs/phase/014A-REPORT.md §Executive Summary, docs/HANDOFF-019.md §6) vs 122 / 423 (INVARIANT-6 in docs/phase/017-REPORT.md §Phase 4, docs/phase/018-REPORT.md §Phase 4, docs/HANDOFF.md §Header banner).
 - **exact_green count & no_base rate**: 4,245 / 43.88% (docs/phase/014A-REPORT.md §Executive Summary, docs/HANDOFF-019.md §6) vs 210 / 75.94% (INVARIANT-6 in docs/phase/017-REPORT.md §Phase 4).
-- **data/raw size**: 4.6 GB (docs/DECISIONS.md §D-41, docs/HANDOFF.md §3.1) vs 4.9 GB / 2,734,020,926 B (docs/DATA_DEPENDENCIES.md §Data Retention, docs/phase/025-transfer-manifest.md §Data Inventory).
+- **data/raw size**: 4.6 GB (docs/DECISIONS.md §D-41, docs/HANDOFF.md §3.1) vs 4.9 GB / 2,734,020,926 B (docs/DATA_DEPENDENCIES.md §Data Retention, docs/phase/025-transfer-manifest.md §Data Inventory). Resolved: 2.73 GB apparent content for transfer sizing / 4.9 GiB on disk for destination free space (supersedes ambiguous paired 4.9 GB figure).
 - **D-39 Java format**: D-39 specifies `FQCN::method` and `fqcn_incomplete`; contradicted by docs/phase/020-parser-survey-REPORT.md §d (`FQCN#method` in code/tests) & docs/phase/020-parser-survey-REPORT.md §8 (`fqcn_incomplete` undeclared in docs/SCHEMAS.md).
 - **Holdout precision**: 100% held-out claim (docs/HANDOVER-PRISHA.md §6) vs dev-set fitted metric (docs/DECISIONS.md §D-31) and voided v4 (docs/phase/012B-REPORT.md §Phase 1).
 
@@ -91,7 +91,7 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 - **151 Python test IDs** (docs/HANDOFF.md §V Limitations) -> 870 (docs/phase/020-parser-survey-REPORT.md §c, docs/phase/023-binding-rate.md §Corpus Scope & Outcomes).
 - **93.60% single binding rate** (docs/HANDOFF.md §3.1) -> 93.93% combined / 63.81% full-confidence (docs/phase/023-binding-rate.md §Quality Breakdown, docs/DECISIONS.md §D-47).
 - **524 strict instances / 2,912 labels** (docs/HANDOFF.md §3.1) -> 122 / 423 (INVARIANT-6 in docs/phase/017-REPORT.md §Phase 4, docs/phase/018-REPORT.md §Phase 4).
-- **4.6 GB data/raw size** (docs/DECISIONS.md §D-41, docs/HANDOFF.md §3.1) -> 4.9 GB / 2,734,020,926 B (docs/DATA_DEPENDENCIES.md §Data Retention, docs/phase/025-transfer-manifest.md §Data Inventory).
+- **4.6 GB data/raw size** (docs/DECISIONS.md §D-41, docs/HANDOFF.md §3.1) -> 2.73 GB apparent content (transfer sizing) / 4.9 GiB on disk (destination free space; 2,734,020,926 B).
 
 ## 6. Open Threads
 - **Base run verification sweep**: Incomplete; 275/1,732 runs verified; Java needs 92 sampled runs (docs/HANDOFF-019.md §2).

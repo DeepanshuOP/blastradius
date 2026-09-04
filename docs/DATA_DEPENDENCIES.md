@@ -14,7 +14,7 @@ way rather than trusting this page.
 **GitHub Actions job logs expire 90 days after the run.** Much of this corpus is
 already past that at source, so re-running the harvester today would not
 reproduce `data/raw` — it would produce a strictly smaller, different corpus.
-The 4.9 GB snapshot (supersedes 4.6 GB) is irreplaceable and must be transferred, not rebuilt. The
+The snapshot (2.73 GB apparent content for transfer sizing / 4.9 GiB on disk for destination free space; supersedes earlier unqualified 4.9 GB and 4.6 GB figures) is irreplaceable and must be transferred, not rebuilt. The
 same is true of `data/state/cursor.db` (131 MB), which `--as-of` reproduction
 needs.
 
@@ -27,7 +27,7 @@ permanently unverifiable share, and no future work closes it.
 
 | Path | Size | In git | Regenerable | Action |
 |---|---:|---|---|---|
-| `data/raw/` | 4.9 GB | No | **NO — 90-day expiry** | Transfer (supersedes 4.6 GB) |
+| `data/raw/` | 2.73 GB apparent / 4.9 GiB on disk | No | **NO — 90-day expiry** | Transfer: 2.73 GB transfer sizing, 4.9 GiB destination free space (supersedes 4.9 GB / 4.6 GB) |
 | `data/state/cursor.db` | 131 MB | No | No | Transfer; `--as-of` needs it |
 | `data/interim/*.parquet` | 33 MB | No (3 PIN files tracked) | Yes, slowly, from `data/raw` | Transfer anyway (supersedes ~31 MB) |
 | `vendor/graphify-br/` | 34 MB | **Yes** (flat tree) | Yes (from upstream `safishamsi/graphify`) | Nothing (vendored in repo) |

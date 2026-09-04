@@ -140,9 +140,15 @@ every reported number. This is what makes `make tables` reproducible.
 | `data/raw` | **4.6 GB** · `cursor.db` 131 MB · `data/interim` ~31 MB · `data/clones` 1.7 GB · `data/frame` 18 MB |
 | Test suite | 384 passing |
 
+> **Correction / Superseded (Phase 023 consolidation / D-47)**:
+> - Outcome rows: 20,535 superseded by **20,451**
+> - Distinct canonical `test_id`: 6,014 superseded by **5,985** (5,115 Java, 870 Python)
+> - Distinct ids by language: Python 151 superseded by **870** (the figure 151 has no on-disk provenance anywhere; actual distinct Python ids on disk are 870); Java 5,863 superseded by **5,115** (5,115 Java ids, 2,043 bare-class)
+> - Outcomes↔instances join: 20,535/20,535 superseded by **20,451/20,451** (100.00%)
+
 **Of 870 pytest ids, 719 come from Java-classified monorepos** (apache/beam
 running Python SDK suites under Gradle). Python-classified repos contributed 151
-— dask/distributed 114, fla-org/flash-linear-attention 37. **The Python arm is
+— dask/distributed 114, fla-org/flash-linear-attention 37. *(Correction: the figure 151 has no on-disk provenance anywhere in the corpus parquets; total distinct Python test_ids are 870).* **The Python arm is
 thin and this is a stated external-validity limitation (§26.2).**
 
 ### 3.3 Base resolution — the project's hardest problem
@@ -192,6 +198,9 @@ is Phase 009-A's job.
 | ambiguous | 4 | 167 (2.78%) |
 
 **Gate 1.5 (≥70%) is MET.** Denominator is all 6,014 distinct test_ids.
+
+> **Correction / Superseded (Phase 023 consolidation / D-47)**:
+> Binding rate 93.60% (5,629 / 6,014) is superseded by **93.93% combined** (5,622 / 5,985) AND **63.81% full-confidence** (3,819 / 5,985 via FQCN; 1,803 / 5,985 [30.13%] at 0.5 confidence via bare-class basename). The combined figure never appears without the split (D-47). Ambiguous: 164 / 5,985 (2.74%, supersedes 167 / 6,014); Not found: 199 / 5,985 (3.32%, supersedes 218 / 6,014). Denominator is 5,985 distinct test_ids (supersedes 6,014). Gate 1.5 is met on the combined figure and NOT met on full-confidence alone.
 
 The fix: bare class names with no package were resolved against a per-repo index
 of test-file basenames. Exactly one match binds; more than one stays `ambiguous`
@@ -299,7 +308,7 @@ now state their own denominator, and a percentage appears only where units match
 failure runs with logs ✅ (12,581) · 72h uninterrupted ❌ · nightly backup ❌
 (T0.4b cut) · dashboard shared with the team ❌ (five minutes, still undone).
 
-**Phase 1 exit (§9.7):** 50k instances ✅ · binding ≥70% ✅ (93.60%) ·
+**Phase 1 exit (§9.7):** 50k instances ✅ · binding ≥70% ✅ (93.60% [superseded per D-47: 93.93% combined / 63.81% full-confidence]) ·
 ≥5,000 positives ❌ (524) · parser ≥95% ❌ (83.87% held out) · three splits ✅ ·
 datasheet ❌ · gold subset ❌ (CUT).
 
@@ -418,7 +427,7 @@ regression fixtures under `tests/fixtures/regression/pytest_xdist/`.
   is one connected thing
 - Base resolution v1 → v2 → v3, each described in §3.3
 - Co-change mining, 12 repos, with the PyDriller deviation
-- `resolve_test_file()` and the binding jump from 61.71% to 93.60%
+- `resolve_test_file()` and the binding jump from 61.71% to 93.60% *(superseded per D-47: 93.93% combined / 63.81% full-confidence over 5,985 ids)*
 - Changeset extraction from `pull_files` (T1.2a) — and the catch that
   `changeset.py` parsed only `data[0]`, silently discarding paginated pages 2+;
   max files per payload is now 993
@@ -710,7 +719,7 @@ locked in a private monorepo. BR-Bench opens it.
 
 **§III The dataset.** The attrition funnel is Table 1 (§3.7). Parser precision
 is **83.87% / 55.32% held out** — with the second-scoring caveat stated plainly
-(§3.5). Binding 93.60%. Composition by language and harness, including the thin
+(§3.5). Binding 93.60% *(superseded per D-47: 93.93% combined / 63.81% full-confidence)*. Composition by language and harness, including the thin
 Python arm as a stated limitation. Base resolution and the `no_base` rate as a
 data-quality column, not a hidden filter.
 
@@ -721,7 +730,7 @@ predicting the test files that changed in the changeset, and the k most
 frequently failing test files in a trailing window cut at `run_started_at`. If
 co-change loses to either, that is the paper's sharpest sentence.
 
-**§V Limitations.** Java-dominant · 151 Python test ids · 62.72% `no_base` ·
+**§V Limitations.** Java-dominant · 151 Python test ids *(superseded: 870; the figure 151 has no on-disk provenance anywhere)* · 62.72% `no_base` ·
 co-change mined on 12 repos · 90-day expiry attrition · parser recall 55.32% ·
 holdout_v3's second score not held out · the `is_truncated` and ambiguity rates.
 
@@ -941,7 +950,7 @@ Python repositories, to measure how far the field's standard proxies diverge fro
 execution reality. The corpus is frozen at `2026-08-29T14:13:00Z`: 12,072 job
 logs yielding 20,535 outcome rows over 6,014 distinct tests, joined at 100%
 against 165,349 workflow-run instances across 76 repositories, with 93.60% of
-tests bound to a source file. A four-module parser suite reads Gradle, Maven and
+tests bound to a source file. *(Superseded per Phase 023 consolidation & D-47: 20,451 outcome rows, 5,985 distinct tests, binding 93.93% combined / 63.81% full-confidence).* A four-module parser suite reads Gradle, Maven and
 pytest output and scores 83.87% precision / 55.32% recall on a corpus it had
 never seen — that is the honest number and it is what goes in the paper. Of
 12,581 failed runs, 62.72% still have no resolvable base run and correctly emit
@@ -965,6 +974,8 @@ contribution is the dataset and the measurement, deliberately not the model.- 20
 2026-08-31 | Antigravity | 014-A | Phase 014-A targeted base resolution across 479 groups (Python-first, 2,371 resolved instances, 44.9% addressable resolution rate), corpus-level base resolution increased to 56.12% (no_base down to 43.88%), strict positive instances rose to 778 (+48.5%), outgoing-params test added, daemon depth bound of 5 that raises implemented | analysis/resolve_bases.py, src/harvest/daemon.py, tests/test_base_resolve.py, tests/test_daemon.py, data/interim/base_resolution_new.parquet, data/interim/base_resolution_targeted.parquet, data/interim/outcomes.parquet, docs/phase/014A-REPORT.md, docs/session/076-2026-08-31-014A-targeted-base-resolution-and-gate1.md, docs/session/INDEX.md, docs/HANDOFF.md | 380 passed, 1 skipped | uncommitted | CLI-1 resolves DEFECT columns in analysis/corpus_instances.py and src/label/fault_revealing.py for schema-compliant v0.2 release.
 
 2026-09-01 | Antigravity | 016-A | Phase 016-A exact_green verification: empirical parse of 20 base runs across 17 repos (13/20 retrievable, 6/13 clean, 7/13 NO_TEST_OUTPUT), proved 778 strict split is provisional (87.28% exact_green dependent), completed 410 census (778/2,371 [32.81%] >90d) | docs/phase/016A-REPORT.md, docs/session/077-2026-09-01-016-A-verify-exact-green.md, docs/session/INDEX.md, docs/HANDOFF.md | 381 passed | uncommitted | Operator review of 016A report and decision on base-log fetching pipeline / provisional 778 handling.
+
+2026-09-04 | Antigravity | holdout-v5 | Step 1 stopped: Holdout v5 worksheet answers cannot be transcribed verbatim into parse_holdout_expected() schema without interpretation (Expected Class: NO_TEST/class names vs TEST_FAILURE/NO_TEST_OUTPUT/TEST_RAN_CLEAN) | docs/session/079-2026-09-04-holdout-v5-transcription-impediment.md, docs/session/INDEX.md, docs/HANDOFF.md | 463 passed, 1 skipped | uncommitted | Operator specifies exact mapping or updates worksheet to define three-way log classification and single-line test IDs for holdout v5.
 
 
 

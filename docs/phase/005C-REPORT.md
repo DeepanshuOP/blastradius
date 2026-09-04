@@ -5,6 +5,7 @@
 * Phase 1 (Fix Quadratic Scripts): PASS - `binding_report.py` and `build_changesets.py` fixed to avoid quadratic and redundant loading.
 * Phase 2 (Build Changesets): PASS - `data/interim/changesets.parquet` built correctly with truncation flag.
 * Phase 3 (Re-Measure Binding): PASS - Binding report generated showing 93.6% binding rate.
+  *(Correction / Superseded: 93.6% is superseded per D-47 by 93.93% combined / 63.81% full-confidence).*
 * Phase 4 (RQ1 Computation): PASS - RQ1 computed honestly with both arms (a and b), using `exact_green` for the true fault-revealing set due to skipped base logs.
 * Phase 5 (Commit): PASS - Committed and pushed.
 
@@ -41,6 +42,9 @@ PR-level flags: touches_test_file: 6414, touches_build_config: 2009, touches_ci_
 
 Gate 1.5 (≥70%) IS MET (93.60%). Denominator is 6,014 total distinct test_ids in cloned repos. 
 Repos below 70%: 3 / 42.
+
+> **Correction / Superseded (Phase 023 consolidation / D-47)**:
+> Binding rate 93.60% (5,629 / 6,014) is superseded by **93.93% combined** (5,622 / 5,985) AND **63.81% full-confidence** (3,819 / 5,985 via FQCN; 1,803 / 5,985 [30.13%] at 0.5 confidence via bare-class basename). The combined figure never appears without the split (D-47). Distinct test_ids denominator 6,014 is superseded by **5,985**. Ambiguous: 164 / 5,985 (2.74%, supersedes 167 / 6,014); Not found: 199 / 5,985 (3.32%, supersedes 218 / 6,014).
 
 ## 4. RQ1 Table
 **Arm A (Resolved Base / exact_green)** - *fault-revealing set*
@@ -84,6 +88,7 @@ Hashes:
 
 ## 9. Hypotheses Verdicts
 1. **Multi-module repos will make bare-name lookup ambiguous far more often than qualified lookup.** FALSE. Ambiguity was only 2.78% (167 / 6014) overall, well below the ~20% threshold. The file index alone is sufficient.
+   *(Correction: Denominator 6014 is superseded by 5,985; ambiguous count is superseded by 164 / 5,985 = 2.74% per Phase 023 consolidation).*
 2. **Clones are at HEAD but ids resolve for older SHAs, so tests added or moved since resolve not_found spuriously.** TRUE. 218 `not_found` test_ids were encountered, indicating that resolving at each instance's own SHA is required to achieve 100% accuracy.
 3. **PR numbers in instances_raw.parquet may not align with the on-disk pr/ directory sharding.** TRUE. The `build_changesets.py` run reported "Missing payloads: 500 out of 165349 PRs."
 4. **RQ1 overlap may be near zero.** TRUE. The overlap metrics for the fault-revealing set (Arm A) are extremely low (Precision: ~0.009, Recall: ~0.12, Jaccard: ~0.009), demonstrating a strong divergence between the co-change proxy impact set and execution reality.

@@ -113,6 +113,7 @@ It **does not match** what Phases 020 and 021 found. Five divergences:
    loss, not a corrupt key"*; §D3 confirms the package-drop defect reproduces and is *"the
    largest defect. 2,067 / 5,144 distinct Java ids are bare-class."* Two `[x]` marks sit on
    parsers with open, quantified correctness defects.
+   *(Correction: Bare-class Java ids 2,067 / 5,144 is superseded by **2,043 / 5,115** per Phase 023 consolidation).*
 2. **`T1.1a` claims a "40-log fixture corpus with hand-labelled expected output."** The
    corpus that actually exists for this work is `tests/fixtures/holdout_v4/` at **32
    fixtures / 47 rows**, and — per the correction applied in Phase 1 below — its labels were

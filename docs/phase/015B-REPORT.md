@@ -101,6 +101,7 @@ Per D-43, `candidates.parquet` provides the universe of observed candidate tests
 > captured for the vast majority of runs — see Phase 016-B §3 (10 of 117,923 successful runs
 > have any job log on disk). The query, range, and median below are retained unmodified as a
 > record of what was computed and why it is invalid; nothing in this section has been deleted.
+> *(Correction: Distinct test_ids figure 6,014 is superseded by **5,985** post-fix per Phase 023 consolidation).*
 
 This is the first measurement and reporting of class imbalance in the BlastRadius project.
 **(Superseded by the WITHDRAWN notice above — this was not, in fact, a measurement of class

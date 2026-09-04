@@ -91,6 +91,9 @@ Columns: ['run_id', 'test_id', 'split', '__index_level_0__']
   Contains negative test instances: False
 ```
 
+> **Correction / Superseded (Phase 023 consolidation)**:
+> `data/interim/parsed_outcomes.parquet` total rows: 20535 is superseded by **20,451**.
+
 ---
 
 ## 3. Empirical Class Imbalance Measurement

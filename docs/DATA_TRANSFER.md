@@ -8,7 +8,7 @@ When handing over the project to a new machine or developer, certain directories
 
 | Asset | Measured Size | In Git? | Regeneratable? | Transfer Method |
 | --- | --- | --- | --- | --- |
-| `data/raw/` | 4.9 GB (supersedes 4.6 GB) | No | **NO (Irreplaceable)** | Physical copy or network transfer (rsync/rclone) |
+| `data/raw/` | 2.73 GB apparent / 4.9 GiB on disk | No | **NO (Irreplaceable)** | Transfer: 2.73 GB transfer sizing, 4.9 GiB destination free space (supersedes 4.9 GB / 4.6 GB) |
 | `data/state/cursor.db` | 131 MB | No | **NO (Irreplaceable)** | Physical copy or network transfer |
 | `data/interim/*.parquet` | 33 MB (supersedes ~31 MB) | No (3 PIN files in git) | Yes (via `make tables` etc.) | Can be copied for convenience, or regenerated |
 | `vendor/graphify-br/` | 34 MB | **Yes (flat tree)** | Yes (from `safishamsi/graphify`) | Tracked in git; no physical copy needed |
@@ -27,7 +27,7 @@ When handing over the project to a new machine or developer, certain directories
    tar -czvf blastradius_data.tar.gz data/raw data/state/cursor.db data/interim/*.parquet
    ```
 2. **Transfer:**
-   Transfer `blastradius_data.tar.gz` to the new machine via a secure network transfer (e.g., `rsync`, `scp`, or a shared cloud drive). Total compressed size is ~2.8 GB.
+   Transfer `blastradius_data.tar.gz` to the new machine via a secure network transfer (e.g., `rsync`, `scp`, or a shared cloud drive). Total compressed size is ~2.8 GB (transfer sizing: 2.73 GB apparent content for `data/raw`; require 4.9 GiB destination free space on disk).
 3. **Extract:**
    On the new machine, extract the archive into the repository root:
    ```bash

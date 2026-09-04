@@ -17,6 +17,7 @@ no `candidates.parquet` built, no holdout v5 sampled.
 **Data source**: `data/interim/parsed_outcomes.parquet` (20,535 rows), joined against
 `data/interim/instances_raw.parquet` (165,349 rows, one row per (repo, run) with
 `run_conclusion` and `job_ids` populated for 100% of rows).
+*(Correction: `parsed_outcomes.parquet` row count 20,535 is superseded by **20,451** post-fix per Phase 023 consolidation).*
 
 ### 1a. Distinct test_ids with status NOT in ('fail', 'error')
 
@@ -61,6 +62,7 @@ because it appeared in a `status in ('fail', 'error')` row — the table `parsed
 was never populated with any other status to begin with (1a). The candidate pool and the
 positive pool are drawn from the identical population by construction. The finding in the
 task prompt is confirmed, not refuted.
+*(Correction: Distinct test_ids figure 6,014 is superseded by **5,985** post-fix per Phase 023 consolidation).*
 
 ### 1d. Top-5 candidate pools vs. a successful run's test count
 
