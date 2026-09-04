@@ -41,10 +41,10 @@
 2026-07-21T20:47:00.6225283Z plugins: timeout-2.4.0, xdist-3.8.0, hypothesis-6.148.3, langsmith-0.10.9, anyio-4.14.2, requests-mock-1.12.1
 2026-07-21T20:47:00.6226429Z timeout: 600.0s
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: Failure count is shown, but no failed test or method is identified in the raw lines.
 
 ---
 
@@ -81,10 +81,10 @@
 2026-06-19T12:37:46.7045492Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
 2026-06-19T12:37:46.7225089Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_layer_cache_layer_idx.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: tests/layers/test_layer_cache_layer_idx.py::test_cache_requires_layer_idx
+- **Justification / Notes**: Explicit pytest FAILED line; bracketed parameter [linear_attn] is dropped.
 
 ---
 
@@ -121,10 +121,10 @@
 2026-06-23T14:11:36.4571507Z plugins: timeout-2.4.0, xdist-3.8.0, hypothesis-6.148.3, anyio-4.14.0, requests-mock-1.12.1
 2026-06-23T14:11:36.4572539Z timeout: 600.0s
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: Failure count is shown, but no failed test or method is identified in the raw lines.
 
 ---
 
@@ -161,10 +161,10 @@
 2026-06-20T10:45:38.4037699Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
 2026-06-20T10:45:38.4238544Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_modeling_nsa.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: tests/models/test_modeling_nsa.py::test_modeling
+- **Justification / Notes**: Explicit pytest FAILED line; all bracketed parameters are dropped.
 
 ---
 
@@ -201,10 +201,10 @@
 2026-08-01T22:24:37.9211201Z |  ___|| |    / _ \ / ___| | |
 2026-08-01T22:24:37.9211860Z | |_   | |   | | | || |    | |
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_sagemaker.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: tests/test_sagemaker.py::test_sagemaker_control_plane_and_training
+- **Justification / Notes**: Explicit pytest FAILED line.
 
 ---
 
@@ -241,10 +241,10 @@
 2026-07-02T11:18:04.1135442Z ##[group]Run codecov/codecov-action@v7
 2026-07-02T11:18:04.1135750Z with:
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_nanny.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: distributed/tests/test_nanny.py::test_failure_during_worker_initialization
+- **Justification / Notes**: Explicit pytest FAILED line; bracketed parameter [76-100] is dropped. The stack trace repeats the same test.
 
 ---
 
@@ -281,10 +281,10 @@
 2026-07-26T19:48:12.0271768Z |  ___|| |    / _ \ / ___| | |
 2026-07-26T19:48:12.0271995Z | |_   | |   | | | || |    | |
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_sagemaker.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: tests/test_sagemaker.py::test_sagemaker_control_plane_and_training
+- **Justification / Notes**: Explicit pytest FAILED line.
 
 ---
 
@@ -321,10 +321,10 @@
 2026-06-08T13:56:55.0252216Z Jun 08 13:56:55 Process exited with EXIT CODE: 1.
 2026-06-08T13:56:55.0253121Z Jun 08 13:56:55 Trying to KILL watchdog (1655).
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: test_stream_execution_environment.py
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: pyflink/datastream/tests/test_stream_execution_environment.py::test_generate_stream_graph_with_dependencies
+- **Justification / Notes**: Explicit pytest FAILED line; nearby test listing and failure line identify the test.
 
 ---
 
@@ -361,10 +361,10 @@
 2026-06-22T22:12:45.3389598Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/HighwayEnv/HighwayEnv
 2026-06-22T22:12:45.3425334Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The visible test line is not marked failed and the summary shows all tests passed.
 
 ---
 
@@ -401,10 +401,10 @@
 2026-08-20T07:44:30.2625480Z git version 2.54.0
 2026-08-20T07:44:30.2662697Z Temporarily overriding HOME='/home/runner/work/_temp/bb3c065f-da20-4be1-9a55-2a7b0ba329a0' before making global git config changes
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show 344 passed tests and no failed test.
 
 ---
 
@@ -441,10 +441,10 @@
 2026-08-15T23:02:35.8145470Z Execution failed for task ':plugin-maven:test'.
 2026-08-15T23:02:35.8146290Z > There were failing tests. See the report at: file:///D:/a/spotless/spotless/plugin-maven/build/reports/tests/test/index.html
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: com.diffplug.spotless.maven.FormatterStepFactoryTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: com.diffplug.spotless.maven.FormatterStepFactoryTest#eclipseUsesDefaultCacheDirectory
+- **Justification / Notes**: Explicit Java failure line plus stack frame supplies the package.
 
 ---
 
@@ -481,10 +481,10 @@
 2026-07-26T12:12:01.9690162Z   /home/runner/work/Stirling-PDF/Stirling-PDF/app/proprietary/src/test/java/***/software/proprietary/security/controller/api/AdminSettingsControllerTest.java:609: error: unreported exception IOException; must be caught or declared to be thrown
 2026-07-26T12:12:01.9692554Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_4-1785067803705.json
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: JarPathUtilTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: JarPathUtilTest#restartHelperJar_notFound_returnsNull
+- **Justification / Notes**: The failed Java test is named, but no package for JarPathUtilTest appears in the section; do not infer one.
 
 ---
 
@@ -521,10 +521,10 @@
 2026-06-29T04:04:01.3652502Z
 2026-06-29T04:04:01.3653495Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: MybatisConfigurationTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: MybatisConfigurationTest#testReload
+- **Justification / Notes**: The failed Java test is named, but no package for MybatisConfigurationTest appears in the section; do not infer one.
 
 ---
 
@@ -561,10 +561,10 @@
 2026-08-05T15:35:54.9524852Z FAILED-TEST: io.sirix.query.scan.RegionOnlyPredicateCountTest > multiFieldConjunctionsAreAnsweredFromColumns(): org.opentest4j.AssertionFailedError: no page served from the fused columns for $u.year gt 1950 and $u.id lt 15000 and not($u.active) (served=0, fellBack=0) ==> expected: <true> but was: <false>
 2026-08-05T15:35:54.9527731Z > There were failing tests. See the report at: file:///home/runner/work/sirix/sirix/bundles/sirix-query/build/reports/tests/test/index.html
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: io.sirix.query.scan.RegionOnlyPredicateCountTest
+- **Expected Identifier Count**: 3
+- **Expected Identifiers**: io.sirix.query.scan.RegionOnlyPredicateCountTest#negationConjoinedWithAnAnchoringLeafIsRepresentable; io.sirix.query.scan.RegionOnlyPredicateCountTest#numericAndBooleanFuseIntoOnePass; io.sirix.query.scan.RegionOnlyPredicateCountTest#multiFieldConjunctionsAreAnsweredFromColumns
+- **Justification / Notes**: Three FAILED-TEST lines identify the class and all three methods; the package is explicitly visible.
 
 ---
 
@@ -601,10 +601,10 @@
 2026-07-13T21:03:56.3312664Z
 2026-07-13T21:03:56.3315733Z FAILURE: Build failed with an exception.
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: The section reports one failed test but does not identify its name or method.
 
 ---
 
@@ -641,10 +641,10 @@
 2026-06-30T07:31:53.5522300Z * What went wrong:
 2026-06-30T07:31:53.5522532Z
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: The section reports two failed tests but does not identify their names or methods.
 
 ---
 
@@ -681,10 +681,10 @@
 2026-07-09T15:08:39.5103468Z FAILURE: Build failed with an exception.
 2026-07-09T15:08:39.5103856Z
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: The section reports four failed tests but does not identify their names or methods.
 
 ---
 
@@ -721,10 +721,10 @@
 2026-07-19T13:49:26.6800610Z
 2026-07-19T13:49:26.6857980Z > Task :sirix-kotlin-api:compileKotlin
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: io.sirix.query.ProjectionIndexStressTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: io.sirix.query.ProjectionIndexStressTest#tombstoneRebuildCyclesKeepServingExactly
+- **Justification / Notes**: Explicit Java failure line and FAILED-TEST line identify the class and method.
 
 ---
 
@@ -761,10 +761,10 @@
 2026-06-09T22:19:17.6207431Z   	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
 2026-06-09T22:19:17.6208214Z   	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - build error, no test named
+- **Justification / Notes**: The raw lines show a Gradle spotlessJavaApply task failure and no named failed test.
 
 ---
 
@@ -801,10 +801,10 @@
 2026-06-22T18:20:28.3298110Z
 2026-06-22T18:20:28.3298289Z * Exception is:
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failed count but no failed test named
+- **Justification / Notes**: A test name appears in STANDARD_OUT, but it is not identified as failed; the section only reports three failed tests.
 
 ---
 
@@ -841,10 +841,10 @@
 2026-08-04T15:20:04.0518607Z [backend:build]
 2026-08-04T15:20:04.0570836Z [backend:build] > Task :build
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no tests ran
+- **Justification / Notes**: The raw lines show compileTestJava/test NO-SOURCE and do not identify a test.
 
 ---
 
@@ -881,10 +881,10 @@
 2026-08-12T17:49:36.9298220Z > Task :servicetalk-data-protobuf-jersey3-jakarta9:clean UP-TO-DATE
 2026-08-12T17:49:36.9299340Z > Task :servicetalk-data-protobuf-jersey4-jakarta11:clean UP-TO-DATE
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no tests identified
+- **Justification / Notes**: The raw lines contain clean/build tasks only and no test name.
 
 ---
 
@@ -921,10 +921,10 @@
 2026-07-08T14:36:42.8788238Z > Task :integration-tests:assemble
 2026-07-08T14:36:42.8788826Z > Task :integration-tests:compileTestJava NO-SOURCE
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no tests ran
+- **Justification / Notes**: The raw lines show compileTestJava/test NO-SOURCE and do not identify a test.
 
 ---
 
@@ -961,10 +961,10 @@
 2026-08-10T09:46:56.4378720Z > Task :servicetalk-data-jackson-jersey3-jakarta9:clean UP-TO-DATE
 2026-08-10T09:46:56.4379685Z > Task :servicetalk-data-jackson3:clean UP-TO-DATE
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no tests identified
+- **Justification / Notes**: The raw lines contain clean/build tasks only and no test name.
 
 ---
 
@@ -1001,10 +1001,10 @@
 2026-07-02T14:35:19.2696883Z > Task :integration-tests:assemble
 2026-07-02T14:35:19.2697598Z > Task :integration-tests:compileTestJava NO-SOURCE
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no tests ran
+- **Justification / Notes**: The raw lines show compileTestJava/test NO-SOURCE and do not identify a test.
 
 ---
 
@@ -1041,10 +1041,10 @@
 2026-05-25T16:37:25.1315528Z [INFO] BUILD FAILURE
 2026-05-25T16:37:25.1316011Z [INFO] ------------------------------------------------------------------------
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: TestShim
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: TestShim#TestAll
+- **Justification / Notes**: Explicit Maven failure line identifies TestShim.TestAll; no package for TestShim appears in the section.
 
 ---
 
@@ -1081,10 +1081,10 @@
 2026-08-11T07:20:54.2185023Z [WARNING] The requested profile "web-dist" could not be activated because it does not exist.
 2026-08-11T07:20:54.2209384Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.3.0:verify (default) on project zeppelin-integration:
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: AuthenticationIT
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: AuthenticationIT#testAnyOfRolesUser
+- **Justification / Notes**: Explicit Maven error line names the test; no package for AuthenticationIT appears in the section.
 
 ---
 
@@ -1121,10 +1121,10 @@
 2026-07-21T15:10:39.7418924Z [INFO] BUILD FAILURE
 2026-07-21T15:10:39.7420259Z [INFO] ------------------------------------------------------------------------
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: TestShim
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: TestShim#TestAll
+- **Justification / Notes**: Explicit Maven failure line identifies TestShim.TestAll; no package for TestShim appears in the section.
 
 ---
 
@@ -1161,10 +1161,10 @@
 2026-08-06T06:33:34.9153207Z [INFO] Apache Atlas Common ................................ SUCCESS [ 16.190 s]
 2026-08-06T06:33:34.9154068Z [INFO] atlas-client-v1 .................................... SUCCESS [ 14.339 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count and stack frame only
+- **Justification / Notes**: The raw lines show two failures and a stack frame, but no test class or method for a failed test.
 
 ---
 
@@ -1201,10 +1201,10 @@
 2026-06-08T03:39:45.2652279Z Jun 08 03:39:45 03:39:45.261 [INFO] Flink : RPC : Akka ................................. SUCCESS [ 24.052 s]
 2026-06-08T03:39:45.2653268Z Jun 08 03:39:45 03:39:45.261 [INFO] Flink : RPC : Akka-Loader .......................... SUCCESS [  3.589 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: AbstractAsyncRunnableStreamOperatorTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: AbstractAsyncRunnableStreamOperatorTest#testCheckpointDrain
+- **Justification / Notes**: Explicit Maven failure line names the method and the earlier Flink package appears in the section's test class lines.
 
 ---
 
@@ -1241,10 +1241,10 @@
 2026-07-18T18:01:12.7290632Z [INFO] hg-pd-client ....................................... SUCCESS [  1.563 s]
 2026-07-18T18:01:12.7291269Z [INFO] hugegraph-struct ................................... SUCCESS [  2.116 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: org.apache.hugegraph.core.VertexCoreTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: org.apache.hugegraph.core.VertexCoreTest#testQueryByNonEqLabelAndIndexedProperty
+- **Justification / Notes**: Explicit Java failure line and stack frame identify the fully qualified class and method.
 
 ---
 
@@ -1281,10 +1281,10 @@
 2026-07-15T15:41:06.2414009Z [WARNING] The requested profile "web-dist" could not be activated because it does not exist.
 2026-07-15T15:41:06.2419112Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:3.3.0:verify (default) on project zeppelin-integration:
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: AuthenticationIT
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: AuthenticationIT#testSimpleAuthentication
+- **Justification / Notes**: Explicit Maven error line names the test; no package for AuthenticationIT appears in the section.
 
 ---
 
@@ -1321,10 +1321,10 @@
 2026-08-04T03:06:12.9057836Z [INFO] hertzbeat-alerter .......................................................................... SUCCESS [02:29 min]
 2026-08-04T03:06:12.9059288Z [INFO] hertzbeat-remoting ......................................................................... SUCCESS [ 11.034 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: LogRealTimeAlertE2eTest
+- **Expected Identifier Count**: 2
+- **Expected Identifiers**: LogRealTimeAlertE2eTest#testRealTimeLogAlertWithGroupAlert; LogRealTimeAlertE2eTest#testRealTimeLogAlertWithIndividualAlert
+- **Justification / Notes**: Two explicit Maven error lines identify two methods in the same test class.
 
 ---
 
@@ -1361,10 +1361,10 @@
 2026-07-06T13:33:13.2126980Z [INFO] hg-pd-client ....................................... SUCCESS [  9.653 s]
 2026-07-06T13:33:13.2128370Z [INFO] hugegraph-struct ................................... SUCCESS [  7.068 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: org.apache.hugegraph.task.TaskAndResultSchedulerTest
+- **Expected Identifier Count**: 1
+- **Expected Identifiers**: org.apache.hugegraph.task.TaskAndResultSchedulerTest#testDistributedDeleteKeepsTaskResultRecoverable
+- **Justification / Notes**: Explicit Java failure line and stack frame identify the fully qualified class and method.
 
 ---
 
@@ -1401,10 +1401,10 @@
 2026-08-11T02:02:13.2741502Z [INFO] Apache Tika BOM .................................... SUCCESS [  0.392 s]
 2026-08-11T02:02:13.2741691Z [INFO] Apache Tika Annotation Processor ................... SUCCESS [  7.337 s]
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - failure count only, no test named
+- **Justification / Notes**: Two failures are reported, but no failed test class or method is identified.
 
 ---
 
@@ -1441,10 +1441,10 @@
 2026-07-13T20:01:20.3231820Z [INFO]   from terminal/.inlined-pom.xml
 2026-07-13T20:01:20.3233251Z [INFO] --------------------------------[ jar ]---------------------------------
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show four tests, all with zero failures/errors, and no failed test.
 
 ---
 
@@ -1481,10 +1481,10 @@
 2026-07-27T16:44:59.3034070Z [INFO] Using GraalVM reachability metadata repository version 1.0.7
 2026-07-27T16:44:59.3317662Z [INFO] [graalvm reachability metadata repository for org.slf4j:slf4j-api:2.0.18]: Configuration directory not found. Trying latest version.
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show tests with zero failures/errors and no failed test.
 
 ---
 
@@ -1521,10 +1521,10 @@
 2026-06-03T16:50:47.3488616Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/45/maven-shared-components-45.pom (3.8 kB at 81 kB/s)
 2026-06-03T16:50:47.3520522Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.10.2/plexus-archiver-4.10.2.pom
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show tests with zero failures/errors and no failed test.
 
 ---
 
@@ -1561,10 +1561,10 @@
 2026-06-07T22:18:08.0561990Z [INFO]
 2026-06-07T22:18:08.0562480Z [INFO] --- spotless:2.46.1:check (spotless-check) @ saiku-service ---
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show tests with zero failures/errors and no failed test.
 
 ---
 
@@ -1601,9 +1601,9 @@
 2026-07-15T20:48:07.4904663Z [INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-parser-apple-module ---
 2026-07-15T20:48:07.4922743Z [INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
 ```
-- **Expected Class**: ___
-- **Expected Identifier Count**: ___
-- **Expected Identifiers**: ___
-- **Justification / Notes**: ___
+- **Expected Class**: NO_TEST
+- **Expected Identifier Count**: 0
+- **Expected Identifiers**: NO_TEST - no failed test identified
+- **Justification / Notes**: The raw lines show tests with zero failures/errors and no failed test.
 
 ---

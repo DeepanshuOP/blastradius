@@ -430,13 +430,35 @@ def print_holdout_scorecard(report: HoldoutReport, show_errors: bool = False) ->
 def main() -> None:
     parser = argparse.ArgumentParser(description="Score union parsers against held-out fixture corpus.")
     parser.add_argument(
+        "holdout_dir",
+        nargs="?",
+        type=Path,
+        default=None,
+        help="Path to held-out fixtures directory (default: tests/fixtures/holdout)",
+    )
+    parser.add_argument(
+        "--dir",
+        type=Path,
+        default=None,
+        help="Path to held-out fixtures directory",
+    )
+    parser.add_argument(
+        "--expected",
+        type=Path,
+        default=None,
+        help="Path to EXPECTED.md (defaults to <dir>/EXPECTED.md)",
+    )
+    parser.add_argument(
         "--show-errors",
         action="store_true",
         help="Print per-fixture false positive and false negative literal strings.",
     )
     args = parser.parse_args()
 
-    report = evaluate_holdout()
+    target_dir = args.dir or args.holdout_dir or HOLDOUT_DIR
+    expected_file = args.expected or (target_dir / "EXPECTED.md" if target_dir != HOLDOUT_DIR else EXPECTED_MD)
+
+    report = evaluate_holdout(holdout_dir=target_dir, expected_md=expected_file)
     print_holdout_scorecard(report, show_errors=args.show_errors)
 
 
