@@ -977,5 +977,7 @@ contribution is the dataset and the measurement, deliberately not the model.- 20
 
 2026-09-04 | Antigravity | holdout-v5 | Step 1 stopped: Holdout v5 worksheet answers cannot be transcribed verbatim into parse_holdout_expected() schema without interpretation (Expected Class: NO_TEST/class names vs TEST_FAILURE/NO_TEST_OUTPUT/TEST_RAN_CLEAN) | docs/session/079-2026-09-04-holdout-v5-transcription-impediment.md, docs/session/INDEX.md, docs/HANDOFF.md | 463 passed, 1 skipped | uncommitted | Operator specifies exact mapping or updates worksheet to define three-way log classification and single-line test IDs for holdout v5.
 
+2026-09-04 | Antigravity | holdout-v5 | Phase 028: Scored Holdout v5 under D-37 (P: 10/41 [24.39%], R: 10/22 [45.45%], Class Acc: 25/40 [62.50%]), analyzed 26 disagreements (2 PARSER WRONG, 24 OPERATOR WRONG), recorded 2 parser defects, permanently closed corpus | docs/phase/024-holdout-v5-worksheet.md, docs/phase/028-holdout-v5-score.md, tests/fixtures/holdout_v5/EXPECTED.md, analysis/holdout_eval.py, docs/session/080-2026-09-04-holdout-v5-score-and-close.md, docs/session/INDEX.md, docs/HANDOFF.md | 463 passed, 1 skipped | 4ba2d6485a2944416c0c5eeb66b2eba5a9be831d | Operator / Architect review Phase 028 score and incorporate headline held-out precision (24.39%) into paper draft.
+
 
 
