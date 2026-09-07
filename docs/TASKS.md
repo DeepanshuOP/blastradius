@@ -58,15 +58,16 @@ Must exist — see ROADMAP §39.1:
 - [x] `T0.8` `[new]` Frame freeze + version tag before Phase 1
 
 ### Weeks 1–4 — Corpus & Ground Truth (Aug 10–Sep 6)
-- [x] `T1.1a` Build 40-log fixture corpus with hand-labelled expected output
-- [x] `T1.1b` `annotations.py` parser
-- [x] `T1.1c` `junit_xml.py` parser (Surefire + pytest)
+- [x] `T1.1a` Build 32-fixture / 47-row fixture corpus (`tests/fixtures/holdout_v4/`) — supersedes "40-log … hand-labelled": count corrected from 40 to 32 fixtures / 47 rows, and per `docs/phase/022-REPORT.md:117-120` the `HAND_EXPECTED` column is empty in every row — labels were not hand-written by a human (`docs/phase/021-expectation-table.md:267`)
+- [ ] `T1.1b` `annotations.py` parser — untracked: `src/parse/annotations.py` does not exist on disk (verified via `ls src/parse/`, 2026-09-07); tick was not backed by an implementation
+- [ ] `T1.1c` `junit_xml.py` parser (Surefire + pytest) — untracked: `src/parse/junit_xml.py` does not exist on disk (verified via `ls src/parse/`, 2026-09-07); tick was not backed by an implementation
 - [x] `T1.1d` `log_pytest.py` parser
-- [x] `T1.1e` `log_maven.py` parser
-- [x] `T1.1f` `log_gradle.py` parser
+- [x] `T1.1e` `log_maven.py` parser — fixed by `b6439bc` (recover Java package from report header and stack frames), `512b86f` (read junit4 surefire lines with bracketed class)
+- [x] `T1.1f` `log_gradle.py` parser — fixed by `b6439bc`, `0e1af4f` (correct Gradle chevron segmentation, suppress class-level failures), `c32bce9` (classloader prefixes / spaced method names), `7e9d822` (recover package from stack trace, stop double counting), `c5037b5` (keep gradle class name attached across a block)
 - [x] `T1.1g` `normalize_test_id()` extending graphify `ids.py` + contract test ⭐
 - [ ] `T1.1h` `resolve_test_file()` + binding-rate report ⭐
-- [ ] `T1.1i` Per-parser coverage + precision report
+- [ ] `T1.1i` Per-parser coverage + precision report — blocked on corpus provenance (32-fixture/47-row corpus is not hand-labelled, see `T1.1a`), not on remaining effort
+- [x] `T1.1j` `dispatch.py` parser dispatch cascade — `src/parse/dispatch.py` verified on disk 2026-09-07; no subtask line previously existed for it
 - [ ] `T1.2a` Changed-file extraction with hunks
 - [ ] `T1.2b` tree-sitter symbol-level change extraction
 - [ ] `T1.2c` Change taxonomy flags (full taxonomy §18.2)

@@ -20,16 +20,16 @@ These assets are not in git due to size and the 90-day GitHub Actions log retent
 | `data/interim/parsed_outcomes.parquet` | 285,109 | 278 KB | `c22e669d1c12a112ff3a4b178d99094c79918df6cef493cedd8666932cf844f9` | No | Extracted per-test execution outcomes |
 | `data/interim/base_resolution_new.parquet` | 265,142 | 259 KB | `9d1a9c3045d3d2df7fcf2c2bd464ca4bc6144f263f70dde1696b6ad3869ddb3c` | No | Base resolution mapping across all failed runs |
 | `data/interim/binding.parquet` | 183,289 | 179 KB | `0a7dc43c14c7ec49956c10791014cbd806fbea1dc6c03e61123be8e20ba8120f` | No | Test identifier to source file binding index |
-| `data/interim/base_resolution.parquet` | 178,338 | 174 KB | `e630ea288db7a1d13f9f9d658c1fe1a3a411516f4948835848bb2fb7e03eb156` | No | Baseline resolution parquet |
+| `data/interim/base_resolution.parquet` | 178,338 | 174 KB | `c049d038ce5c2097cc3b46e1a7508f1565aa6f3000a1fc7163c0d8f603935e9c` (supersedes `e630ea288db7a1d13f9f9d658c1fe1a3a411516f4948835848bb2fb7e03eb156` — same size, different content, mtime 2026-08-29 predates this manifest) | No | Baseline resolution parquet |
 | `data/interim/base_resolution_targeted.parquet` | 149,433 | 146 KB | `60991378bf823127e95495cacc8047f11d05751733362b1c5b4f2ae054f6641c` | No | Targeted group resolution parquet |
 | `data/interim/outcomes.parquet` | 127,727 | 125 KB | `53479e36766bb80a5073c910daa0a904bc4baddee6926def500318604b769757` | No | Processed outcomes for RQ1 divergence |
 | `data/interim/exact_green_verification.parquet` | 58,187 | 57 KB | `c0d800507a2389050771f758f0052dbb672c8cbc1714df0ff4a76a187d7d4301` | No | Exact green verification audit dataset |
-| `data/interim/exact_green_verification_unattended_backup.parquet` | 58,801 | 57 KB | `ef1b9dbd6ea12fae2e5052309ce24bcfe76f49c09c252fc7c52ecaa7641ca62c` | No | Exact green verification unattended backup |
-| `data/interim/exact_green_verification_pre019b_snapshot.parquet` | 58,550 | 57 KB | `f99a3a93db0425026df1f5108a79d3950fb2bf1359c3e9a7e0258d4a961cfb3c` | No | Exact green pre-019b snapshot |
-| `data/interim/base_resolution_new_sampled.parquet` | 51,820 | 51 KB | `52c6f1406456012c8b02137aa599026da68a35e80dcdd11bf5a191cffc9ea08c` | No | Sampled base resolution dataset |
-| `data/interim/parsed_outcomes_pre_d3.parquet` | 286,851 | 280 KB | `32dc7fb5c5c963628e8334ddbbd1573c6600c0f8664ba01579d45e4e20ae19dc` | No | Pre-D3 parsed outcomes |
+| `data/interim/exact_green_verification_unattended_backup.parquet` | 58,801 | 57 KB | `1367cc607f6bae4e8aaacf0edea6f8ba2b1141093a529acbc254685dcf4bd684` (supersedes `ef1b9dbd6ea12fae2e5052309ce24bcfe76f49c09c252fc7c52ecaa7641ca62c` — same size, different content, mtime 2026-09-01T17:18:19Z predates this manifest) | No | Exact green verification unattended backup |
+| `data/interim/exact_green_verification_pre019b_snapshot.parquet` | 58,550 | 57 KB | `0c08db41ccc94076023d4681758cc8570e68806a05407616c1020378450926d2` (supersedes `f99a3a93db0425026df1f5108a79d3950fb2bf1359c3e9a7e0258d4a961cfb3c` — same size, different content, mtime 2026-09-01T18:01:22.800Z predates this manifest) | No | Exact green pre-019b snapshot |
+| `data/interim/base_resolution_new_sampled.parquet` | 51,820 | 51 KB | `60984517ddb55a62ef029e48bb9b482b0eda4a5692646a82befe27a012714e8b` (supersedes `52c6f1406456012c8b02137aa599026da68a35e80dcdd11bf5a191cffc9ea08c` — same size, different content, mtime 2026-08-31 predates this manifest) | No | Sampled base resolution dataset |
+| `data/interim/parsed_outcomes_pre_d3.parquet` | 286,851 | 280 KB | `4d1a6e8c21c109e91db9de14c77ca81f3c43ada366b7dff73a9b34de1b7eb5a1` (supersedes `32dc7fb5c5c963628e8334ddbbd1573c6600c0f8664ba01579d45e4e20ae19dc` — same size, different content, mtime 2026-09-02T16:17:45Z, seconds before the D3/D4 re-parse run start 16:17:59Z) | No | Pre-D3 parsed outcomes |
 | `data/interim/base_outcomes.parquet` | 18,134 | 18 KB | `e706c2ae301e3b1565b97dbe2e00106e891dd3f0c72d6d1d89fa4ac0f1a3cc92` | No | Base test outcomes |
-| `data/interim/exact_green_verification_unattended_round2_removed.parquet` | 6,339 | 6 KB | `188a1005b6fae7c4f4cb696ec0f8a9e7f41cf63d395bf580eb5a71a4f02fdf75` | No | Exact green unattended removed entries |
+| `data/interim/exact_green_verification_unattended_round2_removed.parquet` | 6,339 | 6 KB | `df5bd3c8c47e59f08a91b155769dde664a0fefdeb3daa345cc824f385c95a3b1` (supersedes `188a1005b6fae7c4f4cb696ec0f8a9e7f41cf63d395bf580eb5a71a4f02fdf75` — same size, different content, mtime 2026-09-01T18:01:22.840Z predates this manifest) | No | Exact green unattended removed entries |
 
 **Total Required Untracked Transfer:** **2,904,575,102 bytes** (~2.90 GB payload / 5.07 GB disk footprint).
 
@@ -82,3 +82,36 @@ These assets are already tracked in git and require **no manual file transfer**.
    ```bash
    du -sb data/raw data/state/cursor.db data/interim
    ```
+
+5. **Verification must be per-file sha256, never byte count alone.** On 2026-09-07, 6 of the 16
+   `data/interim/*.parquet` files listed in §1 were found with the identical byte size recorded
+   above but a different sha256 than originally recorded here: `base_resolution.parquet`,
+   `base_resolution_new_sampled.parquet`, `exact_green_verification_pre019b_snapshot.parquet`,
+   `exact_green_verification_unattended_backup.parquet`,
+   `exact_green_verification_unattended_round2_removed.parquet`, `parsed_outcomes_pre_d3.parquet`.
+   A file-count or total-byte-count check (step 4 above) would not have caught this. The
+   corrected hashes are recorded in §1 above; each names the value it supersedes.
+
+6. **2026-09-07 evidence check (recorded, not assumed):** `exact_green_verification.parquet`
+   holds one row per instance (4,245/4,245 rows, keyed by `run_id`, unique) — quarantine resets a
+   verdict, it does not delete a row, so row counts cannot test a verdict reset. The real test is
+   the `base_parse_status` verdict column against its `not_processed` (unverified) default:
+   `exact_green_verification_unattended_backup.parquet` has 1,409/4,245 rows with a verdict other
+   than `not_processed`; `exact_green_verification_pre019b_snapshot.parquet` has 878/4,245;
+   the current `exact_green_verification.parquet` has 859/4,245 (1,409 − 859 = 550;
+   878 − 859 = 19). Joining `exact_green_verification_unattended_round2_removed.parquet`'s 19 rows
+   on `run_id`: 19/19 match in `pre019b_snapshot` with a non-`not_processed` verdict, and 19/19
+   match in the current file reset to `not_processed`. **HANDOVER-020 §3.1's claim of 550
+   instances over 370 base runs quarantined is CORROBORATED** by the verdict column, superseding
+   the row-count-based "not corroborated" note this section previously carried — that note tested
+   the wrong column and is withdrawn.
+
+7. **Manifest defect, recorded for the same reason per-file sha256 is mandatory:** 5 of the 6
+   corrected hashes in item 5 above had file mtimes that *predate* this manifest's own
+   2026-09-02 write date — `base_resolution.parquet` (2026-08-29),
+   `base_resolution_new_sampled.parquet` (2026-08-31),
+   `exact_green_verification_pre019b_snapshot.parquet` (2026-09-01),
+   `exact_green_verification_unattended_backup.parquet` (2026-09-01), and
+   `exact_green_verification_unattended_round2_removed.parquet` (2026-09-01). Their recorded
+   hashes were therefore already wrong at the moment this manifest was written, not invalidated by
+   a later rewrite — this manifest was partly unmeasured despite being specified as measured.
