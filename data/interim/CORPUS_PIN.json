@@ -1,8 +1,8 @@
 {
   "as_of": "2026-08-29T14:13:00Z",
   "file_count": 12072,
-  "git_head_sha": "86043aee8bc9a4b4d6774420a86b7bd2d65655d4",
-  "run_start_utc": "2026-08-29T14:13:03.966865+00:00",
-  "run_end_utc": "2026-08-29T14:42:39.864927+00:00",
+  "git_head_sha": "22de7a30a22f7485aa1e39bb62f10fd032adcc46",
+  "run_start_utc": "2026-09-02T16:17:59.952310+00:00",
+  "run_end_utc": "2026-09-02T16:51:00.520358+00:00",
   "completed_at_resolved_via": "cursor.db capture_unit table lookup on (repo, 'logs', unit_key)"
 }
