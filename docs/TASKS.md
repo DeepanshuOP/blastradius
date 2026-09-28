@@ -24,7 +24,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] Parser suite: JUnit XML + pytest, precision number on the 40-log fixture set
 - [ ] `normalize_test_id()` with contract test passing
 - [ ] Labelling engine v0 on ≥20 repos
-- [ ] (CUT - Roadmap Phase removed) Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
 - [ ] Architecture diagram + literature positioning
 - [ ] Scope-drift conversation with the guide — **done, not pending**
 
@@ -91,25 +91,25 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T1.9` `[new]` Label-provenance tiers mirroring graphify confidence vocabulary
 
 ### Weeks 3–7 — Graph Layer (Aug 24–Sep 20)
-- [ ] (CUT) `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
-- [ ] (CUT) `T2.1b` Strip LLM pass and non-code extractors
-- [ ] (CUT) `T2.1c` Pin versions; re-run their test suite
-- [ ] (CUT) `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
-- [ ] (CUT) `T2.2a` `git worktree` commit-pinned checkout manager
-- [ ] (CUT) (CUT - Roadmap Phase removed) `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
-- [ ] (CUT) `T2.2c` Incremental rebuild via content hashing ⭐
-- [ ] (CUT) (CUT - Roadmap Phase removed) `T2.2d` Graph validation + parse-failure-rate gate
-- [ ] (CUT) `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1b` Strip LLM pass and non-code extractors
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1c` Pin versions; re-run their test suite
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2a` `git worktree` commit-pinned checkout manager
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2c` Incremental rebuild via content hashing ⭐
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2d` Graph validation + parse-failure-rate gate
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
 - [ ] (CUT) `T2.2f` `[new]` Snapshot + delta storage and `graph_index.parquet` (§19.3)
-- [ ] (CUT) `T2.3a` Node type classification (test/source/config/build)
-- [ ] (CUT) `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
-- [ ] (CUT) `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
-- [ ] (CUT) `T2.3d` Extended edge-type schema (§16.3)
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3a` Node type classification (test/source/config/build)
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3d` Extended edge-type schema (§16.3)
 - [ ] (CUT) `T2.3e` `[new]` Binding-rate report + dashboard tile ⭐ (**Gate 1.5**)
 - [ ] (CUT) `T2.4a` `co_changes` weighted edges
 - [ ] (CUT) `T2.4b` `co_fails` edges
 - [ ] (CUT) `T2.4c` Node attributes (churn, complexity, age, failure rate)
-- [ ] (CUT) `T2.5a` Query API primitives (§20.1 Q1–Q10)
+- [ ] (OUT OF PAPER — BITE497J deliverable, five §10.5 primitives only (D-48)) `T2.5a` Query API primitives (§20.1 Q1–Q10)
 - [ ] (CUT) `T2.5b` DuckDB feature cache + benchmark
 - [ ] (CUT) `T2.6` `[v2]` SCIP precision tier on the Java subset (RQ5, optional)
 - [ ] (CUT) `T2.7` `[v2]` `manifest_ingest` package layer + `depends_on` edges

@@ -137,3 +137,17 @@ parser limitation: corpus-wide fqcn_incomplete (13,182) exceeds fqcn_recovered (
 roughly 2:1 because most bare-class ids have no package anywhere in their log. This
 supersedes the previously published 5,629 / 6,014 = 93.60% reported as a single figure.
 Revisit trigger: a new package-recovery source is added to D-39's list.
+
+### D-48: Graph layer excluded from the MSR 2027 paper; continues as a BITE497J deliverable
+**Date**: 2026-09-28.
+**Decided by**: Deepanshu, relayed by Prisha, to be confirmed on commit review.
+**Context**: TASKS.md marked T2.x CUT in aea1feb (2026-08-31) with no decision entry. The 2026-09-27 handover assigned ROADMAP §10 to Prisha.
+**Decision**: Prisha builds the following on the 3-repo mini-corpus:
+- the Graphify strip (T2.1)
+- the commit-pinned builder with the incremental-vs-cold equivalence test (T2.2, except T2.2f)
+- test-node typing and test_id binding (T2.3, except T2.3e)
+- the five §10.5 query primitives (T2.5a, primitives only)
+
+No graph-derived number enters make tables, release/ or the paper. The graph-side binding measurement is reported as graph_node_binding_rate in session reports only. It does not replace D-47's figure or its Gate 1.5 reading.
+These remain CUT: T2.2f (snapshot + delta storage, graph_index.parquet), T2.3e (binding dashboard tile, Gate 1.5), the §20.1 Q1–Q10 catalogue beyond the five primitives, T2.4, all other T2.x work, T4.1a and T4.3a.
+**Revisit trigger**: any proposal to put a graph-derived number into the paper.
