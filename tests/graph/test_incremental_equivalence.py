@@ -50,10 +50,15 @@ SAIKU_CHAIN = [
 ]
 
 
-def _graph_identity(path: str | Path) -> tuple[set[str], set[tuple[str, str]]]:
-    """Return the (node set, edge set) a build must reproduce exactly."""
+def _graph_identity(path: str | Path) -> tuple[set[str], set[tuple[str, str, str]]]:
+    """Return the (node set, edge set) a build must reproduce exactly.
+
+    The stored graph is a `MultiDiGraph` keyed by `edge_type`, so the edge set
+    carries the key: comparing bare `(src, dst)` pairs would let a `tests` edge
+    stand in for the `calls` edge it derives from.
+    """
     graph = load_graph(path)
-    return set(graph.nodes()), set(graph.edges())
+    return set(graph.nodes()), set(graph.edges(keys=True))
 
 
 def _full_identity(path: str | Path) -> tuple[dict, dict]:
@@ -61,7 +66,10 @@ def _full_identity(path: str | Path) -> tuple[dict, dict]:
     graph = load_graph(path)
     return (
         {node: dict(data) for node, data in graph.nodes(data=True)},
-        {(src, dst): dict(data) for src, dst, data in graph.edges(data=True)},
+        {
+            (src, dst, key): dict(data)
+            for src, dst, key, data in graph.edges(keys=True, data=True)
+        },
     )
 
 

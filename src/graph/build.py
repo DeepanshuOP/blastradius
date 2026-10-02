@@ -60,7 +60,7 @@ __all__ = [
 #: Bumped whenever the on-disk node-link payload changes shape. A graph written
 #: by an older version is not comparable with one written by a newer one, so the
 #: incremental path refuses to reuse across versions.
-GRAPH_FORMAT_VERSION = 1
+GRAPH_FORMAT_VERSION = 2
 
 #: ROADMAP §19.4: a (repo, sha) above this parse-failure rate is flagged, with a
 #: reason, rather than silently feeding the frame.
@@ -340,12 +340,22 @@ def _extract(
         return {"nodes": [], "edges": [], "failed_sources": []}
     from graphify.extract import extract as graphify_extract
 
-    return graphify_extract(
-        list(paths),
-        cache_root=cache_root,
-        root=root,
-        parallel=parallel,
-    )
+    from src.graph.test_nodes import register_test_resolver, set_extraction_root
+
+    # D-10: test typing and test_id binding plug in through Graphify's
+    # resolver registry, so they run inside the extraction pass that already
+    # owns cross-file resolution instead of being bolted on afterwards.
+    register_test_resolver()
+    set_extraction_root(root)
+    try:
+        return graphify_extract(
+            list(paths),
+            cache_root=cache_root,
+            root=root,
+            parallel=parallel,
+        )
+    finally:
+        set_extraction_root(None)
 
 
 def _node_sort_key(node: dict) -> tuple[str, str, str]:
@@ -357,12 +367,13 @@ def _node_sort_key(node: dict) -> tuple[str, str, str]:
     )
 
 
-def _edge_sort_key(edge: dict) -> tuple[str, str, str, str]:
+def _edge_sort_key(edge: dict) -> tuple[str, str, str, str, str]:
     """Return a total order over edges that does not depend on walk order."""
     return (
         str(edge.get("source") or ""),
         str(edge.get("target") or ""),
         str(edge.get("edge_type") or edge.get("relation") or ""),
+        str(edge.get("key") or ""),
         str(edge.get("source_location") or ""),
     )
 
@@ -451,7 +462,7 @@ def pagerank(
     return rank
 
 
-def _annotate(graph: nx.DiGraph, communities: dict[int, list[str]]) -> None:
+def _annotate(graph: nx.MultiDiGraph, communities: dict[int, list[str]]) -> None:
     """Add the derived node/edge attributes this layer owns, in place.
 
     Conforms to the field names `docs/SCHEMAS.md` already defines for
@@ -466,13 +477,21 @@ def _annotate(graph: nx.DiGraph, communities: dict[int, list[str]]) -> None:
     member_of = {
         node: cid for cid, members in communities.items() for node in members
     }
-    scores = pagerank(graph) if graph.number_of_edges() else {}
+    # PageRank is computed on the simple projection: parallel edges between the
+    # same pair are the SAME structural relation seen twice (a `calls` edge and
+    # the `tests` edge derived from it), so counting both would inflate the
+    # centrality of exactly the test→source pairs this layer just added.
+    simple = nx.DiGraph()
+    simple.add_nodes_from(graph.nodes())
+    simple.add_edges_from((src, dst) for src, dst in graph.edges())
+    scores = pagerank(simple) if simple.number_of_edges() else {}
     for node, data in graph.nodes(data=True):
         data["community_id"] = member_of.get(node)
         data["degree"] = graph.degree(node)
         data["pagerank"] = round(float(scores.get(node, 0.0)), 12)
         data["start_line"] = _start_line(data.get("source_location"))
         data.setdefault("parse_status", "ok")
+        data.setdefault("node_type", None)
     for _, _, data in graph.edges(data=True):
         data["edge_type"] = data.get("edge_type") or data.get("relation") or "contains"
         data.setdefault("confidence", "EXTRACTED")
@@ -481,7 +500,7 @@ def _annotate(graph: nx.DiGraph, communities: dict[int, list[str]]) -> None:
         data.setdefault("weight", 1.0)
 
 
-def write_graph(graph: nx.DiGraph, meta: dict, path: Path | str) -> Path:
+def write_graph(graph: nx.MultiDiGraph, meta: dict, path: Path | str) -> Path:
     """Write `graph` as deterministic gzipped NetworkX node-link JSON.
 
     The payload carries no timestamp and every collection is sorted, so two
@@ -511,7 +530,7 @@ def write_graph(graph: nx.DiGraph, meta: dict, path: Path | str) -> Path:
     return path
 
 
-def load_graph(path: Path | str) -> nx.DiGraph:
+def load_graph(path: Path | str) -> nx.MultiDiGraph:
     """Load a graph written by `write_graph`.
 
     Args:
@@ -523,7 +542,7 @@ def load_graph(path: Path | str) -> nx.DiGraph:
     with gzip.open(Path(path), "rt", encoding="utf-8") as fh:
         payload = json.load(fh)
     meta = payload.pop("meta", {})
-    graph = nx.node_link_graph(payload, directed=True, multigraph=False, edges="links")
+    graph = nx.node_link_graph(payload, directed=True, multigraph=True, edges="links")
     graph.graph["meta"] = meta
     return graph
 
@@ -682,7 +701,7 @@ def _build_stats(
     )
 
 
-def _assemble(extractions: list[dict], root: Path) -> nx.DiGraph:
+def _assemble(extractions: list[dict], root: Path) -> tuple[nx.MultiDiGraph, dict]:
     """Merge extraction results into an annotated, clustered directed graph.
 
     Args:
@@ -702,11 +721,30 @@ def _assemble(extractions: list[dict], root: Path) -> nx.DiGraph:
         }
         for ext in extractions
     ]
-    graph = graphify_build(sorted_extractions, directed=True, dedup=True, root=root)
+    from src.graph.test_nodes import add_binding_edges
+
+    structural = graphify_build(sorted_extractions, directed=True, dedup=True, root=root)
     # cluster() canonicalises into a sorted graph and seeds its partitioner, so
     # the partition is reproducible. graspologic (Leiden) is outside the `graph`
     # extra, so this is NetworkX's seeded Louvain — see src/graph/README.md.
-    communities = graphify_cluster(graph) if graph.number_of_nodes() else {}
+    # It runs on the structural graph, before the binding edges, so the partition
+    # describes the code's own structure rather than the bridge laid over it.
+    communities = graphify_cluster(structural) if structural.number_of_nodes() else {}
+
+    # A MultiDiGraph keyed by edge_type: a `tests` binding must coexist with the
+    # `calls` edge it was derived from, and a DiGraph can hold only one edge per
+    # pair. See `src.graph.test_nodes.add_binding_edges`.
+    graph = nx.MultiDiGraph()
+    for node, data in sorted(structural.nodes(data=True)):
+        graph.add_node(node, **data)
+    for src, dst, data in sorted(
+        structural.edges(data=True),
+        key=lambda e: (e[0], e[1], str(e[2].get("relation") or "")),
+    ):
+        graph.add_edge(
+            src, dst, key=str(data.get("edge_type") or data.get("relation") or "contains"), **data
+        )
+    add_binding_edges(graph)
     _annotate(graph, communities)
     return graph, communities
 

@@ -52,9 +52,28 @@ EXPECTED_SOURCE_FILES = [
     "tests/test_shapes.py",
 ]
 
-#: Node and edge counts for the fixture at its single commit.
+#: Node and edge counts for the fixture at its single commit. The stored graph
+#: is a `MultiDiGraph` keyed by `edge_type` (see
+#: `src.graph.test_nodes.add_binding_edges` for why), so the edge count includes
+#: the test→source binding edges alongside the structural edges they derive
+#: from: 29 structural + 20 binding.
 EXPECTED_N_NODES = 22
-EXPECTED_N_EDGES = 29
+EXPECTED_N_EDGES = 49
+EXPECTED_N_STRUCTURAL_EDGES = 29
+
+#: Edges per `edge_type`, hand-checked against the fixture.
+EXPECTED_EDGE_TYPES = {
+    "calls": 6,
+    "contains": 7,
+    "imports": 3,
+    "imports_from": 1,
+    "method": 6,
+    "rationale_for": 2,
+    "references": 4,
+    "tests": 9,
+    "tests_by_convention": 3,
+    "tests_by_layout": 8,
+}
 
 #: Nodes per source file. `""` is the one import target that no file owns
 #: (`org.junit.jupiter.api.Test`, an external symbol).
@@ -233,7 +252,10 @@ def test_graph_payload_is_sorted_and_carries_no_timestamp(
         for n in payload["nodes"]
     ]
     assert node_keys == sorted(node_keys)
-    link_keys = [(l["source"], l["target"]) for l in payload["links"]]
+    link_keys = [
+        (l["source"], l["target"], str(l.get("edge_type") or ""), str(l.get("key") or ""))
+        for l in payload["links"]
+    ]
     assert link_keys == sorted(link_keys)
     assert "built_at" not in json.dumps(payload)
     assert payload["meta"]["format_version"] == GRAPH_FORMAT_VERSION
@@ -250,6 +272,9 @@ def test_loaded_graph_is_directed_and_matches_the_stats(
     graph = load_graph(stats.graph_path)
 
     assert graph.is_directed()
+    assert graph.is_multigraph(), (
+        "a `tests` binding must coexist with the `calls` edge it derives from"
+    )
     assert graph.number_of_nodes() == stats.n_nodes == EXPECTED_N_NODES
     assert graph.number_of_edges() == stats.n_edges == EXPECTED_N_EDGES
 
@@ -296,15 +321,38 @@ def test_every_edge_carries_the_schema_fields_this_layer_owns(
     )
     graph = load_graph(stats.graph_path)
 
-    for src, dst, data in graph.edges(data=True):
-        for key in ("edge_type", "confidence", "confidence_score", "weight"):
-            assert key in data, f"{src}->{dst} is missing {key}"
+    for src, dst, key, data in graph.edges(keys=True, data=True):
+        for field in ("edge_type", "confidence", "confidence_score", "weight"):
+            assert field in data, f"{src}->{dst} is missing {field}"
         assert data["confidence"] in {"EXTRACTED", "INFERRED", "AMBIGUOUS"}
         assert 0.0 <= data["confidence_score"] <= 1.0
-    # The fixture's real relations, as emitted by the stripped extractor.
-    assert {"calls", "contains", "imports", "method"} <= {
-        data["edge_type"] for *_, data in graph.edges(data=True)
-    }
+        assert key == data["edge_type"], "the multigraph key must be the edge_type"
+    counts: dict[str, int] = {}
+    for *_, data in graph.edges(data=True):
+        counts[data["edge_type"]] = counts.get(data["edge_type"], 0) + 1
+    assert counts == EXPECTED_EDGE_TYPES
+
+
+def test_the_binding_edges_do_not_displace_the_structural_edges(
+    minirepo_clone, minirepo_sha, tmp_path
+):
+    """Regression guard for a real defect found in this step: emitting the
+    `tests` edge during extraction overwrote the `calls` edge it was derived
+    from, destroying 7 of the fixture's 29 structural edges, because
+    Graphify assembles into a single-edge `nx.DiGraph`."""
+    stats = build_graph_at(
+        "acme/minirepo", minirepo_sha, clone_dir=minirepo_clone, out_dir=tmp_path / "graphs"
+    )
+    graph = load_graph(stats.graph_path)
+
+    structural = [
+        data
+        for *_, data in graph.edges(data=True)
+        if data["edge_type"] not in ("tests", "tests_by_convention", "tests_by_layout")
+    ]
+    assert len(structural) == EXPECTED_N_STRUCTURAL_EDGES
+    # Every `calls` edge of the fixture must survive.
+    assert sum(1 for data in structural if data["edge_type"] == "calls") == 6
 
 
 def test_rebuild_is_reused_without_force(minirepo_clone, minirepo_sha, tmp_path):
