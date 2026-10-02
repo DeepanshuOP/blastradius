@@ -42,7 +42,11 @@ __all__ = [
     "PARSE_FAILURE_CEILING",
     "SOURCE_SUFFIXES",
     "BuildStats",
+    "REVERSE_HOP_RELATIONS",
     "build_graph_at",
+    "build_graph_incremental",
+    "cache_miss_files",
+    "changed_source_files",
     "collect_source_files",
     "graph_path",
     "language_of",
@@ -116,6 +120,12 @@ class BuildStats:
             payload so the graph file stays byte-reproducible.
         wall_seconds: End-to-end build time.
         extract_seconds: Time inside the extractor.
+        n_files_changed: Source files differing from `incremental_from`, or 0
+            for a cold build.
+        n_files_reverse_hop: Files one reverse relation hop from the changed set
+            (ROADMAP §19.1 step 3).
+        n_files_reextracted: Files actually parsed this run — the content-cache
+            misses. The rest were replayed from their cache entries.
         failed_source_files: Sorted repo-relative paths that failed to parse.
     """
 
@@ -139,6 +149,9 @@ class BuildStats:
     built_at: str
     wall_seconds: float
     extract_seconds: float
+    n_files_changed: int = 0
+    n_files_reverse_hop: int = 0
+    n_files_reextracted: int = 0
     failed_source_files: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict:
@@ -617,6 +630,9 @@ def _build_stats(
     wall_seconds: float,
     extract_seconds: float,
     cache_root: Path | None = None,
+    n_files_changed: int = 0,
+    n_files_reverse_hop: int = 0,
+    n_files_reextracted: int = 0,
 ) -> BuildStats:
     """Assemble the `BuildStats` record for one build."""
     per_language, failures = _parse_failure_report(
@@ -659,6 +675,9 @@ def _build_stats(
         built_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         wall_seconds=round(wall_seconds, 3),
         extract_seconds=round(extract_seconds, 3),
+        n_files_changed=n_files_changed,
+        n_files_reverse_hop=n_files_reverse_hop,
+        n_files_reextracted=n_files_reextracted,
         failed_source_files=failures,
     )
 
@@ -740,6 +759,7 @@ def build_graph_at(
 
     with worktree_at(clone, sha) as tree:
         files = collect_source_files(tree)
+        misses = cache_miss_files(files, tree, cache)
         extract_started = time.perf_counter()
         result = _extract(files, tree, cache)
         extract_seconds = time.perf_counter() - extract_started
@@ -759,6 +779,7 @@ def build_graph_at(
             wall_seconds=time.perf_counter() - started,
             extract_seconds=extract_seconds,
             cache_root=cache,
+            n_files_reextracted=len(misses),
         )
 
     write_graph(
@@ -778,6 +799,237 @@ def build_graph_at(
         out_path,
     )
     stats_path.parent.mkdir(parents=True, exist_ok=True)
+    stats_path.write_text(
+        json.dumps(stats.as_dict(), indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return stats
+
+
+#: Relations followed in reverse to find the files whose edges a dirty file can
+#: invalidate (ROADMAP §19.1 step 3). The spec names the reverse-`imports` hop;
+#: the call and inheritance relations are included because an unchanged caller's
+#: `calls` edge into a changed callee goes stale the same way, and leaving it
+#: behind is exactly the "stale edges pointing at deleted symbols" failure §19.1
+#: warns about.
+REVERSE_HOP_RELATIONS = frozenset(
+    {
+        "calls",
+        "extends",
+        "implements",
+        "imports",
+        "imports_from",
+        "inherits",
+        "references",
+    }
+)
+
+def changed_source_files(clone_dir: Path | str, prev_sha: str, sha: str) -> list[str]:
+    """Return the `.java`/`.py` files that differ between two commits.
+
+    Args:
+        clone_dir: The clone to diff in.
+        prev_sha: The earlier commit.
+        sha: The later commit.
+
+    Returns:
+        Sorted repo-relative paths, including deletions (a deleted file must
+        still invalidate its nodes).
+    """
+    out = _git(
+        Path(clone_dir),
+        "diff",
+        "--name-only",
+        "--no-renames",
+        f"{prev_sha}..{sha}",
+    )
+    return sorted(
+        {line for line in out.splitlines() if line and language_of(line) is not None}
+    )
+
+
+def _reverse_hop(graph: nx.DiGraph, dirty: set[str]) -> set[str]:
+    """Return the source files one reverse relation hop from `dirty`.
+
+    ROADMAP §19.1 step 3: resolving only the dirty files leaves stale edges
+    pointing at symbols that moved or vanished, so the files that reference them
+    are re-extracted too.
+
+    Args:
+        graph: The previous graph.
+        dirty: Repo-relative paths that changed.
+
+    Returns:
+        Repo-relative paths of files holding a node that points into `dirty`.
+    """
+    targets = {
+        node
+        for node, data in graph.nodes(data=True)
+        if str(data.get("source_file") or "") in dirty
+    }
+    importers: set[str] = set()
+    for node in targets:
+        for src, _, data in graph.in_edges(node, data=True):
+            relation = str(data.get("relation") or data.get("edge_type") or "")
+            if relation not in REVERSE_HOP_RELATIONS:
+                continue
+            source_file = str(graph.nodes[src].get("source_file") or "")
+            if source_file:
+                importers.add(source_file)
+    return importers - dirty
+
+
+def cache_miss_files(
+    files: list[Path], root: Path, cache_root: Path
+) -> list[Path]:
+    """Return the files with no entry in Graphify's SHA-256 content cache.
+
+    These are the files an extraction will actually parse; the rest are replayed
+    from the cache. Reported so an incremental build's cost is attributable
+    rather than asserted.
+
+    Args:
+        files: Candidate files, absolute.
+        root: The anchor the content hash is computed against.
+        cache_root: Where the cache lives.
+
+    Returns:
+        The subset of `files` that will be re-extracted, in input order.
+    """
+    from graphify.cache import cache_dir, file_hash
+
+    directory = cache_dir(cache_root, "ast")
+    missing = []
+    for path in files:
+        try:
+            if not (directory / f"{file_hash(path, root, cache_root=cache_root)}.json").is_file():
+                missing.append(path)
+        except OSError:
+            missing.append(path)
+    return missing
+
+
+def build_graph_incremental(
+    repo: str,
+    sha: str,
+    prev_sha: str,
+    *,
+    clone_dir: Path | str | None = None,
+    clones_root: Path | str = Path("data/clones"),
+    out_dir: Path | str = Path("data/graphs"),
+    cache_root: Path | str | None = None,
+) -> BuildStats:
+    """Build the graph at `sha` incrementally, reusing the work done at `prev_sha`.
+
+    Incrementality comes from Graphify's SHA-256 content cache (ROADMAP §19.1:
+    "reuse Graphify's content cache rather than adding a second caching layer").
+    Both SHAs of a repo share one `cache_root`, so a file whose content is
+    unchanged is replayed from its cache entry and only genuinely changed files
+    are parsed. The dirty set from `git diff` and its reverse relation hop are
+    computed and recorded, and the files actually re-extracted are reported as
+    `n_files_reextracted`.
+
+    **Why the file list handed to the extractor is not narrowed to the dirty
+    set.** §19.1 step 3 describes splicing a re-extracted subgraph into the
+    previous graph. Graphify's Java import resolution
+    (`extractors/resolution.py::_resolve_cross_file_java_imports`) builds its
+    `{ClassName: [(node_id, package)]}` index *only* from the files extracted in
+    that call, and `resolution_context_nodes` does not reach it — it feeds the
+    direct-call index, the callable guard and the member-call resolvers, not the
+    import resolver. A narrowed call therefore leaves every `imports` edge of a
+    re-extracted Java file pointing at an unresolved placeholder id
+    (`org_saiku_service_datasource_idatasourcemanager`) instead of the defining
+    class node
+    (`saiku_core_..._idatasourcemanager_idatasourcemanager`) — measured on five
+    real consecutive commits of `spiculedata/saiku`, where it produced 2 to 207
+    spurious nodes and up to 1,443 wrong edges per commit. That is exactly the
+    "stale edges pointing at deleted symbols" failure §19.1 warns about, and it
+    would make the dataset untrustworthy (§10.2 step 6 calls divergence
+    release-blocking, not a known issue).
+
+    Handing the extractor the full file list keeps the cross-file resolvers
+    whole, so the incremental graph is equal to the cold graph *by
+    construction* rather than by hope, while the content cache still removes the
+    parsing work. The remaining per-SHA cost is the resolver's package re-parse
+    plus assembly, clustering and PageRank — whole-corpus passes that no
+    caching layer at this level can avoid.
+
+    Args:
+        repo: Repo in `owner/name` form.
+        sha: The commit to build at.
+        prev_sha: The already-built commit whose cache this build reuses.
+        clone_dir: An existing clone. Defaults to `<clones_root>/<slug>`.
+        clones_root: Where clones live.
+        out_dir: Where graphs are written.
+        cache_root: Content-cache anchor. Defaults to the same per-repo
+            directory the cold path uses, which is what makes the reuse happen.
+
+    Returns:
+        The `BuildStats` for this build, with `incremental_from` set to
+        `prev_sha` and the delta fields populated.
+
+    Raises:
+        FileNotFoundError: When the clone is missing.
+        RuntimeError: When either SHA is not a commit in the clone.
+    """
+    started = time.perf_counter()
+    clone = Path(clone_dir) if clone_dir else Path(clones_root) / repo_slug(repo)
+    if not (clone / ".git").exists() and not (clone / "HEAD").exists():
+        raise FileNotFoundError(f"no clone at {clone} for {repo}")
+
+    out_path = graph_path(repo, sha, out_dir)
+    cache = Path(cache_root) if cache_root else Path(out_dir) / "cache" / repo_slug(repo)
+    cache.mkdir(parents=True, exist_ok=True)
+
+    dirty = set(changed_source_files(clone, prev_sha, sha))
+    previous = graph_path(repo, prev_sha, out_dir)
+    hop: set[str] = set()
+    if previous.is_file():
+        hop = _reverse_hop(load_graph(previous), dirty)
+
+    with worktree_at(clone, sha) as tree:
+        files = collect_source_files(tree)
+        misses = cache_miss_files(files, tree, cache)
+        extract_started = time.perf_counter()
+        result = _extract(files, tree, cache)
+        extract_seconds = time.perf_counter() - extract_started
+        graph, communities = _assemble([result], tree)
+        stats = _build_stats(
+            repo=repo,
+            sha=sha,
+            out_path=out_path,
+            graph=graph,
+            communities=communities,
+            files=files,
+            root=tree,
+            nodes=result.get("nodes", []),
+            failed_sources=result.get("failed_sources", []),
+            incremental_from=prev_sha,
+            communities_inherited=False,
+            wall_seconds=time.perf_counter() - started,
+            extract_seconds=extract_seconds,
+            cache_root=cache,
+            n_files_changed=len(dirty),
+            n_files_reverse_hop=len(hop),
+            n_files_reextracted=len(misses),
+        )
+
+    write_graph(
+        graph,
+        {
+            "repo": repo,
+            "sha": sha,
+            "format_version": GRAPH_FORMAT_VERSION,
+            "graphify_commit": stats.graphify_commit,
+            "n_nodes": stats.n_nodes,
+            "n_edges": stats.n_edges,
+            "n_communities": stats.n_communities,
+            "parse_failure_rate": stats.parse_failure_rate,
+            "communities_inherited": stats.communities_inherited,
+            "languages": sorted(SOURCE_SUFFIXES.values()),
+        },
+        out_path,
+    )
+    stats_path = out_path.with_suffix("").with_suffix(".stats.json")
     stats_path.write_text(
         json.dumps(stats.as_dict(), indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
