@@ -9,11 +9,17 @@ dependencies = [
     "requests",
 ]
 
+[project.optional-dependencies]
+graph = ["graphifyy", "duckdb"]
+
 [dependency-groups]
 dev = [
     "pytest",
     "responses",
 ]
+
+[tool.uv.sources]
+graphifyy = { path = "vendor/graphify-br", editable = true }
 
 [build-system]
 requires = ["hatchling"]
