@@ -110,7 +110,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] (CUT) `T2.4b` `co_fails` edges
 - [ ] (CUT) `T2.4c` Node attributes (churn, complexity, age, failure rate)
 - [ ] (OUT OF PAPER — BITE497J deliverable, five §10.5 primitives only (D-48)) `T2.5a` Query API primitives (§20.1 Q1–Q10)
-- [ ] (CUT) `T2.5b` DuckDB feature cache + benchmark
+- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.5b` DuckDB feature cache + benchmark
 - [ ] (CUT) `T2.6` `[v2]` SCIP precision tier on the Java subset (RQ5, optional)
 - [ ] (CUT) `T2.7` `[v2]` `manifest_ingest` package layer + `depends_on` edges
 - [ ] (CUT) `T2.8` `[new]` Phantom-edge rate measurement, 100 hand-checked edges/language
