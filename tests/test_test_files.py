@@ -4,7 +4,18 @@ from src.parse.test_ids import TestId
 from src.parse.test_files import resolve_test_file
 from tests.conftest import requires_data
 
-pytestmark = requires_data("data/clones")
+# Every test below reads a specific clone. Guarding on the `data/clones`
+# directory alone was correct only while it was empty: once any other clone
+# lands there (e.g. the graph layer's mini-corpus) these tests start running
+# against repos that are not present and fail instead of skipping. Name what
+# they actually need.
+pytestmark = requires_data(
+    "data/clones/apache__beam",
+    "data/clones/apache__dolphinscheduler",
+    "data/clones/apache__fineract",
+    "data/clones/floci-io__floci",
+    "data/clones/sirixdb__sirix",
+)
 
 
 # PREDICT: 6 tests will pass. Total suite: whatever is currently there + 6. (Actually wait, let me run `pytest` first to see current test count).

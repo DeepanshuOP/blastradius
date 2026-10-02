@@ -30,4 +30,7 @@ packages = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-norecursedirs = ["vendor"]
+# tests/fixtures holds REAL checked-in source trees, including genuine pytest
+# and JUnit modules the graph layer extracts (tests/fixtures/graph/minirepo).
+# They are inputs, not this suite's tests, so collection must not walk into them.
+norecursedirs = ["vendor", "tests/fixtures"]
