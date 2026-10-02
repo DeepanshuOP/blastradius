@@ -17,3 +17,4 @@ __pycache__/
 !.env.example
 data/frame/repos.partial.csv
 .claude/
+graphify-out/

@@ -14,7 +14,6 @@ from pathlib import Path, PurePath
 from typing import Any, Callable
 
 from .cache import load_cached, save_cached
-from .mcp_ingest import extract_mcp_config, is_mcp_config_path
 from .manifest_ingest import extract_package_manifest, is_package_manifest_path
 from .resolver_registry import (
     LanguageResolver,
@@ -5089,11 +5088,6 @@ def _get_extractor(path: Path) -> Any | None:
     """Return the correct extractor function for a file, or None if unsupported."""
     if path.name.lower().endswith(".blade.php"):
         return extract_blade
-    # MCP config files (.mcp.json, claude_desktop_config.json, ...) are routed
-    # by filename before generic .json dispatch so they get MCP-aware nodes
-    # (servers, commands, packages, env vars) instead of opaque JSON keys.
-    if is_mcp_config_path(path):
-        return extract_mcp_config
     # Package manifests (apm.yml, pyproject.toml, go.mod, pom.xml) → a canonical
     # package node + depends_on edges, by filename before generic suffix dispatch
     # (#1377). apm.yml would otherwise be a .yml document handled by the LLM.

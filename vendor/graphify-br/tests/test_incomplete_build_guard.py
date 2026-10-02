@@ -1,25 +1,52 @@
 """Tests for the incomplete-build shrink-guard on `graphify extract`.
 
 A full build writes the graph with `to_json(..., force=True)`, which bypasses the
-#479 shrink guard. When this run's extraction was incomplete (an AST pass crashed
-or some semantic chunks failed), forcing the write can silently overwrite a good
-complete graph with a smaller partial one. The build now drops back to the shrink
-guard (force=False) on an incomplete run — unless `--allow-partial` is passed —
-and exits non-zero (before writing the manifest) if the guard refuses.
+#479 shrink guard. When this run's extraction was incomplete, forcing the write
+can silently overwrite a good complete graph with a smaller partial one. The
+build now drops back to the shrink guard (force=False) on an incomplete run —
+unless `--allow-partial` is passed — and exits non-zero (before writing the
+manifest) if the guard refuses.
+
+Incompleteness used to be armed here through a stubbed semantic-chunk run. The
+LLM semantic pass is removed in this fork (ROADMAP §10.1 step 2, §29.4), so the
+surviving driver of a silently-partial run is an under-enumerated walk: a
+subtree whose scandir raises, which `detect()` records in ``walk_errors``. These
+tests arm that for real with a `chmod 000` directory, so every assertion below
+about ``force``, exit codes and the untouched existing graph is unchanged.
 """
 from __future__ import annotations
+
+import os
 
 import pytest
 
 import graphify.__main__ as mainmod
 
+pytestmark = pytest.mark.skipif(
+    not hasattr(os, "geteuid") or (hasattr(os, "geteuid") and os.geteuid() == 0),
+    reason="POSIX-only and non-root: needs chmod 000 to actually block scandir",
+)
 
-def _make_docs_corpus(tmp_path):
-    # Docs-only corpus: no code files, so AST extraction is skipped and the only
-    # driver of incompleteness is the (stubbed) semantic chunk run.
-    (tmp_path / "README.md").write_text("# Notes\nThe entry point overview.\n")
-    (tmp_path / "GUIDE.md").write_text("# Guide\nHow to use the thing.\n")
+
+def _make_corpus(tmp_path, *, incomplete: bool):
+    """A one-code-file corpus. When ``incomplete``, a locked subdirectory makes
+    the walk under-enumerate, which is what detect() reports as a walk error."""
+    (tmp_path / "main.py").write_text("def main():\n    return 1\n")
+    if incomplete:
+        locked = tmp_path / "locked"
+        locked.mkdir()
+        (locked / "hidden.py").write_text("def hidden():\n    return 2\n")
+        os.chmod(locked, 0o000)
     return tmp_path
+
+
+@pytest.fixture(autouse=True)
+def _unlock_after(tmp_path):
+    """Restore the locked directory so pytest can clean tmp_path up."""
+    yield
+    locked = tmp_path / "locked"
+    if locked.exists():
+        os.chmod(locked, 0o755)
 
 
 def _seed_to_json_recorder(monkeypatch, *, returns=True):
@@ -36,28 +63,32 @@ def _seed_to_json_recorder(monkeypatch, *, returns=True):
     return rec
 
 
-def _arm_extract(monkeypatch, tmp_path, *, chunk_total, chunk_succeeded, extra_argv=()):
-    corpus = _make_docs_corpus(tmp_path)
-    out_dir = tmp_path / "out"
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test-fake-key")
+def _stub_one_node_ast(monkeypatch, corpus):
+    """Deterministic single-node AST result, so the shrink comparisons below are
+    exact regardless of what the real extractors make of the corpus."""
+    import graphify.extract as extractmod
 
-    def _stub_corpus(paths, **kwargs):
-        on_chunk = kwargs.get("on_chunk_done")
-        if on_chunk:
-            for i in range(chunk_succeeded):
-                on_chunk(i, chunk_total, {"nodes": [], "edges": [], "hyperedges": []})
+    def _stub(paths, **kwargs):
         return {
-            "nodes": [{"id": "s1", "source_file": str(corpus / "README.md"),
-                       "file_type": "document", "label": "Notes"}],
-            "edges": [], "hyperedges": [], "input_tokens": 10, "output_tokens": 5,
+            "nodes": [{"id": "s1", "source_file": str(corpus / "main.py"),
+                       "file_type": "code", "label": "main"}],
+            "edges": [], "input_tokens": 0, "output_tokens": 0,
         }
 
-    monkeypatch.setattr("graphify.llm.extract_corpus_parallel", _stub_corpus)
+    # The package re-exports `extract` lazily, so a dotted-string target can
+    # resolve to the function rather than the module (#monkeypatch quirk);
+    # patch the module object directly, as test_extract_cli.py does.
+    monkeypatch.setattr(extractmod, "extract", _stub)
+
+
+def _arm_extract(monkeypatch, tmp_path, *, incomplete, extra_argv=()):
+    corpus = _make_corpus(tmp_path, incomplete=incomplete)
+    out_dir = tmp_path / "out"
+    _stub_one_node_ast(monkeypatch, corpus)
     monkeypatch.setattr(mainmod, "_check_skill_version", lambda _: None)
     monkeypatch.setattr(
         mainmod.sys, "argv",
-        ["graphify", "extract", str(corpus), "--backend", "claude",
-         "--out", str(out_dir), *extra_argv],
+        ["graphify", "extract", str(corpus), "--out", str(out_dir), *extra_argv],
     )
     return out_dir
 
@@ -65,7 +96,7 @@ def _arm_extract(monkeypatch, tmp_path, *, chunk_total, chunk_succeeded, extra_a
 def test_partial_extraction_refuses_to_shrink_existing_graph(monkeypatch, tmp_path, capsys):
     # 1 of 3 chunks succeeded -> incomplete; the shrink guard refuses (returns False).
     rec = _seed_to_json_recorder(monkeypatch, returns=False)
-    out_dir = _arm_extract(monkeypatch, tmp_path, chunk_total=3, chunk_succeeded=1)
+    out_dir = _arm_extract(monkeypatch, tmp_path, incomplete=True)
 
     with pytest.raises(SystemExit) as exc:
         mainmod.main()
@@ -82,7 +113,7 @@ def test_partial_extraction_writes_when_not_shrinking(monkeypatch, tmp_path):
     # Incomplete run, but the new graph is not smaller -> the guard permits the
     # write. force is still False (guard active), and the CLI does not exit 1.
     rec = _seed_to_json_recorder(monkeypatch, returns=True)
-    _arm_extract(monkeypatch, tmp_path, chunk_total=3, chunk_succeeded=1)
+    _arm_extract(monkeypatch, tmp_path, incomplete=True)
 
     mainmod.main()  # no SystemExit
 
@@ -91,7 +122,7 @@ def test_partial_extraction_writes_when_not_shrinking(monkeypatch, tmp_path):
 
 def test_allow_partial_forces_write_despite_incomplete(monkeypatch, tmp_path):
     rec = _seed_to_json_recorder(monkeypatch, returns=True)
-    _arm_extract(monkeypatch, tmp_path, chunk_total=3, chunk_succeeded=1,
+    _arm_extract(monkeypatch, tmp_path, incomplete=True,
                  extra_argv=["--allow-partial"])
 
     mainmod.main()
@@ -103,7 +134,7 @@ def test_complete_extraction_keeps_force_write(monkeypatch, tmp_path):
     # All chunks succeeded -> a complete build legitimately keeps force=True so a
     # genuine dedup/deletion shrink still overwrites.
     rec = _seed_to_json_recorder(monkeypatch, returns=True)
-    _arm_extract(monkeypatch, tmp_path, chunk_total=1, chunk_succeeded=1)
+    _arm_extract(monkeypatch, tmp_path, incomplete=False)
 
     mainmod.main()
 
@@ -121,25 +152,15 @@ def _seed_existing_graph(gout, n):
 
 
 def _arm_no_cluster(monkeypatch, tmp_path, *, extra_argv=()):
-    corpus = _make_docs_corpus(tmp_path)
+    corpus = _make_corpus(tmp_path, incomplete=True)
     out_dir = tmp_path / "out"
     gout = out_dir / "graphify-out"
     _seed_existing_graph(gout, 5)  # existing complete graph
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test-fake-key")
-
-    def _stub_corpus(paths, **kwargs):
-        on_chunk = kwargs.get("on_chunk_done")
-        if on_chunk:
-            on_chunk(0, 3, {"nodes": [], "edges": [], "hyperedges": []})  # 1 of 3 -> partial
-        return {"nodes": [{"id": "s1", "source_file": str(corpus / "README.md"),
-                           "file_type": "document", "label": "Notes"}],
-                "edges": [], "hyperedges": [], "input_tokens": 1, "output_tokens": 1}
-
-    monkeypatch.setattr("graphify.llm.extract_corpus_parallel", _stub_corpus)
+    _stub_one_node_ast(monkeypatch, corpus)
     monkeypatch.setattr(mainmod, "_check_skill_version", lambda _: None)
     monkeypatch.setattr(
         mainmod.sys, "argv",
-        ["graphify", "extract", str(corpus), "--backend", "claude", "--no-cluster",
+        ["graphify", "extract", str(corpus), "--no-cluster",
          "--out", str(out_dir), *extra_argv],
     )
     return gout / "graph.json"

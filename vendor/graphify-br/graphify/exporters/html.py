@@ -476,17 +476,11 @@ def to_html(
     max_deg = max(degree.values(), default=1) or 1
     max_mc = (max(member_counts.values(), default=1) or 1) if member_counts else 1
 
-    # Work-memory overlay (derived sidecar). When not passed explicitly, load it
-    # best-effort from the sibling .graphify_learning.json next to the output
-    # graph.html (which lives beside graph.json). Empty/missing => no learning
-    # fields, so the un-annotated render is byte-identical to pre-feature.
+    # Work-memory overlay: callers may still pass one explicitly, but the
+    # derived .graphify_learning.json sidecar producer (graphify.reflect) is
+    # removed in this fork, so an unset overlay stays empty.
     if learning_overlay is None:
         learning_overlay = {}
-        try:
-            from graphify.reflect import load_learning_overlay as _llo
-            learning_overlay = _llo(Path(output_path))
-        except Exception:
-            learning_overlay = {}
     # Status -> ring color. preferred=green, contested=amber. Tentative gets no
     # ring (it's not yet trustworthy enough to highlight in the map).
     _RING = {"preferred": "#22c55e", "contested": "#f59e0b"}

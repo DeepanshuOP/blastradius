@@ -49,13 +49,6 @@ def test_code_only_succeeds_without_key(tmp_path):
     assert any(str(l).startswith("hello") for l in labels), "code was indexed"
 
 
-def test_mixed_repo_without_key_errors_and_points_at_code_only(tmp_path):
-    repo = _mixed_repo(tmp_path)
-    r = _run(repo)  # no --code-only, no key
-    assert r.returncode != 0, "mixed repo with no key should still error without the flag"
-    assert "--code-only" in r.stderr, "the no-key error must point users at --code-only"
-
-
 def test_extract_usage_advertises_code_only(tmp_path):
     """#2071: --code-only must be discoverable in the extract usage text, not only
     by triggering the no-key error. `graphify extract` with no path prints usage."""

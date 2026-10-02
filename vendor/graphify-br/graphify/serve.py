@@ -55,14 +55,6 @@ def _load_graph(graph_path: str) -> nx.Graph:
         except TypeError:
             G = json_graph.node_link_graph(data)
         G.graph["_logical_directed"] = _logical_directed
-        # Attach the work-memory overlay (derived sidecar next to graph.json) so
-        # the query/MCP read surface can annotate NODE lines display-only. Empty
-        # when no sidecar exists, leaving un-annotated output byte-identical.
-        try:
-            from graphify.reflect import load_learning_overlay as _llo
-            G.graph["_learning_overlay"] = _llo(resolved)
-        except Exception:
-            G.graph["_learning_overlay"] = {}
         return G
     except json.JSONDecodeError as exc:
         print(f"error: graph.json is corrupted ({exc}). Re-run /graphify to rebuild.", file=sys.stderr)
@@ -1599,52 +1591,6 @@ def _build_server(graph_path: str):
                     "required": ["source", "target"],
                 },
             ),
-            types.Tool(
-                name="list_prs",
-                description=(
-                    "List open GitHub PRs with CI status, review state, and graph impact "
-                    "(which communities each PR touches, blast radius). Use this before starting "
-                    "work to check if a PR already covers the area you're about to change."
-                ),
-                inputSchema={
-                    "type": "object",
-                    "properties": {
-                        "base": {"type": "string", "description": "Base branch to filter PRs by (auto-detected if omitted)"},
-                        "repo": {"type": "string", "description": "GitHub repo (owner/repo). Defaults to current repo."},
-                    },
-                },
-            ),
-            types.Tool(
-                name="get_pr_impact",
-                description=(
-                    "Get detailed graph impact for a specific PR: which files it changes, "
-                    "which knowledge-graph communities are affected, and how many nodes are touched. "
-                    "Use this to assess merge risk or check for overlap with your current work."
-                ),
-                inputSchema={
-                    "type": "object",
-                    "properties": {
-                        "pr_number": {"type": "integer", "description": "PR number to analyse"},
-                        "repo": {"type": "string", "description": "GitHub repo (owner/repo). Defaults to current repo."},
-                    },
-                    "required": ["pr_number"],
-                },
-            ),
-            types.Tool(
-                name="triage_prs",
-                description=(
-                    "Return all actionable open PRs (correct base, not stale) with full graph impact data "
-                    "so you can reason about review priority, merge order, and conflict risk. "
-                    "Call this when the user asks 'what PRs should I review?' or 'what's ready to merge?'"
-                ),
-                inputSchema={
-                    "type": "object",
-                    "properties": {
-                        "base": {"type": "string", "description": "Base branch to filter PRs by (auto-detected if omitted)"},
-                        "repo": {"type": "string", "description": "GitHub repo (owner/repo). Defaults to current repo."},
-                    },
-                },
-            ),
         ]
         # Multi-project support: every tool accepts an optional project_path.
         # Injected here (rather than repeated in 11 literal schemas) so the set
@@ -1667,14 +1613,11 @@ def _build_server(graph_path: str):
         return _tools
 
     def _tool_query_graph(arguments: dict) -> str:
-        import time as _time
-        from graphify import querylog
         question = arguments["question"]
         mode = arguments.get("mode", "bfs")
         depth = min(int(arguments.get("depth", 3)), 6)
         budget = int(arguments.get("token_budget", 2000))
         context_filter = arguments.get("context_filter")
-        _t0 = _time.perf_counter()
         result = _query_graph_text(
             G,
             question,
@@ -1682,16 +1625,6 @@ def _build_server(graph_path: str):
             depth=depth,
             token_budget=budget,
             context_filters=context_filter,
-        )
-        querylog.log_query(
-            kind="mcp_query",
-            question=question,
-            corpus=str(active_graph_path),
-            result=result,
-            mode=mode,
-            depth=depth,
-            token_budget=budget,
-            duration_ms=(_time.perf_counter() - _t0) * 1000,
         )
         return result
 
@@ -1802,91 +1735,6 @@ def _build_server(graph_path: str):
     def _tool_shortest_path(arguments: dict) -> str:
         return _shortest_path_text(G, arguments)
 
-    def _tool_list_prs(arguments: dict) -> str:
-        from graphify.prs import fetch_prs, fetch_worktrees, format_prs_text, _detect_default_branch
-        repo = arguments.get("repo") or None
-        base = arguments.get("base") or _detect_default_branch(repo)
-        try:
-            prs = fetch_prs(repo=repo, base=base)
-        except RuntimeError as e:
-            return f"Error: {e}"
-        worktrees = fetch_worktrees()
-        for pr in prs:
-            pr.worktree_path = worktrees.get(pr.branch)
-        return format_prs_text(prs, base)
-
-    def _tool_get_pr_impact(arguments: dict) -> str:
-        from graphify.prs import fetch_pr_files, compute_pr_impact, _gh, _parse_ci
-        number = int(arguments["pr_number"])
-        repo = arguments.get("repo") or None
-        # Use gh pr view directly — works for any base branch, not just the default
-        view_args = ["pr", "view", str(number), "--json",
-                     "title,headRefName,baseRefName,author,isDraft,reviewDecision,statusCheckRollup,updatedAt"]
-        if repo:
-            view_args += ["--repo", repo]
-        pr_data = _gh(*view_args)
-        if pr_data is None:
-            return f"PR #{number} not found or gh not authenticated."
-        files = fetch_pr_files(number, repo)
-        if not files:
-            return f"PR #{number}: no changed files found (may require gh auth)."
-        comms, nodes = compute_pr_impact(files, G)
-        ci = _parse_ci(pr_data.get("statusCheckRollup") or [])
-        lines = [
-            f"PR #{number}: {pr_data['title']}",
-            f"CI: {ci}  Review: {pr_data.get('reviewDecision') or 'none'}",
-            f"Base: {pr_data['baseRefName']}  Author: {(pr_data.get('author') or {}).get('login', '?')}",
-            f"\nGraph impact: {nodes} nodes across {len(comms)} communities",
-            f"Communities touched: {comms}",
-            f"Files changed ({len(files)}):",
-        ]
-        lines += [f"  {f}" for f in files[:20]]
-        if len(files) > 20:
-            lines.append(f"  … and {len(files) - 20} more")
-        return "\n".join(lines)
-
-    def _tool_triage_prs(arguments: dict) -> str:
-        from concurrent.futures import ThreadPoolExecutor, as_completed
-        from graphify.prs import fetch_prs, fetch_worktrees, fetch_pr_files, compute_pr_impact, _STATUS_ORDER, _detect_default_branch
-        repo = arguments.get("repo") or None
-        base = arguments.get("base") or _detect_default_branch(repo)
-        try:
-            prs = fetch_prs(repo=repo, base=base)
-        except RuntimeError as e:
-            return f"Error: {e}"
-        worktrees = fetch_worktrees()
-        for pr in prs:
-            pr.worktree_path = worktrees.get(pr.branch)
-        actionable = [p for p in prs if p.base_branch == base and p.status not in ("WRONG-BASE", "STALE")]
-        if not actionable:
-            return f"No actionable PRs targeting {base}."
-        # Fetch diffs concurrently then compute graph impact using in-memory G
-        workers = min(8, len(actionable))
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            future_to_pr = {pool.submit(fetch_pr_files, pr.number, repo): pr for pr in actionable}
-            for fut in as_completed(future_to_pr):
-                pr = future_to_pr[fut]
-                try:
-                    files = fut.result()
-                except Exception:
-                    files = []
-                if files:
-                    pr.files_changed = files
-                    pr.communities_touched, pr.nodes_affected = compute_pr_impact(files, G)
-        header = (
-            f"Actionable PRs targeting {base}: {len(actionable)}\n"
-            "Rank these by review priority. Higher blast_radius = more graph communities affected = higher merge risk.\n"
-        )
-        lines = [header]
-        for p in sorted(actionable, key=lambda x: (_STATUS_ORDER.index(x.status) if x.status in _STATUS_ORDER else 99)):
-            impact = f"  blast_radius={p.blast_radius}" if p.blast_radius else ""
-            wt = f"  worktree={p.worktree_path}" if p.worktree_path else ""
-            lines.append(
-                f"PR #{p.number} [{p.status}] CI={p.ci_status} review={p.review_decision or 'none'} "
-                f"age={p.days_old}d author={p.author}{impact}{wt}\n  title: {p.title}"
-            )
-        return "\n\n".join(lines)
-
     _handlers = {
         "query_graph": _tool_query_graph,
         "get_node": _tool_get_node,
@@ -1895,9 +1743,6 @@ def _build_server(graph_path: str):
         "god_nodes": _tool_god_nodes,
         "graph_stats": _tool_graph_stats,
         "shortest_path": _tool_shortest_path,
-        "list_prs": _tool_list_prs,
-        "get_pr_impact": _tool_get_pr_impact,
-        "triage_prs": _tool_triage_prs,
     }
 
     def _load_community_labels() -> dict[int, str]:

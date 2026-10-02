@@ -6,3 +6,19 @@ This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 Portions of this software were contributed under the MIT License prior to the
 relicensing and remain available under those terms. The original MIT license
 text is retained in LICENSE-MIT.
+
+------------------------------------------------------------------------------
+BlastRadius fork notice
+------------------------------------------------------------------------------
+
+This tree is a vendored, modified subset of Graphify, forked for BlastRadius at
+upstream commit 0738af373af9cf5c95f862cc5f3327fd96b4ea23 (see VENDORED.md and
+../GRAPHIFY_COMMIT.txt). It is licensed under the Apache License, Version 2.0,
+with the older MIT-licensed portions described above unchanged.
+
+Modifications (ROADMAP §10.1, §29.4): the LLM semantic-extraction pass and all
+cloud backends are deleted, along with llm.py, transcribe.py, ingest.py,
+file_slice.py, semantic_cleanup.py, reflect.py, mcp_ingest.py, pg_introspect.py,
+prs.py, wiki.py, querylog.py and exporters/graphdb.py; the Obsidian, wiki, SVG,
+GraphML and Cypher exporters are removed from export.py. Extraction is the
+deterministic tree-sitter AST path only.

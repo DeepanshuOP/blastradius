@@ -1,6 +1,10 @@
 """Regression tests for issue #2655: export filename caps must respect the
 DESTINATION PATH length, not only the per-component NAME_MAX.
 
+The Obsidian/wiki exporters these budgets were written for are removed in this
+fork (ROADMAP §29.4), so what survives here is the budget arithmetic itself in
+``graphify.paths``, which the kept exporters still rely on.
+
 #1094 capped export stems at 200 bytes so they stay under the conventional
 255-byte NAME_MAX. That is the correct constraint on POSIX and the wrong one on
 Windows, where the limit applies to the WHOLE path (MAX_PATH = 260 chars
@@ -20,23 +24,7 @@ import re
 import networkx as nx
 import pytest
 
-from graphify import export as export_mod
-from graphify import wiki as wiki_mod
-from graphify.export import _obsidian_safe_stem, to_canvas, to_obsidian
 from graphify.paths import _MIN_STEM_BUDGET, _WINDOWS_MAX_PATH, stem_filename_budget
-from graphify.wiki import _safe_filename, to_wiki
-
-
-def _graph(labels: list[str]) -> tuple[nx.Graph, dict[int, list[str]]]:
-    G = nx.Graph()
-    ids = []
-    for i, lab in enumerate(labels):
-        nid = f"n{i}"
-        G.add_node(nid, label=lab, file_type="code", source_file="x.py", community=0)
-        ids.append(nid)
-    for a, b in zip(ids, ids[1:]):
-        G.add_edge(a, b, relation="calls", confidence="EXTRACTED")
-    return G, {0: ids}
 
 
 def _fake_windows(monkeypatch):
@@ -102,93 +90,10 @@ def test_budget_ignores_extended_length_paths(monkeypatch):
 # The stem helpers honour an explicit limit
 # ---------------------------------------------------------------------------
 
-def test_obsidian_stem_honours_an_explicit_limit():
-    stem = _obsidian_safe_stem("a" * 300, 60)
-    assert len(stem.encode("utf-8")) <= 60
-
-
-def test_obsidian_stem_stays_collision_safe_at_a_small_limit():
-    prefix = "z" * 250
-    a = _obsidian_safe_stem(prefix + "_ALPHA", 40)
-    b = _obsidian_safe_stem(prefix + "_BETA", 40)
-    assert a != b, "truncation dropped the only distinguishing bytes"
-    assert len(a.encode("utf-8")) <= 40 and len(b.encode("utf-8")) <= 40
-
-
-def test_wiki_safe_filename_honours_an_explicit_limit():
-    assert len(_safe_filename("w" * 300, 60)) <= 60
-
 
 # ---------------------------------------------------------------------------
 # The exporters actually thread the budget through (runs on every platform)
 # ---------------------------------------------------------------------------
-
-def test_obsidian_respects_a_small_budget_and_links_still_resolve(tmp_path, monkeypatch):
-    monkeypatch.setattr(export_mod, "stem_filename_budget", lambda out, **kw: 40 - kw.get("reserve", 0))
-    G, comms = _graph(["a" * 300, "b" * 300, "neighbor"])
-    to_obsidian(G, comms, str(tmp_path))
-
-    written = list(tmp_path.glob("*.md"))
-    assert len(written) == 4, [p.name for p in written]  # 3 nodes + 1 community
-    for p in written:
-        assert len(p.stem) <= 40, p.name
-
-    stems = {p.stem for p in written}
-    for p in written:
-        for target in re.findall(r"\[\[([^\]|]+)", p.read_text(encoding="utf-8")):
-            assert target in stems, f"dangling wikilink {target!r} in {p.name}"
-
-
-def test_canvas_card_refs_match_the_notes_under_a_small_budget(tmp_path, monkeypatch):
-    monkeypatch.setattr(export_mod, "stem_filename_budget", lambda out, **kw: 40 - kw.get("reserve", 0))
-    G, comms = _graph(["a" * 300, "b" * 300])
-    to_obsidian(G, comms, str(tmp_path))
-    # The CLI calls to_canvas without the node_filenames map, so the canvas has
-    # to re-derive the same budget or every card points at a missing note.
-    to_canvas(G, comms, str(tmp_path / "graph.canvas"))
-
-    data = json.loads((tmp_path / "graph.canvas").read_text(encoding="utf-8"))
-    refs = [n["file"] for n in data["nodes"] if n.get("type") == "file"]
-    assert refs
-    for ref in refs:
-        assert (tmp_path / ref).exists(), f"canvas card points at missing note: {ref}"
-
-
-def test_wiki_respects_a_small_budget(tmp_path, monkeypatch):
-    monkeypatch.setattr(wiki_mod, "stem_filename_budget", lambda out, **kw: 40 - kw.get("reserve", 0))
-    G, comms = _graph(["a" * 300, "b" * 300])
-    out = tmp_path / "wiki"
-    to_wiki(G, comms, str(out), community_labels={0: "L" * 300})
-
-    written = list(out.glob("*.md"))
-    assert written
-    for p in written:
-        assert len(p.stem) <= 40, p.name
-
-
-def test_wiki_multibyte_labels_stay_within_budget_and_links_resolve(tmp_path, monkeypatch):
-    """A CJK label at a tight budget: the stem must stay within budget counted in
-    CHARACTERS (wiki slices by character), links must resolve on disk, and the
-    non-ASCII characters must survive rather than being reduced to underscores."""
-    monkeypatch.setattr(wiki_mod, "stem_filename_budget", lambda out, **kw: 40 - kw.get("reserve", 0))
-    G, comms = _graph(["文档索引" * 50, "配置解析器" * 50])
-    out = tmp_path / "wiki"
-    to_wiki(G, comms, str(out), community_labels={0: "模块" * 100})
-
-    written = list(out.glob("*.md"))
-    assert written
-    import re
-    target_re = re.compile(r"\]\(([^)\s]+)\)")
-    for p in written:
-        if p.name != "index.md":  # index is a fixed filename, not a label slug
-            # 40-char window: the stem is capped at 40 - reserve, and a collision
-            # suffix can add back up to the reserve, so the whole stem stays <= 40.
-            assert len(p.stem) <= 40, p.name
-            assert any("一" <= ch <= "鿿" for ch in p.stem), f"CJK stripped from {p.name}"
-        for target in target_re.findall(p.read_text(encoding="utf-8")):
-            if "://" in target:
-                continue
-            assert (out / target).exists(), f"{p.name}: dangling link {target!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -200,33 +105,3 @@ _WINDOWS_ONLY = pytest.mark.skipif(
 )
 
 
-@_WINDOWS_ONLY
-def test_obsidian_writes_paths_inside_max_path(tmp_path):
-    G, comms = _graph(["a" * 300, "short"])
-    to_obsidian(G, comms, str(tmp_path))
-    written = list(tmp_path.glob("*.md"))
-    assert written
-    for p in written:
-        assert len(str(p)) < _WINDOWS_MAX_PATH, f"{len(str(p))} chars: {p}"
-
-
-@_WINDOWS_ONLY
-def test_wiki_writes_paths_inside_max_path(tmp_path):
-    G, comms = _graph(["a" * 300, "short"])
-    out = tmp_path / "wiki"
-    to_wiki(G, comms, str(out), community_labels={0: "C" * 300})
-    written = list(out.glob("*.md"))
-    assert written
-    for p in written:
-        assert len(str(p)) < _WINDOWS_MAX_PATH, f"{len(str(p))} chars: {p}"
-
-
-@_WINDOWS_ONLY
-def test_canvas_card_targets_exist_inside_max_path(tmp_path):
-    G, comms = _graph(["a" * 300, "short"])
-    to_obsidian(G, comms, str(tmp_path))
-    to_canvas(G, comms, str(tmp_path / "graph.canvas"))
-    data = json.loads((tmp_path / "graph.canvas").read_text(encoding="utf-8"))
-    for node in data["nodes"]:
-        if node.get("type") == "file":
-            assert (tmp_path / node["file"]).exists(), node["file"]

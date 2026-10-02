@@ -85,86 +85,17 @@ def test_export_html_error_without_graph(tmp_path):
 
 # ── graphify export obsidian ─────────────────────────────────────────────────
 
-def test_export_obsidian_creates_vault(tmp_path):
-    _make_graph(tmp_path)
-    r = _run(["export", "obsidian"], tmp_path)
-    assert r.returncode == 0, r.stderr
-    vault = tmp_path / "graphify-out" / "obsidian"
-    assert vault.exists()
-    md_files = list(vault.glob("*.md"))
-    assert len(md_files) > 0
-
-
-def test_export_obsidian_custom_dir(tmp_path):
-    _make_graph(tmp_path)
-    custom = tmp_path / "my-vault"
-    r = _run(["export", "obsidian", "--dir", str(custom)], tmp_path)
-    assert r.returncode == 0, r.stderr
-    assert custom.exists()
-    assert len(list(custom.glob("*.md"))) > 0
-
 
 # ── graphify export wiki ─────────────────────────────────────────────────────
-
-def test_export_wiki_creates_articles(tmp_path):
-    _make_graph(tmp_path)
-    r = _run(["export", "wiki"], tmp_path)
-    assert r.returncode == 0, r.stderr
-    wiki = tmp_path / "graphify-out" / "wiki"
-    assert wiki.exists()
-    assert (wiki / "index.md").exists()
-
-
-def test_export_wiki_accepts_edges_only_graph_json(tmp_path):
-    out = _make_graph(tmp_path)
-    graph_path = out / "graph.json"
-    data = json.loads(graph_path.read_text())
-    data["edges"] = data.pop("links")
-    graph_path.write_text(json.dumps(data))
-
-    r = _run(["export", "wiki"], tmp_path)
-
-    assert r.returncode == 0, r.stderr
-    assert (out / "wiki" / "index.md").exists()
 
 
 # ── graphify export graphml ──────────────────────────────────────────────────
 
-def test_export_graphml_creates_file(tmp_path):
-    _make_graph(tmp_path)
-    r = _run(["export", "graphml"], tmp_path)
-    assert r.returncode == 0, r.stderr
-    gml = tmp_path / "graphify-out" / "graph.graphml"
-    assert gml.exists()
-    assert gml.stat().st_size > 0
-    content = gml.read_text()
-    assert "<graphml" in content
-
 
 # ── graphify export neo4j (cypher) ───────────────────────────────────────────
 
-def test_export_neo4j_creates_cypher(tmp_path):
-    _make_graph(tmp_path)
-    r = _run(["export", "neo4j"], tmp_path)
-    assert r.returncode == 0, r.stderr
-    cypher = tmp_path / "graphify-out" / "cypher.txt"
-    assert cypher.exists()
-    assert cypher.stat().st_size > 0
-    content = cypher.read_text()
-    assert "MERGE" in content or "CREATE" in content
-
 
 # ── graphify export falkordb (cypher) ────────────────────────────────────────
-
-def test_export_falkordb_creates_cypher(tmp_path):
-    _make_graph(tmp_path)
-    r = _run(["export", "falkordb"], tmp_path)
-    assert r.returncode == 0, r.stderr
-    cypher = tmp_path / "graphify-out" / "cypher.txt"
-    assert cypher.exists()
-    assert cypher.stat().st_size > 0
-    content = cypher.read_text()
-    assert "MERGE" in content or "CREATE" in content
 
 
 # ── graphify query ───────────────────────────────────────────────────────────

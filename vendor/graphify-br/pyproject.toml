@@ -57,22 +57,14 @@ Issues = "https://github.com/Graphify-Labs/graphify/issues"
 # _build_server), lifting the <2 cap 0.9.30 introduced for #2277/#2279/#2291;
 # cap below 3 as the tested range. starlette stays capped below its next major.
 mcp = ["mcp>=1,<3", "starlette>=1.3.1,<2"]
-neo4j = ["neo4j"]
-falkordb = ["falkordb"]
-pdf = ["pypdf>=6.12.0", "markdownify"]
+# BlastRadius fork: the graph-DB push sinks (neo4j, falkordb), the
+# PDF/image/Office/video extractors, the SVG exporter, the PostgreSQL
+# introspector and every cloud LLM backend extra are removed with their
+# modules (ROADMAP §29.4, §10.1 steps 2 and 11). Only the deterministic,
+# offline tiers remain.
 watch = ["watchdog"]
-svg = ["matplotlib", "numpy>=2.0; python_version >= '3.13'"]
 leiden = ["graspologic; python_version < '3.13'"]
-office = ["python-docx", "openpyxl"]
 google = ["openpyxl"]
-postgres = ["psycopg[binary]"]
-video = ["faster-whisper; python_version >= '3.11'", "yt-dlp>=2026.6.9"]
-kimi = ["openai", "tiktoken"]
-ollama = ["openai"]
-bedrock = ["boto3"]
-anthropic = ["anthropic"]
-gemini = ["openai", "tiktoken"]
-openai = ["openai", "tiktoken"]
 chinese = ["jieba"]
 sql = ["tree-sitter-sql"]
 # extract_pascal() uses tree-sitter-pascal for AST-quality extraction (more
@@ -88,7 +80,7 @@ terraform = ["tree-sitter-hcl"]
 # tree-sitter-ocaml ships prebuilt abi3 wheels for every platform, so no C
 # toolchain is needed; kept optional because OCaml is a niche corpus language.
 ocaml = ["tree-sitter-ocaml"]
-all = ["mcp>=1,<3", "starlette>=1.3.1,<2", "neo4j", "falkordb", "pypdf>=6.12.0", "markdownify", "watchdog", "graspologic; python_version < '3.13'", "python-docx", "openpyxl", "faster-whisper; python_version >= '3.11'", "yt-dlp>=2026.6.9", "matplotlib", "numpy>=2.0; python_version >= '3.13'", "openai", "tiktoken", "boto3", "anthropic", "tree-sitter-sql", "jieba", "tree-sitter-dm", "tree-sitter-hcl", "tree-sitter-pascal", "tree-sitter-ocaml"]
+all = ["mcp>=1,<3", "starlette>=1.3.1,<2", "watchdog", "graspologic; python_version < '3.13'", "openpyxl", "jieba", "tree-sitter-sql", "tree-sitter-dm", "tree-sitter-hcl", "tree-sitter-pascal", "tree-sitter-ocaml"]
 
 [project.scripts]
 graphify = "graphify.__main__:main"

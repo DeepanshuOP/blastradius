@@ -1299,7 +1299,6 @@ def build(
     *,
     directed: bool = False,
     dedup: bool = True,
-    dedup_llm_backend: str | None = None,
     root: str | Path | None = None,
 ) -> nx.Graph:
     """Merge multiple extraction results into one graph.
@@ -1307,8 +1306,6 @@ def build(
     directed=True produces a DiGraph that preserves edge direction (source→target).
     directed=False (default) produces an undirected Graph for backward compatibility.
     dedup=True (default) runs entity deduplication before building the graph.
-    dedup_llm_backend: if set (e.g. "gemini", "claude", or "kimi"), uses LLM to resolve
-        ambiguous pairs in the 75–92 Jaro-Winkler score zone.
     root: if given, absolute source_file paths are made relative to root (#932).
 
     With dedup disabled, extractions are merged in order and the last node's
@@ -1338,8 +1335,7 @@ def build(
             if isinstance(n, dict):
                 _fold_node_aliases(n)
         combined["nodes"], combined["edges"] = deduplicate_entities(
-            combined["nodes"], combined["edges"], communities={},
-            dedup_llm_backend=dedup_llm_backend, root=root,
+            combined["nodes"], combined["edges"], communities={}, root=root,
         )
     return build_from_json(combined, directed=directed, root=root)
 
@@ -1584,7 +1580,6 @@ def build_merge(
     *,
     directed: bool | None = None,
     dedup: bool = True,
-    dedup_llm_backend: str | None = None,
     root: str | Path | None = None,
 ) -> nx.Graph:
     """Load existing graph.json, merge new chunks into it, and save back.
@@ -1683,7 +1678,7 @@ def build_merge(
     base = [{"nodes": existing_nodes, "edges": existing_edges}] if had_graph else []
 
     all_chunks = base + list(new_chunks)
-    G = build(all_chunks, directed=directed, dedup=dedup, dedup_llm_backend=dedup_llm_backend, root=root)
+    G = build(all_chunks, directed=directed, dedup=dedup, root=root)
 
     # Prune set for deleted source files — both the raw form (matches nodes that
     # kept absolute source_file) and the normalised relative form (matches nodes

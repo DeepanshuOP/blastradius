@@ -1,3 +1,28 @@
-This project vendors a modified subset of Graphify (MIT License) at
-vendor/graphify-br/. Attribution and pinned upstream commit hash to be
-recorded here at task T2.1d.
+BlastRadius
+Copyright (c) 2026 Deepanshu, Prisha Vadhavkar, Sanskriti Singh
+Licensed under the MIT License (see LICENSE).
+
+------------------------------------------------------------------------------
+Third-party code
+------------------------------------------------------------------------------
+
+This project vendors a modified subset of Graphify at vendor/graphify-br/.
+
+  Upstream:   https://github.com/safishamsi/graphify
+  Commit:     0738af373af9cf5c95f862cc5f3327fd96b4ea23
+              (also recorded in vendor/GRAPHIFY_COMMIT.txt and
+              vendor/graphify-br/VENDORED.md)
+  License:    Apache License, Version 2.0 — see vendor/graphify-br/LICENSE.
+              Older portions were contributed under the MIT License prior to
+              upstream's relicensing and remain available under those terms;
+              that text is retained in vendor/graphify-br/LICENSE-MIT.
+  Attribution and the upstream NOTICE required by Apache-2.0 §4(d) are carried
+  in vendor/graphify-br/NOTICE.
+
+Modifications by the BlastRadius authors, per ROADMAP §10.1 and §29.4:
+the LLM semantic-extraction pass and every cloud backend are removed, as are
+the non-code extractors, the Obsidian/wiki/SVG/GraphML/Cypher exporters, the
+Neo4j/FalkorDB push sinks, the PostgreSQL introspector, the MCP-config
+ingester, the URL ingester, query logging and the work-memory/reflect layer.
+Extraction is the deterministic tree-sitter AST path only, so every graph in
+the dataset is exactly reproducible from source.

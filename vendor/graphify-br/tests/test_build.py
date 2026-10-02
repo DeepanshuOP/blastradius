@@ -1337,30 +1337,6 @@ def test_graph_has_legacy_ids_still_checks_file_scoped_mcp_nodes():
         assert graph_has_legacy_ids([stale], root=".") is True
 
 
-@pytest.mark.parametrize("mcp_dir", ["", "sub"])
-def test_fresh_mcp_graph_is_not_flagged_legacy(tmp_path, monkeypatch, mcp_dir):
-    """End-to-end: a freshly extracted graph containing a .mcp.json — nested or at
-    the repo root — must not nudge the user to rebuild (#2408)."""
-    from graphify.build import graph_has_legacy_ids
-    from graphify.extract import extract
-
-    (tmp_path / "main.py").write_text("def main():\n    return 1\n")
-    mcp_parent = tmp_path / mcp_dir if mcp_dir else tmp_path
-    mcp_parent.mkdir(parents=True, exist_ok=True)
-    (mcp_parent / ".mcp.json").write_text(json.dumps({"mcpServers": {"cloud-run": {
-        "command": "npx",
-        "args": ["-y", "@google-cloud/cloud-run-mcp"],
-        "env": {"GOOGLE_CLOUD_PROJECT": "x"},
-    }}}))
-
-    monkeypatch.chdir(tmp_path)
-    rel = Path(mcp_dir, ".mcp.json") if mcp_dir else Path(".mcp.json")
-    result = extract([Path("main.py"), rel], root=Path("."), parallel=False)
-    ids = {n["id"] for n in result["nodes"]}
-    assert "mcp_command_npx" in ids  # guard: the ingest actually ran
-    assert graph_has_legacy_ids(result["nodes"], root=".") is False
-
-
 def test_semantic_rekey_relative_vs_absolute_source_file():
     """Re-key contract: a relative source_file is migrated; an absolute one is left
     untouched (it can't be relativized, so its on-disk path must not leak into IDs)."""
