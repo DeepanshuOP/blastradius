@@ -375,3 +375,64 @@ def test_binding_report_counts_the_graphs_test_nodes(minirepo_graph):
     report = bind_test_ids(minirepo_graph, sorted(EXPECTED_TEST_IDS), repo="acme/minirepo")
     assert report.n_test_nodes == EXPECTED_TEST_NODE_COUNT
     assert report.n_test_nodes_with_id == len(EXPECTED_TEST_IDS)
+
+
+def test_binding_denominator_counts_distinct_test_ids_not_graphs_or_nodes(
+    minirepo_graph,
+):
+    """Regression guard on what `graph_node_binding_rate`'s denominator *is*.
+
+    `spiculedata/saiku` reported 20/20 against exactly 20 typed graphs, which
+    reads like the denominator might be counting graphs. It is not: it is the
+    number of distinct `test_id`s observed in CI. This pins that, by making the
+    three candidate denominators mutually distinguishable — 6 observed ids, 1
+    graph, 7 test nodes, 4 of which carry a `test_id`.
+    """
+    observed = sorted(EXPECTED_TEST_IDS) + [
+        "com.example.GhostTest#vanished",
+        "tests/test_absent.py::test_nothing",
+    ]
+    report = bind_test_ids(minirepo_graph, observed, repo="acme/minirepo")
+
+    assert len(observed) == 6
+    assert report.n_observed == 6, "the denominator is the observed test_id count"
+    assert report.n_observed != 1, "not the number of graphs"
+    assert report.n_observed != report.n_test_nodes == EXPECTED_TEST_NODE_COUNT
+    assert report.n_observed != report.n_test_nodes_with_id == 4
+    assert report.as_fraction() == "4/6"
+
+
+def test_binding_denominator_deduplicates_the_observed_ids(minirepo_graph):
+    """CI reports a test once per matrix leg, so the same `test_id` arrives many
+    times. The denominator must be the distinct count, or a repo with a wide
+    build matrix would score lower for no reason."""
+    once = bind_test_ids(minirepo_graph, sorted(EXPECTED_TEST_IDS), repo="acme/minirepo")
+    many = bind_test_ids(
+        minirepo_graph, sorted(EXPECTED_TEST_IDS) * 7, repo="acme/minirepo"
+    )
+
+    assert once.n_observed == many.n_observed == 4
+    assert once.as_fraction() == many.as_fraction() == "4/4"
+
+
+def test_binding_denominator_is_unchanged_by_how_many_test_nodes_the_graph_has(
+    minirepo_graph,
+):
+    """Adding graph-side test nodes can only move the numerator. If it moved the
+    denominator, a bigger graph would look worse-bound than a smaller one."""
+    observed = sorted(EXPECTED_TEST_IDS)
+    before = bind_test_ids(minirepo_graph, observed, repo="acme/minirepo")
+
+    minirepo_graph.add_node(
+        "extra_test",
+        node_type="test",
+        test_id="com.example.ExtraTest#added",
+        graph_binding_key="com_example_extratest_added",
+        label=".added()",
+        source_file="src/test/java/com/example/ExtraTest.java",
+    )
+    after = bind_test_ids(minirepo_graph, observed, repo="acme/minirepo")
+
+    assert after.n_observed == before.n_observed == 4
+    assert after.n_test_nodes == before.n_test_nodes + 1
+    assert after.n_bound == before.n_bound == 4
