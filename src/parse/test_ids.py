@@ -358,14 +358,19 @@ def normalize_test_id(
     s = re.sub(r"^\[(?:ERROR|WARNING|WARN|INFO|DEBUG|TRACE|FATAL)\]\s*", "", s).strip()
     s = re.sub(r"^::error::\s*", "", s).strip()
 
-    # Pattern A: testBar(com.example.FooTest) or testBar[0](com.example.FooTest)
-    m_paren = re.search(
-        r"([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\[(.*?)\])?\(([a-zA-Z_$][a-zA-Z0-9_$.$]+)\)", s
-    )
-    if m_paren:
-        method_name = m_paren.group(1)
-        params = f"[{m_paren.group(2)}]" if m_paren.group(2) else None
-        class_name = m_paren.group(3)
+    # Pattern B is tried BEFORE Pattern A. A canonical "Class#method(ArgType)" --
+    # which Gradle emits for a JUnit 5 method with a declared parameter, e.g.
+    # "FooTest#bar(Path)" for a @TempDir Path argument -- also matches Pattern A's
+    # JUnit 4 "method(DeclaringClass)" shape, and Pattern A would read the argument
+    # type as the declaring class, yielding "Path#bar" and discarding the real
+    # (possibly fully-qualified) class. Pattern B returns only when both halves
+    # validate, so on any non-match control still falls through to Pattern A and
+    # the genuine JUnit 4 form is unaffected.
+    # Pattern B: Canonical Java format with "#": com.example.FooTest#testBar[0]
+    if "#" in s:
+        parts = s.split("#", 1)
+        class_name = parts[0].strip()
+        method_name, params = _extract_params_and_method(parts[1])
         if _JAVA_CLASS_RE.match(class_name) and _JAVA_IDENT_RE.match(method_name):
             canonical = f"{class_name}#{method_name}"
             return TestId(
@@ -378,11 +383,14 @@ def normalize_test_id(
                 path=None,
             )
 
-    # Pattern B: Canonical Java format with "#": com.example.FooTest#testBar[0]
-    if "#" in s:
-        parts = s.split("#", 1)
-        class_name = parts[0].strip()
-        method_name, params = _extract_params_and_method(parts[1])
+    # Pattern A: testBar(com.example.FooTest) or testBar[0](com.example.FooTest)
+    m_paren = re.search(
+        r"([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\[(.*?)\])?\(([a-zA-Z_$][a-zA-Z0-9_$.$]+)\)", s
+    )
+    if m_paren:
+        method_name = m_paren.group(1)
+        params = f"[{m_paren.group(2)}]" if m_paren.group(2) else None
+        class_name = m_paren.group(3)
         if _JAVA_CLASS_RE.match(class_name) and _JAVA_IDENT_RE.match(method_name):
             canonical = f"{class_name}#{method_name}"
             return TestId(
