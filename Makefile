@@ -66,10 +66,15 @@ tables:
 	# already computed against it. D-49 fixes the base side at the local
 	# RawStore only. Skipped loudly rather than fatally; downstream staleness is
 	# now caught by check_freshness.py above, not by this step failing.
-	@if [ -n "$$GITHUB_PAT_1" ]; then \
+	# The gate must name every key TokenPool would accept
+	# (src/harvest/ratelimit.py DEFAULT_ENV_KEYS): gating on GITHUB_PAT_1 alone
+	# would skip the fetch for an operator who has only _2 or _3 configured,
+	# which is a silent removal of the step rather than a skip. tests/
+	# test_makefile_pat_gate.py holds the two sides in agreement.
+	@if [ -n "$$GITHUB_PAT_1" ] || [ -n "$$GITHUB_PAT_2" ] || [ -n "$$GITHUB_PAT_3" ]; then \
 		uv run python analysis/fetch_base_logs.py; \
 	else \
-		echo "[tables] SKIP analysis/fetch_base_logs.py — no GITHUB_PAT_1 in env;"; \
+		echo "[tables] SKIP analysis/fetch_base_logs.py — no GITHUB_PAT_1/_2/_3 in env;"; \
 		echo "[tables]      corpus is pinned, base side is local RawStore only (D-49)."; \
 	fi
 	uv run python analysis/parse_base_logs.py
