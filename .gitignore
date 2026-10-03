@@ -18,3 +18,9 @@ __pycache__/
 data/frame/repos.partial.csv
 .claude/
 graphify-out/
+
+# Build output of analysis/build_release.py. Only *.parquet was ignored before,
+# which left CANARY.txt and CHECKSUMS.sha256 committable; the bundle carries
+# pseudonymised author data and regenerates from data/interim, so none of it
+# belongs in git.
+/release/

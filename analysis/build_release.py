@@ -20,26 +20,47 @@ Pseudonymisation
 ----------------
 `instances.parquet` carries `author_login`, a real GitHub login. The release is
 publishable only once that column is pseudonymised under a key the operator
-holds. When `BR_PSEUDONYM_KEY` is absent from the environment this script still
-builds the bundle -- the Architect asked for a local build -- but writes
-`NOT_PUBLISHABLE.md` into the tree and says so on stdout. Presence is checked by
-key NAME only; the value is never read, printed or logged.
+holds, so when `BR_PSEUDONYM_KEY` is set every login is replaced in place by
+`HMAC-SHA256(key, login)` truncated to 16 hex characters. The key is read from
+the environment and used only as HMAC material: it is never printed, logged,
+written into the bundle or included in any error message.
+
+When the key is absent this script still builds the bundle -- the Architect
+asked for a local build -- but the logins stay live, so it writes
+`NOT_PUBLISHABLE.md` into the tree and says so on stdout.
+
+The mapping is deterministic for a fixed key, which is the point: the same
+author is the same pseudonym across tables and across rebuilds, and nobody
+without the key can invert it. Rotating the key renames every author.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import hmac
 import os
 from pathlib import Path
 import shutil
 
 import duckdb
 
-__all__ = ["CANARY", "DATASET_NAME", "build", "checksum_manifest"]
+__all__ = [
+    "CANARY",
+    "DATASET_NAME",
+    "PSEUDONYM_HEX_LEN",
+    "build",
+    "checksum_manifest",
+    "pseudonymise",
+]
 
 DATASET_NAME = "BR-Bench"
 PSEUDONYM_KEY_NAME = "BR_PSEUDONYM_KEY"
+
+#: Truncation length of the hex pseudonym. 16 hex characters is 64 bits, which
+#: keeps a collision over a corpus this size (low thousands of authors)
+#: negligible while staying short enough to read in a table.
+PSEUDONYM_HEX_LEN = 16
 
 #: Documented canary (ROADMAP T1.7, risk T11). A fixed, unique, high-entropy
 #: string shipped in the bundle so that if BR-Bench is later absorbed into an
@@ -109,15 +130,94 @@ def checksum_manifest(root: Path) -> str:
     return "\n".join(lines) + "\n"
 
 
-def build(out_dir: Path, interim: Path) -> dict[str, int]:
+def pseudonymise(login: str, key: bytes) -> str:
+    """Map a GitHub login to its stable pseudonym under `key`.
+
+    Args:
+        login: The real GitHub login.
+        key: Secret HMAC key, as read from `BR_PSEUDONYM_KEY`.
+
+    Returns:
+        The first `PSEUDONYM_HEX_LEN` hex characters of
+        `HMAC-SHA256(key, login)`. Deterministic for a fixed key, and not
+        invertible without it.
+    """
+    digest = hmac.new(key, login.encode("utf-8"), hashlib.sha256).hexdigest()
+    return digest[:PSEUDONYM_HEX_LEN]
+
+
+def _pseudonymise_authors(
+    con: "duckdb.DuckDBPyConnection", table: Path, key: bytes
+) -> int:
+    """Rewrite `author_login` in a parquet file in place, under `key`.
+
+    The mapping is built in Python over the distinct logins and joined back, so
+    the key never enters a SQL string and the rewrite is a single pass.
+
+    Args:
+        con: Open DuckDB connection.
+        table: Parquet file to rewrite; must carry an `author_login` column.
+        key: Secret HMAC key.
+
+    Returns:
+        Number of distinct logins pseudonymised.
+
+    Raises:
+        RuntimeError: If any non-null login survives the join unmapped, which
+            would mean a real login shipping in the bundle.
+    """
+    src = table.as_posix()
+    logins = [
+        row[0]
+        for row in con.execute(
+            f"select distinct author_login from read_parquet('{src}') "
+            "where author_login is not null"
+        ).fetchall()
+    ]
+    con.execute("create or replace temp table pseudo(login varchar, pseudonym varchar)")
+    if logins:
+        con.executemany(
+            "insert into pseudo values (?, ?)",
+            [(login, pseudonymise(login, key)) for login in logins],
+        )
+
+    tmp = table.with_suffix(".pseudonymised.parquet")
+    con.execute(
+        f"""copy (
+               select i.* replace (p.pseudonym as author_login)
+               from read_parquet('{src}') i
+               left join pseudo p on i.author_login = p.login
+             ) to '{tmp.as_posix()}' (format parquet, compression zstd)"""
+    )
+    leaked = con.execute(
+        f"select count(*) from read_parquet('{tmp.as_posix()}') "
+        f"where author_login is not null "
+        f"and not regexp_matches(author_login, '^[0-9a-f]{{{PSEUDONYM_HEX_LEN}}}$')"
+    ).fetchone()[0]
+    if leaked:
+        tmp.unlink(missing_ok=True)
+        raise RuntimeError(
+            f"{leaked} author_login values are not {PSEUDONYM_HEX_LEN}-hex "
+            "pseudonyms after the rewrite; refusing to ship the table"
+        )
+    tmp.replace(table)
+    con.execute("drop table pseudo")
+    return len(logins)
+
+
+def build(out_dir: Path, interim: Path, key: bytes | None = None) -> dict[str, int]:
     """Assemble the bundle and return each table's row count.
 
     Args:
         out_dir: Bundle root to create (removed first if present).
         interim: Directory holding the interim parquet artifacts.
+        key: Secret HMAC key for author pseudonymisation. When None the bundle
+            is built with live logins and is not publishable.
 
     Returns:
-        Mapping of shipped filename to row count.
+        Mapping of shipped filename to row count. When `key` is given the
+        mapping also carries `"_authors_pseudonymised"`, the distinct-login
+        count, so the caller can report it without re-reading the table.
     """
     if out_dir.exists():
         shutil.rmtree(out_dir)
@@ -158,6 +258,10 @@ def build(out_dir: Path, interim: Path) -> dict[str, int]:
             f"select count(*) from read_parquet('{target.as_posix()}')"
         ).fetchone()[0]
 
+    instances = out_dir / "instances.parquet"
+    if key is not None and instances.exists():
+        counts["_authors_pseudonymised"] = _pseudonymise_authors(con, instances, key)
+
     (out_dir / "CANARY.txt").write_text(CANARY_DOC, encoding="utf-8")
     return counts
 
@@ -169,10 +273,14 @@ def main() -> None:
     parser.add_argument("--interim", type=Path, default=Path("data/interim"))
     args = parser.parse_args()
 
-    counts = build(args.out_dir, args.interim)
+    # The key is HMAC material only: never printed, logged or written out.
+    raw_key = os.environ.get(PSEUDONYM_KEY_NAME) or None
+    key = raw_key.encode("utf-8") if raw_key else None
 
-    # Key NAME only. The value is never read.
-    pseudonymised = PSEUDONYM_KEY_NAME in os.environ
+    counts = build(args.out_dir, args.interim, key=key)
+    n_authors = counts.pop("_authors_pseudonymised", None)
+
+    pseudonymised = key is not None
     if not pseudonymised:
         (args.out_dir / "NOT_PUBLISHABLE.md").write_text(NOT_PUBLISHABLE, encoding="utf-8")
 
@@ -188,7 +296,11 @@ def main() -> None:
     print(f"  CHECKSUMS.sha256             SHA-256 manifest over every file")
 
     if pseudonymised:
-        print("\npseudonymisation: key present by name; apply it before publishing")
+        print(
+            f"\npseudonymisation: APPLIED — {n_authors:,} distinct author_login "
+            f"values replaced by {PSEUDONYM_HEX_LEN}-hex HMAC-SHA256 pseudonyms."
+        )
+        print("  The key itself is never printed, logged or shipped.")
     else:
         print(
             f"\nBLOCKED: {PSEUDONYM_KEY_NAME} absent from the environment.\n"
