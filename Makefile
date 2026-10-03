@@ -44,6 +44,12 @@ check-log-isolation:
 
 tables:
 	mkdir -p paper/generated
+	# Refuses to run at all if any interim artifact is older than an input it is
+	# derived from (D-49: outcomes.parquet once predated parsed_outcomes.parquet,
+	# one of its own inputs, and every figure drawn from it described a parse
+	# generation no longer on disk). First, for the same reason secret_scan is
+	# early: a gate placed behind a step that can fail is not a gate.
+	uv run python analysis/check_freshness.py
 	# Release blocker (T1.6b), and independent of every step below it, so it
 	# runs first: a gate placed behind a step that can fail is not a gate.
 	# Exits non-zero only on a credential-shaped match.
