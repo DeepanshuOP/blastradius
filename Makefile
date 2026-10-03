@@ -1,4 +1,4 @@
-.PHONY: test tables figures all check-log-isolation
+.PHONY: test tables figures all reproduce check-log-isolation
 
 test:
 	uv run pytest -q
@@ -55,7 +55,23 @@ tables:
 	# Exits non-zero only on a credential-shaped match.
 	uv run python analysis/secret_scan.py
 	uv run python analysis/resolve_bases.py
-	uv run python analysis/fetch_base_logs.py
+	# Needs a GitHub PAT and the network, and it is the step that caused D-49:
+	# it sits ABOVE parse_base_logs and fault_revealing, so when it aborted for
+	# a missing PAT, `make tables` stopped here and the labels were never
+	# rebuilt while every step above had succeeded -- leaving outcomes.parquet
+	# silently older than its own inputs.
+	#
+	# The corpus is PINNED (data/interim/CORPUS_PIN.json), so fetching further
+	# base logs after the pin would move the corpus out from under every figure
+	# already computed against it. D-49 fixes the base side at the local
+	# RawStore only. Skipped loudly rather than fatally; downstream staleness is
+	# now caught by check_freshness.py above, not by this step failing.
+	@if [ -n "$$GITHUB_PAT_1" ]; then \
+		uv run python analysis/fetch_base_logs.py; \
+	else \
+		echo "[tables] SKIP analysis/fetch_base_logs.py — no GITHUB_PAT_1 in env;"; \
+		echo "[tables]      corpus is pinned, base side is local RawStore only (D-49)."; \
+	fi
 	uv run python analysis/parse_base_logs.py
 	uv run python src/label/fault_revealing.py
 	uv run python analysis/fixture_score.py
@@ -77,4 +93,16 @@ tables:
 figures:
 	@echo "not implemented"
 
-all: test
+# T5.6b: the 3-repo graph-layer mini-corpus reproduction (docs/MINI_CORPUS.md),
+# budgeted under 15 minutes. Graph layer only -- per D-48 nothing it prints
+# reaches `make tables`, `release/` or the paper, and the binding figure it
+# reports is the graph-side diagnostic, not Gate 1.5.
+#
+# Bounded by construction: data/graphs/ holds 427 graphs and a cold rebuild of
+# all of them cannot fit the budget, so the target reproduces the full
+# build -> bind -> query chain over 3 SHAs per repo and names the subset size
+# alongside every figure. Exact commands and expected output: docs/REPRODUCE.md.
+reproduce:
+	uv run --extra graph python analysis/reproduce_mini_corpus.py
+
+all: test reproduce
