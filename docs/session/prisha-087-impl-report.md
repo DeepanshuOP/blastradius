@@ -341,3 +341,256 @@ consistency. **If Deepanshu was in fact at the keyboard, `474de00` and `67bf427`
 are attributed to the wrong person and should be re-authored before anything
 builds on them.** Repo-local config was not touched; `--global` was never
 touched.
+
+---
+
+# Addendum — two blockers, 2026-10-05
+
+## 8. Blocker 1: the key-timing contradiction — resolved, and §2 above was wrong
+
+**The operator's challenge was correct.** My §2 verdict, "`1343287`'s bundle WAS
+pseudonymised", was wrong. `1343287` built a bundle with **live GitHub logins**.
+What is on disk now is a *different, later* bundle. The HMAC evidence in §2 is
+sound and unchanged — it just proves something narrower than I claimed: that the
+bundle **currently on disk** was built with the `.env` key, not that `1343287`
+produced it.
+
+### Timestamps
+
+| Artifact | Timestamp (UTC) |
+|---|---|
+| `git log -1 --format=%ci 1343287` | **2026-10-03 07:10:52** |
+| `.env` | **2026-10-03 16:17:05** |
+| `release/v0.1/outcomes.parquet` | 2026-10-03 16:23:18 |
+| `release/v0.1/cochange.parquet` | 2026-10-03 16:23:18 |
+| `release/v0.1/failure_messages.parquet` | 2026-10-03 16:23:18 |
+| `release/v0.1/instances.parquet` | 2026-10-03 16:23:20 |
+| `release/v0.1/CANARY.txt` | 2026-10-03 16:23:20 |
+| `release/v0.1/CHECKSUMS.sha256` | 2026-10-03 16:23:20 |
+| `release/v0.1/` (dir) | 2026-10-03 16:23:20 |
+| `git log -1 --format=%ci e54189f` | 2026-10-03 16:25:35 |
+
+The ordering is unambiguous: **1343287 (07:10) → `.env` (16:17) → bundle rebuilt
+(16:23) → e54189f (16:25)**. Nine hours separate the commit from the bundle.
+
+### Where the HMAC key comes from
+
+`analysis/build_release.py`, function **`main()`**, line 277:
+
+```python
+raw_key = os.environ.get(PSEUDONYM_KEY_NAME) or None
+key = raw_key.encode("utf-8") if raw_key else None
+```
+
+`PSEUDONYM_KEY_NAME = "BR_PSEUDONYM_KEY"`. The key is obtained from **the
+environment variable only**. There is **no file path, no generated default and
+no hardcoded fallback** anywhere in the module. `main()` passes `key` to
+**`build()`**, which forwards it to **`_pseudonymise_authors()`**, which calls
+**`pseudonymise(login, key)`** — `hmac.new(key, login.encode(), sha256)
+.hexdigest()[:16]`. `key=None` short-circuits at `build()` (`if key is not None`),
+so no pseudonymisation happens at all and `NOT_PUBLISHABLE.md` is written.
+
+**Because no fallback exists, the conditional remediation does not apply** and I
+made no change under it. The timeline alone explains the evidence.
+
+### Was the bundle rebuilt in the last session?
+
+**Yes.** At **2026-10-03 16:23:17–16:23:20**, by
+`uv run --env-file .env python analysis/build_release.py` — the command recorded
+in `docs/DATASHEET.md:260`, added by `e54189f` itself.
+
+`e54189f`'s own diff to `docs/DATASHEET.md` confirms the prior state in writing.
+It **removed** this line:
+
+> `| `author_login` pseudonymisation | **BLOCKED** — `BR_PSEUDONYM_KEY` absent from the environment; the column holds live GitHub logins |`
+
+So the repository already recorded that the pre-`e54189f` bundle held live
+logins. Further, `1343287`'s `analysis/build_release.py` contains **no `hmac`
+import and no `pseudonymise` function at all** — it only tested
+`PSEUDONYM_KEY_NAME in os.environ` to decide whether to write
+`NOT_PUBLISHABLE.md`. At 07:10 the code was *incapable* of pseudonymising, with
+or without a key.
+
+### Residual risk, not fixed because it was not in scope
+
+Without the key the build still **exits 0** and produces a bundle with live
+logins plus `NOT_PUBLISHABLE.md`. That is deliberate (the Architect asked for a
+local build), but it means the only thing standing between a keyless build and a
+publishable-looking tree is a Markdown file. Making the build **fail** without
+`BR_PSEUDONYM_KEY` is a one-line change plus a test. The operator's instruction
+gated that change on a fallback existing, and none does, so **I did not make
+it.** It is offered.
+
+---
+
+## 9. Blocker 2: incomplete clones — guard added, all 43 cloned, figure regenerated
+
+### 9.1 The guard
+
+`analysis/binding_report.py` scoped itself to whatever was in `data/clones/`, so
+with 3 of 43 repos it reported 364 rows and exited 0. It now **refuses to run**,
+naming every missing repo and its expected path, and citing D-47 so the reader
+knows why a subset is not acceptable. The corpus is defined by
+`data/interim/parsed_outcomes.parquet` (43 repos, 5,985 distinct `test_id`s),
+not by the disk. Committed as `cea9f9e` with `tests/test_binding_clone_guard.py`.
+
+**A second, worse hole was then found and fixed.** `data/clones/` lives *inside*
+the BlastRadius working tree. An interrupted `git clone` of `apache/flink` left
+a partial `.git`, git discovery fell through to the parent repository, and
+`git -C data/clones/apache__flink rev-parse HEAD` answered with **BlastRadius's
+own HEAD** (`cea9f9e`). A `.git`-exists check accepted it as a clone. Binding
+would have run against this repository's file tree while reporting Flink's name.
+
+`is_usable_clone()` now requires that the resolved git directory lives inside the
+candidate path, that HEAD resolves, and that `git ls-tree -r HEAD` returns at
+least one path — the exact call `_get_git_tree` makes. Committed as `bceee81`.
+`tests/test_binding_clone_guard.py` is **12 tests**, including a fixture that
+reproduces the nested-partial-clone shape exactly.
+
+### 9.2 The clones
+
+All 40 missing repos cloned from github.com over HTTPS. **No GitHub API call.**
+The project has no clone code path (`analysis/cochange_mine.py` only *discovers*
+existing clones), so `git clone` was used directly.
+
+| | Count | Method |
+|---|---:|---|
+| Pre-existing | 3 | full clones (the mini-corpus) |
+| Cloned full | 20 | `git clone` |
+| Cloned blobless | 20 | `git clone --filter=blob:none --no-checkout` |
+| **Total** | **43 / 43** | 4.7 GB on disk |
+
+**Why blobless, and why it is sound.** Repeated full clones failed on network
+drops (`fetch-pack: unexpected disconnect`, `early EOF`) — the hostel Wi-Fi this
+project is built around. Binding reads **only** the tree:
+`src/parse/test_files.py::_get_git_tree` runs `git ls-tree -r HEAD --name-only`
+and never opens a file. A blobless clone carries every commit and every tree and
+no contents. This was **verified, not assumed**: for `jline/jline3`, cloned both
+ways, the full and blobless clones give the same HEAD
+(`632c696f43765971dcf98c2a2adf5a780d36fcae`) and **byte-identical** 1,098-path
+`ls-tree` output. apache/flink went from a failed full clone to a 155 MB
+blobless clone with 38,582 commits and 27,189 tree paths.
+
+One consequence to record: a blobless clone fetches blobs **lazily over the
+network** if something asks for file contents. Nothing in the binding path does.
+The graph layer does, but its three mini-corpus repos are all full clones, so
+`make all` remains offline. A future graph build over the other 40 repos would
+hit the network.
+
+### 9.3 The regenerated figure — 43/43 clones
+
+`make tables` re-run end to end: **exit 0, 5:44.94**.
+
+| Figure | Published (D-47) | Regenerated 43/43 | Δ |
+|---|---:|---:|---:|
+| **binding rows / key space** | **5,985** | **5,985** | **0** |
+| **combined bound** | **5,622** (93.93%) | **5,623** (93.95%) | **+1** |
+| **full confidence (FQCN)** | **3,819** (63.81%) | **3,801** (63.51%) | **−18** |
+| basename-only, 0.5 confidence | 1,803 (30.13%) | 1,822 (30.44%) | +19 |
+| `exact` | 5,622 | 5,623 | +1 |
+| `not_found` | 199 | 198 | −1 |
+| `ambiguous` | 164 | 164 | 0 |
+| repos below the 70% gate | — | 3 / 43 | — |
+
+Old → new, as asked: **5,985 → 5,985 rows**, **5,622 → 5,623 combined**,
+**3,819 → 3,801 full confidence**, at **43/43 clones** (was 3/43, which reported
+364 rows / 363 exact and is now impossible).
+
+Gate 1.5 (≥70%, ROADMAP §37.1): **MET on the combined figure (93.95%), NOT MET
+on the full-confidence subset (63.51%)** — D-47's two-number verdict is
+unchanged. Label figures are untouched (strict 762 / 4,168; Gate 1 762/5,000 NOT
+MET): binding does not feed the labels.
+
+**These are not a clean re-measurement.** `_get_git_tree` resolves against each
+clone's `HEAD`, not a pinned corpus SHA, so the figure drifts with clone
+freshness. The published numbers were taken on clones as of ~2026-09-02; these
+are on clones taken 2026-10-04/05. The pathfix (`34aec6d`) and clone-HEAD drift
+are **not separated**, the same limitation D-49 records for the labels. **D-47's
+figures are now superseded and a decision record is owed** — I did not write one,
+as that is the Architect's call. Pinning binding to corpus SHAs is the real fix.
+
+### 9.4 Tracked files affected by the 3-clone figure
+
+Audited all 29 tracked files changed since `99d0792`. **Three** carried figures
+or claims computed on the 3-clone binding; all three are regenerated and
+committed in `631475a`:
+
+| File | What was wrong | Now |
+|---|---|---|
+| `docs/DATASHEET.md` | "D-47 binding figure is not currently regenerable… only the 3 mini-corpus clones remain… 364-identifier key space" | Replaced with the regenerated table, the Gate 1.5 reading and the clone-HEAD caveat |
+| `docs/REPRODUCE.md` §6 | Determinism caveat said the row count "is a function of the machine's clone population" | Replaced: the script now refuses an incomplete set; the residual `HEAD`-vs-pinned-SHA gap is stated |
+| `docs/session/prisha-087-impl-report.md` | §4 step-4 row "364 distinct `test_id`s"; §6 carried-forward item | Row marked superseded and pointed here; carried-forward item struck and resolved |
+
+Not changed, deliberately: `docs/DECISIONS.md` D-47 still states 5,622 / 3,819.
+Rewriting a decision record is the Architect's call (§9.3).
+
+---
+
+## 10. Blocker 3: §19.4 query latency — the NOT MET does not exist
+
+**I was asked to record 376.8 ms and 3,039.6 ms as a §19.4 breach. I did not,
+because those numbers are an artifact of my own benchmark, not a property of the
+query layer.** Recording them would have put a false breach in the record.
+
+`analysis/reproduce_mini_corpus.py` timed `src.graph.query.feature_vector()`
+inside the instance loop. That function is a convenience wrapper which
+constructs a **fresh `GraphQuery` per call**, and the constructor builds the
+graph's entire undirected projection every time (`src/graph/query.py`,
+`GraphQuery.__init__`). So each "instance" was paying to rebuild a 30,278-node /
+163,333-edge projection. §19.4's unit is `features()`, as
+`docs/GRAPH_LAYER.md` §2 states.
+
+Corrected to one `GraphQuery` per graph with `features()` in the loop
+(`49c56d1`), against the warm `data/graphs/` store:
+
+| Repo | Before (wrapper per call) | After (`features()`) | §19.4 ≤100 ms |
+|---|---:|---:|---|
+| `fla-org/flash-linear-attention` | 55.1 ms | **47.709 ms** | **MET** |
+| `Stirling-Tools/Stirling-PDF` | 376.8 ms | **99.748 ms** | **MET, by 0.25 ms** |
+| `spiculedata/saiku` | 3,039.6 ms | **43.482 ms** | **MET** |
+
+Total query time fell from 193.99 s to 11.52 s for the same work. §19.4 is
+**MET on all three repos**; `docs/GRAPH_LAYER.md` §7's existing "MET" verdict
+stands and did not need changing. The margin on `Stirling-Tools/Stirling-PDF` is
+0.25 ms and is recorded as "at the budget", not comfortably inside it.
+
+Recorded in `docs/GRAPH_LAYER.md` §6.1, together with the generalisable lesson:
+**`feature_vector()` must never be called in a loop** — any future
+feature-extraction pass over many instances at one SHA must construct
+`GraphQuery` once and reuse it.
+
+`make all` after the fix: **exit 0, 9:47.23 wall, 655 passed / 1 skipped**
+(was 632 passed / 12 skipped — the full clone set unlocks previously-skipped
+data-dependent tests). Reproduction total 305.42 s of the 900 s budget, T5.6b
+**MET**.
+
+---
+
+## 11. Step 8 (addendum): push
+
+| Check | Result |
+|---|---|
+| `git fetch origin` | clean; 0 behind, 4 ahead |
+| **Trailer check** | **0 of 4 commits carry a trailer** (`Co-Authored-By`, `Claude-Session`, `Generated with`, `Signed-off-by`, any `*-By:`) |
+| Authors | one — `prishsha <prishavadhavkar@gmail.com>` |
+| Credential scan of the push diff | no match |
+| Stray paths | none; `data/clones/` is gitignored (`.gitignore:2`), `release/` and `.env` untracked |
+| Push | `git push origin main` → `3252977..631475a`, **no `--force`** |
+| After | 0 ahead / 0 behind |
+
+```
+631475a data: regenerate the D-47 binding figure over all 43 corpus clones
+49c56d1 fix: time features() per graph, not feature_vector() per instance
+bceee81 fix: reject a partial clone that resolves to the enclosing repository
+cea9f9e fix: refuse to report a binding figure over an incomplete clone set
+```
+
+## 12. Owed to the Architect
+
+1. **A decision record superseding D-47's 5,622 / 3,819** with 5,623 / 3,801,
+   and a ruling on pinning binding to corpus SHAs rather than clone `HEAD`.
+2. **Whether `build_release.py` should fail, not warn, without
+   `BR_PSEUDONYM_KEY`** (§8). One line plus a test; not done, not in scope.
+3. **Whether the 20 blobless clones should be filled out to full clones**
+   (§9.2) before any graph work extends beyond the mini-corpus.
+4. The identity flag in §7 above still stands.
