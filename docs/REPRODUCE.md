@@ -140,7 +140,15 @@ Current state, regenerated 2026-10-04 from the pinned corpus:
 
 Seeds are pinned (`--seed`, default 42; the annotation census uses `20261110`).
 No LLM call occurs anywhere in the pipeline (D-17). The corpus is pinned by
-`data/interim/CORPUS_PIN.json`. One caveat worth stating: `analysis/binding_report.py`
-scopes itself to whatever repos are present in `data/clones/`, so its row count
-is a function of the machine's clone population, not of the corpus — see
-`docs/session/prisha-087-impl-report.md` §4.
+`data/interim/CORPUS_PIN.json`.
+
+Two caveats worth stating about `analysis/binding_report.py`:
+
+- It used to scope itself to whatever repos happened to be in `data/clones/`,
+  making its row count a property of the machine. It now **refuses to run**
+  unless all 43 corpus repos are cloned, naming the missing ones
+  (`require_complete_clones`). `make tables` therefore needs the full clone set;
+  see `docs/session/prisha-087-impl-report.md` §9.
+- It resolves against each clone's `HEAD`, **not** against a pinned corpus SHA,
+  so the figure still drifts with how fresh the clones are. That is a real
+  reproducibility gap and is recorded in `docs/DATASHEET.md`.

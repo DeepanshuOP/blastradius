@@ -251,7 +251,7 @@ Re-run this session from the pinned corpus: **exit 0, 5:25.04 wall.**
 | `fault_revealing.py` | all 897/4,384/2,500 · relaxed 770/4,214/2,484 · strict 762/4,168/2,466 |
 | Gate 1 | 762 / 5,000 — Met? **No** |
 | `fixture_score.py` / `holdout_eval.py` | Precision 1.0000, Recall 1.0000, F1 1.0000 |
-| `binding_report.py` | 364 distinct `test_id`s in cloned repos |
+| `binding_report.py` | 364 distinct `test_id`s in cloned repos — **SUPERSEDED, see §9**: that run covered 3 of 43 clones. Regenerated over 43/43 it is 5,985, bound 5,623. |
 | `attrition_funnel.py` | 76 repos swept · 12,986 PRs · 165,349 runs · 12,581 failed (7.61%) · 15,259 logs parsed (100%) · 2,912 with test output (19.08%) · 7,061 with a resolved base · 4,648 with a known base failure set (65.83%) · **762 with ≥1 fault-revealing label (16.39%)** |
 | `rq1_divergence.py` | Historical Top-k P 0.282 / R 0.532 / J 0.277 · Co-change P 0.043 / R 0.253 / J 0.041 · Changeset P 0.023 / R 0.123 / J 0.020 |
 | `corpus_delta.py` BASELINE | 12,581 instances · no_base 5,520 (43.88%) · exact_green 4,245 · strict 762 inst / 4,168 labels |
@@ -317,9 +317,10 @@ pre-existed and were verified, not rewritten.
 - **§19.4 query budget missed on 2 of 3 mini-corpus repos** (376.8 ms and
   3,039.6 ms against ≤100 ms). Needs either an optimisation task or a §VI
   limitation entry. Owner's call.
-- **`binding_report.py`'s clone-scoped denominator** (§4). Either the script
-  should name its scope in its own output, or the figure should be computed over
-  a fixed repo list. Schema-adjacent, so not changed unasked.
+- ~~**`binding_report.py`'s clone-scoped denominator** (§4).~~ **DONE in §9**:
+  the script now refuses an incomplete clone set, all 43 repos are cloned, and
+  the figure is regenerated. A residual remains — it binds against clone `HEAD`
+  rather than a pinned SHA (§9).
 - **One human login survives inside `repo` / `repo_full`** in the release bundle
   (§2). Unavoidable; owed a sentence in `docs/DATASHEET.md`.
 - **`docs/TASKS.md` ticks for `T2.1a`–`T2.5b`** are still owed, per

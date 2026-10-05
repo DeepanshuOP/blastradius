@@ -321,9 +321,31 @@ corrections is not a datasheet:
   classes were derived by rule rather than hand-labelled. No held-out precision
   figure for the parsers is currently defensible; the instrument has been
   regenerated blank for a hand re-label.
-- **D-47 binding figure is not currently regenerable.** The published
-  5,622/5,985 was measured when 43 repositories were cloned locally. Only the 3
-  mini-corpus clones remain, so `analysis/binding_report.py` now covers a
-  364-identifier key space. The figure is not wrong; it is not reproducible at
-  this commit, which for a Data & Tool Showcase submission is a defect that must
-  be fixed before the paper cites it.
+- **D-47 binding figure is regenerable again, and it moved.** The defect
+  recorded here previously — only 3 of 43 repositories cloned, so
+  `analysis/binding_report.py` covered a 364-identifier key space instead of
+  5,985 — is fixed. All 43 corpus repositories are cloned, the script now
+  *refuses* to run on an incomplete set rather than reporting a smaller figure,
+  and the regenerated numbers over the full 5,985-identifier key space are:
+
+  | D-47 figure | Published | Regenerated 2026-10-05 (43/43 clones) |
+  |---|---:|---:|
+  | key space | 5,985 | 5,985 |
+  | combined bound | 5,622 (93.93%) | **5,623 (93.95%)** |
+  | full confidence (FQCN) | 3,819 (63.81%) | **3,801 (63.51%)** |
+  | basename-only, 0.5 confidence | 1,803 (30.13%) | **1,822 (30.44%)** |
+
+  Gate 1.5 (≥70%, ROADMAP §37.1) remains **MET on the combined figure and NOT
+  MET on the full-confidence subset**, which is D-47's whole point and is
+  unchanged. Both numbers must continue to appear together.
+
+  **The regenerated figures are not a clean re-measurement of the published
+  ones.** `src/parse/test_files.py::_get_git_tree` resolves against each
+  clone's `HEAD`, not against a pinned SHA, so the binding figure is a function
+  of when the clones were taken. The published numbers were measured on clones
+  as of ~2026-09-02; these are on clones taken 2026-10-04/05, and 20 of the 43
+  are blobless (`--filter=blob:none`, trees complete, contents absent — proven
+  to give byte-identical `ls-tree` output). The pathfix (`34aec6d`) and this
+  clone-HEAD drift are **not separated**, exactly as D-49 could not separate the
+  fix from generation drift. Pinning binding to the corpus SHAs rather than
+  `HEAD` is owed before the paper cites either number.
