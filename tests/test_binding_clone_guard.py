@@ -22,6 +22,7 @@ from analysis.binding_report import (
     PARSED_OUTCOMES,
     clone_dir_for,
     corpus_repos,
+    is_usable_clone,
     missing_clones,
     require_complete_clones,
 )
@@ -30,14 +31,34 @@ from tests.conftest import requires_data
 PARSED = PARSED_OUTCOMES.as_posix()
 
 
+_GIT_ENV = {
+    "GIT_AUTHOR_NAME": "t",
+    "GIT_AUTHOR_EMAIL": "t@example.com",
+    "GIT_COMMITTER_NAME": "t",
+    "GIT_COMMITTER_EMAIL": "t@example.com",
+    "PATH": "/usr/bin:/bin",
+}
+
+
 def _make_clone(root: Path, repo: str) -> Path:
-    """Create a real (empty) git repository at the conventional clone path."""
+    """Create a real git repository, with a commit, at the clone path.
+
+    The commit matters: a repository with no commit answers `git ls-tree`
+    with nothing, and the guard rejects that for the same reason it rejects a
+    partial clone -- it cannot bind.
+    """
     path = clone_dir_for(repo, root)
     path.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "init", "-q", str(path)], check=True, capture_output=True)
+    (path / "Test.java").write_text("// fixture\n", encoding="utf-8")
     subprocess.run(
-        ["git", "init", "-q", str(path)],
+        ["git", "-C", str(path), "add", "Test.java"], check=True, capture_output=True
+    )
+    subprocess.run(
+        ["git", "-C", str(path), "commit", "-qm", "fixture"],
         check=True,
         capture_output=True,
+        env={**_GIT_ENV, "HOME": str(root)},
     )
     return path
 
@@ -135,15 +156,85 @@ def test_a_directory_without_git_counts_as_missing(tmp_path: Path) -> None:
 
 
 @requires_data(PARSED)
-def test_a_bare_clone_counts_as_present(tmp_path: Path) -> None:
-    """`git clone --bare` has HEAD at the top rather than a .git directory."""
+def test_a_bare_clone_with_a_tree_counts_as_present(tmp_path: Path) -> None:
+    """`git clone --bare` holds HEAD at the top, not in a `.git` directory."""
     repos = corpus_repos()
     for repo in repos[1:]:
         _make_clone(tmp_path, repo)
+
+    source = _make_clone(tmp_path / "src", repos[0])
     bare = clone_dir_for(repos[0], tmp_path)
-    bare.mkdir(parents=True)
     subprocess.run(
-        ["git", "init", "-q", "--bare", str(bare)], check=True, capture_output=True
+        ["git", "clone", "-q", "--bare", str(source), str(bare)],
+        check=True,
+        capture_output=True,
     )
 
+    assert is_usable_clone(bare)
     assert missing_clones(clones_dir=tmp_path) == []
+
+
+# --- a partial clone must not borrow the enclosing repository ---------------
+
+
+@requires_data(PARSED)
+def test_a_partial_clone_inside_a_repo_is_not_mistaken_for_a_clone(
+    tmp_path: Path,
+) -> None:
+    """An interrupted clone must not resolve to the ENCLOSING repository.
+
+    This is a real failure that happened: `data/clones/` sits inside the
+    BlastRadius working tree, a `git clone` of `apache/flink` was interrupted
+    leaving a partial `.git`, git discovery fell through to BlastRadius's own
+    repository, and `git -C <dir> rev-parse HEAD` answered with a BlastRadius
+    commit. A `.git`-exists check accepted it, so binding would have run
+    against the wrong tree under the right repo's name.
+
+    The fixture reproduces the shape exactly: an outer real repository with a
+    commit, and a clone directory inside it holding a partial `.git`.
+    """
+    outer = tmp_path / "outer"
+    clones = outer / "clones"
+    clones.mkdir(parents=True)
+    subprocess.run(["git", "init", "-q", str(outer)], check=True, capture_output=True)
+    (outer / "file.txt").write_text("content", encoding="utf-8")
+    env = {
+        "GIT_AUTHOR_NAME": "t",
+        "GIT_AUTHOR_EMAIL": "t@example.com",
+        "GIT_COMMITTER_NAME": "t",
+        "GIT_COMMITTER_EMAIL": "t@example.com",
+        "PATH": "/usr/bin:/bin",
+        "HOME": str(tmp_path),
+    }
+    subprocess.run(
+        ["git", "-C", str(outer), "add", "file.txt"], check=True, capture_output=True
+    )
+    subprocess.run(
+        ["git", "-C", str(outer), "commit", "-qm", "c"],
+        check=True,
+        capture_output=True,
+        env=env,
+    )
+    # Sanity: the outer repo really does answer ls-tree.
+    assert is_usable_clone(outer)
+
+    repo = corpus_repos()[0]
+    partial = clone_dir_for(repo, clones)
+    (partial / ".git").mkdir(parents=True)
+    (partial / ".git" / "HEAD").write_text("ref: refs/heads/main\n", encoding="utf-8")
+
+    assert not is_usable_clone(partial), "a partial .git was accepted as a clone"
+    assert repo in missing_clones(clones_dir=clones)
+
+
+@requires_data(PARSED)
+def test_an_empty_tree_is_not_a_usable_clone(tmp_path: Path) -> None:
+    """`git init` with no commit answers no paths, so it cannot bind."""
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    subprocess.run(["git", "init", "-q", str(empty)], check=True, capture_output=True)
+    assert not is_usable_clone(empty)
+
+
+def test_a_nonexistent_path_is_not_a_usable_clone(tmp_path: Path) -> None:
+    assert not is_usable_clone(tmp_path / "nope")

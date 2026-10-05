@@ -23,6 +23,7 @@ __all__ = [
     "PARSED_OUTCOMES",
     "clone_dir_for",
     "corpus_repos",
+    "is_usable_clone",
     "missing_clones",
     "require_complete_clones",
 ]
@@ -60,14 +61,61 @@ def corpus_repos(parsed_outcomes: Path = PARSED_OUTCOMES) -> list[str]:
     return sorted(df.loc[df["test_id"].notna(), "repo"].unique().tolist())
 
 
+def is_usable_clone(path: Path) -> bool:
+    """Whether `path` is a git repository that can answer the binding query.
+
+    Presence of a `.git` directory is NOT sufficient, and trusting it is how a
+    corrupt figure gets produced. `data/clones/` lives inside the BlastRadius
+    working tree, so an interrupted `git clone` leaves a partial `.git` that
+    git discovery falls straight through, resolving to the PARENT repository
+    instead. `git -C <dir> rev-parse HEAD` then happily answers with
+    BlastRadius's own HEAD, and binding would run against this repo's file
+    tree while reporting the corpus repo's name.
+
+    So the check is that the resolved git directory actually lives inside
+    `path`, that HEAD resolves, and that `git ls-tree -r HEAD` returns at least
+    one path -- the exact call `src/parse/test_files.py::_get_git_tree` makes.
+
+    Args:
+        path: Candidate clone directory.
+
+    Returns:
+        True if binding can read a non-empty tree from it.
+    """
+    if not path.is_dir():
+        return False
+    try:
+        git_dir = subprocess.check_output(
+            ["git", "-C", str(path), "rev-parse", "--absolute-git-dir"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except (subprocess.CalledProcessError, OSError):
+        return False
+
+    resolved = Path(git_dir).resolve()
+    root = path.resolve()
+    if resolved != root and root not in resolved.parents:
+        # Discovery escaped to an enclosing repository.
+        return False
+
+    try:
+        tree = subprocess.check_output(
+            ["git", "-C", str(path), "ls-tree", "-r", "HEAD", "--name-only"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+    except (subprocess.CalledProcessError, OSError):
+        return False
+    return bool(tree.strip())
+
+
 def missing_clones(
     parsed_outcomes: Path = PARSED_OUTCOMES, clones_dir: Path = CLONES_DIR
 ) -> list[str]:
-    """Corpus repos that have no clone on disk.
+    """Corpus repos with no usable clone on disk.
 
-    A path that exists but is not a git repository counts as missing: a
-    directory without `.git` cannot answer `git ls-tree`, so binding it would
-    silently resolve nothing and look like a 0% repo rather than a setup error.
+    "Usable" is :func:`is_usable_clone`, not merely "the directory exists".
 
     Args:
         parsed_outcomes: The parsed-outcomes table defining the corpus.
@@ -76,12 +124,11 @@ def missing_clones(
     Returns:
         Sorted repos needing a clone.
     """
-    missing = []
-    for repo in corpus_repos(parsed_outcomes):
-        path = clone_dir_for(repo, clones_dir)
-        if not (path / ".git").is_dir() and not (path / "HEAD").is_file():
-            missing.append(repo)
-    return missing
+    return [
+        repo
+        for repo in corpus_repos(parsed_outcomes)
+        if not is_usable_clone(clone_dir_for(repo, clones_dir))
+    ]
 
 
 def require_complete_clones(
