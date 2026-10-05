@@ -29,7 +29,7 @@ import time
 import duckdb
 
 from src.graph.build import build_graph_at, graph_path, load_graph
-from src.graph.query import GraphQuery, QueryCache, feature_vector
+from src.graph.query import GraphQuery, QueryCache
 from src.graph.test_nodes import bind_test_ids
 
 __all__ = ["MINI_CORPUS", "BUDGET_SECONDS", "resolved_base_shas", "verdict"]
@@ -184,7 +184,17 @@ def main() -> int:
         if test_nodes and other:
             rng = random.Random(args.seed)
             cache = QueryCache()
-            GraphQuery(graph, repo=repo, sha=sha, cache=cache)
+            # ONE GraphQuery per graph, reused across instances -- this is the
+            # unit ROADMAP 19.4 budgets (docs/GRAPH_LAYER.md 6, `features()`).
+            #
+            # `feature_vector()` must NOT be used in a timing loop. It is a
+            # convenience wrapper that constructs a fresh GraphQuery per call,
+            # and that constructor builds the graph's full undirected
+            # projection every time. Measured that way saiku reported a
+            # 3,039 ms "per-instance" median against a 100 ms budget -- which
+            # is the wrapper's construction cost, not the query's, and would
+            # have been recorded as a 19.4 breach that does not exist.
+            query = GraphQuery(graph, repo=repo, sha=sha, cache=cache)
             n = min(args.instances, len(test_nodes))
             # The first instance at a SHA pays for the cold cache; ROADMAP
             # 19.4's <=100 ms budget is the warm per-instance figure. Averaging
@@ -193,11 +203,9 @@ def main() -> int:
             t_all = time.perf_counter()
             for i in range(n):
                 t0 = time.perf_counter()
-                feature_vector(
-                    graph,
+                query.features(
                     test_nodes[i % len(test_nodes)],
                     rng.sample(other, min(5, len(other))),
-                    cache=cache,
                 )
                 per_instance_ms.append((time.perf_counter() - t0) * 1000)
             totals["query_s"] += time.perf_counter() - t_all

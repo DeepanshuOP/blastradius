@@ -339,6 +339,39 @@ The per-instance figure — what §19.4 measures — is met everywhere by a wide
 margin. The *first* instance at a SHA pays for the BFS layers; with a warm cache
 that is within budget on 2/3 repos and over it on `Stirling-Tools/Stirling-PDF`.
 
+### 6.1 Re-measured by the T5.6b reproduction, 2026-10-05
+
+`analysis/reproduce_mini_corpus.py` re-measures §19.4 on 3 SHAs per repo, 50
+instances per graph, against the warm `data/graphs/` store. It is a smaller
+sample than §6 (50 instances on one graph per repo, not 200 across five), so
+the first instance is amortised over fewer calls and the medians are higher.
+
+| Repo | Instances | Cold first | Warm median | §19.4 ≤100 ms |
+|---|---:|---:|---:|---|
+| `fla-org/flash-linear-attention` | 50 | 331.679 ms | **47.709 ms** | **MET** |
+| `Stirling-Tools/Stirling-PDF` | 50 | 127.671 ms | **99.748 ms** | **MET, by 0.25 ms** |
+| `spiculedata/saiku` | 50 | 113.136 ms | **43.482 ms** | **MET** |
+
+§19.4 is **MET on all three repos**, so §7's verdict below stands. The margin on
+`Stirling-Tools/Stirling-PDF` is 0.25 ms and should be treated as "at the
+budget", not comfortably inside it.
+
+**A measurement defect was found and fixed here, and it is worth recording
+because it nearly entered the record as a §19.4 breach.** The reproduction
+first timed `src.graph.query.feature_vector()` inside the instance loop. That
+function is a convenience wrapper which constructs a *fresh* `GraphQuery` per
+call, and the constructor builds the graph's entire undirected projection every
+time. Measured that way the same three repos reported warm medians of
+55.1 / 376.8 / **3,039.6 ms** — a 30× apparent breach on `spiculedata/saiku`
+that is purely the wrapper's construction cost, not the query's. The figures in
+the table above come from one `GraphQuery` per graph with `features()` called in
+the loop, which is the unit §19.4 budgets (§2, `features()`).
+
+The lesson generalises beyond this benchmark: **`feature_vector()` must not be
+called in a loop.** Any future feature-extraction pass over many instances at
+one SHA must construct `GraphQuery` once and reuse it, or it will pay the
+projection cost per instance.
+
 ---
 
 ## 7. ROADMAP §10.6 exit criteria
