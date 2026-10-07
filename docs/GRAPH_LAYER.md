@@ -349,7 +349,7 @@ the first instance is amortised over fewer calls and the medians are higher.
 | Repo | Instances | Cold first | Warm median | §19.4 ≤100 ms |
 |---|---:|---:|---:|---|
 | `fla-org/flash-linear-attention` | 50 | 331.679 ms | **47.709 ms** | **MET** |
-| `Stirling-Tools/Stirling-PDF` | 50 | 127.671 ms | **99.748 ms** | **MET, by 0.25 ms** |
+| `Stirling-Tools/Stirling-PDF` | 50 | 127.671 ms | **99.748 ms** | **MET, at the limit** |
 | `spiculedata/saiku` | 50 | 113.136 ms | **43.482 ms** | **MET** |
 
 §19.4 is **MET on all three repos**, so §7's verdict below stands. The margin on
