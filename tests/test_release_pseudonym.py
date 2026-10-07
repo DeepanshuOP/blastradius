@@ -11,6 +11,9 @@ reference, and `build()` end to end against a real parquet file.
 from __future__ import annotations
 
 import csv
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 import duckdb
@@ -106,13 +109,67 @@ def test_build_with_key_replaces_every_login(tmp_path: Path, interim: Path) -> N
     assert pseudonymise("octocat", TEST_KEY) in shipped
 
 
-def test_build_without_key_leaves_logins_raw(tmp_path: Path, interim: Path) -> None:
-    """The no-key path is unchanged: live logins, and the caller must warn."""
+def test_build_without_key_raises_and_touches_nothing(
+    tmp_path: Path, interim: Path
+) -> None:
+    """No key: build() refuses before creating or removing anything."""
     out = tmp_path / "bundle"
-    counts = build(out, interim, key=None)
+    with pytest.raises(ValueError):
+        build(out, interim, key=b"")
+    assert not out.exists()
 
-    assert "_authors_pseudonymised" not in counts
-    assert "octocat" in _logins(out / "instances.parquet")
+    out.mkdir()
+    (out / "keep.txt").write_text("existing bundle", encoding="utf-8")
+    with pytest.raises(ValueError):
+        build(out, interim, key=b"")
+    assert [p.name for p in out.iterdir()] == ["keep.txt"]
+
+
+def _run_main(out: Path, interim: Path, key: str | None) -> subprocess.CompletedProcess[str]:
+    env = {k: v for k, v in os.environ.items() if k != "BR_PSEUDONYM_KEY"}
+    if key is not None:
+        env["BR_PSEUDONYM_KEY"] = key
+    return subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "analysis/build_release.py"),
+            "--out-dir",
+            str(out),
+            "--interim",
+            str(interim),
+        ],
+        cwd=REPO_ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+
+def test_cli_without_key_exits_nonzero_and_writes_no_files(
+    tmp_path: Path, interim: Path
+) -> None:
+    """The CLI without BR_PSEUDONYM_KEY exits 1 and leaves no bundle, partial or whole."""
+    out = tmp_path / "bundle"
+    result = _run_main(out, interim, key=None)
+
+    assert result.returncode != 0
+    assert "BR_PSEUDONYM_KEY" in result.stderr
+    assert not out.exists(), "a partial bundle directory was created"
+    assert list(tmp_path.rglob("NOT_PUBLISHABLE.md")) == []
+
+
+def test_cli_with_key_succeeds_without_not_publishable(
+    tmp_path: Path, interim: Path
+) -> None:
+    """With a key the CLI exits 0, ships a manifest, and never writes NOT_PUBLISHABLE.md."""
+    out = tmp_path / "bundle"
+    result = _run_main(out, interim, key="cli-test-key")
+
+    assert result.returncode == 0, result.stderr
+    assert (out / "CHECKSUMS.sha256").exists()
+    assert not (out / "NOT_PUBLISHABLE.md").exists()
+    assert "cli-test-key" not in result.stdout + result.stderr
 
 
 def test_pseudonymisation_is_byte_stable_across_rebuilds(

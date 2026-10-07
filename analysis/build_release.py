@@ -25,9 +25,9 @@ holds, so when `BR_PSEUDONYM_KEY` is set every login is replaced in place by
 the environment and used only as HMAC material: it is never printed, logged,
 written into the bundle or included in any error message.
 
-When the key is absent this script still builds the bundle -- the Architect
-asked for a local build -- but the logins stay live, so it writes
-`NOT_PUBLISHABLE.md` into the tree and says so on stdout.
+When the key is absent this script exits non-zero and writes nothing: no
+bundle directory, no partial files, and an existing bundle is left untouched.
+A bundle with live logins is never produced.
 
 The mapping is deterministic for a fixed key, which is the point: the same
 author is the same pseudonym across tables and across rebuilds, and nobody
@@ -42,6 +42,7 @@ import hmac
 import os
 from pathlib import Path
 import shutil
+import sys
 
 import duckdb
 
@@ -84,27 +85,6 @@ into a public issue, gist, forum post or model prompt -- doing so contaminates
 the canary itself and destroys its only purpose.
 
 Governing: ROADMAP T1.7, risk T11.
-"""
-
-NOT_PUBLISHABLE = f"""# NOT PUBLISHABLE — {DATASET_NAME} local build
-
-This bundle must not be uploaded, shared or attached to a DOI in its current
-form.
-
-`instances.parquet` carries `author_login`, a real GitHub login for every
-instance. ROADMAP 22.4 requires that column pseudonymised before release.
-`{PSEUDONYM_KEY_NAME}` was absent from the environment when this bundle was
-built, so no pseudonymisation was applied and the column holds live logins.
-
-To clear this blocker:
-
-1. Add `{PSEUDONYM_KEY_NAME}=<a long random secret>` to `.env`. Never commit it.
-2. Re-run `uv run python analysis/build_release.py`.
-3. Confirm this file is gone from the bundle and that `author_login` holds
-   16-character hex pseudonyms.
-
-Until then the Zenodo deposit and the DOI stay unstarted. Both are ONE-WAY
-(D-08: naming is one-way after a DOI).
 """
 
 
@@ -205,20 +185,25 @@ def _pseudonymise_authors(
     return len(logins)
 
 
-def build(out_dir: Path, interim: Path, key: bytes | None = None) -> dict[str, int]:
+def build(out_dir: Path, interim: Path, key: bytes) -> dict[str, int]:
     """Assemble the bundle and return each table's row count.
 
     Args:
         out_dir: Bundle root to create (removed first if present).
         interim: Directory holding the interim parquet artifacts.
-        key: Secret HMAC key for author pseudonymisation. When None the bundle
-            is built with live logins and is not publishable.
+        key: Secret HMAC key for author pseudonymisation. Required.
 
     Returns:
-        Mapping of shipped filename to row count. When `key` is given the
-        mapping also carries `"_authors_pseudonymised"`, the distinct-login
-        count, so the caller can report it without re-reading the table.
+        Mapping of shipped filename to row count, plus
+        `"_authors_pseudonymised"`, the distinct-login count, so the caller can
+        report it without re-reading the table.
+
+    Raises:
+        ValueError: If `key` is empty. Raised before `out_dir` is touched, so
+            nothing is created or removed.
     """
+    if not key:
+        raise ValueError(f"{PSEUDONYM_KEY_NAME} is required; refusing to build")
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
@@ -259,7 +244,7 @@ def build(out_dir: Path, interim: Path, key: bytes | None = None) -> dict[str, i
         ).fetchone()[0]
 
     instances = out_dir / "instances.parquet"
-    if key is not None and instances.exists():
+    if instances.exists():
         counts["_authors_pseudonymised"] = _pseudonymise_authors(con, instances, key)
 
     (out_dir / "CANARY.txt").write_text(CANARY_DOC, encoding="utf-8")
@@ -267,7 +252,7 @@ def build(out_dir: Path, interim: Path, key: bytes | None = None) -> dict[str, i
 
 
 def main() -> None:
-    """Build the bundle, write the manifest, and report the publish blocker."""
+    """Build the bundle and write the manifest; exit 1 without the pseudonym key."""
     parser = argparse.ArgumentParser(description=f"Build the {DATASET_NAME} bundle")
     parser.add_argument("--out-dir", type=Path, default=Path("release/v0.1"))
     parser.add_argument("--interim", type=Path, default=Path("data/interim"))
@@ -275,14 +260,17 @@ def main() -> None:
 
     # The key is HMAC material only: never printed, logged or written out.
     raw_key = os.environ.get(PSEUDONYM_KEY_NAME) or None
-    key = raw_key.encode("utf-8") if raw_key else None
+    if raw_key is None:
+        print(
+            f"ERROR: {PSEUDONYM_KEY_NAME} is absent from the environment; "
+            "no bundle written.\n"
+            f"  Add {PSEUDONYM_KEY_NAME} to .env and run with --env-file .env.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
-    counts = build(args.out_dir, args.interim, key=key)
-    n_authors = counts.pop("_authors_pseudonymised", None)
-
-    pseudonymised = key is not None
-    if not pseudonymised:
-        (args.out_dir / "NOT_PUBLISHABLE.md").write_text(NOT_PUBLISHABLE, encoding="utf-8")
+    counts = build(args.out_dir, args.interim, key=raw_key.encode("utf-8"))
+    n_authors = counts.pop("_authors_pseudonymised")
 
     (args.out_dir / "CHECKSUMS.sha256").write_text(
         checksum_manifest(args.out_dir), encoding="utf-8"
@@ -294,20 +282,11 @@ def main() -> None:
         print(f"  {name:<28} {counts[name]:>12,} rows  {size:>12,} bytes")
     print(f"  CANARY.txt                   documented canary (T1.7)")
     print(f"  CHECKSUMS.sha256             SHA-256 manifest over every file")
-
-    if pseudonymised:
-        print(
-            f"\npseudonymisation: APPLIED — {n_authors:,} distinct author_login "
-            f"values replaced by {PSEUDONYM_HEX_LEN}-hex HMAC-SHA256 pseudonyms."
-        )
-        print("  The key itself is never printed, logged or shipped.")
-    else:
-        print(
-            f"\nBLOCKED: {PSEUDONYM_KEY_NAME} absent from the environment.\n"
-            f"  author_login is NOT pseudonymised; wrote NOT_PUBLISHABLE.md.\n"
-            f"  Add {PSEUDONYM_KEY_NAME} to .env and rebuild before any upload.\n"
-            "  Zenodo deposit and DOI remain ONE-WAY and unstarted."
-        )
+    print(
+        f"\npseudonymisation: APPLIED — {n_authors:,} distinct author_login "
+        f"values replaced by {PSEUDONYM_HEX_LEN}-hex HMAC-SHA256 pseudonyms."
+    )
+    print("  The key itself is never printed, logged or shipped.")
 
 
 if __name__ == "__main__":
