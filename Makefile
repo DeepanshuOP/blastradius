@@ -1,4 +1,4 @@
-.PHONY: test tables figures all reproduce check-log-isolation
+.PHONY: test tables fetch-base-logs figures all reproduce check-log-isolation
 
 test:
 	uv run pytest -q
@@ -55,28 +55,8 @@ tables:
 	# Exits non-zero only on a credential-shaped match.
 	uv run python analysis/secret_scan.py
 	uv run python analysis/resolve_bases.py
-	# Needs a GitHub PAT and the network, and it is the step that caused D-49:
-	# it sits ABOVE parse_base_logs and fault_revealing, so when it aborted for
-	# a missing PAT, `make tables` stopped here and the labels were never
-	# rebuilt while every step above had succeeded -- leaving outcomes.parquet
-	# silently older than its own inputs.
-	#
-	# The corpus is PINNED (data/interim/CORPUS_PIN.json), so fetching further
-	# base logs after the pin would move the corpus out from under every figure
-	# already computed against it. D-49 fixes the base side at the local
-	# RawStore only. Skipped loudly rather than fatally; downstream staleness is
-	# now caught by check_freshness.py above, not by this step failing.
-	# The gate must name every key TokenPool would accept
-	# (src/harvest/ratelimit.py DEFAULT_ENV_KEYS): gating on GITHUB_PAT_1 alone
-	# would skip the fetch for an operator who has only _2 or _3 configured,
-	# which is a silent removal of the step rather than a skip. tests/
-	# test_makefile_pat_gate.py holds the two sides in agreement.
-	@if [ -n "$$GITHUB_PAT_1" ] || [ -n "$$GITHUB_PAT_2" ] || [ -n "$$GITHUB_PAT_3" ]; then \
-		uv run python analysis/fetch_base_logs.py; \
-	else \
-		echo "[tables] SKIP analysis/fetch_base_logs.py — no GITHUB_PAT_1/_2/_3 in env;"; \
-		echo "[tables]      corpus is pinned, base side is local RawStore only (D-49)."; \
-	fi
+	# The base-log fetch is deliberately NOT a step here (D-49): it needs the
+	# network and a PAT. `make tables` makes no network call, whatever the env.
 	uv run python analysis/parse_base_logs.py
 	uv run python src/label/fault_revealing.py
 	uv run python analysis/fixture_score.py
@@ -94,6 +74,17 @@ tables:
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py
 
+
+# Explicit, network-bound, NOT part of `tables`. The corpus is pinned
+# (data/interim/CORPUS_PIN.json); fetching further base logs moves it, so this
+# is an operator decision. The gate names every key TokenPool accepts
+# (src/harvest/ratelimit.py DEFAULT_ENV_KEYS).
+fetch-base-logs:
+	@if [ -z "$$GITHUB_PAT_1" ] && [ -z "$$GITHUB_PAT_2" ] && [ -z "$$GITHUB_PAT_3" ]; then \
+		echo "fetch-base-logs: needs GITHUB_PAT_1/_2/_3 in the environment" >&2; \
+		exit 1; \
+	fi
+	uv run python analysis/fetch_base_logs.py
 
 figures:
 	@echo "not implemented"

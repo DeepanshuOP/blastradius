@@ -24,13 +24,13 @@ the denominators differ.
 | Network | **none**. No GitHub HTTP, no PAT, no LLM call (D-17) |
 | Disk | ~2 GB transient for `data/graphs_reproduce/`, removed on exit |
 
-`make all` needs no credentials. `make tables` needs none either: its one
-PAT-gated step (`analysis/fetch_base_logs.py`) is skipped loudly when no
-`GITHUB_PAT_1/_2/_3` is in the environment, because the corpus is pinned
+`make all` needs no credentials. `make tables` needs none either and makes no
+network call whatever the environment: the base-log fetch
+(`analysis/fetch_base_logs.py`) is **not** part of it. The corpus is pinned
 (`data/interim/CORPUS_PIN.json`) and the base side is fixed at the local
-`RawStore` (D-49). `tests/test_makefile_pat_gate.py` holds that gate honest: it
-asserts the fetch is *skipped*, never removed, and that any single key
-`TokenPool` accepts is enough to run it.
+`RawStore` (D-49). Fetching more is the explicit `make fetch-base-logs`, which
+refuses to run without `GITHUB_PAT_1/_2/_3`. `tests/test_makefile_pat_gate.py`
+asserts `make -n tables` never mentions the fetch, even with a PAT set.
 
 ## 2. The commands
 
