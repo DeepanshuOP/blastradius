@@ -24,6 +24,7 @@ FIXTURES = Path(__file__).parent / "fixtures" / "holdout_v5_scorer"
 FILLED = FIXTURES / "filled.md"
 PARTIAL = FIXTURES / "partial.md"
 WORKSHEET = Path("docs/phase/029-holdout-v5-worksheet.md")
+FILLED_SPACES = FIXTURES / "filled_spaces.md"
 V5_DIR = Path("tests/fixtures/holdout_v5")
 
 
@@ -87,6 +88,18 @@ def test_parse_worksheet_accepts_a_fully_filled_sheet():
     assert second.expected_class == "NO_TEST_OUTPUT"
     assert second.expected_ids == []
     assert second.confidence == "CERTAIN"
+
+
+def test_identifiers_split_on_commas_only_so_spaces_survive():
+    """JUnit display names contain spaces; only commas separate identifiers."""
+    labels, problems = parse_worksheet(FILLED_SPACES)
+
+    assert problems == []
+    assert labels[0].expected_ids == [
+        "com.example.AlphaTest#rejects an empty file",
+        "com.example.BetaTest#two",
+        "com.example.GammaTest#handles two words",
+    ]
 
 
 def test_one_empty_cell_is_enough_to_refuse():

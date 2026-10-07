@@ -125,7 +125,7 @@ def parse_worksheet(path: Path) -> tuple[list[HandLabel], list[str]]:
         raw_ids = values["Expected Identifiers"]
         ids: list[str] = []
         if raw_ids and raw_ids.upper() != "NO_TEST_OUTCOMES":
-            ids = [i.strip().strip("`") for i in re.split(r"[,\s]+", raw_ids) if i.strip()]
+            ids = [i.strip().strip("`") for i in raw_ids.split(",") if i.strip()]
 
         labels.append(
             HandLabel(
