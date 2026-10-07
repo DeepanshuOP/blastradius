@@ -75,7 +75,7 @@ tables:
 	# analysis/verify_exact_green.py`), not part of `tables`. What `tables`
 	# regenerates is every NUMBER derived from its committed output.
 	uv run python analysis/capture_stdout.py exact_green_report.md "exact_green verification report" analysis/verify_exact_green.py --report-only
-	uv run python analysis/capture_stdout.py corpus_delta.md "Corpus delta" analysis/corpus_delta.py
+	uv run python analysis/capture_stdout.py --note "The evidence-only and invariant-6 scenarios below are counterfactuals, not the committed corpus." corpus_delta.md "Corpus delta" analysis/corpus_delta.py
 	uv run python analysis/expiry_cliff.py
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py

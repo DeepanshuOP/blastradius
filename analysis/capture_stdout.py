@@ -7,7 +7,9 @@ stdout VERBATIM (fenced) under a header naming the script and git sha. Nothing
 is reformatted, so every figure is exactly what the script printed. A failing
 script writes no file and its exit status is returned.
 
-Usage: python analysis/capture_stdout.py OUT_NAME TITLE SCRIPT [ARGS...]
+Usage: python analysis/capture_stdout.py [--note TEXT] OUT_NAME TITLE SCRIPT [ARGS...]
+
+`--note` adds a sentence under the header line (e.g. to say a report is a counterfactual).
 """
 
 from __future__ import annotations
@@ -18,7 +20,8 @@ import sys
 from analysis import paper_md
 
 
-def run_and_capture(out_name: str, title: str, script: str, args: list[str], out_dir=paper_md.OUT_DIR) -> int:
+def run_and_capture(out_name: str, title: str, script: str, args: list[str], out_dir=paper_md.OUT_DIR,
+                    note: str = "") -> int:
     """Run `script`, echo and capture its stdout, write the markdown on success.
 
     Args:
@@ -27,6 +30,7 @@ def run_and_capture(out_name: str, title: str, script: str, args: list[str], out
         script: Script path, run with this interpreter.
         args: Extra arguments for the script.
         out_dir: Output directory.
+        note: A sentence placed under the header line, before the verbatim-stdout line.
 
     Returns:
         The script's exit status.
@@ -41,17 +45,20 @@ def run_and_capture(out_name: str, title: str, script: str, args: list[str], out
     if rc != 0:
         return rc
     cmd = " ".join([script, *args])
-    text = paper_md.header(title, script, f"Verbatim stdout of `{cmd}`.")
+    text = paper_md.header(title, script, (note + "\n\n" if note else "") + f"Verbatim stdout of `{cmd}`.")
     text += "\n```text\n" + "".join(captured).rstrip("\n") + "\n```\n"
     paper_md.write(out_name, text, out_dir)
     return 0
 
 
-def main(argv: list[str]) -> int:
+def main(argv: list[str], out_dir=paper_md.OUT_DIR) -> int:
+    note = ""
+    if len(argv) > 2 and argv[1] == "--note":
+        note, argv = argv[2], argv[:1] + argv[3:]
     if len(argv) < 4:
         print(__doc__)
         return 2
-    return run_and_capture(argv[1], argv[2], argv[3], argv[4:])
+    return run_and_capture(argv[1], argv[2], argv[3], argv[4:], out_dir, note=note)
 
 
 if __name__ == "__main__":
