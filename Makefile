@@ -59,11 +59,13 @@ tables:
 	uv run python analysis/secret_scan.py
 	# The base-log fetch is deliberately NOT a step here (D-49): it needs the
 	# network and a PAT. `make tables` makes no network call, whatever the env.
-	uv run python analysis/parse_base_logs.py
-	uv run python src/label/fault_revealing.py
+	uv run python analysis/capture_stdout.py base_log_parse.md "Base-log parse" analysis/parse_base_logs.py
+	uv run python analysis/capture_stdout.py labelling_run.md "Labelling run" src/label/fault_revealing.py
 	uv run python analysis/fixture_score.py
 	uv run python analysis/holdout_eval.py
-	uv run python analysis/binding_report.py
+	uv run python analysis/parser_precision_table.py
+	uv run python analysis/capture_stdout.py binding_run.md "Binding run" analysis/binding_report.py
+	uv run python analysis/paper_numbers.py
 	uv run python analysis/attrition_funnel.py
 	uv run python analysis/rq1_divergence.py
 	uv run python analysis/infra_failure_audit.py
@@ -71,8 +73,8 @@ tables:
 	# it is an explicit step (`uv run --env-file .env python
 	# analysis/verify_exact_green.py`), not part of `tables`. What `tables`
 	# regenerates is every NUMBER derived from its committed output.
-	uv run python analysis/verify_exact_green.py --report-only
-	uv run python analysis/corpus_delta.py
+	uv run python analysis/capture_stdout.py exact_green_report.md "exact_green verification report" analysis/verify_exact_green.py --report-only
+	uv run python analysis/capture_stdout.py corpus_delta.md "Corpus delta" analysis/corpus_delta.py
 	uv run python analysis/expiry_cliff.py
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py

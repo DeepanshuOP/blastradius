@@ -32,16 +32,24 @@ network call whatever the environment: the base-log fetch
 refuses to run without `GITHUB_PAT_1/_2/_3`. `tests/test_makefile_pat_gate.py`
 asserts `make -n tables` never mentions the fetch, even with a PAT set.
 
-Binding resolves against the pinned clone commits in `docs/CLONE_PINS.json`, not
-live HEAD (D-50). Re-pin with `uv run python analysis/binding_report.py
---write-pins` only as a deliberate decision.
-
 `make tables` also exports `BR_OFFLINE=1`, under which `get_with_backoff()`
 raises `OfflineError` before acquiring a token or opening a socket, so a step
 that later gains a network call fails loudly instead of fetching.
 `analysis/resolve_bases.py` is no longer a `tables` step: it needs a PAT and the
 network and rewrites `base_resolution_new.parquet`, so it is the explicit
 `make resolve-bases` (refuses without `GITHUB_PAT_1/_2/_3`).
+
+`make tables` writes every number that reaches the paper to `paper/generated/`
+(note: that directory is git-ignored): `composition.md`, `base_resolution.md`,
+`flakiness.md`, `binding.md`, `gates.md`, `attrition_funnel.md`,
+`parser_precision.md`, `rq1.md`, `infra_failures.md` and the older
+`annotation_census.md`, `corpus_stats.md`, `expiry_cliff.md`. Each is headed with
+its generating script and the git sha. RQ1 figures are written too when
+matplotlib is installed: `uv sync --extra figures` (`matplotlib==3.11.2`).
+
+Binding resolves against the pinned clone commits in `docs/CLONE_PINS.json`, not
+live HEAD (D-50). Re-pin with `uv run python analysis/binding_report.py
+--write-pins` only as a deliberate decision.
 
 ## 2. The commands
 

@@ -100,10 +100,37 @@ def compute_labels(res_df, instances_df, head_parsed, base_parsed):
         "no_output_count": no_output_count,
         "flip_count": flip_count,
         "flip_rate": flip_rate,
+        "n_sha_test_pairs": len(flips),
         "n_matrix_legs_handled": head_parsed['run_id'].duplicated(keep=False).sum() # approximate
     }
 
 GATE1_THRESHOLD = 5000
+
+
+def write_flakiness_md(outcomes: pd.DataFrame, stats: dict, out_dir=None) -> None:
+    """Write `paper/generated/flakiness.md` (same-SHA flips and what they remove).
+
+    Args:
+        outcomes: The `outcomes` frame.
+        stats: The stats dict returned by :func:`compute_labels`.
+        out_dir: Output directory (default `paper/generated`).
+    """
+    from analysis import paper_md
+
+    relaxed = int((outcomes['split'] == 'relaxed').sum())
+    strict = int((outcomes['split'] == 'strict').sum())
+    flips, pairs = int(stats['flip_count']), int(stats['n_sha_test_pairs'])
+    text = paper_md.header(
+        "Flakiness: same-SHA flips", "src/label/fault_revealing.py",
+        "A (head SHA, workflow, test) is a flip when it fails in some but not all runs of that "
+        "workflow on that SHA. Strict labels are the relaxed labels minus flips.")
+    text += "\n" + paper_md.table(
+        ["measure", "n/d"],
+        [["same-SHA flips over (head SHA, workflow, test) groups with a failure", paper_md.rate(flips, pairs)],
+         ["relaxed labels removed as flaky (relaxed -> strict)", paper_md.rate(relaxed - strict, relaxed)]])
+    paper_md.write("flakiness.md", text, *([out_dir] if out_dir else []))
+
+
 
 
 def gate1_lines(outcomes: pd.DataFrame) -> list[str]:
@@ -139,7 +166,7 @@ if __name__ == '__main__':
     print("Done writing data/interim/outcomes.parquet")
     print(f"NO_TEST_OUTPUT base runs omitted: {stats['no_output_count']}")
     print(f"Matrix leg rows unioned: {stats['n_matrix_legs_handled']}")
-    print(f"Same-SHA flips detected: {stats['flip_count']} (Rate: {stats['flip_rate']:.2%})")
+    print(f"Same-SHA flips detected: {stats['flip_count']}/{stats['n_sha_test_pairs']} (Rate: {stats['flip_rate']:.2%})")
     
     for split in ['all', 'relaxed', 'strict']:
         split_df = outcomes[outcomes['split'] == split]
@@ -151,3 +178,4 @@ if __name__ == '__main__':
     for line in gate1_lines(outcomes):
         print(line)
 
+    write_flakiness_md(outcomes, stats)

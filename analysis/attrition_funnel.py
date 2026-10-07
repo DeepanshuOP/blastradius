@@ -2,6 +2,42 @@ import pandas as pd
 import sqlite3
 import glob
 
+from analysis import paper_md
+
+CAVEATS = [
+    "`logs captured` is the `kind='logs'` capture_unit count plus a hard-coded 394 (the 006A base-target "
+    "fetch), and falls back to a hard-coded 13,710 if `data/state/cursor.db` is unreadable.",
+    "`logs parsed` is set equal to `logs not expired` (every log on disk is treated as parsed).",
+    "`logs with test output` is the number of distinct jobs with a parsed TEST_FAILURE outcome (head plus "
+    "base); TEST_RAN_CLEAN logs are not counted.",
+    "`logs not expired` exceeds `logs captured` (a rate above 100%): the two counts come from different "
+    "sources (capture_unit rows versus files on disk), so this stage is not a nested subset. Not corrected here.",
+    "Units change between steps (repos, PRs, runs, logs, instances); a row's n/d is only a survival rate "
+    "where the unit matches its denominator, otherwise the raw ratio is shown.",
+    "The repository-frame stages (SEART export, CI liveness, test intent, sample draw) are NOT regenerated "
+    "here: the script that produced them was replaced in d6990fb.",
+]
+
+
+def write_md(steps: list[tuple]) -> None:
+    """Write `paper/generated/attrition_funnel.md` from the computed steps (each row n/d)."""
+    counts = {name: count for name, count, _, _ in steps}
+    units = {name: unit for name, _, unit, _ in steps}
+    rows = []
+    for name, count, unit, denom_name in steps:
+        if denom_name is None:
+            rows.append([name, unit, f"{count:,}", "-", "-"])
+            continue
+        d = counts[denom_name]
+        same = unit == units[denom_name]
+        rows.append([name, unit, f"{count:,}", f"{denom_name} ({d:,} {units[denom_name]})",
+                     paper_md.rate(count, d) if same else f"{count:,} {unit} / {d:,} {units[denom_name]}"])
+    text = paper_md.header("Pipeline attrition funnel", "analysis/attrition_funnel.py")
+    text += "\n" + paper_md.table(["step", "unit", "count", "denominator", "n/d"], rows)
+    text += "\n## Caveats\n\n" + "\n".join(f"- {c}" for c in CAVEATS) + "\n"
+    paper_md.write("attrition_funnel.md", text)
+
+
 def main():
     print("Computing Attrition Funnel...")
     
@@ -81,6 +117,7 @@ def main():
         ("instances with >=1 fault-revealing label", inst_with_label, "instances", "instances with a known base failure set")
     ]
     
+    write_md(steps)
     print(f"{'Pipeline Step':<45} | {'Count':>10} | {'Survival/Ratio':>25}")
     print("-" * 85)
     
