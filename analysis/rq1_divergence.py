@@ -49,6 +49,7 @@ METHODS = [
 ]
 COCHANGE_MODES = ("trailing", "trailing_both", "static")
 HIST_MODES = ("strict", "legacy")
+SIZE_STRATA = [("1", 1, 1), ("2-5", 2, 5), ("6-20", 6, 20), (">20", 21, 10**9)]
 CLONES_DIR = Path("data/clones")
 CLONE_PINS = Path("docs/CLONE_PINS.json")
 COCHANGE_PIN = Path("data/interim/COCHANGE_PIN.json")
@@ -322,7 +323,7 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int, cochange: str = "trailing
         hist: See :func:`historical_evidence`.
 
     Returns:
-        Columns repo, run_id, language, n_gt and for each method in METHODS
+        Columns repo, run_id, language, n_gt, n_files and for each method in METHODS
         `<m>_p`, `<m>_r`, `<m>_j`, `<m>_size`, `<m>_hit`.
     """
     if cochange not in COCHANGE_MODES or hist not in HIST_MODES:
@@ -354,7 +355,7 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int, cochange: str = "trailing
         C_b2 = set(h['resolved_path'].value_counts().head(k).index.tolist()) if len(h) > 0 else set()
 
         rec = {'repo': repo, 'run_id': run_id, 'language': data.language_of.get(run_id), 'n_gt': len(GT),
-               'co_test_fires': len(C_test) > 0}
+               'n_files': len(F), 'co_test_fires': len(C_test) > 0}
         for key, C in (('co', C_co), ('co_test', C_test), ('co_test_loose', C_loose), ('b1', F), ('b2', C_b2)):
             p, r, j = compute_metrics(C, GT)
             rec.update({f'{key}_p': p, f'{key}_r': r, f'{key}_j': j, f'{key}_size': len(C),
@@ -377,6 +378,11 @@ METHOD_COLS = ["method", "n", "mean P", "mean R", "mean J", "micro P (hits/predi
 def summarize(df: pd.DataFrame) -> list[list]:
     """The method rows for one slice of instances."""
     return [_method_row(df, key, label) for key, label in METHODS]
+
+
+def size_strata(df: pd.DataFrame) -> list[tuple[str, pd.DataFrame]]:
+    """Split instances by number of changed files: 1, 2-5, 6-20, >20."""
+    return [(name, df[(df['n_files'] >= lo) & (df['n_files'] <= hi)]) for name, lo, hi in SIZE_STRATA]
 
 
 def applicability(data: Rq1Data, run_to_gt: dict, mode: str = "trailing") -> dict:
@@ -415,7 +421,7 @@ def applicability(data: Rq1Data, run_to_gt: dict, mode: str = "trailing") -> dic
 
 
 def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame], app: dict | None = None) -> None:
-    """Write `paper/generated/rq1.md`: denominators, applicability, then results overall and per language."""
+    """Write `paper/generated/rq1.md`: denominators, applicability, then results overall, per language and by change size."""
     n_gt = sum(1 for (repo, rid) in run_to_gt if (repo, rid) in
                {(r['repo'], r['run_id']) for _, r in data.valid_runs.iterrows()})
     gt_files = [p for paths in run_to_gt.values() for p in paths]
@@ -461,6 +467,16 @@ def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame],
         for lang in sorted(df['language'].dropna().unique()):
             sub = df[df['language'] == lang]
             text += f"\n### {lang} (n={len(sub)})\n\n" + paper_md.table(METHOD_COLS, summarize(sub))
+    if 10 in per_k:
+        df = per_k[10]
+        text += ("\n## Change size (k = 10)\n\nStrata by number of changed files in the PR; "
+                 f"the strata partition the {len(df)} scored instances.\n")
+        for name, sub in size_strata(df):
+            text += f"\n### {name} changed files (n={len(sub)})\n\n"
+            if len(sub):
+                text += paper_md.table(METHOD_COLS, summarize(sub))
+            else:
+                text += "No instances in this stratum.\n"
     paper_md.write("rq1.md", text)
 
 

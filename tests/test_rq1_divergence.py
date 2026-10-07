@@ -5,7 +5,8 @@ from __future__ import annotations
 import pandas as pd
 
 from analysis.cochange_trailing import RepoHistory, read_history
-from analysis.rq1_divergence import Rq1Data, evaluate_k, ground_truth, historical_evidence, summarize
+from analysis.rq1_divergence import (Rq1Data, evaluate_k, ground_truth, historical_evidence, size_strata,
+                                     summarize)
 from tests.test_cochange_trailing import DAY, T0, make_repo
 
 REPO = "acme/widgets"
@@ -135,6 +136,12 @@ def test_conventional_predicate_rejects_latest_py_that_the_loose_one_accepts() -
     r = evaluate_k(data, ground_truth(data), 5, cochange="static").iloc[0]
     assert (r["co_test_hit"], r["co_test_size"]) == (1, 1)              # tests/test_a.py only
     assert (r["co_test_loose_hit"], r["co_test_loose_size"]) == (1, 3)  # latest.py, test_a.py, contest.py
+
+
+def test_change_size_strata_partition_the_instances() -> None:
+    df = pd.DataFrame({"n_files": [1, 2, 5, 6, 20, 21, 300]})
+    got = {name: list(sub["n_files"]) for name, sub in size_strata(df)}
+    assert got == {"1": [1], "2-5": [2, 5], "6-20": [6, 20], ">20": [21, 300]}
 
 
 def test_figures_are_written_deterministically_when_matplotlib_is_present(tmp_path, monkeypatch) -> None:
