@@ -190,6 +190,14 @@ def _log(entry: dict, log_path: Path) -> None:
 
 
 
+class OfflineError(RuntimeError):
+    """Raised by get_with_backoff() when BR_OFFLINE=1: no request is attempted."""
+
+
+def _offline() -> bool:
+    return os.environ.get("BR_OFFLINE") == "1"
+
+
 class TransferDeadlineExceeded(requests.exceptions.RequestException):
     pass
 class ByteCeilingExceeded(requests.exceptions.RequestException):
@@ -206,7 +214,14 @@ def get_with_backoff(
     pool: TokenPool,
     max_attempts: int = MAX_ATTEMPTS,
 ) -> requests.Response:
-    """The sole HTTP entry point in the codebase. See module docstring."""
+    """The sole HTTP entry point in the codebase. See module docstring.
+
+    Raises:
+        OfflineError: immediately, before a token is acquired or a socket
+            opened, when BR_OFFLINE=1 (`make tables` exports it).
+    """
+    if _offline():
+        raise OfflineError(f"BR_OFFLINE=1: refusing to GET {url}")
     last_exc: Exception | None = None
 
     for attempt in range(1, max_attempts + 1):

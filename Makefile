@@ -1,4 +1,4 @@
-.PHONY: test tables fetch-base-logs figures all reproduce check-log-isolation demo
+.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo
 
 test:
 	uv run pytest -q
@@ -42,6 +42,9 @@ check-log-isolation:
 	fi; \
 	echo "OK: logs/requests.jsonl isolated (no test traffic appended, lines $$before_lines -> $$after_lines)"
 
+# BR_OFFLINE=1 makes get_with_backoff() raise before any socket is opened, so a
+# step that gains a network call fails loudly instead of silently fetching.
+tables: export BR_OFFLINE=1
 tables:
 	mkdir -p paper/generated
 	# Refuses to run at all if any interim artifact is older than an input it is
@@ -54,7 +57,6 @@ tables:
 	# runs first: a gate placed behind a step that can fail is not a gate.
 	# Exits non-zero only on a credential-shaped match.
 	uv run python analysis/secret_scan.py
-	uv run python analysis/resolve_bases.py
 	# The base-log fetch is deliberately NOT a step here (D-49): it needs the
 	# network and a PAT. `make tables` makes no network call, whatever the env.
 	uv run python analysis/parse_base_logs.py
@@ -74,6 +76,16 @@ tables:
 	uv run python analysis/annotation_census.py
 	uv run python analysis/corpus_stats.py
 
+
+# Explicit, network-bound, NOT part of `tables` (it was, until D-50's round; it
+# needs a PAT and the network, and rewrites base_resolution_new.parquet, which
+# every downstream figure derives from). Needs GITHUB_PAT_1/_2/_3.
+resolve-bases:
+	@if [ -z "$$GITHUB_PAT_1" ] && [ -z "$$GITHUB_PAT_2" ] && [ -z "$$GITHUB_PAT_3" ]; then \
+		echo "resolve-bases: needs GITHUB_PAT_1/_2/_3 in the environment" >&2; \
+		exit 1; \
+	fi
+	uv run python analysis/resolve_bases.py
 
 # Explicit, network-bound, NOT part of `tables`. The corpus is pinned
 # (data/interim/CORPUS_PIN.json); fetching further base logs moves it, so this

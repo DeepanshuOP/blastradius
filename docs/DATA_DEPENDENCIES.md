@@ -43,7 +43,7 @@ missing file — the first one each needs is given.
 | # | Target | Fresh clone | First missing input |
 |---:|---|---|---|
 | 1 | `analysis/secret_scan.py` | **PASS** | — (no `release/`, exits 0: nothing to scan) |
-| 2 | `analysis/resolve_bases.py` | FAIL | `data/interim/base_resolution_new.parquet` |
+| 2 | `analysis/resolve_bases.py` (explicit `make resolve-bases`, no longer in `tables`) | FAIL | `data/interim/base_resolution_new.parquet` |
 | 3 | `analysis/fetch_base_logs.py` | FAIL | `data/interim/base_resolution_new.parquet` (also needs 3 PATs) |
 | 4 | `analysis/parse_base_logs.py` | FAIL | `data/interim/base_resolution_new.parquet` (also needs `data/raw`) |
 | 5 | `src/label/fault_revealing.py` | FAIL | `data/interim/base_resolution_new.parquet` |

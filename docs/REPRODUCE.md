@@ -36,6 +36,13 @@ Binding resolves against the pinned clone commits in `docs/CLONE_PINS.json`, not
 live HEAD (D-50). Re-pin with `uv run python analysis/binding_report.py
 --write-pins` only as a deliberate decision.
 
+`make tables` also exports `BR_OFFLINE=1`, under which `get_with_backoff()`
+raises `OfflineError` before acquiring a token or opening a socket, so a step
+that later gains a network call fails loudly instead of fetching.
+`analysis/resolve_bases.py` is no longer a `tables` step: it needs a PAT and the
+network and rewrites `base_resolution_new.parquet`, so it is the explicit
+`make resolve-bases` (refuses without `GITHUB_PAT_1/_2/_3`).
+
 ## 2. The commands
 
 ```bash
@@ -43,6 +50,7 @@ uv sync --extra graph
 make all                 # pytest + the mini-corpus reproduction
 make tables              # regenerates every number that reaches the paper
 make demo                # read-only walkthrough of one strict instance (needs data/graphs/)
+make resolve-bases       # network + PAT: rewrites base_resolution_new.parquet (NOT part of tables)
 uv run --extra graph python analysis/reproduce_mini_corpus.py --help
 ```
 
