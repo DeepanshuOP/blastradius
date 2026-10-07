@@ -1,4 +1,4 @@
-.PHONY: test tables fetch-base-logs figures all reproduce check-log-isolation
+.PHONY: test tables fetch-base-logs figures all reproduce check-log-isolation demo
 
 test:
 	uv run pytest -q
@@ -85,6 +85,10 @@ fetch-base-logs:
 		exit 1; \
 	fi
 	uv run python analysis/fetch_base_logs.py
+
+# Read-only, offline, deterministic walkthrough of one strict instance.
+demo:
+	uv run --extra graph python analysis/demo_walkthrough.py
 
 figures:
 	@echo "not implemented"

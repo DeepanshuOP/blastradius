@@ -38,6 +38,7 @@ asserts `make -n tables` never mentions the fetch, even with a PAT set.
 uv sync --extra graph
 make all                 # pytest + the mini-corpus reproduction
 make tables              # regenerates every number that reaches the paper
+make demo                # read-only walkthrough of one strict instance (needs data/graphs/)
 uv run --extra graph python analysis/reproduce_mini_corpus.py --help
 ```
 
@@ -52,6 +53,13 @@ per graph, default 50), `--out-dir DIR` (default `data/graphs_reproduce`, a
 fresh dir so builds are genuinely **cold**; pass `--out-dir data/graphs` to
 measure the warm path instead), `--keep` to retain the output, `--seed`
 (default 42).
+
+`make demo` (`analysis/demo_walkthrough.py`) is read-only, offline and
+deterministic. It exits 2 with `NO QUALIFYING INSTANCE` unless `data/graphs/`
+holds a graph at the resolved base of a strict mini-corpus instance. On a machine
+without one, `--build-graph-offline` builds it in a temp dir from local git
+objects only (`GIT_NO_LAZY_FETCH=1`; the clones are blobless, so a tree with
+missing blobs is skipped, never fetched).
 
 ## 3. The mini-corpus
 
