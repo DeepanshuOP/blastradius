@@ -6,13 +6,14 @@ optional: `write_figures` imports matplotlib lazily and skips with a warning if
 it is absent, so `make tables` emits the full measurement on a fresh clone with
 no plotting stack. Numbers are the paper; figures are a convenience.
 
-Four predictors are compared at k in {5, 10, 20} on ONE common set of
+Five predictors are compared at k in {5, 10, 20} on ONE common set of
 instances (those where the all-partners co-change proxy fires), so their rows
 are comparable:
   - co-change, all partner files;
-  - co-change restricted to test files (`is_test_filename`, the pipeline's only
-    file-level test predicate; the restriction is applied BEFORE the top-k cut,
-    so the k slots are spent on test files);
+  - co-change restricted to conventional test files
+    (`is_conventional_test_file`; PRIMARY test-only variant). The restriction is
+    applied BEFORE the top-k cut, so the k slots are spent on test files;
+  - the same restricted to `is_test_filename` (`"test"` in the path; sensitivity);
   - changeset baseline (the PR's changed files);
   - historical-frequency baseline (the k most frequently failing bound test
     files of the repo, from STRICT labels of instances that started strictly
@@ -36,12 +37,13 @@ import pandas as pd
 
 from analysis import paper_md
 from analysis.cochange_trailing import RepoHistory, read_history
-from src.parse.changeset import is_test_filename
+from src.parse.changeset import is_conventional_test_file, is_test_filename
 
 K_VALS = [5, 10, 20]
 METHODS = [
     ("co", "co-change, all partner files"),
-    ("co_test", "co-change, restricted to test files"),
+    ("co_test", "co-change, restricted to conventional test files"),
+    ("co_test_loose", "co-change, restricted to files with \"test\" in the path (sensitivity)"),
     ("b1", "changeset baseline"),
     ("b2", "historical-frequency baseline"),
 ]
@@ -335,14 +337,16 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int, cochange: str = "trailing
         if not F:
             continue
 
-        C_co, C_test = set(), set()
+        C_co, C_test, C_loose = set(), set(), set()
         for f in sorted(F):
             partners = cochange_partners(data, repo, f, row, cochange)
             if partners:
                 C_co.update(partners[:k])
-                C_test.update([b for b in partners if is_test_filename(b)][:k])
+                C_test.update([b for b in partners if is_conventional_test_file(b)][:k])
+                C_loose.update([b for b in partners if is_test_filename(b)][:k])
         C_co -= F
         C_test -= F
+        C_loose -= F
         if len(C_co) == 0:
             continue  # conditional on the proxy firing
 
@@ -351,7 +355,7 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int, cochange: str = "trailing
 
         rec = {'repo': repo, 'run_id': run_id, 'language': data.language_of.get(run_id), 'n_gt': len(GT),
                'co_test_fires': len(C_test) > 0}
-        for key, C in (('co', C_co), ('co_test', C_test), ('b1', F), ('b2', C_b2)):
+        for key, C in (('co', C_co), ('co_test', C_test), ('co_test_loose', C_loose), ('b1', F), ('b2', C_b2)):
             p, r, j = compute_metrics(C, GT)
             rec.update({f'{key}_p': p, f'{key}_r': r, f'{key}_j': j, f'{key}_size': len(C),
                         f'{key}_hit': len(C & GT)})
@@ -415,7 +419,8 @@ def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame],
     n_gt = sum(1 for (repo, rid) in run_to_gt if (repo, rid) in
                {(r['repo'], r['run_id']) for _, r in data.valid_runs.iterrows()})
     gt_files = [p for paths in run_to_gt.values() for p in paths]
-    n_test_gt = sum(1 for p in gt_files if is_test_filename(p))
+    n_conv = sum(1 for p in gt_files if is_conventional_test_file(p))
+    n_loose = sum(1 for p in gt_files if is_test_filename(p))
     text = paper_md.header("RQ1: co-change divergence and baselines", "analysis/rq1_divergence.py")
     text += "\n## Denominators\n\n"
     rows = [["strict instances (distinct run_ids with a strict label)", data.n_strict_instances,
@@ -442,15 +447,16 @@ def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame],
              "files skipped; `analysis/cochange_trailing.py`). The historical-frequency baseline reads strict "
              "labels of instances that started strictly earlier, each (test, instance) failure once. "
              "`leakage_audit.md` asserts both per instance.\n")
-    text += ("\n## Test-file predicate\n\n`is_test_filename` (`src/parse/changeset.py`): `\"test\"` in the lowercased "
-             "path. The binding step has no file-level predicate (it resolves ids to files by name), so this "
-             "is the pipeline's only one. Coverage of the ground truth by the predicate: "
-             f"{paper_md.rate(n_test_gt, len(gt_files))} ground-truth (instance, file) pairs pass it, so the restriction "
-             "removes a ground-truth file only to the extent that this fraction is below 100%.\n")
+    text += ("\n## Test-file predicates\n\nPrimary test-only variant: `is_conventional_test_file` "
+             "(`src/parse/changeset.py`): Java/Kotlin/Groovy under `src/test/` or named `*Test`, `*Tests`, `Test*`, `*IT`; "
+             "Python `test_*.py`, `*_test.py`, or `.py` under a `tests/` or `test/` directory. It accepts "
+             f"{paper_md.rate(n_conv, len(gt_files))} ground-truth (instance, file) pairs. "
+             "Sensitivity row: `is_test_filename` (`\"test\"` in the lowercased path), which accepts "
+             f"{paper_md.rate(n_loose, len(gt_files))}. A pair a predicate rejects can never be recalled by that variant.\n")
     for k, df in per_k.items():
         text += f"\n## k = {k}\n\n### Overall\n\n" + paper_md.table(METHOD_COLS, summarize(df))
         fires = int(df['co_test_fires'].sum())
-        text += (f"\nThe test-restricted co-change set is non-empty on {paper_md.rate(fires, len(df))} "
+        text += (f"\nThe conventional-test-restricted co-change set is non-empty on {paper_md.rate(fires, len(df))} "
                  "of these instances (an empty set scores P=R=J=0 here).\n")
         for lang in sorted(df['language'].dropna().unique()):
             sub = df[df['language'] == lang]
@@ -494,7 +500,8 @@ def main():
         n = len(df)
         print(f"\n=== k={k} (n={n}) ===")
         if n > 0:
-            for key, label in (("co", "Co-change"), ("co_test", "Co-change (test files only)"),
+            for key, label in (("co", "Co-change"), ("co_test", "Co-change (conventional test files only)"),
+                               ("co_test_loose", "Co-change ('test' in path; sensitivity)"),
                                ("b1", "Baseline 1 (Changeset)"), ("b2", "Baseline 2 (Historical Top-k)")):
                 print(f"{label}: Precision: {df[f'{key}_p'].mean():.3f}, Recall: {df[f'{key}_r'].mean():.3f}, "
                       f"Jaccard: {df[f'{key}_j'].mean():.3f} (Med size: {float(df[f'{key}_size'].median())})")

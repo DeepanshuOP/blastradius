@@ -23,6 +23,43 @@ def is_test_filename(filename: str) -> bool:
     return "test" in filename.lower()
 
 
+_JVM_SOURCE = (".java", ".kt", ".groovy")
+
+
+def is_conventional_test_file(path: str) -> bool:
+    """Whether `path` is a test source file by the build tools' own conventions.
+
+    Unlike :func:`is_test_filename` this does not look for the substring "test",
+    so `latest.py` and `contest.py` are not test files.
+
+    - Java / Kotlin / Groovy sources (`.java`, `.kt`, `.groovy`): under a
+      `src/test/` directory, or a class named `*Test`, `*Tests`, `Test*` or `*IT`
+      (case-sensitive, on the file stem).
+    - Python (`.py`): named `test_*.py` or `*_test.py`, or any `.py` under a
+      directory called `tests` or `test`.
+    - Anything else (e.g. `src/test/resources/x.json`) is not a test source.
+
+    Args:
+        path: Repo-relative path, `/`-separated.
+
+    Returns:
+        True if the path is a conventional test file.
+    """
+    parts = path.split("/")
+    name = parts[-1]
+    stem, dot, ext = name.rpartition(".")
+    if not dot:
+        return False
+    ext = "." + ext
+    if ext in _JVM_SOURCE:
+        under_src_test = any(parts[i] == "src" and parts[i + 1] == "test" for i in range(len(parts) - 2))
+        return (under_src_test or stem.endswith(("Test", "Tests", "IT")) or stem.startswith("Test"))
+    if ext == ".py":
+        return (name.startswith("test_") or stem.endswith("_test")
+                or any(d in ("tests", "test") for d in parts[:-1]))
+    return False
+
+
 @dataclass
 class ChangedFile:
     filename: str

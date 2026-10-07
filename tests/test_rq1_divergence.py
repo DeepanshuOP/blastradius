@@ -64,7 +64,8 @@ def test_excluding_a_label_changes_ground_truth_and_can_drop_the_instance() -> N
 def test_summarize_reports_every_method_with_n_over_d_micro_rates() -> None:
     rows = summarize(evaluate_k(make_data(), ground_truth(make_data()), 2, cochange="static"))
     assert [r[0] for r in rows] == [
-        "co-change, all partner files", "co-change, restricted to test files",
+        "co-change, all partner files", "co-change, restricted to conventional test files",
+        "co-change, restricted to files with \"test\" in the path (sensitivity)",
         "changeset baseline", "historical-frequency baseline",
     ]
     assert rows[0][5] == "1/2 (50.00%)" and rows[0][6] == "1/2 (50.00%)"
@@ -126,6 +127,14 @@ def test_trailing_mode_does_not_use_the_instances_own_head_commit(tmp_path) -> N
     data.cache.clear()
     data.history[REPO] = RepoHistory(data.history[REPO].commits, min_support=3)
     assert evaluate_k(data, ground_truth(data), 5, cochange="trailing").empty  # support 2 < 3: no partner
+
+
+def test_conventional_predicate_rejects_latest_py_that_the_loose_one_accepts() -> None:
+    data = make_data()
+    data.co_lookup = {REPO: {"src/A.py": ["src/latest.py", "tests/test_a.py", "src/contest.py"]}}
+    r = evaluate_k(data, ground_truth(data), 5, cochange="static").iloc[0]
+    assert (r["co_test_hit"], r["co_test_size"]) == (1, 1)              # tests/test_a.py only
+    assert (r["co_test_loose_hit"], r["co_test_loose_size"]) == (1, 3)  # latest.py, test_a.py, contest.py
 
 
 def test_figures_are_written_deterministically_when_matplotlib_is_present(tmp_path, monkeypatch) -> None:
