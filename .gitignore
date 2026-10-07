@@ -3,7 +3,11 @@ data/*
 corpus/
 /logs/
 worktrees/
-paper/generated/
+# The generated tables and figures are tracked (data: snapshot commits); anything else a script
+# leaves in the directory stays ignored.
+paper/generated/*
+!paper/generated/*.md
+!paper/generated/*.pdf
 __pycache__/
 .venv/
 *.parquet
