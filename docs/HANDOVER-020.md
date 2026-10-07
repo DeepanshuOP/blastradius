@@ -249,6 +249,8 @@ limitation. Say so in §V.
 
 ### 3.4 Binding rate — D-47, two numbers, never one
 
+> **Superseded by D-50:** the figures in this table (5,622 / 3,819 / 1,803) are now 5,643 / 3,820 / 1,823 of 5,985 (94.29% / 63.83% / 30.46%), measured against pinned clones (`docs/CLONE_PINS.json`). `not_found` is 178 / 5,985 (2.97%); `ambiguous` is unchanged at 164 / 5,985 (2.74%). The split rule itself stands.
+
 | Figure | Value | Supersedes |
 |---|---|---|
 | Combined binding | **5,622 / 5,985 (93.93%)** | 5,629 / 6,014 (93.60%) |

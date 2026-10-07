@@ -335,6 +335,12 @@ corrections is not a datasheet:
   | full confidence (FQCN) | 3,819 (63.81%) | **3,801 (63.51%)** |
   | basename-only, 0.5 confidence | 1,803 (30.13%) | **1,822 (30.44%)** |
 
+  **Superseded by D-50 (pinned clones):** combined 5,643 / 5,985 (94.29%),
+  full confidence 3,820 / 5,985 (63.83%), basename-only 1,823 / 5,985 (30.46%).
+  These supersede both columns above (D-47's 5,622 / 3,819 / 1,803 and the
+  2026-10-05 regeneration's 5,623 / 3,801 / 1,822), which differed only because
+  each machine's clones sat at a different HEAD.
+
   Gate 1.5 (≥70%, ROADMAP §37.1) remains **MET on the combined figure and NOT
   MET on the full-confidence subset**, which is D-47's whole point and is
   unchanged. Both numbers must continue to appear together.

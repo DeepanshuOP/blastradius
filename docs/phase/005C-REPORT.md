@@ -92,3 +92,5 @@ Hashes:
 2. **Clones are at HEAD but ids resolve for older SHAs, so tests added or moved since resolve not_found spuriously.** TRUE. 218 `not_found` test_ids were encountered, indicating that resolving at each instance's own SHA is required to achieve 100% accuracy.
 3. **PR numbers in instances_raw.parquet may not align with the on-disk pr/ directory sharding.** TRUE. The `build_changesets.py` run reported "Missing payloads: 500 out of 165349 PRs."
 4. **RQ1 overlap may be near zero.** TRUE. The overlap metrics for the fault-revealing set (Arm A) are extremely low (Precision: ~0.009, Recall: ~0.12, Jaccard: ~0.009), demonstrating a strong divergence between the co-change proxy impact set and execution reality.
+
+> **Further superseded by D-50:** combined 5,643 / 5,985 (94.29%) and full-confidence 3,820 / 5,985 (63.83%), against pinned clones; these replace D-47's 5,622 (93.93%) and 3,819 (63.81%).

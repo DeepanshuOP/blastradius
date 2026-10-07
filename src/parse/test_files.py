@@ -11,8 +11,8 @@ class FileResolution:
     candidates_considered: int
     confidence: float
 
-def _get_git_tree(repo_root: Path) -> set[str]:
-    out = subprocess.check_output(['git', '-C', str(repo_root), 'ls-tree', '-r', 'HEAD', '--name-only'], text=True)
+def _get_git_tree(repo_root: Path, rev: str = 'HEAD') -> set[str]:
+    out = subprocess.check_output(['git', '-C', str(repo_root), 'ls-tree', '-r', rev, '--name-only'], text=True)
     return set(out.splitlines())
 
 def resolve_test_file(test_id: TestId, repo_root: Path, _tree_cache: Optional[dict[str, list[str]]] = None) -> FileResolution:

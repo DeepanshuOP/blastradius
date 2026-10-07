@@ -464,3 +464,5 @@ here and no change is proposed.
     contract test, the code, and shipped data all use `#`. Unresolved.
 
 **Nothing was changed. Nothing was committed.**
+
+> **Binding counts further superseded by D-50:** 5,643 exact (94.29%), 164 ambiguous (2.74%), 178 not_found (2.97%) of 5,985, against pinned clones; these replace D-47's 5,622 / 164 / 199.

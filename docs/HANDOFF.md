@@ -981,5 +981,4 @@ contribution is the dataset and the measurement, deliberately not the model.- 20
 
 2026-09-07 | Claude | gitignore-audit | `.gitignore` line 2 (`data/*`) has no carve-out for `data/interim/` or `data/frame/`. The 3 tracked PIN files (`data/interim/{CORPUS,COCHANGE,INSTANCES}_PIN.json`) and 9 tracked frame files (`data/frame/`) therefore require `git add -f` on every future edit to any of them. A fresh clone is unaffected — these paths are already tracked and populate normally on checkout. Deferred until after the Prisha handover; not fixing `.gitignore` tonight. | docs/HANDOFF.md | not applicable | uncommitted | Architect decides whether to add `!data/interim/` and `!data/frame/**` carve-outs to `.gitignore`, or keep `-f` as the standing procedure.
 
-
-
+> **Binding figures quoted throughout this file (93.60%, and D-47's 5,622 / 3,819) are superseded by D-50:** 5,643 / 5,985 (94.29%) combined and 3,820 / 5,985 (63.83%) full-confidence, against pinned clones (`docs/CLONE_PINS.json`).

@@ -9,6 +9,8 @@ Re-derivation of test-to-source file binding across all 12,072 eligible logs fol
   - **Distinct Java test_id**: 5,115 (supersedes 5,144 pre-fix)
   - **Distinct Python test_id**: 870 (matches 870 pre-fix)
 
+> **Superseded by D-50:** exact 5,622 → 5,643 / 5,985 (93.93% → 94.29%); not_found 199 → 178 (3.32% → 2.97%); full confidence 3,819 → 3,820 (63.81% → 63.83%); basename-only 1,803 → 1,823 (30.13% → 30.46%); ambiguous 164 unchanged. Measured against pinned clones. The figures below are the D-47 record.
+
 ## Binding Status Breakdown (Total: 5,985)
 - **Exact**: 5,622 / 5,985 (93.93%, supersedes 5,629 / 6,014 = 93.60%)
 - **Not Found**: 199 / 5,985 (3.32%, supersedes 218 / 6,014 = 3.63%)

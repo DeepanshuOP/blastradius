@@ -3,7 +3,8 @@
 `analysis/binding_report.py` once scoped itself to whatever was present in
 `data/clones/`, which made its denominator a property of the machine. With 3 of
 43 repos cloned it reported 364 rows and exited 0, a figure not comparable with
-D-47's published 5,622 / 5,985 and 3,819 / 5,985. These tests pin the guard that
+the published binding figures (now D-50's 5,643 / 5,985 and 3,820 / 5,985, which
+supersede D-47's 5,622 / 3,819). These tests pin the guard that
 turns that into a hard error.
 
 The corpus list is read from the REAL `data/interim/parsed_outcomes.parquet`.
@@ -138,7 +139,7 @@ def test_the_subset_that_caused_this_guard_is_rejected(tmp_path: Path) -> None:
     with pytest.raises(SystemExit) as excinfo:
         require_complete_clones(clones_dir=tmp_path)
     assert "BLOCKED" in str(excinfo.value)
-    assert "5,622 / 5,985" in str(excinfo.value), "the error must cite D-47"
+    assert "D-50" in str(excinfo.value), "the error must cite the pinned-binding decision"
 
 
 @requires_data(PARSED)

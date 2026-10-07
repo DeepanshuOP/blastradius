@@ -594,3 +594,5 @@ cea9f9e fix: refuse to report a binding figure over an incomplete clone set
 3. **Whether the 20 blobless clones should be filled out to full clones**
    (§9.2) before any graph work extends beyond the mini-corpus.
 4. The identity flag in §7 above still stands.
+
+> **Superseded by D-50:** this report's regenerated 5,623 / 3,801 (and D-47's 5,622 / 3,819) are replaced by 5,643 / 3,820 of 5,985, against pinned clones. The three machines differed only in clone HEAD.

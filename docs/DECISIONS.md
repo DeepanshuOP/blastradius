@@ -137,6 +137,7 @@ parser limitation: corpus-wide fqcn_incomplete (13,182) exceeds fqcn_recovered (
 roughly 2:1 because most bare-class ids have no package anywhere in their log. This
 supersedes the previously published 5,629 / 6,014 = 93.60% reported as a single figure.
 Revisit trigger: a new package-recovery source is added to D-39's list.
+**Superseded in part by D-50**: the split rule stands; the figures 5,622 / 3,819 are replaced by 5,643 / 3,820.
 
 ### D-48: Graph layer excluded from the MSR 2027 paper; continues as a BITE497J deliverable
 **Date**: 2026-09-28.
@@ -158,3 +159,10 @@ These remain CUT: T2.2f (snapshot + delta storage, graph_index.parquet), T2.3e (
 **Context**: `data/interim/outcomes.parquet` (mtime 2026-08-31 21:02) predated `data/interim/parsed_outcomes.parquet` (2026-09-02 16:51), which is one of its four inputs per `src/label/fault_revealing.py`. The labels were never rebuilt after that parse. 33 distinct `test_id` values were present in `outcomes.parquet` and absent from the `parsed_outcomes.parquet` sitting beside it, so they existed only in a parse generation no longer on disk; by contrast the rebuilt pair is self-consistent at 2500/2500. Nothing in the pipeline detected this: no step compared an artifact's mtime with its inputs'. The discrepancy surfaced only because the JUnit 5 parameter-type fix (34aec6d) forced a re-parse and the old-vs-new comparison did not reconcile.
 **Decision**: The canonical chain is the rebuild from `data/raw/` at `34aec6d` with the parameter-type fix applied, in dependency order: `analysis/corpus_parse.py` (`--as-of 2026-08-29T14:13:00Z`, the pinned corpus) → `analysis/parse_base_logs.py` (local `RawStore` only, no network) → `src/label/fault_revealing.py` → `make tables`. Those are the only valid figures from this date forward. Every earlier interim-derived figure is SUPERSEDED, Gate 1's 778 strict positives among them, and Gate 1 is re-read against the rebuild. `data/interim.pre-pathfix/` is kept untouched as the on-disk record of the stale generation. Generation drift and the fix's own effect are not separated beyond the withdrawn/introduced `test_id` footprint reported in the step-2 supersession table; the fix-reverted re-parse that would have separated them was dropped by ruling, so no figure may be attributed to the fix alone beyond that footprint.
 **Revisit trigger**: any figure not traceable to a rebuild at or after `34aec6d`.
+
+### D-50: Binding resolves against pinned clone commits; canonical figures 5,643 / 3,820
+**Date**: 2026-10-07.
+**Decided by**: Deepanshu.
+**Context**: Binding resolved test ids against each clone's live HEAD, so the figure was a property of when a machine last fetched. It drifted across machines: D-47 5,622 combined / 3,819 full confidence; Prisha 5,623 / 3,801; this machine 5,643 / 3,820 (all of 5,985).
+**Decision**: Binding resolves against the commits in `docs/CLONE_PINS.json`, never HEAD. The pins are this machine's 43 clone HEADs. `is_usable_clone` also requires the pinned tree to be present (a blobless clone passes; a missing pinned sha is rejected). Canonical figures, as measured: combined 5,643 / 5,985 (94.29%) — supersedes D-47's 5,622 (93.93%) and Prisha's 5,623 (93.95%); full confidence 3,820 / 5,985 (63.83%) — supersedes 3,819 (63.81%) and 3,801 (63.51%); basename-only 1,823 / 5,985 (30.46%) — supersedes 1,803 and 1,822; not_found 178 / 5,985 (2.97%) — supersedes 199 (3.32%); ambiguous 164 / 5,985 (2.74%), unchanged. Gate 1.5 (≥70%, ROADMAP §37.1): **MET** on the combined figure, **NOT MET** on full confidence. D-47's split rule stands.
+**Revisit trigger**: per-instance-SHA binding (binding each instance against the tree at its own head or base SHA).

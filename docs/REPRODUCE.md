@@ -32,6 +32,10 @@ network call whatever the environment: the base-log fetch
 refuses to run without `GITHUB_PAT_1/_2/_3`. `tests/test_makefile_pat_gate.py`
 asserts `make -n tables` never mentions the fetch, even with a PAT set.
 
+Binding resolves against the pinned clone commits in `docs/CLONE_PINS.json`, not
+live HEAD (D-50). Re-pin with `uv run python analysis/binding_report.py
+--write-pins` only as a deliberate decision.
+
 ## 2. The commands
 
 ```bash

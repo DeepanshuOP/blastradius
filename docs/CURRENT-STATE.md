@@ -56,7 +56,8 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 | D-44 | Gate 1 reads against label count (positives), not instance count | IN FORCE |
 | D-45 | Secret-scan severity tiering: BLOCKER (tokens) vs REVIEW (email/hosts) | IN FORCE |
 | D-46 | Class-level failures counted, not emitted as test_ids | IN FORCE |
-| D-47 | Binding rate reported as split: combined (93.93%) & full-confidence (63.81%) | IN FORCE |
+| D-47 | Binding rate reported as split: combined & full-confidence (figures superseded by D-50) | IN FORCE (split rule); figures superseded by D-50 |
+| D-50 | Binding pinned to `docs/CLONE_PINS.json`: 5,643 / 5,985 (94.29%) combined, 3,820 / 5,985 (63.83%) full confidence | IN FORCE |
 
 ## 3. Current Figures Table
 | Figure | Current Value | Source File & Section |
@@ -65,7 +66,7 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 | Distinct Java ids | 5,115 | docs/phase/023-binding-rate.md §Corpus Scope & Outcomes |
 | Distinct Python ids | 870 | docs/phase/023-binding-rate.md §Corpus Scope & Outcomes |
 | Outcome rows | 20,451 | docs/phase/023-binding-rate.md §Corpus Scope & Outcomes |
-| Binding rate | 93.93% combined (63.81% full / 30.13% 0.5-conf) | docs/phase/023-binding-rate.md §Quality Breakdown |
+| Binding rate | 5,643 / 5,985 (94.29%) combined; 3,820 / 5,985 (63.83%) full; 1,823 / 5,985 (30.46%) 0.5-conf. Supersedes D-47's 5,622 (93.93%) / 3,819 (63.81%) / 1,803 (30.13%) | docs/DECISIONS.md §D-50 |
 | Bare-class Java ids | 2,043 / 5,115 (39.94%) | docs/phase/023-binding-rate.md §Residual Bare-Class Fragmentation |
 | Strict instances | 122 (INVARIANT-6) / 725 (EVIDENCE-ONLY) | docs/phase/017-REPORT.md §Phase 4 |
 | Strict labels | 423 (INVARIANT-6) / 4,100 (EVIDENCE-ONLY) | docs/phase/017-REPORT.md §Phase 4 |
@@ -89,7 +90,7 @@ Pipeline core operates under zero-LLM and strict reproducibility constraints; th
 - **6,014 tests & 20,535 outcomes** (docs/HANDOFF.md §3.1, docs/phase/020-parser-survey-REPORT.md) -> 5,985 & 20,451 (docs/phase/023-binding-rate.md §Corpus Scope & Outcomes).
 - **5,144 Java & 2,067 bare-class IDs** (docs/phase/020-parser-survey-REPORT.md) -> 5,115 & 2,043 (docs/phase/023-binding-rate.md §Residual Bare-Class Fragmentation).
 - **151 Python test IDs** (docs/HANDOFF.md §V Limitations) -> 870 (docs/phase/020-parser-survey-REPORT.md §c, docs/phase/023-binding-rate.md §Corpus Scope & Outcomes).
-- **93.60% single binding rate** (docs/HANDOFF.md §3.1) -> 93.93% combined / 63.81% full-confidence (docs/phase/023-binding-rate.md §Quality Breakdown, docs/DECISIONS.md §D-47).
+- **93.60% single binding rate** (docs/HANDOFF.md §3.1) -> 93.93% combined / 63.81% full-confidence (D-47) -> **94.29% combined (5,643 / 5,985) / 63.83% full-confidence (3,820 / 5,985)** (docs/DECISIONS.md §D-50, pinned clones).
 - **524 strict instances / 2,912 labels** (docs/HANDOFF.md §3.1) -> 122 / 423 (INVARIANT-6 in docs/phase/017-REPORT.md §Phase 4, docs/phase/018-REPORT.md §Phase 4).
 - **4.6 GB data/raw size** (docs/DECISIONS.md §D-41, docs/HANDOFF.md §3.1) -> 2.73 GB apparent content (transfer sizing) / 4.9 GiB on disk (destination free space; 2,734,020,926 B).
 
