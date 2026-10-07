@@ -68,6 +68,7 @@ tables:
 	uv run python analysis/paper_numbers.py
 	uv run python analysis/attrition_funnel.py
 	uv run python analysis/rq1_divergence.py
+	uv run python analysis/leakage_audit.py
 	uv run python analysis/infra_failure_audit.py
 	# The exact_green sweep itself needs PATs and runs for tens of minutes, so
 	# it is an explicit step (`uv run --env-file .env python

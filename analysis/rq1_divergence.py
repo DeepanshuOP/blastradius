@@ -10,21 +10,32 @@ Four predictors are compared at k in {5, 10, 20} on ONE common set of
 instances (those where the all-partners co-change proxy fires), so their rows
 are comparable:
   - co-change, all partner files;
-  - co-change restricted to test files (`is_test_filename`, the pipeline's
-    only file-level test predicate; restriction is applied BEFORE the top-k cut,
+  - co-change restricted to test files (`is_test_filename`, the pipeline's only
+    file-level test predicate; the restriction is applied BEFORE the top-k cut,
     so the k slots are spent on test files);
   - changeset baseline (the PR's changed files);
   - historical-frequency baseline (the k most frequently failing bound test
-    files of the repo before the run).
+    files of the repo, from STRICT labels of instances that started strictly
+    earlier, each (test, instance) failure counted once).
+
+Leakage: co-change is mined per instance from the commits strictly before that
+instance's `run_started_at` (`analysis/cochange_trailing.py`), not read from the
+static table whose window ends at the corpus pin. The legacy variants
+(`cochange="static"`, `hist="legacy"`) are kept only so `analysis/leakage_audit.py`
+and the old -> new comparison can regenerate the numbers they replace.
 """
 
+import datetime
+import json
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from analysis import paper_md
+from analysis.cochange_trailing import RepoHistory, read_history
 from src.parse.changeset import is_test_filename
 
 K_VALS = [5, 10, 20]
@@ -34,6 +45,11 @@ METHODS = [
     ("b1", "changeset baseline"),
     ("b2", "historical-frequency baseline"),
 ]
+COCHANGE_MODES = ("trailing", "trailing_both", "static")
+HIST_MODES = ("strict", "legacy")
+CLONES_DIR = Path("data/clones")
+CLONE_PINS = Path("docs/CLONE_PINS.json")
+COCHANGE_PIN = Path("data/interim/COCHANGE_PIN.json")
 
 def write_figures(dist_counts, k_vals, co_perf, b1_perf, b2_perf, co_test_perf=None):
     """Write the two RQ1 figures, or skip if matplotlib is not installed.
@@ -116,10 +132,49 @@ class Rq1Data:
     pr_to_changed: dict
     co_support_map: dict
     co_lookup: dict
-    hist_all: pd.DataFrame
+    hist_all: pd.DataFrame  # strict labels only, one row per (run_id, test_id)
     language_of: dict
     n_strict_instances: int
     valid_runs: pd.DataFrame = field(default=None)
+    history: dict = field(default_factory=dict)  # repo -> RepoHistory (trailing co-change)
+    head_sha_of: dict = field(default_factory=dict)  # run_id -> head sha
+    hist_legacy: pd.DataFrame | None = None  # all splits, as the baseline used to read them
+    cache: dict = field(default_factory=dict)  # (mode, repo, file, ts, sha) -> ranked partner paths
+
+
+def run_ts(started_at: str) -> int:
+    """Epoch seconds of an ISO-8601 `run_started_at` (UTC when no offset is given)."""
+    dt = datetime.datetime.fromisoformat(str(started_at).replace("Z", "+00:00"))
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=datetime.timezone.utc)
+    return int(dt.timestamp())
+
+
+def load_history(repos_ts: dict[str, tuple[int, int]], window_days: int, min_support: int,
+                 until_ts: int) -> dict[str, RepoHistory]:
+    """Read each repo's commit log at its pinned commit, back to the earliest window it needs.
+
+    Args:
+        repos_ts: `{repo: (earliest cutoff, latest cutoff)}` over the instances scored.
+        window_days: Trailing window of the co-change statistic.
+        min_support: Support threshold of the statistic.
+        until_ts: Newest commit time to read (the corpus pin, so the legacy window is covered).
+
+    Returns:
+        `{repo: RepoHistory}`.
+
+    Raises:
+        SystemExit: If a repo has no pinned commit or no clone (no silent fallback to HEAD).
+    """
+    pins = json.loads(CLONE_PINS.read_text())["pins"]
+    out = {}
+    for repo, (lo, _hi) in sorted(repos_ts.items()):
+        clone = CLONES_DIR / repo.replace("/", "__")
+        if repo not in pins or not clone.is_dir():
+            raise SystemExit(f"BLOCKED: no pinned clone for {repo}")
+        commits = read_history(clone, pins[repo], lo - window_days * 86400, until_ts)
+        out[repo] = RepoHistory(commits, window_days, min_support)
+    return out
 
 
 def load_data() -> Rq1Data:
@@ -136,11 +191,8 @@ def load_data() -> Rq1Data:
     bound = binding[binding['status'] == 'exact'].set_index(['repo', 'test_id'])['resolved_path'].to_dict()
 
     pr_to_changed = {}
-    for _, row in changesets.iterrows():
-        key = (row['repo'], str(row['pr_number']))
-        if key not in pr_to_changed:
-            pr_to_changed[key] = set()
-        pr_to_changed[key].add(row['filename'])
+    for repo, pr, filename in zip(changesets['repo'], changesets['pr_number'].astype(str), changesets['filename']):
+        pr_to_changed.setdefault((repo, pr), set()).add(filename)
 
     cochange['support'] = cochange['support'].astype(int)
     co_support_map = {}
@@ -154,15 +206,30 @@ def load_data() -> Rq1Data:
         for fa, subgrp in grp.groupby('file_a'):
             co_lookup[repo][fa] = subgrp['file_b'].tolist()
 
+    # Legacy baseline evidence: every split, so a strict label was counted up to three times.
     all_outcomes = pd.merge(outcomes, instances[['run_id', 'repo', 'run_started_at']], on='run_id', how='inner')
-    hist_all = all_outcomes.copy()
-    hist_all['resolved_path'] = hist_all.apply(lambda r: bound.get((r['repo'], r['test_id'])), axis=1)
+    hist_legacy = all_outcomes.copy()
+    hist_legacy['resolved_path'] = [bound.get(k) for k in zip(hist_legacy['repo'], hist_legacy['test_id'])]
+    hist_legacy = hist_legacy.dropna(subset=['resolved_path'])
+
+    # Current baseline evidence: the strict split only, each (run_id, test_id) once.
+    hist_all = strict_labels.drop_duplicates(subset=['run_id', 'test_id']).copy()
+    hist_all['resolved_path'] = [bound.get(k) for k in zip(hist_all['repo'], hist_all['test_id'])]
     hist_all = hist_all.dropna(subset=['resolved_path'])
 
     valid_runs = strict_labels.drop_duplicates(subset=['run_id'])
     language_of = instances.drop_duplicates('run_id').set_index('run_id')['language'].to_dict()
+    head_sha_of = instances.drop_duplicates('run_id').set_index('run_id')['head_sha'].to_dict()
+
+    pin = json.loads(COCHANGE_PIN.read_text())
+    spans = {}
+    for r in valid_runs.itertuples():
+        ts = run_ts(r.run_started_at)
+        lo, hi = spans.get(r.repo, (ts, ts))
+        spans[r.repo] = (min(lo, ts), max(hi, ts))
+    history = load_history(spans, pin['window_days'], pin['support_threshold'], run_ts(pin['as_of']))
     return Rq1Data(strict_labels, bound, pr_to_changed, co_support_map, co_lookup, hist_all,
-                   language_of, len(valid_runs), valid_runs)
+                   language_of, len(valid_runs), valid_runs, history, head_sha_of, hist_legacy)
 
 
 def ground_truth(data: Rq1Data, exclude: set | None = None) -> dict:
@@ -185,18 +252,79 @@ def ground_truth(data: Rq1Data, exclude: set | None = None) -> dict:
     return run_to_gt
 
 
-def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int) -> pd.DataFrame:
+def partner_stats(data: Rq1Data, repo: str, path: str, row, mode: str = "trailing") -> list:
+    """Ranked co-change partners of `path` for one instance, with support and confidence.
+
+    Args:
+        data: Loaded inputs.
+        repo: Repository.
+        path: A changed file.
+        row: The instance row (needs `run_id`, `run_started_at`).
+        mode: `trailing` (only commits strictly before the run, the static table's
+            one-sided reach) or `trailing_both` (same, partners in both directions).
+
+    Returns:
+        `Partner` records, best first.
+    """
+    cutoff, head = run_ts(row['run_started_at']), data.head_sha_of.get(row['run_id'])
+    key = (mode, repo, path, cutoff, head)
+    if key not in data.cache:
+        data.cache[key] = data.history[repo].partners(path, cutoff, exclude_sha=head,
+                                                      both_directions=(mode == "trailing_both"))
+    return data.cache[key]
+
+
+def cochange_partners(data: Rq1Data, repo: str, path: str, row, mode: str = "trailing") -> list[str]:
+    """Ranked co-change partner paths of `path` for one instance.
+
+    Args:
+        data: Loaded inputs.
+        repo: Repository.
+        path: A changed file.
+        row: The instance row (needs `run_id`, `run_started_at`).
+        mode: As :func:`partner_stats`, or `static` (legacy: the table mined to the corpus
+            pin, whose window ends after most runs started; it LEAKS).
+
+    Returns:
+        Partner paths, best first.
+    """
+    if mode == "static":
+        return data.co_lookup.get(repo, {}).get(path, [])
+    return [p.path for p in partner_stats(data, repo, path, row, mode)]
+
+
+def historical_evidence(data: Rq1Data, repo: str, row, hist: str = "strict") -> pd.DataFrame:
+    """The rows the historical-frequency baseline may read for one instance.
+
+    Args:
+        data: Loaded inputs.
+        repo: Repository.
+        row: The instance row (needs `run_started_at`).
+        hist: `strict` (strict labels once each) or `legacy` (all splits).
+
+    Returns:
+        Rows of the same repo with `run_started_at` strictly before the instance's.
+    """
+    frame = data.hist_legacy if hist == "legacy" else data.hist_all
+    return frame[(frame['repo'] == repo) & (frame['run_started_at'] < row['run_started_at'])]
+
+
+def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int, cochange: str = "trailing", hist: str = "strict") -> pd.DataFrame:
     """One row per instance on which the all-partners proxy fires at `k`.
 
     Args:
         data: Loaded inputs.
         run_to_gt: From :func:`ground_truth`.
         k: Partners kept per changed file.
+        cochange: See :func:`cochange_partners`.
+        hist: See :func:`historical_evidence`.
 
     Returns:
-        Columns repo, run_id, language, n_gt, and for each method in METHODS
-        `<m>_p`, `<m>_r`, `<m>_j`, `<m>_size`, `<m>_hit`, `<m>_pred`.
+        Columns repo, run_id, language, n_gt and for each method in METHODS
+        `<m>_p`, `<m>_r`, `<m>_j`, `<m>_size`, `<m>_hit`.
     """
+    if cochange not in COCHANGE_MODES or hist not in HIST_MODES:
+        raise ValueError(f"unknown mode: cochange={cochange!r}, hist={hist!r}")
     rows = []
     for _, row in data.valid_runs.iterrows():
         repo, run_id, pr = row['repo'], row['run_id'], str(row['pr_number'])
@@ -208,8 +336,8 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int) -> pd.DataFrame:
             continue
 
         C_co, C_test = set(), set()
-        for f in F:
-            partners = data.co_lookup.get(repo, {}).get(f)
+        for f in sorted(F):
+            partners = cochange_partners(data, repo, f, row, cochange)
             if partners:
                 C_co.update(partners[:k])
                 C_test.update([b for b in partners if is_test_filename(b)][:k])
@@ -218,8 +346,8 @@ def evaluate_k(data: Rq1Data, run_to_gt: dict, k: int) -> pd.DataFrame:
         if len(C_co) == 0:
             continue  # conditional on the proxy firing
 
-        hist = data.hist_all[(data.hist_all['repo'] == repo) & (data.hist_all['run_started_at'] < row['run_started_at'])]
-        C_b2 = set(hist['resolved_path'].value_counts().head(k).index.tolist()) if len(hist) > 0 else set()
+        h = historical_evidence(data, repo, row, hist)
+        C_b2 = set(h['resolved_path'].value_counts().head(k).index.tolist()) if len(h) > 0 else set()
 
         rec = {'repo': repo, 'run_id': run_id, 'language': data.language_of.get(run_id), 'n_gt': len(GT),
                'co_test_fires': len(C_test) > 0}
@@ -243,12 +371,47 @@ METHOD_COLS = ["method", "n", "mean P", "mean R", "mean J", "micro P (hits/predi
 
 
 def summarize(df: pd.DataFrame) -> list[list]:
-    """The four method rows for one slice of instances."""
+    """The method rows for one slice of instances."""
     return [_method_row(df, key, label) for key, label in METHODS]
 
 
-def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame]) -> None:
-    """Write `paper/generated/rq1.md`: denominators, then results overall and per language."""
+def applicability(data: Rq1Data, run_to_gt: dict, mode: str = "trailing") -> dict:
+    """Axis 1: how many changed files have a co-change partner at all (per instance, as of its start).
+
+    Args:
+        data: Loaded inputs.
+        run_to_gt: From :func:`ground_truth`; only instances with ground truth are counted.
+        mode: `trailing` / `trailing_both` / `static` as in :func:`cochange_partners`.
+
+    Returns:
+        `tot` changed files, `ge3` / `ge2` of them with a partner of support >= 3 / >= 2,
+        `dist` partners-per-file histogram, `instances` counted, `silent` instances
+        with no partner on any changed file.
+    """
+    files, silent = [], []
+    for _, row in data.valid_runs.iterrows():
+        repo = row['repo']
+        if (repo, row['run_id']) not in run_to_gt:
+            continue
+        F = data.pr_to_changed.get((repo, str(row['pr_number'])), set())
+        has_partner = False
+        for f in sorted(F):
+            if mode == "static":
+                supports = data.co_support_map.get((repo, f), [])
+            else:
+                supports = [p.support for p in partner_stats(data, repo, f, row, mode)]
+            files.append({'ge_3': sum(1 for s in supports if s >= 3), 'ge_2': sum(1 for s in supports if s >= 2),
+                          'all': len(supports)})
+            has_partner = has_partner or len(supports) > 0
+        silent.append(not has_partner)
+    df = pd.DataFrame(files)
+    dist = pd.cut(df['all'], bins=[0, 1, 3, 6, 11, np.inf], labels=['0', '1-2', '3-5', '6-10', '11+'], right=False)
+    return {'tot': len(df), 'ge3': int((df['ge_3'] > 0).sum()), 'ge2': int((df['ge_2'] > 0).sum()),
+            'dist': dist.value_counts().sort_index(), 'instances': len(silent), 'silent': int(sum(silent))}
+
+
+def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame], app: dict | None = None) -> None:
+    """Write `paper/generated/rq1.md`: denominators, applicability, then results overall and per language."""
     n_gt = sum(1 for (repo, rid) in run_to_gt if (repo, rid) in
                {(r['repo'], r['run_id']) for _, r in data.valid_runs.iterrows()})
     gt_files = [p for paths in run_to_gt.values() for p in paths]
@@ -264,9 +427,21 @@ def write_rq1_md(data: Rq1Data, run_to_gt: dict, per_k: dict[int, pd.DataFrame])
                      len(df), paper_md.rate(len(df), n_gt)])
     text += paper_md.table(["denominator", "n", "share of its parent (strict instances for GT; GT instances for fires)"],
                            rows)
-    text += ("\nAll four methods are scored on the SAME instances (those where the all-partners proxy "
+    text += ("\nAll methods are scored on the SAME instances (those where the all-partners proxy "
              "fires), so n is identical across methods within a k. Mean P/R/J are macro means over "
              "instances; micro P and R pool hits over all instances.\n")
+    if app:
+        text += "\n## Applicability (Axis 1)\n\n" + paper_md.table(["measure", "n/d"], [
+            ["changed files with >= 1 partner at support >= 3", paper_md.rate(app['ge3'], app['tot'])],
+            ["changed files with >= 1 partner at support >= 2", paper_md.rate(app['ge2'], app['tot'])],
+            ["instances where the proxy is entirely silent", paper_md.rate(app['silent'], app['instances'])]])
+        text += "\nPartners-per-changed-file distribution (any support):\n\n" + paper_md.table(
+            ["partners", "changed files"], [[k, paper_md.rate(int(v), app['tot'])] for k, v in app['dist'].items()])
+    text += ("\n## Leakage control\n\nCo-change partners are mined per instance from commits with committer time "
+             "strictly before that instance's `run_started_at` (trailing 365 days, support >= 2, commits over 50 "
+             "files skipped; `analysis/cochange_trailing.py`). The historical-frequency baseline reads strict "
+             "labels of instances that started strictly earlier, each (test, instance) failure once. "
+             "`leakage_audit.md` asserts both per instance.\n")
     text += ("\n## Test-file predicate\n\n`is_test_filename` (`src/parse/changeset.py`): `\"test\"` in the lowercased "
              "path. The binding step has no file-level predicate (it resolves ids to files by name), so this "
              "is the pipeline's only one. Coverage of the ground truth by the predicate: "
@@ -295,49 +470,15 @@ def main():
     # AXIS 1: APPLICABILITY
     # --------------------------------------------------------------------------
     print("\nAXIS 1 - APPLICABILITY")
-    all_changed_files = []
-    instance_silent = []
-
-    for _, row in valid_runs.iterrows():
-        repo = row['repo']
-        run_id = row['run_id']
-        pr = str(row['pr_number'])
-        if (repo, run_id) not in run_to_gt:
-            continue
-
-        F = pr_to_changed.get((repo, pr), set())
-
-        instance_has_partner = False
-        for f in F:
-            supports = co_support_map.get((repo, f), [])
-            partners_ge_3 = sum(1 for s in supports if s >= 3)
-            partners_ge_2 = sum(1 for s in supports if s >= 2)
-            partners_all = len(supports)
-            all_changed_files.append({
-                'repo': repo, 'file': f,
-                'ge_3': partners_ge_3, 'ge_2': partners_ge_2, 'all': partners_all
-            })
-            if partners_all > 0:
-                instance_has_partner = True
-        instance_silent.append(not instance_has_partner)
-
-    df_files = pd.DataFrame(all_changed_files)
-    tot = len(df_files)
-    ge3_cnt = len(df_files[df_files['ge_3'] > 0])
-    ge2_cnt = len(df_files[df_files['ge_2'] > 0])
+    app = applicability(data, run_to_gt)
+    tot, ge3_cnt, ge2_cnt = app['tot'], app['ge3'], app['ge2']
     print(f"Total changed files in instances with GT: {tot}")
     print(f">=1 partner at support >=3: {ge3_cnt} / {tot} ({ge3_cnt/tot:.1%})")
     print(f">=1 partner at support >=2: {ge2_cnt} / {tot} ({ge2_cnt/tot:.1%})")
-
-    bins = [0, 1, 3, 6, 11, np.inf]
-    labels = ['0', '1-2', '3-5', '6-10', '11+']
-    dist = pd.cut(df_files['all'], bins=bins, labels=labels, right=False)
     print("Distribution of partners-per-changed-file (any support):")
-    dist_counts = dist.value_counts().sort_index()
+    dist_counts = app['dist']
     print(dist_counts)
-
-    silent_cnt = sum(instance_silent)
-    tot_inst = len(instance_silent)
+    silent_cnt, tot_inst = app['silent'], app['instances']
     print(f"Instances with at least one changed file with any partner: {tot_inst - silent_cnt} / {tot_inst} ({(tot_inst - silent_cnt)/tot_inst:.1%})")
     print(f"Proxy is entirely silent on {silent_cnt} / {tot_inst} ({silent_cnt/tot_inst:.1%}) of instances.")
 
@@ -362,7 +503,7 @@ def main():
             b1_perf.append((df['b1_p'].mean(), df['b1_r'].mean()))
             b2_perf.append((df['b2_p'].mean(), df['b2_r'].mean()))
 
-    write_rq1_md(data, run_to_gt, per_k)
+    write_rq1_md(data, run_to_gt, per_k, app)
     print("\nWrote paper/generated/rq1.md")
 
     # --------------------------------------------------------------------------
