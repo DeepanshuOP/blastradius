@@ -5,6 +5,24 @@ import json
 from pathlib import Path
 import re
 
+
+def is_test_filename(filename: str) -> bool:
+    """The pipeline's file-level test predicate: `"test"` in the lowercased path.
+
+    This is the predicate behind `touches_test_file`. The binding step
+    (`src/parse/test_files.py`) resolves ids to files by name and has no
+    file-level predicate of its own, so analyses that must classify a file as a
+    test file reuse this one.
+
+    Args:
+        filename: Repo-relative path.
+
+    Returns:
+        True if the path names a test file under this predicate.
+    """
+    return "test" in filename.lower()
+
+
 @dataclass
 class ChangedFile:
     filename: str
@@ -86,7 +104,7 @@ def extract_changeset(repo: str, pr_number: str, head_sha: str, raw_dir: Path = 
         ))
         
         lower_name = filename.lower()
-        if "test" in lower_name:
+        if is_test_filename(filename):
             touches_test = True
             
         if "build.gradle" in lower_name or "pom.xml" in lower_name or "setup.py" in lower_name:
