@@ -66,6 +66,7 @@ tables:
 	uv run python analysis/binding_report.py
 	uv run python analysis/attrition_funnel.py
 	uv run python analysis/rq1_divergence.py
+	uv run python analysis/infra_failure_audit.py
 	# The exact_green sweep itself needs PATs and runs for tens of minutes, so
 	# it is an explicit step (`uv run --env-file .env python
 	# analysis/verify_exact_green.py`), not part of `tables`. What `tables`
