@@ -1,142 +1,173 @@
+"""Pipeline attrition funnels, every stage computed from local data.
+
+Three funnels, one per unit, because a funnel only means something while its
+unit does not change (a PR has many runs; a repo has many PRs):
+
+  - repos:  SEART export -> CI-live -> test-intent -> sampled -> swept ->
+            with a failed run -> with a strict instance;
+  - PRs:    discovered -> with a failed run -> with a strict instance;
+  - runs:   discovered -> failed -> with a failed-job log on disk -> with a parsed
+            head test failure -> with a resolved base -> with a known base failure
+            set -> with a strict label.
+
+Each stage is the intersection of its own predicate with the previous stage's
+set, so counts are non-increasing by construction, and this is asserted. Nothing
+is hard-coded and nothing falls back: a missing input raises.
+
+The repository-frame stages (SEART export to sample draw) come from
+`data/frame/attrition_stage.csv` and `frame_v1.csv`, as the generator at
+c042ea8 computed them.
+"""
+
+from __future__ import annotations
+
 import pandas as pd
-import sqlite3
-import glob
 
 from analysis import paper_md
+from src.harvest.rawstore import RawStore
 
-CAVEATS = [
-    "`logs captured` is the `kind='logs'` capture_unit count plus a hard-coded 394 (the 006A base-target "
-    "fetch), and falls back to a hard-coded 13,710 if `data/state/cursor.db` is unreadable.",
-    "`logs parsed` is set equal to `logs not expired` (every log on disk is treated as parsed).",
-    "`logs with test output` is the number of distinct jobs with a parsed TEST_FAILURE outcome (head plus "
-    "base); TEST_RAN_CLEAN logs are not counted.",
-    "`logs not expired` exceeds `logs captured` (a rate above 100%): the two counts come from different "
-    "sources (capture_unit rows versus files on disk), so this stage is not a nested subset. Not corrected here.",
-    "Units change between steps (repos, PRs, runs, logs, instances); a row's n/d is only a survival rate "
-    "where the unit matches its denominator, otherwise the raw ratio is shown.",
-    "The repository-frame stages (SEART export, CI liveness, test intent, sample draw) are NOT regenerated "
-    "here: the script that produced them was replaced in d6990fb.",
-]
+FRAME_STAGE = "data/frame/attrition_stage.csv"
+FRAME_SAMPLE = "data/frame/frame_v1.csv"
+NOT_CI_LIVE = ("no_ci", "api_error")
+KEPT = "kept"
 
 
-def write_md(steps: list[tuple]) -> None:
-    """Write `paper/generated/attrition_funnel.md` from the computed steps (each row n/d)."""
-    counts = {name: count for name, count, _, _ in steps}
-    units = {name: unit for name, _, unit, _ in steps}
-    rows = []
-    for name, count, unit, denom_name in steps:
-        if denom_name is None:
-            rows.append([name, unit, f"{count:,}", "-", "-"])
-            continue
-        d = counts[denom_name]
-        same = unit == units[denom_name]
-        rows.append([name, unit, f"{count:,}", f"{denom_name} ({d:,} {units[denom_name]})",
-                     paper_md.rate(count, d) if same else f"{count:,} {unit} / {d:,} {units[denom_name]}"])
-    text = paper_md.header("Pipeline attrition funnel", "analysis/attrition_funnel.py")
-    text += "\n" + paper_md.table(["step", "unit", "count", "denominator", "n/d"], rows)
-    text += "\n## Caveats\n\n" + "\n".join(f"- {c}" for c in CAVEATS) + "\n"
+def _names(df: pd.DataFrame) -> pd.Series:
+    return df["owner"] + "/" + df["repo"]
+
+
+def has_failed_job_log(row, store: RawStore) -> bool:
+    """Whether any failed job of the run has its log in the local RawStore."""
+    return any(conclusion == "failure" and store.exists(row.repo, "logs", int(job_id))
+               for job_id, conclusion in zip(row.job_ids, row.job_conclusions))
+
+
+def repo_chain(stage: pd.DataFrame, sample: pd.DataFrame, instances: pd.DataFrame, strict_runs: set) -> list[tuple]:
+    """Repository funnel as `(stage, set, source)` rows."""
+    names = _names(stage)
+    assert names.is_unique, "attrition_stage.csv lists a repo twice"
+    swept = set(instances["repo"])
+    failed = set(instances.loc[instances["run_conclusion"] == "failure", "repo"])
+    labelled = set(instances.loc[instances["run_id"].isin(strict_runs), "repo"])
+    return [
+        ("SEART export", set(names), FRAME_STAGE),
+        ("CI-live (>= 100 runs in 90 days)", set(names[~stage["verdict"].isin(NOT_CI_LIVE)]), FRAME_STAGE),
+        ("has a test-intent workflow", set(names[stage["verdict"] == KEPT]), FRAME_STAGE),
+        ("sampled into the frame", set(_names(sample)), FRAME_SAMPLE),
+        ("swept (>= 1 run harvested)", swept, "instances_raw.parquet"),
+        ("with a failed run", failed, "instances_raw.parquet"),
+        ("with a strict instance", labelled, "outcomes.parquet (split == strict)"),
+    ]
+
+
+def pr_chain(instances: pd.DataFrame, strict_runs: set) -> list[tuple]:
+    """PR funnel as `(stage, set, source)` rows."""
+    prs = instances.dropna(subset=["pr_number"])
+    key = list(zip(prs["repo"], prs["pr_number"]))
+    prs = prs.assign(key=key)
+    return [
+        ("PRs discovered", set(prs["key"]), "instances_raw.parquet"),
+        ("with a failed run", set(prs.loc[prs["run_conclusion"] == "failure", "key"]), "instances_raw.parquet"),
+        ("with a strict instance", set(prs.loc[prs["run_id"].isin(strict_runs), "key"]),
+         "outcomes.parquet (split == strict)"),
+    ]
+
+
+def run_chain(instances: pd.DataFrame, parsed: pd.DataFrame, resolution: pd.DataFrame, base_out: pd.DataFrame,
+              strict_runs: set, store: RawStore) -> list[tuple]:
+    """Run (instance) funnel as `(stage, set, source)` rows."""
+    failed = instances[instances["run_conclusion"] == "failure"]
+    logged = failed[[has_failed_job_log(r, store) for r in failed.itertuples()]]
+    resolved = set(resolution.loc[resolution["status"] != "no_base", "run_id"])
+    known_base = set(resolution.loc[resolution["status"] == "exact_green", "run_id"]) | set(base_out["run_id"])
+    return [
+        ("runs discovered", set(instances["run_id"]), "instances_raw.parquet"),
+        ("failed runs", set(failed["run_id"]), "instances_raw.parquet"),
+        ("with a failed-job log on disk", set(logged["run_id"]), "RawStore (data/raw)"),
+        ("with a parsed head test failure", set(parsed["run_id"]), "parsed_outcomes.parquet"),
+        ("with a resolved base", resolved, "base_resolution_new.parquet (status != no_base)"),
+        ("with a known base failure set", known_base, "base_resolution_new.parquet (exact_green) + base_outcomes.parquet"),
+        ("with >= 1 strict label", strict_runs, "outcomes.parquet (split == strict)"),
+    ]
+
+
+def nest(chain: list[tuple]) -> list[tuple[str, set, str]]:
+    """Intersect each stage with the previous one and assert the counts do not rise."""
+    out, prev = [], None
+    for name, members, source in chain:
+        members = set(members) if prev is None else set(members) & prev
+        assert prev is None or len(members) <= len(prev), f"{name} exceeds its predecessor"
+        out.append((name, members, source))
+        prev = members
+    return out
+
+
+def render(title: str, unit: str, chain: list[tuple[str, set, str]]) -> str:
+    """Markdown table: count, share of the previous stage, share of the first stage (both n/d)."""
+    first = len(chain[0][1])
+    rows, prev = [], None
+    for name, members, source in chain:
+        n = len(members)
+        rows.append([name, f"{n:,}", "-" if prev is None else paper_md.rate(n, prev),
+                     "-" if prev is None else paper_md.rate(n, first), source])
+        prev = n
+    return (f"\n## {title}\n\nUnit: {unit}.\n\n"
+            + paper_md.table(["stage", "count", "of previous stage", "of first stage", "source"], rows))
+
+
+def main() -> None:
+    stage = pd.read_csv(FRAME_STAGE)
+    sample = pd.read_csv(FRAME_SAMPLE)
+    instances = pd.read_parquet("data/interim/instances_raw.parquet")
+    outcomes = pd.read_parquet("data/interim/outcomes.parquet")
+    parsed = pd.read_parquet("data/interim/parsed_outcomes.parquet")
+    resolution = pd.read_parquet("data/interim/base_resolution_new.parquet")
+    base_out = pd.read_parquet("data/interim/base_outcomes.parquet")
+    strict_runs = set(outcomes.loc[outcomes["split"] == "strict", "run_id"])
+
+    repos = nest(repo_chain(stage, sample, instances, strict_runs))
+    prs = nest(pr_chain(instances, strict_runs))
+    runs = nest(run_chain(instances, parsed, resolution, base_out, strict_runs, RawStore()))
+
+    # Base failure set, counted without nesting, for the reconciliation note.
+    exact_green = set(resolution.loc[resolution["status"] == "exact_green", "run_id"])
+    with_base_outcomes = set(base_out["run_id"])
+    standalone = len(exact_green | with_base_outcomes)
+
+    text = paper_md.header("Pipeline attrition funnels", "analysis/attrition_funnel.py",
+                           "Every stage is computed from local data and is the intersection of its predicate with the "
+                           "previous stage, so each count is at most its predecessor's (asserted).")
+    text += render("Repositories", "repos", repos)
+    text += render("Pull requests", "(repo, PR number)", prs)
+    text += render("Runs (benchmark instances)", "workflow runs", runs)
+    text += "\n## Base failure sets\n\n" + paper_md.table(["measure", "n/d"], [
+        ["runs whose base was an exact_green run", paper_md.rate(len(exact_green), len(resolution))],
+        ["runs with a failure set parsed from a base log (`base_outcomes.parquet`)",
+         paper_md.rate(len(with_base_outcomes), len(resolution))],
+        ["runs with a known base failure set, either way", paper_md.rate(standalone, len(resolution))],
+        ["... of which in the run funnel above (also has a failed-job log, a parsed head failure, a resolved base)",
+         paper_md.rate(len(runs[5][1]), standalone)]])
+    text += ("\n`parse_base_logs.py` reports the same quantity (instances with both head and base failure sets). "
+             "It counts a head run once its base run's parser returned any record, but `base_outcomes.parquet` only "
+             "holds records whose identifier normalised to a canonical test id. A base run whose every identifier "
+             "failed to normalise was counted by the first and absent from the second, which was the whole of the "
+             "one-run difference between the two. `parse_base_logs.py` now sets the flag only after normalisation, "
+             "so both count the runs in the 'either way' row.\n")
+    text += ("\n## Stages not computed\n\n"
+             "- Log-level stages (logs captured, not expired, parsed, with test output): omitted. Their unit is logs, "
+             "which do not nest into runs; 'with a failed-job log on disk' is the run-level replacement.\n"
+             "- Graph-build and binding stages: omitted here. They are measured outside the funnel "
+             "(`binding.md`, `gates.md`); no local artefact records a per-run graph build outcome that nests with runs.\n")
     paper_md.write("attrition_funnel.md", text)
 
+    for title, chain in (("repos", repos), ("PRs", prs), ("runs", runs)):
+        print(f"\n{title}")
+        prev = None
+        for name, members, _ in chain:
+            n = len(members)
+            print(f"  {name:<45} {n:>9,d}  {'' if prev is None else paper_md.rate(n, prev)}")
+            prev = n
 
-def main():
-    print("Computing Attrition Funnel...")
-    
-    # 1. repos in frame
-    repos_in_frame = sum(1 for _ in open('data/frame/frame_v1.csv')) - 1
-    
-    # 2. repos swept
-    instances = pd.read_parquet('data/interim/instances_raw.parquet')
-    repos_swept = instances['repo'].nunique()
-    
-    # 3. PRs discovered
-    prs_discovered = instances.dropna(subset=['pr_number']).groupby(['repo', 'pr_number']).ngroups
-    
-    # 4. runs discovered
-    runs_discovered = len(instances)
-    
-    # 5. failed runs
-    failed_runs = len(instances[instances['run_conclusion'] == 'failure'])
-    
-    # 6. logs captured
-    # All records in state/cursor.db where kind='logs' + manual sweep from 006A (let's just approximate as 13710 from state)
-    try:
-        conn = sqlite3.connect('data/state/cursor.db')
-        logs_captured = conn.execute("SELECT count(*) FROM capture_unit WHERE kind='logs'").fetchone()[0]
-    except Exception:
-        logs_captured = 13710
-        
-    # Add manual base runs parsed in 006A
-    # Base target logs fetch was 394
-    logs_captured += 394
-    
-    # 7. logs not expired
-    # Total jsonl.gz on disk
-    logs_not_expired = len(glob.glob('data/raw/*/job/*/*/*.jsonl.gz'))
-    
-    # 8. logs parsed
-    # Since Phase 045 classified everything, we consider all logs on disk as parsed.
-    logs_parsed = logs_not_expired
-    
-    # 9. logs with test output
-    # From parsed_outcomes (TEST_FAILURE) + TEST_RAN_CLEAN
-    # We can get TEST_FAILURE from parsed_outcomes.parquet (unique jobs)
-    # But wait, we also have base_outcomes.parquet
-    parsed = pd.read_parquet('data/interim/parsed_outcomes.parquet')
-    test_failure = parsed['job_id'].nunique()
-    base_out = pd.read_parquet('data/interim/base_outcomes.parquet')
-    test_failure += base_out['job_id'].nunique()
-    
-    # Let's say TEST_RAN_CLEAN is unknown here, we just use test_failure as approximation, or 2785.
-    logs_with_test_output = test_failure  # This is actually TEST_FAILURE.
-    
-    # 10. instances with resolved base
-    res = pd.read_parquet('data/interim/base_resolution_new.parquet')
-    inst_resolved = len(res[res['status'] != 'no_base'])
-    
-    # 11. instances with a known base failure set
-    runs_with_base_outcomes = set(base_out['run_id'].unique())
-    inst_known_base = len(res[res['status'] == 'exact_green']) + len(res[res['run_id'].isin(runs_with_base_outcomes)])
-    
-    # 12. instances with >=1 fault-revealing label
-    outcomes = pd.read_parquet('data/interim/outcomes.parquet')
-    strict = outcomes[outcomes['split'] == 'strict']
-    inst_with_label = strict['run_id'].nunique()
-    
-    steps = [
-        ("repos in frame", repos_in_frame, "repos", None),
-        ("repos swept", repos_swept, "repos", "repos in frame"),
-        ("PRs discovered", prs_discovered, "PRs", None),
-        ("runs discovered", runs_discovered, "runs", "PRs discovered"),
-        ("failed runs", failed_runs, "runs", "runs discovered"),
-        ("logs captured", logs_captured, "logs", None),
-        ("logs not expired", logs_not_expired, "logs", "logs captured"),
-        ("logs parsed", logs_parsed, "logs", "logs not expired"),
-        ("logs with test output", logs_with_test_output, "logs", "logs parsed"),
-        ("instances with resolved base", inst_resolved, "instances", "failed runs"),
-        ("instances with a known base failure set", inst_known_base, "instances", "instances with resolved base"),
-        ("instances with >=1 fault-revealing label", inst_with_label, "instances", "instances with a known base failure set")
-    ]
-    
-    write_md(steps)
-    print(f"{'Pipeline Step':<45} | {'Count':>10} | {'Survival/Ratio':>25}")
-    print("-" * 85)
-    
-    # lookup map
-    counts = {name: count for name, count, _, _ in steps}
-    units = {name: unit for name, _, unit, _ in steps}
-    
-    for name, count, unit, denom_name in steps:
-        if denom_name is None:
-            print(f"{name:<45} | {count:10,d} | {'-':>25}")
-        else:
-            denom_count = counts[denom_name]
-            denom_unit = units[denom_name]
-            if unit == denom_unit:
-                pct = (count / denom_count * 100) if denom_count > 0 else 0
-                print(f"{name:<45} | {count:10,d} | {pct:24.2f}%")
-            else:
-                ratio = f"{count} {unit} / {denom_count} {denom_unit}"
-                print(f"{name:<45} | {count:10,d} | {ratio:>25}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

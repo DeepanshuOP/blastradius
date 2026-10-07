@@ -73,11 +73,13 @@ def run(as_of: str = None, limit: int = None):
                 
             logs_parsed += 1
             if parsed_outcomes:
-                base_run_yielded_identifiers[b_id] = True
                 for o in parsed_outcomes:
                     canonical_id = normalize_test_id(o.test_id, None)
                     if not canonical_id:
                         continue
+                    # Only a normalised identifier is a usable base failure set; flagging the
+                    # base run before this point counted runs that wrote no outcome row.
+                    base_run_yielded_identifiers[b_id] = True
                     distinct_test_ids.add(canonical_id.canonical)
                     
                     for h_id in base_run_to_head_runs[b_id]:
