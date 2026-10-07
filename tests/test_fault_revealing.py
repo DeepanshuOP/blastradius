@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.label.fault_revealing import compute_labels
+from src.label.fault_revealing import compute_labels, gate1_lines
 from pathlib import Path
 
 def test_no_base_omitted():
@@ -133,3 +133,28 @@ def test_strict_excludes_flaky(real_data):
     out, _ = compute_labels(r_res, r_inst, r_head, r_base)
     assert len(out[(out['test_id'] == 'T1') & (out['run_id'] == r1) & (out['split'] == 'relaxed')]) == 1
     assert len(out[(out['test_id'] == 'T1') & (out['run_id'] == r1) & (out['split'] == 'strict')]) == 0
+
+
+def test_gate1_lines_report_labels_first_then_instances():
+    """D-44: labels are primary. 3 strict labels over 2 runs; others are ignored."""
+    out = pd.DataFrame({
+        "run_id": [1, 1, 2, 1, 3],
+        "test_id": ["a", "b", "c", "a", "z"],
+        "split": ["strict", "strict", "strict", "relaxed", "all"],
+    })
+    assert gate1_lines(out) == [
+        "Gate 1 (D-44, primary) labels: 3 / 5000 (Met? No)",
+        "Gate 1 (secondary) instances: 2 / 5000 (Met? No)",
+    ]
+
+
+def test_gate1_lines_meet_when_labels_reach_the_threshold():
+    out = pd.DataFrame({
+        "run_id": [1] * 5000,
+        "test_id": [str(i) for i in range(5000)],
+        "split": ["strict"] * 5000,
+    })
+    assert gate1_lines(out) == [
+        "Gate 1 (D-44, primary) labels: 5000 / 5000 (Met? Yes)",
+        "Gate 1 (secondary) instances: 1 / 5000 (Met? No)",
+    ]

@@ -103,6 +103,30 @@ def compute_labels(res_df, instances_df, head_parsed, base_parsed):
         "n_matrix_legs_handled": head_parsed['run_id'].duplicated(keep=False).sum() # approximate
     }
 
+GATE1_THRESHOLD = 5000
+
+
+def gate1_lines(outcomes: pd.DataFrame) -> list[str]:
+    """Gate 1 report lines: labels (D-44, primary) then instances, both vs 5,000.
+
+    Args:
+        outcomes: The `outcomes` frame (columns run_id, test_id, split).
+
+    Returns:
+        Two printable lines.
+    """
+    strict = outcomes[outcomes['split'] == 'strict']
+    labels, instances = len(strict), strict['run_id'].nunique()
+
+    def met(n: int) -> str:
+        return 'Yes' if n >= GATE1_THRESHOLD else 'No'
+
+    return [
+        f"Gate 1 (D-44, primary) labels: {labels} / {GATE1_THRESHOLD} (Met? {met(labels)})",
+        f"Gate 1 (secondary) instances: {instances} / {GATE1_THRESHOLD} (Met? {met(instances)})",
+    ]
+
+
 if __name__ == '__main__':
     res = pd.read_parquet('data/interim/base_resolution_new.parquet')
     instances = pd.read_parquet('data/interim/instances_raw.parquet')
@@ -124,5 +148,6 @@ if __name__ == '__main__':
         distinct_tests = split_df['test_id'].nunique()
         print(f"Split {split}: {instances_cnt} instances, {labels_cnt} labels, {distinct_tests} distinct tests")
         
-    positives = outcomes[outcomes['split'] == 'strict']['run_id'].nunique()
-    print(f"Gate 1 Positives: {positives} / 5000 (Met? {'Yes' if positives >= 5000 else 'No'})")
+    for line in gate1_lines(outcomes):
+        print(line)
+
