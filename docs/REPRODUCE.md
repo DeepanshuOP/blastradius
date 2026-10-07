@@ -82,9 +82,9 @@ with missing blobs is skipped, never fetched); `--no-build-graph` forbids that
 and exits 2 (`NO QUALIFYING INSTANCE`) unless `data/graphs/` already holds one.
 Among the instances that clear every gate it prefers a failing test whose
 failure message is a code-level failure (assertion, expected-vs-actual) over an
-unclassifiable one, and both over an environment failure (CUDA/GPU, OOM,
-timeout, connection/DNS, missing service); the classification is printed in the
-selection report (`analysis/failure_class.py`).
+unclassifiable one, then a timeout, then a strict environment failure
+(CUDA/GPU, OOM, connection/DNS, missing service); the classification is printed
+in the selection report (`analysis/failure_class.py`).
 
 ## 3. The mini-corpus
 

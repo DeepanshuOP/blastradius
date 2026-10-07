@@ -4,13 +4,15 @@ Each strict label `(run_id, test_id)` is classified from the failure messages of
 its parsed outcome rows (one row per job in a matrix) using
 `analysis/failure_class.py`. Per-label rule, applied over the label's rows:
 code-level if ANY row is code-level (the test demonstrably failed on code),
-else environment if any row is environment, else unknown. "Unknown" is split
+else environment-strict if any row is, else timeout if any row is, else unknown.
+Timeouts are reported apart from the strict environment class: a timeout is a
+symptom that a change can cause. "Unknown" is split
 into `no message recorded` and `message matched no pattern`; the former is the
 majority of labels and bounds what this audit can see.
 
 Writes `paper/generated/infra_failures.md`: patterns used, counts and rates for
-labels and instances, an RQ1 sensitivity table with environment-classified
-labels removed, and 10 sampled environment messages for hand review.
+labels and instances, an RQ1 sensitivity table (environment-strict removed;
+environment-strict plus timeout removed), and sampled messages for hand review.
 """
 
 from __future__ import annotations
@@ -20,13 +22,15 @@ import random
 import pandas as pd
 
 from analysis import paper_md
-from analysis.failure_class import CODE, ENVIRONMENT, UNKNOWN, classify, pattern_listing
+from analysis.failure_class import CODE, ENVIRONMENT, TIMEOUT, UNKNOWN, classify, pattern_listing
 from analysis.rq1_divergence import K_VALS, METHODS, evaluate_k, ground_truth, load_data
 
 SAMPLE_SEED = 20261110  # the project's sampling seed (attrition_funnel footnote 2)
 SAMPLE_SIZE = 10
 MESSAGE_CHARS = 200
-_PRECEDENCE = {CODE: 0, ENVIRONMENT: 1, UNKNOWN: 2}
+_PRECEDENCE = {CODE: 0, ENVIRONMENT: 1, TIMEOUT: 2, UNKNOWN: 3}
+CLASSES = (CODE, ENVIRONMENT, TIMEOUT, UNKNOWN)
+NAME = {CODE: "code-level", ENVIRONMENT: "environment-strict", TIMEOUT: "timeout", UNKNOWN: "unknown"}
 
 
 def classify_labels(strict: pd.DataFrame, parsed: pd.DataFrame) -> pd.DataFrame:
@@ -73,20 +77,32 @@ def instance_table(labels: pd.DataFrame) -> list[list]:
     per = labels.groupby("run_id")["cls"]
     any_env = int((per.apply(lambda s: (s == ENVIRONMENT).any())).sum())
     all_env = int((per.apply(lambda s: (s == ENVIRONMENT).all())).sum())
+    any_to = int((per.apply(lambda s: (s == TIMEOUT).any())).sum())
+    all_envto = int((per.apply(lambda s: s.isin([ENVIRONMENT, TIMEOUT]).all())).sum())
     any_code = int((per.apply(lambda s: (s == CODE).any())).sum())
     none_code_or_env = int((per.apply(lambda s: (s == UNKNOWN).all())).sum())
     return [
-        ["instances with >= 1 environment label", paper_md.rate(any_env, n)],
-        ["instances whose labels are ALL environment", paper_md.rate(all_env, n)],
+        ["instances with >= 1 environment-strict label", paper_md.rate(any_env, n)],
+        ["instances whose labels are ALL environment-strict", paper_md.rate(all_env, n)],
+        ["instances with >= 1 timeout label", paper_md.rate(any_to, n)],
+        ["instances whose labels are ALL environment-strict or timeout", paper_md.rate(all_envto, n)],
         ["instances with >= 1 code-level label", paper_md.rate(any_code, n)],
         ["instances whose labels are ALL unknown", paper_md.rate(none_code_or_env, n)],
     ]
 
 
 def sensitivity(data, exclude: set) -> list[list]:
-    """RQ1 rows with and without the environment-classified labels."""
+    """RQ1 rows with and without environment-strict, and environment-strict plus timeout, labels.
+
+    Args:
+        data: Loaded RQ1 inputs.
+        exclude: `{"environment-strict": labels, "environment-strict + timeout": labels}`.
+
+    Returns:
+        One row per (k, variant, method).
+    """
     rows = []
-    variants = (("all strict labels", set()), ("environment-classified labels removed", exclude))
+    variants = (("all strict labels", set()),) + tuple((f"{name} removed", ex) for name, ex in exclude.items())
     for k in K_VALS:
         for name, ex in variants:
             df = evaluate_k(data, ground_truth(data, ex), k)
@@ -115,12 +131,12 @@ def main() -> None:
              "if any is, else unknown.\n")
 
     text += "\n## Strict labels by class\n\n"
-    rows = [[c, paper_md.rate(int((labels["cls"] == c).sum()), n)] for c in (CODE, ENVIRONMENT, UNKNOWN)]
+    rows = [[NAME[c], paper_md.rate(int((labels["cls"] == c).sum()), n)] for c in CLASSES]
     text += paper_md.table(["class", "labels"], rows)
     unk = labels[labels["cls"] == UNKNOWN]
     text += "\n### By deciding rule\n\n" + paper_md.table(
         ["class", "rule", "labels"],
-        [[c, r, paper_md.rate(int(((labels["cls"] == c) & (labels["rule"] == r)).sum()), n)]
+        [[NAME[c], r, paper_md.rate(int(((labels["cls"] == c) & (labels["rule"] == r)).sum()), n)]
          for (c, r) in sorted(labels[["cls", "rule"]].drop_duplicates().itertuples(index=False, name=None))])
     text += (f"\nUnknown splits into {paper_md.rate(int((unk['rule'] == 'no message recorded').sum()), n)} "
              f"with no message recorded and {paper_md.rate(int((unk['rule'] == 'message matched no pattern').sum()), n)} "
@@ -134,30 +150,38 @@ def main() -> None:
     rows = []
     for lg in sorted(labels["language"].dropna().unique()):
         sub = labels[labels["language"] == lg]
-        rows.append([lg] + [paper_md.rate(int((sub["cls"] == c).sum()), len(sub)) for c in (CODE, ENVIRONMENT, UNKNOWN)])
-    text += "\n## Labels by language\n\n" + paper_md.table(["language", CODE, ENVIRONMENT, UNKNOWN], rows)
+        rows.append([lg] + [paper_md.rate(int((sub["cls"] == c).sum()), len(sub)) for c in CLASSES])
+    text += "\n## Labels by language\n\n" + paper_md.table(["language"] + [NAME[c] for c in CLASSES], rows)
 
     env = labels[labels["cls"] == ENVIRONMENT]
-    exclude = set(zip(env["run_id"].astype(int), env["test_id"]))
+    tmo = labels[labels["cls"] == TIMEOUT]
+
+    def keys(frame: pd.DataFrame) -> set:
+        return set(zip(frame["run_id"].astype(int), frame["test_id"]))
+
+    exclude = {"environment-strict": keys(env), "environment-strict + timeout": keys(env) | keys(tmo)}
     data = load_data()
-    text += ("\n## RQ1 sensitivity: environment-classified labels removed\n\n"
-             f"{len(exclude):,} labels removed from the ground truth; an instance whose ground truth "
-             "becomes empty leaves the evaluation (n falls). Mean P/R/J over n instances, as in "
-             "`rq1.md`.\n\n")
+    text += ("\n## RQ1 sensitivity: labels removed\n\n"
+             + "; ".join(f"{name}: {len(ex):,} labels" for name, ex in exclude.items())
+             + ". An instance whose ground truth becomes empty leaves the evaluation (n falls). "
+             "Mean P/R/J over n instances, as in `rq1.md`.\n\n")
     text += paper_md.table(["k", "labels", "method", "n", "mean P", "mean R", "mean J"],
                            sensitivity(data, exclude))
 
-    pool = env.sort_values(["run_id", "test_id"]).reset_index(drop=True)
-    picks = random.Random(SAMPLE_SEED).sample(range(len(pool)), min(SAMPLE_SIZE, len(pool)))
-    text += f"\n## {len(picks)} sampled environment-classified messages (seed {SAMPLE_SEED}, truncated to {MESSAGE_CHARS} chars)\n\n"
-    text += "For hand review: each should be a failure that is not the change's fault.\n\n"
-    for i in sorted(picks):
-        r = pool.iloc[i]
-        msg = r["message"][:MESSAGE_CHARS].replace("\n", " ").replace("|", "\\|")
-        text += f"- run {r['run_id']}, `{r['test_id']}`, rule `{r['rule']}`: `{msg}`\n"
+    for title, pool, note in (("environment-strict", env, "each should be a failure that is not the change's fault"),
+                              ("timeout", tmo, "each may still be a real hang the change caused")):
+        pool = pool.sort_values(["run_id", "test_id"]).reset_index(drop=True)
+        picks = random.Random(SAMPLE_SEED).sample(range(len(pool)), min(SAMPLE_SIZE, len(pool)))
+        text += (f"\n## {len(picks)} sampled {title} messages (seed {SAMPLE_SEED}, truncated to {MESSAGE_CHARS} chars)\n\n"
+                 f"For hand review: {note}.\n\n")
+        for i in sorted(picks):
+            r = pool.iloc[i]
+            msg = r["message"][:MESSAGE_CHARS].replace("\n", " ").replace("|", "\\|")
+            text += f"- run {r['run_id']}, `{r['test_id']}`, rule `{r['rule']}`: `{msg}`\n"
 
     path = paper_md.write("infra_failures.md", text)
-    print(f"Wrote {path}: {paper_md.rate(len(env), n)} strict labels classified environment")
+    print(f"Wrote {path}: {paper_md.rate(len(env), n)} environment-strict, {paper_md.rate(len(tmo), n)} timeout, "
+          f"{paper_md.rate(int((labels['cls'] == CODE).sum()), n)} code-level strict labels")
 
 
 if __name__ == "__main__":

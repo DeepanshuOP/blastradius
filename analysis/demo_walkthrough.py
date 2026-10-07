@@ -16,9 +16,9 @@ Gates, in order (the counts that survive each are printed):
 
 Among the instances that clear gates 1-4, the failing test's failure message is
 classified (`analysis/failure_class.py`) and a code-level failure (assertion or
-expected-vs-actual) is preferred over an unknown one, which is preferred over an
-environment failure (CUDA/GPU unavailable, OOM, timeout, connection or DNS
-error, missing service). The classification is printed in the selection report.
+expected-vs-actual) is preferred over an unknown one, then a timeout, then a strict
+environment failure (CUDA/GPU unavailable, OOM, connection or DNS error, missing
+service). The classification is printed in the selection report.
 
 A missing graph is built by default, in a throw-away temp dir from local git
 objects only (`GIT_NO_LAZY_FETCH=1`; the corpus clones are `--filter=blob:none`,
@@ -45,7 +45,7 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
-from analysis.failure_class import CODE, ENVIRONMENT, UNKNOWN, classify
+from analysis.failure_class import CODE, ENVIRONMENT, TIMEOUT, UNKNOWN, classify
 
 MINI_CORPUS_DOC = Path("docs/MINI_CORPUS.md")
 HOLDOUT_EXCLUSION = Path("docs/session/holdout-exclusion.txt")
@@ -247,8 +247,8 @@ def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
     counts = logged["failure_class"].value_counts()
     report.append("failure-message classification of those rows (analysis/failure_class.py): "
                   + ", ".join(f"{k} {int(counts.get(k, 0))}/{len(logged)}"
-                              for k in (CODE, UNKNOWN, ENVIRONMENT)))
-    rank = {CODE: 0, UNKNOWN: 1, ENVIRONMENT: 2}
+                              for k in (CODE, UNKNOWN, TIMEOUT, ENVIRONMENT)))
+    rank = {CODE: 0, UNKNOWN: 1, TIMEOUT: 2, ENVIRONMENT: 3}
     logged["rank"] = logged["failure_class"].map(rank)
     logged = logged.sort_values(["rank", "repo", "pr_number", "run_id", "test_id", "job_id"])
 
@@ -287,7 +287,7 @@ def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
         return None, report
     r = chosen
     report.append(f"selected: failure class {r['failure_class']} (rule '{r['failure_rule']}'), "
-                  f"preference code-level > unknown > environment")
+                  f"preference code-level > unknown > timeout > environment")
     return Candidate(r["repo"], int(r["pr_number"]), int(r["run_id"]), r["head_sha"], r["base_sha"],
                      r["test_id"], int(r["job_id"]), gdir, r["failure_message"],
                      r["failure_class"], r["failure_rule"]), report
