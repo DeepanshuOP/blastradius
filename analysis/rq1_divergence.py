@@ -45,7 +45,7 @@ def write_figures(dist_counts, k_vals, co_perf, b1_perf, b2_perf):
     plt.ylabel('Number of Changed Files')
     plt.xticks(rotation=0)
     plt.tight_layout()
-    plt.savefig('paper/generated/fig1_applicability.pdf')
+    plt.savefig('paper/generated/fig1_applicability.pdf', metadata={'CreationDate': None})
     plt.close()
 
     # Fig 2
@@ -64,7 +64,7 @@ def write_figures(dist_counts, k_vals, co_perf, b1_perf, b2_perf):
         plt.ylim(0, 1.0)
         plt.legend()
         plt.tight_layout()
-        plt.savefig('paper/generated/fig2_accuracy.pdf')
+        plt.savefig('paper/generated/fig2_accuracy.pdf', metadata={'CreationDate': None})
         plt.close()
         print("\nGenerated paper/generated/fig1_applicability.pdf and paper/generated/fig2_accuracy.pdf")
     return True

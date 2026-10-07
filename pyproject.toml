@@ -12,6 +12,7 @@ dependencies = [
 [project.optional-dependencies]
 graph = ["graphifyy", "duckdb"]
 dashboard = ["streamlit==1.65.0"]
+figures = ["matplotlib==3.11.2"]
 
 [dependency-groups]
 dev = [
