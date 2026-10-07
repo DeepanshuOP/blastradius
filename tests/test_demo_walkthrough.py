@@ -78,6 +78,9 @@ def test_demo_is_deterministic_and_read_only() -> None:
     assert first.returncode == second.returncode
     assert first.stdout == second.stdout
     assert "SELECTION" in first.stdout
+    assert "failure-message classification" in first.stdout
+    if first.returncode == 0:
+        assert "preference code-level > unknown > environment" in first.stdout
     if first.returncode == 2:
         assert "NO QUALIFYING INSTANCE" in first.stdout
     assert [p.stat().st_mtime_ns for p in watched] == before

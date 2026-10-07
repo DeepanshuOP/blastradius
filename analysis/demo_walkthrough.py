@@ -11,13 +11,20 @@ Gates, in order (the counts that survive each are printed):
   2. the failing test binds to a test file (`binding.parquet`, status `exact`)
   3. no head job of the run is a holdout log (never shown, never parsed here)
   4. the raw log of the failing job is in the local RawStore
-  5. a graph exists at the resolved base SHA in `data/graphs/`
+  5. a graph exists at the resolved base SHA in `data/graphs/`, or (the default
+     when it does not) the tree is fully local so the graph can be built
 
-Gate 5 is deliberately strict. `--build-graph-offline` relaxes it for machines
-without a populated `data/graphs/`: the graph is then built in a throw-away
-temp dir from local git objects only (`GIT_NO_LAZY_FETCH=1`; the corpus clones
-are `--filter=blob:none`, so a tree with missing blobs is skipped, never
-fetched), and the output says so.
+Among the instances that clear gates 1-4, the failing test's failure message is
+classified (`analysis/failure_class.py`) and a code-level failure (assertion or
+expected-vs-actual) is preferred over an unknown one, which is preferred over an
+environment failure (CUDA/GPU unavailable, OOM, timeout, connection or DNS
+error, missing service). The classification is printed in the selection report.
+
+A missing graph is built by default, in a throw-away temp dir from local git
+objects only (`GIT_NO_LAZY_FETCH=1`; the corpus clones are `--filter=blob:none`,
+so a tree with missing blobs is skipped, never fetched), and the output says
+so. `--no-build-graph` restores the strict "graph must already be in
+`data/graphs/`" behaviour; `--build-graph-offline` is accepted and is now a no-op.
 
 Exit status: 0 walkthrough printed; 2 no instance cleared the gates.
 """
@@ -37,6 +44,8 @@ from pathlib import Path
 
 import duckdb
 import pandas as pd
+
+from analysis.failure_class import CODE, ENVIRONMENT, UNKNOWN, classify
 
 MINI_CORPUS_DOC = Path("docs/MINI_CORPUS.md")
 HOLDOUT_EXCLUSION = Path("docs/session/holdout-exclusion.txt")
@@ -63,6 +72,9 @@ class Candidate:
     test_id: str
     job_id: int
     graph_dir: Path | None  # None: built offline into a temp dir
+    failure_message: str = ""
+    failure_class: str = UNKNOWN
+    failure_rule: str = "empty"
 
 
 def mini_corpus_repos(doc: Path = MINI_CORPUS_DOC) -> list[str]:
@@ -215,39 +227,70 @@ def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
     report.append(f"gate 2 with a bound test and a resolved base: {len(strict)} labels, "
                   f"{strict['run_id'].nunique()} instances")
 
-    jobs = par[["run_id", "test_id", "job_id"]].drop_duplicates()
+    jobs = par[["run_id", "test_id", "job_id", "failure_message"]].copy()
+    jobs["failure_message"] = jobs["failure_message"].fillna("")
+    jobs = jobs.sort_values(["run_id", "test_id", "job_id", "failure_message"])
+    jobs = jobs.drop_duplicates(["run_id", "test_id", "job_id"])
     bad_runs = set(jobs[jobs["job_id"].isin(holdout)]["run_id"])
     strict = strict[~strict["run_id"].isin(bad_runs)]
     report.append(f"gate 3 not touching a holdout job: {strict['run_id'].nunique()} instances")
 
     strict = strict.merge(jobs, on=["run_id", "test_id"])
-    strict = strict.sort_values(["repo", "pr_number", "run_id", "test_id", "job_id"])
     store = RawStore()
-    logged, graphed, buildable = [], [], []
-    for row in strict.itertuples():
-        if not store.exists(row.repo, "logs", int(row.job_id)):
-            continue
-        logged.append(row)
-        if graph_path(row.repo, row.base_sha, GRAPH_DIR).exists():
-            graphed.append(row)
-        elif build_offline and clone_dir(row.repo).exists() and tree_is_local(
-            clone_dir(row.repo), row.base_sha
-        ):
-            buildable.append(row)
-    report.append(f"gate 4 raw log in local RawStore: {len({r.run_id for r in logged})} instances")
-    report.append(f"gate 5 graph in {GRAPH_DIR}/: {len({r.run_id for r in graphed})} instances "
-                  f"({len(list(GRAPH_DIR.glob('graph_*.json.gz'))) if GRAPH_DIR.exists() else 0} graphs on disk)")
+    logged = strict[[store.exists(r.repo, "logs", int(r.job_id)) for r in strict.itertuples()]].copy()
+    report.append(f"gate 4 raw log in local RawStore: {logged['run_id'].nunique()} instances, "
+                  f"{len(logged)} (label, job) rows")
 
-    if graphed:
-        r, gdir = graphed[0], GRAPH_DIR
-    elif buildable:
-        report.append(f"gate 5 (--build-graph-offline) buildable from local objects: "
-                      f"{len({r.run_id for r in buildable})} instances")
-        r, gdir = buildable[0], None
-    else:
+    cls = [classify(m) for m in logged["failure_message"]]
+    logged["failure_class"] = [c for c, _ in cls]
+    logged["failure_rule"] = [r for _, r in cls]
+    counts = logged["failure_class"].value_counts()
+    report.append("failure-message classification of those rows (analysis/failure_class.py): "
+                  + ", ".join(f"{k} {int(counts.get(k, 0))}/{len(logged)}"
+                              for k in (CODE, UNKNOWN, ENVIRONMENT)))
+    rank = {CODE: 0, UNKNOWN: 1, ENVIRONMENT: 2}
+    logged["rank"] = logged["failure_class"].map(rank)
+    logged = logged.sort_values(["rank", "repo", "pr_number", "run_id", "test_id", "job_id"])
+
+    on_disk = [graph_path(r.repo, r.base_sha, GRAPH_DIR).exists() for r in logged.itertuples()]
+    n_graph = int(sum(on_disk))
+    report.append(f"gate 5 graph in {GRAPH_DIR}/: {logged[on_disk]['run_id'].nunique()} instances "
+                  f"({len(list(GRAPH_DIR.glob('graph_*.json.gz'))) if GRAPH_DIR.exists() else 0} graphs on disk)")
+    logged["on_disk"] = on_disk
+
+    local_cache: dict[tuple[str, str], bool] = {}
+
+    def buildable(repo: str, sha: str) -> bool:
+        if (repo, sha) not in local_cache:
+            local_cache[(repo, sha)] = clone_dir(repo).exists() and tree_is_local(clone_dir(repo), sha)
+        return local_cache[(repo, sha)]
+
+    chosen, gdir = None, None
+    for rk in (0, 1, 2):
+        tier = logged[logged["rank"] == rk]
+        graphed = tier[tier["on_disk"]]
+        if len(graphed):
+            chosen, gdir = graphed.iloc[0], GRAPH_DIR
+            break
+        if build_offline:
+            for row in tier.itertuples():
+                if buildable(row.repo, row.base_sha):
+                    chosen, gdir = tier.loc[row.Index], None
+                    break
+            if chosen is not None:
+                break
+    if build_offline:
+        n_checked = len(local_cache)
+        report.append(f"gate 5 (offline build) (repo, base SHA) pairs checked for a fully local tree: "
+                      f"{n_checked}, buildable {sum(local_cache.values())}")
+    if chosen is None:
         return None, report
-    return Candidate(r.repo, int(r.pr_number), int(r.run_id), r.head_sha, r.base_sha,
-                     r.test_id, int(r.job_id), gdir), report
+    r = chosen
+    report.append(f"selected: failure class {r['failure_class']} (rule '{r['failure_rule']}'), "
+                  f"preference code-level > unknown > environment")
+    return Candidate(r["repo"], int(r["pr_number"]), int(r["run_id"]), r["head_sha"], r["base_sha"],
+                     r["test_id"], int(r["job_id"]), gdir, r["failure_message"],
+                     r["failure_class"], r["failure_rule"]), report
 
 
 def run_flaky(run_id: int, head_sha: str, test_ids: set[str], res: pd.DataFrame,
@@ -287,18 +330,19 @@ def main() -> int:
     """
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--build-graph-offline", action="store_true",
-                    help="build a missing graph in a temp dir from local git objects only")
+                    help="no-op: building a missing graph offline is now the default")
+    ap.add_argument("--no-build-graph", action="store_true",
+                    help="require the graph to already be in data/graphs/ (never build one)")
     args = ap.parse_args()
     os.environ["GIT_NO_LAZY_FETCH"] = "1"
 
-    cand, report = find_candidate(args.build_graph_offline)
+    cand, report = find_candidate(not args.no_build_graph)
     print("SELECTION (sorted by repo, PR, run, test; first instance clearing every gate)")
     for line in report:
         print(f"  {line}")
     if cand is None:
         print("\nNO QUALIFYING INSTANCE: nothing cleared every gate, so nothing is shown.")
-        print("  (a populated data/graphs/ is required; see docs/REPRODUCE.md, or pass "
-              "--build-graph-offline)")
+        print("  (no fully local tree or graph for any candidate; see docs/REPRODUCE.md)")
         return 2
 
     from src.harvest.rawstore import RawStore
@@ -324,6 +368,8 @@ def main() -> int:
     print(f"  canonical test_id  {po['test_id']}")
     print(f"  status {po['status']}, harness {po['harness']}, parser confidence "
           f"{po['parser_confidence']:.2f}, fqcn-qualified {po['is_fqcn_qualified']}")
+    print(f"  failure message ({cand.failure_class}, rule '{cand.failure_rule}'): "
+          f"{(cand.failure_message or '(none recorded)')[:MAX_LINE_CHARS]!r}")
 
     print("\n4) THE BASE RUN")
     brid = rres["base_run_id"]

@@ -49,7 +49,7 @@ network and rewrites `base_resolution_new.parquet`, so it is the explicit
 uv sync --extra graph
 make all                 # pytest + the mini-corpus reproduction
 make tables              # regenerates every number that reaches the paper
-make demo                # read-only walkthrough of one strict instance (needs data/graphs/)
+make demo                # read-only walkthrough of one strict instance (builds a missing graph offline)
 make resolve-bases       # network + PAT: rewrites base_resolution_new.parquet (NOT part of tables)
 uv run --extra graph python analysis/reproduce_mini_corpus.py --help
 ```
@@ -67,11 +67,16 @@ measure the warm path instead), `--keep` to retain the output, `--seed`
 (default 42).
 
 `make demo` (`analysis/demo_walkthrough.py`) is read-only, offline and
-deterministic. It exits 2 with `NO QUALIFYING INSTANCE` unless `data/graphs/`
-holds a graph at the resolved base of a strict mini-corpus instance. On a machine
-without one, `--build-graph-offline` builds it in a temp dir from local git
-objects only (`GIT_NO_LAZY_FETCH=1`; the clones are blobless, so a tree with
-missing blobs is skipped, never fetched).
+deterministic and finishes in well under a minute. When `data/graphs/` has no
+graph at the resolved base of a candidate, it builds one into a temp dir from
+local git objects only (`GIT_NO_LAZY_FETCH=1`; the clones are blobless, so a tree
+with missing blobs is skipped, never fetched); `--no-build-graph` forbids that
+and exits 2 (`NO QUALIFYING INSTANCE`) unless `data/graphs/` already holds one.
+Among the instances that clear every gate it prefers a failing test whose
+failure message is a code-level failure (assertion, expected-vs-actual) over an
+unclassifiable one, and both over an environment failure (CUDA/GPU, OOM,
+timeout, connection/DNS, missing service); the classification is printed in the
+selection report (`analysis/failure_class.py`).
 
 ## 3. The mini-corpus
 

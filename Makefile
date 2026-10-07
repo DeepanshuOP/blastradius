@@ -98,9 +98,10 @@ fetch-base-logs:
 	fi
 	uv run python analysis/fetch_base_logs.py
 
-# Read-only, offline, deterministic walkthrough of one strict instance.
+# Read-only, offline, deterministic walkthrough of one strict instance. A graph
+# missing from data/graphs/ is built into a temp dir from local git objects.
 demo:
-	uv run --extra graph python analysis/demo_walkthrough.py
+	GIT_NO_LAZY_FETCH=1 uv run --extra graph python analysis/demo_walkthrough.py
 
 figures:
 	@echo "not implemented"
