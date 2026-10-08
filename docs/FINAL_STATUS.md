@@ -38,7 +38,7 @@ Code commit `28d4323`; numbers snapshot tag `paper-numbers-v1.1` (v1 + D-53). Ev
 
 ## Remaining manual steps
 
-1. Zenodo deposit of `release/v0.1` (one-way; fires D-08 naming). A reviewer should first confirm the five secret-scan REVIEW samples.
-2. A GitHub release of the source with a DOI.
-3. `CITATION.cff`, once the author order is set.
-4. Licence decision for the dataset (still open in the datasheet), and the schema validator (T1.6a) remains blocked.
+1. Zenodo deposit of `release/v0.1`: draft prepared with reserved DOI 10.5281/zenodo.23250262 and licence CC BY 4.0. The five secret-scan REVIEW findings were checked (Apple icon filenames, Java package names, `adlam.example.com` test addresses). Files cannot change after publishing, so re-upload the current `docs/DATASHEET.md` first.
+2. A GitHub release of the source (tag v1.0.0) with a Zenodo code DOI.
+3. `CITATION.cff` is in the repository root (final author order).
+4. Licence decided: release bundle CC BY 4.0, source code MIT. The schema validator (T1.6a) remains blocked.
