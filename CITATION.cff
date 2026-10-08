@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use BlastRadius or the BR-Bench dataset, please cite it as below."
+title: "BlastRadius and BR-Bench: execution-grounded change impact data from GitHub Actions"
+abstract: >-
+  BR-Bench links code changes in GitHub Actions runs to the individual tests
+  that actually failed because of them, using a deterministic pipeline that
+  resolves a base run for every change and filters same-commit flakiness.
+type: software
+authors:
+  - family-names: "Deepanshu"
+    affiliation: "Vellore Institute of Technology, Vellore, India"
+  - family-names: "Singh"
+    given-names: "Sanskriti"
+    affiliation: "Vellore Institute of Technology, Vellore, India"
+  - family-names: "Vadhavkar"
+    given-names: "Prisha"
+    affiliation: "Vellore Institute of Technology, Vellore, India"
+  - family-names: "C A"
+    given-names: "Yoga Raja"
+    affiliation: "Vellore Institute of Technology, Vellore, India"
+repository-code: "https://github.com/DeepanshuOP/blastradius"
+license: MIT
+keywords:
+  - continuous integration
+  - GitHub Actions
+  - fault-revealing tests
+  - regression test selection
+  - change impact analysis
+  - mining software repositories

@@ -27,7 +27,7 @@
 \IEEEauthorblockN{Deepanshu\IEEEauthorrefmark{1}, Sanskriti Singh\IEEEauthorrefmark{1}, Prisha Vadhavkar\IEEEauthorrefmark{1}, Dr.~Yoga Raja C A\IEEEauthorrefmark{2}}
 \IEEEauthorblockA{\IEEEauthorrefmark{1}School of Computer Science Engineering and Information Systems\\
 Vellore Institute of Technology, Vellore, Tamil Nadu, India\\
-\{[EMAIL], [EMAIL], [EMAIL]\}}
+\{deepanshu.2023, sanskriti.singh2023, prisha.vadhavkar2023\}@vitstudent.ac.in}
 \IEEEauthorblockA{\IEEEauthorrefmark{2}Assistant Professor Sr. Grade 1, Department of Information Technology\\
 School of Computer Science Engineering and Information Systems\\
 Vellore Institute of Technology, Vellore, Tamil Nadu, India\\
@@ -36,7 +36,6 @@ yogaraja.ca@vit.ac.in}
 
 \maketitle
 
-% [AI DRAFT]
 \begin{abstract}
 Continuous Integration (CI) services execute automated test suites to detect regressions introduced by pull requests. While industrial platforms at Meta and Google leverage predictive models and large-scale workload analyses, the research community lacks public, reproducible benchmarks linking pull-request modifications directly to individual failing tests. We present BR-Bench, an open dataset linking code changes to fault-revealing tests mined from GitHub Actions logs across Java and Python open-source repositories. A test is defined as fault-revealing if and only if it fails at the head commit, passes or is absent in the resolved base run, and does not exhibit flakiness across runs on the same commit. The strict benchmark split contains 762 pull-request instances, 4,168 fault-revealing labels, and 2,466 distinct tests across 37 repositories. We evaluate test-to-file binding against pinned commit trees, achieving 94.29\% (5,643/5,985) combined binding and 63.83\% (3,820/5,985) full-confidence fully qualified name binding. In an illustrative application evaluating predictive test selection proxies at $k=10$, historical failure frequency achieves a micro recall of 39.44\% (519/1,316) whereas all-partner co-change file mining achieves only 4.64\% (61/1,316). We provide complete extraction pipelines without language model dependencies, processed release tables, and offline reproduction via a single command.
 \end{abstract}
@@ -47,16 +46,12 @@ continuous integration, test selection, regression testing, mining software repo
 
 \section{Introduction}
 
-% [AI DRAFT]
 Modern software development relies on continuous integration (CI) workflows to catch defects before pull requests merge into shared branches. In CI pipelines, every code modification triggers test suites that consume substantial computational time and energy. Predicting in advance which individual tests are likely to fail on a given pull-request diff would enable teams to run failure-prone tests first, accelerate feedback cycles, and conserve compute resources.
 
-% [AI DRAFT]
 Prior academic research addresses neighboring questions rather than empirical test-failure prediction. Change impact analysis (CIA) techniques predict co-changed program entities using version-control history~\cite{borg2017supporting,huang2022change}, capturing developer editing coupling rather than runtime defect propagation. Regression test selection (RTS) tools, such as Ekstazi~\cite{gligoric2015practical} and STARTS~\cite{legunsen2017starts}, compute safe over-approximations of reachable tests via dynamic file or static class dependencies. In contrast, industrial studies examine CI workloads and predictive selection: Meta deployed predictive test selection on historical execution outcomes~\cite{machalica2019predictive}, while Google characterized continuous testing workloads and test selection trade-offs at massive scale~\cite{memon2017taming}. However, these industrial deployments run on closed-source monorepos, leaving their underlying failure datasets inaccessible to academic researchers.
 
-% [AI DRAFT]
 Existing open datasets fail to fill this gap. RTPTorrent~\cite{mattis2020rtptorrent} was mined from Travis CI prior to 2020, covers only Java, organizes data around build jobs rather than pull-request diffs, and emphasizes test prioritization rather than change-to-test fault linking. GHALogs~\cite{moriconi2025ghalogs} provides raw GitHub Actions logs but does not parse granular test outcomes, map tests to source files, or filter non-deterministic executions.
 
-% [AI DRAFT]
 To bridge this divide, we present \textsc{BR-Bench}, an open benchmark connecting pull-request file changes directly to the individual test cases that failed because of them. Mined from real GitHub Actions pipelines across 76 swept repositories, \textsc{BR-Bench} extracts structured test outcomes from Gradle, Maven, and pytest execution logs. We resolve base runs on repository histories, filter same-commit test flakiness, and bind test identifiers back to repository source paths.
 
 \section{Data Source and Collection Method}
@@ -68,22 +63,17 @@ To bridge this divide, we present \textsc{BR-Bench}, an open benchmark connectin
 \label{fig:pipeline}
 \end{figure}
 
-% [AI DRAFT]
 The construction pipeline of \textsc{BR-Bench} consists of seven reproducible stages (Fig.~\ref{fig:pipeline}): repository selection, metadata harvesting, log parsing, identifier canonicalisation, base-run resolution, test-to-file binding, and release bundling.
 
 \subsection{Repository Sampling and Harvesting}
-% [AI DRAFT]
 We selected candidate repositories from the SEART GitHub platform~\cite{dabic2021sampling}. Starting from an export of 3,671 open-source repositories, we retained 2,646 repositories active on GitHub Actions with at least 100 workflow runs in the preceding 90 days. We identified 2,333 repositories executing test-intent workflows (excluding linting or deployment tasks). We sampled 300 repositories into a balanced evaluation frame across Java and Python. The funnel counts 76 swept repositories and 165,349 runs (\texttt{instances\_raw}); the harvest corpus has 77 repositories and 175,038 runs (\texttt{corpus\_stats.md}). For each workflow run, the harvester downloaded run metadata, job step statuses, check-run annotations, and raw textual execution logs via the GitHub REST API.
 
 \subsection{Log Parsing and Test Identifier Normalisation}
-% [AI DRAFT]
 Because GitHub Actions treats test execution as unstructured stdout and stderr streams, test verdicts must be parsed from job logs. We built deterministic line parsers for three major test runners: Maven Surefire/Failsafe, Gradle Test Runner, and pytest. The parsers extract test outcomes (pass, fail, error, skip) and execution durations without relying on external large language models (LLMs). Each parsed test is mapped to a canonical identifier (\texttt{src/parse/test\_ids.py}): for Java, the format is \texttt{fully.qualified.Class\#method}; for Python, the format is \texttt{path::name}. Bare class identifiers are disambiguated using package declarations recovered from logs where available.
 
 \subsection{Base-Run Resolution and Fault Revelation}
-% [AI DRAFT]
 A test failure at a pull request's head commit does not imply that the pull request caused the failure; the test may have been broken in the upstream base branch. To establish causality, every failed head run must be paired with an appropriate base run. For each pull-request run on head commit $H$ targeting base branch commit $B$, we search repository history for a workflow run on $B$ executing the identical workflow. If a run on $B$ exists and completed with conclusion \texttt{success}, we record an \texttt{exact\_green} resolution. If no run exists on $B$, we traverse ancestor commits along the default branch within a maximum distance of 10 commits. In total, base resolution records five mutually exclusive statuses: \texttt{exact}, \texttt{exact\_green}, \texttt{ancestor} (max distance 10), \texttt{branch\_prior}, and \texttt{no\_base}. Under Invariant~6, runs resolving to \texttt{no\_base} emit zero labels.
 
-% [AI DRAFT]
 The benchmark defines three nested splits (\texttt{src/label/fault\_revealing.py}):
 (1)~\texttt{all} contains every $(\text{run}, \text{test})$ head failure in workflow runs with a usable base and parsed head test output;
 (2)~\texttt{relaxed} removes tests that also fail in the resolved base run ($T_{\text{head\_fail}} \setminus T_{\text{base\_fail}}$); and
@@ -93,10 +83,8 @@ T_{\text{reveal}} = (T_{\text{head\_fail}} \setminus T_{\text{base\_fail}}) \set
 \end{equation}
 
 \subsection{Flakiness Filtering and Test-to-File Binding}
-% [AI DRAFT]
 Flaky tests flip their status non-deterministically without code changes~\cite{bell2018deflaker}. We detect same-SHA flips across repeated workflow executions on the exact same commit hash. Across 11,557 evaluated (head SHA, workflow, test) groups, 62 instances (0.54\%) flipped, leading to the removal of 46 flaky labels from the relaxed set (1.09\% of 4,214 labels) to form the strict set.
 
-% [AI DRAFT]
 To enable change impact analysis, canonical test identifiers must bind to physical test source files. We bind identifiers against pinned repository clones recorded in \texttt{docs/CLONE\_PINS.json} rather than volatile branch heads. Basename-only matches achieve 0.5 confidence, while fully qualified class names that match uniquely achieve 1.0 confidence.
 
 \section{Storage and Schema}
@@ -116,18 +104,14 @@ To enable change impact analysis, canonical test identifiers must bind to physic
 & \texttt{language} & String; language (\texttt{java} or \texttt{python}) \\
 & \texttt{head\_sha} & String; commit SHA at head \\
 & \texttt{base\_sha} & String; target commit on base branch \\
-& \texttt{base\_run\_id} & Int64; resolved base run identifier \\
+& \texttt{base\_run\_id} & Int64; null in v0.1 (base commit in \texttt{base\_sha}) \\
 & \texttt{run\_id} & Int64; workflow run identifier \\
 & \texttt{workflow\_name} & String; CI workflow name \\
 & \texttt{author\_login} & String; HMAC-SHA256 pseudonymised hash \\
-& \texttt{changed\_files} & [VERIFY: in spec, omitted from release parquet] \\
-& \texttt{base\_run\_dist} & [VERIFY: in spec, in base\_resolution\_new] \\
 \midrule
 \texttt{outcomes} & \texttt{run\_id} & Int64; FK to \texttt{instances} \\
 & \texttt{test\_id} & String; canonical test identifier \\
 & \texttt{split} & String; split (\texttt{all}, \texttt{relaxed}, \texttt{strict}) \\
-& \texttt{status\_head/base} & [VERIFY: spec defines pass $\vert$ fail $\vert$ error $\vert$ skip $\vert$ absent] \\
-& \texttt{binding\_strategy} & [VERIFY: spec defines tests $\vert$ tests\_by\_convention $\vert$ tests\_by\_layout $\vert$ unbound] \\
 \midrule
 \texttt{cochange} & \texttt{file\_a}, \texttt{file\_b} & String; pair of co-changed files \\
 & \texttt{support}, \texttt{lift} & Int64 / Double; co-change metrics \\
@@ -135,10 +119,8 @@ To enable change impact analysis, canonical test identifiers must bind to physic
 \end{tabular}
 \end{table}
 
-% [AI DRAFT]
-\textsc{BR-Bench} is published in Apache Parquet format to ensure efficient columnar storage and typed schema enforcement, accompanied by a structured dataset datasheet~\cite{gebru2021datasheets}. Table~\ref{tab:schemas} details the primary fields across the shipped release tables. The \texttt{instances.parquet} table stores pull-request runs, commit hashes, base-run metadata, and execution details. The \texttt{outcomes.parquet} table records individual test failures across the benchmark splits. The \texttt{cochange.parquet} table provides commit-level co-change association rules, and \texttt{failure\_messages.parquet} isolates textual failure messages. Where fields from the design specification (\texttt{docs/SCHEMAS.md}) are resolved in upstream interim tables or evaluated in dedicated reports rather than emitted directly into release Parquet columns, they are marked \texttt{[VERIFY]}.
+\textsc{BR-Bench} is published in Apache Parquet format to ensure efficient columnar storage and typed schema enforcement, accompanied by a structured dataset datasheet~\cite{gebru2021datasheets}. Table~\ref{tab:schemas} details the primary fields across the shipped release tables. The \texttt{instances.parquet} table stores pull-request runs, commit hashes, base-run metadata, and execution details. The \texttt{outcomes.parquet} table records individual test failures across the benchmark splits. The \texttt{cochange.parquet} table provides commit-level co-change association rules, and \texttt{failure\_messages.parquet} isolates textual failure messages. In release v0.1, \texttt{base\_run\_id} is null for all 165,349 instances and \texttt{outcomes} carries only \texttt{run\_id}, \texttt{test\_id} and \texttt{split}; line-level hunks, per-test head and base statuses, same-commit flip flags and the bound test file are computed by the pipeline (and regenerated by \texttt{make tables}) but are not shipped as columns, as the datasheet records.
 
-% [AI DRAFT]
 To protect contributor privacy, all author usernames in \texttt{instances.parquet} are pseudonymised using HMAC-SHA256 keyed by an operator-held secret, truncated to 16 hex characters across 1,791 unique authors (\texttt{docs/DATASHEET.md} \S4). Failure messages were scanned for credentials; zero blocking secrets were identified, while 5 review samples were flagged for human verification.
 
 \section{Dataset Overview and Quality}
@@ -175,7 +157,6 @@ Emitted strict benchmark instances & 762 & 84.95\% & 0.46\% \\
 \end{tabular}
 \end{table}
 
-% [AI DRAFT]
 The progressive filtering of repositories and workflow runs is summarized in Table~\ref{tab:funnel}. Of the 165,349 workflow runs swept across 76 repositories, 12,581 (7.61\%) concluded with a failure status. Among these, 6,586 had raw job logs preserved on disk, and 1,774 parsed to at least one test failure. Base-run matching resolved 1,348 of these runs, of which 897 possessed a known base failure set (either via an \texttt{exact\_green} run or a parsed base log). Filtering out flakiness and runs lacking test output yielded 762 qualified benchmark instances in the strict split.
 
 \subsection{Language and Split Distribution}
@@ -196,7 +177,6 @@ The progressive filtering of repositories and workflow runs is summarized in Tab
 \end{tabular}
 \end{table}
 
-% [AI DRAFT]
 Table~\ref{tab:splits} summarizes the benchmark splits. The \texttt{strict} benchmark split comprises 762 pull-request instances and 4,168 fault-revealing labels representing 2,466 distinct tests across 37 repositories. Java accounts for 83.73\% of instances (638/762) and 92.49\% of labels (3,855/4,168), while Python represents 16.27\% of instances (124/762) and 7.51\% of labels (313/4,168).
 
 \subsection{Test Binding and Data Quality}
@@ -224,10 +204,8 @@ Unknown error text / unparsed stack trace & 3,238 & 77.69\% \\
 \end{tabular}
 \end{table}
 
-% [AI DRAFT]
 Table~\ref{tab:quality} reports test binding and error classification. Across 5,985 evaluated $(\text{repo}, \text{test\_id})$ pairs, 94.29\% (5,643/5,985) bind successfully to source files. Full-confidence FQCN resolution accounts for 63.83\% (3,820/5,985), while basename matching resolves 30.46\% (1,823/5,985). Only 5.71\% remain unbound (2.97\% not found, 2.74\% ambiguous).
 
-% [AI DRAFT]
 An automated regex audit classified failure messages into four classes: code-level assertions accounted for 17.49\% (729/4,168), timeout errors represented 2.69\% (112/4,168), and strict environment failures (e.g., missing CUDA GPUs or network timeouts) accounted for 2.14\% (89/4,168). A majority of labels (77.69\%, 3,238/4,168) remain unknown due to uncaptured stack traces or unparsed error texts.
 
 \section{How the Data Has Been Used: RQ1 Example}
@@ -240,11 +218,9 @@ An automated regex audit classified failure messages into four classes: code-lev
 \label{fig:rq1}
 \end{figure}
 
-% [AI DRAFT]
 To demonstrate how \textsc{BR-Bench} serves as an empirical benchmark, we evaluate an example research question (RQ1): \textit{How accurately do conventional change impact analysis proxies and historical baselines identify fault-revealing tests?}
 
 \subsection{Experimental Setup and Leakage Audit}
-% [AI DRAFT]
 We evaluate four test selection strategies at a budget of $k=10$ candidate files (candidates are files):
 \begin{enumerate}
 \item \textit{Co-change (All)}: Trailing 365-day co-change partners mined from Git commits.
@@ -253,16 +229,13 @@ We evaluate four test selection strategies at a budget of $k=10$ candidate files
 \item \textit{Historical Frequency}: The $k$ most frequently failing bound test files from strictly earlier runs (strict labels, each $(\text{test}, \text{instance})$ counted once).
 \end{enumerate}
 
-% [AI DRAFT]
 To prevent temporal data leakage, co-change history was mined strictly prior to each run's start timestamp. An audit revealed that a naive static co-change table leaked future commits in 713/713 audited instances, and an uncorrected historical baseline double-counted failures across multiple splits (224,758 rows for 78,399 distinct labels). After enforcing per-instance trailing windows, symmetric partner lookups, and single-split counting, zero leakage violations remain across all 762 instances.
 
 \subsection{Results}
-% [AI DRAFT]
 All methods are evaluated on the identical set of $n=576$ instances where the co-change proxy yields predictions ($1,316$ positive test labels; 462 Java, 114 Python). As shown in Fig.~\ref{fig:rq1}, all-partner co-change achieves a micro recall of only 4.64\% (61/1,316; mean P/R/J: 0.011 / 0.051 / 0.010). Restricting co-change to conventional test files improves micro recall to 7.67\% (101/1,316; mean P/R/J: 0.054 / 0.087 / 0.038). The changeset baseline recalls 17.02\% (224/1,316; mean P/R/J: 0.039 / 0.245 / 0.037). In contrast, historical failure frequency achieves 39.44\% micro recall (519/1,316; mean P/R/J: 0.185 / 0.517 / 0.178). Removing environment and timeout failure labels leaves this ordering unchanged. This evaluation demonstrates that historical test failure frequency dramatically outperforms version-control co-change heuristics at identifying true regressions.
 
 \section{Originality and Similar Datasets}
 
-% [AI DRAFT]
 \textsc{BR-Bench} differs substantively from existing benchmarks:
 \begin{itemize}
 \item \textbf{RTPTorrent}~\cite{mattis2020rtptorrent}: While RTPTorrent provides test outcomes from Travis CI for Java, it organizes data by build job rather than pull-request diffs, predates GitHub Actions, and focuses on test prioritization. \textsc{BR-Bench} targets diff-to-failing-test prediction across Java and Python.
@@ -273,11 +246,10 @@ All methods are evaluated on the identical set of $n=576$ instances where the co
 
 \section{Limitations and Threats}
 
-% [AI DRAFT]
 We identify several limitations and threats to validity:
 \begin{enumerate}
 \item \textit{Roadmap Sample Size Gates}: Our roadmap Gate 1 threshold ($\ge 5,000$ strict positives) was \textbf{not met}, reaching 4,168/5,000 labels (83.36\%) and 762/5,000 instances (15.24\%). Furthermore, Gate 1.5 ($\ge 70\%$ test binding) was met on the combined metric (94.29\%, 5,643/5,985) but \textbf{not met} at full-confidence FQCN resolution (63.83\%, 3,820/5,985).
-\item \textit{Parser Evaluation}: Parser evaluation figures on our fixture corpus (46/46) and holdout v1 (30/30) were derived from development sets used during parser tuning. Independent parser precision on holdout v5 was \textbf{not measured} [MISSING: blind human annotations on holdout v5 fixtures] due to the lack of completed blind human annotations.
+\item \textit{Parser Evaluation}: Parser evaluation figures on our fixture corpus (46/46) and holdout v1 (30/30) were derived from development sets used during parser tuning. Independent parser precision on holdout v5 was \textbf{not measured}, because no blind human annotation of the holdout v5 fixtures was completed.
 \item \textit{Observational Ground Truth}: Labels represent observational CI execution outcomes rather than causal defect injections or isolated re-executions. Non-test environmental failures remain present in a small minority of labels (2.14\% strict environment, 2.69\% timeout).
 \item \textit{90-Day Retention Cliff}: Because GitHub Actions purges raw log artifacts after 90 days, 33.21\% of failed runs (4,458/13,422) had already expired at the time of harvesting across the 77-repository harvest corpus (as of the last capture, 2026-08-29). Exact reproduction must rely on our archived raw store rather than live GitHub API calls.
 \item \textit{Repository Skew}: The strict benchmark split is dominated by Java repositories (35 Java vs. 2 Python), with high volume from a small set of active projects (e.g., Apache Beam, Stirling-PDF).
@@ -285,7 +257,6 @@ We identify several limitations and threats to validity:
 
 \section{Future Research Questions and Improvements}
 
-% [AI DRAFT]
 \textsc{BR-Bench} opens promising directions for empirical software engineering research, including:
 (1)~\textit{Machine Learning for Test Selection}: training graph neural networks and language models on code diffs and test paths to predict regressions without execution overhead;
 (2)~\textit{Independent Test Re-execution}: executing a planned causal subset in isolated containerized environments to distinguish true regressions from environmental flakes; and
@@ -293,12 +264,10 @@ We identify several limitations and threats to validity:
 
 \section{Availability and Reproducibility}
 
-% [AI DRAFT]
-The source code and the release bundle are released under the MIT licence; the underlying repository content remains under each project's own licence. The release bundle deposited on Zenodo at \texttt{[DOI-DATA]} holds the processed \texttt{instances}, \texttt{outcomes}, and \texttt{cochange} tables (165,349 / 12,766 / 175,204 rows), NOT the raw log store. The complete source code pipeline is available on GitHub at \texttt{[DOI-CODE]}. The dataset numbers in this paper can be regenerated offline in approximately 8 minutes on a standard laptop by executing \texttt{make tables}, and the test suite comprising 787 automated tests (787 passed, 1 skipped) passes cleanly via \texttt{make test}.
+The source code is released under the MIT licence and the release bundle under CC BY 4.0; the underlying repository content remains under each project's own licence. The release bundle is deposited on Zenodo (\url{https://doi.org/10.5281/zenodo.23250262}) and holds the processed \texttt{instances}, \texttt{outcomes}, \texttt{cochange} and \texttt{failure\_messages} tables (165,349 / 12,766 / 175,204 / 3,490 rows), not the raw log store. The complete source code pipeline is available on GitHub at \texttt{[DOI-CODE]}. The dataset numbers in this paper can be regenerated offline in approximately 8 minutes on a standard laptop by executing \texttt{make tables}, and the test suite comprising 787 automated tests (787 passed, 1 skipped) passes cleanly via \texttt{make test}.
 
 \section{Conclusion}
 
-% [AI DRAFT]
 We presented \textsc{BR-Bench}, an open benchmark linking pull-request modifications to fault-revealing tests across Java and Python GitHub Actions pipelines. By resolving base runs, filtering same-commit flakiness, and binding tests to source files, \textsc{BR-Bench} provides an empirical ground truth for regression test selection and impact analysis. Our initial evaluation demonstrates that historical test failure frequency substantially outperforms conventional co-change proxies, establishing a foundation for future predictive test selection research.
 
 \newpage

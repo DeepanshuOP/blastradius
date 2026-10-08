@@ -54,7 +54,6 @@ INTERIM = Path("data/interim")
 GRAPH_DIR = Path("data/graphs")
 MAX_LOG_LINES = 10
 MAX_LINE_CHARS = 200
-COCHANGE_K = 10
 
 _ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 _FAIL_WORDS = re.compile(r"FAIL|ERROR|Error|error|<<<|Exception|assert", re.IGNORECASE)
@@ -418,10 +417,10 @@ def main() -> int:
           f"{brow['candidates_considered']} candidate file(s) considered)")
 
     print("\n7) GRAPH CONTEXT  (graph at the base commit; hops on the undirected projection)")
-    changed = print_graph(cand, brow["resolved_path"])
+    print_graph(cand, brow["resolved_path"])
 
-    print("\n8) CO-CHANGE vs WHAT ACTUALLY FAILED")
-    print_cochange(cand, changed, out, bind)
+    print("\n8) PREDICTORS vs WHAT ACTUALLY FAILED  (same method as RQ1 and the demo site)")
+    print_predictions(cand)
     return 0
 
 
@@ -510,44 +509,60 @@ def print_graph(cand: Candidate, test_file: str) -> list[str]:
     return changed
 
 
-def print_cochange(cand: Candidate, changed: list[str], out: pd.DataFrame, bind: pd.DataFrame) -> None:
-    """Print the co-change prediction against the actual failing test files.
+def format_predictions(s: dict, show: int = 5) -> list[str]:
+    """Stage 8 as text lines, from the `predictions` block the demo site also renders.
 
-    Mirrors `analysis/rq1_divergence.py`: top-k partners of every changed file,
-    minus the changed files, against the bound test files of the strict labels.
-    Ties on confidence are broken by file name, which rq1 leaves unspecified.
+    Pure: the same dict (`analysis/export_demo_data.stage_predictions`) feeds the site's
+    stage 8 and this walkthrough, so the two cannot disagree.
+
+    Args:
+        s: The `predictions` stage dict.
+        show: How many paths to list per predictor.
+
+    Returns:
+        Lines to print.
+    """
+    m, n = s["metrics"], s["metrics"]["n_actual"]
+    lines = [f"leakage-free, k = {s['k']}: co-change uses only commits before the run started "
+             f"({s['run_started_at']}), history only strict labels of earlier runs",
+             f"History caught {m['history']['hits']}/{n} failing test file{'' if n == 1 else 's'}; "
+             f"co-change caught {m['cochange']['hits']}/{n}."]
+    for key, name, extra in (("cochange", "co-change (top k partners per changed file)", None),
+                             ("history", "historical frequency (top k failing test files)", "past_failures")):
+        mm = m[key]
+        lines.append(f"{name}: {mm['predicted']} predicted, {mm['hits']} hit, "
+                     f"precision {mm['precision']:.3f}, recall {mm['recall']:.3f}")
+        for x in s[key][:show]:
+            tail = f"  (x{x[extra]})" if extra else ""
+            lines.append(f"    {'HIT ' if x['hit'] else 'miss'} {x['path']}{tail}")
+        if len(s[key]) > show:
+            lines.append(f"    ... {len(s[key]) - show} more "
+                         f"({sum(1 for x in s[key][show:] if x['hit'])} hit(s) among them)")
+        if not s[key]:
+            lines.append("    (none: the predictor is silent for this instance)")
+    lines.append(f"actually failed ({n} bound test file{'' if n == 1 else 's'}):")
+    for x in s["actual"]:
+        lines.append(f"    {x['path']}  co-change {'yes' if x['caught_by_cochange'] else 'no'}, "
+                     f"history {'yes' if x['caught_by_history'] else 'no'}")
+    return lines
+
+
+def print_predictions(cand: Candidate) -> dict:
+    """Print stage 8 with the same trailing, symmetric method as RQ1 and the demo site.
 
     Args:
         cand: The selected instance.
-        changed: The PR's changed files.
-        out: `outcomes.parquet`.
-        bind: `binding.parquet`.
+
+    Returns:
+        The `predictions` stage dict that was printed.
     """
-    co = _read("cochange")
-    co = co[co["repo_full"] == cand.repo]
-    predicted: set[str] = set()
-    for f in changed:
-        part = co[co["file_a"] == f].sort_values(["conf_a_to_b", "file_b"], ascending=[False, True])
-        predicted.update(part["file_b"].head(COCHANGE_K))
-    predicted -= set(changed)
-    tests = out[(out["run_id"] == cand.run_id) & (out["split"] == "strict")]["test_id"]
-    paths = bind[(bind["repo"] == cand.repo) & (bind["status"] == "exact")
-                 & bind["test_id"].isin(tests)]["resolved_path"]
-    actual = set(paths)
-    if not predicted:
-        print("  no co-change predictions exist for this instance's changed files "
-              "(the proxy is silent here)")
-        print(f"  actual failing test files: {len(actual)}")
-        return
-    hit = predicted & actual
-    p = len(hit) / len(predicted)
-    r = len(hit) / len(actual) if actual else 0.0
-    j = len(hit) / len(predicted | actual)
-    print(f"  co-change set (top {COCHANGE_K} partners per changed file): {len(predicted)} files")
-    print(f"  actual failing set (bound test files): {len(actual)} files")
-    print(f"  overlap: {len(hit)}   precision {p:.3f}  recall {r:.3f}  jaccard {j:.3f}")
-    for name, s in (("predicted", predicted), ("actual", actual), ("overlap", hit)):
-        print(f"    {name}: " + (", ".join(sorted(s)[:5]) + (" ..." if len(s) > 5 else "") if s else "-"))
+    from analysis import export_demo_data as ex  # lazy: the exporter imports this module
+    from analysis import rq1_divergence as rq1
+
+    stage = ex.stage_predictions(cand, rq1.load_data())
+    for ln in format_predictions(stage):
+        print(f"  {ln}")
+    return stage
 
 
 if __name__ == "__main__":
