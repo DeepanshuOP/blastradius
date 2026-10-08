@@ -1,0 +1,25 @@
+\begin{tikzpicture}[
+  node distance=0.45cm and 0.4cm,
+  every text node part/.style={align=center},
+  box/.style={draw, rectangle, rounded corners=2pt, minimum height=0.6cm, minimum width=1.1cm, font=\scriptsize, inner sep=2pt, fill=black!4},
+  proc/.style={box, fill=blue!5, draw=blue!40},
+  filter/.style={box, fill=orange!8, draw=orange!50},
+  res/.style={box, fill=green!8, draw=green!50, font=\scriptsize\bfseries},
+  arr/.style={->, >=latex, semithick}
+]
+  \node[proc] (harvest) {1. Harvester\\(GHA runs, logs)};
+  \node[proc, right=of harvest] (parse) {2. Log Parser\\(Maven, Gradle, pytest)};
+  \node[proc, right=of parse] (norm) {3. Normaliser\\(\texttt{test\_id} FQCN)};
+  \node[filter, below=of norm] (base) {4. Base Resolution\\(exact-green / diff)};
+  \node[filter, left=of base] (label) {5. Label Engine\\(strict / relaxed)};
+  \node[filter, left=of label] (bind) {6. Test Binding\\(pinned clones)};
+  \node[res, below=of label] (release) {7. Release Bundle (\textsc{BR-Bench})\\(\texttt{instances.parquet}, \texttt{outcomes.parquet})};
+
+  \draw[arr] (harvest) -- (parse);
+  \draw[arr] (parse) -- (norm);
+  \draw[arr] (norm) -- (base);
+  \draw[arr] (base) -- (label);
+  \draw[arr] (label) -- (bind);
+  \draw[arr] (bind) |- (release);
+  \draw[arr] (label) -- (release);
+\end{tikzpicture}
