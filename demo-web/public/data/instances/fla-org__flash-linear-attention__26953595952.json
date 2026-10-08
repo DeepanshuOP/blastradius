@@ -1,5 +1,5 @@
 {
- "generated_at_git_sha": "e50f3d5b7be9da31bb361ada9ac560b8538afd33",
+ "generated_at_git_sha": "04ca282917553e2662c3ca58feea7e53e5615680",
  "id": "fla-org__flash-linear-attention__26953595952",
  "stages": {
   "binding": {
@@ -230,6 +230,3323 @@
    "workflow_name": "nvidia-h100-ci"
   },
   "graph": {
+   "blast": {
+    "caps": {
+     "edges": 400,
+     "nodes": 150
+    },
+    "edges": [
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk",
+      "target": "fla_ops_gated_oja_rule_chunk_h"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk",
+      "target": "fla_ops_gated_oja_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "target": "tests_ops_test_iplr_delta"
+     },
+     {
+      "source": "fla_ops_lightning_attn_chunk",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_retention_chunk",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_simple_gla_chunk",
+      "target": "tests_ops_test_simple_gla"
+     },
+     {
+      "source": "fla_layers_gdn2_gateddeltanet2",
+      "target": "tests_ops_test_gdn2"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_bwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_fwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_comba_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_gated_oja_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_comba_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_gated_oja_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_comba_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_gated_oja_rule_chunk"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_chunk_chunk_comba"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_utils"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_utils_chunk_comba_cumsum_scalar_fwd"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_wy_fast"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_comba_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_delta_h"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_o"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dqkwg"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dv_local"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_common_chunk_o_chunk_fwd_o"
+     },
+     {
+      "source": "fla_ops_comba_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_chunk_chunk_comba",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_fused_recurrent_fused_recurrent_comba",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_naive",
+      "target": "fla_ops_comba_naive_naive_chunk_comba"
+     },
+     {
+      "source": "fla_ops_comba_naive",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_naive_naive_chunk_comba",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_utils",
+      "target": "fla_ops_comba_utils_chunk_comba_cumsum_scalar_fwd"
+     },
+     {
+      "source": "fla_ops_comba_utils",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_utils",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_utils_chunk_comba_cumsum_scalar_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_utils_chunk_comba_cumsum_scalar_fwd",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd_kernel"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd_kernel"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_comba_wy_fast_recompute_w_u_fwd_kernel"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_comba_wy_fast_recompute_w_u_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_common_chunk_h_chunk_bwd_dh"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_common_chunk_h_chunk_fwd_h"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_gsa_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_rwkv6_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_bwd_dh",
+      "target": "fla_ops_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_bwd_dh",
+      "target": "fla_ops_gsa_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_bwd_dh",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_fwd_h",
+      "target": "fla_ops_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_fwd_h",
+      "target": "fla_ops_gsa_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_fwd_h",
+      "target": "fla_ops_rwkv6_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_h_chunk_fwd_h",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dqkwg"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dv"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dv_local"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_fwd_o"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_simple_gla_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "fla_ops_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "target": "fla_ops_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_common_gate_fused_beta_sigmoid"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_common_gate_fused_beta_sigmoid_bwd"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid_bwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_compress_h0"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_expand_h0"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_kda_chunk_chunk_kda"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_chunk_chunkdeltarulefunction"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_fwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+      "target": "fla_ops_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+      "target": "tests_ops_test_delta"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule_fwd",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_fwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_fused_recurrent_fused_recurrent_delta_rule",
+      "target": "fla_ops_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_delta_rule_fused_recurrent_fused_recurrent_delta_rule",
+      "target": "tests_ops_test_delta"
+     },
+     {
+      "source": "fla_ops_delta_rule_parallel",
+      "target": "fla_ops_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd_kernel"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_fwd"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_chunk_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_oja_rule_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_rwkv6_chunk"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_gsa_chunk"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_rwkv6_chunk"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gsa_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gsa_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_chunk_chunk_kda",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_ops_kda_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_fused_recurrent",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "tests_ops_test_gdn2"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_ops_lightning_attn_chunk",
+      "target": "fla_ops_lightning_attn_init"
+     },
+     {
+      "source": "fla_ops_retention_chunk",
+      "target": "fla_ops_retention_init"
+     },
+     {
+      "source": "fla_ops_rwkv6_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_rwkv6_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_rwkv6_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_rwkv7_fused_addcmul",
+      "target": "tests_ops_test_rwkv7"
+     },
+     {
+      "source": "fla_ops_rwkv7_gate_output_correction",
+      "target": "tests_ops_test_rwkv7"
+     },
+     {
+      "source": "fla_ops_simple_gla_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_simple_gla_fused_recurrent",
+      "target": "tests_ops_test_simple_gla"
+     },
+     {
+      "source": "fla_ops_utils_index_prepare_chunk_indices",
+      "target": "tests_ops_utils_test_index"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_gsa"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_ttt"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_comba"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_delta"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_dplr_delta"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_gdn2"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_gsa"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_iplr_delta"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_oja"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_retention"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_rwkv6"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_rwkv7"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_simple_gla"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_ttt"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_utils_test_cumsum"
+     },
+     {
+      "source": "fla_layers_kda",
+      "target": "fla_ops_kda_chunk_chunk_kda"
+     },
+     {
+      "source": "fla_layers_mesa_net",
+      "target": "fla_modules_l2norm"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_ops_comba_fused_recurrent",
+      "target": "fla_ops_comba_fused_recurrent_fused_recurrent_comba"
+     },
+     {
+      "source": "fla_ops_comba_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_chunk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_chunk_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_intracard_cp"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt",
+      "target": "tests_ops_test_solve_tril"
+     },
+     {
+      "source": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "target": "tests_ops_test_solve_tril"
+     },
+     {
+      "source": "fla_ops_common_fused_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_fused_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_fused_recurrent",
+      "target": "fla_ops_gsa_fused_recurrent"
+     },
+     {
+      "source": "fla_ops_common_fused_recurrent",
+      "target": "fla_ops_simple_gla_fused_recurrent"
+     },
+     {
+      "source": "fla_ops_common_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid_bwd",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_ops_common_intracard_cp",
+      "target": "fla_ops_common_intracard_cp_intracard_fwd_h"
+     },
+     {
+      "source": "fla_ops_common_intracard_cp",
+      "target": "fla_ops_cp_chunk_delta_h"
+     },
+     {
+      "source": "fla_ops_common_intracard_cp",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_intracard_cp_intracard_fwd_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "tests_context_parallel_test_cp_bwd_gk_offset"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_kda_chunk"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_product_chunk_deltaproduct_o"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk_deltaproduct_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk_deltaproduct_o",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk_deltaproduct_o",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk_a_bwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk_a_fwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk_h_bwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk_h_fwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_chunk_o_bwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_wy_fast_bwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "target": "fla_ops_generalized_delta_rule_dplr_wy_fast_fwd"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_a_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_a_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_a_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_a_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_a_fwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_fwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_h_fwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_o_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_o_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_chunk_o_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_wy_fast_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_wy_fast_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_wy_fast_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_wy_fast_fwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_gsa_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_chunk",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_kda_chunk",
+      "target": "fla_ops_kda_chunk_chunk_kda"
+     },
+     {
+      "source": "fla_ops_kda_chunk",
+      "target": "fla_ops_kda_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_kda_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_chunk_intra"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_gate"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_wy_fast"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_kda_chunk_fwd",
+      "target": "fla_ops_kda_chunk_intra"
+     },
+     {
+      "source": "fla_ops_kda_chunk_fwd",
+      "target": "fla_ops_kda_gate"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_kda_wy_fast"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_lightning_attn_fused_recurrent",
+      "target": "fla_ops_lightning_attn_init"
+     },
+     {
+      "source": "fla_ops_lightning_attn_fused_recurrent",
+      "target": "fla_ops_simple_gla_fused_recurrent"
+     },
+     {
+      "source": "fla_ops_retention_fused_chunk",
+      "target": "fla_ops_retention_init"
+     },
+     {
+      "source": "fla_ops_retention_fused_recurrent",
+      "target": "fla_ops_retention_init"
+     },
+     {
+      "source": "fla_ops_retention_fused_recurrent",
+      "target": "fla_ops_simple_gla_fused_recurrent"
+     },
+     {
+      "source": "fla_ops_retention_init",
+      "target": "fla_ops_retention_parallel"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_forgetting_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_models_test_modeling_base"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_modules_test_conv"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_delta_product"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_forgetting_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_gla"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_linear_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_nsa"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_path_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_solve_tril"
+     },
+     {
+      "source": "fla_layers_kda",
+      "target": "tests_layers_test_layer_cache_layer_idx"
+     },
+     {
+      "source": "fla_layers_mesa_net",
+      "target": "tests_layers_test_layer_cache_layer_idx"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_forgetting_attn_parallel"
+     },
+     {
+      "source": "fla_ops_common_backends_intracard",
+      "target": "fla_ops_common_intracard_cp_intracard_fwd_h"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_chunk_bwd",
+      "target": "fla_ops_common_backends_tilelang_init"
+     },
+     {
+      "source": "fla_ops_common_fused_recurrent",
+      "target": "fla_ops_gla_fused_recurrent"
+     },
+     {
+      "source": "fla_ops_forgetting_attn_parallel",
+      "target": "tests_ops_test_forgetting_attn"
+     },
+     {
+      "source": "tests_models_test_modeling_abc",
+      "target": "tests_models_test_modeling_base"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_bitnet"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_comba"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_nsa"
+     }
+    ],
+    "max_hops": 4,
+    "nodes": [
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_comba_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/wy_fast.py",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_delta_rule_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "delta_rule/chunk.py",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_delta_rule_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "delta_rule/wy_fast.py",
+      "path": "fla/ops/delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_delta_rule_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/chunk.py",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_delta_rule_chunk_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/chunk_fwd.py",
+      "path": "fla/ops/gated_delta_rule/chunk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_delta_rule_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/wy_fast.py",
+      "path": "fla/ops/gated_delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_oja_rule_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_oja_rule/chunk.py",
+      "path": "fla/ops/gated_oja_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_oja_rule_chunk_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_oja_rule/chunk_h.py",
+      "path": "fla/ops/gated_oja_rule/chunk_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_oja_rule_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_oja_rule/wy_fast.py",
+      "path": "fla/ops/gated_oja_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "iplr/chunk.py",
+      "path": "fla/ops/generalized_delta_rule/iplr/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gsa_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gsa/chunk.py",
+      "path": "fla/ops/gsa/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_lightning_attn_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "lightning_attn/chunk.py",
+      "path": "fla/ops/lightning_attn/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_retention_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/chunk.py",
+      "path": "fla/ops/retention/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_rwkv6_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "rwkv6/chunk.py",
+      "path": "fla/ops/rwkv6/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_simple_gla_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "simple_gla/chunk.py",
+      "path": "fla/ops/simple_gla/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_comba",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_comba.py",
+      "path": "tests/ops/test_comba.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_delta",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_delta.py",
+      "path": "tests/ops/test_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_dplr_delta",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_dplr_delta.py",
+      "path": "tests/ops/test_dplr_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_gdn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gdn.py",
+      "path": "tests/ops/test_gdn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_gdn2",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gdn2.py",
+      "path": "tests/ops/test_gdn2.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_gsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gsa.py",
+      "path": "tests/ops/test_gsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_iplr_delta",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_iplr_delta.py",
+      "path": "tests/ops/test_iplr_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_kda",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_kda.py",
+      "path": "tests/ops/test_kda.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_oja",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_oja.py",
+      "path": "tests/ops/test_oja.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_retention",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_retention.py",
+      "path": "tests/ops/test_retention.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_rwkv6",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_rwkv6.py",
+      "path": "tests/ops/test_rwkv6.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_rwkv7",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_rwkv7.py",
+      "path": "tests/ops/test_rwkv7.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_simple_gla",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_simple_gla.py",
+      "path": "tests/ops/test_simple_gla.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_ttt",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_ttt.py",
+      "path": "tests/ops/test_ttt.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_utils_test_cumsum",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_cumsum.py",
+      "path": "tests/ops/utils/test_cumsum.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_utils_test_index",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_index.py",
+      "path": "tests/ops/utils/test_index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_layers_gdn2_gateddeltanet2",
+      "in_graph": true,
+      "kind": "class",
+      "label": "GatedDeltaNet2",
+      "path": "fla/layers/gdn2.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm",
+      "in_graph": true,
+      "kind": "file",
+      "label": "l2norm.py",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm_l2norm_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_bwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm_l2norm_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_fwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/chunk.py",
+      "path": "fla/ops/comba/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_chunk_chunk_comba",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_comba()",
+      "path": "fla/ops/comba/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_fused_recurrent_fused_recurrent_comba",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_comba()",
+      "path": "fla/ops/comba/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_naive",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/naive.py",
+      "path": "fla/ops/comba/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_naive_naive_chunk_comba",
+      "in_graph": true,
+      "kind": "function",
+      "label": "naive_chunk_comba()",
+      "path": "fla/ops/comba/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_utils",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/utils.py",
+      "path": "fla/ops/comba/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_utils_chunk_comba_cumsum_scalar_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_comba_cumsum_scalar_fwd()",
+      "path": "fla/ops/comba/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_scaled_dot_comba_pkt_fwd()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_chunk_scaled_dot_comba_pkt_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_scaled_dot_comba_pkt_fwd_kernel()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_bwd()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_prepare_wy_repr_bwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_bwd_kernel()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_recompute_w_u_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "recompute_w_u_fwd()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_comba_wy_fast_recompute_w_u_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "recompute_w_u_fwd_kernel()",
+      "path": "fla/ops/comba/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_delta_h.py",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_bwd_dhu()",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_h()",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_h.py",
+      "path": "fla/ops/common/chunk_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_h_chunk_bwd_dh",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dh()",
+      "path": "fla/ops/common/chunk_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_h_chunk_fwd_h",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_fwd_h()",
+      "path": "fla/ops/common/chunk_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_o.py",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dqkwg()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_bwd_dv",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dv()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dv_local()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_fwd_o()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_scaled_dot_kkt",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_scaled_dot_kkt.py",
+      "path": "fla/ops/common/chunk_scaled_dot_kkt.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_scaled_dot_kkt_chunk_scaled_dot_kkt_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_scaled_dot_kkt_fwd()",
+      "path": "fla/ops/common/chunk_scaled_dot_kkt.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/gate.py",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate_fused_beta_sigmoid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_beta_sigmoid()",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate_fused_beta_sigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_beta_sigmoid_bwd()",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cp/chunk_delta_h.py",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_bwd_dhu_pre_process()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_h_pre_process()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "in_graph": true,
+      "kind": "function",
+      "label": "compress_h0()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "in_graph": true,
+      "kind": "function",
+      "label": "expand_h0()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_context_flacpcontext",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FLACPContext",
+      "path": "fla/ops/cp/context.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_delta_rule()",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_chunk_chunk_delta_rule_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_delta_rule_bwd()",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_chunk_chunk_delta_rule_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_delta_rule_fwd()",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_chunk_chunkdeltarulefunction",
+      "in_graph": true,
+      "kind": "class",
+      "label": "ChunkDeltaRuleFunction",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_fused_recurrent_fused_recurrent_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_delta_rule()",
+      "path": "fla/ops/delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "delta_rule/__init__.py",
+      "path": "fla/ops/delta_rule/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "delta_rule/parallel.py",
+      "path": "fla/ops/delta_rule/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_bwd()",
+      "path": "fla/ops/delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_bwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_bwd_kernel()",
+      "path": "fla/ops/delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_delta_rule_wy_fast_prepare_wy_repr_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_fwd()",
+      "path": "fla/ops/delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_product_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_product/chunk.py",
+      "path": "fla/ops/gated_delta_product/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "dplr/chunk.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gla_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gla/chunk.py",
+      "path": "fla/ops/gla/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_chunk_chunk_kda",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_kda()",
+      "path": "fla/ops/kda/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/fused_recurrent.py",
+      "path": "fla/ops/kda/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/gate.py",
+      "path": "fla/ops/kda/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_lightning_attn_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "lightning_attn/__init__.py",
+      "path": "fla/ops/lightning_attn/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_retention_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/__init__.py",
+      "path": "fla/ops/retention/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_rwkv7_fused_addcmul",
+      "in_graph": true,
+      "kind": "file",
+      "label": "fused_addcmul.py",
+      "path": "fla/ops/rwkv7/fused_addcmul.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_rwkv7_gate_output_correction",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gate_output_correction.py",
+      "path": "fla/ops/rwkv7/gate_output_correction.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_simple_gla_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "simple_gla/fused_recurrent.py",
+      "path": "fla/ops/simple_gla/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_index_prepare_chunk_indices",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_chunk_indices()",
+      "path": "fla/ops/utils/index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op",
+      "in_graph": true,
+      "kind": "file",
+      "label": "op.py",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_check_shared_mem",
+      "in_graph": true,
+      "kind": "function",
+      "label": "check_shared_mem()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_testing_assert_close",
+      "in_graph": true,
+      "kind": "function",
+      "label": "assert_close()",
+      "path": "fla/utils/_testing.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_kda",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda.py",
+      "path": "fla/layers/kda.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_mesa_net",
+      "in_graph": true,
+      "kind": "file",
+      "label": "mesa_net.py",
+      "path": "fla/layers/mesa_net.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attn/parallel.py",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_comba_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/fused_recurrent.py",
+      "path": "fla/ops/comba/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_backends_tilelang_chunk_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "tilelang/chunk_bwd.py",
+      "path": "fla/ops/common/backends/tilelang/chunk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_fused_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/fused_chunk.py",
+      "path": "fla/ops/common/fused_chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/fused_recurrent.py",
+      "path": "fla/ops/common/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_intracard_cp",
+      "in_graph": true,
+      "kind": "file",
+      "label": "intracard_cp.py",
+      "path": "fla/ops/common/intracard_cp.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_intracard_cp_intracard_fwd_h",
+      "in_graph": true,
+      "kind": "function",
+      "label": "intracard_fwd_h()",
+      "path": "fla/ops/common/intracard_cp.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_gated_delta_product_chunk_deltaproduct_o",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_deltaproduct_o.py",
+      "path": "fla/ops/gated_delta_product/chunk_deltaproduct_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/fused_recurrent.py",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk_a_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_A_bwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk_A_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk_a_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_A_fwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk_A_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk_h_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_h_bwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk_h_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk_h_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "dplr/chunk_h_fwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk_h_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_chunk_o_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_o_bwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/chunk_o_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_wy_fast_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "wy_fast_bwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/wy_fast_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_dplr_wy_fast_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "wy_fast_fwd.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/wy_fast_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_gsa_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gsa/fused_recurrent.py",
+      "path": "fla/ops/gsa/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk.py",
+      "path": "fla/ops/kda/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_chunk_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_bwd.py",
+      "path": "fla/ops/kda/chunk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_chunk_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_fwd.py",
+      "path": "fla/ops/kda/chunk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_chunk_intra",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_intra.py",
+      "path": "fla/ops/kda/chunk_intra.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/wy_fast.py",
+      "path": "fla/ops/kda/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_lightning_attn_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "lightning_attn/fused_recurrent.py",
+      "path": "fla/ops/lightning_attn/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_retention_fused_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/fused_chunk.py",
+      "path": "fla/ops/retention/fused_chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_retention_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/fused_recurrent.py",
+      "path": "fla/ops/retention/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_retention_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/parallel.py",
+      "path": "fla/ops/retention/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_context_parallel_test_cp_bwd_gk_offset",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_cp_bwd_gk_offset.py",
+      "path": "tests/context_parallel/test_cp_bwd_gk_offset.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_models_test_modeling_base",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_base.py",
+      "path": "tests/models/test_modeling_base.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_modules_test_conv",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_conv.py",
+      "path": "tests/modules/test_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_attn.py",
+      "path": "tests/ops/test_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_delta_product",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_delta_product.py",
+      "path": "tests/ops/test_delta_product.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_forgetting_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_forgetting_attn.py",
+      "path": "tests/ops/test_forgetting_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_gla",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gla.py",
+      "path": "tests/ops/test_gla.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_linear_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_linear_attn.py",
+      "path": "tests/ops/test_linear_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_nsa.py",
+      "path": "tests/ops/test_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_path_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_path_attn.py",
+      "path": "tests/ops/test_path_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_solve_tril",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_solve_tril.py",
+      "path": "tests/ops/test_solve_tril.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_common_backends_intracard",
+      "in_graph": true,
+      "kind": "file",
+      "label": "intracard.py",
+      "path": "fla/ops/common/backends/intracard.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_common_backends_tilelang_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/backends/tilelang/__init__.py",
+      "path": "fla/ops/common/backends/tilelang/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_forgetting_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "forgetting_attn/parallel.py",
+      "path": "fla/ops/forgetting_attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_gla_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gla/fused_recurrent.py",
+      "path": "fla/ops/gla/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_layers_test_layer_cache_layer_idx",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_layer_cache_layer_idx.py",
+      "path": "tests/layers/test_layer_cache_layer_idx.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_abc",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_abc.py",
+      "path": "tests/models/test_modeling_abc.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_bitnet",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_bitnet.py",
+      "path": "tests/models/test_modeling_bitnet.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_comba",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_comba.py",
+      "path": "tests/models/test_modeling_comba.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_nsa.py",
+      "path": "tests/models/test_modeling_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:.github/workflows/nvidia-a100.yml",
+      "in_graph": false,
+      "kind": "file",
+      "label": "nvidia-a100.yml",
+      "path": ".github/workflows/nvidia-a100.yml"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:.github/workflows/reusable-ci-tests.yml",
+      "in_graph": false,
+      "kind": "file",
+      "label": "reusable-ci-tests.yml",
+      "path": ".github/workflows/reusable-ci-tests.yml"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": null,
+      "id": "outer:tests/models/test_modeling_parallax.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_modeling_parallax.py",
+      "path": "tests/models/test_modeling_parallax.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:tests/ops/test_gated_delta.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_gated_delta.py",
+      "path": "tests/ops/test_gated_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:tests/ops/test_gated_delta_product.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_gated_delta_product.py",
+      "path": "tests/ops/test_gated_delta_product.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:tests/ops/test_lightning_attn.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_lightning_attn.py",
+      "path": "tests/ops/test_lightning_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": null,
+      "id": "outer:tests/ops/test_parallax.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_parallax.py",
+      "path": "tests/ops/test_parallax.py"
+     }
+    ],
+    "note": "hops on the undirected projection from the nearest changed file",
+    "truncated": {
+     "edges": false,
+     "nodes": true
+    },
+    "within_hops_total": 4582
+   },
    "built_offline_from_local_git": true,
    "changed_distances": [
     {

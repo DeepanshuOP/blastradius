@@ -21,6 +21,20 @@ export type GraphNode = { id: string; label: string; file: string | null; kind: 
 export type GraphEdge = { source: string; target: string; relation: string; direction: string };
 export type GraphPath = { changed_file: string; hops: number; nodes: GraphNode[]; edges: GraphEdge[] };
 
+export type BlastNode = {
+  id: string; label: string; path: string | null; kind: string; hop: number | null; in_graph: boolean;
+  changed: boolean; actual_failing: boolean; cochange_pred: boolean; history_pred: boolean;
+};
+export type BlastDoc = {
+  nodes: BlastNode[];
+  edges: { source: string; target: string }[];
+  max_hops: number;
+  caps: { nodes: number; edges: number };
+  truncated: { nodes: boolean; edges: boolean };
+  within_hops_total: number;
+  note: string;
+};
+
 export type InstanceDoc = {
   id: string;
   generated_at_git_sha: string;
@@ -82,6 +96,7 @@ export type InstanceDoc = {
       paths: GraphPath[];
       min_distance_to_any_changed: number | null;
       distance_note: string;
+      blast: BlastDoc | null;
     };
     predictions: {
       k: number;

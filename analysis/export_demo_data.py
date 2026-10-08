@@ -206,8 +206,121 @@ def _edge_relation(graph: nx.MultiDiGraph, a: str, b: str) -> tuple[str, str]:
     return "related", "forward"
 
 
-def stage_graph(c: dw.Candidate, test_file: str, changed: list[str], cache: dict) -> dict:
-    """Stage 7: shortest paths from the test node to the nearest changed files."""
+BLAST_HOPS = 4
+BLAST_MAX_NODES = 150
+BLAST_MAX_EDGES = 400
+
+
+def node_kind(d: dict) -> str:
+    """`test` / `file` / `function` / `class` for one graph node's attributes."""
+    if d.get("node_type") == "test" or d.get("test_id"):
+        return "test"
+    if d.get("source_location") == "L1":
+        return "file"
+    return "function" if str(d.get("label") or "").endswith(")") else "class"
+
+
+def blast_radius(graph: nx.MultiDiGraph, undirected: nx.Graph, changed: list[tuple[str, str | None]],
+                 preds: dict, path_nodes: list[str]) -> dict:
+    """The code-graph neighbourhood within `BLAST_HOPS` hops of any changed file.
+
+    Hops are on the undirected projection. Nodes are taken in priority order
+    (changed files, actual failing test files, co-change predictions, history
+    predictions, nodes on shortest paths, then nearest by hop, ties by id) up
+    to `BLAST_MAX_NODES`; predicted or failing files farther than
+    `BLAST_HOPS` hops, or absent from the graph, get `hop: None` (the outer ring).
+
+    Args:
+        graph: The bound base-commit graph.
+        undirected: Its undirected projection.
+        changed: `(changed_file, node_or_None)` pairs.
+        preds: Stage 8 (`stage_predictions`) output.
+        path_nodes: Node ids on stage 7's shortest paths.
+
+    Returns:
+        `{nodes, edges, max_hops, caps, truncated}`.
+    """
+    file_nodes: dict[str, str] = {}
+    for n, d in sorted(graph.nodes(data=True)):
+        if d.get("source_location") == "L1" and d.get("source_file"):
+            file_nodes.setdefault(str(d["source_file"]), n)
+    flags = {"changed": {f for f, _ in changed}, "actual_failing": {x["path"] for x in preds["actual"]},
+             "cochange_pred": {x["path"] for x in preds["cochange"]},
+             "history_pred": {x["path"] for x in preds["history"]}}
+    sources = sorted({n for _, n in changed if n})
+    dist: dict[str, int] = {n: 0 for n in sources}
+    parent: dict[str, str] = {}
+    frontier = list(sources)
+    for hop in range(1, BLAST_HOPS + 1):
+        nxt = []
+        for u in frontier:
+            for v in sorted(undirected.neighbors(u)):
+                if v not in dist:
+                    dist[v], parent[v] = hop, u
+                    nxt.append(v)
+        frontier = nxt
+
+    def chain(n: str) -> list[str]:
+        out = []
+        while n in parent:
+            n = parent[n]
+            out.append(n)
+        return out
+
+    order: list[str] = []
+    outer: list[str] = []
+    for name in ("changed", "actual_failing", "cochange_pred", "history_pred"):
+        for f in sorted(flags[name]):
+            n = file_nodes.get(f)
+            if n is not None and n in dist:
+                order.append(n)
+            else:
+                outer.append(f)
+    for n in order[:]:
+        order.extend(chain(n))
+    order.extend(n for n in path_nodes if n in dist)
+    order.extend(sorted(dist, key=lambda n: (dist[n], n)))
+    keep: list[str] = []
+    seen: set[str] = set()
+    outer_ids = [f"outer:{f}" for f in dict.fromkeys(outer)][:BLAST_MAX_NODES]
+    room = BLAST_MAX_NODES - len(outer_ids)
+    for n in order:
+        if n not in seen and len(keep) < room:
+            seen.add(n)
+            keep.append(n)
+    by_node = {n: f for f, n in file_nodes.items()}
+
+    def entry(nid: str) -> dict:
+        if nid.startswith("outer:"):
+            f, d, hop, kind = nid[len("outer:"):], {}, None, "file"
+        else:
+            d = graph.nodes[nid]
+            f, hop, kind = by_node.get(nid) or d.get("source_file"), dist[nid], node_kind(d)
+        lab = str(d.get("label") or (f or nid).rsplit("/", 1)[-1])
+        e = {"id": nid, "label": lab, "path": f, "kind": kind, "hop": hop, "in_graph": not nid.startswith("outer:")}
+        is_file = nid in by_node or nid.startswith("outer:")
+        e.update({k: bool(is_file and f in v) for k, v in flags.items()})
+        if kind == "file" and e["actual_failing"]:
+            e["kind"] = "test"
+        return e
+
+    nodes = [entry(n) for n in keep] + [entry(n) for n in outer_ids]
+    nodes.sort(key=lambda e: (e["hop"] is None, e["hop"] or 0, e["id"]))
+    kept = set(keep)
+    edges = sorted({tuple(sorted((a, b))) for a, b in undirected.subgraph(kept).edges() if a != b},
+                   key=lambda ab: (max(dist[ab[0]], dist[ab[1]]), ab))
+    return {"nodes": nodes, "edges": [{"source": a, "target": b} for a, b in edges[:BLAST_MAX_EDGES]],
+            "max_hops": BLAST_HOPS, "caps": {"nodes": BLAST_MAX_NODES, "edges": BLAST_MAX_EDGES},
+            "truncated": {"nodes": len(dist) + len(outer_ids) > len(nodes), "edges": len(edges) > BLAST_MAX_EDGES},
+            "within_hops_total": len(dist), "note": "hops on the undirected projection from the nearest changed file"}
+
+
+def stage_graph(c: dw.Candidate, test_file: str, changed: list[str], cache: dict,
+                preds: dict | None = None) -> dict:
+    """Stage 7: shortest paths from the test node to the nearest changed files.
+
+    With `preds` (stage 8), also the blast-radius neighbourhood (`blast_radius`).
+    """
     from src.graph.build import build_graph_at, graph_path, load_graph
     from src.graph.query import UNREACHABLE, GraphQuery
     from src.graph.test_nodes import bind_test_ids
@@ -253,6 +366,9 @@ def stage_graph(c: dw.Candidate, test_file: str, changed: list[str], cache: dict
         "changed_distances": dists, "paths": paths,
         "min_distance_to_any_changed": None if m == UNREACHABLE else m,
         "distance_note": "hops on the undirected projection (src/graph/query.py)",
+        "blast": None if preds is None else blast_radius(
+            graph, q._undirected, mapped, preds,
+            sorted({n["id"] for p in paths for n in p["nodes"]})),
     }
 
 
@@ -299,8 +415,8 @@ def export_instance(c: dw.Candidate, t: Tables, data: rq1.Rq1Data, cache: dict, 
     s4, t_head, t_base = stage_head_base(c, t)
     s5 = stage_verdict(c, t, t_head, t_base)
     s6 = stage_binding(c, t, s5["t_reveal"])
-    s7 = stage_graph(c, s6["selected"]["resolved_path"], [f["path"] for f in s1["changed_files"]], cache)
     s8 = stage_predictions(c, data)
+    s7 = stage_graph(c, s6["selected"]["resolved_path"], [f["path"] for f in s1["changed_files"]], cache, s8)
     return {"id": instance_id(c), "generated_at_git_sha": sha,
             "stages": {"change": s1, "raw_log": s2, "parsed_outcome": s3, "head_vs_base": s4,
                        "verdict": s5, "binding": s6, "graph": s7, "predictions": s8}}

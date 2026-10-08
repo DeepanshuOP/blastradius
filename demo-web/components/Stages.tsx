@@ -1,3 +1,4 @@
+import BlastRadius from "./BlastRadius";
 import GraphPaths from "./GraphPaths";
 import type { InstanceDoc } from "./types";
 import { Badge, Card, KV, Mono, pct, short } from "./ui";
@@ -162,8 +163,15 @@ function Graph({ s }: { s: S["graph"] }) {
     <>
       <p className="mb-3">
         Code graph at <Mono>{short(s.graph_commit)}</Mono>: {s.n_nodes.toLocaleString()} nodes, {s.n_edges.toLocaleString()} edges
-        {s.built_offline_from_local_git ? " (built offline from local git objects)" : ""}. The {s.paths.length} nearest changed files:
+        {s.built_offline_from_local_git ? " (built offline from local git objects)" : ""}.
       </p>
+      {s.blast && (
+        <div className="mb-5 rounded-lg border border-slate-100 bg-slate-50/60 p-3">
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Blast radius: the neighbourhood of the change</h4>
+          <BlastRadius b={s.blast} />
+        </div>
+      )}
+      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Shortest paths: failing test to the {s.paths.length} nearest changed files</h4>
       <GraphPaths paths={s.paths} testLabel={s.test_node?.label ?? "test"} />
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <span className="rounded bg-slate-800 px-3 py-1 font-mono text-sm text-white">
