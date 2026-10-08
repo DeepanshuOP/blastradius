@@ -1,0 +1,357 @@
+{
+ "binding": {
+  "rows": [
+   {
+    "measure": "combined (exact)",
+    "value": {
+     "d": 5985,
+     "n": 5643,
+     "text": "5,643/5,985 (94.29%)"
+    }
+   },
+   {
+    "measure": "full confidence (exact, fully-qualified class name)",
+    "value": {
+     "d": 5985,
+     "n": 3820,
+     "text": "3,820/5,985 (63.83%)"
+    }
+   },
+   {
+    "measure": "basename-only, 0.5 confidence (exact, bare class name)",
+    "value": {
+     "d": 5985,
+     "n": 1823,
+     "text": "1,823/5,985 (30.46%)"
+    }
+   },
+   {
+    "measure": "ambiguous",
+    "value": {
+     "d": 5985,
+     "n": 164,
+     "text": "164/5,985 (2.74%)"
+    }
+   },
+   {
+    "measure": "not_found",
+    "value": {
+     "d": 5985,
+     "n": 178,
+     "text": "178/5,985 (2.97%)"
+    }
+   },
+   {
+    "measure": "unqualified",
+    "value": {
+     "d": 5985,
+     "n": 0,
+     "text": "0/5,985 (0.00%)"
+    }
+   }
+  ],
+  "source": "paper/generated/binding.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "environment_audit": {
+  "instances": [
+   {
+    "measure": "instances with >= 1 environment-strict label",
+    "value": {
+     "d": 762,
+     "n": 39,
+     "text": "39/762 (5.12%)"
+    }
+   },
+   {
+    "measure": "instances whose labels are ALL environment-strict",
+    "value": {
+     "d": 762,
+     "n": 37,
+     "text": "37/762 (4.86%)"
+    }
+   },
+   {
+    "measure": "instances with >= 1 timeout label",
+    "value": {
+     "d": 762,
+     "n": 80,
+     "text": "80/762 (10.50%)"
+    }
+   },
+   {
+    "measure": "instances whose labels are ALL environment-strict or timeout",
+    "value": {
+     "d": 762,
+     "n": 84,
+     "text": "84/762 (11.02%)"
+    }
+   },
+   {
+    "measure": "instances with >= 1 code-level label",
+    "value": {
+     "d": 762,
+     "n": 268,
+     "text": "268/762 (35.17%)"
+    }
+   },
+   {
+    "measure": "instances whose labels are ALL unknown",
+    "value": {
+     "d": 762,
+     "n": 394,
+     "text": "394/762 (51.71%)"
+    }
+   }
+  ],
+  "labels_by_class": [
+   {
+    "class": "code-level",
+    "labels": {
+     "d": 4168,
+     "n": 729,
+     "text": "729/4,168 (17.49%)"
+    }
+   },
+   {
+    "class": "environment-strict",
+    "labels": {
+     "d": 4168,
+     "n": 89,
+     "text": "89/4,168 (2.14%)"
+    }
+   },
+   {
+    "class": "timeout",
+    "labels": {
+     "d": 4168,
+     "n": 112,
+     "text": "112/4,168 (2.69%)"
+    }
+   },
+   {
+    "class": "unknown",
+    "labels": {
+     "d": 4168,
+     "n": 3238,
+     "text": "3,238/4,168 (77.69%)"
+    }
+   }
+  ],
+  "source": "paper/generated/infra_failures.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "gates": {
+  "rows": [
+   {
+    "gate": "Gate 1 (D-44, primary): strict labels",
+    "measured": {
+     "d": 5000,
+     "n": 4168,
+     "text": "4,168/5,000 (83.36%)"
+    },
+    "threshold": ">= 5,000",
+    "verdict": "NOT MET"
+   },
+   {
+    "gate": "Gate 1 (secondary): strict instances",
+    "measured": {
+     "d": 5000,
+     "n": 762,
+     "text": "762/5,000 (15.24%)"
+    },
+    "threshold": ">= 5,000",
+    "verdict": "NOT MET"
+   },
+   {
+    "gate": "Gate 1.5: combined binding",
+    "measured": {
+     "d": 5985,
+     "n": 5643,
+     "text": "5,643/5,985 (94.29%)"
+    },
+    "threshold": ">= 70%",
+    "verdict": "MET"
+   },
+   {
+    "gate": "Gate 1.5: full-confidence binding",
+    "measured": {
+     "d": 5985,
+     "n": 3820,
+     "text": "3,820/5,985 (63.83%)"
+    },
+    "threshold": ">= 70%",
+    "verdict": "NOT MET"
+   }
+  ],
+  "source": "paper/generated/gates.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "generated_at_git_sha": "e50f3d5b7be9da31bb361ada9ac560b8538afd33",
+ "leakage": {
+  "audited": {
+   "d": 762,
+   "n": 713,
+   "text": "713/762 (93.57%)"
+  },
+  "current_check": "a commit at or after `run_started_at` behind a partner (times re-read from git)",
+  "current_violations": {
+   "d": 713,
+   "n": 0,
+   "text": "0/713 (0.00%)"
+  },
+  "legacy_check": "a mined commit dated in `[run_started_at, as_of]` touches a changed file of the instance",
+  "legacy_violations": {
+   "d": 713,
+   "n": 640,
+   "text": "640/713 (89.76%)"
+  },
+  "source": "paper/generated/leakage_audit.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "rq1_k10": {
+  "k": 10,
+  "methods": [
+   {
+    "mean_jaccard": 0.01,
+    "mean_precision": 0.011,
+    "mean_recall": 0.051,
+    "median_size": 14.0,
+    "method": "co-change, all partner files",
+    "micro_precision": {
+     "d": 13109,
+     "n": 61,
+     "text": "61/13,109 (0.47%)"
+    },
+    "micro_recall": {
+     "d": 1316,
+     "n": 61,
+     "text": "61/1,316 (4.64%)"
+    },
+    "n": 576
+   },
+   {
+    "mean_jaccard": 0.038,
+    "mean_precision": 0.054,
+    "mean_recall": 0.087,
+    "median_size": 4.0,
+    "method": "co-change, restricted to conventional test files",
+    "micro_precision": {
+     "d": 4674,
+     "n": 101,
+     "text": "101/4,674 (2.16%)"
+    },
+    "micro_recall": {
+     "d": 1316,
+     "n": 101,
+     "text": "101/1,316 (7.67%)"
+    },
+    "n": 576
+   },
+   {
+    "mean_jaccard": 0.033,
+    "mean_precision": 0.048,
+    "mean_recall": 0.087,
+    "median_size": 6.0,
+    "method": "co-change, restricted to files with \"test\" in the path (sensitivity)",
+    "micro_precision": {
+     "d": 5737,
+     "n": 101,
+     "text": "101/5,737 (1.76%)"
+    },
+    "micro_recall": {
+     "d": 1316,
+     "n": 101,
+     "text": "101/1,316 (7.67%)"
+    },
+    "n": 576
+   },
+   {
+    "mean_jaccard": 0.037,
+    "mean_precision": 0.039,
+    "mean_recall": 0.245,
+    "median_size": 9.0,
+    "method": "changeset baseline",
+    "micro_precision": {
+     "d": 14001,
+     "n": 224,
+     "text": "224/14,001 (1.60%)"
+    },
+    "micro_recall": {
+     "d": 1316,
+     "n": 224,
+     "text": "224/1,316 (17.02%)"
+    },
+    "n": 576
+   },
+   {
+    "mean_jaccard": 0.178,
+    "mean_precision": 0.185,
+    "mean_recall": 0.517,
+    "median_size": 10.0,
+    "method": "historical-frequency baseline",
+    "micro_precision": {
+     "d": 4099,
+     "n": 519,
+     "text": "519/4,099 (12.66%)"
+    },
+    "micro_recall": {
+     "d": 1316,
+     "n": 519,
+     "text": "519/1,316 (39.44%)"
+    },
+    "n": 576
+   }
+  ],
+  "source": "paper/generated/rq1.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "runs_funnel": {
+  "source": "paper/generated/attrition_funnel.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560",
+  "stages": [
+   {
+    "count": 165349,
+    "of_previous": "-",
+    "source": "instances_raw.parquet",
+    "stage": "runs discovered"
+   },
+   {
+    "count": 12581,
+    "of_previous": "12,581/165,349 (7.61%)",
+    "source": "instances_raw.parquet",
+    "stage": "failed runs"
+   },
+   {
+    "count": 6586,
+    "of_previous": "6,586/12,581 (52.35%)",
+    "source": "RawStore (data/raw)",
+    "stage": "with a failed-job log on disk"
+   },
+   {
+    "count": 1774,
+    "of_previous": "1,774/6,586 (26.94%)",
+    "source": "parsed_outcomes.parquet",
+    "stage": "with a parsed head test failure"
+   },
+   {
+    "count": 1348,
+    "of_previous": "1,348/1,774 (75.99%)",
+    "source": "base_resolution_new.parquet (status != no_base)",
+    "stage": "with a resolved base"
+   },
+   {
+    "count": 897,
+    "of_previous": "897/1,348 (66.54%)",
+    "source": "base_resolution_new.parquet (exact_green) + base_outcomes.parquet",
+    "stage": "with a known base failure set"
+   },
+   {
+    "count": 762,
+    "of_previous": "762/897 (84.95%)",
+    "source": "outcomes.parquet (split == strict)",
+    "stage": "with >= 1 strict label"
+   }
+  ]
+ }
+}

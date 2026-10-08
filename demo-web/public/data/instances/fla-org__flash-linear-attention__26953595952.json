@@ -1,0 +1,969 @@
+{
+ "generated_at_git_sha": "e50f3d5b7be9da31bb361ada9ac560b8538afd33",
+ "id": "fla-org__flash-linear-attention__26953595952",
+ "stages": {
+  "binding": {
+   "all": [
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/models/test_modeling_comba.py",
+     "status": "exact",
+     "test_id": "tests/models/test_modeling_comba.py::test_modeling"
+    },
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/ops/test_delta.py",
+     "status": "exact",
+     "test_id": "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+    }
+   ],
+   "pins_file": "docs/CLONE_PINS.json",
+   "selected": {
+    "candidates_considered": 1,
+    "resolved_path": "tests/ops/test_delta.py",
+    "status": "exact",
+    "test_id": "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+   }
+  },
+  "change": {
+   "base_sha": "7378dfed2ac08242b3770be43fd4539df636afc3",
+   "base_status": "exact_green",
+   "changed_files": [
+    {
+     "additions": 1,
+     "deletions": 1,
+     "path": "fla/ops/comba/wy_fast.py",
+     "status": "modified"
+    },
+    {
+     "additions": 19,
+     "deletions": 2,
+     "path": "fla/ops/delta_rule/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 3,
+     "deletions": 2,
+     "path": "fla/ops/delta_rule/wy_fast.py",
+     "status": "modified"
+    },
+    {
+     "additions": 25,
+     "deletions": 5,
+     "path": "fla/ops/gated_delta_rule/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 45,
+     "deletions": 27,
+     "path": "fla/ops/gated_delta_rule/chunk_fwd.py",
+     "status": "modified"
+    },
+    {
+     "additions": 1,
+     "deletions": 1,
+     "path": "fla/ops/gated_delta_rule/wy_fast.py",
+     "status": "modified"
+    },
+    {
+     "additions": 26,
+     "deletions": 5,
+     "path": "fla/ops/gated_oja_rule/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 1,
+     "deletions": 1,
+     "path": "fla/ops/gated_oja_rule/chunk_h.py",
+     "status": "modified"
+    },
+    {
+     "additions": 1,
+     "deletions": 1,
+     "path": "fla/ops/gated_oja_rule/wy_fast.py",
+     "status": "modified"
+    },
+    {
+     "additions": 7,
+     "deletions": 1,
+     "path": "fla/ops/generalized_delta_rule/iplr/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 8,
+     "deletions": 2,
+     "path": "fla/ops/gsa/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 2,
+     "deletions": 0,
+     "path": "fla/ops/lightning_attn/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 2,
+     "deletions": 0,
+     "path": "fla/ops/retention/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 8,
+     "deletions": 6,
+     "path": "fla/ops/rwkv6/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 8,
+     "deletions": 4,
+     "path": "fla/ops/simple_gla/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 2,
+     "deletions": 0,
+     "path": "tests/ops/test_comba.py",
+     "status": "modified"
+    },
+    {
+     "additions": 73,
+     "deletions": 0,
+     "path": "tests/ops/test_delta.py",
+     "status": "modified"
+    },
+    {
+     "additions": 28,
+     "deletions": 22,
+     "path": "tests/ops/test_dplr_delta.py",
+     "status": "modified"
+    },
+    {
+     "additions": 78,
+     "deletions": 0,
+     "path": "tests/ops/test_gdn.py",
+     "status": "modified"
+    },
+    {
+     "additions": 9,
+     "deletions": 0,
+     "path": "tests/ops/test_gdn2.py",
+     "status": "modified"
+    },
+    {
+     "additions": 87,
+     "deletions": 0,
+     "path": "tests/ops/test_gsa.py",
+     "status": "modified"
+    },
+    {
+     "additions": 53,
+     "deletions": 0,
+     "path": "tests/ops/test_iplr_delta.py",
+     "status": "modified"
+    },
+    {
+     "additions": 12,
+     "deletions": 0,
+     "path": "tests/ops/test_kda.py",
+     "status": "modified"
+    },
+    {
+     "additions": 78,
+     "deletions": 0,
+     "path": "tests/ops/test_lightning_attn.py",
+     "status": "added"
+    },
+    {
+     "additions": 74,
+     "deletions": 0,
+     "path": "tests/ops/test_oja.py",
+     "status": "modified"
+    },
+    {
+     "additions": 49,
+     "deletions": 0,
+     "path": "tests/ops/test_retention.py",
+     "status": "modified"
+    },
+    {
+     "additions": 54,
+     "deletions": 0,
+     "path": "tests/ops/test_rwkv6.py",
+     "status": "modified"
+    },
+    {
+     "additions": 39,
+     "deletions": 0,
+     "path": "tests/ops/test_rwkv7.py",
+     "status": "modified"
+    },
+    {
+     "additions": 70,
+     "deletions": 0,
+     "path": "tests/ops/test_simple_gla.py",
+     "status": "modified"
+    },
+    {
+     "additions": 32,
+     "deletions": 22,
+     "path": "tests/ops/test_ttt.py",
+     "status": "modified"
+    },
+    {
+     "additions": 1,
+     "deletions": 0,
+     "path": "tests/ops/utils/test_cumsum.py",
+     "status": "modified"
+    },
+    {
+     "additions": 1,
+     "deletions": 1,
+     "path": "tests/ops/utils/test_index.py",
+     "status": "modified"
+    }
+   ],
+   "head_sha": "484e3dbfe7e2bb0f8b839929f564be8436bb5c96",
+   "language": "Python",
+   "pr_number": 935,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 26953595952,
+   "workflow_name": "nvidia-h100-ci"
+  },
+  "graph": {
+   "built_offline_from_local_git": true,
+   "changed_distances": [
+    {
+     "file": "fla/ops/comba/wy_fast.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_comba_wy_fast"
+    },
+    {
+     "file": "fla/ops/delta_rule/chunk.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "fla_ops_delta_rule_chunk"
+    },
+    {
+     "file": "fla/ops/delta_rule/wy_fast.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_ops_delta_rule_wy_fast"
+    },
+    {
+     "file": "fla/ops/gated_delta_rule/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gated_delta_rule_chunk"
+    },
+    {
+     "file": "fla/ops/gated_delta_rule/chunk_fwd.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gated_delta_rule_chunk_fwd"
+    },
+    {
+     "file": "fla/ops/gated_delta_rule/wy_fast.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_ops_gated_delta_rule_wy_fast"
+    },
+    {
+     "file": "fla/ops/gated_oja_rule/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gated_oja_rule_chunk"
+    },
+    {
+     "file": "fla/ops/gated_oja_rule/chunk_h.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gated_oja_rule_chunk_h"
+    },
+    {
+     "file": "fla/ops/gated_oja_rule/wy_fast.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gated_oja_rule_wy_fast"
+    },
+    {
+     "file": "fla/ops/generalized_delta_rule/iplr/chunk.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_ops_generalized_delta_rule_iplr_chunk"
+    },
+    {
+     "file": "fla/ops/gsa/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_gsa_chunk"
+    },
+    {
+     "file": "fla/ops/lightning_attn/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_lightning_attn_chunk"
+    },
+    {
+     "file": "fla/ops/retention/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_retention_chunk"
+    },
+    {
+     "file": "fla/ops/rwkv6/chunk.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_rwkv6_chunk"
+    },
+    {
+     "file": "fla/ops/simple_gla/chunk.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_ops_simple_gla_chunk"
+    },
+    {
+     "file": "tests/ops/test_comba.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_comba"
+    },
+    {
+     "file": "tests/ops/test_delta.py",
+     "hops": 0,
+     "in_graph": true,
+     "node": "tests_ops_test_delta"
+    },
+    {
+     "file": "tests/ops/test_dplr_delta.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_dplr_delta"
+    },
+    {
+     "file": "tests/ops/test_gdn.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_gdn"
+    },
+    {
+     "file": "tests/ops/test_gdn2.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_gdn2"
+    },
+    {
+     "file": "tests/ops/test_gsa.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_gsa"
+    },
+    {
+     "file": "tests/ops/test_iplr_delta.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_iplr_delta"
+    },
+    {
+     "file": "tests/ops/test_kda.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_kda"
+    },
+    {
+     "file": "tests/ops/test_lightning_attn.py",
+     "hops": null,
+     "in_graph": false,
+     "node": null
+    },
+    {
+     "file": "tests/ops/test_oja.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_oja"
+    },
+    {
+     "file": "tests/ops/test_retention.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_retention"
+    },
+    {
+     "file": "tests/ops/test_rwkv6.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_rwkv6"
+    },
+    {
+     "file": "tests/ops/test_rwkv7.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_rwkv7"
+    },
+    {
+     "file": "tests/ops/test_simple_gla.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_simple_gla"
+    },
+    {
+     "file": "tests/ops/test_ttt.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_test_ttt"
+    },
+    {
+     "file": "tests/ops/utils/test_cumsum.py",
+     "hops": 2,
+     "in_graph": true,
+     "node": "tests_ops_utils_test_cumsum"
+    },
+    {
+     "file": "tests/ops/utils/test_index.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "tests_ops_utils_test_index"
+    }
+   ],
+   "distance_note": "hops on the undirected projection (src/graph/query.py)",
+   "graph_commit": "7378dfed2ac08242b3770be43fd4539df636afc3",
+   "min_distance_to_any_changed": 0,
+   "n_edges": 15891,
+   "n_nodes": 5870,
+   "paths": [
+    {
+     "changed_file": "tests/ops/test_delta.py",
+     "edges": [],
+     "hops": 0,
+     "nodes": [
+      {
+       "file": "tests/ops/test_delta.py",
+       "id": "tests_ops_test_delta",
+       "kind": "code",
+       "label": "test_delta.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "fla/ops/delta_rule/chunk.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "imports",
+       "source": "tests_ops_test_delta",
+       "target": "fla_ops_delta_rule_chunk_chunk_delta_rule"
+      },
+      {
+       "direction": "backward",
+       "relation": "contains",
+       "source": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+       "target": "fla_ops_delta_rule_chunk"
+      }
+     ],
+     "hops": 2,
+     "nodes": [
+      {
+       "file": "tests/ops/test_delta.py",
+       "id": "tests_ops_test_delta",
+       "kind": "code",
+       "label": "test_delta.py"
+      },
+      {
+       "file": "fla/ops/delta_rule/chunk.py",
+       "id": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+       "kind": "code",
+       "label": "chunk_delta_rule()"
+      },
+      {
+       "file": "fla/ops/delta_rule/chunk.py",
+       "id": "fla_ops_delta_rule_chunk",
+       "kind": "code",
+       "label": "delta_rule/chunk.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "tests/ops/test_comba.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "imports",
+       "source": "tests_ops_test_delta",
+       "target": "fla_utils_testing_assert_close"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_testing_assert_close",
+       "target": "tests_ops_test_comba"
+      }
+     ],
+     "hops": 2,
+     "nodes": [
+      {
+       "file": "tests/ops/test_delta.py",
+       "id": "tests_ops_test_delta",
+       "kind": "code",
+       "label": "test_delta.py"
+      },
+      {
+       "file": "fla/utils/_testing.py",
+       "id": "fla_utils_testing_assert_close",
+       "kind": "code",
+       "label": "assert_close()"
+      },
+      {
+       "file": "tests/ops/test_comba.py",
+       "id": "tests_ops_test_comba",
+       "kind": "code",
+       "label": "test_comba.py"
+      }
+     ]
+    }
+   ],
+   "test_node": {
+    "file": "tests/ops/test_delta.py",
+    "id": "tests_ops_test_delta",
+    "kind": "code",
+    "label": "test_delta.py"
+   },
+   "test_node_how": "its test FILE node (no node carries this test_id)"
+  },
+  "head_vs_base": {
+   "base_run_conclusion": null,
+   "base_run_distance": 0.0,
+   "base_run_id": 26951686117,
+   "tests": [
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/models/test_modeling_comba.py::test_modeling"
+    },
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+    }
+   ]
+  },
+  "parsed_outcome": {
+   "failure_class": "code-level",
+   "failure_message": "AssertionError:            dk@64 diff: 2.500000 ratio: 0.534884",
+   "failure_rule": "leading-assertion",
+   "harness": "pytest",
+   "is_fqcn_qualified": true,
+   "params": "[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk64]",
+   "parser_confidence": 0.9,
+   "raw_log_line": "2026-06-24T04:32:05.9443825Z FAILED tests/ops/test_delta.py::test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk64] - AssertionError:            dk@64 diff: 2.500000 ratio: 0.534884",
+   "status": "fail",
+   "test_id": "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+  },
+  "predictions": {
+   "actual": [
+    {
+     "caught_by_cochange": false,
+     "caught_by_history": true,
+     "path": "tests/models/test_modeling_comba.py"
+    },
+    {
+     "caught_by_cochange": false,
+     "caught_by_history": false,
+     "path": "tests/ops/test_delta.py"
+    }
+   ],
+   "cochange": [
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/attn/parallel.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/common/chunk_o.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/common/chunk_scaled_dot_kkt.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/forgetting_attn/parallel.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/lightning_attn/fused_recurrent.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/retention/fused_chunk.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/ops/retention/parallel.py"
+    },
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "tests/ops/test_gla.py"
+    },
+    {
+     "confidence": 0.8333,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk_A_fwd.py"
+    },
+    {
+     "confidence": 0.8333,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk_h_bwd.py"
+    },
+    {
+     "confidence": 0.8333,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk_h_fwd.py"
+    },
+    {
+     "confidence": 0.8333,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk_o_bwd.py"
+    },
+    {
+     "confidence": 0.75,
+     "hit": false,
+     "path": "fla/ops/rwkv7/gate_output_correction.py"
+    },
+    {
+     "confidence": 0.75,
+     "hit": false,
+     "path": "tests/ops/test_gated_delta.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": ".github/workflows/reusable-ci-tests.yml"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/comba/chunk.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/comba/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/backends/intracard.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/backends/tilelang/__init__.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/backends/tilelang/chunk_bwd.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/chunk_delta_h.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/chunk_h.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/fused_chunk.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/common/intracard_cp.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/cp/chunk_delta_h.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/gated_delta_product/chunk.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/chunk_A_bwd.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/wy_fast_bwd.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/dplr/wy_fast_fwd.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "fla/ops/gsa/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "tests/ops/test_delta_product.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "tests/ops/test_gated_delta_product.py"
+    },
+    {
+     "confidence": 0.6667,
+     "hit": false,
+     "path": "tests/ops/test_solve_tril.py"
+    },
+    {
+     "confidence": 0.6364,
+     "hit": false,
+     "path": "fla/ops/kda/chunk.py"
+    },
+    {
+     "confidence": 0.5714,
+     "hit": false,
+     "path": "tests/context_parallel/test_cp_bwd_gk_offset.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/common/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/gla/chunk.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/gla/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/retention/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/rwkv7/fused_addcmul.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/ops/simple_gla/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "tests/ops/test_forgetting_attn.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "tests/ops/test_linear_attn.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "tests/ops/test_path_attn.py"
+    },
+    {
+     "confidence": 0.4091,
+     "hit": false,
+     "path": "fla/ops/kda/gate.py"
+    },
+    {
+     "confidence": 0.3636,
+     "hit": false,
+     "path": "fla/layers/kda.py"
+    },
+    {
+     "confidence": 0.3333,
+     "hit": false,
+     "path": "fla/ops/gated_delta_product/chunk_deltaproduct_o.py"
+    },
+    {
+     "confidence": 0.3182,
+     "hit": false,
+     "path": "fla/ops/kda/chunk_bwd.py"
+    },
+    {
+     "confidence": 0.3182,
+     "hit": false,
+     "path": "fla/ops/kda/chunk_intra.py"
+    },
+    {
+     "confidence": 0.3182,
+     "hit": false,
+     "path": "fla/ops/kda/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.2857,
+     "hit": false,
+     "path": ".github/workflows/nvidia-a100.yml"
+    },
+    {
+     "confidence": 0.2727,
+     "hit": false,
+     "path": "fla/ops/kda/chunk_fwd.py"
+    },
+    {
+     "confidence": 0.2727,
+     "hit": false,
+     "path": "fla/ops/kda/wy_fast.py"
+    }
+   ],
+   "history": [
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/layers/test_layer_cache_layer_idx.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/ops/test_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 13,
+     "path": "tests/models/test_modeling_nsa.py"
+    },
+    {
+     "hit": true,
+     "past_failures": 9,
+     "path": "tests/models/test_modeling_comba.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 9,
+     "path": "tests/models/test_modeling_abc.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 5,
+     "path": "tests/models/test_modeling_bitnet.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 4,
+     "path": "tests/ops/test_attn.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/models/test_modeling_parallax.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/ops/test_parallax.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/modules/test_conv.py"
+    }
+   ],
+   "k": 10,
+   "metrics": {
+    "cochange": {
+     "hits": 0,
+     "precision": 0.0,
+     "predicted": 55,
+     "recall": 0.0
+    },
+    "history": {
+     "hits": 1,
+     "precision": 0.1,
+     "predicted": 10,
+     "recall": 0.5
+    },
+    "n_actual": 2
+   },
+   "run_started_at": "2026-06-24T04:05:31Z"
+  },
+  "raw_log": {
+   "job_id": 83115462250,
+   "lines": [
+    {
+     "failing": true,
+     "text": "2026-06-24T04:32:05.9443825Z FAILED tests/ops/test_delta.py::test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk64] - AssertionError:            dk@64 diff: 2.500000 ratio: 0.534884"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-24T04:30:18.7181632Z tests/ops/test_delta.py::test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk16]"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-24T04:31:03.5006059Z tests/ops/test_delta.py::test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk32]"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-24T04:32:05.2278706Z tests/ops/test_delta.py::test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk64]"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-24T04:32:05.2938310Z __ test_chunk_with_chunk_size[B1-T64-H2-D32-scale0.1-torch.bfloat16-chunk64] ___"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-24T04:32:05.2949688Z     def test_chunk_with_chunk_size("
+    }
+   ],
+   "test_name_token": "test_chunk_with_chunk_size"
+  },
+  "verdict": {
+   "agrees_with_outcomes_parquet": true,
+   "flaky": [],
+   "recorded_strict": 2,
+   "selected_is_fault_revealing": true,
+   "selected_test": "tests/ops/test_delta.py::test_chunk_with_chunk_size",
+   "sibling_runs": 1,
+   "t_base_fail": [],
+   "t_head_fail": [
+    "tests/models/test_modeling_comba.py::test_modeling",
+    "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+   ],
+   "t_reveal": [
+    "tests/models/test_modeling_comba.py::test_modeling",
+    "tests/ops/test_delta.py::test_chunk_with_chunk_size"
+   ]
+  }
+ }
+}
