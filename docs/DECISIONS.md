@@ -178,3 +178,11 @@ These remain CUT: T2.2f (snapshot + delta storage, graph_index.parquet), T2.3e (
 - the test-only variant uses `is_conventional_test_file`; the `"test"`-in-path predicate stays as a labelled sensitivity row;
 - failure classes are environment-strict / timeout / code-level / unknown.
 **Revisit trigger**: any change to RQ1 evidence windows or method definitions.
+
+### D-53: Independent parser precision not measured for the MSR 2027 submission; holdout v5 left unscored
+**Date**: 2026-10-08.
+**Decided by**: Deepanshu.
+**Note**: D-51 was never assigned; the sequence skips from D-50 to D-52.
+**Context**: D-38 requires blind human labels made from the full fixture logs. No such labelling was completed in time. One attempt was machine-assisted, made from excerpts only, and was discarded. The v5 corpus (40 logs) has never been scored and remains unconsumed.
+**Decision**: The paper reports parser precision only from development corpora (fixture corpus 46/46, holdout v1 30/30), explicitly marked not independent of development. The independent v5 figure is reported as not measured. The `docs/phase/029-holdout-v5-worksheet.md` worksheet stays blank in git.
+**Revisit trigger**: a blind human labeller completes 029 from the full fixtures before camera-ready (2027-01-24); then score once under D-37.
