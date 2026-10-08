@@ -23,6 +23,10 @@ HOLDOUT_V1_INDEPENDENCE = (
     "(`docs/phase/027-scorer-provenance.md`; `docs/HANDOVER-020.md` §3.5). The 100% is a fit number "
     "and may not be reported as held-out performance."
 )
+V5_ROW = [
+    "holdout v5 (independent of development)", "NOT SCORED",
+    "no blind human labels (D-53); corpus unconsumed",
+]
 
 
 def _row(name: str, rep, independent: str) -> list:
@@ -45,7 +49,9 @@ def main() -> None:
         ["corpus", "fixtures", "expected ids", "precision (n/d)", "recall (n/d)",
          "classification accuracy (n/d)", "TP / FP / FN", "independent of development?"],
         [_row("fixture corpus (`tests/fixtures/logs/`)", fixture, FIXTURE_INDEPENDENCE),
-         _row("holdout v1 (`tests/fixtures/holdout/`)", holdout, HOLDOUT_V1_INDEPENDENCE)])
+         _row("holdout v1 (`tests/fixtures/holdout/`)", holdout, HOLDOUT_V1_INDEPENDENCE),
+         [V5_ROW[0] + ": NOT SCORED, " + V5_ROW[2], "n/a", "n/a", "n/a", "n/a", "n/a", "n/a",
+          "Independent figure NOT MEASURED (D-53)."]])
     rows = [[h.harness, h.fixtures_count, h.expected_ids_count, rate(h.tp, h.tp + h.fp),
              rate(h.tp, h.tp + h.fn), rate(h.class_correct, h.fixtures_count)]
             for h in holdout.harness_breakdown.values()]

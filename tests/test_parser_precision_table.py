@@ -26,3 +26,11 @@ def test_holdout_v1_row_is_marked_a_development_set_under_d37() -> None:
     row = _row("holdout v1", rep, HOLDOUT_V1_INDEPENDENCE)
     assert row[1] == rep.total_fixtures == 20
     assert row[-1].startswith("NO.") and "D-37" in row[-1]
+
+
+def test_v5_row_states_not_scored_and_cites_d53() -> None:
+    from analysis.parser_precision_table import V5_ROW
+
+    text = " ".join(V5_ROW)
+    assert "holdout v5 (independent of development)" in text and "NOT SCORED" in text
+    assert "no blind human labels (D-53); corpus unconsumed" in text
