@@ -298,7 +298,7 @@ purpose — a repository owner, workflow or bot name that happens to coincide wi
 a username. Zero hits are unexplained, and the authoritative column-level check
 (§4) finds no raw login at all.
 
-**Licence.** To be decided before release. Underlying repository content remains
+**Licence.** MIT, as decided by the authors on 2026-10-08 for now (the repository `LICENSE`). Underlying repository content remains
 under each project's own licence; permissive-only selection is intended.
 
 ---
