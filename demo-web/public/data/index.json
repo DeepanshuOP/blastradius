@@ -1,6 +1,6 @@
 {
  "default": "fla-org__flash-linear-attention__26953595952",
- "generated_at_git_sha": "04ca282917553e2662c3ca58feea7e53e5615680",
+ "generated_at_git_sha": "1de6421f167a8390f8bd87c40bb75ff9adfd3d88",
  "instances": [
   {
    "failure_class": "code-level",
@@ -9,6 +9,42 @@
    "repo": "fla-org/flash-linear-attention",
    "run_id": 26953595952,
    "selected_test": "tests/ops/test_delta.py::test_chunk_with_chunk_size",
+   "test_count": 2
+  },
+  {
+   "failure_class": "code-level",
+   "id": "fla-org__flash-linear-attention__29046109179",
+   "pr_number": 955,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 29046109179,
+   "selected_test": "tests/modules/test_conv.py::test_conv",
+   "test_count": 1
+  },
+  {
+   "failure_class": "unknown",
+   "id": "fla-org__flash-linear-attention__28391465676",
+   "pr_number": 977,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 28391465676,
+   "selected_test": "tests/models/test_modeling_yoco.py::test_modeling",
+   "test_count": 1
+  },
+  {
+   "failure_class": "unknown",
+   "id": "fla-org__flash-linear-attention__28169752411",
+   "pr_number": 980,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 28169752411,
+   "selected_test": "tests/models/test_modeling_forgetting_transformer.py::test_modeling",
+   "test_count": 2
+  },
+  {
+   "failure_class": "unknown",
+   "id": "fla-org__flash-linear-attention__28734729275",
+   "pr_number": 1003,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 28734729275,
+   "selected_test": "tests/models/test_modeling_bitnet.py::test_modeling",
    "test_count": 2
   }
  ],
@@ -20,6 +56,6 @@
   "gate 3 not touching a holdout job: 76 instances",
   "gate 4 raw log in local RawStore: 76 instances, 228 (label, job) rows",
   "failure-message classification of those rows (analysis/failure_class.py): code-level 65/228, unknown 101/228, timeout 0/228, environment 62/228",
-  "exported: 1 instance(s) (limit 8); (repo, base SHA) pairs checked for a fully local tree: 20, buildable 1"
+  "exported: 5 instance(s) (limit 8); (repo, base SHA) pairs checked for a fully local tree: 20, buildable 2"
  ]
 }

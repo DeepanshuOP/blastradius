@@ -1,0 +1,3480 @@
+{
+ "generated_at_git_sha": "1de6421f167a8390f8bd87c40bb75ff9adfd3d88",
+ "id": "fla-org__flash-linear-attention__29046109179",
+ "stages": {
+  "binding": {
+   "all": [
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/modules/test_conv.py",
+     "status": "exact",
+     "test_id": "tests/modules/test_conv.py::test_conv"
+    }
+   ],
+   "pins_file": "docs/CLONE_PINS.json",
+   "selected": {
+    "candidates_considered": 1,
+    "resolved_path": "tests/modules/test_conv.py",
+    "status": "exact",
+    "test_id": "tests/modules/test_conv.py::test_conv"
+   }
+  },
+  "change": {
+   "base_sha": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "base_status": "exact_green",
+   "changed_files": [
+    {
+     "additions": 5,
+     "deletions": 0,
+     "path": "fla/modules/conv/cp/ops.py",
+     "status": "modified"
+    },
+    {
+     "additions": 9,
+     "deletions": 7,
+     "path": "fla/modules/conv/triton/kernels.py",
+     "status": "modified"
+    },
+    {
+     "additions": 14,
+     "deletions": 0,
+     "path": "fla/modules/conv/triton/ops.py",
+     "status": "modified"
+    }
+   ],
+   "head_sha": "a3a65f5036bdd5ebee5ae455509e613424340c1e",
+   "language": "Python",
+   "pr_number": 955,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 29046109179,
+   "workflow_name": "nvidia-h100-ci"
+  },
+  "graph": {
+   "blast": {
+    "caps": {
+     "edges": 400,
+     "nodes": 150
+    },
+    "edges": [
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_cp_init",
+      "target": "fla_modules_conv_cp_ops"
+     },
+     {
+      "source": "fla_modules_conv_cp_init",
+      "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_init",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_ops_cp_comm_conv_cp_send_recv_bwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_ops_cp_comm_conv_cp_send_recv_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction"
+     },
+     {
+      "source": "fla_modules_conv_triton_init",
+      "target": "fla_modules_conv_triton_ops_compute_dh0_triton"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_modules_conv_triton_kernels_compute_dh0_kernel"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "tests_ops_test_cache"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "tests_ops_test_cache"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "tests_ops_test_cache"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_states",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "target": "fla_modules_conv_triton_ops"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_compute_dh0_triton"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_has_non_standard_layout"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_compute_dh0_triton"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "tests_ops_test_cache"
+     },
+     {
+      "source": "fla_ops_utils_cache_fla_cache_autotune",
+      "target": "tests_ops_test_cache"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_logsigmoid_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_logsigmoid_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_fwdbwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_linear"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_sigmoid_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_sigmoid_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_fwdbwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_linear"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swish_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swish_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_bwd",
+      "target": "fla_modules_activations_logsigmoidfunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_fwd",
+      "target": "fla_modules_activations_logsigmoidfunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoidfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoidfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwd",
+      "target": "fla_modules_activations_powglufunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwd",
+      "target": "fla_modules_activations_powglulinearfunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwdbwd",
+      "target": "fla_modules_activations_powglufunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwdbwd",
+      "target": "fla_modules_activations_powglulinearfunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwdbwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglu_linear",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglufunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_powglufunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_powglulinearfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_powglulinearfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_bwd",
+      "target": "fla_modules_activations_sigmoidfunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_fwd",
+      "target": "fla_modules_activations_sigmoidfunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidglufunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidglufunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidglulinearfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_sigmoidglulinearfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwd",
+      "target": "fla_modules_activations_swiglufunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwd",
+      "target": "fla_modules_activations_swiglulinearfunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwdbwd",
+      "target": "fla_modules_activations_swiglufunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwdbwd",
+      "target": "fla_modules_activations_swiglulinearfunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwdbwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_linear",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglufunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swiglufunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swiglulinearfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swiglulinearfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swish_bwd",
+      "target": "fla_modules_activations_swishfunction_backward"
+     },
+     {
+      "source": "fla_modules_activations_swish_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swish_fwd",
+      "target": "fla_modules_activations_swishfunction_forward"
+     },
+     {
+      "source": "fla_modules_activations_swish_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swishfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_activations_swishfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_init",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations_powglulinearfunctionnpu_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations_powglulinearfunctionnpu_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations_swiglulinearfunctionnpu_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations_swiglulinearfunctionnpu_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_states_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_states_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_npu",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_states_npu",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_cross_entropy",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_cross_entropy_crossentropylossfunctionnpu_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_cross_entropy_crossentropylossfunctionnpu_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_grpo",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_grpo_grpolossnpu_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_grpo_grpolossnpu_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary",
+      "target": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_modules_conv_causal_conv1d_causal_conv1d"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_modules_conv_cuda_ops_causal_conv1d_cuda"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "fla_modules_conv_cuda_ops_causal_conv1d_cuda"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "fla_modules_conv_short_conv"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_modules_conv_cp_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_modules_conv_cp_ops_rationale_228"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_backward"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_correct_dx_for_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_conv_cp_ops_rationale_16"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_backward",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_correct_dx_for_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_backward",
+      "target": "fla_modules_conv_cp_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_backward",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_correct_dx_for_cp",
+      "target": "fla_modules_conv_cp_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_correct_dx_for_cp",
+      "target": "fla_ops_cp_comm_conv_cp_send_recv_bwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward",
+      "target": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward",
+      "target": "fla_modules_conv_cp_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp",
+      "target": "fla_modules_conv_cp_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp",
+      "target": "fla_ops_cp_comm_conv_cp_send_recv_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops",
+      "target": "fla_modules_conv_cuda_ops_causal_conv1d_cuda"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops_causal_conv1d_cuda",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops_fastcausalconv1dfn_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops_fastcausalconv1dfn_forward",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cuda_ops_fastcausalconv1dfn_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_short_conv",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_short_conv_shortconvolution_step",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_constexpr"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_heuristics"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_jit"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_constexpr"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_heuristics"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_jit"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_constexpr"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_heuristics"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_jit"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update",
+      "target": "fla_modules_conv_triton_kernels_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_constexpr"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_heuristics"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_jit"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_causal_conv1d_update_states",
+      "target": "fla_modules_conv_triton_kernels_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_constexpr"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_heuristics"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "target": "fla_modules_conv_triton_kernels_py_jit"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "target": "fla_modules_conv_triton_kernels_rationale_448"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction_backward"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_py_longtensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction_forward"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_py_longtensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction_backward"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction_forward"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_backward",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_modules_conv_triton_ops_has_non_standard_layout"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_modules_conv_triton_ops_py_longtensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "target": "fla_modules_conv_triton_ops_rationale_109"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_has_non_standard_layout",
+      "target": "fla_modules_conv_triton_ops_py_tensor"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_has_non_standard_layout",
+      "target": "fla_modules_conv_triton_ops_rationale_26"
+     },
+     {
+      "source": "fla_modules_fused_bitlinear",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_bitlinear_layernormlinearquantfn_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_bitlinear_layernormlinearquantfn_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_modules_fused_cross_entropy_cross_entropy_loss"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy_cross_entropy_loss",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy_crossentropylossfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy_crossentropylossfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_modules_fused_kl_div_fused_kl_div_backward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_modules_fused_kl_div_fused_kl_div_forward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_backward",
+      "target": "fla_modules_fused_kl_div_fusedkldivlossfunction_backward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_backward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_forward",
+      "target": "fla_modules_fused_kl_div_fusedkldivlossfunction_forward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_forward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fusedkldivlossfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fusedkldivlossfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward",
+      "target": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_backward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "target": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_forward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "target": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_backward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_forward",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_modules_fused_norm_gate_layer_norm_gated_bwd"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate_layer_norm_gated_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_nsa_compression"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_utils_decorators_input_guard",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_layers_gated_deltanet",
+      "target": "fla_modules_convolution"
+     },
+     {
+      "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "target": "tests_modules_test_conv_test_conv"
+     },
+     {
+      "source": "fla_modules_convolution",
+      "target": "tests_modules_test_conv"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk",
+      "target": "fla_ops_delta_rule_chunk_chunk_delta_rule"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "tests_ops_test_nsa"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "tests_modules_test_conv",
+      "target": "tests_modules_test_conv_test_conv"
+     },
+     {
+      "source": "fla_layers_gated_deltanet",
+      "target": "tests_layers_test_layer_cache_layer_idx"
+     },
+     {
+      "source": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+      "target": "tests_ops_test_delta"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "tests_models_test_modeling_bitnet"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "tests_models_test_modeling_nsa"
+     }
+    ],
+    "max_hops": 4,
+    "nodes": [
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_modules_conv_cp_ops",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cp/ops.py",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_modules_conv_triton_kernels",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kernels.py",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_modules_conv_triton_ops",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton/ops.py",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_cp_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "conv/cp/__init__.py",
+      "path": "fla/modules/conv/cp/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_cp()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_cp_ops_causalconv1dfunctioncp",
+      "in_graph": true,
+      "kind": "class",
+      "label": "CausalConv1dFunctionCP",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton/__init__.py",
+      "path": "fla/modules/conv/triton/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_bwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_bwd_kernel()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_fwd_kernel()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_states_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_states_fwd_kernel()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_update",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_update_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_kernel()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_causal_conv1d_update_states",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_states()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels_compute_dh0_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "compute_dh0_kernel()",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_bwd()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_fwd()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_states()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_causalconv1dfunction",
+      "in_graph": true,
+      "kind": "class",
+      "label": "CausalConv1dFunction",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "in_graph": true,
+      "kind": "function",
+      "label": "compute_dh0_triton()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_ops_has_non_standard_layout",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_has_non_standard_layout()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_backends_init_dispatch",
+      "in_graph": true,
+      "kind": "function",
+      "label": "dispatch()",
+      "path": "fla/ops/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_comm_conv_cp_send_recv_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "conv_cp_send_recv_bwd()",
+      "path": "fla/ops/cp/comm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_comm_conv_cp_send_recv_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "conv_cp_send_recv_fwd()",
+      "path": "fla/ops/cp/comm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_context_flacpcontext",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FLACPContext",
+      "path": "fla/ops/cp/context.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cache.py",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_fla_cache_autotune",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fla_cache_autotune()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_index_prepare_chunk_indices",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_chunk_indices()",
+      "path": "fla/ops/utils/index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_input_guard",
+      "in_graph": true,
+      "kind": "function",
+      "label": "input_guard()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "tests_ops_test_cache",
+      "in_graph": true,
+      "kind": "test",
+      "label": "ops/test_cache.py",
+      "path": "tests/ops/test_cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/activations.py",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsigmoid_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoid_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsigmoid_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoidfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoidfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_fwdbwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_fwdbwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_linear",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_linear()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglufunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglufunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglulinearfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglulinearfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "sigmoid_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoid_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "sigmoid_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidglufunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidglufunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidglulinearfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoidglulinearfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_fwdbwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_fwdbwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_linear",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_linear()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglufunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglufunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglulinearfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglulinearfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swish_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swish_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swish_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swish_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swishfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swishfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/backends/__init__.py",
+      "path": "fla/modules/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/activations.py",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations_powglulinearfunctionnpu_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations_powglulinearfunctionnpu_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations_swiglulinearfunctionnpu_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations_swiglulinearfunctionnpu_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/causal_conv1d.py",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_bwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_fwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_update_states_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_states_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_coregrid()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_dwdb_core()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_dx_core()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_fwd_core_scalar()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_fwd_coregrid()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/fused_cross_entropy.py",
+      "path": "fla/modules/backends/triton_ascend/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_cross_entropy_crossentropylossfunctionnpu_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/backends/triton_ascend/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_cross_entropy_crossentropylossfunctionnpu_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/backends/triton_ascend/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_grpo",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/grpo.py",
+      "path": "fla/modules/backends/triton_ascend/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_grpo_grpolossnpu_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/backends/triton_ascend/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_grpo_grpolossnpu_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/backends/triton_ascend/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_rotary",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/rotary.py",
+      "path": "fla/modules/backends/triton_ascend/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "rotary_embedding_fwdbwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_causal_conv1d",
+      "in_graph": true,
+      "kind": "file",
+      "label": "conv/causal_conv1d.py",
+      "path": "fla/modules/conv/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_causal_conv1d_causal_conv1d",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d()",
+      "path": "fla/modules/conv/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_correct_dx_for_cp",
+      "in_graph": true,
+      "kind": "function",
+      "label": "._correct_dx_for_cp()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_causalconv1dfunctioncp_prepare_initial_state_for_cp",
+      "in_graph": true,
+      "kind": "function",
+      "label": "._prepare_initial_state_for_cp()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_py_tensor",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Tensor",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_rationale_16",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Context Parallel version of CausalConv1dFunction. Forward: 1. Get tails from…",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_rationale_228",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Context Parallel version of causal_conv1d. Automatically handles communication…",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cuda_ops",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cuda/ops.py",
+      "path": "fla/modules/conv/cuda/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cuda_ops_causal_conv1d_cuda",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_cuda()",
+      "path": "fla/modules/conv/cuda/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cuda_ops_fastcausalconv1dfn_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/conv/cuda/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cuda_ops_fastcausalconv1dfn_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/conv/cuda/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_short_conv",
+      "in_graph": true,
+      "kind": "file",
+      "label": "short_conv.py",
+      "path": "fla/modules/conv/short_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_short_conv_shortconvolution_step",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".step()",
+      "path": "fla/modules/conv/short_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_kernels_py_constexpr",
+      "in_graph": true,
+      "kind": "class",
+      "label": "constexpr",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_kernels_py_heuristics",
+      "in_graph": true,
+      "kind": "class",
+      "label": "heuristics",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_kernels_py_jit",
+      "in_graph": true,
+      "kind": "class",
+      "label": "jit",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_kernels_py_tensor",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Tensor",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_kernels_rationale_448",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Compute dh0 (gradient w.r.t. initial_state) in a separate kernel. This avoids…",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causalconv1dfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_py_longtensor",
+      "in_graph": true,
+      "kind": "class",
+      "label": "LongTensor",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_py_tensor",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Tensor",
+      "path": ""
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_rationale_109",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Compute dh0 (gradient w.r.t. initial_state) using a separate Triton kernel.…",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_rationale_26",
+      "in_graph": true,
+      "kind": "class",
+      "label": "QKV-style views (stride_t != D) break triton-ascend masked kernels.",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_convolution",
+      "in_graph": true,
+      "kind": "file",
+      "label": "convolution.py",
+      "path": "fla/modules/convolution.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_bitlinear",
+      "in_graph": true,
+      "kind": "file",
+      "label": "fused_bitlinear.py",
+      "path": "fla/modules/fused_bitlinear.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_bitlinear_layernormlinearquantfn_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/fused_bitlinear.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_bitlinear_layernormlinearquantfn_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/fused_bitlinear.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_cross_entropy.py",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy_cross_entropy_loss",
+      "in_graph": true,
+      "kind": "function",
+      "label": "cross_entropy_loss()",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy_crossentropylossfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy_crossentropylossfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_kl_div.py",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fused_kl_div_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_kl_div_backward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fused_kl_div_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_kl_div_forward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fusedkldivlossfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fusedkldivlossfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_linear_cross_entropy.py",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_linear_cross_entropy_backward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_linear_cross_entropy_forward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".backward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fusedlinearcrossentropyfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsumexp_fwd()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_norm_gate.py",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate_layer_norm_gated_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "layer_norm_gated_bwd()",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attn/parallel.py",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_delta_rule_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "delta_rule/chunk.py",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_nsa_compression",
+      "in_graph": true,
+      "kind": "file",
+      "label": "compression.py",
+      "path": "fla/ops/nsa/compression.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_utils_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "fla/utils/__init__.py",
+      "path": "fla/utils/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_layers_gated_deltanet",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_deltanet.py",
+      "path": "fla/layers/gated_deltanet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_delta_rule_chunk_chunk_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_delta_rule()",
+      "path": "fla/ops/delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_utils_compat_find_spec_cached",
+      "in_graph": true,
+      "kind": "function",
+      "label": "find_spec_cached()",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_modules_test_conv",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_conv.py",
+      "path": "tests/modules/test_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "tests_modules_test_conv_test_conv",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_conv()",
+      "path": "tests/modules/test_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_ops_test_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_attn.py",
+      "path": "tests/ops/test_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_ops_test_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_nsa.py",
+      "path": "tests/ops/test_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_layers_test_layer_cache_layer_idx",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_layer_cache_layer_idx.py",
+      "path": "tests/layers/test_layer_cache_layer_idx.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_bitnet",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_bitnet.py",
+      "path": "tests/models/test_modeling_bitnet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_nsa.py",
+      "path": "tests/models/test_modeling_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_ops_test_delta",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_delta.py",
+      "path": "tests/ops/test_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": null,
+      "id": "outer:tests/models/test_modeling_abc.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_modeling_abc.py",
+      "path": "tests/models/test_modeling_abc.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": null,
+      "id": "outer:tests/models/test_modeling_comba.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_modeling_comba.py",
+      "path": "tests/models/test_modeling_comba.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": null,
+      "id": "outer:tests/models/test_modeling_yoco.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_modeling_yoco.py",
+      "path": "tests/models/test_modeling_yoco.py"
+     }
+    ],
+    "note": "hops on the undirected projection from the nearest changed file",
+    "truncated": {
+     "edges": false,
+     "nodes": true
+    },
+    "within_hops_total": 5146
+   },
+   "built_offline_from_local_git": true,
+   "changed_distances": [
+    {
+     "file": "fla/modules/conv/cp/ops.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_modules_conv_cp_ops"
+    },
+    {
+     "file": "fla/modules/conv/triton/kernels.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_modules_conv_triton_kernels"
+    },
+    {
+     "file": "fla/modules/conv/triton/ops.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_modules_conv_triton_ops"
+    }
+   ],
+   "distance_note": "hops on the undirected projection (src/graph/query.py)",
+   "graph_commit": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "min_distance_to_any_changed": 3,
+   "n_edges": 21338,
+   "n_nodes": 7569,
+   "paths": [
+    {
+     "changed_file": "fla/modules/conv/cp/ops.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_modules_test_conv_test_conv",
+       "target": "fla_modules_conv_causal_conv1d_causal_conv1d"
+      },
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+      },
+      {
+       "direction": "backward",
+       "relation": "contains",
+       "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+       "target": "fla_modules_conv_cp_ops"
+      }
+     ],
+     "hops": 3,
+     "nodes": [
+      {
+       "file": "tests/modules/test_conv.py",
+       "id": "tests_modules_test_conv_test_conv",
+       "kind": "code",
+       "label": "test_conv()"
+      },
+      {
+       "file": "fla/modules/conv/causal_conv1d.py",
+       "id": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "kind": "code",
+       "label": "causal_conv1d()"
+      },
+      {
+       "file": "fla/modules/conv/cp/ops.py",
+       "id": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+       "kind": "code",
+       "label": "causal_conv1d_cp()"
+      },
+      {
+       "file": "fla/modules/conv/cp/ops.py",
+       "id": "fla_modules_conv_cp_ops",
+       "kind": "code",
+       "label": "cp/ops.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "fla/modules/conv/triton/kernels.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_modules_test_conv_test_conv",
+       "target": "fla_modules_conv_causal_conv1d_causal_conv1d"
+      },
+      {
+       "direction": "forward",
+       "relation": "references",
+       "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "target": "fla_utils_decorators_input_guard"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_decorators_input_guard",
+       "target": "fla_modules_conv_triton_kernels"
+      }
+     ],
+     "hops": 3,
+     "nodes": [
+      {
+       "file": "tests/modules/test_conv.py",
+       "id": "tests_modules_test_conv_test_conv",
+       "kind": "code",
+       "label": "test_conv()"
+      },
+      {
+       "file": "fla/modules/conv/causal_conv1d.py",
+       "id": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "kind": "code",
+       "label": "causal_conv1d()"
+      },
+      {
+       "file": "fla/utils/_decorators.py",
+       "id": "fla_utils_decorators_input_guard",
+       "kind": "code",
+       "label": "input_guard()"
+      },
+      {
+       "file": "fla/modules/conv/triton/kernels.py",
+       "id": "fla_modules_conv_triton_kernels",
+       "kind": "code",
+       "label": "kernels.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "fla/modules/conv/triton/ops.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_modules_test_conv_test_conv",
+       "target": "fla_modules_conv_causal_conv1d_causal_conv1d"
+      },
+      {
+       "direction": "forward",
+       "relation": "references",
+       "source": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "target": "fla_utils_decorators_input_guard"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_decorators_input_guard",
+       "target": "fla_modules_conv_triton_ops"
+      }
+     ],
+     "hops": 3,
+     "nodes": [
+      {
+       "file": "tests/modules/test_conv.py",
+       "id": "tests_modules_test_conv_test_conv",
+       "kind": "code",
+       "label": "test_conv()"
+      },
+      {
+       "file": "fla/modules/conv/causal_conv1d.py",
+       "id": "fla_modules_conv_causal_conv1d_causal_conv1d",
+       "kind": "code",
+       "label": "causal_conv1d()"
+      },
+      {
+       "file": "fla/utils/_decorators.py",
+       "id": "fla_utils_decorators_input_guard",
+       "kind": "code",
+       "label": "input_guard()"
+      },
+      {
+       "file": "fla/modules/conv/triton/ops.py",
+       "id": "fla_modules_conv_triton_ops",
+       "kind": "code",
+       "label": "triton/ops.py"
+      }
+     ]
+    }
+   ],
+   "test_node": {
+    "file": "tests/modules/test_conv.py",
+    "id": "tests_modules_test_conv_test_conv",
+    "kind": "code",
+    "label": "test_conv()"
+   },
+   "test_node_how": "the test's own node"
+  },
+  "head_vs_base": {
+   "base_run_conclusion": null,
+   "base_run_distance": 0.0,
+   "base_run_id": 33095075420,
+   "tests": [
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/modules/test_conv.py::test_conv"
+    }
+   ]
+  },
+  "parsed_outcome": {
+   "failure_class": "code-level",
+   "failure_message": "AssertionError:  y: NaN detected in tri",
+   "failure_rule": "leading-assertion",
+   "harness": "pytest",
+   "is_fqcn_qualified": true,
+   "params": "[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton]",
+   "parser_confidence": 0.9,
+   "raw_log_line": "2026-07-09T23:56:19.1224880Z FAILED tests/modules/test_conv.py::test_conv[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton] - AssertionError:  y: NaN detected in tri",
+   "status": "fail",
+   "test_id": "tests/modules/test_conv.py::test_conv"
+  },
+  "predictions": {
+   "actual": [
+    {
+     "caught_by_cochange": true,
+     "caught_by_history": true,
+     "path": "tests/modules/test_conv.py"
+    }
+   ],
+   "cochange": [
+    {
+     "confidence": 0.4,
+     "hit": true,
+     "path": "tests/modules/test_conv.py"
+    },
+    {
+     "confidence": 0.2222,
+     "hit": false,
+     "path": "fla/ops/utils/cache.py"
+    }
+   ],
+   "history": [
+    {
+     "hit": false,
+     "past_failures": 17,
+     "path": "tests/ops/test_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/layers/test_layer_cache_layer_idx.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 13,
+     "path": "tests/models/test_modeling_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 12,
+     "path": "tests/models/test_modeling_comba.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 11,
+     "path": "tests/models/test_modeling_bitnet.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 9,
+     "path": "tests/models/test_modeling_abc.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 7,
+     "path": "tests/ops/test_attn.py"
+    },
+    {
+     "hit": true,
+     "past_failures": 4,
+     "path": "tests/modules/test_conv.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 4,
+     "path": "tests/models/test_modeling_yoco.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/ops/test_delta.py"
+    }
+   ],
+   "k": 10,
+   "metrics": {
+    "cochange": {
+     "hits": 1,
+     "precision": 0.5,
+     "predicted": 2,
+     "recall": 1.0
+    },
+    "history": {
+     "hits": 1,
+     "precision": 0.1,
+     "predicted": 10,
+     "recall": 1.0
+    },
+    "n_actual": 1
+   },
+   "run_started_at": "2026-07-09T19:56:10Z"
+  },
+  "raw_log": {
+   "job_id": 86215062842,
+   "lines": [
+    {
+     "failing": true,
+     "text": "2026-07-09T23:56:19.1224880Z FAILED tests/modules/test_conv.py::test_conv[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton] - AssertionError:  y: NaN detected in tri"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:55:48.9567966Z Found ops test files: /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/context_parallel/test_cp_conv.py /home/ubuntu/actions-runner/_w"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:55:48.9708755Z for f in /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/context_parallel/test_cp_conv.py /home/ubuntu/actions-runner/_work/flash-lin"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:56:18.4281464Z tests/modules/test_conv.py::test_conv[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton]"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:56:19.1187219Z _ test_conv[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton] _"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:56:19.1195920Z     def test_conv("
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:56:19.1209417Z tests/modules/test_conv.py:186:"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-09T23:56:19.1221368Z tests/modules/test_conv.py::test_conv[B2_T64_D128_W3_activationswish_has_biasTrue_has_residualTrue_torch.float32_triton]"
+    }
+   ],
+   "test_name_token": "test_conv"
+  },
+  "verdict": {
+   "agrees_with_outcomes_parquet": true,
+   "flaky": [],
+   "recorded_strict": 1,
+   "selected_is_fault_revealing": true,
+   "selected_test": "tests/modules/test_conv.py::test_conv",
+   "sibling_runs": 1,
+   "t_base_fail": [],
+   "t_head_fail": [
+    "tests/modules/test_conv.py::test_conv"
+   ],
+   "t_reveal": [
+    "tests/modules/test_conv.py::test_conv"
+   ]
+  }
+ }
+}

@@ -1,5 +1,5 @@
 {
- "generated_at_git_sha": "5d95cf35b878b2a01f7ebca5092810922a9a958f",
+ "generated_at_git_sha": "1de6421f167a8390f8bd87c40bb75ff9adfd3d88",
  "harvested_repos_by_language": {
   "Java": 71,
   "Python": 6,
@@ -156,5 +156,84 @@
   ],
   "source": "paper/generated/composition.md"
  },
- "top_repos": null
+ "top_repos": {
+  "rows": [
+   {
+    "instances": 107,
+    "labels": 145,
+    "repo": "unicode-org/cldr"
+   },
+   {
+    "instances": 75,
+    "labels": 623,
+    "repo": "apache/beam"
+   },
+   {
+    "instances": 64,
+    "labels": 123,
+    "repo": "fla-org/flash-linear-attention"
+   },
+   {
+    "instances": 60,
+    "labels": 190,
+    "repo": "dask/distributed"
+   },
+   {
+    "instances": 57,
+    "labels": 203,
+    "repo": "apache/hugegraph"
+   },
+   {
+    "instances": 48,
+    "labels": 188,
+    "repo": "apache/zeppelin"
+   },
+   {
+    "instances": 47,
+    "labels": 429,
+    "repo": "apache/tika"
+   },
+   {
+    "instances": 31,
+    "labels": 329,
+    "repo": "floci-io/floci"
+   },
+   {
+    "instances": 27,
+    "labels": 31,
+    "repo": "apache/dolphinscheduler"
+   },
+   {
+    "instances": 24,
+    "labels": 381,
+    "repo": "mcreator/mcreator"
+   },
+   {
+    "instances": 22,
+    "labels": 198,
+    "repo": "apache/fineract"
+   },
+   {
+    "instances": 22,
+    "labels": 56,
+    "repo": "apache/flink"
+   },
+   {
+    "instances": 18,
+    "labels": 77,
+    "repo": "apache/hertzbeat"
+   },
+   {
+    "instances": 17,
+    "labels": 41,
+    "repo": "sirixdb/sirix"
+   },
+   {
+    "instances": 15,
+    "labels": 16,
+    "repo": "airlift/airlift"
+   }
+  ],
+  "source": "data/interim/outcomes.parquet + instances_raw.parquet"
+ }
 }

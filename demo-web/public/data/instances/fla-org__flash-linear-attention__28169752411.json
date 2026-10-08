@@ -1,0 +1,3618 @@
+{
+ "generated_at_git_sha": "1de6421f167a8390f8bd87c40bb75ff9adfd3d88",
+ "id": "fla-org__flash-linear-attention__28169752411",
+ "stages": {
+  "binding": {
+   "all": [
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/models/test_modeling_forgetting_transformer.py",
+     "status": "exact",
+     "test_id": "tests/models/test_modeling_forgetting_transformer.py::test_modeling"
+    },
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/ops/test_attn.py",
+     "status": "exact",
+     "test_id": "tests/ops/test_attn.py::test_parallel"
+    }
+   ],
+   "pins_file": "docs/CLONE_PINS.json",
+   "selected": {
+    "candidates_considered": 1,
+    "resolved_path": "tests/models/test_modeling_forgetting_transformer.py",
+    "status": "exact",
+    "test_id": "tests/models/test_modeling_forgetting_transformer.py::test_modeling"
+   }
+  },
+  "change": {
+   "base_sha": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "base_status": "exact_green",
+   "changed_files": [
+    {
+     "additions": 0,
+     "deletions": 1,
+     "path": "fla/ops/attn/parallel.py",
+     "status": "modified"
+    }
+   ],
+   "head_sha": "d01f63180aeef4164d68875ea9da9787e8ab8574",
+   "language": "Python",
+   "pr_number": 980,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 28169752411,
+   "workflow_name": "nvidia-h100-ci"
+  },
+  "graph": {
+   "blast": {
+    "caps": {
+     "edges": 400,
+     "nodes": 150
+    },
+    "edges": [
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_attn_parallel"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_attn_parallel_parallel_attn"
+     },
+     {
+      "source": "fla_ops_attn_init",
+      "target": "fla_ops_attn_parallel"
+     },
+     {
+      "source": "fla_ops_attn_init",
+      "target": "fla_ops_attn_parallel_parallel_attn"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dkv"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dq"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_preprocess"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_fwd"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallel_attn_fwd_kernel"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_parallelattentionfunction"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_attn_parallel_rationale_251"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_forgetting_attn_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_nsa_compression"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_nsa_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_path_attn_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_ops_utils_op_log2"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_utils_decorators_contiguous"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_ops_attn_parallel",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn",
+      "target": "fla_ops_forgetting_attn_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd",
+      "target": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dkv",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dq",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess",
+      "target": "fla_ops_nsa_compression"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess",
+      "target": "fla_ops_nsa_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess",
+      "target": "fla_ops_path_attn_parallel"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_fwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_fwd_kernel",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_attn_parallel_parallel_attn_fwd_kernel",
+      "target": "fla_ops_utils_op_log2"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_ops_nsa_parallel"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_utils_decorators_contiguous"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_nsa_parallel",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_nsa_parallel",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_nsa_parallel",
+      "target": "fla_utils_decorators_contiguous"
+     },
+     {
+      "source": "fla_ops_nsa_parallel",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_path_attn_parallel",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_path_attn_parallel",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_path_attn_parallel",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_utils_op",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_utils_op",
+      "target": "fla_ops_utils_op_log2"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_layers_init"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_layers_utils"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_layers_utils_pad_input"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_layers_utils_unpad_input"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_ops_attn_decoding"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_ops_attn_decoding_attn_decoding_one_step"
+     },
+     {
+      "source": "fla_layers_forgetting_attn",
+      "target": "fla_ops_forgetting_attn_parallel"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_nsa"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_path_attn"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_wall_attn"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_yoco_yococrossattention"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_yoco_yocogatedretention"
+     },
+     {
+      "source": "fla_layers_init",
+      "target": "fla_layers_yoco_yocosharedkvbuilder"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_layers_utils"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_layers_utils_pad_input"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_layers_utils_unpad_input"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_modules_rotary_rotaryembedding"
+     },
+     {
+      "source": "fla_layers_nsa",
+      "target": "fla_ops_nsa_parallel"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_layers_utils"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_layers_utils_pad_input"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_layers_utils_unpad_input"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_modules_l2norm"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_modules_layernorm_rmsnorm"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_ops_attn_decoding"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_ops_attn_decoding_attn_decoding_one_step"
+     },
+     {
+      "source": "fla_layers_path_attn",
+      "target": "fla_ops_path_attn_parallel"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_get_layer_cache"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_pad_input"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_repad_hidden_states"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_unpad_hidden_states"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_unpad_input"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_utils_update_layer_cache"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_wall_attn"
+     },
+     {
+      "source": "fla_layers_utils",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_get_layer_cache",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_pad_input",
+      "target": "fla_layers_utils_repad_hidden_states"
+     },
+     {
+      "source": "fla_layers_utils_pad_input",
+      "target": "fla_layers_wall_attn"
+     },
+     {
+      "source": "fla_layers_utils_pad_input",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_pad_input",
+      "target": "fla_layers_yoco_yococrossattention_forward"
+     },
+     {
+      "source": "fla_layers_utils_repad_hidden_states",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_unpad_hidden_states",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_unpad_input",
+      "target": "fla_layers_wall_attn"
+     },
+     {
+      "source": "fla_layers_utils_unpad_input",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_utils_unpad_input",
+      "target": "fla_layers_yoco_yococrossattention_forward"
+     },
+     {
+      "source": "fla_layers_utils_update_layer_cache",
+      "target": "fla_layers_yoco"
+     },
+     {
+      "source": "fla_layers_wall_attn",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_wall_attn",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_wall_attn",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_layers_wall_attn",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_layers_wall_attn",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_layers_wall_attn_wallattention_decode_rebuild",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_layers_yoco_yococrossattention"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_layers_yoco_yocogatedretention"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_layers_yoco_yocorotaryembedding"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_layers_yoco_yocosharedkvbuilder"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_activations"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_fused_norm_gate_fusedrmsnormgated"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_layernorm_rmsnorm"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_rotary"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_rotary_rotary_embedding"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_modules_rotary_rotaryembedding"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_attn_decoding"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_attn_decoding_attn_decoding_one_step"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_simple_gla_chunk_chunk_simple_gla"
+     },
+     {
+      "source": "fla_layers_yoco",
+      "target": "fla_ops_simple_gla_fused_recurrent_fused_recurrent_simple_gla"
+     },
+     {
+      "source": "fla_layers_yoco_yococrossattention",
+      "target": "fla_layers_yoco_yococrossattention_forward"
+     },
+     {
+      "source": "fla_layers_yoco_yococrossattention",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_layers_yoco_yococrossattention_forward",
+      "target": "fla_ops_attn_decoding_attn_decoding_one_step"
+     },
+     {
+      "source": "fla_layers_yoco_yococrossattention_forward",
+      "target": "fla_ops_attn_parallel_parallel_attn"
+     },
+     {
+      "source": "fla_layers_yoco_yocogatedretention",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_layers_yoco_yocorotaryembedding",
+      "target": "fla_modules_rotary_rotaryembedding"
+     },
+     {
+      "source": "fla_layers_yoco_yocosharedkvbuilder",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_models_utils",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_models_utils",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_models_utils_cache",
+      "target": "fla_models_yoco_modeling_yoco"
+     },
+     {
+      "source": "fla_models_yoco_modeling_yoco",
+      "target": "fla_modules_layernorm_rmsnorm"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_logsigmoid_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_logsigmoid_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_fwdbwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_powglu_linear"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_sigmoid_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_sigmoid_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_fwdbwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swiglu_linear"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swish_bwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_modules_activations_swish_fwd"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_logsigmoid_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglu_fwdbwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_powglu_linear",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_sigmoid_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_fwdbwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swiglu_linear",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swish_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_activations_swish_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_backends_init",
+      "target": "fla_ops_backends_init"
+     },
+     {
+      "source": "fla_modules_backends_init",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_activations",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "target": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_cross_entropy",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_kl_div",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_fused_linear_cross_entropy",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_grpo",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary",
+      "target": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_cp_ops_causal_conv1d_cp"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_bwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_modules_conv_triton_ops_compute_dh0_triton"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_fwd"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_modules_conv_triton_ops_compute_dh0_triton"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_causal_conv1d_update_states"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_modules_conv_triton_ops_causalconv1dfunction_forward"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_modules_fused_cross_entropy_cross_entropy_loss"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_fused_cross_entropy_cross_entropy_loss",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_modules_fused_kl_div_fused_kl_div_backward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_modules_fused_kl_div_fused_kl_div_forward"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_backward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_kl_div_fused_kl_div_forward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "target": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_modules_fused_norm_gate_fusedrmsnormgated"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_modules_fused_norm_gate_layer_norm_gated_bwd"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_modules_fused_norm_gate_layer_norm_gated_fwd"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate_layer_norm_gated_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_fused_norm_gate_layer_norm_gated_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_grpo",
+      "target": "fla_modules_grpo_fused_grpo_loss"
+     },
+     {
+      "source": "fla_modules_grpo",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_grpo",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_modules_grpo_fused_grpo_loss",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_bwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_fwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_layernorm",
+      "target": "fla_modules_layernorm_layer_norm_bwd"
+     },
+     {
+      "source": "fla_modules_layernorm",
+      "target": "fla_modules_layernorm_layer_norm_fwd"
+     },
+     {
+      "source": "fla_modules_layernorm",
+      "target": "fla_modules_layernorm_rmsnorm"
+     },
+     {
+      "source": "fla_modules_layernorm",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_layernorm_layer_norm_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_layernorm_layer_norm_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_rotary",
+      "target": "fla_modules_rotary_rotary_embedding"
+     },
+     {
+      "source": "fla_modules_rotary",
+      "target": "fla_modules_rotary_rotary_embedding_fwdbwd"
+     },
+     {
+      "source": "fla_modules_rotary",
+      "target": "fla_modules_rotary_rotaryembedding"
+     },
+     {
+      "source": "fla_modules_rotary",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_rotary",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_rotary_rotary_embedding_fwdbwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_rotary_rotary_embedding_fwdbwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_token_shift",
+      "target": "fla_modules_token_shift_token_shift_bwd"
+     },
+     {
+      "source": "fla_modules_token_shift",
+      "target": "fla_modules_token_shift_token_shift_fwd"
+     },
+     {
+      "source": "fla_modules_token_shift",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_token_shift_token_shift_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_modules_token_shift_token_shift_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_abc_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_bwd",
+      "target": "fla_ops_atk_chunk_atk_bwd_chunk_atk_bwd"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_bwd_chunk_atk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_fwd",
+      "target": "fla_ops_atk_chunk_atk_fwd_atk_fwd_stages"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_atk_chunk_atk_fwd_atk_fwd_stages",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "fla_ops_attn_decoding_attn_decoding_one_step"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_decoding",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_attn_decoding_attn_decoding_one_step",
+      "target": "fla_ops_utils_cumsum_chunk_global_cumsum"
+     },
+     {
+      "source": "fla_ops_attn_decoding_attn_decoding_one_step",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_attn_decoding_attn_decoding_one_step",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_attn_init",
+      "target": "fla_ops_attn_naive"
+     },
+     {
+      "source": "fla_ops_attn_naive",
+      "target": "fla_ops_attn_naive_naive_attn_decoding"
+     },
+     {
+      "source": "fla_ops_attn_naive",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_ops_attn_naive",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_attn_naive_naive_attn_decoding",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_o"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_op_exp2"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_nsa_compression",
+      "target": "tests_ops_test_nsa"
+     },
+     {
+      "source": "fla_ops_nsa_parallel",
+      "target": "tests_ops_test_nsa"
+     },
+     {
+      "source": "fla_utils_device_check_shared_mem",
+      "target": "tests_ops_test_parallax"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_attn"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_attn_sink"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_nsa"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_ops_test_parallax"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_layers_init"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_layers_utils"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_layers_utils_get_layer_cache"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_layers_utils_update_layer_cache"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_models_utils"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_models_utils_cache"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_modules_activations"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_modules_fused_norm_gate_fusedrmsnormgated"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_modules_layernorm_rmsnorm"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_modules_rotary_rotaryembedding"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "fla_ops_abc_chunk"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_lightning_attn_chunk",
+      "target": "fla_ops_simple_gla_chunk_chunk_simple_gla"
+     },
+     {
+      "source": "fla_ops_lightning_attn_fused_recurrent",
+      "target": "fla_ops_simple_gla_fused_recurrent_fused_recurrent_simple_gla"
+     },
+     {
+      "source": "fla_ops_retention_chunk",
+      "target": "fla_ops_simple_gla_chunk_chunk_simple_gla"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_models_test_modeling_base"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+     },
+     {
+      "source": "fla_utils_testing_assert_close",
+      "target": "tests_modules_test_conv"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+     },
+     {
+      "source": "fla_layers_abc",
+      "target": "tests_layers_test_layer_cache_layer_idx"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "tests_models_test_modeling_bitnet"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "tests_models_test_modeling_nsa"
+     },
+     {
+      "source": "tests_models_test_modeling_abc",
+      "target": "tests_models_test_modeling_base"
+     },
+     {
+      "source": "tests_models_test_modeling_abc",
+      "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_bitnet"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_comba"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_forgetting_transformer"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_nsa"
+     },
+     {
+      "source": "tests_models_test_modeling_base",
+      "target": "tests_models_test_modeling_parallax"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_bitnet"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_comba"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_forgetting_transformer"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_forgetting_transformer_test_modeling"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_nsa"
+     },
+     {
+      "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "target": "tests_models_test_modeling_parallax"
+     },
+     {
+      "source": "tests_models_test_modeling_forgetting_transformer",
+      "target": "tests_models_test_modeling_forgetting_transformer_test_modeling"
+     }
+    ],
+    "max_hops": 4,
+    "nodes": [
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attn/parallel.py",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_layers_yoco",
+      "in_graph": true,
+      "kind": "file",
+      "label": "yoco.py",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attn/__init__.py",
+      "path": "fla/ops/attn/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_bwd()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dkv",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_bwd_kernel_dkv()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_dq",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_bwd_kernel_dq()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_bwd_kernel_preprocess",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_bwd_kernel_preprocess()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_bwd_preprocess",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_bwd_preprocess()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_fwd()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallel_attn_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "parallel_attn_fwd_kernel()",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_parallelattentionfunction",
+      "in_graph": true,
+      "kind": "class",
+      "label": "ParallelAttentionFunction",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attn_parallel_rationale_251",
+      "in_graph": true,
+      "kind": "class",
+      "label": "# NOTE: we must multiply RCP_LN2 after tl.dot for high precision",
+      "path": "fla/ops/attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_backends_init_dispatch",
+      "in_graph": true,
+      "kind": "function",
+      "label": "dispatch()",
+      "path": "fla/ops/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_forgetting_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "forgetting_attn/parallel.py",
+      "path": "fla/ops/forgetting_attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_nsa_compression",
+      "in_graph": true,
+      "kind": "file",
+      "label": "compression.py",
+      "path": "fla/ops/nsa/compression.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_nsa_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "nsa/parallel.py",
+      "path": "fla/ops/nsa/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_path_attn_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "path_attn/parallel.py",
+      "path": "fla/ops/path_attn/parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_constant",
+      "in_graph": true,
+      "kind": "file",
+      "label": "constant.py",
+      "path": "fla/ops/utils/constant.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cumsum",
+      "in_graph": true,
+      "kind": "file",
+      "label": "utils/cumsum.py",
+      "path": "fla/ops/utils/cumsum.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cumsum_chunk_global_cumsum",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_global_cumsum()",
+      "path": "fla/ops/utils/cumsum.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_index_prepare_chunk_indices",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_chunk_indices()",
+      "path": "fla/ops/utils/index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op",
+      "in_graph": true,
+      "kind": "file",
+      "label": "op.py",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op_exp2",
+      "in_graph": true,
+      "kind": "function",
+      "label": "exp2()",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op_log2",
+      "in_graph": true,
+      "kind": "function",
+      "label": "log2()",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_contiguous",
+      "in_graph": true,
+      "kind": "function",
+      "label": "contiguous()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_check_shared_mem",
+      "in_graph": true,
+      "kind": "function",
+      "label": "check_shared_mem()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": true,
+      "hop": 1,
+      "id": "tests_ops_test_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_attn.py",
+      "path": "tests/ops/test_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "tests_ops_test_attn_sink",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_attn_sink.py",
+      "path": "tests/ops/test_attn_sink.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_forgetting_attn",
+      "in_graph": true,
+      "kind": "file",
+      "label": "forgetting_attn.py",
+      "path": "fla/layers/forgetting_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "layers/__init__.py",
+      "path": "fla/layers/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_nsa",
+      "in_graph": true,
+      "kind": "file",
+      "label": "nsa.py",
+      "path": "fla/layers/nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_path_attn",
+      "in_graph": true,
+      "kind": "file",
+      "label": "path_attn.py",
+      "path": "fla/layers/path_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils",
+      "in_graph": true,
+      "kind": "file",
+      "label": "layers/utils.py",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_get_layer_cache",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_layer_cache()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_pad_input",
+      "in_graph": true,
+      "kind": "function",
+      "label": "pad_input()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_repad_hidden_states",
+      "in_graph": true,
+      "kind": "function",
+      "label": "repad_hidden_states()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_unpad_hidden_states",
+      "in_graph": true,
+      "kind": "function",
+      "label": "unpad_hidden_states()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_unpad_input",
+      "in_graph": true,
+      "kind": "function",
+      "label": "unpad_input()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_utils_update_layer_cache",
+      "in_graph": true,
+      "kind": "function",
+      "label": "update_layer_cache()",
+      "path": "fla/layers/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_wall_attn",
+      "in_graph": true,
+      "kind": "file",
+      "label": "wall_attn.py",
+      "path": "fla/layers/wall_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_wall_attn_wallattention_decode_rebuild",
+      "in_graph": true,
+      "kind": "function",
+      "label": "._decode_rebuild()",
+      "path": "fla/layers/wall_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_yoco_yococrossattention",
+      "in_graph": true,
+      "kind": "class",
+      "label": "YOCOCrossAttention",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_yoco_yococrossattention_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_yoco_yocogatedretention",
+      "in_graph": true,
+      "kind": "class",
+      "label": "YOCOGatedRetention",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_yoco_yocorotaryembedding",
+      "in_graph": true,
+      "kind": "class",
+      "label": "YOCORotaryEmbedding",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_yoco_yocosharedkvbuilder",
+      "in_graph": true,
+      "kind": "class",
+      "label": "YOCOSharedKVBuilder",
+      "path": "fla/layers/yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_models_utils",
+      "in_graph": true,
+      "kind": "file",
+      "label": "models/utils.py",
+      "path": "fla/models/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_models_utils_cache",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Cache",
+      "path": "fla/models/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_models_yoco_modeling_yoco",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modeling_yoco.py",
+      "path": "fla/models/yoco/modeling_yoco.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/activations.py",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsigmoid_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_logsigmoid_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsigmoid_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_fwdbwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_fwdbwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_powglu_linear",
+      "in_graph": true,
+      "kind": "function",
+      "label": "powglu_linear()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "sigmoid_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_sigmoid_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "sigmoid_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_fwdbwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_fwdbwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swiglu_linear",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swiglu_linear()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swish_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swish_bwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_activations_swish_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "swish_fwd()",
+      "path": "fla/modules/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/backends/__init__.py",
+      "path": "fla/modules/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_activations",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/activations.py",
+      "path": "fla/modules/backends/triton_ascend/activations.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/causal_conv1d.py",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_bwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_bwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_causal_conv1d_fwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_fwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_coregrid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_coregrid()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dwdb_core",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_dwdb_core()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_bwd_dx_core",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_bwd_dx_core()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_core_scalar",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_fwd_core_scalar()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_causal_conv1d_launch_fwd_coregrid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_launch_fwd_coregrid()",
+      "path": "fla/modules/backends/triton_ascend/causal_conv1d.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/fused_cross_entropy.py",
+      "path": "fla/modules/backends/triton_ascend/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_kl_div",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/fused_kl_div.py",
+      "path": "fla/modules/backends/triton_ascend/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_fused_linear_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/fused_linear_cross_entropy.py",
+      "path": "fla/modules/backends/triton_ascend/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_grpo",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/grpo.py",
+      "path": "fla/modules/backends/triton_ascend/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_rotary",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton_ascend/rotary.py",
+      "path": "fla/modules/backends/triton_ascend/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_backends_triton_ascend_rotary_rotary_embedding_fwdbwd_npu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "rotary_embedding_fwdbwd_npu()",
+      "path": "fla/modules/backends/triton_ascend/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cp/ops.py",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_cp_ops_causal_conv1d_cp",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_cp()",
+      "path": "fla/modules/conv/cp/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops",
+      "in_graph": true,
+      "kind": "file",
+      "label": "triton/ops.py",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_bwd()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_fwd()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_update",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causal_conv1d_update_states",
+      "in_graph": true,
+      "kind": "function",
+      "label": "causal_conv1d_update_states()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_causalconv1dfunction_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": ".forward()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_conv_triton_ops_compute_dh0_triton",
+      "in_graph": true,
+      "kind": "function",
+      "label": "compute_dh0_triton()",
+      "path": "fla/modules/conv/triton/ops.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_cross_entropy.py",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_cross_entropy_cross_entropy_loss",
+      "in_graph": true,
+      "kind": "function",
+      "label": "cross_entropy_loss()",
+      "path": "fla/modules/fused_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_kl_div.py",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fused_kl_div_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_kl_div_backward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_kl_div_fused_kl_div_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_kl_div_forward()",
+      "path": "fla/modules/fused_kl_div.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_linear_cross_entropy.py",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_backward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_linear_cross_entropy_backward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_fused_linear_cross_entropy_forward",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_linear_cross_entropy_forward()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_linear_cross_entropy_logsumexp_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "logsumexp_fwd()",
+      "path": "fla/modules/fused_linear_cross_entropy.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/fused_norm_gate.py",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate_fusedrmsnormgated",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FusedRMSNormGated",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate_layer_norm_gated_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "layer_norm_gated_bwd()",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_fused_norm_gate_layer_norm_gated_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "layer_norm_gated_fwd()",
+      "path": "fla/modules/fused_norm_gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_grpo",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/grpo.py",
+      "path": "fla/modules/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_grpo_fused_grpo_loss",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_grpo_loss()",
+      "path": "fla/modules/grpo.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_l2norm",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/l2norm.py",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_l2norm_l2norm_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_bwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_l2norm_l2norm_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_fwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_layernorm",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/layernorm.py",
+      "path": "fla/modules/layernorm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_layernorm_layer_norm_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "layer_norm_bwd()",
+      "path": "fla/modules/layernorm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_layernorm_layer_norm_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "layer_norm_fwd()",
+      "path": "fla/modules/layernorm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_layernorm_rmsnorm",
+      "in_graph": true,
+      "kind": "class",
+      "label": "RMSNorm",
+      "path": "fla/modules/layernorm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_rotary",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/rotary.py",
+      "path": "fla/modules/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_rotary_rotary_embedding",
+      "in_graph": true,
+      "kind": "function",
+      "label": "rotary_embedding()",
+      "path": "fla/modules/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_rotary_rotary_embedding_fwdbwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "rotary_embedding_fwdbwd()",
+      "path": "fla/modules/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_rotary_rotaryembedding",
+      "in_graph": true,
+      "kind": "class",
+      "label": "RotaryEmbedding",
+      "path": "fla/modules/rotary.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_token_shift",
+      "in_graph": true,
+      "kind": "file",
+      "label": "token_shift.py",
+      "path": "fla/modules/token_shift.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_token_shift_token_shift_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "token_shift_bwd()",
+      "path": "fla/modules/token_shift.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_modules_token_shift_token_shift_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "token_shift_fwd()",
+      "path": "fla/modules/token_shift.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_abc_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "abc/chunk.py",
+      "path": "fla/ops/abc/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_atk_chunk_atk_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_atk_bwd.py",
+      "path": "fla/ops/atk/chunk_atk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_atk_chunk_atk_bwd_chunk_atk_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_atk_bwd()",
+      "path": "fla/ops/atk/chunk_atk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_atk_chunk_atk_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "chunk_atk_fwd.py",
+      "path": "fla/ops/atk/chunk_atk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_atk_chunk_atk_fwd_atk_fwd_stages",
+      "in_graph": true,
+      "kind": "function",
+      "label": "_atk_fwd_stages()",
+      "path": "fla/ops/atk/chunk_atk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_decoding",
+      "in_graph": true,
+      "kind": "file",
+      "label": "decoding.py",
+      "path": "fla/ops/attn/decoding.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_decoding_attn_decoding_one_step",
+      "in_graph": true,
+      "kind": "function",
+      "label": "attn_decoding_one_step()",
+      "path": "fla/ops/attn/decoding.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_naive",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attn/naive.py",
+      "path": "fla/ops/attn/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_attn_naive_naive_attn_decoding",
+      "in_graph": true,
+      "kind": "function",
+      "label": "naive_attn_decoding()",
+      "path": "fla/ops/attn/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_backends_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "ops/backends/__init__.py",
+      "path": "fla/ops/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_chunk_o",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_o.py",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "iplr/chunk.py",
+      "path": "fla/ops/generalized_delta_rule/iplr/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_simple_gla_chunk_chunk_simple_gla",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_simple_gla()",
+      "path": "fla/ops/simple_gla/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_simple_gla_fused_recurrent_fused_recurrent_simple_gla",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_simple_gla()",
+      "path": "fla/ops/simple_gla/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_utils_testing_assert_close",
+      "in_graph": true,
+      "kind": "function",
+      "label": "assert_close()",
+      "path": "fla/utils/_testing.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_nsa.py",
+      "path": "tests/ops/test_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_parallax",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_parallax.py",
+      "path": "tests/ops/test_parallax.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_layers_abc",
+      "in_graph": true,
+      "kind": "file",
+      "label": "abc.py",
+      "path": "fla/layers/abc.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_lightning_attn_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "lightning_attn/chunk.py",
+      "path": "fla/ops/lightning_attn/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_lightning_attn_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "lightning_attn/fused_recurrent.py",
+      "path": "fla/ops/lightning_attn/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_ops_retention_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "retention/chunk.py",
+      "path": "fla/ops/retention/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "fla_utils_compat_find_spec_cached",
+      "in_graph": true,
+      "kind": "function",
+      "label": "find_spec_cached()",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "tests_models_test_modeling_base",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_base.py",
+      "path": "tests/models/test_modeling_base.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "in_graph": true,
+      "kind": "test",
+      "label": "run_test_model_forward_backward()",
+      "path": "tests/models/test_modeling_base.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_modules_test_conv",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_conv.py",
+      "path": "tests/modules/test_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_layers_test_layer_cache_layer_idx",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_layer_cache_layer_idx.py",
+      "path": "tests/layers/test_layer_cache_layer_idx.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_abc",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_abc.py",
+      "path": "tests/models/test_modeling_abc.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_bitnet",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_bitnet.py",
+      "path": "tests/models/test_modeling_bitnet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_comba",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_comba.py",
+      "path": "tests/models/test_modeling_comba.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 4,
+      "id": "tests_models_test_modeling_forgetting_transformer",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_forgetting_transformer.py",
+      "path": "tests/models/test_modeling_forgetting_transformer.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 4,
+      "id": "tests_models_test_modeling_forgetting_transformer_test_modeling",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling()",
+      "path": "tests/models/test_modeling_forgetting_transformer.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_nsa.py",
+      "path": "tests/models/test_modeling_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 4,
+      "id": "tests_models_test_modeling_parallax",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_parallax.py",
+      "path": "tests/models/test_modeling_parallax.py"
+     }
+    ],
+    "note": "hops on the undirected projection from the nearest changed file",
+    "truncated": {
+     "edges": false,
+     "nodes": true
+    },
+    "within_hops_total": 5894
+   },
+   "built_offline_from_local_git": true,
+   "changed_distances": [
+    {
+     "file": "fla/ops/attn/parallel.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_attn_parallel"
+    }
+   ],
+   "distance_note": "hops on the undirected projection (src/graph/query.py)",
+   "graph_commit": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "min_distance_to_any_changed": 4,
+   "n_edges": 21338,
+   "n_nodes": 7569,
+   "paths": [
+    {
+     "changed_file": "fla/ops/attn/parallel.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_forgetting_transformer_test_modeling",
+       "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+      },
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "target": "fla_utils_testing_assert_close"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_testing_assert_close",
+       "target": "tests_ops_test_attn"
+      },
+      {
+       "direction": "forward",
+       "relation": "imports_from",
+       "source": "tests_ops_test_attn",
+       "target": "fla_ops_attn_parallel"
+      }
+     ],
+     "hops": 4,
+     "nodes": [
+      {
+       "file": "tests/models/test_modeling_forgetting_transformer.py",
+       "id": "tests_models_test_modeling_forgetting_transformer_test_modeling",
+       "kind": "code",
+       "label": "test_modeling()"
+      },
+      {
+       "file": "tests/models/test_modeling_base.py",
+       "id": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "kind": "code",
+       "label": "run_test_model_forward_backward()"
+      },
+      {
+       "file": "fla/utils/_testing.py",
+       "id": "fla_utils_testing_assert_close",
+       "kind": "code",
+       "label": "assert_close()"
+      },
+      {
+       "file": "tests/ops/test_attn.py",
+       "id": "tests_ops_test_attn",
+       "kind": "code",
+       "label": "test_attn.py"
+      },
+      {
+       "file": "fla/ops/attn/parallel.py",
+       "id": "fla_ops_attn_parallel",
+       "kind": "code",
+       "label": "attn/parallel.py"
+      }
+     ]
+    }
+   ],
+   "test_node": {
+    "file": "tests/models/test_modeling_forgetting_transformer.py",
+    "id": "tests_models_test_modeling_forgetting_transformer_test_modeling",
+    "kind": "code",
+    "label": "test_modeling()"
+   },
+   "test_node_how": "the test's own node"
+  },
+  "head_vs_base": {
+   "base_run_conclusion": null,
+   "base_run_distance": 0.0,
+   "base_run_id": 33095075420,
+   "tests": [
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/models/test_modeling_forgetting_transformer.py::test_modeling"
+    },
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/ops/test_attn.py::test_parallel"
+    }
+   ]
+  },
+  "parsed_outcome": {
+   "failure_class": "unknown",
+   "failure_message": "tvm.error.InternalError: Check failed: (it != map_.end()) is false:  Cannot find role for stmt: tirx.Bind",
+   "failure_rule": "no-match",
+   "harness": "pytest",
+   "is_fqcn_qualified": true,
+   "params": "[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]",
+   "parser_confidence": 0.9,
+   "raw_log_line": "2026-06-25T12:24:16.6889975Z FAILED tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] - tvm.error.InternalError: Check failed: (it !=",
+   "status": "fail",
+   "test_id": "tests/models/test_modeling_forgetting_transformer.py::test_modeling"
+  },
+  "predictions": {
+   "actual": [
+    {
+     "caught_by_cochange": false,
+     "caught_by_history": false,
+     "path": "tests/models/test_modeling_forgetting_transformer.py"
+    },
+    {
+     "caught_by_cochange": true,
+     "caught_by_history": true,
+     "path": "tests/ops/test_attn.py"
+    }
+   ],
+   "cochange": [
+    {
+     "confidence": 0.4,
+     "hit": true,
+     "path": "tests/ops/test_attn.py"
+    },
+    {
+     "confidence": 0.3,
+     "hit": false,
+     "path": "fla/ops/forgetting_attn/parallel.py"
+    },
+    {
+     "confidence": 0.3,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/iplr/chunk.py"
+    },
+    {
+     "confidence": 0.3,
+     "hit": false,
+     "path": "fla/ops/nsa/parallel.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/attn/decoding.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/attn/naive.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/common/chunk_o.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/lightning_attn/chunk.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/lightning_attn/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.2,
+     "hit": false,
+     "path": "fla/ops/retention/chunk.py"
+    }
+   ],
+   "history": [
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/layers/test_layer_cache_layer_idx.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/ops/test_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 13,
+     "path": "tests/models/test_modeling_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 10,
+     "path": "tests/models/test_modeling_comba.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 9,
+     "path": "tests/models/test_modeling_abc.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 7,
+     "path": "tests/models/test_modeling_bitnet.py"
+    },
+    {
+     "hit": true,
+     "past_failures": 6,
+     "path": "tests/ops/test_attn.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/models/test_modeling_parallax.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/ops/test_parallax.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/modules/test_conv.py"
+    }
+   ],
+   "k": 10,
+   "metrics": {
+    "cochange": {
+     "hits": 1,
+     "precision": 0.1,
+     "predicted": 10,
+     "recall": 0.5
+    },
+    "history": {
+     "hits": 1,
+     "precision": 0.1,
+     "predicted": 10,
+     "recall": 0.5
+    },
+    "n_actual": 2
+   },
+   "run_started_at": "2026-06-25T12:22:28Z"
+  },
+  "raw_log": {
+   "job_id": 83430783601,
+   "lines": [
+    {
+     "failing": true,
+     "text": "2026-06-25T12:24:16.6889975Z FAILED tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] - tvm.error.InternalError: Check failed: (it !="
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:23:55.8477709Z Found models test files: /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting_transformer.py /home/ubuntu/"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:23:55.8575437Z ##[group]Run $CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:23:55.8579724Z $CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_forgetting_transformer."
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:04.4540248Z tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.2174494Z ________ test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] ________"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.2180273Z     def test_modeling("
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.2185019Z tests/models/test_modeling_forgetting_transformer.py:42:"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.2185868Z tests/models/test_modeling_base.py:55: in run_test_model_forward_backward"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.6883857Z tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]"
+    },
+    {
+     "failing": false,
+     "text": "2026-06-25T12:24:16.6886378Z tests/models/test_modeling_forgetting_transformer.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]"
+    }
+   ],
+   "test_name_token": "test_modeling"
+  },
+  "verdict": {
+   "agrees_with_outcomes_parquet": true,
+   "flaky": [],
+   "recorded_strict": 2,
+   "selected_is_fault_revealing": true,
+   "selected_test": "tests/models/test_modeling_forgetting_transformer.py::test_modeling",
+   "sibling_runs": 1,
+   "t_base_fail": [],
+   "t_head_fail": [
+    "tests/models/test_modeling_forgetting_transformer.py::test_modeling",
+    "tests/ops/test_attn.py::test_parallel"
+   ],
+   "t_reveal": [
+    "tests/models/test_modeling_forgetting_transformer.py::test_modeling",
+    "tests/ops/test_attn.py::test_parallel"
+   ]
+  }
+ }
+}

@@ -1,0 +1,4025 @@
+{
+ "generated_at_git_sha": "1de6421f167a8390f8bd87c40bb75ff9adfd3d88",
+ "id": "fla-org__flash-linear-attention__28734729275",
+ "stages": {
+  "binding": {
+   "all": [
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/models/test_modeling_bitnet.py",
+     "status": "exact",
+     "test_id": "tests/models/test_modeling_bitnet.py::test_modeling"
+    },
+    {
+     "candidates_considered": 1,
+     "resolved_path": "tests/ops/test_nsa.py",
+     "status": "exact",
+     "test_id": "tests/ops/test_nsa.py::test_parallel_decode"
+    }
+   ],
+   "pins_file": "docs/CLONE_PINS.json",
+   "selected": {
+    "candidates_considered": 1,
+    "resolved_path": "tests/models/test_modeling_bitnet.py",
+    "status": "exact",
+    "test_id": "tests/models/test_modeling_bitnet.py::test_modeling"
+   }
+  },
+  "change": {
+   "base_sha": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "base_status": "exact_green",
+   "changed_files": [
+    {
+     "additions": 1,
+     "deletions": 0,
+     "path": "ENVs.md",
+     "status": "modified"
+    },
+    {
+     "additions": 24,
+     "deletions": 1,
+     "path": "fla/ops/gated_delta_rule/chunk.py",
+     "status": "modified"
+    },
+    {
+     "additions": 69,
+     "deletions": 4,
+     "path": "fla/ops/gated_delta_rule/fused_recurrent.py",
+     "status": "modified"
+    },
+    {
+     "additions": 8,
+     "deletions": 0,
+     "path": "fla/ops/utils/cache.py",
+     "status": "modified"
+    },
+    {
+     "additions": 5,
+     "deletions": 0,
+     "path": "fla/utils/__init__.py",
+     "status": "modified"
+    },
+    {
+     "additions": 86,
+     "deletions": 0,
+     "path": "fla/utils/_batch_invariant.py",
+     "status": "added"
+    },
+    {
+     "additions": 20,
+     "deletions": 0,
+     "path": "tests/ops/test_gdn.py",
+     "status": "modified"
+    },
+    {
+     "additions": 437,
+     "deletions": 0,
+     "path": "tests/ops/test_gdn_batch_invariant.py",
+     "status": "added"
+    }
+   ],
+   "head_sha": "b4c03a6af9a8a2d2512ad2191a087b78b1975134",
+   "language": "Python",
+   "pr_number": 1003,
+   "repo": "fla-org/flash-linear-attention",
+   "run_id": 28734729275,
+   "workflow_name": "nvidia-h100-ci"
+  },
+  "graph": {
+   "blast": {
+    "caps": {
+     "edges": 400,
+     "nodes": 150
+    },
+    "edges": [
+     {
+      "source": "fla_modules_backends_triton_ascend_init",
+      "target": "fla_ops_backends_init"
+     },
+     {
+      "source": "fla_modules_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_conv_triton_kernels",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_bwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_modules_l2norm_l2norm_fwd"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_modules_l2norm",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_bwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_gated_delta_product_chunk"
+     },
+     {
+      "source": "fla_modules_l2norm_l2norm_fwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_attnres_backends_gluon",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_attnres_backends_gluon",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_attnres_backends_gluon",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_attnres_backends_triton_ascend_init",
+      "target": "fla_ops_backends_init"
+     },
+     {
+      "source": "fla_ops_attnres_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_ops_attnres_fused",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_backends_init_dispatch"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_common_backends_tilelang_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_common_backends_triton_ascend_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_gated_delta_rule_backends_triton_ascend_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_gla_backends_triton_ascend_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_kda_backends_tilelang_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_kda_backends_triton_ascend_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_rwkv6_backends_tilelang_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_ops_utils_backends_triton_ascend_init"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_backends_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_delta_h"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_o"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dqkwg"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dv_local"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_chunk_o_chunk_fwd_o"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_gate"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_common_gate_fused_beta_sigmoid_bwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_gate"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_bwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_gla_chunk"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_kda_chunk_intra"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_kda_chunk_intra_token_parallel"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_kda_gate"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_kda_wy_fast"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_backends_init_dispatch",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_init",
+      "target": "fla_utils_compat_has_usable_nvcc"
+     },
+     {
+      "source": "fla_ops_common_backends_tilelang_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_common_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_kernel_h_blockdim64"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_gdn2_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_gdn2_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_gdn2_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_kernel_h_blockdim64",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_kernel_h_blockdim64",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dqkwg"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_bwd_dv_local"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_common_chunk_o_chunk_fwd_o"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_common_chunk_o",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_common_gate_fused_beta_sigmoid"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_common_gate_fused_beta_sigmoid_bwd"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_common_gate_fused_beta_sigmoid_bwd",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_compress_h0"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_chunk_delta_h_expand_h0"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_cp_context_flacpcontext"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_backends_flash_qla"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_cp_context_flacpcontext",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_utils_index"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_product_chunk",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_backends_flash_qla",
+      "target": "fla_ops_gated_delta_rule_backends_flash_qla_flashqlabackend"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_backends_flash_qla",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_backends_flash_qla_flashqlabackend",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_chunkgateddeltarulefunction"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_gate"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_utils_index"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule",
+      "target": "fla_ops_gated_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd",
+      "target": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_gated_delta_rule_wy_fast"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule_fwd_kernel"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_gated_delta_rule_fused_recurrent_fusedrecurrentfunction"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_gated_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_ops_utils_softplus"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule",
+      "target": "fla_ops_gated_delta_rule_init"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule_fwd_kernel",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_gated_delta_rule_gate_fused_gdn_gate"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_gated_delta_rule_gate_naive_gdn_gate"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_index"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_ops_utils_softplus"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate_fused_gdn_gate",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_gate_naive_gdn_gate",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_init",
+      "target": "fla_ops_gated_delta_rule_naive"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_init",
+      "target": "fla_ops_gated_delta_rule_naive_naive_recurrent_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_naive",
+      "target": "fla_ops_gated_delta_rule_naive_naive_recurrent_gated_delta_rule"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_naive",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_naive_naive_recurrent_gated_delta_rule",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd",
+      "target": "tests_ops_test_gdn"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_gdn2_chunk_intra"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_gdn2_wy_fast"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_kda_chunk_bwd"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_kda_gate"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_gdn2_chunk_intra_token_parallel"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_gdn2_wy_fast"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gdn2_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gdn2_wy_fast",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gdn2_wy_fast",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gdn2_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gdn2_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "target": "fla_utils_compat_has_usable_nvcc"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "target": "fla_utils_device_get_device_capability"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "target": "fla_utils_device_get_device_smem_optin"
+     },
+     {
+      "source": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_gla_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_gla_chunk",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_kda_backends_tilelang_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_kda_backends_tilelang_init",
+      "target": "fla_utils_compat_has_usable_nvcc"
+     },
+     {
+      "source": "fla_ops_kda_backends_tilelang_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_kda_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_chunk_intra"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_gate"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_kda_wy_fast"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_constant"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_chunk_bwd",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_kda_chunk_intra_token_parallel"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_kda_wy_fast"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_kda_chunk_intra_token_parallel",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_index"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_ops_utils_softplus"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_kda_gate",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_cache"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_ops_utils_op"
+     },
+     {
+      "source": "fla_ops_kda_wy_fast",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_rwkv6_backends_tilelang_init",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_ops_rwkv6_backends_tilelang_init",
+      "target": "fla_utils_compat_has_usable_nvcc"
+     },
+     {
+      "source": "fla_ops_rwkv6_backends_tilelang_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_utils_backends_triton_ascend_init",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_autotunekey"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_cachedautotuner"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_configure_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_flacachemode"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_get_fla_config_dir"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_get_gpu_info"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_kernelconfigfile"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_load_cached_config"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_load_config_file"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_read_config_file"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_restore_autotune_backend"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cache_sanitize_gpu_name"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_utils_cache",
+      "target": "tests_ops_test_kda"
+     },
+     {
+      "source": "fla_ops_utils_cache_autotunekey",
+      "target": "fla_ops_utils_cache_load_cached_config"
+     },
+     {
+      "source": "fla_ops_utils_cache_configure_fla_cache_autotune",
+      "target": "fla_ops_utils_cache_fla_cache_autotune"
+     },
+     {
+      "source": "fla_ops_utils_cache_fla_cache_autotune",
+      "target": "fla_ops_utils_cumsum"
+     },
+     {
+      "source": "fla_ops_utils_cache_get_fla_config_dir",
+      "target": "fla_ops_utils_cache_get_gpu_info"
+     },
+     {
+      "source": "fla_ops_utils_cache_get_fla_config_dir",
+      "target": "fla_ops_utils_cache_load_cached_config"
+     },
+     {
+      "source": "fla_ops_utils_cache_get_gpu_info",
+      "target": "fla_ops_utils_cache_sanitize_gpu_name"
+     },
+     {
+      "source": "fla_ops_utils_cache_load_cached_config",
+      "target": "fla_ops_utils_cache_read_config_file"
+     },
+     {
+      "source": "fla_ops_utils_cache_load_config_file",
+      "target": "fla_ops_utils_cache_read_config_file"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_ops_utils_cumsum_chunk_local_cumsum"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_ops_utils_index"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_utils_cumsum",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_ops_utils_cumsum_chunk_local_cumsum",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_ops_utils_index",
+      "target": "fla_ops_utils_index_prepare_chunk_indices"
+     },
+     {
+      "source": "fla_ops_utils_index",
+      "target": "fla_utils_decorators_tensor_cache"
+     },
+     {
+      "source": "fla_ops_utils_index_prepare_chunk_indices",
+      "target": "fla_utils_decorators_tensor_cache"
+     },
+     {
+      "source": "fla_ops_utils_op",
+      "target": "fla_ops_utils_op_exp"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_compat_ascend_compile_kwargs"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_compat_find_spec_cached"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_compat_has_usable_nvcc"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_config"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_device"
+     },
+     {
+      "source": "fla_utils_compat",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_compat_ascend_compile_kwargs",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_compat_find_spec_cached",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_compat_has_usable_nvcc",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_config",
+      "target": "fla_utils_decorators"
+     },
+     {
+      "source": "fla_utils_config",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_action"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_checkpoint"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_contiguous"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_deprecate_kwarg"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_require_version"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_decorators_tensor_cache"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_device"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_device_custom_device_ctx"
+     },
+     {
+      "source": "fla_utils_decorators",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_action",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_checkpoint",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_contiguous",
+      "target": "fla_utils_decorators_input_guard"
+     },
+     {
+      "source": "fla_utils_decorators_contiguous",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_deprecate_kwarg",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_input_guard",
+      "target": "fla_utils_device_custom_device_ctx"
+     },
+     {
+      "source": "fla_utils_decorators_input_guard",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_require_version",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_decorators_tensor_cache",
+      "target": "fla_utils_init"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_backend"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_check_environments"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_check_pytorch_version"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_check_shared_mem"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_custom_device_ctx"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_get_all_max_shared_mem"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_get_available_device"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_get_device_capability"
+     },
+     {
+      "source": "fla_utils_device",
+      "target": "fla_utils_device_get_device_smem_optin"
+     }
+    ],
+    "max_hops": 4,
+    "nodes": [
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_delta_rule_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/chunk.py",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/fused_recurrent.py",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_ops_utils_cache",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cache.py",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "fla_utils_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "fla/utils/__init__.py",
+      "path": "fla/utils/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 0,
+      "id": "tests_ops_test_gdn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gdn.py",
+      "path": "tests/ops/test_gdn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/backends/triton_ascend/__init__.py",
+      "path": "fla/modules/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_conv_triton_kernels",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kernels.py",
+      "path": "fla/modules/conv/triton/kernels.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm",
+      "in_graph": true,
+      "kind": "file",
+      "label": "modules/l2norm.py",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm_l2norm_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_bwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_modules_l2norm_l2norm_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "l2norm_fwd()",
+      "path": "fla/modules/l2norm.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attnres_backends_gluon",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gluon.py",
+      "path": "fla/ops/attnres/backends/gluon.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attnres_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attnres/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/attnres/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_attnres_fused",
+      "in_graph": true,
+      "kind": "file",
+      "label": "attnres/fused.py",
+      "path": "fla/ops/attnres/fused.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_backends_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "ops/backends/__init__.py",
+      "path": "fla/ops/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_backends_init_dispatch",
+      "in_graph": true,
+      "kind": "function",
+      "label": "dispatch()",
+      "path": "fla/ops/backends/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_backends_tilelang_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/backends/tilelang/__init__.py",
+      "path": "fla/ops/common/backends/tilelang/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/common/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_delta_h.py",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_bwd_dhu()",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_h",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_h()",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_delta_h_chunk_gated_delta_rule_fwd_kernel_h_blockdim64",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_kernel_h_blockdim64()",
+      "path": "fla/ops/common/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_o.py",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_bwd_dqkwg",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dqkwg()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_bwd_dv_local",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_bwd_dv_local()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_chunk_o_chunk_fwd_o",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_fwd_o()",
+      "path": "fla/ops/common/chunk_o.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/gate.py",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate_fused_beta_sigmoid",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_beta_sigmoid()",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_common_gate_fused_beta_sigmoid_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_beta_sigmoid_bwd()",
+      "path": "fla/ops/common/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "cp/chunk_delta_h.py",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_bwd_dhu_pre_process",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_bwd_dhu_pre_process()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_chunk_gated_delta_rule_fwd_h_pre_process",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_h_pre_process()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_compress_h0",
+      "in_graph": true,
+      "kind": "function",
+      "label": "compress_h0()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_chunk_delta_h_expand_h0",
+      "in_graph": true,
+      "kind": "function",
+      "label": "expand_h0()",
+      "path": "fla/ops/cp/chunk_delta_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_cp_context_flacpcontext",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FLACPContext",
+      "path": "fla/ops/cp/context.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_product_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_product/chunk.py",
+      "path": "fla/ops/gated_delta_product/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_backends_flash_qla",
+      "in_graph": true,
+      "kind": "file",
+      "label": "flash_qla.py",
+      "path": "fla/ops/gated_delta_rule/backends/flash_qla.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_backends_flash_qla_flashqlabackend",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FlashQLABackend",
+      "path": "fla/ops/gated_delta_rule/backends/flash_qla.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/gated_delta_rule/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule()",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_bwd()",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_chunk_gated_delta_rule_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd()",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_chunkgateddeltarulefunction",
+      "in_graph": true,
+      "kind": "class",
+      "label": "ChunkGatedDeltaRuleFunction",
+      "path": "fla/ops/gated_delta_rule/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_fwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/chunk_fwd.py",
+      "path": "fla/ops/gated_delta_rule/chunk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_chunk_fwd_chunk_gated_delta_rule_fwd_intra",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_gated_delta_rule_fwd_intra()",
+      "path": "fla/ops/gated_delta_rule/chunk_fwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_gated_delta_rule()",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_gated_delta_rule_fwd()",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent_fused_recurrent_gated_delta_rule_fwd_kernel",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_recurrent_gated_delta_rule_fwd_kernel()",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_fused_recurrent_fusedrecurrentfunction",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FusedRecurrentFunction",
+      "path": "fla/ops/gated_delta_rule/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/gate.py",
+      "path": "fla/ops/gated_delta_rule/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_gate_fused_gdn_gate",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fused_gdn_gate()",
+      "path": "fla/ops/gated_delta_rule/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_gate_gdn_gate_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "gdn_gate_bwd()",
+      "path": "fla/ops/gated_delta_rule/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_gate_gdn_gate_chunk_cumsum",
+      "in_graph": true,
+      "kind": "function",
+      "label": "gdn_gate_chunk_cumsum()",
+      "path": "fla/ops/gated_delta_rule/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_gate_naive_gdn_gate",
+      "in_graph": true,
+      "kind": "function",
+      "label": "naive_gdn_gate()",
+      "path": "fla/ops/gated_delta_rule/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/__init__.py",
+      "path": "fla/ops/gated_delta_rule/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_naive",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/naive.py",
+      "path": "fla/ops/gated_delta_rule/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_naive_naive_recurrent_gated_delta_rule",
+      "in_graph": true,
+      "kind": "function",
+      "label": "naive_recurrent_gated_delta_rule()",
+      "path": "fla/ops/gated_delta_rule/naive.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_delta_rule/wy_fast.py",
+      "path": "fla/ops/gated_delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_wy_fast_prepare_wy_repr_bwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_wy_repr_bwd()",
+      "path": "fla/ops/gated_delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gated_delta_rule_wy_fast_recompute_w_u_fwd",
+      "in_graph": true,
+      "kind": "function",
+      "label": "recompute_w_u_fwd()",
+      "path": "fla/ops/gated_delta_rule/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gdn2_chunk_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gdn2/chunk_bwd.py",
+      "path": "fla/ops/gdn2/chunk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gdn2_chunk_intra",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gdn2/chunk_intra.py",
+      "path": "fla/ops/gdn2/chunk_intra.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gdn2_chunk_intra_token_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gdn2/chunk_intra_token_parallel.py",
+      "path": "fla/ops/gdn2/chunk_intra_token_parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gdn2_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gdn2/wy_fast.py",
+      "path": "fla/ops/gdn2/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_generalized_delta_rule_dplr_backends_tilelang_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "dplr/backends/tilelang/__init__.py",
+      "path": "fla/ops/generalized_delta_rule/dplr/backends/tilelang/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gla_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gla/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/gla/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_gla_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gla/chunk.py",
+      "path": "fla/ops/gla/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_backends_tilelang_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/backends/tilelang/__init__.py",
+      "path": "fla/ops/kda/backends/tilelang/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/kda/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_chunk_bwd",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_bwd.py",
+      "path": "fla/ops/kda/chunk_bwd.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_chunk_intra",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_intra.py",
+      "path": "fla/ops/kda/chunk_intra.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_chunk_intra_token_parallel",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk_intra_token_parallel.py",
+      "path": "fla/ops/kda/chunk_intra_token_parallel.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_gate",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/gate.py",
+      "path": "fla/ops/kda/gate.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_kda_wy_fast",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/wy_fast.py",
+      "path": "fla/ops/kda/wy_fast.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_rwkv6_backends_tilelang_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "rwkv6/backends/tilelang/__init__.py",
+      "path": "fla/ops/rwkv6/backends/tilelang/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_backends_triton_ascend_init",
+      "in_graph": true,
+      "kind": "file",
+      "label": "utils/backends/triton_ascend/__init__.py",
+      "path": "fla/ops/utils/backends/triton_ascend/__init__.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_autotunekey",
+      "in_graph": true,
+      "kind": "class",
+      "label": "AutotuneKey",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_cachedautotuner",
+      "in_graph": true,
+      "kind": "class",
+      "label": "CachedAutotuner",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_configure_fla_cache_autotune",
+      "in_graph": true,
+      "kind": "function",
+      "label": "configure_fla_cache_autotune()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_fla_cache_autotune",
+      "in_graph": true,
+      "kind": "function",
+      "label": "fla_cache_autotune()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_flacachemode",
+      "in_graph": true,
+      "kind": "class",
+      "label": "FlaCacheMode",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_get_fla_config_dir",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_fla_config_dir()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_get_gpu_info",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_gpu_info()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_kernelconfigfile",
+      "in_graph": true,
+      "kind": "class",
+      "label": "KernelConfigFile",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_load_cached_config",
+      "in_graph": true,
+      "kind": "function",
+      "label": "load_cached_config()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_load_config_file",
+      "in_graph": true,
+      "kind": "function",
+      "label": "load_config_file()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_read_config_file",
+      "in_graph": true,
+      "kind": "function",
+      "label": "read_config_file()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_restore_autotune_backend",
+      "in_graph": true,
+      "kind": "function",
+      "label": "restore_autotune_backend()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cache_sanitize_gpu_name",
+      "in_graph": true,
+      "kind": "function",
+      "label": "sanitize_gpu_name()",
+      "path": "fla/ops/utils/cache.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_constant",
+      "in_graph": true,
+      "kind": "file",
+      "label": "constant.py",
+      "path": "fla/ops/utils/constant.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cumsum",
+      "in_graph": true,
+      "kind": "file",
+      "label": "utils/cumsum.py",
+      "path": "fla/ops/utils/cumsum.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_cumsum_chunk_local_cumsum",
+      "in_graph": true,
+      "kind": "function",
+      "label": "chunk_local_cumsum()",
+      "path": "fla/ops/utils/cumsum.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_index",
+      "in_graph": true,
+      "kind": "file",
+      "label": "index.py",
+      "path": "fla/ops/utils/index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_index_prepare_chunk_indices",
+      "in_graph": true,
+      "kind": "function",
+      "label": "prepare_chunk_indices()",
+      "path": "fla/ops/utils/index.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op",
+      "in_graph": true,
+      "kind": "file",
+      "label": "op.py",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_op_exp",
+      "in_graph": true,
+      "kind": "function",
+      "label": "exp()",
+      "path": "fla/ops/utils/op.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_ops_utils_softplus",
+      "in_graph": true,
+      "kind": "file",
+      "label": "softplus.py",
+      "path": "fla/ops/utils/softplus.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_compat",
+      "in_graph": true,
+      "kind": "file",
+      "label": "_compat.py",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_compat_ascend_compile_kwargs",
+      "in_graph": true,
+      "kind": "function",
+      "label": "ascend_compile_kwargs()",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_compat_find_spec_cached",
+      "in_graph": true,
+      "kind": "function",
+      "label": "find_spec_cached()",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_compat_has_usable_nvcc",
+      "in_graph": true,
+      "kind": "function",
+      "label": "has_usable_nvcc()",
+      "path": "fla/utils/_compat.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_config",
+      "in_graph": true,
+      "kind": "file",
+      "label": "_config.py",
+      "path": "fla/utils/_config.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators",
+      "in_graph": true,
+      "kind": "file",
+      "label": "_decorators.py",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_action",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Action",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_checkpoint",
+      "in_graph": true,
+      "kind": "function",
+      "label": "checkpoint()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_contiguous",
+      "in_graph": true,
+      "kind": "function",
+      "label": "contiguous()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_deprecate_kwarg",
+      "in_graph": true,
+      "kind": "function",
+      "label": "deprecate_kwarg()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_input_guard",
+      "in_graph": true,
+      "kind": "function",
+      "label": "input_guard()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_require_version",
+      "in_graph": true,
+      "kind": "function",
+      "label": "require_version()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_decorators_tensor_cache",
+      "in_graph": true,
+      "kind": "function",
+      "label": "tensor_cache()",
+      "path": "fla/utils/_decorators.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device",
+      "in_graph": true,
+      "kind": "file",
+      "label": "_device.py",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_backend",
+      "in_graph": true,
+      "kind": "class",
+      "label": "Backend",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_check_environments",
+      "in_graph": true,
+      "kind": "function",
+      "label": "check_environments()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_check_pytorch_version",
+      "in_graph": true,
+      "kind": "function",
+      "label": "check_pytorch_version()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_check_shared_mem",
+      "in_graph": true,
+      "kind": "function",
+      "label": "check_shared_mem()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_custom_device_ctx",
+      "in_graph": true,
+      "kind": "function",
+      "label": "custom_device_ctx()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_get_all_max_shared_mem",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_all_max_shared_mem()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_get_available_device",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_available_device()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_get_device_capability",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_device_capability()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_device_get_device_smem_optin",
+      "in_graph": true,
+      "kind": "function",
+      "label": "get_device_smem_optin()",
+      "path": "fla/utils/_device.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 1,
+      "id": "fla_utils_testing_assert_close",
+      "in_graph": true,
+      "kind": "function",
+      "label": "assert_close()",
+      "path": "fla/utils/_testing.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 1,
+      "id": "tests_ops_test_kda",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_kda.py",
+      "path": "tests/ops/test_kda.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_gated_deltanet",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_deltanet.py",
+      "path": "fla/layers/gated_deltanet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_layers_mesa_net",
+      "in_graph": true,
+      "kind": "file",
+      "label": "mesa_net.py",
+      "path": "fla/layers/mesa_net.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_comba_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "comba/fused_recurrent.py",
+      "path": "fla/ops/comba/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_chunk_scaled_dot_kkt",
+      "in_graph": true,
+      "kind": "file",
+      "label": "common/chunk_scaled_dot_kkt.py",
+      "path": "fla/ops/common/chunk_scaled_dot_kkt.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_common_intracard_cp",
+      "in_graph": true,
+      "kind": "file",
+      "label": "intracard_cp.py",
+      "path": "fla/ops/common/intracard_cp.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_gated_oja_rule_chunk_h",
+      "in_graph": true,
+      "kind": "file",
+      "label": "gated_oja_rule/chunk_h.py",
+      "path": "fla/ops/gated_oja_rule/chunk_h.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_generalized_delta_rule_iplr_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "iplr/chunk.py",
+      "path": "fla/ops/generalized_delta_rule/iplr/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/chunk.py",
+      "path": "fla/ops/kda/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_kda_fused_recurrent",
+      "in_graph": true,
+      "kind": "file",
+      "label": "kda/fused_recurrent.py",
+      "path": "fla/ops/kda/fused_recurrent.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "fla_ops_rwkv6_chunk",
+      "in_graph": true,
+      "kind": "file",
+      "label": "rwkv6/chunk.py",
+      "path": "fla/ops/rwkv6/chunk.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_context_parallel_test_cp_gdn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_cp_gdn.py",
+      "path": "tests/context_parallel/test_cp_gdn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_models_test_modeling_base",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_base.py",
+      "path": "tests/models/test_modeling_base.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_models_test_modeling_base_run_test_model_forward_backward",
+      "in_graph": true,
+      "kind": "test",
+      "label": "run_test_model_forward_backward()",
+      "path": "tests/models/test_modeling_base.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_models_test_modeling_bitnet",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_bitnet.py",
+      "path": "tests/models/test_modeling_bitnet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_models_test_modeling_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_nsa.py",
+      "path": "tests/models/test_modeling_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_modules_test_conv",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_conv.py",
+      "path": "tests/modules/test_conv.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_attn",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_attn.py",
+      "path": "tests/ops/test_attn.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_delta",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_delta.py",
+      "path": "tests/ops/test_delta.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": 2,
+      "id": "tests_ops_test_gdn2",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_gdn2.py",
+      "path": "tests/ops/test_gdn2.py"
+     },
+     {
+      "actual_failing": true,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 2,
+      "id": "tests_ops_test_nsa",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_nsa.py",
+      "path": "tests/ops/test_nsa.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_layers_test_layer_cache_layer_idx",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_layer_cache_layer_idx.py",
+      "path": "tests/layers/test_layer_cache_layer_idx.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_abc",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_abc.py",
+      "path": "tests/models/test_modeling_abc.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": 3,
+      "id": "tests_models_test_modeling_bitnet_test_modeling",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling()",
+      "path": "tests/models/test_modeling_bitnet.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_comba",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_comba.py",
+      "path": "tests/models/test_modeling_comba.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": false,
+      "history_pred": true,
+      "hop": 3,
+      "id": "tests_models_test_modeling_parallax",
+      "in_graph": true,
+      "kind": "test",
+      "label": "test_modeling_parallax.py",
+      "path": "tests/models/test_modeling_parallax.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:ENVs.md",
+      "in_graph": false,
+      "kind": "file",
+      "label": "ENVs.md",
+      "path": "ENVs.md"
+     },
+     {
+      "actual_failing": false,
+      "changed": false,
+      "cochange_pred": true,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:fla/utils.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "utils.py",
+      "path": "fla/utils.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:fla/utils/_batch_invariant.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "_batch_invariant.py",
+      "path": "fla/utils/_batch_invariant.py"
+     },
+     {
+      "actual_failing": false,
+      "changed": true,
+      "cochange_pred": false,
+      "history_pred": false,
+      "hop": null,
+      "id": "outer:tests/ops/test_gdn_batch_invariant.py",
+      "in_graph": false,
+      "kind": "file",
+      "label": "test_gdn_batch_invariant.py",
+      "path": "tests/ops/test_gdn_batch_invariant.py"
+     }
+    ],
+    "note": "hops on the undirected projection from the nearest changed file",
+    "truncated": {
+     "edges": true,
+     "nodes": true
+    },
+    "within_hops_total": 6666
+   },
+   "built_offline_from_local_git": true,
+   "changed_distances": [
+    {
+     "file": "ENVs.md",
+     "hops": null,
+     "in_graph": false,
+     "node": null
+    },
+    {
+     "file": "fla/ops/gated_delta_rule/chunk.py",
+     "hops": 5,
+     "in_graph": true,
+     "node": "fla_ops_gated_delta_rule_chunk"
+    },
+    {
+     "file": "fla/ops/gated_delta_rule/fused_recurrent.py",
+     "hops": 5,
+     "in_graph": true,
+     "node": "fla_ops_gated_delta_rule_fused_recurrent"
+    },
+    {
+     "file": "fla/ops/utils/cache.py",
+     "hops": 4,
+     "in_graph": true,
+     "node": "fla_ops_utils_cache"
+    },
+    {
+     "file": "fla/utils/__init__.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "fla_utils_init"
+    },
+    {
+     "file": "fla/utils/_batch_invariant.py",
+     "hops": null,
+     "in_graph": false,
+     "node": null
+    },
+    {
+     "file": "tests/ops/test_gdn.py",
+     "hops": 3,
+     "in_graph": true,
+     "node": "tests_ops_test_gdn"
+    },
+    {
+     "file": "tests/ops/test_gdn_batch_invariant.py",
+     "hops": null,
+     "in_graph": false,
+     "node": null
+    }
+   ],
+   "distance_note": "hops on the undirected projection (src/graph/query.py)",
+   "graph_commit": "88caebbf9a7e30fadab905ce85fb55866b5e17c1",
+   "min_distance_to_any_changed": 3,
+   "n_edges": 21338,
+   "n_nodes": 7569,
+   "paths": [
+    {
+     "changed_file": "fla/utils/__init__.py",
+     "edges": [
+      {
+       "direction": "backward",
+       "relation": "contains",
+       "source": "tests_models_test_modeling_bitnet_test_modeling",
+       "target": "tests_models_test_modeling_bitnet"
+      },
+      {
+       "direction": "forward",
+       "relation": "imports",
+       "source": "tests_models_test_modeling_bitnet",
+       "target": "fla_utils_compat_find_spec_cached"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_compat_find_spec_cached",
+       "target": "fla_utils_init"
+      }
+     ],
+     "hops": 3,
+     "nodes": [
+      {
+       "file": "tests/models/test_modeling_bitnet.py",
+       "id": "tests_models_test_modeling_bitnet_test_modeling",
+       "kind": "code",
+       "label": "test_modeling()"
+      },
+      {
+       "file": "tests/models/test_modeling_bitnet.py",
+       "id": "tests_models_test_modeling_bitnet",
+       "kind": "code",
+       "label": "test_modeling_bitnet.py"
+      },
+      {
+       "file": "fla/utils/_compat.py",
+       "id": "fla_utils_compat_find_spec_cached",
+       "kind": "code",
+       "label": "find_spec_cached()"
+      },
+      {
+       "file": "fla/utils/__init__.py",
+       "id": "fla_utils_init",
+       "kind": "code",
+       "label": "fla/utils/__init__.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "tests/ops/test_gdn.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_bitnet_test_modeling",
+       "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+      },
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "target": "fla_utils_testing_assert_close"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_testing_assert_close",
+       "target": "tests_ops_test_gdn"
+      }
+     ],
+     "hops": 3,
+     "nodes": [
+      {
+       "file": "tests/models/test_modeling_bitnet.py",
+       "id": "tests_models_test_modeling_bitnet_test_modeling",
+       "kind": "code",
+       "label": "test_modeling()"
+      },
+      {
+       "file": "tests/models/test_modeling_base.py",
+       "id": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "kind": "code",
+       "label": "run_test_model_forward_backward()"
+      },
+      {
+       "file": "fla/utils/_testing.py",
+       "id": "fla_utils_testing_assert_close",
+       "kind": "code",
+       "label": "assert_close()"
+      },
+      {
+       "file": "tests/ops/test_gdn.py",
+       "id": "tests_ops_test_gdn",
+       "kind": "code",
+       "label": "test_gdn.py"
+      }
+     ]
+    },
+    {
+     "changed_file": "fla/ops/utils/cache.py",
+     "edges": [
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_bitnet_test_modeling",
+       "target": "tests_models_test_modeling_base_run_test_model_forward_backward"
+      },
+      {
+       "direction": "forward",
+       "relation": "calls",
+       "source": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "target": "fla_utils_testing_assert_close"
+      },
+      {
+       "direction": "backward",
+       "relation": "imports",
+       "source": "fla_utils_testing_assert_close",
+       "target": "tests_ops_test_kda"
+      },
+      {
+       "direction": "forward",
+       "relation": "imports_from",
+       "source": "tests_ops_test_kda",
+       "target": "fla_ops_utils_cache"
+      }
+     ],
+     "hops": 4,
+     "nodes": [
+      {
+       "file": "tests/models/test_modeling_bitnet.py",
+       "id": "tests_models_test_modeling_bitnet_test_modeling",
+       "kind": "code",
+       "label": "test_modeling()"
+      },
+      {
+       "file": "tests/models/test_modeling_base.py",
+       "id": "tests_models_test_modeling_base_run_test_model_forward_backward",
+       "kind": "code",
+       "label": "run_test_model_forward_backward()"
+      },
+      {
+       "file": "fla/utils/_testing.py",
+       "id": "fla_utils_testing_assert_close",
+       "kind": "code",
+       "label": "assert_close()"
+      },
+      {
+       "file": "tests/ops/test_kda.py",
+       "id": "tests_ops_test_kda",
+       "kind": "code",
+       "label": "test_kda.py"
+      },
+      {
+       "file": "fla/ops/utils/cache.py",
+       "id": "fla_ops_utils_cache",
+       "kind": "code",
+       "label": "cache.py"
+      }
+     ]
+    }
+   ],
+   "test_node": {
+    "file": "tests/models/test_modeling_bitnet.py",
+    "id": "tests_models_test_modeling_bitnet_test_modeling",
+    "kind": "code",
+    "label": "test_modeling()"
+   },
+   "test_node_how": "the test's own node"
+  },
+  "head_vs_base": {
+   "base_run_conclusion": null,
+   "base_run_distance": 0.0,
+   "base_run_id": 33095075420,
+   "tests": [
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/models/test_modeling_bitnet.py::test_modeling"
+    },
+    {
+     "base": "no failure recorded",
+     "head": "fail",
+     "test_id": "tests/ops/test_nsa.py::test_parallel_decode"
+    }
+   ]
+  },
+  "parsed_outcome": {
+   "failure_class": "unknown",
+   "failure_message": "ImportError: Please install Flash Attention via `pip install flash-attn --no-build-isolation` first",
+   "failure_rule": "no-match",
+   "harness": "pytest",
+   "is_fqcn_qualified": true,
+   "params": "[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]",
+   "parser_confidence": 0.9,
+   "raw_log_line": "2026-07-05T08:33:41.2561052Z tests/models/test_modeling_bitnet.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] FAILED",
+   "status": "fail",
+   "test_id": "tests/models/test_modeling_bitnet.py::test_modeling"
+  },
+  "predictions": {
+   "actual": [
+    {
+     "caught_by_cochange": false,
+     "caught_by_history": true,
+     "path": "tests/models/test_modeling_bitnet.py"
+    },
+    {
+     "caught_by_cochange": false,
+     "caught_by_history": true,
+     "path": "tests/ops/test_nsa.py"
+    }
+   ],
+   "cochange": [
+    {
+     "confidence": 1.0,
+     "hit": false,
+     "path": "fla/modules/conv/triton/kernels.py"
+    },
+    {
+     "confidence": 0.75,
+     "hit": false,
+     "path": "fla/utils/_compat.py"
+    },
+    {
+     "confidence": 0.5,
+     "hit": false,
+     "path": "fla/utils/_device.py"
+    },
+    {
+     "confidence": 0.4706,
+     "hit": false,
+     "path": "fla/ops/common/chunk_delta_h.py"
+    },
+    {
+     "confidence": 0.4118,
+     "hit": false,
+     "path": "fla/ops/common/chunk_o.py"
+    },
+    {
+     "confidence": 0.4118,
+     "hit": false,
+     "path": "fla/ops/cp/chunk_delta_h.py"
+    },
+    {
+     "confidence": 0.4118,
+     "hit": false,
+     "path": "fla/ops/gated_delta_rule/wy_fast.py"
+    },
+    {
+     "confidence": 0.4,
+     "hit": false,
+     "path": "fla/ops/gated_oja_rule/chunk_h.py"
+    },
+    {
+     "confidence": 0.4,
+     "hit": false,
+     "path": "fla/ops/generalized_delta_rule/iplr/chunk.py"
+    },
+    {
+     "confidence": 0.4,
+     "hit": false,
+     "path": "fla/ops/rwkv6/chunk.py"
+    },
+    {
+     "confidence": 0.4,
+     "hit": false,
+     "path": "fla/utils.py"
+    },
+    {
+     "confidence": 0.4,
+     "hit": false,
+     "path": "tests/ops/test_gdn2.py"
+    },
+    {
+     "confidence": 0.3529,
+     "hit": false,
+     "path": "fla/ops/gated_delta_rule/chunk_fwd.py"
+    },
+    {
+     "confidence": 0.3529,
+     "hit": false,
+     "path": "fla/ops/kda/chunk.py"
+    },
+    {
+     "confidence": 0.3333,
+     "hit": false,
+     "path": "tests/ops/test_kda.py"
+    },
+    {
+     "confidence": 0.2941,
+     "hit": false,
+     "path": "fla/ops/common/chunk_scaled_dot_kkt.py"
+    },
+    {
+     "confidence": 0.2941,
+     "hit": false,
+     "path": "fla/ops/common/intracard_cp.py"
+    },
+    {
+     "confidence": 0.2941,
+     "hit": false,
+     "path": "tests/context_parallel/test_cp_gdn.py"
+    },
+    {
+     "confidence": 0.2667,
+     "hit": false,
+     "path": "fla/layers/gated_deltanet.py"
+    },
+    {
+     "confidence": 0.2667,
+     "hit": false,
+     "path": "fla/ops/comba/fused_recurrent.py"
+    },
+    {
+     "confidence": 0.2667,
+     "hit": false,
+     "path": "fla/ops/kda/fused_recurrent.py"
+    }
+   ],
+   "history": [
+    {
+     "hit": false,
+     "past_failures": 14,
+     "path": "tests/layers/test_layer_cache_layer_idx.py"
+    },
+    {
+     "hit": true,
+     "past_failures": 14,
+     "path": "tests/ops/test_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 13,
+     "path": "tests/models/test_modeling_nsa.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 10,
+     "path": "tests/models/test_modeling_comba.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 9,
+     "path": "tests/models/test_modeling_abc.py"
+    },
+    {
+     "hit": true,
+     "past_failures": 8,
+     "path": "tests/models/test_modeling_bitnet.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 7,
+     "path": "tests/ops/test_attn.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 4,
+     "path": "tests/modules/test_conv.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/ops/test_delta.py"
+    },
+    {
+     "hit": false,
+     "past_failures": 3,
+     "path": "tests/models/test_modeling_parallax.py"
+    }
+   ],
+   "k": 10,
+   "metrics": {
+    "cochange": {
+     "hits": 0,
+     "precision": 0.0,
+     "predicted": 21,
+     "recall": 0.0
+    },
+    "history": {
+     "hits": 2,
+     "precision": 0.2,
+     "predicted": 10,
+     "recall": 1.0
+    },
+    "n_actual": 2
+   },
+   "run_started_at": "2026-07-05T08:26:23Z"
+  },
+  "raw_log": {
+   "job_id": 85207197487,
+   "lines": [
+    {
+     "failing": true,
+     "text": "2026-07-05T08:33:41.2561052Z tests/models/test_modeling_bitnet.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] FAILED"
+    },
+    {
+     "failing": true,
+     "text": "2026-07-05T08:33:41.4990490Z FAILED tests/models/test_modeling_bitnet.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] - ImportError: Please install Flash Attention via `pip install "
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:31.3546119Z Found models test files: /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_abc.py /home/ubuntu/actions-runner/_wor"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:31.3630206Z ##[group]Run $CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_abc.py /ho"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:31.3655260Z $CONDA_BIN_PATH/pytest -s -v --exitfirst /home/ubuntu/actions-runner/_work/flash-linear-attention/flash-linear-attention/tests/models/test_modeling_abc.py /home/ubuntu/act"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:37.7047238Z tests/models/test_modeling_abc.py::test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16]"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:38.8058995Z tests/models/test_modeling_abc.py::test_modeling[L4-B4-T1024-H4-D64-l2False-bsNone-torch.bfloat16] SKIPPED"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:39.8250157Z tests/models/test_modeling_abc.py::test_modeling[L4-B4-T1024-H4-D128-l2False-bsNone-torch.bfloat16] SKIPPED"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:40.2453649Z tests/models/test_modeling_abc.py::test_modeling[L4-B4-T1024-H4-D64-l2False-bs1-torch.bfloat16] SKIPPED"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:40.6518100Z tests/models/test_modeling_abc.py::test_modeling[L4-B4-T1024-H4-D64-l2False-bs4-torch.bfloat16] SKIPPED"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:40.6554906Z tests/models/test_modeling_abc.py::test_generation[L2-B4-T2000-H8-D64-torch.float16] SKIPPED"
+    },
+    {
+     "failing": false,
+     "text": "2026-07-05T08:33:41.2562070Z ________ test_modeling[L4-B4-T1024-H4-D64-l2True-bsNone-torch.bfloat16] ________"
+    }
+   ],
+   "test_name_token": "test_modeling"
+  },
+  "verdict": {
+   "agrees_with_outcomes_parquet": true,
+   "flaky": [],
+   "recorded_strict": 2,
+   "selected_is_fault_revealing": true,
+   "selected_test": "tests/models/test_modeling_bitnet.py::test_modeling",
+   "sibling_runs": 1,
+   "t_base_fail": [],
+   "t_head_fail": [
+    "tests/models/test_modeling_bitnet.py::test_modeling",
+    "tests/ops/test_nsa.py::test_parallel_decode"
+   ],
+   "t_reveal": [
+    "tests/models/test_modeling_bitnet.py::test_modeling",
+    "tests/ops/test_nsa.py::test_parallel_decode"
+   ]
+  }
+ }
+}
