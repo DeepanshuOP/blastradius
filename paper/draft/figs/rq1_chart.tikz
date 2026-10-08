@@ -1,0 +1,28 @@
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=14pt,
+    width=0.48\textwidth,
+    height=4.4cm,
+    ymin=0,
+    ymax=45,
+    ylabel={Micro Recall at $k=10$ (\%)},
+    symbolic x coords={Co-change (All), Co-change (Test), Changeset, Hist. Freq.},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    every node near coord/.append style={font=\scriptsize},
+    tick label style={font=\scriptsize},
+    label style={font=\footnotesize},
+    ymajorgrids=true,
+    grid style=dashed,
+    enlarge x limits=0.18,
+]
+\addplot[fill=blue!30, draw=blue!70] coordinates {
+    (Co-change (All), 4.64)
+    (Co-change (Test), 7.67)
+    (Changeset, 17.02)
+    (Hist. Freq., 39.44)
+};
+\end{axis}
+\end{tikzpicture}
