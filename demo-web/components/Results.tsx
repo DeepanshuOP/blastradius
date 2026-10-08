@@ -1,20 +1,66 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import type { ResultsDoc } from "./types";
-import { Badge, Card, Source, METHOD_SHORT as SHORT } from "./ui";
+import {
+  Bar, BarChart, CartesianGrid, Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Scatter, ScatterChart,
+  Tooltip, XAxis, YAxis, ZAxis,
+} from "recharts";
+import type { MethodRow, ResultsDoc } from "./types";
+import { Badge, CHART_METHODS, Card, METHOD_COLOR, Source, METHOD_SHORT as SHORT } from "./ui";
+
+const CLASS_COLOR: Record<string, string> = {
+  "code-level": "#2563eb", "environment-strict": "#dc2626", timeout: "#f59e0b", unknown: "#94a3b8",
+};
+
+/** One row per group (language or size stratum), one bar per charted method, value = mean recall. */
+function groupedRecall(groups: { name: string; methods: MethodRow[] }[]) {
+  return groups.map((g) => ({
+    name: g.name,
+    ...Object.fromEntries(CHART_METHODS.map((m) => [m, g.methods.find((x) => x.method === m)?.mean_recall ?? 0])),
+  }));
+}
+
+function GroupedBars({ data }: { data: ReturnType<typeof groupedRecall> }) {
+  return (
+    <div className="h-72 w-full">
+      <ResponsiveContainer>
+        <BarChart data={data} margin={{ left: 0, right: 12, top: 8, bottom: 4 }}>
+          <CartesianGrid vertical={false} stroke="#e2e8f0" />
+          <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#334155" }} />
+          <YAxis domain={[0, 1]} tickFormatter={(v: number) => v.toFixed(1)} tick={{ fontSize: 12, fill: "#64748b" }} />
+          <Tooltip formatter={(v: number, k: string) => [v.toFixed(3), SHORT[k] ?? k]} />
+          <Legend formatter={(k: string) => SHORT[k] ?? k} wrapperStyle={{ fontSize: 12 }} />
+          {CHART_METHODS.map((m) => (
+            <Bar key={m} dataKey={m} fill={METHOD_COLOR[m]} isAnimationActive={false} radius={[3, 3, 0, 0]} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
 
 
 export default function Results({ r }: { r: ResultsDoc }) {
   const rq = r.rq1_k10;
   const recall = rq.methods.map((m) => ({ name: SHORT[m.method] ?? m.method, recall: m.mean_recall }));
-  const funnel = r.runs_funnel.stages.map((s) => ({ name: s.stage, count: s.count }));
   const lk = r.leakage;
+  const bd = r.rq1_breakdowns;
+  const byLang = groupedRecall(Object.entries(bd.by_language).map(([k, v]) => ({ name: `${k} (n=${v[0].n})`, methods: v })));
+  const bySize = groupedRecall(bd.by_size.map((g) => ({ name: `${g.stratum} file${g.stratum === "1" ? "" : "s"} (n=${g.n})`, methods: g.methods })));
+  const curves = CHART_METHODS.map((m) => ({
+    method: m,
+    points: Object.keys(bd.curves).map(Number).sort((a, b) => a - b).map((k) => {
+      const row = bd.curves[String(k)].find((x) => x.method === m);
+      return { k: `k=${k}`, recall: row?.mean_recall ?? 0, precision: row?.mean_precision ?? 0 };
+    }),
+  }));
+  const classes = r.environment_audit.labels_by_class.map((c) => ({ name: c.class, value: c.labels.n, text: c.labels.text }));
 
   return (
     <div className="space-y-5">
       <Card title={`RQ1: predictors at k = ${rq.k} (scored on the same instances)`}>
-        <div className="overflow-x-auto">
+        <details className="group mb-4 rounded border border-slate-200 bg-slate-50/50 px-3 py-2">
+          <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wide text-slate-600">Details: full k = 10 table</summary>
+        <div className="mt-2 overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead className="text-xs uppercase text-slate-500">
               <tr>
@@ -39,7 +85,8 @@ export default function Results({ r }: { r: ResultsDoc }) {
             </tbody>
           </table>
         </div>
-        <h4 className="mb-1 mt-5 text-xs font-semibold uppercase text-slate-500">Mean recall per method</h4>
+        </details>
+        <h4 className="mb-1 mt-2 text-xs font-semibold uppercase text-slate-500">Mean recall per method</h4>
         <div className="h-72 w-full">
           <ResponsiveContainer>
             <BarChart data={recall} layout="vertical" margin={{ left: 8, right: 48, top: 4, bottom: 4 }}>
@@ -56,24 +103,56 @@ export default function Results({ r }: { r: ResultsDoc }) {
         <Source file={rq.source} />
       </Card>
 
-      <Card title="Runs funnel: from every discovered run to strict benchmark instances">
-        <div className="h-80 w-full">
-          <ResponsiveContainer>
-            <BarChart data={funnel} layout="vertical" margin={{ left: 8, right: 72, top: 4, bottom: 4 }}>
-              <CartesianGrid horizontal={false} stroke="#e2e8f0" />
-              <XAxis type="number" scale="log" domain={[100, "auto"]} allowDataOverflow tick={{ fontSize: 12, fill: "#64748b" }}
-                tickFormatter={(v: number) => v.toLocaleString()} />
-              <YAxis type="category" dataKey="name" width={190} tick={{ fontSize: 11, fill: "#334155" }} />
-              <Tooltip formatter={(v: number) => v.toLocaleString()} />
-              <Bar dataKey="count" fill="#64748b" radius={[0, 3, 3, 0]} isAnimationActive={false}>
-                <LabelList dataKey="count" position="right" formatter={(v: number) => v.toLocaleString()} style={{ fontSize: 12, fill: "#334155" }} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <p className="text-xs text-slate-500">Log scale. Each stage is the intersection with the previous one.</p>
-        <Source file={r.runs_funnel.source} />
-      </Card>
+      <div className="grid gap-5 lg:grid-cols-2">
+        <Card title="Mean recall at k = 10 by language">
+          <GroupedBars data={byLang} />
+          <Source file={bd.source} />
+        </Card>
+        <Card title="Mean recall at k = 10 by change size (files changed in the PR)">
+          <GroupedBars data={bySize} />
+          <Source file={bd.source} />
+        </Card>
+        <Card title="Precision vs recall as k grows (k = 5, 10, 20)">
+          <div className="h-72 w-full">
+            <ResponsiveContainer>
+              <ScatterChart margin={{ left: 0, right: 24, top: 8, bottom: 24 }}>
+                <CartesianGrid stroke="#e2e8f0" />
+                <XAxis type="number" dataKey="recall" name="mean recall" domain={[0, 0.7]} tick={{ fontSize: 12, fill: "#64748b" }}
+                  label={{ value: "mean recall", position: "insideBottom", offset: -8, fontSize: 12, fill: "#64748b" }} />
+                <YAxis type="number" dataKey="precision" name="mean precision" domain={[0, 0.25]} ticks={[0, 0.05, 0.1, 0.15, 0.2, 0.25]} tick={{ fontSize: 12, fill: "#64748b" }}
+                  label={{ value: "mean precision", angle: -90, position: "insideLeft", fontSize: 12, fill: "#64748b" }} />
+                <ZAxis range={[60, 60]} />
+                <Tooltip cursor={{ strokeDasharray: "3 3" }} formatter={(v: number) => v.toFixed(3)} />
+                <Legend verticalAlign="top" wrapperStyle={{ fontSize: 12 }} />
+                {curves.map((c) => (
+                  <Scatter key={c.method} name={SHORT[c.method] ?? c.method} data={c.points} fill={METHOD_COLOR[c.method]}
+                    line={{ stroke: METHOD_COLOR[c.method], strokeWidth: 1.5 }} isAnimationActive={false}>
+                    {c.method === "historical-frequency baseline" && (
+                      <LabelList dataKey="k" position="top" style={{ fontSize: 10, fill: "#64748b" }} />
+                    )}
+                  </Scatter>
+                ))}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+          <Source file={bd.source} />
+        </Card>
+        <Card title={`What the ${classes.reduce((a, c) => a + c.value, 0).toLocaleString()} strict labels failed with (message-based class)`}>
+          <div className="h-72 w-full">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie data={classes} dataKey="value" nameKey="name" innerRadius={55} outerRadius={95} paddingAngle={2} isAnimationActive={false}
+                  label={(e: { name: string; value: number }) => `${e.name} ${e.value.toLocaleString()}`}>
+                  {classes.map((c) => <Cell key={c.name} fill={CLASS_COLOR[c.name] ?? "#94a3b8"} />)}
+                </Pie>
+                <Tooltip formatter={(v: number, _n: string, p: { payload?: { text: string } }) => p.payload?.text ?? v} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-xs text-slate-500">A regular expression on the recorded failure message; a lower bound where no message was recorded (unknown).</p>
+          <Source file={r.environment_audit.source} />
+        </Card>
+      </div>
 
       <div className="grid gap-5 md:grid-cols-2">
         <Card title="Gates">

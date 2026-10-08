@@ -1,0 +1,160 @@
+{
+ "generated_at_git_sha": "5d95cf35b878b2a01f7ebca5092810922a9a958f",
+ "harvested_repos_by_language": {
+  "Java": 71,
+  "Python": 6,
+  "source": "paper/generated/corpus_stats.md"
+ },
+ "repos_funnel": {
+  "source": "paper/generated/attrition_funnel.md",
+  "stages": [
+   {
+    "count": 3671,
+    "stage": "SEART export"
+   },
+   {
+    "count": 2646,
+    "stage": "CI-live (>= 100 runs in 90 days)"
+   },
+   {
+    "count": 2333,
+    "stage": "has a test-intent workflow"
+   },
+   {
+    "count": 300,
+    "stage": "sampled into the frame"
+   },
+   {
+    "count": 76,
+    "stage": "swept (>= 1 run harvested)"
+   },
+   {
+    "count": 69,
+    "stage": "with a failed run"
+   },
+   {
+    "count": 37,
+    "stage": "with a strict instance"
+   }
+  ]
+ },
+ "runs_funnel": {
+  "source": "paper/generated/attrition_funnel.md",
+  "stages": [
+   {
+    "count": 165349,
+    "stage": "runs discovered"
+   },
+   {
+    "count": 12581,
+    "stage": "failed runs"
+   },
+   {
+    "count": 6586,
+    "stage": "with a failed-job log on disk"
+   },
+   {
+    "count": 1774,
+    "stage": "with a parsed head test failure"
+   },
+   {
+    "count": 1348,
+    "stage": "with a resolved base"
+   },
+   {
+    "count": 897,
+    "stage": "with a known base failure set"
+   },
+   {
+    "count": 762,
+    "stage": "with >= 1 strict label"
+   }
+  ]
+ },
+ "splits": {
+  "rows": [
+   {
+    "distinct_tests": 2500,
+    "instances": {
+     "d": 897,
+     "n": 897,
+     "text": "897/897 (100.00%)"
+    },
+    "labels": {
+     "d": 4384,
+     "n": 4384,
+     "text": "4,384/4,384 (100.00%)"
+    },
+    "repos": 37,
+    "split": "all"
+   },
+   {
+    "distinct_tests": 2484,
+    "instances": {
+     "d": 897,
+     "n": 770,
+     "text": "770/897 (85.84%)"
+    },
+    "labels": {
+     "d": 4384,
+     "n": 4214,
+     "text": "4,214/4,384 (96.12%)"
+    },
+    "repos": 37,
+    "split": "relaxed"
+   },
+   {
+    "distinct_tests": 2466,
+    "instances": {
+     "d": 897,
+     "n": 762,
+     "text": "762/897 (84.95%)"
+    },
+    "labels": {
+     "d": 4384,
+     "n": 4168,
+     "text": "4,168/4,384 (95.07%)"
+    },
+    "repos": 37,
+    "split": "strict"
+   }
+  ],
+  "source": "paper/generated/composition.md"
+ },
+ "strict_by_language": {
+  "rows": [
+   {
+    "distinct_tests": 2341,
+    "instances": {
+     "d": 762,
+     "n": 638,
+     "text": "638/762 (83.73%)"
+    },
+    "labels": {
+     "d": 4168,
+     "n": 3855,
+     "text": "3,855/4,168 (92.49%)"
+    },
+    "language": "Java",
+    "repos": 35
+   },
+   {
+    "distinct_tests": 125,
+    "instances": {
+     "d": 762,
+     "n": 124,
+     "text": "124/762 (16.27%)"
+    },
+    "labels": {
+     "d": 4168,
+     "n": 313,
+     "text": "313/4,168 (7.51%)"
+    },
+    "language": "Python",
+    "repos": 2
+   }
+  ],
+  "source": "paper/generated/composition.md"
+ },
+ "top_repos": null
+}

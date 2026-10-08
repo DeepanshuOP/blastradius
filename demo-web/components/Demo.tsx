@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Corpus from "./Corpus";
 import Overview from "./Overview";
 import Results from "./Results";
 import { STAGE_TITLES, StageCard } from "./Stages";
-import type { IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
+import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
 const TABS = ["Overview", "How it works", "Live run", "Results", "Corpus"] as const;
@@ -133,27 +134,18 @@ function LiveRun({ index }: { index: IndexDoc }) {
   );
 }
 
-function Corpus() {
-  return (
-    <Card title="Corpus dashboard">
-      <p>The live harvest state (repositories, runs, jobs, logs on disk) is shown by the existing read-only Streamlit dashboard, not rebuilt here. From the repository root, in WSL2:</p>
-      <pre className="mt-3 overflow-x-auto rounded bg-slate-900 p-3 font-mono text-xs text-slate-200">uv run --extra dashboard streamlit run dashboard.py</pre>
-      <p className="mt-3">It opens on <Mono>http://localhost:8501</Mono> and reads <Mono>data/state/cursor.db</Mono> in read-only mode, plus <Mono>data/frame/frame_v1.csv</Mono> and the raw-store directory.</p>
-    </Card>
-  );
-}
-
 export default function Demo() {
   const [tab, setTab] = useState<Tab>("Overview");
   const [index, setIndex] = useState<IndexDoc | null>(null);
   const [results, setResults] = useState<ResultsDoc | null>(null);
   const [overview, setOverview] = useState<OverviewDoc | null>(null);
+  const [corpus, setCorpus] = useState<CorpusDoc | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([getJson<IndexDoc>("/data/index.json"), getJson<ResultsDoc>("/data/results.json"),
-      getJson<OverviewDoc>("/data/overview.json")])
-      .then(([i, r, o]) => { setIndex(i); setResults(r); setOverview(o); })
+      getJson<OverviewDoc>("/data/overview.json"), getJson<CorpusDoc>("/data/corpus.json")])
+      .then(([i, r, o, c]) => { setIndex(i); setResults(r); setOverview(o); setCorpus(c); })
       .catch((e) => setErr(String(e)));
   }, []);
 
@@ -182,7 +174,7 @@ export default function Demo() {
         {tab === "How it works" && <HowItWorks />}
         {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
         {tab === "Results" && (results ? <Results r={results} /> : loading)}
-        {tab === "Corpus" && <Corpus />}
+        {tab === "Corpus" && (corpus ? <Corpus c={corpus} /> : loading)}
       </main>
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 sm:px-6">

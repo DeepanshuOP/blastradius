@@ -86,3 +86,36 @@ def test_overview_reads_the_generated_tables() -> None:
     assert head["historical-frequency baseline"]["text"] == "519/1,316 (39.44%)"
     r = [m["micro_recall"]["n"] / m["micro_recall"]["d"] for m in ov["headline"]["methods"]]
     assert r == sorted(r, reverse=True)
+
+
+def test_rq1_breakdowns_read_the_real_rq1_tables() -> None:
+    from analysis.export_demo_data import rq1_breakdowns
+
+    b = rq1_breakdowns()
+    assert {k: v[0]["n"] for k, v in b["by_language"].items()} == {"Java": 462, "Python": 114}
+    assert [s["stratum"] for s in b["by_size"]] == ["1", "2-5", "6-20", ">20"]
+    assert sum(s["n"] for s in b["by_size"]) == 576  # the strata partition the scored instances
+    hist = next(m for m in b["curves"]["10"] if m["method"] == "historical-frequency baseline")
+    assert hist["mean_recall"] == 0.517
+    assert sorted(b["curves"]) == ["10", "20", "5"]
+
+
+def test_top_repos_orders_by_strict_instances_then_name() -> None:
+    import pandas as pd
+
+    from analysis.export_demo_data import top_repos
+
+    inst = pd.DataFrame({"run_id": [1, 2, 3, 4, 5], "repo": ["b/b", "a/a", "a/a", "c/c", "c/c"]})
+    out = pd.DataFrame({"run_id": [1, 1, 2, 3, 3, 3, 4, 5, 5], "test_id": list("abcdefghi"),
+                        "split": ["strict"] * 7 + ["relaxed", "strict"]})
+    assert top_repos(inst, out, n=2) == [{"repo": "a/a", "instances": 2, "labels": 4},
+                                         {"repo": "c/c", "instances": 2, "labels": 2}]
+
+
+def test_corpus_has_no_top_repos_without_parquet(tmp_path: Path) -> None:
+    from analysis.export_demo_data import corpus
+
+    c = corpus("abc", interim=tmp_path)
+    assert c["top_repos"] is None
+    assert c["harvested_repos_by_language"]["Java"] == 71
+    assert c["strict_by_language"]["rows"][0]["instances"]["text"].startswith("638/762")

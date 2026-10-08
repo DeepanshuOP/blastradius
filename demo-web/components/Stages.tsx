@@ -189,6 +189,53 @@ function Mark({ ok }: { ok: boolean }) {
   return <span aria-label={ok ? "hit" : "miss"} className="shrink-0">{ok ? "✅" : "❌"}</span>;
 }
 
+const OV_ORANGE = "#ea580c";
+const OV_BLUE = "#2563eb";
+const OV_RED = "#dc2626";
+
+/** Three-set overlap of the failing test files (red), co-change picks (orange) and history picks (blue). Not to scale. */
+function Overlap({ s }: { s: S["predictions"] }) {
+  const A = new Set(s.actual.map((x) => x.path));
+  const C = new Set(s.cochange.map((x) => x.path));
+  const H = new Set(s.history.map((x) => x.path));
+  const all = Array.from(new Set([...A, ...C, ...H]));
+  const n = (f: (a: boolean, c: boolean, h: boolean) => boolean) => all.filter((p) => f(A.has(p), C.has(p), H.has(p))).length;
+  const r = {
+    aOnly: n((a, c, h) => a && !c && !h), ac: n((a, c, h) => a && c && !h), ah: n((a, c, h) => a && !c && h),
+    ach: n((a, c, h) => a && c && h), cOnly: n((a, c, h) => !a && c && !h), hOnly: n((a, c, h) => !a && !c && h),
+    ch: n((a, c, h) => !a && c && h),
+  };
+  const coHits = r.ac + r.ach;
+  const hiHits = r.ah + r.ach;
+  const T = (x: number, y: number, v: number, big = true) => (
+    <text x={x} y={y} textAnchor="middle" className="tabular-nums" fontSize={big ? 20 : 15} fontWeight={700} fill={v ? "#0f172a" : "#94a3b8"}>{v}</text>
+  );
+  return (
+    <figure className="mb-4 rounded-lg border border-slate-100 bg-slate-50/60 p-3">
+      <svg viewBox="0 0 520 352" role="img" className="mx-auto h-auto w-full max-w-xl"
+        aria-label={`Overlap of ${A.size} failing test files with ${C.size} co-change picks and ${H.size} history picks`}>
+        <circle cx={260} cy={118} r={104} fill={OV_RED} fillOpacity={0.14} stroke={OV_RED} strokeWidth={2} />
+        <circle cx={190} cy={212} r={104} fill={OV_ORANGE} fillOpacity={0.14} stroke={OV_ORANGE} strokeWidth={2} />
+        <circle cx={330} cy={212} r={104} fill={OV_BLUE} fillOpacity={0.14} stroke={OV_BLUE} strokeWidth={2} />
+        {T(260, 62, r.aOnly)}
+        {T(210, 150, r.ac)}
+        {T(310, 150, r.ah)}
+        {T(260, 188, r.ach)}
+        {T(132, 252, r.cOnly)}
+        {T(388, 252, r.hOnly)}
+        {T(260, 262, r.ch)}
+        <text x={260} y={80} textAnchor="middle" fontSize={11} fill="#64748b">missed by both</text>
+        <text x={8} y={20} fontSize={12} fontWeight={700} fill={OV_RED}>Actually failed: {A.size}</text>
+        <text x={8} y={344} fontSize={12} fontWeight={700} fill={OV_ORANGE}>Co-change: {C.size} picked, {coHits} hit</text>
+        <text x={512} y={344} textAnchor="end" fontSize={12} fontWeight={700} fill={OV_BLUE}>History: {H.size} picked, {hiHits} hit</text>
+      </svg>
+      <figcaption className="mt-1 text-center text-xs text-slate-500">
+        Circle overlaps are drawn for readability, not to scale. Inside the red circle = a hit; outside = a wrong pick; {r.aOnly} failing file{r.aOnly === 1 ? "" : "s"} missed by both.
+      </figcaption>
+    </figure>
+  );
+}
+
 const SHOW = 10;
 
 function Predictions({ s }: { s: S["predictions"] }) {
@@ -199,6 +246,7 @@ function Predictions({ s }: { s: S["predictions"] }) {
       <p className="mb-3 rounded bg-slate-100 px-3 py-2 font-medium text-slate-800">
         History caught {m.history.hits}/{n} failing test file{n === 1 ? "" : "s"}; co-change caught {m.cochange.hits}/{n}.
       </p>
+      <Overlap s={s} />
       <div className="grid gap-3 md:grid-cols-3">
         <div className="min-w-0 rounded border border-slate-200 p-3">
           <h4 className="text-xs font-semibold uppercase text-slate-600">Co-change (top {s.k} per changed file)</h4>

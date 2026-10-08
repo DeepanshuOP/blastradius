@@ -115,8 +115,24 @@ export type InstanceDoc = {
 
 export type Sourced = { source: string; source_generated_at_git_sha: string | null };
 
+export type MethodRow = {
+  method: string;
+  n: number;
+  mean_precision: number;
+  mean_recall: number;
+  mean_jaccard: number;
+  micro_recall: Rate;
+};
+
+export type Rq1Breakdowns = Sourced & {
+  by_language: Record<string, MethodRow[]>;
+  by_size: { stratum: string; n: number; methods: MethodRow[] }[];
+  curves: Record<string, { method: string; mean_precision: number; mean_recall: number }[]>;
+};
+
 export type ResultsDoc = {
   generated_at_git_sha: string;
+  rq1_breakdowns: Rq1Breakdowns;
   rq1_k10: Sourced & {
     k: number;
     methods: {
@@ -151,4 +167,17 @@ export type OverviewDoc = {
   kpis: { label: string; value: number; source: string }[];
   binding: { source: string; combined: Rate; full_confidence: Rate };
   headline: Sourced & { k: number; methods: { method: string; n: number; micro_recall: Rate }[] };
+};
+
+export type CorpusDoc = {
+  generated_at_git_sha: string;
+  harvested_repos_by_language: { source: string; Java: number; Python: number };
+  strict_by_language: {
+    source: string;
+    rows: { language: string; repos: number; instances: Rate; labels: Rate; distinct_tests: number }[];
+  };
+  splits: { source: string; rows: { split: string; repos: number; instances: Rate; labels: Rate; distinct_tests: number }[] };
+  top_repos: { source: string; rows: { repo: string; instances: number; labels: number }[] } | null;
+  repos_funnel: { source: string; stages: { stage: string; count: number }[] };
+  runs_funnel: { source: string; stages: { stage: string; count: number }[] };
 };

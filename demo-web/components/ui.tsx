@@ -61,3 +61,18 @@ export const METHOD_SHORT: Record<string, string> = {
 };
 export const methodName = (m: string) => METHOD_SHORT[m] ?? m;
 export const ratePct = (r: { n: number; d: number }) => `${((100 * r.n) / r.d).toFixed(2)}%`;
+
+/** The four RQ1 methods drawn in charts (the "test in path" sensitivity row stays in the tables only). */
+export const CHART_METHODS = [
+  "co-change, all partner files",
+  "co-change, restricted to conventional test files",
+  "changeset baseline",
+  "historical-frequency baseline",
+] as const;
+/** One colour per method, shared by every chart; orange/blue match the blast-radius legend. */
+export const METHOD_COLOR: Record<string, string> = {
+  "co-change, all partner files": "#ea580c",
+  "co-change, restricted to conventional test files": "#f59e0b",
+  "changeset baseline": "#64748b",
+  "historical-frequency baseline": "#2563eb",
+};

@@ -23,6 +23,7 @@ Exit status: 0 exported >= 1 instance; 2 nothing qualified.
 
 from __future__ import annotations
 
+import argparse
 import contextlib
 import io
 import json
@@ -513,6 +514,7 @@ def results(sha: str) -> dict:
     return {
         "generated_at_git_sha": sha,
         "rq1_k10": {**src("rq1.md"), "k": 10, "methods": rq},
+        "rq1_breakdowns": rq1_breakdowns(),
         "runs_funnel": {**src("attrition_funnel.md"), "stages": funnel},
         "gates": {**src("gates.md"), "rows": gates},
         "binding": {**src("binding.md"), "rows": binding},
@@ -522,6 +524,100 @@ def results(sha: str) -> dict:
         "environment_audit": {**src("infra_failures.md"),
                               "labels_by_class": [{"class": r[0], "labels": rate(r[1])} for r in by_class],
                               "instances": [{"measure": r[0], "value": rate(r[1])} for r in inst]},
+    }
+
+
+def _method_rows(rows: list[list[str]]) -> list[dict]:
+    """RQ1 method rows -> `{method, n, mean_precision, mean_recall, mean_jaccard, micro_recall}`."""
+    return [{"method": r[0], "n": int(num(r[1])), "mean_precision": num(r[2]), "mean_recall": num(r[3]),
+             "mean_jaccard": num(r[4]), "micro_recall": rate(r[6])} for r in rows]
+
+
+def rq1_breakdowns() -> dict:
+    """RQ1 at k = 10 by language and by change size, and the P/R curves over k = 5, 10, 20.
+
+    Parsed out of `paper/generated/rq1.md`; nothing is hard-coded.
+
+    Returns:
+        `{source, by_language, by_size, curves}`: `by_language` maps `Java`/`Python` to method rows,
+        `by_size` lists `{stratum, n, methods}` in file order, and `curves` maps each k to
+        `{method, mean_precision, mean_recall}` rows (overall).
+    """
+    p = GENERATED / "rq1.md"
+    tables = md_tables(p)
+    by_language = {}
+    for trail, _, rows in tables:
+        if len(trail) >= 3 and trail[-2] == "k = 10":
+            m = re.match(r"^(Java|Python) \(n=\d+\)$", trail[-1])
+            if m:
+                by_language[m.group(1)] = _method_rows(rows)
+    by_size = []
+    for trail, _, rows in tables:
+        if len(trail) >= 3 and trail[-2] == "Change size (k = 10)":
+            m = re.match(r"^(.+?) changed files \(n=(\d+)\)$", trail[-1])
+            if m:
+                by_size.append({"stratum": m.group(1), "n": int(m.group(2)), "methods": _method_rows(rows)})
+    curves = {}
+    for k in (5, 10, 20):
+        _, rows = find_table(p, f"k = {k}", "Overall")
+        curves[str(k)] = [{"method": r[0], "mean_precision": num(r[2]), "mean_recall": num(r[3])} for r in rows]
+    if set(by_language) != {"Java", "Python"} or len(by_size) != 4:
+        raise SystemExit(f"BLOCKED: unexpected RQ1 sections in {p}: {sorted(by_language)}, {len(by_size)} strata")
+    return {"source": str(p), "source_generated_at_git_sha": source_sha(p),
+            "by_language": by_language, "by_size": by_size, "curves": curves}
+
+
+def top_repos(inst: pd.DataFrame, out: pd.DataFrame, n: int = 15) -> list[dict]:
+    """The `n` repositories with the most strict instances (ties by repo name).
+
+    Args:
+        inst: `instances_raw` with `run_id` and `repo`.
+        out: `outcomes` with `run_id`, `test_id` and `split`.
+        n: How many repositories.
+
+    Returns:
+        `[{repo, instances, labels}]`, most instances first.
+    """
+    strict = out[out["split"] == "strict"]
+    runs = strict.groupby("run_id").size().rename("labels").reset_index()
+    j = runs.merge(inst[["run_id", "repo"]].drop_duplicates("run_id"), on="run_id")
+    g = j.groupby("repo").agg(instances=("run_id", "nunique"), labels=("labels", "sum")).reset_index()
+    g = g.sort_values(["instances", "repo"], ascending=[False, True]).head(n)
+    return [{"repo": r.repo, "instances": int(r.instances), "labels": int(r.labels)} for r in g.itertuples()]
+
+
+def corpus(sha: str, interim: Path = Path("data/interim")) -> dict:
+    """Corpus composition for the site's Corpus tab, from `paper/generated/*.md` and the parquet.
+
+    `top_repos` is `None` when `outcomes.parquet` / `instances_raw.parquet` are not on disk.
+    """
+    p = GENERATED / "composition.md"
+    _, split = find_table(p, "Per split")
+    _, strict_lang = find_table(p, "Per language: strict split")
+    stats = GENERATED / "corpus_stats.md"
+    m = re.search(r"\*\*(\d+) Java\*\*, \*\*(\d+) Python\*\*", stats.read_text(encoding="utf-8"))
+    if not m:
+        raise SystemExit(f"BLOCKED: no language split in {stats}")
+    top = None
+    if (interim / "outcomes.parquet").exists() and (interim / "instances_raw.parquet").exists():
+        top = top_repos(pd.read_parquet(interim / "instances_raw.parquet"),
+                        pd.read_parquet(interim / "outcomes.parquet"))
+    p_f = GENERATED / "attrition_funnel.md"
+    _, runs = find_table(p_f, "Runs (benchmark instances)")
+    _, repos = find_table(p_f, "Repositories")
+    return {
+        "generated_at_git_sha": sha,
+        "harvested_repos_by_language": {"source": str(stats), "Java": int(m.group(1)), "Python": int(m.group(2))},
+        "strict_by_language": {"source": str(p), "rows": [
+            {"language": r[0], "repos": int(num(r[1])), "instances": rate(r[2]), "labels": rate(r[3]),
+             "distinct_tests": int(num(r[4]))} for r in strict_lang]},
+        "splits": {"source": str(p), "rows": [
+            {"split": r[0], "repos": int(num(r[1])), "instances": rate(r[3]), "labels": rate(r[4]),
+             "distinct_tests": int(num(r[5]))} for r in split]},
+        "top_repos": ({"source": "data/interim/outcomes.parquet + instances_raw.parquet", "rows": top}
+                      if top is not None else None),
+        "repos_funnel": {"source": str(p_f), "stages": [{"stage": r[0], "count": int(num(r[1]))} for r in repos]},
+        "runs_funnel": {"source": str(p_f), "stages": [{"stage": r[0], "count": int(num(r[1]))} for r in runs]},
     }
 
 
@@ -570,17 +666,30 @@ def write_json(path: Path, obj: dict) -> None:
     path.write_text(json.dumps(obj, indent=1, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def main(out_dir: Path = OUT_DIR) -> int:
-    """Select, export and index the instances, then write `results.json`.
+def write_docs(out_dir: Path, sha: str) -> None:
+    """Write the three documents that need only `paper/generated` (and, optionally, the parquet)."""
+    write_json(out_dir / "results.json", results(sha))
+    write_json(out_dir / "overview.json", overview(sha))
+    write_json(out_dir / "corpus.json", corpus(sha))
+    print(f"wrote {out_dir / 'results.json'}, {out_dir / 'overview.json'} and {out_dir / 'corpus.json'}")
+
+
+def main(out_dir: Path = OUT_DIR, docs_only: bool = False) -> int:
+    """Select, export and index the instances, then write the site's other documents.
 
     Args:
         out_dir: Output directory (the only place written to).
+        docs_only: Write only `results.json`, `overview.json` and `corpus.json` (no instance export;
+            needs no parquet apart from the optional top-repositories chart).
 
     Returns:
         Process exit status.
     """
     os.environ["GIT_NO_LAZY_FETCH"] = "1"
     sha = paper_md.git_sha()
+    if docs_only:
+        write_docs(out_dir, sha)
+        return 0
     chosen, report = select_instances()
     for line in report:
         print(line)
@@ -602,11 +711,13 @@ def main(out_dir: Path = OUT_DIR) -> int:
         print(f"wrote {inst_dir / doc['id']}.json")
     write_json(out_dir / "index.json", {"generated_at_git_sha": sha, "default": index[0]["id"],
                                         "instances": index, "selection": report})
-    write_json(out_dir / "results.json", results(sha))
-    write_json(out_dir / "overview.json", overview(sha))
-    print(f"wrote {out_dir / 'index.json'}, {out_dir / 'results.json'} and {out_dir / 'overview.json'}")
+    print(f"wrote {out_dir / 'index.json'}")
+    write_docs(out_dir, sha)
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--docs-only", action="store_true",
+                    help="write only results.json, overview.json and corpus.json")
+    sys.exit(main(docs_only=ap.parse_args().docs_only))
