@@ -21,6 +21,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+from analysis import paper_md
+
+RUNTIME_S = 0.0
+
 SEED = 20261110
 TARGET_SAMPLE_SIZE = 1500
 
@@ -299,7 +303,8 @@ def run_census() -> str:
         annotations_per_file.append(file_annotation_count)
         
     t1 = time.perf_counter()
-    duration = t1 - t0
+    global RUNTIME_S
+    RUNTIME_S = t1 - t0  # wall-clock: stdout only, never in the file
     
     # 4. Compute distributions
     total_ann = len(records)
@@ -320,11 +325,10 @@ def run_census() -> str:
     
     # Build Markdown Output
     lines: List[str] = []
-    lines.append("# GitHub Check-Run Annotation Census")
+    lines.append(paper_md.header("GitHub Check-Run Annotation Census", "analysis/annotation_census.py").rstrip("\n"))
     lines.append("")
     lines.append(f"Unbiased stratified random census of **{actual_sample_size:,}** check-run annotation files")
     lines.append(f"drawn from **{total_captured_files:,}** captured files across **{total_repos_with_annotations}** repositories (Seed: `{SEED}`).")
-    lines.append(f"Generated deterministically by `analysis/annotation_census.py` in **{duration:.2f}s**.")
     lines.append("")
     
     # Section 1: Sampling & Stratification
@@ -483,6 +487,7 @@ def run_census() -> str:
 def main() -> None:
     report = run_census()
     print(report)
+    print(f"[stdout only] census took {RUNTIME_S:.2f}s")
 
 
 if __name__ == "__main__":

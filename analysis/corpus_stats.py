@@ -22,6 +22,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from analysis import paper_md
+
 DB_URI = "file:data/state/cursor.db?mode=ro"
 FRAME_PATH = Path("data/frame/frame_v1.csv")
 RAW_ROOT = Path("data/raw")
@@ -276,9 +278,6 @@ def get_daemon_runtime() -> tuple[str | None, datetime.datetime | None, float]:
 
 def generate_stats() -> str:
     """Generate the comprehensive corpus statistics markdown report."""
-    as_of = datetime.datetime.now(datetime.timezone.utc)
-    as_of_str = as_of.strftime("%Y-%m-%d %H:%M:%S UTC")
-
     # 1. Load frame and database
     frame_repos = load_frame()
     db_data = query_cursor_store()
@@ -288,13 +287,13 @@ def generate_stats() -> str:
     unique_runs, failed_runs, unique_jobs, repo_runs = parse_runs_and_jobs(run_files, job_files)
 
     # 3. Daemon runtime inspection
-    daemon_pid, daemon_start_dt, daemon_elapsed_s = get_daemon_runtime()
+    daemon_pid, _, daemon_elapsed_s = get_daemon_runtime()
+    print(f"[stdout only] daemon pid {daemon_pid}, uptime {daemon_elapsed_s / 3600.0:.2f} h, "
+          f"run at {datetime.datetime.now(datetime.timezone.utc):%Y-%m-%d %H:%M:%S} UTC")
 
     lines: list[str] = []
-    lines.append("# BlastRadius Corpus Statistics & Review 1 Verification")
-    lines.append("")
-    lines.append(f"**As of**: `{as_of_str}`  ")
-    lines.append("Generated deterministically by `analysis/corpus_stats.py`.")
+    lines.append(paper_md.header("BlastRadius Corpus Statistics & Review 1 Verification",
+                                 "analysis/corpus_stats.py").rstrip("\n"))
     lines.append("")
 
     if db_data.get("is_stale") and db_data.get("error"):
@@ -345,11 +344,13 @@ def generate_stats() -> str:
     earliest_iso = db_data["earliest_started_at"]
     latest_iso = db_data["latest_updated_at"]
 
+    harvest_span_s = 0.0
     if earliest_iso and latest_iso:
         try:
             earliest_dt = datetime.datetime.fromisoformat(earliest_iso.replace("Z", "+00:00"))
             latest_dt = datetime.datetime.fromisoformat(latest_iso.replace("Z", "+00:00"))
             elapsed_harvest_s = max(0.0, (latest_dt - earliest_dt).total_seconds())
+            harvest_span_s = elapsed_harvest_s
             elapsed_str = format_duration(elapsed_harvest_s)
         except Exception:
             elapsed_str = "N/A"
@@ -395,10 +396,10 @@ def generate_stats() -> str:
 
     # Evaluation of criteria
     # 1. 72 h uninterrupted run
-    crit1_hours = (daemon_elapsed_s / 3600.0) if daemon_elapsed_s > 0 else 0.0
-    crit1_val = f"{crit1_hours:.2f} h ({format_duration(daemon_elapsed_s)}) uninterrupted"
-    if daemon_pid:
-        crit1_val += f" (PID {daemon_pid})"
+    # Recorded harvest span (cursor.db timestamps), not the live process uptime: uptime is wall-clock
+    # and is printed to stdout only.
+    crit1_hours = harvest_span_s / 3600.0
+    crit1_val = f"{crit1_hours:.2f} h ({format_duration(harvest_span_s)}) recorded harvest span"
     crit1_verdict = "MET" if crit1_hours >= 72.0 else "NOT MET"
 
     # 2. >=50,000 runs across >=60 repos

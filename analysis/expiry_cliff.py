@@ -17,6 +17,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from analysis import paper_md
+
 RAW_DIR = Path("data/raw")
 OUTPUT_DIR = Path("paper/generated")
 OUTPUT_MD_PATH = OUTPUT_DIR / "expiry_cliff.md"
@@ -42,8 +44,16 @@ def _percentile(values: list[float], q: float) -> float:
     return sorted_vals[low] * (high - idx) + sorted_vals[high] * (idx - low)
 
 
-def load_runs(as_of: datetime) -> tuple[dict[int, dict[str, Any]], int, int, list[str]]:
-    """Scan and parse all workflow run objects in data/raw, deduplicating by run ID."""
+def load_runs(as_of: datetime | None = None) -> tuple[dict[int, dict[str, Any]], int, int, list[str], datetime | None]:
+    """Scan and parse all workflow run objects in data/raw, deduplicating by run ID.
+
+    Args:
+        as_of: Instant ages are measured against. None (the default) uses the latest `fetched_at`
+            of any record read, so the result depends on the data and not on the wall clock.
+
+    Returns:
+        Runs by id, raw record count, runs missing `run_started_at`, repos, and the `as_of` used.
+    """
     # 1. Snapshot the file list once at the start
     files = sorted(list(RAW_DIR.rglob("runs.jsonl.gz")))
     
@@ -51,6 +61,7 @@ def load_runs(as_of: datetime) -> tuple[dict[int, dict[str, Any]], int, int, lis
     raw_record_count = 0
     missing_run_started_at_count = 0
     repos_found: set[str] = set()
+    latest_fetch: datetime | None = None
 
     for file_path in files:
         # Extract owner__repo from relative path parts
@@ -66,6 +77,11 @@ def load_runs(as_of: datetime) -> tuple[dict[int, dict[str, Any]], int, int, lis
                     if not line:
                         continue
                     rec = json.loads(line)
+                    fetched = rec.get("fetched_at")
+                    if fetched:
+                        ft = datetime.fromisoformat(fetched.replace("Z", "+00:00"))
+                        if latest_fetch is None or ft > latest_fetch:
+                            latest_fetch = ft
                     body = rec.get("body")
                     if isinstance(body, str):
                         try:
@@ -87,7 +103,7 @@ def load_runs(as_of: datetime) -> tuple[dict[int, dict[str, Any]], int, int, lis
                                 age_days = None
                             else:
                                 dt = datetime.fromisoformat(started_at_str.replace("Z", "+00:00"))
-                                age_days = (as_of - dt).total_seconds() / 86400.0
+                                age_days = 0.0  # filled in below, once `as_of` is known
 
                             unique_runs[run_id] = {
                                 "id": run_id,
@@ -96,19 +112,23 @@ def load_runs(as_of: datetime) -> tuple[dict[int, dict[str, Any]], int, int, lis
                                 "conclusion": run.get("conclusion"),
                                 "status": run.get("status"),
                                 "run_started_at": started_at_str,
+                                "_dt": dt,
                                 "age_days": age_days,
                             }
         except Exception:
             continue
 
-    return unique_runs, raw_record_count, missing_run_started_at_count, sorted(list(repos_found))
+    if as_of is None:
+        as_of = latest_fetch.astimezone(timezone.utc) if latest_fetch else datetime(1970, 1, 1, tzinfo=timezone.utc)
+    for r in unique_runs.values():
+        dt = r.pop("_dt")
+        r["age_days"] = None if dt is None else (as_of - dt).total_seconds() / 86400.0
+    return unique_runs, raw_record_count, missing_run_started_at_count, sorted(list(repos_found)), as_of
 
 
 def generate_report(as_of: datetime | None = None) -> str:
-    if as_of is None:
-        as_of = datetime.now(timezone.utc)
-
-    unique_runs, raw_count, missing_started, repos = load_runs(as_of)
+    """Render the report. `as_of` defaults to the latest `fetched_at` in the raw store (no wall clock)."""
+    unique_runs, raw_count, missing_started, repos, as_of = load_runs(as_of)
     total_unique = len(unique_runs)
 
     all_ages = [r["age_days"] for r in unique_runs.values() if r["age_days"] is not None]
@@ -203,9 +223,9 @@ def generate_report(as_of: datetime | None = None) -> str:
     as_of_str = as_of.strftime("%Y-%m-%d %H:%M:%S UTC")
 
     lines: list[str] = []
-    lines.append("# BlastRadius 90-Day Log-Expiry Exposure Analysis")
+    lines.append(paper_md.header("BlastRadius 90-Day Log-Expiry Exposure Analysis", "analysis/expiry_cliff.py").rstrip("\n"))
     lines.append("")
-    lines.append(f"**As of**: `{as_of_str}`  ")
+    lines.append(f"**As of** (latest capture in `data/raw`): `{as_of_str}`  ")
     lines.append(f"**Corpus Scope**: {len(repos)} repositories, {total_unique:,} unique workflow runs ({raw_count:,} raw records).  ")
     lines.append(f"**Missing timestamps (`run_started_at`)**: {missing_started}  ")
     lines.append("")
@@ -318,8 +338,9 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_MD_PATH.write_text(content, encoding="utf-8")
 
-    # Print exact content to stdout
+    # Print exact content to stdout; the wall clock lives here only, never in the file.
     print(content)
+    print(f"[stdout only] run at {datetime.now(timezone.utc):%Y-%m-%d %H:%M:%S} UTC")
 
 
 if __name__ == "__main__":
