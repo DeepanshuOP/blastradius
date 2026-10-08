@@ -95,7 +95,7 @@
 | **Gate B** | Author review protocol | **PASSED** | `% [AI DRAFT]` markers retained for authors |
 | | No copied prose or template evasion | **PASSED** | Clean room writing from repo facts |
 | **Gate C** | Dataset/split and preprocessing stated | **PASSED** | Invariants, splits, base resolution formalized |
-| | Implementation details reproducible | **PASSED** | `make tables` (~8 min), `make test` (782 passed, 1 skipped) |
+| | Implementation details reproducible | **PASSED** | `make tables` (~8 min), `make test` (787 passed, 1 skipped) |
 | | Figures/tables traced to artifacts | **PASSED** | Tables I–IV and Figs. 1–2 traced to repo |
 | **Gate D** | Correct conference template | **PASSED** | `IEEEtran` 10pt conference |
 | | Exact page budget respected | **PASSED** | Exactly 4 pages text + 1 page references (5 total) |
@@ -187,5 +187,5 @@ pdftotext -f 5 -l 5 main.pdf - | head -n 4
 
 # Test suite verification
 pytest
-# Output: 782 passed, 1 skipped in 668s
+# Output: 787 passed, 1 skipped in 528.38s
 ```
