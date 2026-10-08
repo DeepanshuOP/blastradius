@@ -1,4 +1,4 @@
-.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data
+.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web
 
 test:
 	uv run pytest -q
@@ -112,6 +112,11 @@ demo:
 # only output). Headline numbers are parsed from paper/generated/*.md.
 demo-data:
 	GIT_NO_LAZY_FETCH=1 uv run --extra graph python analysis/export_demo_data.py
+
+# Static Next.js replay of demo-data on http://localhost:3000 (needs Node >= 18
+# and `npm ci` in demo-web/ once). No Python server, no runtime network calls.
+demo-web:
+	cd demo-web && npm run build && npm start
 
 figures:
 	@echo "not implemented"

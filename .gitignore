@@ -28,3 +28,9 @@ graphify-out/
 # pseudonymised author data and regenerates from data/interim, so none of it
 # belongs in git.
 /release/
+
+# demo-web (Next.js)
+demo-web/node_modules
+demo-web/.next
+demo-web/next-env.d.ts
+demo-web/tsconfig.tsbuildinfo
