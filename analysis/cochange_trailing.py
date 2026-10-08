@@ -126,16 +126,16 @@ class RepoHistory:
                 and self.commits[i].sha != exclude_sha]
 
     def partners(self, path: str, cutoff_ts: int, exclude_sha: str | None = None,
-                 both_directions: bool = False) -> list[Partner]:
+                 both_directions: bool = True) -> list[Partner]:
         """Ranked co-change partners of `path` using only commits before `cutoff_ts`.
 
         Args:
             path: The changed file.
             cutoff_ts: Instance start, epoch seconds; commits at or after it are invisible.
             exclude_sha: A commit to ignore even if dated before the cutoff (the instance's own head).
-            both_directions: False reproduces the static table's reach, which stores each pair once
-                as `file_a < file_b` and was looked up by `file_a` only, so a file's partners are
-                only the lexicographically LATER paths. True returns every partner.
+            both_directions: True (default, D-52) returns every partner. False reproduces the static
+                table's reach, which stores each pair once as `file_a < file_b` and was looked up by
+                `file_a` only, so a file's partners were only the lexicographically LATER paths.
 
         Returns:
             Partners with support >= `min_support`, best first.

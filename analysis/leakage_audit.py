@@ -135,9 +135,9 @@ def stage_table(data: Rq1Data) -> list[list]:
     stages = (
         ("0 old: static co-change table, all-splits baseline", "static", "legacy"),
         ("1 baseline de-duplicated to strict, once per (test, instance) only", "static", "strict"),
-        ("2 co-change trailing only (leak fix)", "trailing", "legacy"),
-        ("3 both fixes (current)", "trailing", "strict"),
-        ("info: 3 plus partners in both directions", "trailing_both", "strict"),
+        ("2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)", "trailing_oneside", "legacy"),
+        ("3 co-change trailing, one-sided lookup, strict baseline (Round 4)", "trailing_oneside", "strict"),
+        ("4 symmetric lookup, strict baseline (current, D-52)", "trailing", "strict"),
     )
     gt = ground_truth(data)
     rows = []
@@ -195,11 +195,10 @@ def main() -> int:
          ["a mined commit dated in `[run_started_at, as_of]` touches a changed file of the instance",
           r(leg_c['future_commit'], leg_c['audited'])]])
     text += "\n## RQ1 under each fix (mean P / R / J, n instances where the all-partners proxy fires)\n\n"
-    text += ("Stage 1 isolates the baseline de-duplication, stage 2 the co-change leak fix, stage 3 both. "
-             "`co-change, restricted to files with \"test\" in the path` is the old test-only row. The `info` stage "
-             "is not a fix applied: the static table stores each pair once as `file_a < file_b` and was looked up "
-             "by `file_a` only, so only lexicographically later paths were ever candidates; it shows what "
-             "both directions would score.\n\n")
+    text += ("Stage 1 isolates the baseline de-duplication, stage 2 the co-change leak fix, stage 3 both, stage 4 adds the symmetric lookup. "
+             "`co-change, restricted to files with \"test\" in the path` is the old test-only row. The static table "
+             "stores each pair once as `file_a < file_b` and was looked up by `file_a` only, so only "
+             "lexicographically later paths were ever candidates; stages 0-3 inherit that, stage 4 reads both directions.\n\n")
     text += paper_md.table(["k", "stage", "method", "n", "mean P", "mean R", "mean J"], stage_table(data))
     path = paper_md.write("leakage_audit.md", text)
 

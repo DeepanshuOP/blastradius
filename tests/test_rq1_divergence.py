@@ -119,6 +119,16 @@ def test_trailing_mode_ignores_commits_after_the_run_and_the_static_table_does_n
     assert (static["co_size"], static["co_hit"]) == (2, 1)      # the static table also offers C
 
 
+def test_trailing_mode_reads_partners_in_both_directions_and_oneside_does_not(tmp_path) -> None:
+    data, _ = trailing_data(tmp_path)
+    # The instance changes src/B.py and the failing test is bound to src/A.py ("src/A.py" < "src/B.py").
+    data.pr_to_changed = {(REPO, "7"): {"src/B.py"}}
+    data.bound = {(REPO, "t::b"): "src/A.py"}
+    sym = evaluate_k(data, ground_truth(data), 5, cochange="trailing").iloc[0]
+    assert (sym["co_size"], sym["co_hit"]) == (1, 1)  # A co-changed with B in 3 commits before day 4
+    assert evaluate_k(data, ground_truth(data), 5, cochange="trailing_oneside").empty  # old lookup: no candidate
+
+
 def test_trailing_mode_does_not_use_the_instances_own_head_commit(tmp_path) -> None:
     data, sha = trailing_data(tmp_path)
     data.head_sha_of = {1: sha["d3"]}  # pretend the instance's head is the day-3 commit

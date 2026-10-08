@@ -89,12 +89,54 @@ def test_window_drops_commits_older_than_window_days(tmp_path) -> None:
     assert (b.support, b.confidence) == (2, 2 / 3)
 
 
-def test_pairs_are_one_sided_unless_both_directions_is_requested(tmp_path) -> None:
+def test_partners_default_to_both_directions_and_one_sided_is_opt_in(tmp_path) -> None:
     h, _ = history(tmp_path)
-    # B < ... : B's later-sorting partners: none (A and C sort earlier... "src/A.py" < "src/B.py")
-    assert h.partners("src/B.py", T0 + 4 * DAY) == []
-    [a] = h.partners("src/B.py", T0 + 4 * DAY, both_directions=True)
+    # "src/A.py" < "src/B.py": the old one-sided lookup from B saw no partner at all.
+    assert h.partners("src/B.py", T0 + 4 * DAY, both_directions=False) == []
+    [a] = h.partners("src/B.py", T0 + 4 * DAY)
     assert (a.path, a.support, a.confidence) == ("src/A.py", 3, 1.0)
+
+
+def test_symmetric_partner_counts_and_top_k_match_the_hand_computed_table(tmp_path) -> None:
+    """Expected values written by hand from the commit list below, never from running the code.
+
+    Commits (day, files), cutoff = day 10 (a run started at T0 + 10 days):
+      1 b,c   2 b,c   3 a,b   4 a,b   5 b,d   6 b,d   7 c,d
+      10 b,c  (committed AT the cutoff: invisible)   20 b,c  (after the cutoff: invisible)
+    Window is 365 days, so every commit is inside it; min_support is 2.
+
+      b: touched by days 1-6 = 6 commits. a: days 3,4 = 2. c: days 1,2 = 2. d: days 5,6 = 2.
+         All confidence 2/6; ties broken by path: a, c, d. (Counting the day-10 and day-20
+         commits would give c support 4 of 8: a visible leak.)
+      c: touched by days 1,2,7 = 3 commits. b: days 1,2 = 2 (conf 2/3). d: day 7 only = 1 < 2: dropped.
+      a: touched by days 3,4 = 2 commits. b: 2 (conf 1.0).
+      d: touched by days 5,6,7 = 3 commits. b: days 5,6 = 2 (conf 2/3). c: day 7 only: dropped.
+    One-sided (only lexicographically later partners): b -> c, d; c -> nothing (d dropped); a -> b; d -> nothing.
+    """
+    repo = tmp_path / "r"
+    repo.mkdir()
+    _git(repo, "init", "-q", "-b", "main")
+    for day, files in [(1, "bc"), (2, "bc"), (3, "ab"), (4, "ab"), (5, "bd"), (6, "bd"), (7, "cd"),
+                       (10, "bc"), (20, "bc")]:
+        _commit(repo, [f"{f}.py" for f in files], T0 + day * DAY)
+    h = RepoHistory(read_history(repo, "HEAD", T0, T0 + 30 * DAY))
+    cutoff = T0 + 10 * DAY
+
+    def got(path: str, **kw) -> list[tuple[str, int, float]]:
+        return [(p.path, p.support, p.confidence) for p in h.partners(path, cutoff, **kw)]
+
+    assert got("b.py") == [("a.py", 2, 2 / 6), ("c.py", 2, 2 / 6), ("d.py", 2, 2 / 6)]
+    assert [p.path for p in h.partners("b.py", cutoff)][:2] == ["a.py", "c.py"]  # top-2
+    assert got("c.py") == [("b.py", 2, 2 / 3)]
+    assert got("a.py") == [("b.py", 2, 1.0)]
+    assert got("d.py") == [("b.py", 2, 2 / 3)]
+    assert got("b.py", both_directions=False) == [("c.py", 2, 2 / 6), ("d.py", 2, 2 / 6)]
+    assert got("c.py", both_directions=False) == []
+    assert got("a.py", both_directions=False) == [("b.py", 2, 1.0)]
+    assert got("d.py", both_directions=False) == []
+    # A cutoff one second later makes the day-10 commit visible: b.py is then in 7 commits, c.py in 4 of them.
+    late = [(p.path, p.support, p.confidence) for p in h.partners("b.py", cutoff + 1)]
+    assert late == [("c.py", 3, 3 / 7), ("a.py", 2, 2 / 7), ("d.py", 2, 2 / 7)]
 
 
 def test_ranking_is_confidence_then_support_then_path(tmp_path) -> None:

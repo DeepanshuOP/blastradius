@@ -47,7 +47,7 @@ METHODS = [
     ("b1", "changeset baseline"),
     ("b2", "historical-frequency baseline"),
 ]
-COCHANGE_MODES = ("trailing", "trailing_both", "static")
+COCHANGE_MODES = ("trailing", "trailing_oneside", "static")
 HIST_MODES = ("strict", "legacy")
 SIZE_STRATA = [("1", 1, 1), ("2-5", 2, 5), ("6-20", 6, 20), (">20", 21, 10**9)]
 CLONES_DIR = Path("data/clones")
@@ -263,8 +263,9 @@ def partner_stats(data: Rq1Data, repo: str, path: str, row, mode: str = "trailin
         repo: Repository.
         path: A changed file.
         row: The instance row (needs `run_id`, `run_started_at`).
-        mode: `trailing` (only commits strictly before the run, the static table's
-            one-sided reach) or `trailing_both` (same, partners in both directions).
+        mode: `trailing` (only commits strictly before the run; partners looked up in both
+            directions, D-52) or `trailing_oneside` (same, but only lexicographically later
+            partners, the old static table's reach; sensitivity only).
 
     Returns:
         `Partner` records, best first.
@@ -273,7 +274,7 @@ def partner_stats(data: Rq1Data, repo: str, path: str, row, mode: str = "trailin
     key = (mode, repo, path, cutoff, head)
     if key not in data.cache:
         data.cache[key] = data.history[repo].partners(path, cutoff, exclude_sha=head,
-                                                      both_directions=(mode == "trailing_both"))
+                                                      both_directions=(mode != "trailing_oneside"))
     return data.cache[key]
 
 
@@ -391,7 +392,7 @@ def applicability(data: Rq1Data, run_to_gt: dict, mode: str = "trailing") -> dic
     Args:
         data: Loaded inputs.
         run_to_gt: From :func:`ground_truth`; only instances with ground truth are counted.
-        mode: `trailing` / `trailing_both` / `static` as in :func:`cochange_partners`.
+        mode: `trailing` / `trailing_oneside` / `static` as in :func:`cochange_partners`.
 
     Returns:
         `tot` changed files, `ge3` / `ge2` of them with a partner of support >= 3 / >= 2,
