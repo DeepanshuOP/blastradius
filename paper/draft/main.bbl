@@ -49,10 +49,11 @@ M.~Machalica, A.~Samylkin, M.~Porth, and S.~Chandra, ``Predictive test
   selection,'' in \emph{Proc. 41st Int. Conf. Softw. Eng.: Softw. Eng. Pract.
   (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2019, pp. 91--100.
 
-\bibitem{memisevic2023predictive}
-N.~Memisevic, M.~Gligoric, and D.~Marinov, ``Predictive test selection in
-  continuous integration,'' in \emph{Proc. IEEE/ACM Int. Conf. Softw. Eng.},
-  2023, pp. 1--12, [VERIFY CITATION].
+\bibitem{memon2017taming}
+Memon, Gao, Nguyen, Dhanda, Nickell, Siemborski, and Micco, ``Taming
+  {Google}-scale continuous testing,'' in \emph{Proc. 39th Int. Conf. Softw.
+  Eng.: Softw. Eng. Pract. (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax
+  IEEE, 2017, pp. 233--242.
 
 \bibitem{mattis2020rtptorrent}
 T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
@@ -64,7 +65,7 @@ T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
 F.~Moriconi, T.~Durieux, J.-R. Falleri, R.~Troncy, and A.~Francillon,
   ``{GHALogs}: Large-scale dataset of {GitHub} actions runs,'' in \emph{Proc.
   22nd Int. Conf. Mining Softw. Repos. (MSR), Data and Tool Showcase
-  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 1--5.
+  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025.
 
 \bibitem{dabic2021sampling}
 O.~Dabic, E.~Aghajani, and G.~Bavota, ``Sampling projects in {GitHub} for {MSR}
