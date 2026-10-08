@@ -235,7 +235,7 @@ def generate_report(as_of: datetime | None = None) -> str:
     # Section 1: Headline Recoverable Window
     lines.append("## 1. Recoverable Window for Failed Runs")
     lines.append("")
-    lines.append(f"> **Headline Metric**: Across all {len(repos)} repositories, **{recoverable_today:,} out of {total_failed:,} failed-run logs ({recoverable_today_pct:.1f}%) remain RECOVERABLE TODAY**.")
+    lines.append(f"> **Headline Metric**: Across all {len(repos)} repositories, **{recoverable_today:,} out of {total_failed:,} failed-run logs ({recoverable_today_pct:.1f}%) were RECOVERABLE AT THE LAST CAPTURE**.")
     lines.append(f"> Exactly **{win_expired:,} failed runs ({win_expired_pct:.1f}%) are already >90 days old** and their logs are permanently expired from GitHub Actions storage.")
     lines.append("")
     lines.append("| Window Band | Remaining Log Lifetime | Failed Runs | % of Failed Runs | Operational Urgency |")
@@ -245,7 +245,7 @@ def generate_report(as_of: datetime | None = None) -> str:
     lines.append(f"| **Medium (31 – 60 days left)** | Age 30.0d – 59.9d | **{win_31_60:,}** | {win_31_60_pct:.2f}% | Safe for 1 month |")
     lines.append(f"| **Low (> 60 days left)** | Age < 30.0d | **{win_gt60:,}** | {win_gt60_pct:.2f}% | Safe for 2 months |")
     lines.append(f"| **Permanently Expired** | Age > 90.0d | **{win_expired:,}** | {win_expired_pct:.2f}% | **Lost** (unrecoverable from GitHub API) |")
-    lines.append(f"| **Total Recoverable Today** | **Age ≤ 90.0d** | **{recoverable_today:,}** | **{recoverable_today_pct:.2f}%** | **Total available for Stage 4 download** |")
+    lines.append(f"| **Total Recoverable At Last Capture** | **Age ≤ 90.0d** | **{recoverable_today:,}** | **{recoverable_today_pct:.2f}%** | **Total available for Stage 4 download** |")
     lines.append("")
 
     # Section 2: Overall Age Distribution
@@ -323,7 +323,7 @@ def generate_report(as_of: datetime | None = None) -> str:
 
     lines.append("### Key Takeaways for Review 1 & Stage 4 Planning")
     lines.append(f"1. **D-23 Hypothesis Confirmed**: The 90-day expiry cliff is real and active. {win_expired:,} failed runs are permanently unrecoverable from GitHub log storage, validating the D-23 decision to prioritize Stage 4 (log capture) over non-expiring tiers.")
-    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** (~{est_jobs:,.0f} jobs at {JOBS_PER_FAILED_RUN:.2f} jobs/failed run) across {len(repos)} repos have logs available today. Measured across 21 logs (provisional, n=21, all Java: ~{MEASURED_LOG_MB:.4f} MB uncompressed HTTP payload, ~{MEASURED_LOG_ON_DISK_MB:.4f} MB on-disk gzipped per log), this represents an estimated ~{est_download_gb:.2f} GB download (~{est_on_disk_gb:.2f} GB on-disk footprint).")
+    lines.append(f"2. **Stage 4 Target Sized**: Exactly **{recoverable_today:,} failed runs** (~{est_jobs:,.0f} jobs at {JOBS_PER_FAILED_RUN:.2f} jobs/failed run) across {len(repos)} repos had logs available at the last capture. Measured across 21 logs (provisional, n=21, all Java: ~{MEASURED_LOG_MB:.4f} MB uncompressed HTTP payload, ~{MEASURED_LOG_ON_DISK_MB:.4f} MB on-disk gzipped per log), this represents an estimated ~{est_download_gb:.2f} GB download (~{est_on_disk_gb:.2f} GB on-disk footprint).")
     lines.append(f"3. **Daily Attrition Rate**: With **{failed_60_90:,} failed runs** in the 60–90 day bracket, the corpus loses approximately **{daily_loss:.1f} recoverable failed runs per day of delay**.")
     lines.append("")
 
