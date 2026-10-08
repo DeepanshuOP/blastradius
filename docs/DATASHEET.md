@@ -69,14 +69,14 @@ Label counts by split, and the run-level resolution frame:
 
 | Figure | Value | Source |
 |---|---|---|
-| labels, `all` split | 4,384 | rebuild chain, `src/label/fault_revealing.py` |
-| labels, `relaxed` split | 4,214 | rebuild chain, `src/label/fault_revealing.py` |
-| labels, `strict` split | 4,168 | rebuild chain, `src/label/fault_revealing.py` |
-| instances with ≥1 strict label | 762 | rebuild chain, `src/label/fault_revealing.py` |
-| distinct tests, strict split | 2,466 | rebuild chain, `src/label/fault_revealing.py` |
-| run-level rows | 12,581 | `make tables`, `analysis/corpus_delta.py` |
-| `no_base` rate | 5,520/12,581 (43.88%) | `make tables`, `analysis/corpus_delta.py` |
-| same-SHA flip rate | 62 (0.54%) | rebuild chain, `src/label/fault_revealing.py` |
+| labels, `all` split | 4,384 | `paper/generated/labelling_run.md` |
+| labels, `relaxed` split | 4,214 | `paper/generated/labelling_run.md` |
+| labels, `strict` split | 4,168 | `paper/generated/labelling_run.md` |
+| instances with ≥1 strict label | 762 | `paper/generated/labelling_run.md` |
+| distinct tests, strict split | 2,466 | `paper/generated/labelling_run.md` |
+| run-level rows | 12,581 | `paper/generated/corpus_delta.md` (baseline) |
+| `no_base` rate | 5,520/12,581 (43.88%) | `paper/generated/corpus_delta.md` (baseline; the other `no_base` rates there are counterfactual scenarios) |
+| same-SHA flip rate | 62/11,557 (0.54%) | `paper/generated/flakiness.md`; `paper/generated/labelling_run.md` |
 
 **What data does each instance consist of?** Repository, PR number, head and
 base SHA, base ref, workflow run and job identifiers, workflow name, run
@@ -220,11 +220,14 @@ change-impact measurements and the gate readings below.
 
 | Gate | Threshold | Reading | Status | Source |
 |---|---|---|---|---|
-| Gate 1 | ≥5,000 positives (labels, per D-44) | 4,168/5,000 | **NOT MET** | rebuild chain, `src/label/fault_revealing.py` |
+| Gate 1 | ≥5,000 positives (labels, per D-44) | 4,168/5,000 (83.36%) | **NOT MET** | `paper/generated/gates.md` |
+| Gate 1 (secondary) | ≥5,000 instances | 762/5,000 (15.24%) | NOT MET | `paper/generated/gates.md` |
+| Gate 1.5 combined binding | ≥70% | 5,643/5,985 (94.29%) | **MET** | `paper/generated/gates.md` |
+| Gate 1.5 full-confidence binding | ≥70% | 3,820/5,985 (63.83%) | **NOT MET** | `paper/generated/gates.md` |
 
 D-44 fixes the reading against the **label** count, not the instance count: a
 positive is a (change, test) pair. The instance-based reading (762) is not the
-gate.
+gate. Gate 1.5 is read on both binding figures together (D-47).
 
 **What should it not be used for?**
 
