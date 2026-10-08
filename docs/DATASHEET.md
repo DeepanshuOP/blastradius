@@ -216,6 +216,13 @@ that model on BR-Bench is invalid (ROADMAP T1.7, risk T11).
 **What has it been used for?** Nothing published yet. Internally: baseline
 change-impact measurements and the gate readings below.
 
+**Parser precision.** Reported only from development corpora, and explicitly not
+independent of development: fixture corpus 46/46 precision and recall, holdout v1
+30/30 (`paper/generated/parser_precision.md`). The independent holdout v5 figure
+is **not measured**: no blind human labels were completed (D-38 requires them), one
+machine-assisted attempt from excerpts only was discarded, the 40-log v5 corpus is
+unscored and unconsumed, and the 029 worksheet stays blank (D-53).
+
 **Current gate readings.**
 
 | Gate | Threshold | Reading | Status | Source |
