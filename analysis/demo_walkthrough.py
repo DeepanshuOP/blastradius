@@ -189,18 +189,15 @@ def _read(name: str) -> pd.DataFrame:
     return duckdb.sql(f"select * from read_parquet('{INTERIM / name}.parquet')").df()
 
 
-def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
-    """Walk the gates in sorted order and return the first instance that clears all.
-
-    Args:
-        build_offline: Allow a temp-dir graph when `data/graphs/` has none.
+def gated_rows() -> tuple[pd.DataFrame, list[str]]:
+    """Apply gates 1-4 and classify the failure message of every surviving row.
 
     Returns:
-        `(candidate_or_None, report_lines)` where the report names the survivors
-        of each gate.
+        `(rows, report_lines)`: one row per (label, job) that cleared gates 1-4,
+        sorted by preference `(rank, repo, pr_number, run_id, test_id, job_id)`,
+        with `failure_class`, `failure_rule` and `rank` columns.
     """
     from src.harvest.rawstore import RawStore
-    from src.graph.build import graph_path
 
     report: list[str] = []
     repos = mini_corpus_repos()
@@ -251,7 +248,22 @@ def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
     rank = {CODE: 0, UNKNOWN: 1, TIMEOUT: 2, ENVIRONMENT: 3}
     logged["rank"] = logged["failure_class"].map(rank)
     logged = logged.sort_values(["rank", "repo", "pr_number", "run_id", "test_id", "job_id"])
+    return logged, report
 
+
+def find_candidate(build_offline: bool) -> tuple[Candidate | None, list[str]]:
+    """Walk the gates in sorted order and return the first instance that clears all.
+
+    Args:
+        build_offline: Allow a temp-dir graph when `data/graphs/` has none.
+
+    Returns:
+        `(candidate_or_None, report_lines)` where the report names the survivors
+        of each gate.
+    """
+    from src.graph.build import graph_path
+
+    logged, report = gated_rows()
     on_disk = [graph_path(r.repo, r.base_sha, GRAPH_DIR).exists() for r in logged.itertuples()]
     n_graph = int(sum(on_disk))
     report.append(f"gate 5 graph in {GRAPH_DIR}/: {logged[on_disk]['run_id'].nunique()} instances "
@@ -413,6 +425,33 @@ def main() -> int:
     return 0
 
 
+def file_node(graph, path: str) -> str | None:
+    """The file-level node (`source_location` L1) of `path`, or None."""
+    return next((n for n, d in sorted(graph.nodes(data=True))
+                 if d.get("source_file") == path and d.get("source_location") == "L1"), None)
+
+
+def map_nodes(graph, test_id: str, test_file: str,
+              changed: list[str]) -> tuple[str | None, str, list[tuple[str, str | None]]]:
+    """Locate the test node and each changed file's node in a bound graph.
+
+    Args:
+        graph: A graph with `bind_test_ids` already applied.
+        test_id: The failing test.
+        test_file: Its bound test file.
+        changed: The PR's changed files.
+
+    Returns:
+        `(test_node, how_it_was_found, [(changed_file, node_or_None)])`.
+    """
+    tnodes = sorted(n for n, d in graph.nodes(data=True) if d.get("test_id") == test_id)
+    if tnodes:
+        tnode, how = tnodes[0], "the test's own node"
+    else:
+        tnode, how = file_node(graph, test_file), "its test FILE node (no node carries this test_id)"
+    return tnode, how, [(f, file_node(graph, f)) for f in changed]
+
+
 def print_graph(cand: Candidate, test_file: str) -> list[str]:
     """Print changed files and their distance to the failing test via `GraphQuery`.
 
@@ -448,20 +487,9 @@ def print_graph(cand: Candidate, test_file: str) -> list[str]:
     try:
         graph = load_graph(graph_path(cand.repo, cand.base_sha, gdir))
         bind_test_ids(graph, [cand.test_id], repo=cand.repo)
-        tnodes = sorted(n for n, d in graph.nodes(data=True) if d.get("test_id") == cand.test_id)
-        if tnodes:
-            tnode, how = tnodes[0], "the test's own node"
-        else:
-            tnode = next((n for n, d in sorted(graph.nodes(data=True))
-                          if d.get("source_file") == test_file and d.get("source_location") == "L1"), None)
-            how = "its test FILE node (no node carries this test_id)"
+        tnode, how, mapped = map_nodes(graph, cand.test_id, test_file, changed)
         print(f"  test node: {tnode} [{how}]")
         q = GraphQuery(graph, repo=cand.repo, sha=cand.base_sha)
-        mapped = []
-        for f in changed:
-            node = next((n for n, d in sorted(graph.nodes(data=True))
-                         if d.get("source_file") == f and d.get("source_location") == "L1"), None)
-            mapped.append((f, node))
         for f, node in mapped[:MAX_LOG_LINES]:
             if node is None:
                 print(f"    {f}: not in the base graph (added/non-source)")

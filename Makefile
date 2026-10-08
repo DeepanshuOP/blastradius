@@ -1,4 +1,4 @@
-.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo
+.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data
 
 test:
 	uv run pytest -q
@@ -106,6 +106,12 @@ fetch-base-logs:
 # missing from data/graphs/ is built into a temp dir from local git objects.
 demo:
 	GIT_NO_LAZY_FETCH=1 uv run --extra graph python analysis/demo_walkthrough.py
+
+# Recorded demo runs for the static site: the walkthrough's gates, offline graph
+# build and RQ1's k=10 predictors, written as JSON to demo-web/public/data/ (the
+# only output). Headline numbers are parsed from paper/generated/*.md.
+demo-data:
+	GIT_NO_LAZY_FETCH=1 uv run --extra graph python analysis/export_demo_data.py
 
 figures:
 	@echo "not implemented"
