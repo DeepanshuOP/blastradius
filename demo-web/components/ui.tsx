@@ -7,8 +7,8 @@ export function Card({ title, step, children, className = "" }: {
   className?: string;
 }) {
   return (
-    <section className={`rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-5 ${className}`}>
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
+    <section className={`rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 ${className}`}>
+      <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-800">
         {step !== undefined && (
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-800 text-xs text-white">
             {step}
@@ -50,3 +50,14 @@ export function Badge({ tone, children }: { tone: "red" | "green" | "slate" | "a
 
 export const short = (sha: string) => sha.slice(0, 10);
 export const pct = (x: number) => `${(x * 100).toFixed(1)}%`;
+
+/** Short display names for the RQ1 method rows of paper/generated/rq1.md. */
+export const METHOD_SHORT: Record<string, string> = {
+  "co-change, all partner files": "Co-change (all)",
+  "co-change, restricted to conventional test files": "Co-change (test files)",
+  'co-change, restricted to files with "test" in the path (sensitivity)': "Co-change (\"test\" in path)",
+  "changeset baseline": "Changeset",
+  "historical-frequency baseline": "Historical frequency",
+};
+export const methodName = (m: string) => METHOD_SHORT[m] ?? m;
+export const ratePct = (r: { n: number; d: number }) => `${((100 * r.n) / r.d).toFixed(2)}%`;

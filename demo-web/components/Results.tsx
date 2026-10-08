@@ -2,15 +2,8 @@
 
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { ResultsDoc } from "./types";
-import { Badge, Card, Source } from "./ui";
+import { Badge, Card, Source, METHOD_SHORT as SHORT } from "./ui";
 
-const SHORT: Record<string, string> = {
-  "co-change, all partner files": "Co-change (all)",
-  "co-change, restricted to conventional test files": "Co-change (test files)",
-  'co-change, restricted to files with "test" in the path (sensitivity)': "Co-change (\"test\" in path)",
-  "changeset baseline": "Changeset",
-  "historical-frequency baseline": "Historical frequency",
-};
 
 export default function Results({ r }: { r: ResultsDoc }) {
   const rq = r.rq1_k10;

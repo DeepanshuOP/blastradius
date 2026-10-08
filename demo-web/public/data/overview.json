@@ -1,0 +1,100 @@
+{
+ "binding": {
+  "combined": {
+   "d": 5985,
+   "n": 5643,
+   "text": "5,643/5,985 (94.29%)"
+  },
+  "full_confidence": {
+   "d": 5985,
+   "n": 3820,
+   "text": "3,820/5,985 (63.83%)"
+  },
+  "source": "paper/generated/binding.md"
+ },
+ "generated_at_git_sha": "62d3dcdc3cc3cd90142a5c1789f76eed5a25cadc",
+ "headline": {
+  "k": 10,
+  "methods": [
+   {
+    "method": "historical-frequency baseline",
+    "micro_recall": {
+     "d": 1316,
+     "n": 519,
+     "text": "519/1,316 (39.44%)"
+    },
+    "n": 576
+   },
+   {
+    "method": "changeset baseline",
+    "micro_recall": {
+     "d": 1316,
+     "n": 224,
+     "text": "224/1,316 (17.02%)"
+    },
+    "n": 576
+   },
+   {
+    "method": "co-change, restricted to conventional test files",
+    "micro_recall": {
+     "d": 1316,
+     "n": 101,
+     "text": "101/1,316 (7.67%)"
+    },
+    "n": 576
+   },
+   {
+    "method": "co-change, restricted to files with \"test\" in the path (sensitivity)",
+    "micro_recall": {
+     "d": 1316,
+     "n": 101,
+     "text": "101/1,316 (7.67%)"
+    },
+    "n": 576
+   },
+   {
+    "method": "co-change, all partner files",
+    "micro_recall": {
+     "d": 1316,
+     "n": 61,
+     "text": "61/1,316 (4.64%)"
+    },
+    "n": 576
+   }
+  ],
+  "source": "paper/generated/rq1.md",
+  "source_generated_at_git_sha": "28d4323d93bb9c357e7a71c34c1aebb3be2ae560"
+ },
+ "kpis": [
+  {
+   "label": "repositories swept",
+   "source": "paper/generated/attrition_funnel.md",
+   "value": 76
+  },
+  {
+   "label": "CI runs harvested",
+   "source": "paper/generated/attrition_funnel.md",
+   "value": 165349
+  },
+  {
+   "label": "failed runs",
+   "source": "paper/generated/attrition_funnel.md",
+   "value": 12581
+  },
+  {
+   "label": "strict instances",
+   "source": "paper/generated/attrition_funnel.md",
+   "value": 762
+  },
+  {
+   "label": "fault-revealing labels (strict)",
+   "source": "paper/generated/composition.md",
+   "value": 4168
+  },
+  {
+   "label": "distinct tests (strict)",
+   "source": "paper/generated/composition.md",
+   "value": 2466
+  }
+ ]
+}

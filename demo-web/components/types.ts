@@ -130,3 +130,10 @@ export type ResultsDoc = {
     instances: { measure: string; value: Rate }[];
   };
 };
+
+export type OverviewDoc = {
+  generated_at_git_sha: string;
+  kpis: { label: string; value: number; source: string }[];
+  binding: { source: string; combined: Rate; full_confidence: Rate };
+  headline: Sourced & { k: number; methods: { method: string; n: number; micro_recall: Rate }[] };
+};

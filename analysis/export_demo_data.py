@@ -409,6 +409,42 @@ def results(sha: str) -> dict:
     }
 
 
+def overview(sha: str) -> dict:
+    """KPI cards and the headline recall chart, parsed out of `paper/generated/*.md`."""
+    def row(rows: list[list[str]], first: str) -> list[str]:
+        return next(r for r in rows if r[0] == first)
+
+    p_f = GENERATED / "attrition_funnel.md"
+    _, repos = find_table(p_f, "Repositories")
+    _, runs = find_table(p_f, "Runs (benchmark instances)")
+    p_c = GENERATED / "composition.md"
+    _, split = find_table(p_c, "Per split")
+    strict = row(split, "strict")
+    p_b = GENERATED / "binding.md"
+    _, bind = find_table(p_b, "Test-to-file binding (D-47, D-50)")
+    p_r = GENERATED / "rq1.md"
+    _, rq = find_table(p_r, "k = 10", "Overall")
+    methods = sorted(({"method": r[0], "n": int(num(r[1])), "micro_recall": rate(r[6])} for r in rq),
+                     key=lambda m: (-m["micro_recall"]["n"] / m["micro_recall"]["d"], m["method"]))
+    kpi = [
+        ("repositories swept", int(num(row(repos, "swept (>= 1 run harvested)")[1])), p_f),
+        ("CI runs harvested", int(num(row(runs, "runs discovered")[1])), p_f),
+        ("failed runs", int(num(row(runs, "failed runs")[1])), p_f),
+        ("strict instances", int(num(row(runs, "with >= 1 strict label")[1])), p_f),
+        ("fault-revealing labels (strict)", rate(strict[4])["n"], p_c),
+        ("distinct tests (strict)", int(num(strict[5])), p_c),
+    ]
+    return {
+        "generated_at_git_sha": sha,
+        "kpis": [{"label": k, "value": v, "source": str(s)} for k, v, s in kpi],
+        "binding": {"source": str(p_b),
+                    "combined": rate(row(bind, "combined (exact)")[1]),
+                    "full_confidence": rate(row(bind, "full confidence (exact, fully-qualified class name)")[1])},
+        "headline": {"source": str(p_r), "source_generated_at_git_sha": source_sha(p_r), "k": 10,
+                     "methods": methods},
+    }
+
+
 # -- main --------------------------------------------------------------------
 
 
@@ -451,7 +487,8 @@ def main(out_dir: Path = OUT_DIR) -> int:
     write_json(out_dir / "index.json", {"generated_at_git_sha": sha, "default": index[0]["id"],
                                         "instances": index, "selection": report})
     write_json(out_dir / "results.json", results(sha))
-    print(f"wrote {out_dir / 'index.json'} and {out_dir / 'results.json'}")
+    write_json(out_dir / "overview.json", overview(sha))
+    print(f"wrote {out_dir / 'index.json'}, {out_dir / 'results.json'} and {out_dir / 'overview.json'}")
     return 0
 
 

@@ -71,3 +71,18 @@ def test_default_instance_json(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) 
     holdout, _ = holdout_job_ids()
     assert doc["stages"]["raw_log"]["job_id"] not in holdout
     assert not _ints(doc) & holdout
+
+
+def test_overview_reads_the_generated_tables() -> None:
+    from analysis.export_demo_data import overview
+
+    ov = overview("0" * 40)
+    kpi = {k["label"]: k["value"] for k in ov["kpis"]}
+    assert kpi["strict instances"] == 762
+    assert kpi["fault-revealing labels (strict)"] == 4168
+    assert ov["binding"]["combined"]["text"] == "5,643/5,985 (94.29%)"
+    head = {m["method"]: m["micro_recall"] for m in ov["headline"]["methods"]}
+    assert head["co-change, all partner files"]["text"] == "61/1,316 (4.64%)"
+    assert head["historical-frequency baseline"]["text"] == "519/1,316 (39.44%)"
+    r = [m["micro_recall"]["n"] / m["micro_recall"]["d"] for m in ov["headline"]["methods"]]
+    assert r == sorted(r, reverse=True)

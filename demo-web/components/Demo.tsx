@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Overview from "./Overview";
 import Results from "./Results";
 import { STAGE_TITLES, StageCard } from "./Stages";
-import type { IndexDoc, InstanceDoc, ResultsDoc } from "./types";
+import type { IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
-const TABS = ["How it works", "Live run", "Results", "Corpus"] as const;
+const TABS = ["Overview", "How it works", "Live run", "Results", "Corpus"] as const;
 type Tab = (typeof TABS)[number];
 const STEP_MS = 800;
 
@@ -143,44 +144,50 @@ function Corpus() {
 }
 
 export default function Demo() {
-  const [tab, setTab] = useState<Tab>("How it works");
+  const [tab, setTab] = useState<Tab>("Overview");
   const [index, setIndex] = useState<IndexDoc | null>(null);
   const [results, setResults] = useState<ResultsDoc | null>(null);
+  const [overview, setOverview] = useState<OverviewDoc | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([getJson<IndexDoc>("/data/index.json"), getJson<ResultsDoc>("/data/results.json")])
-      .then(([i, r]) => { setIndex(i); setResults(r); })
+    Promise.all([getJson<IndexDoc>("/data/index.json"), getJson<ResultsDoc>("/data/results.json"),
+      getJson<OverviewDoc>("/data/overview.json")])
+      .then(([i, r, o]) => { setIndex(i); setResults(r); setOverview(o); })
       .catch((e) => setErr(String(e)));
   }, []);
 
+  const loading = !err && <p className="text-sm text-slate-500">Loading…</p>;
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6">
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">BlastRadius</h1>
-          <p className="mt-1 max-w-3xl text-sm text-slate-600">
-            Execution-grounded change impact for CI: which tests did a pull request actually break, and can a predictor tell in advance?
-          </p>
-          <nav className="-mb-5 mt-4 flex gap-1 overflow-x-auto" role="tablist">
+    <div className="flex min-h-screen flex-col">
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 pt-3 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+          <div className="pb-1 sm:pb-3">
+            <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">BlastRadius</h1>
+            <p className="text-xs text-slate-500">Which tests did a pull request actually break, and can a predictor tell in advance?</p>
+          </div>
+          <nav className="-mb-px flex gap-1 overflow-x-auto" role="tablist">
             {TABS.map((t) => (
               <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)}
-                className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium ${tab === t ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+                className={`whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium transition-colors ${tab === t ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
                 {t}
               </button>
             ))}
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
         {err && <p className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">Could not load /data: {err}. Run <Mono>make demo-data</Mono>.</p>}
+        {tab === "Overview" && (overview ? <Overview o={overview} /> : loading)}
         {tab === "How it works" && <HowItWorks />}
-        {tab === "Live run" && (index ? <LiveRun index={index} /> : !err && <p className="text-sm text-slate-500">Loading…</p>)}
-        {tab === "Results" && (results ? <Results r={results} /> : !err && <p className="text-sm text-slate-500">Loading…</p>)}
+        {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
+        {tab === "Results" && (results ? <Results r={results} /> : loading)}
         {tab === "Corpus" && <Corpus />}
       </main>
-      <footer className="mx-auto max-w-6xl px-4 pb-8 text-xs text-slate-400 sm:px-6">
-        Static replay. No network calls beyond this site&apos;s own <Mono className="text-slate-400">/data/*.json</Mono>.
+      <footer className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 sm:px-6">
+          data at <Mono className="text-slate-600">{index ? short(index.generated_at_git_sha) : "…"}</Mono> · static replay · <Mono className="text-slate-600">make demo</Mono> runs it live
+        </div>
       </footer>
     </div>
   );
