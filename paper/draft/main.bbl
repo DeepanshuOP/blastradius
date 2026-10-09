@@ -65,7 +65,7 @@ T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
 F.~Moriconi, T.~Durieux, J.-R. Falleri, R.~Troncy, and A.~Francillon,
   ``{GHALogs}: Large-scale dataset of {GitHub} actions runs,'' in \emph{Proc.
   22nd Int. Conf. Mining Softw. Repos. (MSR), Data and Tool Showcase
-  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025.
+  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 669--673.
 
 \bibitem{dabic2021sampling}
 O.~Dabic, E.~Aghajani, and G.~Bavota, ``Sampling projects in {GitHub} for {MSR}
@@ -83,10 +83,20 @@ T.~Gebru, J.~Morgenstern, B.~Vecchione, J.~W. Vaughan, H.~Wallach,
   H.~Daum{\'e}~III, and K.~Crawford, ``Datasheets for datasets,'' \emph{Commun.
   ACM}, vol.~64, no.~12, pp. 86--92, 2021.
 
+\bibitem{brbench_data}
+Deepanshu, S.~Singh, P.~Vadhavkar, and {Yoga Raja C A}, ``{BR-Bench}:
+  Execution-grounded change-to-failing-test data from {GitHub} actions (release
+  v0.1),'' \url{https://doi.org/10.5281/zenodo.23250262}, 2026.
+
 \bibitem{ren2004chianti}
 X.~Ren, F.~Shah, F.~Tip, B.~G. Ryder, and O.~Chesley, ``Chianti: A tool for
   change impact analysis of {Java} programs,'' in \emph{Proc. 19th ACM SIGPLAN
   Conf. Object-Oriented Program., Syst., Lang., Appl. (OOPSLA)}.\hskip 1em plus
   0.5em minus 0.4em\relax ACM, 2004, pp. 432--448.
+
+\bibitem{brbench_code}
+Deepanshu, S.~Singh, P.~Vadhavkar, and {Yoga Raja C A}, ``Blastradius and
+  {BR-Bench}: Execution-grounded change impact data from {GitHub} actions,''
+  \url{https://doi.org/10.5281/zenodo.23250690}, 2026.
 
 \end{thebibliography}
