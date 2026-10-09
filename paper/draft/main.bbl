@@ -50,10 +50,10 @@ M.~Machalica, A.~Samylkin, M.~Porth, and S.~Chandra, ``Predictive test
   (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2019, pp. 91--100.
 
 \bibitem{memon2017taming}
-Memon, Gao, Nguyen, Dhanda, Nickell, Siemborski, and Micco, ``Taming
-  {Google}-scale continuous testing,'' in \emph{Proc. 39th Int. Conf. Softw.
-  Eng.: Softw. Eng. Pract. (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax
-  IEEE, 2017, pp. 233--242.
+A.~Memon, Z.~Gao, B.~Nguyen, S.~Dhanda, E.~Nickell, R.~Siemborski, and
+  J.~Micco, ``Taming {Google}-scale continuous testing,'' in \emph{Proc. 39th
+  Int. Conf. Softw. Eng.: Softw. Eng. Pract. (ICSE-SEIP)}.\hskip 1em plus 0.5em
+  minus 0.4em\relax IEEE, 2017, pp. 233--242.
 
 \bibitem{mattis2020rtptorrent}
 T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
