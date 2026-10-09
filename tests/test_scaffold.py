@@ -37,7 +37,7 @@ def test_python_version() -> None:
     assert sys.version_info[:2] == (3, 11)
 
 
-@requires_data("data/interim")
+@requires_data("data/interim/outcomes.parquet")
 def test_layout_exists() -> None:
     for rel_dir in EXPECTED_DIRS:
         assert (REPO_ROOT / rel_dir).is_dir(), f"missing directory: {rel_dir}"

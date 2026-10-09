@@ -11,6 +11,8 @@ paper/generated/*
 __pycache__/
 .venv/
 *.parquet
+# Checked-in test fixtures are real row slices and must ship with the repo.
+!tests/fixtures/**/*.parquet
 *.jsonl.gz
 .pytest_cache/
 .ruff_cache/
