@@ -40,8 +40,7 @@ odes near coords displaying exact percentages.
    - If the publisher or camera-ready instructions request standalone EPS/PDF files instead of inline TikZ/PGFPlots, compile igs/pipeline.tikz and igs/rq1_chart.tikz via pdflatex -shell-escape or standalone class into pipeline.pdf and q1_chart.pdf.
 
 2. **Zenodo DOIs**:
-   - Deposit elease/v0.1 onto Zenodo to mint the final dataset DOI (replacing [DOI-DATA]).
-   - Tag the GitHub repository release to mint the software DOI (replacing [DOI-CODE]).
+   - DONE: dataset DOI 10.5281/zenodo.23250262 and code DOI 10.5281/zenodo.23250690 are minted and inserted.
 
 3. **Author Order and Affiliation Confirmation**:
    - Confirm the final order among Prisha Vadhavkar, Sanskriti Singh, and Deepanshu before submission.
