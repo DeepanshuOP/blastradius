@@ -15,11 +15,14 @@ Two scoring units, because the predictors emit different things:
     bound test files of the strict labels, exactly as `analysis/rq1_divergence.py`
     scores them (that script predicts files, never test ids).
 
-Run: `BR_OFFLINE=1 uv run python -m analysis.reachability_mini`
+Run: `BR_OFFLINE=1 uv run python -m analysis.reachability_mini [--json PATH]`
 """
 
 from __future__ import annotations
 
+import argparse
+import json
+import os
 import statistics
 import subprocess
 from collections import defaultdict, deque
@@ -29,7 +32,7 @@ from typing import Iterable
 import networkx as nx
 import pandas as pd
 
-from src.graph.build import graph_path, load_graph
+from src.graph.build import graph_path, load_graph, repo_slug
 from src.parse.test_ids import derive_node_id
 
 K_VALS = [5, 10, 20]
@@ -140,6 +143,34 @@ def score_ids(ranked: list[str], gt: set[str], mapping: dict[str, set[str]]) -> 
     return p, r, (hits / union if union else 0.0), hits
 
 
+def local_tree_status(repo: str, sha: str, clones_root: Path = Path("data/clones")) -> str:
+    """Whether `sha` can be checked out from the local clone without any network.
+
+    Args:
+        repo: Repo in `owner/name` form.
+        sha: Commit to probe.
+        clones_root: Where clones live.
+
+    Returns:
+        `"local"` when the commit and every blob of its tree are on disk,
+        `"no_commit"` when the commit is absent, `"missing_blobs"` when it is a
+        partial clone lacking some of the tree's blobs, `"no_clone"` otherwise.
+    """
+    clone = clones_root / repo_slug(repo)
+    if not clone.exists():
+        return "no_clone"
+    env = os.environ | {"GIT_NO_LAZY_FETCH": "1"}
+    git = ["git", "-C", str(clone)]
+    if subprocess.run([*git, "cat-file", "-e", f"{sha}^{{commit}}"], capture_output=True, env=env).returncode:
+        return "no_commit"
+    tree = subprocess.run([*git, "ls-tree", "-r", "--object-only", sha], capture_output=True, text=True, env=env)
+    if tree.returncode:
+        return "missing_blobs"
+    check = subprocess.run([*git, "cat-file", "--batch-check"], input=tree.stdout, capture_output=True,
+                           text=True, env=env)
+    return "missing_blobs" if " missing" in check.stdout else "local"
+
+
 def _git_sha() -> str:
     return subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
 
@@ -165,6 +196,12 @@ def population() -> tuple[pd.DataFrame, list[tuple[str, int]]]:
     s = s[s["status"].notna() & (s["status"] != "no_base") & s["base_sha"].notna()]
     funnel.append(("... with a resolved base SHA (status != no_base)", len(s)))
     funnel.append(("    distinct resolved base SHAs", s["base_sha"].nunique()))
+    status = {(r, x): local_tree_status(r, x) for r, x in sorted(set(zip(s["repo"], s["base_sha"])))}
+    for st, label in (("local", "fully local (buildable offline)"), ("no_commit", "commit absent from the local clone"),
+                      ("missing_blobs", "commit local, blobs missing (partial clone)"), ("no_clone", "no local clone")):
+        n = sum(1 for v in status.values() if v == st)
+        if n:
+            funnel.append((f"    base SHAs: {label}", n))
     s = s[[graph_path(r, x).exists() for r, x in zip(s["repo"], s["base_sha"])]]
     funnel.append(("... with a graph at that SHA in data/graphs/", len(s)))
     known = set(zip(chg["repo"], chg["pr_number"].astype(str)))
@@ -180,9 +217,27 @@ def _fmt(df: pd.DataFrame, key: str) -> list[str]:
             f"{statistics.median(df[f'{key}_size']):g}"]
 
 
+def _table(df: pd.DataFrame, keys: list[tuple[str, str]]) -> list[dict]:
+    rows = []
+    for label, key in keys:
+        hits, act = int(df[f"{key}_hit"].sum()), int(df["n_gt"].sum())
+        rows.append({"method": label, "mean_p": round(float(df[f"{key}_p"].mean()), 4),
+                     "mean_r": round(float(df[f"{key}_r"].mean()), 4), "mean_j": round(float(df[f"{key}_j"].mean()), 4),
+                     "micro_hits": hits, "micro_actual": act, "median_size": float(statistics.median(df[f"{key}_size"]))})
+    return rows
+
+
+#: Filled by `run()`; written by `--json`.
+PAYLOAD: dict = {}
+
+
 def run() -> list[str]:
-    """Run the measurement and return the report as markdown lines."""
+    """Run the measurement and return the report as markdown lines (and fill `PAYLOAD`)."""
     pop, funnel = population()
+    PAYLOAD.clear()
+    PAYLOAD.update({"source": "analysis/reachability_mini.py", "generated_at_git_sha": _git_sha(),
+                    "funnel": [{"step": a.strip(), "n": int(n)} for a, n in funnel], "n": len(pop),
+                    "unbound": None, "test_id_level": [], "file_level": []})
     lines = ["### Population funnel", "", "| step | n |", "|---|---|"]
     lines += [f"| {a} | {n} |" for a, n in funnel]
     if pop.empty:
@@ -241,6 +296,16 @@ def run() -> list[str]:
 
     df_id, df_file = pd.DataFrame(rows_id), pd.DataFrame(rows_file)
     lines += ["", f"Ground-truth test_ids with no graph node: {unbound_n}/{unbound_d}", ""]
+    PAYLOAD["unbound"] = {"n": unbound_n, "d": unbound_d}
+    for scope, sub in [("overall", df_id)] + [(r, g) for r, g in df_id.groupby("repo")]:
+        PAYLOAD["test_id_level"].append({"scope": scope, "n": len(sub), "rows": _table(
+            sub, [("reachability k=5", "R5"), ("reachability k=10", "R10"), ("reachability k=20", "R20"),
+                  ("reachability unbounded", "Rinf")])})
+    for scope, sub in ([("overall", df_file)] + [(r, g) for r, g in df_file.groupby("repo")]) if not df_file.empty else []:
+        keys = [(f"{lab} k={k}", f"{p}{k}") for k in K_VALS for lab, p in (
+            ("reachability", "R"), ("co-change (all partners)", "co"), ("co-change (test files)", "cot"),
+            ("historical frequency", "hist"))] + [("reachability unbounded", "Rinf")]
+        PAYLOAD["file_level"].append({"scope": scope, "n": len(sub), "rows": _table(sub, keys)})
     for title, df, keys in (
         ("Test-id level (R vs strict fault-revealing test_ids)", df_id, ["R5", "R10", "R20", "Rinf"]),
     ):
@@ -261,8 +326,13 @@ def run() -> list[str]:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--json", type=Path, help="also write the result as JSON here")
+    args = ap.parse_args()
     print(f"analysis/reachability_mini.py @ {_git_sha()}")
     print("\n".join(run()))
+    if args.json:
+        args.json.write_text(json.dumps(PAYLOAD, indent=2, sort_keys=True) + "\n")
 
 
 if __name__ == "__main__":

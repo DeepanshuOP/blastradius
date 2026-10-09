@@ -1,0 +1,42 @@
+{
+  "file_level": [],
+  "funnel": [
+    {
+      "n": 762,
+      "step": "strict instances, all repos"
+    },
+    {
+      "n": 79,
+      "step": "strict instances in the 3 mini-corpus repos"
+    },
+    {
+      "n": 36,
+      "step": "... with a resolved base SHA (status != no_base)"
+    },
+    {
+      "n": 36,
+      "step": "distinct resolved base SHAs"
+    },
+    {
+      "n": 22,
+      "step": "base SHAs: commit absent from the local clone"
+    },
+    {
+      "n": 14,
+      "step": "base SHAs: commit local, blobs missing (partial clone)"
+    },
+    {
+      "n": 0,
+      "step": "... with a graph at that SHA in data/graphs/"
+    },
+    {
+      "n": 0,
+      "step": "... with a known changeset (population)"
+    }
+  ],
+  "generated_at_git_sha": "926bbb4",
+  "n": 0,
+  "source": "analysis/reachability_mini.py",
+  "test_id_level": [],
+  "unbound": null
+}
