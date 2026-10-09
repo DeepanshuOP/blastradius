@@ -185,13 +185,107 @@ def _pseudonymise_authors(
     return len(logins)
 
 
-def build(out_dir: Path, interim: Path, key: bytes) -> dict[str, int]:
+#: Release schema v0.2 (docs/SCHEMAS.md, D-54). Every statement is a join over
+#: `data/interim/*` read-only at build time; nothing in the interim store is
+#: written. `{p}` is a path placeholder filled by `_v02_sql`.
+_V02_INSTANCES = """
+    with cs as (
+        select repo, pr_number, head_sha,
+               cast(count(*) as integer) as n_files_changed,
+               sum(additions + deletions)::bigint as n_lines_changed,
+               bool_or(touches_test_file) as touches_test_file,
+               bool_or(touches_build_config) as touches_build_config,
+               bool_or(touches_ci_config) as touches_ci_config,
+               bool_and(is_docs_only) as is_docs_only,
+               list(filename order by filename) as changed_files
+        from read_parquet('{changesets}')
+        group by repo, pr_number, head_sha
+    )
+    select i.* replace (
+               strptime(i.run_started_at, '%Y-%m-%dT%H:%M:%SZ') as run_started_at,
+               cast(b.base_run_id as bigint) as base_run_id),
+           coalesce(b.status, 'not_attempted') as base_status,
+           cast(b.base_run_distance as integer) as base_run_distance,
+           cs.n_files_changed, cs.n_lines_changed, cs.touches_test_file,
+           cs.touches_build_config, cs.touches_ci_config, cs.is_docs_only,
+           cs.changed_files
+    from read_parquet('{instances}') i
+    left join read_parquet('{base}') b on b.run_id = i.run_id
+    left join cs on cs.repo = i.repo
+                and cs.pr_number = cast(i.pr_number as varchar)
+                and cs.head_sha = i.head_sha
+"""
+
+_V02_OUTCOMES = """
+    with po as (
+        select run_id, test_id,
+               cast(count(*) as integer) as n_job_rows,
+               min(parser_confidence) as parser_confidence,
+               max(duration_s) as duration_s,
+               min(label_source) as label_source,
+               case when bool_or(status = 'fail') then 'fail' else 'error' end
+                   as status_head,
+               min(failure_message) as msg
+        from read_parquet('{parsed}')
+        group by run_id, test_id
+    )
+    select o.run_id, o.test_id, o.split,
+           case when b.status = 'exact' then b.resolved_path end as test_file,
+           po.label_source, po.parser_confidence, po.status_head,
+           po.n_job_rows,
+           b.status as binding_status,
+           case when b.status = 'exact' and b.is_fqcn_qualified then 1.0
+                when b.status = 'exact' then 0.5 end::float as binding_confidence,
+           po.duration_s,
+           sha256(po.msg) as failure_message_hash
+    from read_parquet('{outcomes}') o
+    left join read_parquet('{instances}') i on i.run_id = o.run_id
+    left join po on po.run_id = o.run_id and po.test_id = o.test_id
+    left join read_parquet('{binding}') b on b.repo = i.repo and b.test_id = o.test_id
+"""
+
+
+def _build_v02(con: "duckdb.DuckDBPyConnection", out_dir: Path, interim: Path) -> dict[str, int]:
+    """Write the v0.2 instances and outcomes tables as joins over `interim`.
+
+    Args:
+        con: Open DuckDB connection.
+        out_dir: Bundle root; `instances.parquet` and `outcomes.parquet` are written.
+        interim: Interim directory, read only.
+
+    Returns:
+        Row count per written file name.
+    """
+    paths = {
+        "changesets": interim / "changesets.parquet",
+        "instances": interim / "instances_raw.parquet",
+        "base": interim / "base_resolution_new.parquet",
+        "parsed": interim / "parsed_outcomes.parquet",
+        "outcomes": interim / "outcomes.parquet",
+        "binding": interim / "binding.parquet",
+    }
+    fill = {k: v.as_posix() for k, v in paths.items()}
+    counts: dict[str, int] = {}
+    for name, sql in (("instances.parquet", _V02_INSTANCES), ("outcomes.parquet", _V02_OUTCOMES)):
+        target = out_dir / name
+        con.execute(
+            f"copy ({sql.format(**fill)}) to '{target.as_posix()}' "
+            "(format parquet, compression zstd)"
+        )
+        counts[name] = con.execute(
+            f"select count(*) from read_parquet('{target.as_posix()}')"
+        ).fetchone()[0]
+    return counts
+
+
+def build(out_dir: Path, interim: Path, key: bytes, schema: str = "v0.1") -> dict[str, int]:
     """Assemble the bundle and return each table's row count.
 
     Args:
         out_dir: Bundle root to create (removed first if present).
         interim: Directory holding the interim parquet artifacts.
         key: Secret HMAC key for author pseudonymisation. Required.
+        schema: `"v0.1"` (verbatim copies) or `"v0.2"` (docs/SCHEMAS.md, D-54).
 
     Returns:
         Mapping of shipped filename to row count, plus
@@ -204,6 +298,8 @@ def build(out_dir: Path, interim: Path, key: bytes) -> dict[str, int]:
     """
     if not key:
         raise ValueError(f"{PSEUDONYM_KEY_NAME} is required; refusing to build")
+    if schema not in ("v0.1", "v0.2"):
+        raise ValueError(f"unknown release schema {schema!r}")
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
@@ -216,7 +312,11 @@ def build(out_dir: Path, interim: Path, key: bytes) -> dict[str, int]:
         "outcomes.parquet": interim / "outcomes.parquet",
         "cochange.parquet": interim / "cochange.parquet",
     }
+    if schema == "v0.2":
+        counts.update(_build_v02(con, out_dir, interim))
     for name, source in copies.items():
+        if schema == "v0.2" and name != "cochange.parquet":
+            continue
         if not source.exists():
             continue
         target = out_dir / name
@@ -254,9 +354,13 @@ def build(out_dir: Path, interim: Path, key: bytes) -> dict[str, int]:
 def main() -> None:
     """Build the bundle and write the manifest; exit 1 without the pseudonym key."""
     parser = argparse.ArgumentParser(description=f"Build the {DATASET_NAME} bundle")
-    parser.add_argument("--out-dir", type=Path, default=Path("release/v0.1"))
+    parser.add_argument("--schema", choices=("v0.1", "v0.2"), default="v0.1")
+    parser.add_argument("--out-dir", type=Path, default=None,
+                        help="Bundle root (default: release/<schema>)")
     parser.add_argument("--interim", type=Path, default=Path("data/interim"))
     args = parser.parse_args()
+    if args.out_dir is None:
+        args.out_dir = Path("release") / args.schema
 
     # The key is HMAC material only: never printed, logged or written out.
     raw_key = os.environ.get(PSEUDONYM_KEY_NAME) or None
@@ -269,8 +373,13 @@ def main() -> None:
         )
         sys.exit(1)
 
-    counts = build(args.out_dir, args.interim, key=raw_key.encode("utf-8"))
+    counts = build(args.out_dir, args.interim, key=raw_key.encode("utf-8"), schema=args.schema)
     n_authors = counts.pop("_authors_pseudonymised")
+
+    if args.schema == "v0.2":
+        from analysis.release_schema import generate
+
+        generate(Path("docs/SCHEMAS.md"), args.out_dir / "schema.json")
 
     (args.out_dir / "CHECKSUMS.sha256").write_text(
         checksum_manifest(args.out_dir), encoding="utf-8"

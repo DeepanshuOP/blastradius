@@ -1,3 +1,5 @@
+> **SUPERSEDED by `030-schema-divergence.md`**
+
 # Schema Divergence Diagnostic Report (Phase 013-B)
 
 **Date**: 2026-08-31  
