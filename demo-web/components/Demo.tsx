@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Agents from "./Agents";
 import Corpus from "./Corpus";
 import Overview from "./Overview";
 import Results from "./Results";
@@ -8,7 +9,7 @@ import { STAGE_TITLES, StageCard } from "./Stages";
 import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
-const TABS = ["Overview", "How it works", "Live run", "Results", "Corpus"] as const;
+const TABS = ["Overview", "How it works", "Live run", "Results", "Agents", "Corpus"] as const;
 type Tab = (typeof TABS)[number];
 const STEP_MS = 800;
 
@@ -174,6 +175,7 @@ export default function Demo() {
         {tab === "How it works" && <HowItWorks />}
         {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
         {tab === "Results" && (results ? <Results r={results} /> : loading)}
+        {tab === "Agents" && <Agents />}
         {tab === "Corpus" && (corpus ? <Corpus c={corpus} /> : loading)}
       </main>
       <footer className="border-t border-slate-200 bg-white">

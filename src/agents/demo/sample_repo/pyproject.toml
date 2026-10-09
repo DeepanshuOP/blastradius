@@ -1,0 +1,5 @@
+[project]
+name = "shopcart"
+version = "0.1.0"
+description = "A tiny shopping-cart library used as the target codebase for the BlastRadius agent demo."
+requires-python = ">=3.10"
