@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-09T05:31:22+00:00",
+  "generated_at": "2026-10-09T09:09:12+00:00",
   "story": "As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.",
   "title": "FESTIVE20 discount code",
   "workdir": "<temp>",
@@ -49,7 +49,7 @@
           "headline": "Risk MEDIUM: 2 file(s) to change, 7 of 15 tests at risk",
           "inputs": {
             "user story": "As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.",
-            "codebase": "shopcart @ 8440dcfc4e3c"
+            "codebase": "shopcart @ ac2f81fd11cd"
           },
           "outputs": {
             "files to change": [
@@ -66,7 +66,7 @@
               "tests/test_pricing.py::test_welcome10_takes_ten_percent"
             ]
           },
-          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-clean` |\n| Base | `main` @ `8440dcfc4e3c` |\n| Generated | 2026-10-09T05:31:17+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n\n## 9. Method\n\n- Code graph at `8440dcfc4e3c`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
+          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-clean` |\n| Base | `main` @ `ac2f81fd11cd` |\n| Generated | 2026-10-09T09:09:08+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n- 7/15 tests (47%) reach a changed file\n\n## 9. Method\n\n- Code graph at `ac2f81fd11cd`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
         },
         {
           "agent": "Coding Agent",
@@ -78,7 +78,7 @@
           },
           "outputs": {
             "branch": "br/festive20-discount-code",
-            "commit": "11cddb002659",
+            "commit": "b7fbd0716fd5",
             "changed files": [
               "shopcart/pricing.py",
               "tests/test_cart.py",
@@ -86,12 +86,12 @@
             ],
             "mode": "patch:festive20.json"
           },
-          "document": "# PR #1: feat: add FESTIVE20 discount code capped at Rs 500\n\nAdds the FESTIVE20 code (20% off) and a per-code cap table so FESTIVE20 never takes off more than Rs 500. Tests cover the percentage, the cap, and the checkout total.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `8440dcfc4e3c`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20.json)._\n"
+          "document": "# PR #1: feat: add FESTIVE20 discount code capped at Rs 500\n\nAdds the FESTIVE20 code (20% off) and a per-code cap table so FESTIVE20 never takes off more than Rs 500. Tests cover the percentage, the cap, and the checkout total.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `ac2f81fd11cd`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20.json)._\n"
         },
         {
           "agent": "PR Reviewer Agent",
           "status": "ok",
-          "headline": "APPROVE: merged as 6d87e62113a9",
+          "headline": "APPROVE: merged as 5b789adc666c",
           "inputs": {
             "pull request": "#1",
             "impact analysis": "impact.json",
@@ -100,7 +100,7 @@
           "outputs": {
             "verdict": "APPROVE",
             "merged": true,
-            "commit id": "6d87e62113a9",
+            "commit id": "5b789adc666c",
             "checks": [
               {
                 "check": "scope",
@@ -119,21 +119,21 @@
               }
             ]
           },
-          "document": "# Review of PR #1: feat: add FESTIVE20 discount code capped at Rs 500\n\n**Verdict: APPROVE** — merged as `6d87e62113a9`\n\n| Check | Result | Detail |\n|---|---|---|\n| scope | pass | all changed files are inside the impact scope |\n| compile | pass | all changed Python files compile |\n| tests at risk | pass | 7 passed, 0 failed, 0 errors (7 from the impact analysis, 2 changed test file(s)) |\n\n_Reviewed by the BlastRadius PR Reviewer Agent._\n"
+          "document": "# Review of PR #1: feat: add FESTIVE20 discount code capped at Rs 500\n\n**Verdict: APPROVE** — merged as `5b789adc666c`\n\n| Check | Result | Detail |\n|---|---|---|\n| scope | pass | all changed files are inside the impact scope |\n| compile | pass | all changed Python files compile |\n| tests at risk | pass | 7 passed, 0 failed, 0 errors (7 from the impact analysis, 2 changed test file(s)) |\n\n_Reviewed by the BlastRadius PR Reviewer Agent._\n"
         },
         {
           "agent": "Build & Deploy Agent",
           "status": "ok",
-          "headline": "Built and deployed 6d87e62113a9 on main",
+          "headline": "Built and deployed 5b789adc666c on main",
           "inputs": {
-            "commit id": "6d87e62113a9",
+            "commit id": "5b789adc666c",
             "branch": "main"
           },
           "outputs": {
             "status": "deployed",
-            "build": "python3 -m pytest -q -p no:cacheprovider",
+            "build": "python -m pytest -q -p no:cacheprovider",
             "exit code": 0,
-            "package": "shopcart-clean-6d87e62113a9.tar.gz"
+            "package": "shopcart-clean-5b789adc666c.tar.gz"
           },
           "document": "```\n..................                                                       [100%]\n18 passed in 0.04s\n```\n"
         },
@@ -151,7 +151,7 @@
             "impact recall": "n/a (no failures)",
             "missed failures": []
           },
-          "document": "# Regression Test Report: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Commit | `6d87e62113a9` |\n| Verdict | **PASS** |\n| Selected scope | 10 of 18 tests (the test files the impact analysis put at risk) |\n| Selected run | 10 passed, 0 failed, 0 errors, 0 skipped in 0.37 s |\n| Full suite | 18 passed, 0 failed, 0 errors, 0 skipped in 0.33 s |\n| Impact recall | no test failed, so there was nothing to miss |\n\n## Selected tests\n\n| Test | Outcome | Time (s) |\n|---|---|---:|\n| `tests/test_cart.py::test_add_rejects_zero_quantity` | passed | 0.000 |\n| `tests/test_cart.py::test_subtotal_sums_lines` | passed | 0.000 |\n| `tests/test_cart.py::test_total_applies_discount_then_tax` | passed | 0.000 |\n| `tests/test_cart.py::test_total_with_festive20_respects_cap` | passed | 0.000 |\n| `tests/test_pricing.py::test_code_is_case_insensitive` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_is_capped_at_rs_500` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_takes_twenty_percent` | passed | 0.000 |\n| `tests/test_pricing.py::test_no_code_leaves_subtotal` | passed | 0.001 |\n| `tests/test_pricing.py::test_unknown_code_is_ignored` | passed | 0.000 |\n| `tests/test_pricing.py::test_welcome10_takes_ten_percent` | passed | 0.000 |\n\n_Generated by the BlastRadius Regression Suite Agent._\n"
+          "document": "# Regression Test Report: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Commit | `5b789adc666c` |\n| Verdict | **PASS** |\n| Selected scope | 10 of 18 tests (the test files the impact analysis put at risk) |\n| Selected run | 10 passed, 0 failed, 0 errors, 0 skipped in 0.22 s |\n| Full suite | 18 passed, 0 failed, 0 errors, 0 skipped in 0.21 s |\n| Impact recall | no test failed, so there was nothing to miss |\n\n## Selected tests\n\n| Test | Outcome | Time (s) |\n|---|---|---:|\n| `tests/test_cart.py::test_add_rejects_zero_quantity` | passed | 0.000 |\n| `tests/test_cart.py::test_subtotal_sums_lines` | passed | 0.000 |\n| `tests/test_cart.py::test_total_applies_discount_then_tax` | passed | 0.000 |\n| `tests/test_cart.py::test_total_with_festive20_respects_cap` | passed | 0.000 |\n| `tests/test_pricing.py::test_code_is_case_insensitive` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_is_capped_at_rs_500` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_takes_twenty_percent` | passed | 0.000 |\n| `tests/test_pricing.py::test_no_code_leaves_subtotal` | passed | 0.000 |\n| `tests/test_pricing.py::test_unknown_code_is_ignored` | passed | 0.000 |\n| `tests/test_pricing.py::test_welcome10_takes_ten_percent` | passed | 0.000 |\n\n_Generated by the BlastRadius Regression Suite Agent._\n"
         }
       ],
       "notifications": []
@@ -178,7 +178,7 @@
           "headline": "Risk MEDIUM: 2 file(s) to change, 7 of 15 tests at risk",
           "inputs": {
             "user story": "As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.",
-            "codebase": "shopcart @ 423cf5c939bd"
+            "codebase": "shopcart @ 2d34786d4a60"
           },
           "outputs": {
             "files to change": [
@@ -195,7 +195,7 @@
               "tests/test_pricing.py::test_welcome10_takes_ten_percent"
             ]
           },
-          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-blocked` |\n| Base | `main` @ `423cf5c939bd` |\n| Generated | 2026-10-09T05:31:19+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n\n## 9. Method\n\n- Code graph at `423cf5c939bd`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
+          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-blocked` |\n| Base | `main` @ `2d34786d4a60` |\n| Generated | 2026-10-09T09:09:10+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n- 7/15 tests (47%) reach a changed file\n\n## 9. Method\n\n- Code graph at `2d34786d4a60`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
         },
         {
           "agent": "Coding Agent",
@@ -207,7 +207,7 @@
           },
           "outputs": {
             "branch": "br/festive20-discount-code",
-            "commit": "d6defe5577f8",
+            "commit": "b31473950886",
             "changed files": [
               "shopcart/pricing.py",
               "shopcart/receipt.py",
@@ -216,7 +216,7 @@
             ],
             "mode": "patch:festive20_scope_creep.json"
           },
-          "document": "# PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\nAdds the FESTIVE20 code (20% off, capped at Rs 500) with tests, and while there switches receipts to the rupee sign.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `423cf5c939bd`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `shopcart/receipt.py` (outside the impact scope)\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20_scope_creep.json)._\n"
+          "document": "# PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\nAdds the FESTIVE20 code (20% off, capped at Rs 500) with tests, and while there switches receipts to the rupee sign.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `2d34786d4a60`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `shopcart/receipt.py` (outside the impact scope)\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20_scope_creep.json)._\n"
         },
         {
           "agent": "PR Reviewer Agent",
@@ -292,7 +292,7 @@
           "headline": "Risk MEDIUM: 2 file(s) to change, 7 of 15 tests at risk",
           "inputs": {
             "user story": "As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.",
-            "codebase": "shopcart @ 894a0195814f"
+            "codebase": "shopcart @ 18d3d611c132"
           },
           "outputs": {
             "files to change": [
@@ -309,7 +309,7 @@
               "tests/test_pricing.py::test_welcome10_takes_ten_percent"
             ]
           },
-          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-build-fails` |\n| Base | `main` @ `894a0195814f` |\n| Generated | 2026-10-09T05:31:20+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n\n## 9. Method\n\n- Code graph at `894a0195814f`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
+          "document": "# Impact Analysis: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Repository | `shopcart-build-fails` |\n| Base | `main` @ `18d3d611c132` |\n| Generated | 2026-10-09T09:09:10+00:00 by the BlastRadius Impact Analysis Agent (offline) |\n| Risk | **MEDIUM** |\n| Scope | 2 file(s) to change, 0 dependent, 7 test(s) at risk, 8 unaffected |\n\n## 1. User story\n\n> As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n## 2. Interpretation\n\nNo language model is configured, so this interpretation is keyword-based: the story's terms (apply, discount, code, FESTIVE20, checkout, off, cart, total, capped, Rs) were matched against identifiers, paths, docstrings and comments, and the matched files were expanded through the code graph.\n\n## 3. Components to change\n\n| File | Score | Why |\n|---|---:|---|\n| `shopcart/cart.py` | 1.00 | matches story terms: discount, total, cart, checkout, apply |\n| `shopcart/pricing.py` | 0.71 | matches story terms: code, discount, apply, off, cart |\n\n## 4. Dependent components\n\nNone: no other source file depends on the files above.\n\n## 5. Tests at risk (ranked)\n\n| # | Test | Graph distance | Risk score | Why |\n|---:|---|---:|---:|---|\n| 1 | `tests/test_cart.py::test_total_applies_discount_then_tax` | 1 | 0.34 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); test name mentions discount, total; failed 0/1 past runs |\n| 2 | `tests/test_pricing.py::test_code_is_case_insensitive` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 3 | `tests/test_pricing.py::test_unknown_code_is_ignored` | 1 | 0.31 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 4 | `tests/test_pricing.py::test_no_code_leaves_subtotal` | 1 | 0.30 | reaches `shopcart/pricing.py` in 1 hop(s); test name mentions code; failed 0/1 past runs |\n| 5 | `tests/test_cart.py::test_add_rejects_zero_quantity` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 6 | `tests/test_cart.py::test_subtotal_sums_lines` | 1 | 0.28 | reaches `shopcart/cart.py`, `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n| 7 | `tests/test_pricing.py::test_welcome10_takes_ten_percent` | 1 | 0.28 | reaches `shopcart/pricing.py` in 1 hop(s); failed 0/1 past runs |\n\n## 6. Tests not affected\n\n- `tests/test_catalog.py`: 2 test(s)\n- `tests/test_inventory.py`: 2 test(s)\n- `tests/test_receipt.py`: 2 test(s)\n- `tests/test_tax.py`: 2 test(s)\n\n## 7. Recommended regression scope\n\nRun the 7 test(s) in section 5 on every PR for this story (7 of 15 tests); run the full suite in the build before deploy.\n\n## 8. Risks and gaps\n\n- 2 file(s) to change, 0 dependent file(s), 7 test(s) at risk\n- 7/15 tests (47%) reach a changed file\n\n## 9. Method\n\n- Code graph at `18d3d611c132`: 59 nodes, 112 edges, 14 files parsed, 0 parse failures (BlastRadius graph layer, Graphify `0738af373af9`).\n- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).\n- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate (failure history from earlier regression runs).\n- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; treat this as a ranked scope, not a safety guarantee.\n"
         },
         {
           "agent": "Coding Agent",
@@ -321,7 +321,7 @@
           },
           "outputs": {
             "branch": "br/festive20-discount-code",
-            "commit": "e44bafce73f0",
+            "commit": "92408944d47f",
             "changed files": [
               "shopcart/pricing.py",
               "shopcart/receipt.py",
@@ -330,12 +330,12 @@
             ],
             "mode": "patch:festive20_scope_creep.json"
           },
-          "document": "# PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\nAdds the FESTIVE20 code (20% off, capped at Rs 500) with tests, and while there switches receipts to the rupee sign.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `894a0195814f`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `shopcart/receipt.py` (outside the impact scope)\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20_scope_creep.json)._\n"
+          "document": "# PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\nAdds the FESTIVE20 code (20% off, capped at Rs 500) with tests, and while there switches receipts to the rupee sign.\n\n**Story:** As a shopper, I want to apply the discount code FESTIVE20 at checkout to get 20% off my cart total, capped at Rs 500.\n\n**Impact analysis:** risk MEDIUM, 7 test(s) at risk, base `18d3d611c132`.\n\n**Changed files**\n- `shopcart/pricing.py`\n- `shopcart/receipt.py` (outside the impact scope)\n- `tests/test_cart.py`\n- `tests/test_pricing.py`\n\n**Tests at risk**\n- `tests/test_cart.py::test_total_applies_discount_then_tax`\n- `tests/test_pricing.py::test_code_is_case_insensitive`\n- `tests/test_pricing.py::test_unknown_code_is_ignored`\n- `tests/test_pricing.py::test_no_code_leaves_subtotal`\n- `tests/test_cart.py::test_add_rejects_zero_quantity`\n- `tests/test_cart.py::test_subtotal_sums_lines`\n- `tests/test_pricing.py::test_welcome10_takes_ten_percent`\n\n_Opened by the BlastRadius Coding Agent (patch:festive20_scope_creep.json)._\n"
         },
         {
           "agent": "PR Reviewer Agent",
           "status": "ok",
-          "headline": "APPROVE: merged as 64592758d5b6",
+          "headline": "APPROVE: merged as 657853821b05",
           "inputs": {
             "pull request": "#1",
             "impact analysis": "impact.json",
@@ -344,7 +344,7 @@
           "outputs": {
             "verdict": "APPROVE",
             "merged": true,
-            "commit id": "64592758d5b6",
+            "commit id": "657853821b05",
             "checks": [
               {
                 "check": "scope",
@@ -363,23 +363,23 @@
               }
             ]
           },
-          "document": "# Review of PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\n**Verdict: APPROVE** — merged as `64592758d5b6`\n\n| Check | Result | Detail |\n|---|---|---|\n| scope | FAIL | outside the impact scope: shopcart/receipt.py (warn mode: not blocking) |\n| compile | pass | all changed Python files compile |\n| tests at risk | pass | 7 passed, 0 failed, 0 errors (7 from the impact analysis, 2 changed test file(s)) |\n\n_Reviewed by the BlastRadius PR Reviewer Agent._\n"
+          "document": "# Review of PR #1: feat: add FESTIVE20 discount code; show the rupee sign on receipts\n\n**Verdict: APPROVE** — merged as `657853821b05`\n\n| Check | Result | Detail |\n|---|---|---|\n| scope | FAIL | outside the impact scope: shopcart/receipt.py (warn mode: not blocking) |\n| compile | pass | all changed Python files compile |\n| tests at risk | pass | 7 passed, 0 failed, 0 errors (7 from the impact analysis, 2 changed test file(s)) |\n\n_Reviewed by the BlastRadius PR Reviewer Agent._\n"
         },
         {
           "agent": "Build & Deploy Agent",
           "status": "failed",
-          "headline": "Build FAILED for 64592758d5b6 on main; notification sent, nothing deployed",
+          "headline": "Build FAILED for 657853821b05 on main; notification sent, nothing deployed",
           "inputs": {
-            "commit id": "64592758d5b6",
+            "commit id": "657853821b05",
             "branch": "main"
           },
           "outputs": {
             "status": "build_failed",
-            "build": "python3 -m pytest -q -p no:cacheprovider",
+            "build": "python -m pytest -q -p no:cacheprovider",
             "exit code": 1,
             "package": null
           },
-          "document": "```\nE         ? ^\n\ntests/test_receipt.py:5: AssertionError\n______________________ test_receipt_line_contains_amount _______________________\n\n    def test_receipt_line_contains_amount():\n>       assert \"Rs 25.00\" in receipt_line(\"PEN-010\", 1, 2500)\nE       AssertionError: assert 'Rs 25.00' in 'PEN-010    x1         ₹25.00'\nE        +  where 'PEN-010    x1         ₹25.00' = receipt_line('PEN-010', 1, 2500)\n\ntests/test_receipt.py:9: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_receipt.py::test_format_rupees - AssertionError: assert '₹4...\nFAILED tests/test_receipt.py::test_receipt_line_contains_amount - AssertionEr...\n2 failed, 16 passed in 0.07s\n```\n"
+          "document": "```\nE         ? ^\n\ntests/test_receipt.py:5: AssertionError\n______________________ test_receipt_line_contains_amount _______________________\n\n    def test_receipt_line_contains_amount():\n>       assert \"Rs 25.00\" in receipt_line(\"PEN-010\", 1, 2500)\nE       AssertionError: assert 'Rs 25.00' in 'PEN-010    x1         ₹25.00'\nE        +  where 'PEN-010    x1         ₹25.00' = receipt_line('PEN-010', 1, 2500)\n\ntests/test_receipt.py:9: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_receipt.py::test_format_rupees - AssertionError: assert '₹4...\nFAILED tests/test_receipt.py::test_receipt_line_contains_amount - AssertionEr...\n2 failed, 16 passed in 0.04s\n```\n"
         },
         {
           "agent": "Regression Suite Agent",
@@ -398,22 +398,22 @@
               "tests/test_receipt.py::test_receipt_line_contains_amount"
             ]
           },
-          "document": "# Regression Test Report: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Commit | `64592758d5b6` |\n| Verdict | **FAIL** |\n| Selected scope | 10 of 18 tests (the test files the impact analysis put at risk) |\n| Selected run | 10 passed, 0 failed, 0 errors, 0 skipped in 0.33 s |\n| Full suite | 16 passed, 2 failed, 0 errors, 0 skipped in 0.33 s |\n| Impact recall | 0/2 of the failing tests were in the selected scope |\n\n## Selected tests\n\n| Test | Outcome | Time (s) |\n|---|---|---:|\n| `tests/test_cart.py::test_add_rejects_zero_quantity` | passed | 0.000 |\n| `tests/test_cart.py::test_subtotal_sums_lines` | passed | 0.000 |\n| `tests/test_cart.py::test_total_applies_discount_then_tax` | passed | 0.000 |\n| `tests/test_cart.py::test_total_with_festive20_respects_cap` | passed | 0.000 |\n| `tests/test_pricing.py::test_code_is_case_insensitive` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_is_capped_at_rs_500` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_takes_twenty_percent` | passed | 0.000 |\n| `tests/test_pricing.py::test_no_code_leaves_subtotal` | passed | 0.000 |\n| `tests/test_pricing.py::test_unknown_code_is_ignored` | passed | 0.000 |\n| `tests/test_pricing.py::test_welcome10_takes_ten_percent` | passed | 0.000 |\n\n## Failures\n\n- `tests/test_receipt.py::test_format_rupees`: AssertionError: assert '₹499.00' == 'Rs 499.00' (**outside the impact scope**)\n- `tests/test_receipt.py::test_receipt_line_contains_amount`: AssertionError: assert 'Rs 25.00' in 'PEN-010    x1         ₹25.00' (**outside the impact scope**)\n\n## Missed by the impact analysis\n\n2 failing test(s) were outside the selected scope. Either the change touched code the story did not call for (check the PR's out-of-scope files), or the dependency was invisible to static analysis.\n\n_Generated by the BlastRadius Regression Suite Agent._\n"
+          "document": "# Regression Test Report: FESTIVE20 discount code\n\n| | |\n|---|---|\n| Commit | `657853821b05` |\n| Verdict | **FAIL** |\n| Selected scope | 10 of 18 tests (the test files the impact analysis put at risk) |\n| Selected run | 10 passed, 0 failed, 0 errors, 0 skipped in 0.24 s |\n| Full suite | 16 passed, 2 failed, 0 errors, 0 skipped in 0.35 s |\n| Impact recall | 0/2 of the failing tests were in the selected scope |\n\n## Selected tests\n\n| Test | Outcome | Time (s) |\n|---|---|---:|\n| `tests/test_cart.py::test_add_rejects_zero_quantity` | passed | 0.000 |\n| `tests/test_cart.py::test_subtotal_sums_lines` | passed | 0.001 |\n| `tests/test_cart.py::test_total_applies_discount_then_tax` | passed | 0.001 |\n| `tests/test_cart.py::test_total_with_festive20_respects_cap` | passed | 0.000 |\n| `tests/test_pricing.py::test_code_is_case_insensitive` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_is_capped_at_rs_500` | passed | 0.000 |\n| `tests/test_pricing.py::test_festive20_takes_twenty_percent` | passed | 0.000 |\n| `tests/test_pricing.py::test_no_code_leaves_subtotal` | passed | 0.000 |\n| `tests/test_pricing.py::test_unknown_code_is_ignored` | passed | 0.000 |\n| `tests/test_pricing.py::test_welcome10_takes_ten_percent` | passed | 0.000 |\n\n## Failures\n\n- `tests/test_receipt.py::test_format_rupees`: AssertionError: assert '₹499.00' == 'Rs 499.00' (**outside the impact scope**)\n- `tests/test_receipt.py::test_receipt_line_contains_amount`: AssertionError: assert 'Rs 25.00' in 'PEN-010    x1         ₹25.00' (**outside the impact scope**)\n\n## Missed by the impact analysis\n\n2 failing test(s) were outside the selected scope. Either the change touched code the story did not call for (check the PR's out-of-scope files), or the dependency was invisible to static analysis.\n\n_Generated by the BlastRadius Regression Suite Agent._\n"
         }
       ],
       "notifications": [
         {
-          "ts": "2026-10-09T05:31:21+00:00",
+          "ts": "2026-10-09T09:09:11+00:00",
           "event": "build_failed",
-          "message": "Build FAILED for main @ 64592758d5b6 (python3 -m pytest -q -p no:cacheprovider exited 1); not deployed.",
+          "message": "Build FAILED for main @ 657853821b05 (python -m pytest -q -p no:cacheprovider exited 1); not deployed.",
           "details": {
-            "commit": "64592758d5b62363576386afe5ce0731e1837ad2",
+            "commit": "657853821b05c9ebf77051ac8494fb3a814a1e38",
             "branch": "main",
             "failed": [
               "FAILED tests/test_receipt.py::test_format_rupees - AssertionError: assert '₹4...",
               "FAILED tests/test_receipt.py::test_receipt_line_contains_amount - AssertionEr..."
             ],
-            "log": "<temp>/shopcart-build-fails/.blastradius/builds/64592758d5b6/build.log"
+            "log": "<temp>/shopcart-build-fails/.blastradius/builds/657853821b05/build.log"
           },
           "channels": [
             "log",

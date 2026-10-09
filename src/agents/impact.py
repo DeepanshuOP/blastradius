@@ -285,7 +285,16 @@ class ImpactAnalysisAgent:
                 gaps.append(f"no test reaches `{p}`; add tests for the new behaviour")
         n_change, n_dep = len(seeds), len(dep_files)
         risk_reasons = [f"{n_change} file(s) to change, {n_dep} dependent file(s), {len(tests)} test(s) at risk"]
-        risk = "low" if n_change <= 1 and n_dep == 0 else "high" if n_change + n_dep >= 5 or gaps else "medium"
+        total_tests = len(tests) + len(unaffected)
+        share = len(tests) / total_tests if total_tests else 0.0
+        if total_tests:
+            risk_reasons.append(f"{len(tests)}/{total_tests} tests ({share:.0%}) reach a changed file")
+        if n_change + n_dep >= 5 or gaps or share >= 0.5:
+            risk = "high"
+        elif n_change <= 1 and n_dep == 0 and share < 0.2:
+            risk = "low"
+        else:
+            risk = "medium"
         risk_reasons += llm_risks
 
         base_branch = gitops.current_branch(repo)
