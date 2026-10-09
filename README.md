@@ -62,7 +62,10 @@ make test            # full test suite
 make tables          # regenerate every number in paper/generated/ (offline, ~8 min; needs data/)
 make demo            # terminal walkthrough of one real instance
 make agents-demo     # the five agents, three recorded scenarios
-make demo-web        # demo site on http://localhost:3000 (Live run · Results · Agents · Corpus)
+make demo-web        # demo site on http://localhost:3000 (Live run · Results · Analyze a repo · Agents · Corpus · Decisions)
+make analyze REPO=https://github.com/pallets/itsdangerous \
+  STORY="Add a max_age grace period when validating timestamped signatures"
+                     # impact analysis of any public Python/Java repo (shallow clone, offline agent, no LLM)
 ```
 
 Using the dataset only: download the release from Zenodo and read the Parquet tables with DuckDB or pandas. Schema: `docs/SCHEMAS.md` (section "Release schema v0.2"); datasheet: `docs/DATASHEET.md`; reproduction: `docs/REPRODUCE.md`.
@@ -77,7 +80,7 @@ Using the dataset only: download the release from Zenodo and read the Parquet ta
 | `src/graph/` | commit-pinned code graphs over a stripped Graphify fork (no LLM pass) |
 | `src/agents/` | the five-agent workflow |
 | `analysis/` | every reported number, the release builder, the validator |
-| `demo-web/` | static Next.js demo site |
+| `demo-web/` | Next.js demo site; static replay plus a localhost-only `/api/analyze` route |
 | `paper/` | MSR 2027 Data & Tool Showcase draft and generated tables |
 
 ## Citation
