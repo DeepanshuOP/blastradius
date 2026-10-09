@@ -1,0 +1,3142 @@
+{
+ "decisions": {
+  "rows": [
+   {
+    "id": "D-01",
+    "title": "Target track"
+   },
+   {
+    "id": "D-02",
+    "title": "Claimed contribution"
+   },
+   {
+    "id": "D-03",
+    "title": "Language scope"
+   },
+   {
+    "id": "D-04",
+    "title": "Parser strategy"
+   },
+   {
+    "id": "D-05",
+    "title": "Graph formalism"
+   },
+   {
+    "id": "D-06",
+    "title": "Storage"
+   },
+   {
+    "id": "D-07",
+    "title": "Diff extraction"
+   },
+   {
+    "id": "D-08",
+    "title": "Naming"
+   },
+   {
+    "id": "D-09",
+    "title": "Test-ID normalizer"
+   },
+   {
+    "id": "D-10",
+    "title": "Test-node typing"
+   },
+   {
+    "id": "D-11",
+    "title": "Graphify baseline"
+   },
+   {
+    "id": "D-12",
+    "title": "Matrix builds"
+   },
+   {
+    "id": "D-13",
+    "title": "Monorepos"
+   },
+   {
+    "id": "D-14",
+    "title": "Graph versioning"
+   },
+   {
+    "id": "D-15",
+    "title": "Visualisation"
+   },
+   {
+    "id": "D-16",
+    "title": "Dual submission"
+   },
+   {
+    "id": "D-17",
+    "title": "LLM in pipeline"
+   },
+   {
+    "id": "D-18",
+    "title": "Placement collision"
+   },
+   {
+    "id": "D-19",
+    "title": "Raw-capture path keying"
+   },
+   {
+    "id": "D-20",
+    "title": "Cursor completion tracking"
+   },
+   {
+    "id": "D-22",
+    "title": "Transient handling & dead credentials"
+   },
+   {
+    "id": "D-23",
+    "title": "Capture order vs. retention"
+   },
+   {
+    "id": "D-24",
+    "title": "Check-run annotation source tier"
+   },
+   {
+    "id": "D-25",
+    "title": "Test identity two-key model"
+   },
+   {
+    "id": "D-26",
+    "title": "Per-repository log retention policy"
+   },
+   {
+    "id": "D-27",
+    "title": "EXPECTED.md amendment protocol & ground-truth validation"
+   },
+   {
+    "id": "D-28",
+    "title": "Artifact retention policy & forward-only capture window"
+   },
+   {
+    "id": "D-29",
+    "title": "Ground-truth labelling discipline & raw-log derivation"
+   },
+   {
+    "id": "D-30",
+    "title": "Language-stratified sweep filter & early Python pivot"
+   },
+   {
+    "id": "D-31",
+    "title": "Gradle FQCN suffix join & ground-truth alignment"
+   },
+   {
+    "id": "D-32",
+    "title": "Parameterisation"
+   },
+   {
+    "id": "D-34",
+    "title": "Base resolution via commit graph and branch-run index"
+   },
+   {
+    "id": "D-35",
+    "title": "run_attempt semantics"
+   },
+   {
+    "id": "D-36",
+    "title": "Transfer deadline and byte ceiling"
+   },
+   {
+    "id": "D-37",
+    "title": "Holdout corpus lifecycle"
+   },
+   {
+    "id": "D-38",
+    "title": "Void versus superseded scoring"
+   },
+   {
+    "id": "D-39",
+    "title": "Java test identifier convention"
+   },
+   {
+    "id": "D-40",
+    "title": "Language-ordered sweep"
+   },
+   {
+    "id": "D-41",
+    "title": "Artifact retention cadence"
+   },
+   {
+    "id": "D-42",
+    "title": "Schema conformance"
+   },
+   {
+    "id": "D-43",
+    "title": "Derivable negatives and candidate test universes"
+   },
+   {
+    "id": "D-44",
+    "title": "Gate 1 reads against the label count, not the instance count"
+   },
+   {
+    "id": "D-45",
+    "title": "Secret-scan severity tiering"
+   },
+   {
+    "id": "D-46",
+    "title": "Class-level failure events are not test ids, and are counted rather than dropped silently"
+   },
+   {
+    "id": "D-47",
+    "title": "The binding rate is reported as two numbers, not one"
+   },
+   {
+    "id": "D-48",
+    "title": "Graph layer excluded from the MSR 2027 paper; continues as a BITE497J deliverable"
+   },
+   {
+    "id": "D-49",
+    "title": "Interim artifacts rebuilt from raw at 34aec6d; all earlier interim-derived figures superseded"
+   },
+   {
+    "id": "D-50",
+    "title": "Binding resolves against pinned clone commits; canonical figures 5,643 / 3,820"
+   },
+   {
+    "id": "D-52",
+    "title": "RQ1 method corrections"
+   },
+   {
+    "id": "D-53",
+    "title": "Independent parser precision not measured for the MSR 2027 submission; holdout v5 left unscored"
+   },
+   {
+    "id": "D-54",
+    "title": "Release schema v0.2"
+   },
+   {
+    "id": "D-55",
+    "title": "Agentic workflow (five agents) as a separate demo path"
+   }
+  ],
+  "source": "docs/DECISIONS.md"
+ },
+ "generated_at_git_sha": "84b4fa5aba22e35d62ecb26032a4300d88afea32",
+ "panels": [
+  {
+   "id": "funnel",
+   "source": "paper/generated/attrition_funnel.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "stage",
+      "count",
+      "of previous stage",
+      "of first stage",
+      "source"
+     ],
+     "heading": "Repositories",
+     "rows": [
+      [
+       "SEART export",
+       "3,671",
+       "-",
+       "-",
+       "data/frame/attrition_stage.csv"
+      ],
+      [
+       "CI-live (>= 100 runs in 90 days)",
+       "2,646",
+       "2,646/3,671 (72.08%)",
+       "2,646/3,671 (72.08%)",
+       "data/frame/attrition_stage.csv"
+      ],
+      [
+       "has a test-intent workflow",
+       "2,333",
+       "2,333/2,646 (88.17%)",
+       "2,333/3,671 (63.55%)",
+       "data/frame/attrition_stage.csv"
+      ],
+      [
+       "sampled into the frame",
+       "300",
+       "300/2,333 (12.86%)",
+       "300/3,671 (8.17%)",
+       "data/frame/frame_v1.csv"
+      ],
+      [
+       "swept (>= 1 run harvested)",
+       "76",
+       "76/300 (25.33%)",
+       "76/3,671 (2.07%)",
+       "instances_raw.parquet"
+      ],
+      [
+       "with a failed run",
+       "69",
+       "69/76 (90.79%)",
+       "69/3,671 (1.88%)",
+       "instances_raw.parquet"
+      ],
+      [
+       "with a strict instance",
+       "37",
+       "37/69 (53.62%)",
+       "37/3,671 (1.01%)",
+       "outcomes.parquet (split == strict)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "stage",
+      "count",
+      "of previous stage",
+      "of first stage",
+      "source"
+     ],
+     "heading": "Pull requests",
+     "rows": [
+      [
+       "PRs discovered",
+       "12,986",
+       "-",
+       "-",
+       "instances_raw.parquet"
+      ],
+      [
+       "with a failed run",
+       "4,005",
+       "4,005/12,986 (30.84%)",
+       "4,005/12,986 (30.84%)",
+       "instances_raw.parquet"
+      ],
+      [
+       "with a strict instance",
+       "419",
+       "419/4,005 (10.46%)",
+       "419/12,986 (3.23%)",
+       "outcomes.parquet (split == strict)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "stage",
+      "count",
+      "of previous stage",
+      "of first stage",
+      "source"
+     ],
+     "heading": "Runs (benchmark instances)",
+     "rows": [
+      [
+       "runs discovered",
+       "165,349",
+       "-",
+       "-",
+       "instances_raw.parquet"
+      ],
+      [
+       "failed runs",
+       "12,581",
+       "12,581/165,349 (7.61%)",
+       "12,581/165,349 (7.61%)",
+       "instances_raw.parquet"
+      ],
+      [
+       "with a failed-job log on disk",
+       "6,586",
+       "6,586/12,581 (52.35%)",
+       "6,586/165,349 (3.98%)",
+       "RawStore (data/raw)"
+      ],
+      [
+       "with a parsed head test failure",
+       "1,774",
+       "1,774/6,586 (26.94%)",
+       "1,774/165,349 (1.07%)",
+       "parsed_outcomes.parquet"
+      ],
+      [
+       "with a resolved base",
+       "1,348",
+       "1,348/1,774 (75.99%)",
+       "1,348/165,349 (0.82%)",
+       "base_resolution_new.parquet (status != no_base)"
+      ],
+      [
+       "with a known base failure set",
+       "897",
+       "897/1,348 (66.54%)",
+       "897/165,349 (0.54%)",
+       "base_resolution_new.parquet (exact_green) + base_outcomes.parquet"
+      ],
+      [
+       "with >= 1 strict label",
+       "762",
+       "762/897 (84.95%)",
+       "762/165,349 (0.46%)",
+       "outcomes.parquet (split == strict)"
+      ]
+     ]
+    }
+   ],
+   "title": "Attrition funnel: repositories, pull requests, runs"
+  },
+  {
+   "id": "rq1_k5",
+   "source": "paper/generated/rq1.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 5 > Overall",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "575",
+       "0.012",
+       "0.038",
+       "0.011",
+       "42/7,515 (0.56%)",
+       "42/1,315 (3.19%)",
+       "8"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "575",
+       "0.054",
+       "0.069",
+       "0.037",
+       "84/3,513 (2.39%)",
+       "84/1,315 (6.39%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "575",
+       "0.046",
+       "0.061",
+       "0.030",
+       "77/4,110 (1.87%)",
+       "77/1,315 (5.86%)",
+       "5"
+      ],
+      [
+       "changeset baseline",
+       "575",
+       "0.039",
+       "0.245",
+       "0.037",
+       "224/13,993 (1.60%)",
+       "224/1,315 (17.03%)",
+       "9"
+      ],
+      [
+       "historical-frequency baseline",
+       "575",
+       "0.201",
+       "0.423",
+       "0.188",
+       "406/2,385 (17.02%)",
+       "406/1,315 (30.87%)",
+       "5"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 5 > Java (n=461)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "461",
+       "0.005",
+       "0.021",
+       "0.005",
+       "19/6,573 (0.29%)",
+       "19/1,062 (1.79%)",
+       "9"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "461",
+       "0.025",
+       "0.052",
+       "0.020",
+       "51/3,116 (1.64%)",
+       "51/1,062 (4.80%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "461",
+       "0.017",
+       "0.045",
+       "0.013",
+       "48/3,646 (1.32%)",
+       "48/1,062 (4.52%)",
+       "5"
+      ],
+      [
+       "changeset baseline",
+       "461",
+       "0.040",
+       "0.280",
+       "0.039",
+       "201/13,137 (1.53%)",
+       "201/1,062 (18.93%)",
+       "13"
+      ],
+      [
+       "historical-frequency baseline",
+       "461",
+       "0.211",
+       "0.434",
+       "0.200",
+       "314/1,836 (17.10%)",
+       "314/1,062 (29.57%)",
+       "5"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 5 > Python (n=114)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "114",
+       "0.039",
+       "0.106",
+       "0.035",
+       "23/942 (2.44%)",
+       "23/253 (9.09%)",
+       "6"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "114",
+       "0.171",
+       "0.139",
+       "0.108",
+       "33/397 (8.31%)",
+       "33/253 (13.04%)",
+       "3.5"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "114",
+       "0.162",
+       "0.127",
+       "0.102",
+       "29/464 (6.25%)",
+       "29/253 (11.46%)",
+       "4.5"
+      ],
+      [
+       "changeset baseline",
+       "114",
+       "0.037",
+       "0.105",
+       "0.026",
+       "23/856 (2.69%)",
+       "23/253 (9.09%)",
+       "5"
+      ],
+      [
+       "historical-frequency baseline",
+       "114",
+       "0.163",
+       "0.382",
+       "0.141",
+       "92/549 (16.76%)",
+       "92/253 (36.36%)",
+       "5"
+      ]
+     ]
+    }
+   ],
+   "title": "RQ1 at k = 5"
+  },
+  {
+   "id": "rq1_k10",
+   "source": "paper/generated/rq1.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 10 > Overall",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.051",
+       "0.010",
+       "61/13,109 (0.47%)",
+       "61/1,316 (4.64%)",
+       "14"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.087",
+       "0.038",
+       "101/4,674 (2.16%)",
+       "101/1,316 (7.67%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.087",
+       "0.033",
+       "101/5,737 (1.76%)",
+       "101/1,316 (7.67%)",
+       "6"
+      ],
+      [
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037",
+       "224/14,001 (1.60%)",
+       "224/1,316 (17.02%)",
+       "9"
+      ],
+      [
+       "historical-frequency baseline",
+       "576",
+       "0.185",
+       "0.517",
+       "0.178",
+       "519/4,099 (12.66%)",
+       "519/1,316 (39.44%)",
+       "10"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 10 > Java (n=462)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "462",
+       "0.005",
+       "0.034",
+       "0.005",
+       "33/11,572 (0.29%)",
+       "33/1,063 (3.10%)",
+       "15"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "462",
+       "0.026",
+       "0.071",
+       "0.021",
+       "65/4,176 (1.56%)",
+       "65/1,063 (6.11%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "462",
+       "0.019",
+       "0.071",
+       "0.015",
+       "65/5,156 (1.26%)",
+       "65/1,063 (6.11%)",
+       "7"
+      ],
+      [
+       "changeset baseline",
+       "462",
+       "0.040",
+       "0.279",
+       "0.039",
+       "201/13,145 (1.53%)",
+       "201/1,063 (18.91%)",
+       "13"
+      ],
+      [
+       "historical-frequency baseline",
+       "462",
+       "0.199",
+       "0.496",
+       "0.192",
+       "380/3,040 (12.50%)",
+       "380/1,063 (35.75%)",
+       "8"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 10 > Python (n=114)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "114",
+       "0.034",
+       "0.123",
+       "0.032",
+       "28/1,537 (1.82%)",
+       "28/253 (11.07%)",
+       "11"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "114",
+       "0.171",
+       "0.151",
+       "0.108",
+       "36/498 (7.23%)",
+       "36/253 (14.23%)",
+       "3.5"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "114",
+       "0.166",
+       "0.151",
+       "0.106",
+       "36/581 (6.20%)",
+       "36/253 (14.23%)",
+       "4.5"
+      ],
+      [
+       "changeset baseline",
+       "114",
+       "0.037",
+       "0.105",
+       "0.026",
+       "23/856 (2.69%)",
+       "23/253 (9.09%)",
+       "5"
+      ],
+      [
+       "historical-frequency baseline",
+       "114",
+       "0.128",
+       "0.601",
+       "0.120",
+       "139/1,059 (13.13%)",
+       "139/253 (54.94%)",
+       "10"
+      ]
+     ]
+    }
+   ],
+   "title": "RQ1 at k = 10"
+  },
+  {
+   "id": "rq1_k20",
+   "source": "paper/generated/rq1.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 20 > Overall",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.063",
+       "0.010",
+       "73/19,713 (0.37%)",
+       "73/1,316 (5.55%)",
+       "21"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.089",
+       "0.038",
+       "105/5,312 (1.98%)",
+       "105/1,316 (7.98%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.089",
+       "0.033",
+       "105/6,922 (1.52%)",
+       "105/1,316 (7.98%)",
+       "6"
+      ],
+      [
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037",
+       "224/14,001 (1.60%)",
+       "224/1,316 (17.02%)",
+       "9"
+      ],
+      [
+       "historical-frequency baseline",
+       "576",
+       "0.177",
+       "0.575",
+       "0.170",
+       "596/6,342 (9.40%)",
+       "596/1,316 (45.29%)",
+       "11"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 20 > Java (n=462)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "462",
+       "0.005",
+       "0.046",
+       "0.005",
+       "41/17,348 (0.24%)",
+       "41/1,063 (3.86%)",
+       "24"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "462",
+       "0.025",
+       "0.072",
+       "0.021",
+       "67/4,780 (1.40%)",
+       "67/1,063 (6.30%)",
+       "4"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "462",
+       "0.019",
+       "0.072",
+       "0.015",
+       "67/6,298 (1.06%)",
+       "67/1,063 (6.30%)",
+       "7"
+      ],
+      [
+       "changeset baseline",
+       "462",
+       "0.040",
+       "0.279",
+       "0.039",
+       "201/13,145 (1.53%)",
+       "201/1,063 (18.91%)",
+       "13"
+      ],
+      [
+       "historical-frequency baseline",
+       "462",
+       "0.192",
+       "0.533",
+       "0.186",
+       "417/4,623 (9.02%)",
+       "417/1,063 (39.23%)",
+       "8"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "k = 20 > Python (n=114)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "114",
+       "0.033",
+       "0.131",
+       "0.031",
+       "32/2,365 (1.35%)",
+       "32/253 (12.65%)",
+       "20"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "114",
+       "0.170",
+       "0.157",
+       "0.109",
+       "38/532 (7.14%)",
+       "38/253 (15.02%)",
+       "3.5"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "114",
+       "0.166",
+       "0.157",
+       "0.106",
+       "38/624 (6.09%)",
+       "38/253 (15.02%)",
+       "4.5"
+      ],
+      [
+       "changeset baseline",
+       "114",
+       "0.037",
+       "0.105",
+       "0.026",
+       "23/856 (2.69%)",
+       "23/253 (9.09%)",
+       "5"
+      ],
+      [
+       "historical-frequency baseline",
+       "114",
+       "0.112",
+       "0.748",
+       "0.108",
+       "179/1,719 (10.41%)",
+       "179/253 (70.75%)",
+       "19"
+      ]
+     ]
+    }
+   ],
+   "title": "RQ1 at k = 20"
+  },
+  {
+   "id": "rq1_size",
+   "source": "paper/generated/rq1.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "Change size (k = 10) > 1 changed files (n=51)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "51",
+       "0.007",
+       "0.020",
+       "0.004",
+       "3/319 (0.94%)",
+       "3/167 (1.80%)",
+       "6"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "51",
+       "0.025",
+       "0.044",
+       "0.014",
+       "5/128 (3.91%)",
+       "5/167 (2.99%)",
+       "1"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "51",
+       "0.024",
+       "0.044",
+       "0.013",
+       "5/154 (3.25%)",
+       "5/167 (2.99%)",
+       "1"
+      ],
+      [
+       "changeset baseline",
+       "51",
+       "0.020",
+       "0.020",
+       "0.020",
+       "1/51 (1.96%)",
+       "1/167 (0.60%)",
+       "1"
+      ],
+      [
+       "historical-frequency baseline",
+       "51",
+       "0.086",
+       "0.435",
+       "0.080",
+       "32/385 (8.31%)",
+       "32/167 (19.16%)",
+       "10"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "Change size (k = 10) > 2-5 changed files (n=148)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "148",
+       "0.029",
+       "0.071",
+       "0.028",
+       "17/1,434 (1.19%)",
+       "17/323 (5.26%)",
+       "10"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "148",
+       "0.066",
+       "0.090",
+       "0.060",
+       "24/613 (3.92%)",
+       "24/323 (7.43%)",
+       "2"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "148",
+       "0.053",
+       "0.090",
+       "0.048",
+       "24/773 (3.10%)",
+       "24/323 (7.43%)",
+       "3"
+      ],
+      [
+       "changeset baseline",
+       "148",
+       "0.074",
+       "0.176",
+       "0.066",
+       "32/480 (6.67%)",
+       "32/323 (9.91%)",
+       "3"
+      ],
+      [
+       "historical-frequency baseline",
+       "148",
+       "0.125",
+       "0.448",
+       "0.116",
+       "109/1,190 (9.16%)",
+       "109/323 (33.75%)",
+       "10"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "Change size (k = 10) > 6-20 changed files (n=207)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "207",
+       "0.007",
+       "0.047",
+       "0.006",
+       "19/3,738 (0.51%)",
+       "19/368 (5.16%)",
+       "15"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "207",
+       "0.073",
+       "0.112",
+       "0.043",
+       "38/1,343 (2.83%)",
+       "38/368 (10.33%)",
+       "3"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "207",
+       "0.071",
+       "0.112",
+       "0.041",
+       "38/1,687 (2.25%)",
+       "38/368 (10.33%)",
+       "7"
+      ],
+      [
+       "changeset baseline",
+       "207",
+       "0.039",
+       "0.320",
+       "0.038",
+       "84/2,332 (3.60%)",
+       "84/368 (22.83%)",
+       "11"
+      ],
+      [
+       "historical-frequency baseline",
+       "207",
+       "0.134",
+       "0.548",
+       "0.131",
+       "159/1,474 (10.79%)",
+       "159/368 (43.21%)",
+       "10"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J",
+      "micro P (hits/predicted)",
+      "micro R (hits/actual)",
+      "median size"
+     ],
+     "heading": "Change size (k = 10) > >20 changed files (n=170)",
+     "rows": [
+      [
+       "co-change, all partner files",
+       "170",
+       "0.002",
+       "0.049",
+       "0.002",
+       "22/7,618 (0.29%)",
+       "22/458 (4.80%)",
+       "37.5"
+      ],
+      [
+       "co-change, restricted to conventional test files",
+       "170",
+       "0.030",
+       "0.066",
+       "0.021",
+       "34/2,590 (1.31%)",
+       "34/458 (7.42%)",
+       "10"
+      ],
+      [
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "170",
+       "0.024",
+       "0.066",
+       "0.016",
+       "34/3,123 (1.09%)",
+       "34/458 (7.42%)",
+       "13"
+      ],
+      [
+       "changeset baseline",
+       "170",
+       "0.014",
+       "0.280",
+       "0.014",
+       "107/11,138 (0.96%)",
+       "107/458 (23.36%)",
+       "67"
+      ],
+      [
+       "historical-frequency baseline",
+       "170",
+       "0.329",
+       "0.564",
+       "0.317",
+       "219/1,050 (20.86%)",
+       "219/458 (47.82%)",
+       "6.5"
+      ]
+     ]
+    }
+   ],
+   "title": "RQ1 by change size (k = 10)"
+  },
+  {
+   "id": "sensitivity",
+   "source": "paper/generated/infra_failures.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "k",
+      "labels",
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J"
+     ],
+     "heading": "RQ1 sensitivity: labels removed",
+     "rows": [
+      [
+       "5",
+       "all strict labels",
+       "co-change, all partner files",
+       "575",
+       "0.012",
+       "0.038",
+       "0.011"
+      ],
+      [
+       "5",
+       "all strict labels",
+       "co-change, restricted to conventional test files",
+       "575",
+       "0.054",
+       "0.069",
+       "0.037"
+      ],
+      [
+       "5",
+       "all strict labels",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "575",
+       "0.046",
+       "0.061",
+       "0.030"
+      ],
+      [
+       "5",
+       "all strict labels",
+       "changeset baseline",
+       "575",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "5",
+       "all strict labels",
+       "historical-frequency baseline",
+       "575",
+       "0.201",
+       "0.423",
+       "0.188"
+      ],
+      [
+       "5",
+       "environment-strict removed",
+       "co-change, all partner files",
+       "538",
+       "0.007",
+       "0.024",
+       "0.007"
+      ],
+      [
+       "5",
+       "environment-strict removed",
+       "co-change, restricted to conventional test files",
+       "538",
+       "0.030",
+       "0.057",
+       "0.023"
+      ],
+      [
+       "5",
+       "environment-strict removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "538",
+       "0.021",
+       "0.049",
+       "0.016"
+      ],
+      [
+       "5",
+       "environment-strict removed",
+       "changeset baseline",
+       "538",
+       "0.040",
+       "0.255",
+       "0.037"
+      ],
+      [
+       "5",
+       "environment-strict removed",
+       "historical-frequency baseline",
+       "538",
+       "0.198",
+       "0.410",
+       "0.185"
+      ],
+      [
+       "5",
+       "environment-strict + timeout removed",
+       "co-change, all partner files",
+       "507",
+       "0.008",
+       "0.026",
+       "0.007"
+      ],
+      [
+       "5",
+       "environment-strict + timeout removed",
+       "co-change, restricted to conventional test files",
+       "507",
+       "0.031",
+       "0.062",
+       "0.024"
+      ],
+      [
+       "5",
+       "environment-strict + timeout removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "507",
+       "0.022",
+       "0.053",
+       "0.017"
+      ],
+      [
+       "5",
+       "environment-strict + timeout removed",
+       "changeset baseline",
+       "507",
+       "0.041",
+       "0.266",
+       "0.039"
+      ],
+      [
+       "5",
+       "environment-strict + timeout removed",
+       "historical-frequency baseline",
+       "507",
+       "0.205",
+       "0.418",
+       "0.192"
+      ],
+      [
+       "10",
+       "all strict labels",
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.051",
+       "0.010"
+      ],
+      [
+       "10",
+       "all strict labels",
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.087",
+       "0.038"
+      ],
+      [
+       "10",
+       "all strict labels",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.087",
+       "0.033"
+      ],
+      [
+       "10",
+       "all strict labels",
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "10",
+       "all strict labels",
+       "historical-frequency baseline",
+       "576",
+       "0.185",
+       "0.517",
+       "0.178"
+      ],
+      [
+       "10",
+       "environment-strict removed",
+       "co-change, all partner files",
+       "539",
+       "0.007",
+       "0.038",
+       "0.006"
+      ],
+      [
+       "10",
+       "environment-strict removed",
+       "co-change, restricted to conventional test files",
+       "539",
+       "0.030",
+       "0.076",
+       "0.024"
+      ],
+      [
+       "10",
+       "environment-strict removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "539",
+       "0.024",
+       "0.076",
+       "0.019"
+      ],
+      [
+       "10",
+       "environment-strict removed",
+       "changeset baseline",
+       "539",
+       "0.040",
+       "0.254",
+       "0.037"
+      ],
+      [
+       "10",
+       "environment-strict removed",
+       "historical-frequency baseline",
+       "539",
+       "0.186",
+       "0.498",
+       "0.179"
+      ],
+      [
+       "10",
+       "environment-strict + timeout removed",
+       "co-change, all partner files",
+       "508",
+       "0.007",
+       "0.042",
+       "0.007"
+      ],
+      [
+       "10",
+       "environment-strict + timeout removed",
+       "co-change, restricted to conventional test files",
+       "508",
+       "0.032",
+       "0.082",
+       "0.026"
+      ],
+      [
+       "10",
+       "environment-strict + timeout removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "508",
+       "0.025",
+       "0.082",
+       "0.020"
+      ],
+      [
+       "10",
+       "environment-strict + timeout removed",
+       "changeset baseline",
+       "508",
+       "0.041",
+       "0.265",
+       "0.039"
+      ],
+      [
+       "10",
+       "environment-strict + timeout removed",
+       "historical-frequency baseline",
+       "508",
+       "0.192",
+       "0.496",
+       "0.184"
+      ],
+      [
+       "20",
+       "all strict labels",
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.063",
+       "0.010"
+      ],
+      [
+       "20",
+       "all strict labels",
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.089",
+       "0.038"
+      ],
+      [
+       "20",
+       "all strict labels",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.089",
+       "0.033"
+      ],
+      [
+       "20",
+       "all strict labels",
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "20",
+       "all strict labels",
+       "historical-frequency baseline",
+       "576",
+       "0.177",
+       "0.575",
+       "0.170"
+      ],
+      [
+       "20",
+       "environment-strict removed",
+       "co-change, all partner files",
+       "539",
+       "0.007",
+       "0.051",
+       "0.006"
+      ],
+      [
+       "20",
+       "environment-strict removed",
+       "co-change, restricted to conventional test files",
+       "539",
+       "0.030",
+       "0.078",
+       "0.024"
+      ],
+      [
+       "20",
+       "environment-strict removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "539",
+       "0.023",
+       "0.078",
+       "0.018"
+      ],
+      [
+       "20",
+       "environment-strict removed",
+       "changeset baseline",
+       "539",
+       "0.040",
+       "0.254",
+       "0.037"
+      ],
+      [
+       "20",
+       "environment-strict removed",
+       "historical-frequency baseline",
+       "539",
+       "0.178",
+       "0.556",
+       "0.171"
+      ],
+      [
+       "20",
+       "environment-strict + timeout removed",
+       "co-change, all partner files",
+       "508",
+       "0.007",
+       "0.055",
+       "0.007"
+      ],
+      [
+       "20",
+       "environment-strict + timeout removed",
+       "co-change, restricted to conventional test files",
+       "508",
+       "0.032",
+       "0.084",
+       "0.025"
+      ],
+      [
+       "20",
+       "environment-strict + timeout removed",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "508",
+       "0.025",
+       "0.084",
+       "0.019"
+      ],
+      [
+       "20",
+       "environment-strict + timeout removed",
+       "changeset baseline",
+       "508",
+       "0.041",
+       "0.265",
+       "0.039"
+      ],
+      [
+       "20",
+       "environment-strict + timeout removed",
+       "historical-frequency baseline",
+       "508",
+       "0.184",
+       "0.552",
+       "0.177"
+      ]
+     ]
+    }
+   ],
+   "title": "RQ1 sensitivity: environment / timeout labels removed"
+  },
+  {
+   "id": "leakage",
+   "source": "paper/generated/leakage_audit.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "check (instances violating)",
+      "current: strict labels, once each",
+      "legacy: all splits"
+     ],
+     "heading": "Historical-frequency baseline",
+     "rows": [
+      [
+       "instances audited",
+       "762/762 (100.00%)",
+       "762/762 (100.00%)"
+      ],
+      [
+       "instances with any evidence",
+       "720/762 (94.49%)",
+       "723/762 (94.88%)"
+      ],
+      [
+       "evidence from a run starting at or after the instance",
+       "0/762 (0.00%)",
+       "0/762 (0.00%)"
+      ],
+      [
+       "instance's own run in the evidence",
+       "0/762 (0.00%)",
+       "0/762 (0.00%)"
+      ],
+      [
+       "non-strict rows in the evidence",
+       "0/762 (0.00%)",
+       "723/762 (94.88%)"
+      ],
+      [
+       "a (run, test) counted more than once",
+       "0/762 (0.00%)",
+       "721/762 (94.62%)"
+      ],
+      [
+       "evidence rows / distinct (run, test) labels, summed over instances",
+       "72,809 / 72,809",
+       "224,758 / 78,399"
+      ],
+      [
+       "observation (not a violation): evidence includes another run of the same head commit",
+       "47/762 (6.17%)",
+       "47/762 (6.17%)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "check (instances violating)",
+      "current: per-instance trailing history"
+     ],
+     "heading": "Co-change",
+     "rows": [
+      [
+       "instances audited (strict, with a changeset)",
+       "713/762 (93.57%)"
+      ],
+      [
+       "instances with any co-change evidence",
+       "678/713 (95.09%)"
+      ],
+      [
+       "a commit at or after `run_started_at` behind a partner (times re-read from git)",
+       "0/713 (0.00%)"
+      ],
+      [
+       "a used commit git cannot time",
+       "0/713 (0.00%)"
+      ],
+      [
+       "a commit older than the trailing window",
+       "0/713 (0.00%)"
+      ],
+      [
+       "the instance's own head commit used",
+       "0/713 (0.00%)"
+      ],
+      [
+       "commits behind the evidence, summed over instances",
+       "39,980"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "check (instances violating)",
+      "legacy"
+     ],
+     "heading": "Co-change > Legacy static table (`data/interim/cochange.parquet`)",
+     "rows": [
+      [
+       "window ends (2026-08-29T14:13:00Z) after the instance started",
+       "713/713 (100.00%)"
+      ],
+      [
+       "a mined commit dated in `[run_started_at, as_of]` touches a changed file of the instance",
+       "640/713 (89.76%)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "k",
+      "stage",
+      "method",
+      "n",
+      "mean P",
+      "mean R",
+      "mean J"
+     ],
+     "heading": "RQ1 under each fix (mean P / R / J, n instances where the all-partners proxy fires)",
+     "rows": [
+      [
+       "5",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, all partner files",
+       "558",
+       "0.015",
+       "0.064",
+       "0.013"
+      ],
+      [
+       "5",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.041",
+       "0.073",
+       "0.030"
+      ],
+      [
+       "5",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.036",
+       "0.073",
+       "0.026"
+      ],
+      [
+       "5",
+       "0 old: static co-change table, all-splits baseline",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "5",
+       "0 old: static co-change table, all-splits baseline",
+       "historical-frequency baseline",
+       "558",
+       "0.198",
+       "0.424",
+       "0.186"
+      ],
+      [
+       "5",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, all partner files",
+       "558",
+       "0.015",
+       "0.064",
+       "0.013"
+      ],
+      [
+       "5",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.041",
+       "0.073",
+       "0.030"
+      ],
+      [
+       "5",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.036",
+       "0.073",
+       "0.026"
+      ],
+      [
+       "5",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "5",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "historical-frequency baseline",
+       "558",
+       "0.202",
+       "0.419",
+       "0.189"
+      ],
+      [
+       "5",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, all partner files",
+       "532",
+       "0.018",
+       "0.066",
+       "0.016"
+      ],
+      [
+       "5",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to conventional test files",
+       "532",
+       "0.061",
+       "0.073",
+       "0.041"
+      ],
+      [
+       "5",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "532",
+       "0.054",
+       "0.071",
+       "0.035"
+      ],
+      [
+       "5",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "changeset baseline",
+       "532",
+       "0.037",
+       "0.251",
+       "0.034"
+      ],
+      [
+       "5",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "historical-frequency baseline",
+       "532",
+       "0.196",
+       "0.422",
+       "0.183"
+      ],
+      [
+       "5",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, all partner files",
+       "532",
+       "0.018",
+       "0.066",
+       "0.016"
+      ],
+      [
+       "5",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to conventional test files",
+       "532",
+       "0.061",
+       "0.073",
+       "0.041"
+      ],
+      [
+       "5",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "532",
+       "0.054",
+       "0.071",
+       "0.035"
+      ],
+      [
+       "5",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "changeset baseline",
+       "532",
+       "0.037",
+       "0.251",
+       "0.034"
+      ],
+      [
+       "5",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "historical-frequency baseline",
+       "532",
+       "0.200",
+       "0.417",
+       "0.186"
+      ],
+      [
+       "5",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, all partner files",
+       "575",
+       "0.012",
+       "0.038",
+       "0.011"
+      ],
+      [
+       "5",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to conventional test files",
+       "575",
+       "0.054",
+       "0.069",
+       "0.037"
+      ],
+      [
+       "5",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "575",
+       "0.046",
+       "0.061",
+       "0.030"
+      ],
+      [
+       "5",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "changeset baseline",
+       "575",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "5",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "historical-frequency baseline",
+       "575",
+       "0.201",
+       "0.423",
+       "0.188"
+      ],
+      [
+       "10",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, all partner files",
+       "558",
+       "0.013",
+       "0.079",
+       "0.012"
+      ],
+      [
+       "10",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.041",
+       "0.087",
+       "0.031"
+      ],
+      [
+       "10",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.036",
+       "0.087",
+       "0.026"
+      ],
+      [
+       "10",
+       "0 old: static co-change table, all-splits baseline",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "10",
+       "0 old: static co-change table, all-splits baseline",
+       "historical-frequency baseline",
+       "558",
+       "0.176",
+       "0.522",
+       "0.169"
+      ],
+      [
+       "10",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, all partner files",
+       "558",
+       "0.013",
+       "0.079",
+       "0.012"
+      ],
+      [
+       "10",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.041",
+       "0.087",
+       "0.031"
+      ],
+      [
+       "10",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.036",
+       "0.087",
+       "0.026"
+      ],
+      [
+       "10",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "10",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "historical-frequency baseline",
+       "558",
+       "0.186",
+       "0.514",
+       "0.179"
+      ],
+      [
+       "10",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, all partner files",
+       "533",
+       "0.017",
+       "0.082",
+       "0.015"
+      ],
+      [
+       "10",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to conventional test files",
+       "533",
+       "0.063",
+       "0.090",
+       "0.043"
+      ],
+      [
+       "10",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "533",
+       "0.055",
+       "0.090",
+       "0.037"
+      ],
+      [
+       "10",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "changeset baseline",
+       "533",
+       "0.036",
+       "0.250",
+       "0.034"
+      ],
+      [
+       "10",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "historical-frequency baseline",
+       "533",
+       "0.175",
+       "0.517",
+       "0.168"
+      ],
+      [
+       "10",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, all partner files",
+       "533",
+       "0.017",
+       "0.082",
+       "0.015"
+      ],
+      [
+       "10",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to conventional test files",
+       "533",
+       "0.063",
+       "0.090",
+       "0.043"
+      ],
+      [
+       "10",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "533",
+       "0.055",
+       "0.090",
+       "0.037"
+      ],
+      [
+       "10",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "changeset baseline",
+       "533",
+       "0.036",
+       "0.250",
+       "0.034"
+      ],
+      [
+       "10",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "historical-frequency baseline",
+       "533",
+       "0.186",
+       "0.509",
+       "0.178"
+      ],
+      [
+       "10",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.051",
+       "0.010"
+      ],
+      [
+       "10",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.087",
+       "0.038"
+      ],
+      [
+       "10",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.087",
+       "0.033"
+      ],
+      [
+       "10",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "10",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "historical-frequency baseline",
+       "576",
+       "0.185",
+       "0.517",
+       "0.178"
+      ],
+      [
+       "20",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, all partner files",
+       "558",
+       "0.012",
+       "0.087",
+       "0.011"
+      ],
+      [
+       "20",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.042",
+       "0.098",
+       "0.032"
+      ],
+      [
+       "20",
+       "0 old: static co-change table, all-splits baseline",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.037",
+       "0.098",
+       "0.027"
+      ],
+      [
+       "20",
+       "0 old: static co-change table, all-splits baseline",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "20",
+       "0 old: static co-change table, all-splits baseline",
+       "historical-frequency baseline",
+       "558",
+       "0.165",
+       "0.585",
+       "0.160"
+      ],
+      [
+       "20",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, all partner files",
+       "558",
+       "0.012",
+       "0.087",
+       "0.011"
+      ],
+      [
+       "20",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to conventional test files",
+       "558",
+       "0.042",
+       "0.098",
+       "0.032"
+      ],
+      [
+       "20",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "558",
+       "0.037",
+       "0.098",
+       "0.027"
+      ],
+      [
+       "20",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "changeset baseline",
+       "558",
+       "0.038",
+       "0.249",
+       "0.035"
+      ],
+      [
+       "20",
+       "1 baseline de-duplicated to strict, once per (test, instance) only",
+       "historical-frequency baseline",
+       "558",
+       "0.178",
+       "0.573",
+       "0.172"
+      ],
+      [
+       "20",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, all partner files",
+       "533",
+       "0.016",
+       "0.089",
+       "0.014"
+      ],
+      [
+       "20",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to conventional test files",
+       "533",
+       "0.063",
+       "0.091",
+       "0.043"
+      ],
+      [
+       "20",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "533",
+       "0.055",
+       "0.091",
+       "0.037"
+      ],
+      [
+       "20",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "changeset baseline",
+       "533",
+       "0.036",
+       "0.250",
+       "0.034"
+      ],
+      [
+       "20",
+       "2 co-change trailing, one-sided lookup, legacy baseline (leak fix only)",
+       "historical-frequency baseline",
+       "533",
+       "0.163",
+       "0.580",
+       "0.158"
+      ],
+      [
+       "20",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, all partner files",
+       "533",
+       "0.016",
+       "0.089",
+       "0.014"
+      ],
+      [
+       "20",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to conventional test files",
+       "533",
+       "0.063",
+       "0.091",
+       "0.043"
+      ],
+      [
+       "20",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "533",
+       "0.055",
+       "0.091",
+       "0.037"
+      ],
+      [
+       "20",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "changeset baseline",
+       "533",
+       "0.036",
+       "0.250",
+       "0.034"
+      ],
+      [
+       "20",
+       "3 co-change trailing, one-sided lookup, strict baseline (Round 4)",
+       "historical-frequency baseline",
+       "533",
+       "0.177",
+       "0.568",
+       "0.170"
+      ],
+      [
+       "20",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, all partner files",
+       "576",
+       "0.011",
+       "0.063",
+       "0.010"
+      ],
+      [
+       "20",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to conventional test files",
+       "576",
+       "0.054",
+       "0.089",
+       "0.038"
+      ],
+      [
+       "20",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "co-change, restricted to files with \"test\" in the path (sensitivity)",
+       "576",
+       "0.048",
+       "0.089",
+       "0.033"
+      ],
+      [
+       "20",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "changeset baseline",
+       "576",
+       "0.039",
+       "0.245",
+       "0.037"
+      ],
+      [
+       "20",
+       "4 symmetric lookup, strict baseline (current, D-52)",
+       "historical-frequency baseline",
+       "576",
+       "0.177",
+       "0.575",
+       "0.170"
+      ]
+     ]
+    }
+   ],
+   "title": "Leakage audit (before / after)"
+  },
+  {
+   "id": "flakiness",
+   "source": "paper/generated/flakiness.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "measure",
+      "n/d"
+     ],
+     "heading": "Flakiness: same-SHA flips",
+     "rows": [
+      [
+       "same-SHA flips over (head SHA, workflow, test) groups with a failure",
+       "62/11,557 (0.54%)"
+      ],
+      [
+       "relaxed labels removed as flaky (relaxed -> strict)",
+       "46/4,214 (1.09%)"
+      ]
+     ]
+    }
+   ],
+   "title": "Flakiness: same-SHA flips"
+  },
+  {
+   "id": "expiry",
+   "source": "paper/generated/expiry_cliff.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "Window Band",
+      "Remaining Log Lifetime",
+      "Failed Runs",
+      "% of Failed Runs",
+      "Operational Urgency"
+     ],
+     "heading": "1. Recoverable Window for Failed Runs",
+     "rows": [
+      [
+       "**Critical (≤ 7 days left)**",
+       "Age 83.0d – 90.0d",
+       "**715**",
+       "5.33%",
+       "**Imminent permanent loss** — capture immediately"
+      ],
+      [
+       "**High (8 – 30 days left)**",
+       "Age 60.0d – 82.9d",
+       "**2,451**",
+       "18.26%",
+       "**Expiring this month** — Stage 4 priority target"
+      ],
+      [
+       "**Medium (31 – 60 days left)**",
+       "Age 30.0d – 59.9d",
+       "**3,101**",
+       "23.10%",
+       "Safe for 1 month"
+      ],
+      [
+       "**Low (> 60 days left)**",
+       "Age < 30.0d",
+       "**2,697**",
+       "20.09%",
+       "Safe for 2 months"
+      ],
+      [
+       "**Permanently Expired**",
+       "Age > 90.0d",
+       "**4,458**",
+       "33.21%",
+       "**Lost** (unrecoverable from GitHub API)"
+      ],
+      [
+       "**Total Recoverable At Last Capture**",
+       "**Age ≤ 90.0d**",
+       "**8,964**",
+       "**66.79%**",
+       "**Total available for Stage 4 download**"
+      ]
+     ]
+    }
+   ],
+   "title": "Log-expiry cliff (90-day retention)"
+  },
+  {
+   "id": "expiry_d23",
+   "source": "paper/generated/expiry_cliff.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "Metric",
+      "D-23 Smoke Corpus (10 Repos)",
+      "Full Measured Corpus (77 Repos)",
+      "Trend / Finding"
+     ],
+     "heading": "5. Comparison Against Decision D-23 Baseline",
+     "rows": [
+      [
+       "**Total Workflow Runs**",
+       "6,212",
+       "**175,038**",
+       "28.2× scale increase"
+      ],
+      [
+       "**Total Failed Runs**",
+       "401",
+       "**13,422**",
+       "33.5× scale increase (failure rate rose from 6.5% to 7.7%)"
+      ],
+      [
+       "**Overall Median Run Age**",
+       "68.3 days",
+       "**52.1 days**",
+       "Fresher corpus (16.2 days lower median age)"
+      ],
+      [
+       "**Overall P90 Run Age**",
+       "100.1 days",
+       "**112.8 days**",
+       "Longer tail distribution (112.8d vs 100.1d baseline)"
+      ],
+      [
+       "**Runs Past 90 Days**",
+       "1,180 (19.0%)",
+       "**34,595 (19.8%)**",
+       "Higher overall expiration rate (19.8% vs 19.0%)"
+      ],
+      [
+       "**Failed Runs Past 90 Days**",
+       "195 (48.6% of fails)",
+       "**4,458 (33.2% of fails)**",
+       "**Confirms D-23**: 33.2% permanent loss, with 66.8% still recoverable"
+      ],
+      [
+       "**Failed Runs in 60–90d Band**",
+       "206 (51.4% of fails)",
+       "**3,166 (23.6% of fails)**",
+       "**Confirms D-23 urgency**: 3,166 failed runs face expiry within 30 days"
+      ]
+     ]
+    }
+   ],
+   "title": "Log-expiry cliff vs the D-23 baseline"
+  },
+  {
+   "id": "parser",
+   "source": "paper/generated/parser_precision.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "corpus",
+      "fixtures",
+      "expected ids",
+      "precision (n/d)",
+      "recall (n/d)",
+      "classification accuracy (n/d)",
+      "TP / FP / FN",
+      "independent of development?"
+     ],
+     "heading": "Parser precision and recall",
+     "rows": [
+      [
+       "fixture corpus (`tests/fixtures/logs/`)",
+       "40",
+       "46",
+       "46/46 (100.00%)",
+       "46/46 (100.00%)",
+       "40/40 (100.00%)",
+       "46 / 0 / 0",
+       "NO. Development corpus: the parsers were built and tuned against these logs (`docs/phase/013B-holdout-v5-protocol.md` §4, 'Development fixtures'; `docs/session/059-2026-08-27-holdout-scoring.md`)."
+      ],
+      [
+       "holdout v1 (`tests/fixtures/holdout/`)",
+       "20",
+       "30",
+       "30/30 (100.00%)",
+       "30/30 (100.00%)",
+       "20/20 (100.00%)",
+       "30 / 0 / 0",
+       "NO. Permanently a development set under D-37: it drove three parser fixes diagnosed from its own failures, and `tests/test_holdout_eval.py` pins the parsers to its ids (`docs/phase/027-scorer-provenance.md`; `docs/HANDOVER-020.md` §3.5). The 100% is a fit number and may not be reported as held-out performance."
+      ],
+      [
+       "holdout v5 (independent of development): NOT SCORED, no blind human labels (D-53); corpus unconsumed",
+       "n/a",
+       "n/a",
+       "n/a",
+       "n/a",
+       "n/a",
+       "n/a",
+       "Independent figure NOT MEASURED (D-53)."
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "harness",
+      "fixtures",
+      "expected ids",
+      "precision (n/d)",
+      "recall (n/d)",
+      "classification (n/d)"
+     ],
+     "heading": "Holdout v1 by harness",
+     "rows": [
+      [
+       "pytest",
+       "2",
+       "5",
+       "5/5 (100.00%)",
+       "5/5 (100.00%)",
+       "2/2 (100.00%)"
+      ],
+      [
+       "Maven",
+       "7",
+       "10",
+       "10/10 (100.00%)",
+       "10/10 (100.00%)",
+       "7/7 (100.00%)"
+      ],
+      [
+       "Gradle",
+       "7",
+       "15",
+       "15/15 (100.00%)",
+       "15/15 (100.00%)",
+       "7/7 (100.00%)"
+      ],
+      [
+       "Other",
+       "4",
+       "0",
+       "0/0 (n/a)",
+       "0/0 (n/a)",
+       "4/4 (100.00%)"
+      ]
+     ]
+    }
+   ],
+   "title": "Parser precision (development sets only; v5 not scored)"
+  },
+  {
+   "id": "binding",
+   "source": "paper/generated/binding.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "measure",
+      "n/d"
+     ],
+     "heading": "Test-to-file binding (D-47, D-50)",
+     "rows": [
+      [
+       "combined (exact)",
+       "5,643/5,985 (94.29%)"
+      ],
+      [
+       "full confidence (exact, fully-qualified class name)",
+       "3,820/5,985 (63.83%)"
+      ],
+      [
+       "basename-only, 0.5 confidence (exact, bare class name)",
+       "1,823/5,985 (30.46%)"
+      ],
+      [
+       "ambiguous",
+       "164/5,985 (2.74%)"
+      ],
+      [
+       "not_found",
+       "178/5,985 (2.97%)"
+      ],
+      [
+       "unqualified",
+       "0/5,985 (0.00%)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "repo [harness]",
+      "bound / test_ids"
+     ],
+     "heading": "Per (repo, harness), from paper/generated/binding_run.md",
+     "rows": [
+      [
+       "Stirling-Tools/Stirling-PDF [gradle]",
+       "307 / 307 (100.00%)"
+      ],
+      [
+       "airlift/airlift [maven]",
+       "12 / 12 (100.00%)"
+      ],
+      [
+       "apache/atlas [maven]",
+       "113 / 114 (99.12%)"
+      ],
+      [
+       "apache/beam [gradle]",
+       "909 / 1001 (90.81%)"
+      ],
+      [
+       "apache/beam [pytest]",
+       "683 / 696 (98.13%)"
+      ],
+      [
+       "apache/dolphinscheduler [maven]",
+       "240 / 252 (95.24%)"
+      ],
+      [
+       "apache/fineract [gradle]",
+       "184 / 187 (98.40%)"
+      ],
+      [
+       "apache/flink [maven]",
+       "32 / 32 (100.00%)"
+      ],
+      [
+       "apache/hertzbeat [maven]",
+       "39 / 49 (79.59%)"
+      ],
+      [
+       "apache/hugegraph [maven]",
+       "64 / 70 (91.43%)"
+      ],
+      [
+       "apache/streampark [maven]",
+       "20 / 20 (100.00%)"
+      ],
+      [
+       "apache/tika [maven]",
+       "157 / 165 (95.15%)"
+      ],
+      [
+       "apache/zeppelin [maven]",
+       "81 / 82 (98.78%)"
+      ],
+      [
+       "apple/servicetalk [gradle]",
+       "7 / 7 (100.00%)"
+      ],
+      [
+       "atmosphere/atmosphere [maven]",
+       "5 / 6 (83.33%)"
+      ],
+      [
+       "baomidou/mybatis-plus [gradle]",
+       "150 / 163 (92.02%)"
+      ],
+      [
+       "bobbylight/rsyntaxtextarea [gradle]",
+       "9 / 9 (100.00%)"
+      ],
+      [
+       "castorini/anserini [maven]",
+       "534 / 560 (95.36%)"
+      ],
+      [
+       "dask/distributed [pytest]",
+       "109 / 114 (95.61%)"
+      ],
+      [
+       "diffplug/spotless [gradle]",
+       "92 / 92 (100.00%)"
+      ],
+      [
+       "fla-org/flash-linear-attention [pytest]",
+       "36 / 37 (97.30%)"
+      ],
+      [
+       "floci-io/floci [maven]",
+       "431 / 431 (100.00%)"
+      ],
+      [
+       "floci-io/floci [pytest]",
+       "17 / 18 (94.44%)"
+      ],
+      [
+       "gaul/s3proxy [pytest]",
+       "0 / 1 (0.00%)"
+      ],
+      [
+       "grobidOrg/grobid [gradle]",
+       "29 / 29 (100.00%)"
+      ],
+      [
+       "gurkenlabs/litiengine [gradle]",
+       "4 / 4 (100.00%)"
+      ],
+      [
+       "igniterealtime/openfire [maven]",
+       "21 / 22 (95.45%)"
+      ],
+      [
+       "jline/jline3 [maven]",
+       "3 / 3 (100.00%)"
+      ],
+      [
+       "knowm/xchart [maven]",
+       "6 / 6 (100.00%)"
+      ],
+      [
+       "linkedin/brooklin [gradle]",
+       "1 / 1 (100.00%)"
+      ],
+      [
+       "mcreator/mcreator [gradle]",
+       "43 / 43 (100.00%)"
+      ],
+      [
+       "nats-io/nats.java [gradle]",
+       "12 / 12 (100.00%)"
+      ],
+      [
+       "openremote/openremote [gradle]",
+       "5 / 5 (100.00%)"
+      ],
+      [
+       "opentripplanner/opentripplanner [maven]",
+       "10 / 12 (83.33%)"
+      ],
+      [
+       "oracle/opengrok [maven]",
+       "3 / 3 (100.00%)"
+      ],
+      [
+       "plantuml/plantuml [gradle]",
+       "3 / 3 (100.00%)"
+      ],
+      [
+       "robo-code/robocode [gradle]",
+       "3 / 3 (100.00%)"
+      ],
+      [
+       "rptools/maptool [gradle]",
+       "3 / 3 (100.00%)"
+      ],
+      [
+       "sirixdb/sirix [gradle]",
+       "1165 / 1305 (89.27%)"
+      ],
+      [
+       "sirixdb/sirix [pytest]",
+       "0 / 4 (0.00%)"
+      ],
+      [
+       "spiculedata/saiku [maven]",
+       "20 / 20 (100.00%)"
+      ],
+      [
+       "spring-cloud/spring-cloud-config [maven]",
+       "13 / 13 (100.00%)"
+      ],
+      [
+       "spring-projects/spring-kafka [gradle]",
+       "8 / 8 (100.00%)"
+      ],
+      [
+       "thealgorithms/java [maven]",
+       "7 / 7 (100.00%)"
+      ],
+      [
+       "unicode-org/cldr [maven]",
+       "34 / 35 (97.14%)"
+      ],
+      [
+       "webauthn4j/webauthn4j [gradle]",
+       "19 / 19 (100.00%)"
+      ]
+     ]
+    }
+   ],
+   "title": "Binding breakdown"
+  },
+  {
+   "id": "classes",
+   "source": "paper/generated/infra_failures.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "class",
+      "labels"
+     ],
+     "heading": "Strict labels by class",
+     "rows": [
+      [
+       "code-level",
+       "729/4,168 (17.49%)"
+      ],
+      [
+       "environment-strict",
+       "89/4,168 (2.14%)"
+      ],
+      [
+       "timeout",
+       "112/4,168 (2.69%)"
+      ],
+      [
+       "unknown",
+       "3,238/4,168 (77.69%)"
+      ]
+     ]
+    },
+    {
+     "columns": [
+      "class",
+      "rule",
+      "labels"
+     ],
+     "heading": "Strict labels by class > By deciding rule",
+     "rows": [
+      [
+       "code-level",
+       "expected-vs-actual",
+       "122/4,168 (2.93%)"
+      ],
+      [
+       "code-level",
+       "leading-assertion",
+       "607/4,168 (14.56%)"
+      ],
+      [
+       "environment-strict",
+       "connection-error",
+       "22/4,168 (0.53%)"
+      ],
+      [
+       "environment-strict",
+       "cuda-gpu-unavailable",
+       "66/4,168 (1.58%)"
+      ],
+      [
+       "environment-strict",
+       "missing-service",
+       "1/4,168 (0.02%)"
+      ],
+      [
+       "timeout",
+       "timeout",
+       "112/4,168 (2.69%)"
+      ],
+      [
+       "unknown",
+       "message matched no pattern",
+       "1,007/4,168 (24.16%)"
+      ],
+      [
+       "unknown",
+       "no message recorded",
+       "2,231/4,168 (53.53%)"
+      ]
+     ]
+    }
+   ],
+   "title": "Failure classes of the strict labels"
+  },
+  {
+   "id": "gates",
+   "source": "paper/generated/gates.md",
+   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "tables": [
+    {
+     "columns": [
+      "gate",
+      "measured (n/d)",
+      "threshold",
+      "verdict"
+     ],
+     "heading": "Gates",
+     "rows": [
+      [
+       "Gate 1 (D-44, primary): strict labels",
+       "4,168/5,000 (83.36%)",
+       ">= 5,000",
+       "NOT MET"
+      ],
+      [
+       "Gate 1 (secondary): strict instances",
+       "762/5,000 (15.24%)",
+       ">= 5,000",
+       "NOT MET"
+      ],
+      [
+       "Gate 1.5: combined binding",
+       "5,643/5,985 (94.29%)",
+       ">= 70%",
+       "MET"
+      ],
+      [
+       "Gate 1.5: full-confidence binding",
+       "3,820/5,985 (63.83%)",
+       ">= 70%",
+       "NOT MET"
+      ]
+     ]
+    }
+   ],
+   "title": "Gates"
+  }
+ ],
+ "release": {
+  "datasheet_rows": [
+   {
+    "item": "`author_login` pseudonymisation",
+    "status": "**PASS**: HMAC-SHA256 applied under `BR_PSEUDONYM_KEY`; 1,791/1,791 logins replaced, 0 raw logins survive (§4)"
+   },
+   {
+    "item": "Secret scan (T1.6b)",
+    "status": "**PASS**: 4 files, 0 BLOCKER findings, 5 REVIEW findings, `analysis/secret_scan.py --root release`; the REVIEW findings were triaged (see below)"
+   }
+  ],
+  "dois": [
+   {
+    "doi": "10.5281/zenodo.23250262",
+    "what": "dataset"
+   },
+   {
+    "doi": "10.5281/zenodo.23250690",
+    "what": "code"
+   }
+  ],
+  "sources": [
+   "README.md",
+   "docs/DATASHEET.md",
+   "release/v0.2",
+   "analysis/validate_release.py"
+  ],
+  "tables": [
+   {
+    "rows": 175204,
+    "table": "cochange"
+   },
+   {
+    "rows": 3490,
+    "table": "failure_messages"
+   },
+   {
+    "rows": 165349,
+    "table": "instances"
+   },
+   {
+    "rows": 12766,
+    "table": "outcomes"
+   }
+  ],
+  "validator": {
+   "verdict": "PASS",
+   "violations": []
+  }
+ }
+}

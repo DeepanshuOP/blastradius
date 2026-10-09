@@ -2,14 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import Agents from "./Agents";
+import Analyze from "./Analyze";
 import Corpus from "./Corpus";
 import Overview from "./Overview";
+import { Decisions, MoreResults, type PanelsDoc } from "./Panels";
 import Results from "./Results";
 import { STAGE_TITLES, StageCard } from "./Stages";
 import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
-const TABS = ["Overview", "How it works", "Live run", "Results", "Agents", "Corpus"] as const;
+const TABS = ["Overview", "How it works", "Live run", "Results", "Analyze a repo", "Agents", "Corpus", "Decisions"] as const;
 type Tab = (typeof TABS)[number];
 const STEP_MS = 800;
 
@@ -141,6 +143,7 @@ export default function Demo() {
   const [results, setResults] = useState<ResultsDoc | null>(null);
   const [overview, setOverview] = useState<OverviewDoc | null>(null);
   const [corpus, setCorpus] = useState<CorpusDoc | null>(null);
+  const [panels, setPanels] = useState<PanelsDoc | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
@@ -148,6 +151,7 @@ export default function Demo() {
       getJson<OverviewDoc>("/data/overview.json"), getJson<CorpusDoc>("/data/corpus.json")])
       .then(([i, r, o, c]) => { setIndex(i); setResults(r); setOverview(o); setCorpus(c); })
       .catch((e) => setErr(String(e)));
+    getJson<PanelsDoc>("/data/panels.json").then(setPanels).catch((e) => setErr(String(e)));
   }, []);
 
   const loading = !err && <p className="text-sm text-slate-500">Loading…</p>;
@@ -174,9 +178,11 @@ export default function Demo() {
         {tab === "Overview" && (overview ? <Overview o={overview} /> : loading)}
         {tab === "How it works" && <HowItWorks />}
         {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
-        {tab === "Results" && (results ? <Results r={results} /> : loading)}
+        {tab === "Results" && (results ? <><Results r={results} />{panels && <div className="mt-8"><MoreResults d={panels} /></div>}</> : loading)}
+        {tab === "Analyze a repo" && <Analyze />}
         {tab === "Agents" && <Agents />}
         {tab === "Corpus" && (corpus ? <Corpus c={corpus} /> : loading)}
+        {tab === "Decisions" && (panels ? <Decisions d={panels.decisions} /> : loading)}
       </main>
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 sm:px-6">

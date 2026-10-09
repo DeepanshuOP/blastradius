@@ -9,7 +9,11 @@ writes are under `demo-web/public/data/`:
     graph paths, predictors vs reality);
   - `index.json`: the exported instances;
   - `results.json`: headline numbers parsed out of `paper/generated/*.md`, each
-    block naming its source file (nothing is hard-coded).
+    block naming its source file (nothing is hard-coded);
+  - `panels.json`: the remaining result tables of `paper/generated/*.md` verbatim
+    (heading trail, columns, rows, source), release facts read from
+    `README.md`, `docs/DATASHEET.md` and `release/v0.2`, and the decision titles
+    of `docs/DECISIONS.md`.
 
 Up to `MAX_INSTANCES` instances that clear gates 1-4 of the walkthrough
 (holdout jobs excluded by its guard) and whose graph is on disk or buildable
@@ -438,7 +442,7 @@ def md_tables(path: Path) -> list[tuple[list[str], list[str], list[list[str]]]]:
         if ln.startswith("#"):
             level = len(ln) - len(ln.lstrip("#"))
             heads = heads[:level - 1] + [ln.lstrip("#").strip()]
-        if ln.startswith("|") and i + 1 < len(lines) and lines[i + 1].startswith("|---"):
+        if ln.startswith("|") and i + 1 < len(lines) and re.match(r"^\|\s*:?-{3,}", lines[i + 1]):
             cols = [x.strip() for x in ln.strip("|").split("|")]
             rows, i = [], i + 2
             while i < len(lines) and lines[i].startswith("|"):
@@ -657,6 +661,100 @@ def overview(sha: str) -> dict:
     }
 
 
+# -- panels: every other result table, release facts, decisions -------------
+
+#: (panel id, title, generated file, `##` sections to keep; empty = all tables).
+PANELS: list[tuple[str, str, str, list[str]]] = [
+    ("funnel", "Attrition funnel: repositories, pull requests, runs", "attrition_funnel.md",
+     ["Repositories", "Pull requests", "Runs (benchmark instances)"]),
+    ("rq1_k5", "RQ1 at k = 5", "rq1.md", ["k = 5"]),
+    ("rq1_k10", "RQ1 at k = 10", "rq1.md", ["k = 10"]),
+    ("rq1_k20", "RQ1 at k = 20", "rq1.md", ["k = 20"]),
+    ("rq1_size", "RQ1 by change size (k = 10)", "rq1.md", ["Change size (k = 10)"]),
+    ("sensitivity", "RQ1 sensitivity: environment / timeout labels removed", "infra_failures.md",
+     ["RQ1 sensitivity: labels removed"]),
+    ("leakage", "Leakage audit (before / after)", "leakage_audit.md", []),
+    ("flakiness", "Flakiness: same-SHA flips", "flakiness.md", []),
+    ("expiry", "Log-expiry cliff (90-day retention)", "expiry_cliff.md",
+     ["1. Recoverable Window for Failed Runs"]),
+    ("expiry_d23", "Log-expiry cliff vs the D-23 baseline", "expiry_cliff.md",
+     ["5. Comparison Against Decision D-23 Baseline"]),
+    ("parser", "Parser precision (development sets only; v5 not scored)", "parser_precision.md", []),
+    ("binding", "Binding breakdown", "binding.md", []),
+    ("classes", "Failure classes of the strict labels", "infra_failures.md",
+     ["Strict labels by class"]),
+    ("gates", "Gates", "gates.md", []),
+]
+
+
+def _in_sections(trail: list[str], sections: list[str]) -> bool:
+    """True when a table sits under one of the `##` sections named (trail[0] is the `#` title)."""
+    return len(trail) > 1 and trail[1] in sections
+
+
+def binding_per_repo(path: Path = GENERATED / "binding_run.md") -> dict:
+    """Per (repo, harness) binding rates out of the verbatim stdout block of `binding_run.md`."""
+    rows = [list(m.groups()) for m in re.finditer(r"^  (\S+ \[\w+\]): (\d+ / \d+ \([\d.]+%\))$",
+                                                  path.read_text(encoding="utf-8"), re.M)]
+    return {"heading": f"Per (repo, harness), from {path}", "columns": ["repo [harness]", "bound / test_ids"], "rows": rows}
+
+
+def panel_tables() -> list[dict]:
+    """The tables of each `PANELS` entry, copied cell for cell from its generated file."""
+    out = []
+    for pid, title, name, prefix in PANELS:
+        p = GENERATED / name
+        tables = [{"heading": " > ".join(trail[1:] or trail), "columns": cols, "rows": rows}
+                  for trail, cols, rows in md_tables(p) if not prefix or _in_sections(trail, prefix)]
+        if pid == "binding":
+            tables.append(binding_per_repo())
+        if not tables:
+            raise SystemExit(f"BLOCKED: panel {pid}: no table under {prefix} in {p}")
+        out.append({"id": pid, "title": title, "source": str(p), "source_generated_at_git_sha": source_sha(p),
+                    "tables": tables})
+    return out
+
+
+def decisions(path: Path = Path("docs/DECISIONS.md")) -> dict:
+    """`D-NN` ids and titles: table rows `| **D-NN** | title |` and `## D-NN: title` headings."""
+    seen: dict[int, str] = {}
+    for ln in path.read_text(encoding="utf-8").splitlines():
+        m = (re.match(r"^\|\s*\*\*D-(\d+)\*\*\s*\|\s*([^|]+)\|", ln)
+             or re.match(r"^#{2,4}\s*D-(\d+)\s*[:\u2014\u2013-]+\s*(.+)$", ln)
+             or re.match(r"^D-(\d+) \((\d{4}-\d{2}-\d{2})\) \u2014 (.+?)\.\s", ln))
+        if m:
+            title = m.group(m.lastindex).strip().strip("*")
+            seen.setdefault(int(m.group(1)), title)
+    return {"source": str(path), "rows": [{"id": f"D-{k:02d}", "title": v} for k, v in sorted(seen.items())]}
+
+
+def release_facts(rel: Path = Path("release/v0.2")) -> dict:
+    """DOIs, released tables with row counts, validator verdict, pseudonymisation and secret-scan rows."""
+    readme = Path("README.md").read_text(encoding="utf-8")
+    dois = [{"what": w.lower(), "doi": d} for w, d in
+            re.findall(r"\[!\[(Dataset|Code) DOI\]\([^)]*\)\]\(https://doi\.org/([^)]+)\)", readme)]
+    sheet = Path("docs/DATASHEET.md").read_text(encoding="utf-8").splitlines()
+    rows = [[c.strip() for c in ln.strip("|").split("|")] for ln in sheet
+            if ln.startswith("| `author_login` pseudonymisation") or ln.startswith("| Secret scan")]
+    tables, validator = [], {"verdict": "release/v0.2 not on disk", "violations": []}
+    if rel.exists():
+        import pyarrow.parquet as pq
+
+        from analysis.validate_release import validate
+        tables = [{"table": f.stem, "rows": pq.ParquetFile(f).metadata.num_rows} for f in sorted(rel.glob("*.parquet"))]
+        errs = validate(rel, rel / "schema.json")
+        validator = {"verdict": "FAIL" if errs else "PASS", "violations": errs}
+    return {"sources": ["README.md", "docs/DATASHEET.md", str(rel), "analysis/validate_release.py"],
+            "dois": dois, "tables": tables, "validator": validator,
+            "datasheet_rows": [{"item": r[0], "status": r[1]} for r in rows]}
+
+
+def panels(sha: str) -> dict:
+    """Everything the Results and Decisions tabs show beyond `results.json`."""
+    return {"generated_at_git_sha": sha, "panels": panel_tables(), "release": release_facts(),
+            "decisions": decisions()}
+
+
 # -- main --------------------------------------------------------------------
 
 
@@ -671,7 +769,8 @@ def write_docs(out_dir: Path, sha: str) -> None:
     write_json(out_dir / "results.json", results(sha))
     write_json(out_dir / "overview.json", overview(sha))
     write_json(out_dir / "corpus.json", corpus(sha))
-    print(f"wrote {out_dir / 'results.json'}, {out_dir / 'overview.json'} and {out_dir / 'corpus.json'}")
+    write_json(out_dir / "panels.json", panels(sha))
+    print(f"wrote {out_dir / 'results.json'}, {out_dir / 'overview.json'}, {out_dir / 'corpus.json'} and {out_dir / 'panels.json'}")
 
 
 def main(out_dir: Path = OUT_DIR, docs_only: bool = False) -> int:

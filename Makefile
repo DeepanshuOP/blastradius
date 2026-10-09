@@ -1,4 +1,4 @@
-.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo
+.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
 
 test:
 	uv run pytest -q
@@ -123,6 +123,19 @@ demo-data:
 # and `npm ci` in demo-web/ once). No Python server, no runtime network calls.
 demo-web:
 	cd demo-web && npm run build && npm start
+
+# CLI twin of the demo site's "Analyze a repo" tab: shallow-clone a public GitHub
+# repo (Python or Java) into $$TMPDIR/br-analyze/<owner>__<repo> (reused if present)
+# and run the offline Impact Analysis Agent on it. No LLM, no token.
+#   make analyze REPO=https://github.com/pallets/itsdangerous STORY="..." [BRANCH=main]
+analyze:
+	@echo "$(REPO)" | grep -Eq '^https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$$' \
+		|| { echo 'usage: make analyze REPO=https://github.com/<owner>/<repo> STORY="..." [BRANCH=<branch>]' >&2; exit 2; }
+	@test -n "$(STORY)" || { echo 'analyze: STORY="..." is required' >&2; exit 2; }
+	@dir="$${TMPDIR:-/tmp}/br-analyze/$$(echo '$(REPO)' | sed -E 's#^https://github.com/##; s#\.git$$##; s#/#__#')$(if $(BRANCH),__$(BRANCH))"; \
+	[ -d "$$dir/.git" ] || GIT_TERMINAL_PROMPT=0 timeout 120 git clone --quiet --depth 50 $(if $(BRANCH),--branch $(BRANCH)) '$(REPO)' "$$dir" || exit 1; \
+	timeout 180 uv run --extra graph python -m src.agents impact --repo "$$dir" --story '$(STORY)' --provider offline \
+		&& echo "impact.md and impact.json: $$dir/.blastradius/impact/"
 
 figures:
 	@echo "not implemented"

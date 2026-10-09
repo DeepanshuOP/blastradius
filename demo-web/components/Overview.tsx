@@ -13,6 +13,13 @@ const WHY: [string, string][] = [
     "Every number regenerates from the checked-in pipeline with one command, and both predictors are leakage-audited per instance."],
 ];
 
+/** Existing tools and what they do; public, well-known descriptions only, no accuracy claims. */
+const TOOLS: [string, string, string][] = [
+  ["Ekstazi, STARTS", "regression test selection", "dynamic (Ekstazi) and static (STARTS) dependency analysis picks the tests a change can reach"],
+  ["Launchable / CloudBees, Gradle Develocity", "predictive test selection", "proprietary models trained on each customer's own test history"],
+  ["pytest-testmon, Bazel / Nx affected targets", "dependency tracking", "re-run only what the changed files or build targets feed into"],
+];
+
 function colour(method: string): string {
   if (method.startsWith("historical")) return "#2563eb";
   if (method.startsWith("co-change, all")) return "#ea580c";
@@ -77,6 +84,24 @@ export default function Overview({ o }: { o: OverviewDoc }) {
             Of the tests that actually failed, co-change predicted {ratePct(co.micro_recall)}; historical failure frequency {ratePct(hist.micro_recall)} (n={n}).
           </p>
         )}
+        <Source file={h.source} />
+      </Card>
+
+      <Card title="Why BR-Bench">
+        <p className="text-slate-700">Existing tools <span className="font-semibold">select</span> tests:</p>
+        <ul className="mt-2 space-y-1.5">
+          {TOOLS.map(([name, kind, how]) => (
+            <li key={name} className="grid gap-1 sm:grid-cols-[18rem_12rem_1fr]">
+              <span className="font-medium text-slate-900">{name}</span><span className="text-slate-500">{kind}</span><span className="text-slate-600">{how}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-slate-700">
+          None of them publishes an open, execution-grounded record of which tests a change actually broke, so none of their claims can be
+          checked on public data. BR-Bench is that yardstick. Our agents use what it measured to rank tests:
+          {co && hist ? <> failure history beats co-change, <span className="font-semibold">{ratePct(hist.micro_recall)}</span> vs{" "}
+            <span className="font-semibold">{ratePct(co.micro_recall)}</span> micro recall at k = {h.k} ({hist.micro_recall.text} vs {co.micro_recall.text}).</> : null}
+        </p>
         <Source file={h.source} />
       </Card>
 
