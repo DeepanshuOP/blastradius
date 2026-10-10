@@ -8,6 +8,10 @@ Three providers:
   project dependency, so no new package). Key: ``ANTHROPIC_API_KEY``. Model:
   ``BR_AGENT_MODEL``.
 
+* ``bedrock`` calls Amazon Bedrock's Converse API over plain ``requests`` (D-60), paid from the
+  operator's AWS credits with a hard project cap (``BR_BEDROCK_MAX_USD``). Key:
+  ``AWS_BEARER_TOKEN_BEDROCK``; region ``BR_BEDROCK_REGION``; prices ``BR_PRICE_IN`` /
+  ``BR_PRICE_OUT`` (USD per million tokens, required). E3 replication only.
 * ``groq`` calls Groq's OpenAI-compatible endpoint over plain ``requests`` (no SDK), on
   the free tier (D-58). Key: ``GROQ_API_KEY``. Model: ``BR_AGENT_MODEL`` (default
   ``openai/gpt-oss-120b``). A client-side limiter keeps to ``BR_GROQ_RPM`` /
@@ -15,7 +19,7 @@ Three providers:
   (``src/agents/llm_cache.py``).
 
 Selection: ``BR_OFFLINE=1`` always forces ``offline``; else ``BR_AGENT_PROVIDER`` if set
-(``groq`` | ``anthropic`` | ``offline``); else ``anthropic`` when ``ANTHROPIC_API_KEY`` is
+(``groq`` | ``bedrock`` | ``anthropic`` | ``offline``); else ``anthropic`` when ``ANTHROPIC_API_KEY`` is
 set; else ``groq`` when ``GROQ_API_KEY`` is set; else ``offline``.
 """
 
@@ -108,6 +112,10 @@ class AnthropicLLM:
             raise LLMError(f"Anthropic API returned {resp.status_code}: {resp.text[:300]}")
         text = "".join(b.get("text", "") for b in resp.json().get("content", []) if b.get("type") == "text")
         return extract_json(text)
+
+
+class CostCapReached(RuntimeError):
+    """The next Bedrock call's estimated cost would push the ledger past ``BR_BEDROCK_MAX_USD``."""
 
 
 @dataclass
@@ -267,6 +275,138 @@ class GroqLLM:
         return extract_json(res.text)
 
 
+def bedrock_spend(ledger: Path = USAGE_LEDGER) -> float:
+    """Total USD recorded for Bedrock calls in the usage ledger (the project-wide figure)."""
+    total = 0.0
+    if Path(ledger).exists():
+        for line in Path(ledger).read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                total += float(json.loads(line).get("usd") or 0.0)
+    return total
+
+
+@dataclass
+class BedrockLLM:
+    """Amazon Bedrock Converse provider with a cost ledger and a hard USD cap.
+
+    ``POST https://bedrock-runtime.{region}.amazonaws.com/model/{model_id}/converse`` with a bearer key and
+    ``inferenceConfig {maxTokens, temperature: 0}``. Converse has no seed, so runs are not bit-reproducible:
+    the cache is the record, and replay mode never calls the network.
+    """
+
+    api_key: str
+    model: str
+    region: str = "ap-south-1"
+    price_in: float | None = None     # USD per million input tokens
+    price_out: float | None = None    # USD per million output tokens
+    max_usd: float = 10.0
+    name: str = "bedrock"
+    cache: LLMCache | None = None
+    ledger: Path = USAGE_LEDGER
+    clock: object = time.time
+    sleeper: object = time.sleep
+    max_retries: int = 5
+
+    def available(self) -> bool:
+        """True when a key is configured."""
+        return bool(self.api_key)
+
+    @staticmethod
+    def usd(input_tokens: int, output_tokens: int, price_in: float, price_out: float) -> float:
+        """`input * price_in / 1e6 + output * price_out / 1e6`."""
+        return input_tokens * price_in / 1e6 + output_tokens * price_out / 1e6
+
+    def estimate_usd(self, system: str, user: str, max_tokens: int) -> float:
+        """Upper-bound estimate of one call: input at 3.5 chars/token, output at the full completion budget."""
+        if self.price_in is None or self.price_out is None:
+            raise LLMError("BR_PRICE_IN and BR_PRICE_OUT must be set (USD per million tokens); refusing to run")
+        return self.usd(int((len(system) + len(user)) / 3.5), max_tokens, self.price_in, self.price_out)
+
+    def check_budget(self, planned_usd: float) -> None:
+        """Raise :class:`CostCapReached` if `planned_usd` on top of the ledger would pass the cap."""
+        spent = bedrock_spend(self.ledger)
+        if spent + planned_usd > self.max_usd:
+            raise CostCapReached(f"estimated USD {planned_usd:.4f} + ledger USD {spent:.4f} exceeds "
+                                 f"BR_BEDROCK_MAX_USD {self.max_usd:.2f}")
+
+    def url(self) -> str:
+        from urllib.parse import quote
+
+        return f"https://bedrock-runtime.{self.region}.amazonaws.com/model/{quote(self.model, safe='')}/converse"
+
+    def body(self, system: str, user: str, max_tokens: int) -> dict:
+        return {"messages": [{"role": "user", "content": [{"text": user}]}], "system": [{"text": system}],
+                "inferenceConfig": {"maxTokens": max_tokens, "temperature": 0}}
+
+    def _record(self, in_t: int, out_t: int, usd: float | None) -> None:
+        self.ledger.parent.mkdir(parents=True, exist_ok=True)
+        with self.ledger.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"timestamp": datetime.fromtimestamp(self.clock(), timezone.utc)
+                                 .isoformat(timespec="seconds"), "model": self.model, "provider": "bedrock",
+                                 "tokens": in_t + out_t, "input_tokens": in_t, "output_tokens": out_t,
+                                 "usd": usd}) + "\n")
+
+    def chat(self, system: str, user: str, max_completion_tokens: int = 1500, probe: bool = False) -> ChatResult:
+        """One Converse call, from the cache when recorded.
+
+        Args:
+            system: System prompt.
+            user: User message.
+            max_completion_tokens: Completion budget (`maxTokens`).
+            probe: Allow a call with unset prices (model probe only; the cost is recorded as unknown).
+
+        Raises:
+            CacheMiss: In replay mode, for an unrecorded request.
+            CostCapReached: If the estimated cost would exceed the project cap.
+            LLMError: Unset prices, a non-retryable error, or retries exhausted.
+        """
+        params = {"temperature": 0, "maxTokens": max_completion_tokens}
+        messages = [{"role": "user", "content": user}]
+        key = cache_key(self.name, self.model, system, messages, params)
+        if self.cache is not None:
+            rec = self.cache.get(key)
+            if rec is not None:
+                return ChatResult(rec["response_text"], rec.get("usage"), rec["model"], True, rec.get("provider_id"),
+                                  rec.get("latency_s"))
+        if not probe:
+            self.check_budget(self.estimate_usd(system, user, max_completion_tokens))
+        delay = 10.0
+        for attempt in range(self.max_retries + 1):
+            t0 = self.clock()
+            resp = requests.post(self.url(), headers={"Authorization": f"Bearer {self.api_key}",
+                                                      "Content-Type": "application/json"},
+                                 json=self.body(system, user, max_completion_tokens), timeout=TIMEOUT)
+            low = resp.text.lower()
+            if resp.status_code == 429 or "throttlingexception" in low:
+                if attempt == self.max_retries:
+                    raise LLMError(f"Bedrock throttling persisted after {self.max_retries} retries")
+                self.sleeper(float(resp.headers.get("retry-after", delay)))
+                delay *= 2
+                continue
+            if resp.status_code != 200:
+                raise LLMError(f"Bedrock {resp.status_code}: {resp.text[:300]}")
+            data = resp.json()
+            blocks = ((data.get("output") or {}).get("message") or {}).get("content") or []
+            text = "".join(b.get("text", "") for b in blocks if "text" in b)
+            usage = data.get("usage") or {}
+            in_t, out_t = int(usage.get("inputTokens", 0)), int(usage.get("outputTokens", 0))
+            usd = (self.usd(in_t, out_t, self.price_in, self.price_out)
+                   if self.price_in is not None and self.price_out is not None else None)
+            self._record(in_t, out_t, usd)
+            lat = round(self.clock() - t0, 3)
+            if self.cache is not None:
+                self.cache.put(key, {"model": self.model, "system": system, "messages": messages, "params": params},
+                               text, {**usage, "usd": usd}, self.model, resp.headers.get("x-amzn-requestid"), lat)
+            return ChatResult(text, {**usage, "usd": usd, "total_tokens": in_t + out_t}, self.model, False,
+                              resp.headers.get("x-amzn-requestid"), lat)
+        raise LLMError("unreachable")
+
+    def complete_json(self, system: str, prompt: str, max_tokens: int = 4000) -> dict | None:
+        """JSON-object completion for the agents that expect one."""
+        res = self.chat(system + "\nReply with a single JSON object and nothing else.", prompt, max_tokens)
+        return extract_json(res.text)
+
+
 def extract_json(text: str) -> dict:
     """Parse the first JSON object in ``text`` (tolerates ```json fences).
 
@@ -284,7 +424,7 @@ def extract_json(text: str) -> dict:
     return value
 
 
-def get_llm(provider: str | None = None) -> OfflineLLM | AnthropicLLM | GroqLLM:
+def get_llm(provider: str | None = None) -> OfflineLLM | AnthropicLLM | GroqLLM | BedrockLLM:
     """Return the configured provider (see module docstring)."""
     if os.environ.get("BR_OFFLINE") == "1":
         return OfflineLLM()
@@ -303,4 +443,102 @@ def get_llm(provider: str | None = None) -> OfflineLLM | AnthropicLLM | GroqLLM:
         if not g_key:
             raise LLMError("BR_AGENT_PROVIDER=groq but GROQ_API_KEY is not set")
         return GroqLLM(api_key=g_key, model=os.environ.get("BR_AGENT_MODEL") or GROQ_DEFAULT_MODEL)
-    raise LLMError(f"unknown provider {choice!r} (use 'offline', 'anthropic' or 'groq')")
+    if choice == "bedrock":
+        key = os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "")
+        model = os.environ.get("BR_BEDROCK_MODEL", "")
+        if not key or not model:
+            raise LLMError("BR_AGENT_PROVIDER=bedrock needs AWS_BEARER_TOKEN_BEDROCK and BR_BEDROCK_MODEL")
+        pi, po = os.environ.get("BR_PRICE_IN"), os.environ.get("BR_PRICE_OUT")
+        return BedrockLLM(api_key=key, model=model, region=os.environ.get("BR_BEDROCK_REGION") or "ap-south-1",
+                          price_in=float(pi) if pi else None, price_out=float(po) if po else None,
+                          max_usd=float(os.environ.get("BR_BEDROCK_MAX_USD") or 10))
+    raise LLMError(f"unknown provider {choice!r} (use 'offline', 'anthropic', 'groq' or 'bedrock')")
+
+
+# ---- Bedrock model probe ---------------------------------------------------------------------
+_UNUSABLE = ("invalid_payment_instrument", "aws marketplace", "subscription", "accessdenied", "access denied",
+             "not authorized", "marketplace")
+_FAMILIES = [("claude-sonnet", "newest Anthropic Claude Sonnet"), ("qwen3-coder", "newest Qwen3 Coder"),
+             ("deepseek", "newest DeepSeek"), ("nova-pro", "newest Amazon Nova Pro")]
+
+
+def _version_key(model_id: str) -> tuple:
+    return tuple(int(x) for x in re.findall(r"\d+", model_id))
+
+
+def list_bedrock_ids(key: str, region: str) -> tuple[list[str], list[str], str]:
+    """Foundation-model ids and inference-profile ids visible to the key (control-plane GETs).
+
+    Returns:
+        `(model_ids, profile_ids, note)`; empty lists and a note if listing is not permitted.
+    """
+    hdr = {"Authorization": f"Bearer {key}"}
+    base = f"https://bedrock.{region}.amazonaws.com"
+    models: list[str] = []
+    profiles: list[str] = []
+    notes = []
+    r = requests.get(f"{base}/foundation-models", headers=hdr, timeout=TIMEOUT)
+    if r.status_code == 200:
+        models = [m["modelId"] for m in r.json().get("modelSummaries", [])]
+    else:
+        notes.append(f"foundation-models {r.status_code}: {r.text[:120]}")
+    token = None
+    while True:
+        r = requests.get(f"{base}/inference-profiles", headers=hdr, timeout=TIMEOUT,
+                         params={"maxResults": 1000, **({"nextToken": token} if token else {})})
+        if r.status_code != 200:
+            notes.append(f"inference-profiles {r.status_code}: {r.text[:120]}")
+            break
+        d = r.json()
+        profiles += [p["inferenceProfileId"] for p in d.get("inferenceProfileSummaries", [])]
+        token = d.get("nextToken")
+        if not token:
+            break
+    return models, profiles, "; ".join(notes)
+
+
+def probe_bedrock(out: Path = Path("eval/llm_cache/bedrock_probe.json")) -> dict:
+    """One 16-token call per candidate model; record which are usable on this account. No other Bedrock call."""
+    key = os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "")
+    region = os.environ.get("BR_BEDROCK_REGION") or "ap-south-1"
+    if not key:
+        raise SystemExit("AWS_BEARER_TOKEN_BEDROCK is not set")
+    explicit = [c.strip() for c in os.environ.get("BR_BEDROCK_CANDIDATES", "").split(",") if c.strip()]
+    models, profiles, note = ([], [], "BR_BEDROCK_CANDIDATES given; listing skipped") if explicit else list_bedrock_ids(key, region)
+    cands: list[tuple[str, str]] = [(c, "from BR_BEDROCK_CANDIDATES") for c in explicit]
+    if not explicit:
+        pool = profiles + models
+        for frag, label in _FAMILIES:
+            hits = [m for m in pool if frag in m.lower()]
+            # prefer a cross-region profile (apac. / global.) over a bare model id of the same model
+            hits.sort(key=lambda m: (_version_key(m), m.startswith(("apac.", "global.")), m), reverse=True)
+            if hits:
+                cands.append((hits[0], label))
+    results = []
+    for mid, label in cands:
+        llm = BedrockLLM(api_key=key, model=mid, region=region, max_retries=1)
+        rec: dict = {"candidate": label, "model_id": mid}
+        try:
+            r = llm.chat("Reply with one word.", "Reply with the word ok", 16, probe=True)
+            rec.update(status=200, usable=True, reply=r.text.strip()[:40], usage=r.usage)
+        except Exception as exc:  # recorded, never raised: the next candidate is tried
+            msg = str(exc)
+            rec.update(status=int(re.search(r"Bedrock (\d{3})", msg).group(1)) if re.search(r"Bedrock (\d{3})", msg) else None,
+                       usable=False, error=msg[:300],
+                       marketplace_or_access=any(t in msg.lower() for t in _UNUSABLE))
+        results.append(rec)
+        print(json.dumps(rec, ensure_ascii=False))
+    doc = {"region": region, "listing_note": note, "n_models_listed": len(models), "n_profiles_listed": len(profiles),
+           "candidates": results}
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+    return doc
+
+
+if __name__ == "__main__":
+    import sys
+
+    if "--probe-bedrock" in sys.argv:
+        probe_bedrock()
+    else:
+        print(__doc__)

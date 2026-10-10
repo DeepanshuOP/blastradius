@@ -223,3 +223,10 @@ D-54 (2026-10-09) — Release schema v0.2. 030 found 39 divergent columns betwee
 **Context**: The ranker, the triage classifier and the statistics need gradient boosting and a stats library; `CLAUDE.md` forbids new dependencies without asking.
 **Decision**: `ml = ["lightgbm==4.7.0", "scikit-learn==1.9.1", "scipy==1.17.1"]` in `pyproject.toml`, optional, locked in `uv.lock`. SHAP values come from LightGBM's built-in `pred_contrib=True`, so there is no `shap` dependency. LightGBM runs with `deterministic=True`, `force_row_wise=True`, `num_threads=1` for reported numbers.
 **Revisit trigger**: a result that cannot be produced deterministically with these versions.
+
+### D-60: Amazon Bedrock as a third E3 provider, paid from AWS credits
+**Date**: 2026-10-10.
+**Decided by**: Deepanshu.
+**Context**: The free Groq models are small open-weight models; a frontier-model replication of E3 needs a provider that bills. The operator has AWS credits and set a project-wide spending cap.
+**Decision**: `BedrockLLM` in `src/agents/llm.py` calls the Bedrock Converse API over plain `requests` (no `boto3`, no new dependency), selected by `BR_AGENT_PROVIDER=bedrock`. It is used for E3 replication only, never in E1, E2, features, labels or `make tables`. Spending: hard cap USD 45 for the whole project, recorded across all runs in `eval/llm_cache/usage.jsonl`; the code refuses to start a call whose estimated cost would push the ledger past `BR_BEDROCK_MAX_USD` (default 10, raised only by the operator) and refuses to run with `BR_PRICE_IN` / `BR_PRICE_OUT` unset. Converse has no seed, so runs are not bit-reproducible and the cache is the record. No other paid API and no other AWS service.
+**Revisit trigger**: any other use of Bedrock, or a price or model change.

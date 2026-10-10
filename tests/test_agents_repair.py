@@ -259,3 +259,65 @@ def test_retry_feedback_is_deterministic(tmp_path) -> None:
     raw = f"runner = <click.testing.CliRunner object at 0x75921a4a4390> in {tmp_path}/x.py"
     assert clean_feedback(raw, tmp_path) == "runner = <click.testing.CliRunner object at 0xADDR> in <repo>/x.py"
     assert clean_feedback(raw, tmp_path) == clean_feedback(raw.replace("0x75921a4a4390", "0x7b0546c12450"), tmp_path)
+
+
+# ---- Bedrock provider (D-60) -------------------------------------------------------------------
+BEDROCK_OK = {"output": {"message": {"role": "assistant", "content": [{"text": "ok"}]}}, "stopReason": "end_turn",
+              "usage": {"inputTokens": 1_000_000, "outputTokens": 100_000, "totalTokens": 1_100_000}}
+
+
+def _bedrock(tmp_path, **kw):
+    from src.agents.llm import BedrockLLM
+
+    d = dict(api_key="k", model="apac.anthropic.claude-sonnet-4-5-v1:0", region="ap-south-1", price_in=3.0, price_out=15.0,
+             max_usd=10.0, ledger=tmp_path / "u.jsonl", sleeper=lambda s: None, cache=LLMCache(tmp_path / "c.jsonl"))
+    d.update(kw)
+    return BedrockLLM(**d)
+
+
+def test_bedrock_request_shape_and_usd_arithmetic(tmp_path, monkeypatch) -> None:
+    calls = []
+    monkeypatch.setattr("src.agents.llm.requests.post", lambda url, **k: calls.append((url, k)) or FakeResp(200, BEDROCK_OK))
+    llm = _bedrock(tmp_path)
+    r = llm.chat("sys", "user text", 1500)
+    url, kw = calls[0]
+    assert url == ("https://bedrock-runtime.ap-south-1.amazonaws.com/model/"
+                   "apac.anthropic.claude-sonnet-4-5-v1%3A0/converse")
+    assert kw["headers"]["Authorization"] == "Bearer k"
+    assert kw["json"] == {"messages": [{"role": "user", "content": [{"text": "user text"}]}],
+                          "system": [{"text": "sys"}], "inferenceConfig": {"maxTokens": 1500, "temperature": 0}}
+    # 1,000,000 in x USD 3 / 1e6 + 100,000 out x USD 15 / 1e6 = 3.00 + 1.50
+    assert r.usage["usd"] == pytest.approx(4.5) and r.text == "ok"
+    rec = json.loads((tmp_path / "u.jsonl").read_text())
+    assert rec["usd"] == pytest.approx(4.5) and rec["provider"] == "bedrock" and rec["input_tokens"] == 1_000_000
+    from src.agents.llm import bedrock_spend
+
+    assert bedrock_spend(tmp_path / "u.jsonl") == pytest.approx(4.5)
+    assert llm.chat("sys", "user text", 1500).from_cache  # replayed free, no second ledger line
+    assert len((tmp_path / "u.jsonl").read_text().splitlines()) == 1
+
+
+def test_bedrock_refuses_without_prices_and_over_the_cap(tmp_path, monkeypatch) -> None:
+    from src.agents.llm import CostCapReached, LLMError
+
+    monkeypatch.setattr("src.agents.llm.requests.post", lambda *a, **k: (_ for _ in ()).throw(AssertionError("network")))
+    with pytest.raises(LLMError, match="BR_PRICE_IN"):
+        _bedrock(tmp_path, price_in=None).chat("s", "u")
+    # a call whose worst case is 1500 x USD 15 / 1e6 = 0.0225 does not fit under a USD 0.01 cap
+    with pytest.raises(CostCapReached):
+        _bedrock(tmp_path, max_usd=0.01).chat("s", "u")
+    # the ledger counts: 9.99 already spent leaves no room for another 0.0225 under a cap of 10
+    (tmp_path / "u.jsonl").write_text(json.dumps({"timestamp": "2026-10-10T00:00:00+00:00", "model": "x", "usd": 9.99}) + "\n")
+    with pytest.raises(CostCapReached):
+        _bedrock(tmp_path, max_usd=10.0).chat("s", "u")
+
+
+def test_bedrock_throttling_backs_off_and_replay_miss_raises(tmp_path, monkeypatch) -> None:
+    seq = [FakeResp(429, text='{"__type":"ThrottlingException"}'), FakeResp(200, BEDROCK_OK)]
+    monkeypatch.setattr("src.agents.llm.requests.post", lambda *a, **k: seq.pop(0))
+    slept = []
+    llm = _bedrock(tmp_path, sleeper=slept.append)
+    assert llm.chat("s", "u").text == "ok" and slept == [10.0]
+    miss = _bedrock(tmp_path, cache=LLMCache(tmp_path / "other.jsonl", replay=True))
+    with pytest.raises(CacheMiss):
+        miss.chat("s", "u")

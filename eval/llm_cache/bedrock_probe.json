@@ -1,0 +1,40 @@
+{
+  "region": "ap-south-1",
+  "listing_note": "",
+  "n_models_listed": 87,
+  "n_profiles_listed": 46,
+  "candidates": [
+    {
+      "candidate": "newest Anthropic Claude Sonnet",
+      "model_id": "global.anthropic.claude-sonnet-5-5",
+      "status": 400,
+      "usable": false,
+      "error": "Bedrock 400: {\"message\":\"Operation not allowed\"}",
+      "marketplace_or_access": false
+    },
+    {
+      "candidate": "newest Qwen3 Coder",
+      "model_id": "qwen.qwen3-coder-480b-a35b-v1:0",
+      "status": 400,
+      "usable": false,
+      "error": "Bedrock 400: {\"message\":\"Operation not allowed\"}",
+      "marketplace_or_access": false
+    },
+    {
+      "candidate": "newest DeepSeek",
+      "model_id": "deepseek.v3.2",
+      "status": 400,
+      "usable": false,
+      "error": "Bedrock 400: {\"message\":\"Operation not allowed\"}",
+      "marketplace_or_access": false
+    },
+    {
+      "candidate": "newest Amazon Nova Pro",
+      "model_id": "apac.amazon.nova-pro-v1:0",
+      "status": 400,
+      "usable": false,
+      "error": "Bedrock 400: {\"message\":\"Operation not allowed\"}",
+      "marketplace_or_access": false
+    }
+  ]
+}
