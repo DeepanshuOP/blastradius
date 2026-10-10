@@ -154,8 +154,9 @@ seeded:
 	uv run --extra ml python -m src.eval.seeded.build
 
 MODEL ?= openai/gpt-oss-120b
+VARIANT ?= standard
 repair-run:
-	uv run --env-file .env --extra ml python -m analysis.rq4_repair run --model $(MODEL)
+	uv run --env-file .env --extra ml python -m analysis.rq4_repair run --model $(MODEL) --variant $(VARIANT)
 
 repair-eval: export BR_OFFLINE=1
 repair-eval: export BR_LLM_REPLAY=1

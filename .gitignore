@@ -36,3 +36,8 @@ demo-web/node_modules
 demo-web/.next
 demo-web/next-env.d.ts
 demo-web/tsconfig.tsbuildinfo
+
+# LaTeX build products of the paper draft
+paper/draft/*.aux
+paper/draft/*.blg
+paper/draft/*.log

@@ -30,9 +30,10 @@ from pathlib import Path
 import numpy as np
 
 from analysis import paper_md
-from src.agents.llm import DailyQuotaReached, GroqLLM, get_llm
+from src.agents.llm import BedrockLLM, CostCapReached, DailyQuotaReached, GroqLLM, bedrock_spend
 from src.agents.llm_cache import CacheMiss, LLMCache, model_slug
-from src.agents.repair import ARMS, FailureReport, RepairAgent, build_prompt, index_functions, select_chunks
+from src.agents.repair import (ARMS, SYSTEM, FailureReport, RepairAgent, build_prompt, index_functions,
+                               select_chunks)
 from src.eval import stats as S
 from src.eval.seeded.build import SEEDED, source_files
 from src.eval.seeded.validate import head_state, make_validator
@@ -70,13 +71,17 @@ def subset(tasks: list[dict], n: int, seed: int = 0) -> list[dict]:
 
 
 def test_file_of(test_id: str, files: set[str]) -> str | None:
-    """Map a JUnit `classname::name` id to its test file by the longest dotted prefix that is a file."""
-    cls = test_id.split("::")[0]
-    parts = cls.split(".")
-    for k in range(len(parts), 0, -1):
-        cand = "/".join(parts[:k]) + ".py"
-        if cand in files:
-            return cand
+    """Map a JUnit `classname::name` id to its test file: the longest dotted run that is a tracked file.
+
+    pytest may prefix the classname with directories above the repo (`data.seeded.repos.x.tests.test_a`), so
+    leading components are skipped as needed.
+    """
+    parts = test_id.split("::")[0].split(".")
+    for i in range(len(parts)):
+        for k in range(len(parts), i, -1):
+            cand = "/".join(parts[i:k]) + ".py"
+            if cand in files:
+                return cand
     return None
 
 
@@ -127,7 +132,8 @@ def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool) 
     if not repo.exists() or not py.exists():
         raise SystemExit(f"{repo} or its venv is missing: run `make seeded` first (needs the network once)")
     src_dirs = pins[slug]["src_dirs"]
-    rec: dict = {"task_id": task["task_id"], "repo": slug, "operator": task["operator"]}
+    rec: dict = {"task_id": task["task_id"], "repo": slug, "operator": task["operator"],
+                 "variant": task.get("variant", "standard")}
     with head_state(repo, task["pr_diff"]):
         files = tracked_files(repo)
         srcs = source_files(repo, {"src_dirs": src_dirs})
@@ -141,7 +147,9 @@ def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool) 
             rec[f"retrieval_{arm}"] = {
                 "hit": any(c.file == task["gt_file"] and c.qualname == task["gt_function"] for c in ch),
                 "file_hit": any(c.file == task["gt_file"] for c in ch),
-                "distractor_chunks": sum(1 for c in ch if c.file in task["distractor_files"]), "n": len(ch)}
+                "distractor_chunks": sum(1 for c in ch if c.file in task["distractor_files"]
+                                         or (c.file, c.qualname) in {(d["file"], d["function"]) for d in task.get("hard_distractors", [])}),
+                "n": len(ch)}
         if not run_llm:
             return rec
         preexisting = set(task["preexisting_failures"])
@@ -149,10 +157,15 @@ def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool) 
         head_funcs = {(c.file, c.qualname): c for c in index_functions(repo, [task["gt_file"]])}
         gt_fn = head_funcs.get((task["gt_file"], task["gt_function"]))
         head_text = (repo / task["gt_file"]).read_text(encoding="utf-8")
-        base_text = head_text  # replaced below with the pre-mutation text
-        import subprocess
-        base_text = subprocess.run(["git", "-C", str(repo), "show", f"HEAD:{task['gt_file']}"], capture_output=True,
-                                   text=True, check=True).stdout
+        # the file as it should look once the mutant line is put back: the head text with that line replaced by the
+        # original (the hard variant keeps its no-op edits, so the base file is not the right reference)
+        hl = head_text.splitlines()
+        near = sorted((i for i, l in enumerate(hl) if l == task["mutated_snippet"]),
+                      key=lambda i: abs(i - (task["gt_line"] - 1)))
+        if near:
+            hl[near[0]] = task["original_snippet"]
+        base_text = "\n".join(hl)
+        hard_fn = {(d["file"], d["function"]) for d in task.get("hard_distractors", [])}
         for arm in arms:
             verdicts: list = []
             validate = make_validator(repo, py, preexisting, targets, on_verdict=verdicts.append)
@@ -199,112 +212,215 @@ def ci(vals: list[int]) -> str:
     return f"[{lo:.2f}, {hi:.2f}]"
 
 
-def write_report(all_recs: list[dict], per_model: dict[str, list[dict]], quota_note: dict[str, str]) -> None:
-    n = len(all_recs)
-    text = paper_md.header("RQ4 / E3: change-aware repair on BR-Seeded", "analysis/rq4_repair.py",
-                           "Produced by `make repair-eval` from cached LLM responses under D-58. It is NOT part of "
-                           "`make tables`, and its repair numbers depend on the recorded model replies "
-                           "(`eval/llm_cache/`). Detection and retrieval need no model.")
-    text += ("\nBR-Seeded: one mutation operator applied to a function covered by the suite (so at least one test "
-             "fails), plus 2-3 harmless distractor edits in other files; the diff is the 'PR'. A patch is accepted "
-             "only if the FULL suite (minus tests already failing at the base) passes. Seeded bugs are simpler than "
-             "real ones; this measures what retrieval and change-awareness add, not absolute repair ability.\n")
-    by_repo = defaultdict(int)
-    for r in all_recs:
-        by_repo[r["repo"]] += 1
-    text += f"\n## Tasks\n\n{n} tasks: " + ", ".join(f"{k} {v}" for k, v in sorted(by_repo.items())) + ".\n"
+def mcnemar_onesided(b: int, c: int) -> float:
+    """Exact one-sided McNemar: P(X >= b), X ~ Binomial(b + c, 0.5); b = first arm only, c = second arm only."""
+    from scipy.stats import binom
 
-    # detection
-    det = [r["detection"] for r in all_recs if r.get("detection")]
+    n = b + c
+    return 1.0 if n == 0 else float(binom.sf(b - 1, n, 0.5))
+
+
+def mcnemar_twosided(b: int, c: int) -> float:
+    from scipy.stats import binomtest
+
+    return 1.0 if b + c == 0 else float(binomtest(min(b, c), b + c, 0.5).pvalue)
+
+
+def paired(recs: list[dict], a: str, b: str) -> tuple[int, int]:
+    """`(a only, b only)` plausible fixes over tasks that have both arms."""
+    both = [r for r in recs if a in r and b in r]
+    return (sum(1 for r in both if r[a]["accepted"] and not r[b]["accepted"]),
+            sum(1 for r in both if r[b]["accepted"] and not r[a]["accepted"]))
+
+
+def is_groq(model: str) -> bool:
+    return model.startswith("openai/gpt-oss")
+
+
+def model_usage(model: str) -> tuple[int, float, int]:
+    """`(tokens, usd, calls)` recorded in a model's cache file."""
+    path = CACHE_DIR / f"e3_{model_slug(model)}.jsonl"
+    tok, usd, n = 0, 0.0, 0
+    for ln in path.read_text(encoding="utf-8").splitlines():
+        if ln.strip():
+            u = json.loads(ln).get("usage") or {}
+            tok += int(u.get("total_tokens", 0) or (u.get("inputTokens", 0) + u.get("outputTokens", 0)))
+            usd += float(u.get("usd") or 0.0)
+            n += 1
+    return tok, usd, n
+
+
+def arm_table(recs: list[dict]) -> str:
+    tab = []
+    for arm in ARMS:
+        xs = [r[arm] for r in recs if arm in r]
+        if not xs:
+            continue
+        acc = [int(x["accepted"]) for x in xs]
+        tab.append([arm, len(xs), pct(sum(acc), len(xs)), ci(acc),
+                    pct(sum(x["edited_gt_file"] for x in xs), len(xs)),
+                    pct(sum(x["edited_gt_function"] for x in xs), len(xs)),
+                    pct(sum(x["exact_restore"] for x in xs), len(xs)),
+                    sum(x["overfit"] for x in xs), pct(sum(x["patch_in_distractor"] for x in xs), len(xs)),
+                    f"{np.mean([x['total_tokens'] for x in xs]):.0f}", f"{np.mean([x['attempts'] for x in xs]):.2f}"])
+    return paper_md.table(
+        ["arm", "n", "plausible fix (full suite green)", "bootstrap 95% CI", "edited seeded file", "edited seeded function",
+         "exact restore", "overfit (target tests pass, suite fails)", "patch landed in a distractor file",
+         "tokens / task", "model calls / task"], tab)
+
+
+def breakdowns(recs: list[dict]) -> str:
+    out = ""
+    for label, key in (("operator", "operator"), ("repo", "repo")):
+        groups: dict[str, list] = defaultdict(list)
+        for r in recs:
+            groups[r[key]].append(r)
+        rows = []
+        for g in sorted(groups):
+            cells = [g, len(groups[g])]
+            for arm in ("R1", "R2", "R3"):
+                xs = [r[arm]["accepted"] for r in groups[g] if arm in r]
+                cells.append(f"{sum(xs)}/{len(xs)}" if xs else "n/a")
+            rows.append(cells)
+        out += f"\n#### By {label} (plausible fixes)\n\n" + paper_md.table([label, "n", "R1", "R2", "R3"], rows)
+    return out
+
+
+def retrieval_table(recs: list[dict], title: str) -> str:
+    n = len(recs)
+    rows = []
+    for arm, label in (("R1", "R1 log-only (BM25 over all functions)"),
+                       ("R2", "R2 change-aware (functions touched by the diff)")):
+        k = f"retrieval_{arm}"
+        rows.append([label, pct(sum(r[k]["hit"] for r in recs), n), pct(sum(r[k]["file_hit"] for r in recs), n),
+                     pct(sum(r[k]["distractor_chunks"] for r in recs), sum(r[k]["n"] for r in recs))])
+    b = sum(1 for r in recs if r["retrieval_R2"]["hit"] and not r["retrieval_R1"]["hit"])
+    c = sum(1 for r in recs if r["retrieval_R1"]["hit"] and not r["retrieval_R2"]["hit"])
+    txt = f"\n### {title}\n\n" + paper_md.table(
+        ["arm", "seeded function among the <= 3 chunks", "seeded file among them", "chunks that sit in a distractor"], rows)
+    txt += (f"\nPaired, R2 hits where R1 misses: {b}; R1 hits where R2 misses: {c}; "
+            f"exact McNemar (two-sided) p = {mcnemar_twosided(b, c):.4g} (n = {n}).\n")
+    return txt
+
+
+CAVEAT = ("On the standard variant the seeded edit lies inside the diff that R2 searches, so part of R2's retrieval "
+          "advantage is by construction; the hard variant, which places 4-6 no-op edits inside functions the failing "
+          "tests execute, measures how much remains.")
+
+
+def write_report(base: dict[str, list[dict]], runs: dict[tuple[str, str], list[dict]], pilot_ids: set[str],
+                 notes: dict[tuple[str, str], str], primary: str) -> None:
+    std, hard = base["standard"], base["hard"]
+    text = paper_md.header("RQ4 / E3: change-aware repair on BR-Seeded", "analysis/rq4_repair.py",
+                           "Produced by `make repair-eval` from cached LLM responses under D-58 / D-60. It is NOT part of "
+                           "`make tables`, and its repair numbers depend on the recorded model replies "
+                           "(`eval/llm_cache/`). Detection and retrieval need no model. Analysis plan: "
+                           "`docs/phase/033-e3-preregistration.md`.")
+    text += ("\nBR-Seeded: one mutation operator applied to a function covered by the suite (so at least one test fails), "
+             "plus 2-3 harmless distractor edits in other files; the diff is the 'PR'. The **hard** variant is the same 70 "
+             "mutants with 4-6 additional no-op edits (a comment line or redundant parentheses) inside functions the failing "
+             "tests execute. A patch is accepted only if the FULL suite (minus tests already failing at the base) passes. "
+             "Seeded bugs are simpler than real ones; this measures what retrieval and change-awareness add, not absolute "
+             "repair ability.\n")
+    by_repo = defaultdict(int)
+    for r in std:
+        by_repo[r["repo"]] += 1
+    nh = sorted(int(r.get("n_hard", 0)) for r in hard)
+    text += (f"\n## Tasks\n\n{len(std)} tasks: " + ", ".join(f"{k} {v}" for k, v in sorted(by_repo.items()))
+             + f". Hard variant: {len(hard)} tasks; added no-op edits per task min {nh[0] if nh else 0} / median "
+             f"{nh[len(nh) // 2] if nh else 0} / max {nh[-1] if nh else 0}; {sum(1 for n in nh if n >= 4)} of {len(nh)} tasks "
+             "kept at least 4.\n")
+
+    det = [r["detection"] for r in std if r.get("detection")]
     e1 = [d for d in det if "e1" in d]
     text += "\n## Detection (no model, all tasks with a resolvable failing test file)\n\n"
     if e1:
         text += paper_md.table(
             ["order", "tasks", "mean position of the first failing test file", "mean share of test files run before the first failure"],
-            [["E1 model", len(e1), f"{np.mean([d['e1'] for d in e1]):.2f}",
-              f"{np.mean([d['e1'] / d['n_files'] for d in e1]):.3f}"],
+            [["E1 model", len(e1), f"{np.mean([d['e1'] for d in e1]):.2f}", f"{np.mean([d['e1'] / d['n_files'] for d in e1]):.3f}"],
              ["alphabetical (B0, retest-all)", len(e1), f"{np.mean([d['alpha'] for d in e1]):.2f}",
               f"{np.mean([d['alpha'] / d['n_files'] for d in e1]):.3f}"],
              ["random (mean of 20 seeds)", len(e1), f"{np.mean([d['random'] for d in e1]):.2f}",
               f"{np.mean([d['random'] / d['n_files'] for d in e1]):.3f}"]])
-        text += ("\nThe E1 model was trained on BR-Bench (Java-heavy GitHub Actions failures, history features); on these "
-                 "repos there is no failure history, so only proximity and change features are informative.\n")
+        text += ("\nOn the seeded Python repositories, which have no failure history, ordering tests with the BR-Bench model puts "
+                 f"the first failing test file at mean position {np.mean([d['e1'] for d in e1]):.2f}, against "
+                 f"{np.mean([d['alpha'] for d in e1]):.2f} for alphabetical order and {np.mean([d['random'] for d in e1]):.2f} for "
+                 "random order.\n")
     else:
         text += "E1 model unavailable or no failing test file resolved: detection not computed.\n"
 
-    # retrieval
-    text += "\n## Retrieval hit rate (no model, all tasks)\n\n"
-    rows = []
-    for arm in ("R1", "R2"):
-        k = f"retrieval_{arm}"
-        h = sum(r[k]["hit"] for r in all_recs)
-        f_ = sum(r[k]["file_hit"] for r in all_recs)
-        d = sum(r[k]["distractor_chunks"] for r in all_recs)
-        c = sum(r[k]["n"] for r in all_recs)
-        rows.append([arm + (" log-only (BM25 over all functions)" if arm == "R1" else " change-aware (functions touched by the diff)"),
-                     pct(h, n), pct(f_, n), pct(d, c)])
-    text += paper_md.table(["arm", "seeded function among the <= 3 chunks", "seeded file among them",
-                            "chunks that sit in a distractor file"], rows)
-    b = sum(1 for r in all_recs if r["retrieval_R2"]["hit"] and not r["retrieval_R1"]["hit"])
-    c_ = sum(1 for r in all_recs if r["retrieval_R1"]["hit"] and not r["retrieval_R2"]["hit"])
-    if b + c_:
-        from scipy.stats import binomtest
-        text += (f"\nPaired, R2 hits where R1 misses: {b}; R1 hits where R2 misses: {c_}; "
-                 f"exact McNemar p = {binomtest(min(b, c_), b + c_, 0.5).pvalue:.4g}.\n")
+    text += "\n## Retrieval hit rate (no model, all tasks)\n\n" + CAVEAT + "\n"
+    text += retrieval_table(std, "Standard variant")
+    text += retrieval_table(hard, "Hard variant (same 70 mutants plus 4-6 no-op edits in executed functions)")
 
-    # repair, per model
-    for model, recs in per_model.items():
-        m = len(recs)
-        text += f"\n## Repair: {model} (n = {m} tasks, the same subset for every arm and model)\n\n"
-        if quota_note.get(model):
-            text += f"**{quota_note[model]}**\n\n"
+    # ---- confirmatory ---------------------------------------------------------------------------
+    cells = sorted(runs, key=lambda k: (k[1] != "standard", k[0] != primary, k[0]))
+    text += "\n## Confirmatory results (pre-registered, `docs/phase/033-e3-preregistration.md`)\n"
+    tests: list[tuple[str, int, int, str]] = []   # (label, b, c, cell)
+    prim = runs.get((primary, "standard"))
+    text += "\n### Primary test\n\n"
+    if prim:
+        b, c = paired(prim, "R2", "R1")
+        n = len([r for r in prim if "R1" in r and "R2" in r])
+        pv = mcnemar_onesided(b, c)
+        text += (f"Standard variant, {primary}, n = {n}: R2 plausible-fix rate "
+                 f"{sum(r['R2']['accepted'] for r in prim)}/{len(prim)} vs R1 {sum(r['R1']['accepted'] for r in prim)}/{len(prim)}; "
+                 f"R2 only {b}, R1 only {c}; exact McNemar one-sided p = {pv:.4g} (alpha = 0.05): "
+                 + ("**R2 > R1 supported**." if pv < 0.05 else "**R2 > R1 not supported at alpha = 0.05**.")
+                 + (f" ({notes[(primary, 'standard')]})" if (primary, "standard") in notes else "") + "\n")
+    else:
+        text += f"Not available: no complete standard-variant run of {primary}.\n"
+    for (m, v), recs in sorted(runs.items(), key=lambda kv: (kv[0][1] != "standard", kv[0][0] != primary, kv[0][0])):
         if not recs:
-            text += "No repair results for this model.\n"
             continue
-        tab = []
-        for arm in ARMS:
-            xs = [r[arm] for r in recs if arm in r]
-            if not xs:
-                continue
-            acc = [int(x["accepted"]) for x in xs]
-            tab.append([arm, len(xs), pct(sum(acc), len(xs)), ci(acc),
-                        pct(sum(x["edited_gt_file"] for x in xs), len(xs)),
-                        pct(sum(x["edited_gt_function"] for x in xs), len(xs)),
-                        pct(sum(x["exact_restore"] for x in xs), len(xs)),
-                        sum(x["overfit"] for x in xs), pct(sum(x["patch_in_distractor"] for x in xs), len(xs)),
-                        f"{np.mean([x['total_tokens'] for x in xs]):.0f}", f"{np.mean([x['attempts'] for x in xs]):.2f}",
-                        f"{np.mean([x['wall_s'] for x in xs]):.1f}"])
-        text += paper_md.table(
-            ["arm", "n", "plausible fix (full suite green)", "bootstrap 95% CI", "edited seeded file",
-             "edited seeded function", "exact restore", "overfit (target tests pass, suite fails)",
-             "patch landed in a distractor file", "tokens / task", "model calls / task", "wall s / task"], tab)
-        text += ("\nCost: USD 0 on the Groq free tier; tokens are the resource that is spent. R0 makes no model call. "
-                 "`wall s` for cached calls is the measured wall time of the validation run only.\n")
-        both = [r for r in recs if "R1" in r and "R2" in r]
-        if both:
-            b2 = sum(1 for r in both if r["R2"]["accepted"] and not r["R1"]["accepted"])
-            c2 = sum(1 for r in both if r["R1"]["accepted"] and not r["R2"]["accepted"])
-            from scipy.stats import binomtest
-            p = binomtest(min(b2, c2), b2 + c2, 0.5).pvalue if b2 + c2 else 1.0
-            text += (f"\nPaired R2 vs R1 on plausible fix: R2 only {b2}, R1 only {c2}, exact McNemar p = {p:.4g} "
-                     f"(n = {len(both)}).\n")
-        for label, key in (("operator", "operator"), ("repo", "repo")):
-            groups: dict[str, list] = defaultdict(list)
-            for r in recs:
-                groups[r[key]].append(r)
-            rows = []
-            for g in sorted(groups):
-                cells = [g, len(groups[g])]
-                for arm in ("R1", "R2", "R3"):
-                    xs = [r[arm]["accepted"] for r in groups[g] if arm in r]
-                    cells.append(f"{sum(xs)}/{len(xs)}" if xs else "n/a")
-                rows.append(cells)
-            text += f"\n### By {label} (plausible fixes)\n\n" + paper_md.table([label, "n", "R1", "R2", "R3"], rows)
+        if not (m == primary and v == "standard"):
+            b, c = paired(recs, "R2", "R1")
+            tests.append((f"R2 > R1, {m}, {v}", b, c, f"{m}|{v}"))
+        b, c = paired(recs, "R3", "R2")
+        tests.append((f"R3 > R2, {m}, {v}", b, c, f"{m}|{v}"))
+    if tests:
+        adj = S.holm_adjust([mcnemar_onesided(b, c) for _, b, c, _ in tests])
+        text += (f"\n### Secondary tests (one-sided exact McNemar, Holm family of {len(tests)})\n\n"
+                 + paper_md.table(["test", "first only", "second only", "p (unadjusted)", "Holm-adjusted p"],
+                                  [[lab, b, c, f"{mcnemar_onesided(b, c):.4g}", f"{a:.4g}"]
+                                   for (lab, b, c, _), a in zip(tests, adj)]))
+    ledger = bedrock_spend()
+    for (m, v), recs in sorted(runs.items(), key=lambda kv: (kv[0][1] != "standard", kv[0][0] != primary, kv[0][0])):
+        tok, usd, calls = model_usage(m)
+        text += f"\n### {m}, {v} variant (n = {len(recs)} tasks)\n\n"
+        if (m, v) in notes:
+            text += f"**{notes[(m, v)]}**\n\n"
+        if not recs:
+            text += "No complete tasks.\n"
+            continue
+        text += arm_table(recs)
+        text += breakdowns(recs)
+    # ---- pilot ----------------------------------------------------------------------------------
+    text += "\n## Pilot (n = 20, standard variant): not confirmatory\n\n"
+    text += ("The 20-task operator-stratified subset run on 2026-10-10 before the pre-registration was written. Reported "
+             "as a pilot; the 20 tasks are part of the 70 above and are not an independent sample.\n")
+    for (m, v), recs in sorted(runs.items()):
+        if v != "standard":
+            continue
+        sub = [r for r in recs if r["task_id"] in pilot_ids]
+        if sub:
+            b, c = paired(sub, "R2", "R1")
+            text += (f"\n### {m} (pilot, n = {len(sub)})\n\n" + arm_table(sub)
+                     + f"\nPaired R2 vs R1: R2 only {b}, R1 only {c}, exact McNemar two-sided p = {mcnemar_twosided(b, c):.4g}.\n")
+    # ---- cost -----------------------------------------------------------------------------------
+    rows = []
+    for m in sorted({k[0] for k in runs}):
+        tok, usd, calls = model_usage(m)
+        rows.append([m, "Groq free tier" if is_groq(m) else "Amazon Bedrock", calls, f"{tok:,}",
+                     "0.00" if is_groq(m) else f"{usd:.4f}"])
+    text += ("\n## Cost\n\n" + paper_md.table(["model", "provider", "recorded calls", "tokens", "USD"], rows)
+             + f"\nBedrock USD total in `eval/llm_cache/usage.jsonl`: **{ledger:.4f}** (project cap USD 45).\n"
+             "Groq is the free tier (USD 0); the Bedrock figure is computed from the operator-set per-million-token prices.\n")
     paper_md.write(RESULT_MD, text)
 
 
 def cache_models() -> list[str]:
-    """Models that have an E3 cache file (slug -> original name via the first record)."""
+    """Models that have an E3 cache file (original model name from the first record)."""
     out = []
     for p in sorted(CACHE_DIR.glob("e3_*.jsonl")):
         first = p.read_text(encoding="utf-8").splitlines()[:1]
@@ -313,65 +429,136 @@ def cache_models() -> list[str]:
     return out
 
 
+def load_variant(variant: str) -> list[dict]:
+    if variant == "hard":
+        path = OUT / "tasks_hard.jsonl"
+        recs = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        return recs
+    return load_tasks()
+
+
+def make_llm(model: str, replay: bool):
+    """The provider object for a cache file: Groq for gpt-oss models, Bedrock otherwise."""
+    cache = LLMCache(CACHE_DIR / f"e3_{model_slug(model)}.jsonl", replay=replay)
+    if replay:
+        if is_groq(model):
+            return GroqLLM(api_key="replay", model=model, cache=cache, ledger=Path(os.devnull))
+        return BedrockLLM(api_key="replay", model=model, cache=cache, ledger=Path(os.devnull))
+    if is_groq(model):
+        key = os.environ.get("GROQ_API_KEY", "")
+        if not key:
+            raise SystemExit("repair arms not run (no API key): set GROQ_API_KEY (`uv run --env-file .env ...`)")
+        return GroqLLM(api_key=key, model=model, cache=cache)
+    key = os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "")
+    if not key:
+        raise SystemExit("repair arms not run (no AWS_BEARER_TOKEN_BEDROCK)")
+    pi, po = os.environ.get("BR_PRICE_IN"), os.environ.get("BR_PRICE_OUT")
+    return BedrockLLM(api_key=key, model=model, region=os.environ.get("BR_BEDROCK_REGION") or "ap-south-1", cache=cache,
+                      price_in=float(pi) if pi else None, price_out=float(po) if po else None,
+                      max_usd=float(os.environ.get("BR_BEDROCK_MAX_USD") or 10))
+
+
+def estimate_run(tasks: list[dict], pins: dict, llm) -> tuple[int, int, float | None]:
+    """Worst-case `(input tokens, completion tokens, usd)` of R1 + R2 + R3's two retries for tasks, without any call.
+
+    Prompts are built exactly as the agent builds them (retrieval needs no model); cache hits are not subtracted,
+    so this is an upper bound for a resumed run.
+    """
+    tin = tout = 0
+    for t in tasks:
+        slug = t["repo"]
+        repo = SEEDED / "repos" / slug
+        with head_state(repo, t["pr_diff"]):
+            srcs = source_files(repo, {"src_dirs": pins[slug]["src_dirs"]})
+            changed, n_lines = diff_stats(t["pr_diff"])
+            rep = FailureReport(failing=t["failing_tests"], pr_diff=t["pr_diff"], triage="mine", changed_files=changed)
+            tie = e1_priority(repo, changed, n_lines)
+            for arm in ("R1", "R2"):
+                ch = select_chunks(arm, repo, srcs, rep, tie if arm == "R2" else None)
+                chars = len(SYSTEM) + len(build_prompt(arm, rep, ch, repo))
+                calls = 1 + (2 if arm == "R2" else 0)  # R3 shares R2's first call; its retries add up to two
+                tin += int(chars / 3.5) * calls + (int(1000 / 3.5) * 2 if arm == "R2" else 0)
+                tout += 1500 * calls
+    usd = None
+    if getattr(llm, "price_in", None) is not None and getattr(llm, "price_out", None) is not None:
+        usd = tin * llm.price_in / 1e6 + tout * llm.price_out / 1e6
+    return tin, tout, usd
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("mode", choices=["run", "eval"])
     ap.add_argument("--model", default=os.environ.get("MODEL") or os.environ.get("BR_AGENT_MODEL") or DEFAULT_MODELS[0])
+    ap.add_argument("--variant", choices=["standard", "hard"], default="standard")
     args = ap.parse_args(argv)
-    tasks = load_tasks()
     pins = json.loads(REPOS_JSON.read_text())
     n_sub = int(os.environ.get("BR_E3_TASKS") or 20)
-    sub = subset(tasks, n_sub)
-    quota_note: dict[str, str] = {}
+    pilot_ids = {t["task_id"] for t in subset(load_tasks(), 20)}
 
     if args.mode == "run":
-        key = os.environ.get("GROQ_API_KEY", "")
-        if not key:
-            print("repair arms not run (no API key): set GROQ_API_KEY (`uv run --env-file .env ...`)", file=sys.stderr)
-            return 0
-        cache = LLMCache(CACHE_DIR / f"e3_{model_slug(args.model)}.jsonl")
-        llm = GroqLLM(api_key=key, model=args.model, cache=cache)
-        # estimate before spending anything: R1 + R2 prompts per task, plus R3's two worst-case retries
-        est = 0
-        for t in sub:
-            est += 2 * (GroqLLM.estimate_tokens("x" * 700, "x" * 9000, 1500)) + 2 * GroqLLM.estimate_tokens("x" * 700, "x" * 10000, 1500)
-        used, _ = llm._day_total()
-        remaining = llm.tpd - used
-        print(f"{args.model}: {len(sub)} tasks, worst-case estimate {est:,} tokens, {max(remaining, 0):,} left today "
-              f"(TPD {llm.tpd:,})", flush=True)
-        done: list[dict] = []
+        tasks_all = load_variant(args.variant)
+        sub = subset(tasks_all, n_sub)
+        llm = make_llm(args.model, replay=False)
+        tin, tout, usd = estimate_run(sub, pins, llm)
+        extra = ""
+        if isinstance(llm, GroqLLM):
+            used, _ = llm._day_total()
+            extra = f"; {max(llm.tpd - used, 0):,} tokens left today by the client-side ledger (TPD {llm.tpd:,})"
+        print(f"{args.model} [{args.variant}]: {len(sub)} tasks, worst case {tin:,} input + {tout:,} output tokens"
+              + (f", estimated USD {usd:.2f}, ledger USD {bedrock_spend():.2f}, cap USD {llm.max_usd:.2f}" if usd is not None else "")
+              + extra, flush=True)
+        if isinstance(llm, BedrockLLM):
+            llm.check_budget(usd or 0.0) if usd is not None else llm.estimate_usd("", "", 0)
+        print("subset:", ", ".join(t["task_id"] for t in sub), flush=True)
+        done = 0
         try:
             for t in sub:
-                done.append(run_task(t, llm, ("R1", "R2", "R3"), pins, True))
-                print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if done[-1][a]['accepted'] else 'no'}" for a in ("R1", "R2", "R3")),
+                rec = run_task(t, llm, ("R1", "R2", "R3"), pins, True)
+                done += 1
+                print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if rec[a]['accepted'] else 'no'}" for a in ("R1", "R2", "R3")),
                       flush=True)
-        except DailyQuotaReached as exc:
-            print(f"{exc}: {len(done)} of {len(sub)} tasks done; cached calls are kept, re-run to resume.")
-            quota_note[args.model] = f"Stopped at the daily quota: {len(done)} of {len(sub)} tasks done."
-        print(f"cache: {cache.path} ({len(cache)} records)")
+        except (DailyQuotaReached, CostCapReached) as exc:
+            print(f"{exc}: {done} of {len(sub)} tasks done; cached calls are kept, re-run the same command to resume.")
+        if isinstance(llm, BedrockLLM):
+            print(f"Bedrock ledger total: USD {bedrock_spend():.4f} (cap USD {llm.max_usd:.2f})")
+        print(f"cache: {llm.cache.path} ({len(llm.cache)} records)")
         return 0
 
     # eval: replay only, no network
     os.environ["BR_LLM_REPLAY"] = "1"
     os.environ["BR_OFFLINE"] = "1"
-    base = [run_task(t, None, (), pins, False) for t in tasks]
-    per_model: dict[str, list[dict]] = {}
-    models = cache_models()
-    if not models:
-        quota_note["(none)"] = "repair arms not run (no cached model responses)"
-    for model in models:
-        cache = LLMCache(CACHE_DIR / f"e3_{model_slug(model)}.jsonl", replay=True)
-        llm = GroqLLM(api_key="replay", model=model, cache=cache, ledger=Path(os.devnull))
-        recs = []
+    base: dict[str, list[dict]] = {}
+    tasks_by_variant: dict[str, list[dict]] = {}
+    for v in ("standard", "hard"):
         try:
-            for t in sub:
-                recs.append(run_task(t, llm, ("R0", "R1", "R2", "R3"), pins, True))
-        except CacheMiss as exc:
-            quota_note[model] = f"Cache incomplete ({exc}); {len(recs)} of {len(sub)} tasks replayed."
-        per_model[model] = recs
-    if not models:
-        per_model["(no model run)"] = []
-    write_report(base, per_model, quota_note)
+            tasks_by_variant[v] = load_variant(v)
+        except FileNotFoundError:
+            tasks_by_variant[v] = []
+        base[v] = []
+        for t in tasks_by_variant[v]:
+            r = run_task(t, None, (), pins, False)
+            r["n_hard"] = t.get("n_hard_distractors", 0)
+            base[v].append(r)
+    runs: dict[tuple[str, str], list[dict]] = {}
+    notes: dict[tuple[str, str], str] = {}
+    models = cache_models()
+    primary = DEFAULT_MODELS[0]
+    for model in models:
+        llm = make_llm(model, replay=True)
+        for v in ("standard", "hard"):
+            tasks = tasks_by_variant[v]
+            recs, missed = [], 0
+            for t in tasks:
+                try:
+                    recs.append(run_task(t, llm, ("R0", "R1", "R2", "R3"), pins, True))
+                except CacheMiss:
+                    missed += 1
+            if not recs and v == "hard":
+                continue
+            runs[(model, v)] = recs
+            if missed:
+                notes[(model, v)] = f"{len(recs)} of {len(tasks)} tasks done; {missed} not run (cache incomplete)"
+    write_report(base, runs, pilot_ids, notes, primary)
     print(f"wrote paper/generated/{RESULT_MD}")
     return 0
 
