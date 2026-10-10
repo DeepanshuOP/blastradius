@@ -220,3 +220,21 @@ analysis (A1) and the conclusion (no cached request is invalidated) stand. Repro
 - Deviation to note: AGENTS.md says "no external sources / do not fetch any URL" and forbids writes under `data/`. The model download is a
   pinned dependency fetch (D-61 approves it), and `data/rag/` is a new git-ignored directory the brief names; neither touches `data/raw`,
   `data/interim` or logs.
+
+## Step 1 (2026-10-10): RAG index, `src/rag/`
+
+- Files: `src/rag/{__init__,chunks,index,history}.py`, `tests/test_rag.py` (14 tests, offline; real git repo with 3 commits in `tmp_path`).
+- `chunks.py`: Python via `ast` (same granularity as `repair.index_functions`, asserted equal on the sample repo), Java via tree-sitter-java
+  (the parser Graphify uses; `Parser` called directly, no Graphify graph), commit subjects by `git log -L` (cap 3) with `--follow -n 3` fallback.
+- `index.py`: sparse = `repair.bm25_scores` over `repair._doc_tokens` (reused, not reimplemented); dense = fastembed cosine, vectors
+  content-addressed in `data/rag/emb_<model>.sqlite`; hybrid = RRF k = 60. The sparse ranking lists only chunks with BM25 > 0. `build(repo, sha)`
+  caches chunk digest + vectors under `data/rag/<repo>@<sha12>.<model>.{json,npz}`; `search(query, k, mode, restrict_to, tokens)`.
+  Chunk text is cut at 2,000 characters before embedding (CPU cost).
+- `history.py`: `fix_history(repo, rev, file, qualname)` -> up to 2 `(sha, subject, hunk <= 40 lines)` from `git log -L` at the function's
+  range as of `rev`.
+- Finding: `git log -L` attributes lines by diff alignment, so a function appended in a commit that also edits a neighbouring line can be
+  credited with that neighbour's history (reproduced while writing the fixture). The fixture avoids it; the limitation is inherent to `-L`.
+- **Finding for Step 3:** the three seeded pallets repos (click, itsdangerous, markupsafe) are depth-1 clones (`.git/shallow`, 1 commit);
+  `data/clones` does not hold them. `fix_history` on them returns nothing, so R4's history block would be empty for all 70 tasks until the
+  clones are deepened (a `git fetch --deepen`, network, which I have not done). Raised to the operator in the Step 3 report.
+- `make test`: **931 passed, 2 skipped** (917 + 14 new) in 769 s.
