@@ -1,0 +1,336 @@
+"""Repair Agent (D-58): the ONLY module that may call an LLM.
+
+Given a failing change, it triages the failure, retrieves at most three code chunks, asks
+the model for one SEARCH/REPLACE patch, applies it strictly and accepts it only if the
+FULL suite passes (target tests and every test that was green before).
+
+Arms (same model, same caps, same output format; they differ only in how the <= 3 chunks
+are chosen, which is retrieval and costs no tokens):
+
+R0  no LLM: notify only (what Jenkins does)
+R1  log-only: BM25 over every source function, queried with identifiers from the failing
+    test ids and output (the inputs LogSage / CI-Bench / CI-Repair-Bench give the model)
+R2  change-aware: functions touched by the PR diff, ranked by the same BM25; ties broken by
+    the E1 model's score of the test file paired with the changed file; the triage class
+    is stated in the prompt
+R3  R2 plus up to two retries, each feeding back the failing output (<= 1,000 chars)
+
+One attempt is one LLM call with the input capped near 3,000 tokens.
+"""
+
+from __future__ import annotations
+
+import ast
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Callable
+
+from src.eval.baselines import bm25_scores, path_token_list
+
+ARMS = ("R0", "R1", "R2", "R3")
+MAX_CHUNKS = 3
+CONTEXT_LINES = 20
+OUTPUT_CHARS = 1500
+RETRY_OUTPUT_CHARS = 1000
+MAX_RETRIES = 2
+
+SYSTEM = (
+    "You are a careful software engineer fixing a failing test suite. Reply with SEARCH/REPLACE blocks only, "
+    "no explanation. Each block is exactly:\n"
+    "path/to/file.py\n<<<<<<< SEARCH\nexact lines to replace, copied verbatim\n=======\nreplacement lines\n"
+    ">>>>>>> REPLACE\n"
+    "The SEARCH text must appear exactly once in the file. Change as little as possible. Only edit files shown."
+)
+_BLOCK = re.compile(r"^(?P<path>[^\n<>=]+?)[ \t]*\n<<<<<<< SEARCH\n(?P<search>.*?)\n?=======\n(?P<replace>.*?)\n?>>>>>>> REPLACE",
+                    re.S | re.M)
+_WORD = re.compile(r"[A-Za-z_][A-Za-z0-9_]{2,}")
+_NOISE = {"assert", "self", "error", "none", "true", "false", "def", "return", "the", "and", "test", "tests",
+          "traceback", "file", "line", "pytest", "python", "site", "packages", "lib", "raise", "failed", "assertionerror"}
+
+
+@dataclass
+class Chunk:
+    """One candidate code location shown to the model."""
+
+    file: str
+    qualname: str
+    start: int
+    end: int
+    focus: int
+    score: float = 0.0
+    text: str = ""
+
+
+@dataclass
+class FailureReport:
+    """Everything the agent is told about one failing change."""
+
+    failing: list[dict]            # [{"test_id": ..., "output": ...}]
+    pr_diff: str = ""
+    triage: str = "mine"           # mine | inherited | flaky
+    changed_files: list[str] = field(default_factory=list)
+
+
+@dataclass
+class Attempt:
+    """One model call and what became of its answer."""
+
+    prompt_chars: int
+    response: str
+    usage: dict | None
+    from_cache: bool
+    applied: bool
+    error: str = ""
+    files: dict[str, str] = field(default_factory=dict)  # path -> patched content
+
+
+@dataclass
+class RepairResult:
+    """Outcome of the agent on one failure."""
+
+    arm: str
+    action: str                    # repair | rerun | ignore | notify
+    chunks: list[Chunk] = field(default_factory=list)
+    attempts: list[Attempt] = field(default_factory=list)
+    accepted: bool = False
+    note: str = ""
+
+
+# ---- routing -------------------------------------------------------------------------------
+def route(triage: str) -> str:
+    """What to do with a failure of a given triage class.
+
+    `mine` goes to repair; `flaky` gets a rerun suggestion; `inherited` is reported as
+    already failing on the base and receives no patch.
+    """
+    return {"mine": "repair", "flaky": "rerun", "inherited": "ignore"}.get(triage, "repair")
+
+
+# ---- retrieval -----------------------------------------------------------------------------
+def index_functions(repo: Path, files: list[str]) -> list[Chunk]:
+    """Every top-level function and method of the given source files, as chunks (unscored)."""
+    out: list[Chunk] = []
+    for f in files:
+        try:
+            src = (repo / f).read_text(encoding="utf-8")
+            tree = ast.parse(src)
+        except (OSError, SyntaxError, UnicodeDecodeError):
+            continue
+        lines = src.splitlines()
+
+        def visit(node: ast.AST, prefix: str) -> None:
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    q = f"{prefix}{child.name}"
+                    start = min([child.lineno] + [d.lineno for d in child.decorator_list])
+                    out.append(Chunk(f, q, start, child.end_lineno, start, 0.0, "\n".join(lines[start - 1:child.end_lineno])))
+                elif isinstance(child, ast.ClassDef):
+                    visit(child, f"{prefix}{child.name}.")
+
+        visit(tree, "")
+    return out
+
+
+def query_tokens(failing: list[dict], output_chars: int = OUTPUT_CHARS) -> list[str]:
+    """Query for retrieval: tokens of the failing test ids plus identifiers in their output."""
+    toks: list[str] = []
+    for t in failing:
+        toks += path_token_list(t["test_id"].replace("::", "/").replace(".", "/"))
+    text = "\n".join(t.get("output", "") for t in failing)[:output_chars]
+    for w in _WORD.findall(text):
+        for part in path_token_list(w):
+            if len(part) >= 3 and part not in _NOISE:
+                toks.append(part)
+    return [t for t in toks if t not in _NOISE]
+
+
+def _doc_tokens(c: Chunk) -> list[str]:
+    toks = path_token_list(c.qualname.replace(".", "/") + "/" + c.file)
+    for w in _WORD.findall(c.text):
+        toks += [p for p in path_token_list(w) if len(p) >= 3 and p not in _NOISE]
+    return toks
+
+
+def changed_line_ranges(pr_diff: str) -> dict[str, list[int]]:
+    """Added or replaced line numbers (post-image) per file in a unified diff."""
+    out: dict[str, list[int]] = {}
+    cur = None
+    new_line = 0
+    for ln in pr_diff.splitlines():
+        if ln.startswith("+++ b/"):
+            cur = ln[6:]
+            out.setdefault(cur, [])
+        elif ln.startswith("@@"):
+            m = re.match(r"@@ -\d+(?:,\d+)? \+(\d+)", ln)
+            new_line = int(m.group(1)) if m else 0
+        elif cur is not None and ln.startswith("+") and not ln.startswith("+++"):
+            out[cur].append(new_line)
+            new_line += 1
+        elif cur is not None and ln.startswith("-") and not ln.startswith("---"):
+            pass  # a deletion consumes no post-image line
+        elif cur is not None and ln.startswith(" "):
+            new_line += 1
+    return out
+
+
+def select_chunks(arm: str, repo: Path, source_files: list[str], report: FailureReport,
+                  tie_break: Callable[[str], float] | None = None) -> list[Chunk]:
+    """The <= 3 chunks an arm shows the model.
+
+    Args:
+        arm: `R1` (all functions) or `R2` / `R3` (functions touched by the diff).
+        repo: Working tree in the state under repair (PR applied).
+        source_files: Repo-relative non-test source files.
+        report: The failure.
+        tie_break: `file -> priority` (higher first) used only among equal BM25 scores (R2/R3).
+
+    Returns:
+        Up to :data:`MAX_CHUNKS` chunks, best first, with `focus` set to the line shown around.
+    """
+    funcs = index_functions(repo, source_files)
+    if arm in ("R2", "R3"):
+        ranges = changed_line_ranges(report.pr_diff)
+        touched = []
+        for c in funcs:
+            hit = [ln for ln in ranges.get(c.file, []) if c.start <= ln <= c.end]
+            if hit:
+                c.focus = hit[0]
+                touched.append(c)
+        pool = touched or funcs
+    else:
+        pool = funcs
+    q = query_tokens(report.failing)
+    scores = bm25_scores([_doc_tokens(c) for c in pool], q)
+    for c, s in zip(pool, scores):
+        c.score = float(s)
+    prio = tie_break or (lambda f: 0.0)
+    ranked = sorted(pool, key=lambda c: (-round(c.score, 9), -prio(c.file), c.file, c.start))[:MAX_CHUNKS]
+    if arm == "R1":  # focus on the line sharing most tokens with the query
+        qs = set(q)
+        for c in ranked:
+            best, best_n = c.start, -1
+            for i, ln in enumerate(c.text.splitlines()):
+                n = len(qs & set(path_token_list(ln)))
+                if n > best_n:
+                    best, best_n = c.start + i, n
+            c.focus = best
+    return ranked
+
+
+def render_chunk(c: Chunk, repo: Path) -> str:
+    """The function's lines within +-CONTEXT_LINES of its focus line, numbered, under a path header."""
+    lines = (repo / c.file).read_text(encoding="utf-8").splitlines()
+    lo, hi = max(c.start, c.focus - CONTEXT_LINES), min(c.end, c.focus + CONTEXT_LINES)
+    body = "\n".join(f"{i:>5}| {lines[i - 1]}" for i in range(lo, hi + 1))
+    return f"### {c.file} :: {c.qualname} (lines {lo}-{hi})\n{body}"
+
+
+def build_prompt(arm: str, report: FailureReport, chunks: list[Chunk], repo: Path, feedback: str = "") -> str:
+    """User message: failing tests, output (<= 1,500 chars), triage (R2/R3), the chunks, optional retry feedback."""
+    ids = "\n".join(f"- {t['test_id']}" for t in report.failing[:8])
+    out = "\n".join(t.get("output", "") for t in report.failing)[:OUTPUT_CHARS]
+    parts = [f"Failing tests:\n{ids}", f"Test output (truncated):\n{out}"]
+    if arm in ("R2", "R3"):
+        parts.append("Triage: this failure is MINE, i.e. caused by the change under review (the tests passed before it).\n"
+                     "Files changed by the change: " + ", ".join(sorted(report.changed_files) or ["(unknown)"]))
+    parts.append("Candidate code:\n" + "\n\n".join(render_chunk(c, repo) for c in chunks))
+    if feedback:
+        parts.append("Your previous patch did not make the whole suite pass. Output of the run:\n"
+                     + feedback[:RETRY_OUTPUT_CHARS])
+    parts.append("Reply with SEARCH/REPLACE blocks only.")
+    return "\n\n".join(parts)
+
+
+# ---- applying a patch ----------------------------------------------------------------------
+def parse_blocks(text: str) -> list[tuple[str, str, str]]:
+    """`(path, search, replace)` triples in a model reply (code fences tolerated)."""
+    cleaned = "\n".join(ln for ln in text.splitlines() if not ln.strip().startswith("```"))
+    return [(m["path"].strip(), m["search"], m["replace"]) for m in _BLOCK.finditer(cleaned)]
+
+
+def apply_blocks(repo: Path, blocks: list[tuple[str, str, str]], allowed: set[str] | None = None) -> dict[str, str]:
+    """Apply SEARCH/REPLACE blocks strictly; returns `{path: new content}` without writing.
+
+    Raises:
+        ValueError: If there are no blocks, a path is not allowed or missing, or a SEARCH
+            text does not occur exactly once in the file as edited so far.
+    """
+    if not blocks:
+        raise ValueError("no SEARCH/REPLACE blocks in the reply")
+    files: dict[str, str] = {}
+    for path, search, replace in blocks:
+        if allowed is not None and path not in allowed:
+            raise ValueError(f"{path} was not one of the files shown")
+        p = repo / path
+        if not p.is_file() or ".." in Path(path).parts:
+            raise ValueError(f"{path} does not exist")
+        text = files.get(path, p.read_text(encoding="utf-8"))
+        n = text.count(search)
+        if not search or n != 1:
+            raise ValueError(f"SEARCH text matches {n} times in {path} (must be exactly once)")
+        files[path] = text.replace(search, replace, 1)
+    return files
+
+
+class RepairAgent:
+    """Triage-routed, retrieval-grounded, validation-gated repair."""
+
+    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES) -> None:
+        """Create the agent.
+
+        Args:
+            llm: An object with `chat(system, user, max_completion_tokens) -> ChatResult`
+                (`GroqLLM`), or an offline provider (then only R0 behaviour is possible).
+            arm: One of :data:`ARMS`.
+            max_retries: Extra attempts for R3.
+        """
+        if arm not in ARMS:
+            raise ValueError(f"unknown arm {arm!r}")
+        self.llm, self.arm, self.max_retries = llm, arm, max_retries
+
+    def run(self, repo: Path, source_files: list[str], report: FailureReport,
+            validate: Callable[[dict[str, str]], tuple[bool, str]],
+            tie_break: Callable[[str], float] | None = None) -> RepairResult:
+        """Handle one failure.
+
+        Args:
+            repo: Working tree in the failing state (never modified here).
+            source_files: Repo-relative non-test source files.
+            report: The failure.
+            validate: Runs the FULL suite on `{path: content}` applied to a copy and returns
+                `(accepted, failing_output)`; accepted means every non-pre-existing test passes.
+            tie_break: See :func:`select_chunks`.
+
+        Returns:
+            The result. `accepted` is True only when `validate` accepted a patch.
+        """
+        action = route(report.triage)
+        if action == "rerun":
+            return RepairResult(self.arm, "rerun", note="triaged flaky: rerun the test, no patch proposed")
+        if action == "ignore":
+            return RepairResult(self.arm, "ignore", note="triaged inherited: already failing on the base, no patch")
+        if self.arm == "R0" or not hasattr(self.llm, "chat"):
+            return RepairResult(self.arm, "notify", note="notification only, no model call")
+        chunks = select_chunks("R1" if self.arm == "R1" else "R2", repo, source_files, report, tie_break)
+        res = RepairResult(self.arm, "repair", chunks)
+        feedback = ""
+        tries = 1 + (self.max_retries if self.arm == "R3" else 0)
+        for i in range(tries):
+            prompt = build_prompt(self.arm, report, chunks, repo, feedback)
+            r = self.llm.chat(SYSTEM, prompt, 1500)
+            att = Attempt(len(SYSTEM) + len(prompt), r.text, r.usage, r.from_cache, False)
+            res.attempts.append(att)
+            try:
+                att.files = apply_blocks(repo, parse_blocks(r.text), {c.file for c in chunks})
+                att.applied = True
+            except ValueError as exc:
+                att.error = str(exc)
+                feedback = f"(your reply could not be applied: {exc})"
+                continue
+            ok, out = validate(att.files)
+            if ok:
+                res.accepted = True
+                return res
+            feedback = out
+        return res
