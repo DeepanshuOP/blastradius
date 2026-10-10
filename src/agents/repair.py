@@ -226,6 +226,18 @@ def render_chunk(c: Chunk, repo: Path) -> str:
     return f"### {c.file} :: {c.qualname} (lines {lo}-{hi})\n{body}"
 
 
+_ADDR = re.compile(r"0x[0-9a-fA-F]{5,}")
+
+
+def clean_feedback(text: str, repo: Path) -> str:
+    """Make suite output deterministic before it enters a prompt (replay depends on it).
+
+    Memory addresses in object reprs (`<Foo object at 0x7f3a...>`) and the absolute path of the working
+    tree differ from run to run; both are masked. Nothing else is altered.
+    """
+    return _ADDR.sub("0xADDR", text).replace(str(repo), "<repo>")
+
+
 def build_prompt(arm: str, report: FailureReport, chunks: list[Chunk], repo: Path, feedback: str = "") -> str:
     """User message: failing tests, output (<= 1,500 chars), triage (R2/R3), the chunks, optional retry feedback."""
     ids = "\n".join(f"- {t['test_id']}" for t in report.failing[:8])
@@ -237,7 +249,7 @@ def build_prompt(arm: str, report: FailureReport, chunks: list[Chunk], repo: Pat
     parts.append("Candidate code:\n" + "\n\n".join(render_chunk(c, repo) for c in chunks))
     if feedback:
         parts.append("Your previous patch did not make the whole suite pass. Output of the run:\n"
-                     + feedback[:RETRY_OUTPUT_CHARS])
+                     + clean_feedback(feedback, repo)[:RETRY_OUTPUT_CHARS])
     parts.append("Reply with SEARCH/REPLACE blocks only.")
     return "\n\n".join(parts)
 

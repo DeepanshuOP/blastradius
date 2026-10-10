@@ -251,3 +251,11 @@ def test_provider_selection_order(monkeypatch) -> None:
     assert get_llm().name == "groq"
     monkeypatch.setenv("BR_OFFLINE", "1")
     assert get_llm().name == "offline"
+
+
+def test_retry_feedback_is_deterministic(tmp_path) -> None:
+    from src.agents.repair import clean_feedback
+
+    raw = f"runner = <click.testing.CliRunner object at 0x75921a4a4390> in {tmp_path}/x.py"
+    assert clean_feedback(raw, tmp_path) == "runner = <click.testing.CliRunner object at 0xADDR> in <repo>/x.py"
+    assert clean_feedback(raw, tmp_path) == clean_feedback(raw.replace("0x75921a4a4390", "0x7b0546c12450"), tmp_path)
