@@ -51,3 +51,8 @@ Branch: `upgrade-2.0` (from `main` at 1198e1d). Operator: DeepanshuOP.
 - `uv run python -m analysis.build_e1_features` (stdout): 734 instances (49 without a changeset); split 440 / 146 / 148; 608,903 rows; candidates per instance min/median/max 35 / 304.5 / 5,439; positives per instance 1 / 1 / 104; ground-truth files among candidates 1,527/1,527 (100.00%); all 36 repos from the pinned clone; 3 positives are non-conventional and unseen before (candidate only because they are labels; no feature exposes candidate provenance).
 - Decisions made: failure *events* are one per (run, test_id) so `hist_fail_count` equals RQ1's historical baseline count; `prox_min_dir_dist` is tree distance (up + down segments); stems shorter than 3 characters are ignored in `prox_name_contains_stem`; module = path prefix before the first src/tests/test segment.
 - `graph_` family: not implemented (optional; see Phase 4 note).
+
+## Phase 3: metrics and baselines — done
+- Files: `src/eval/metrics.py`, `src/eval/baselines.py`, `tests/test_e1_metrics.py`, `tests/test_e1_baselines.py`.
+- `uv run pytest -q tests/test_e1_metrics.py tests/test_e1_baselines.py` -> 11 passed.
+- HARD STOP 1 reproduction (k=10, 576 instances, 1,316 labels), asserted by `test_reproduces_published_rq1_baselines`: co-change 61, changed files 224, failure history 519 hits: all equal `paper/generated/rq1.md`. Finding: the history set only reproduces under RQ1's own tie rule (pandas `value_counts` order). With a path-ascending tie-break the same baseline scores 524 hits. The E1 ranking B4 uses the path tie-break (spec: ties by path); both are reported in `rq2_predictor.md`.
