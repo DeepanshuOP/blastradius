@@ -224,16 +224,20 @@
    {
     "id": "D-59",
     "title": "New optional extra `ml`"
+   },
+   {
+    "id": "D-60",
+    "title": "Amazon Bedrock as a third E3 provider, paid from AWS credits"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "11424577ebe9abe9b822bc7267d3e8d5eee0a6bb",
+ "generated_at_git_sha": "38cf56a5e4612225679d385b648a04a756a1e350",
  "panels": [
   {
    "id": "funnel",
    "source": "paper/generated/attrition_funnel.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -396,7 +400,7 @@
   {
    "id": "rq1_k5",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -599,7 +603,7 @@
   {
    "id": "rq1_k10",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -802,7 +806,7 @@
   {
    "id": "rq1_k20",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -1005,7 +1009,7 @@
   {
    "id": "rq1_size",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -1273,7 +1277,7 @@
   {
    "id": "sensitivity",
    "source": "paper/generated/infra_failures.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
    "tables": [
     {
      "columns": [
@@ -1700,7 +1704,7 @@
   {
    "id": "leakage",
    "source": "paper/generated/leakage_audit.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
    "tables": [
     {
      "columns": [
@@ -2548,7 +2552,7 @@
   {
    "id": "flakiness",
    "source": "paper/generated/flakiness.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "c5527cf554d37c52307e3923ca5e56638873b63d",
    "tables": [
     {
      "columns": [
@@ -2573,7 +2577,7 @@
   {
    "id": "expiry",
    "source": "paper/generated/expiry_cliff.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
    "tables": [
     {
      "columns": [
@@ -2635,7 +2639,7 @@
   {
    "id": "expiry_d23",
    "source": "paper/generated/expiry_cliff.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
    "tables": [
     {
      "columns": [
@@ -2696,7 +2700,7 @@
   {
    "id": "parser",
    "source": "paper/generated/parser_precision.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -2794,7 +2798,7 @@
   {
    "id": "binding",
    "source": "paper/generated/binding.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [
@@ -3028,7 +3032,7 @@
   {
    "id": "classes",
    "source": "paper/generated/infra_failures.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
    "tables": [
     {
      "columns": [
@@ -3111,7 +3115,7 @@
   {
    "id": "gates",
    "source": "paper/generated/gates.md",
-   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b",
    "tables": [
     {
      "columns": [

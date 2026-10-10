@@ -10,6 +10,8 @@
 
 On top of the dataset, BlastRadius 2.0 is a change-aware CI assistant in four stages: **predict** which test files a change will break (E1), **run** them first, **triage** each failure as the change's own, inherited or flaky (E2), and **repair** the ones that are the change's own, accepting a patch only if the full suite passes (E3). Each stage is an experiment scored on BR-Bench (E3 on a seeded-bug benchmark) and each may come out negative; results, including the ones that did not work, are in [`docs/RESULTS_2.md`](docs/RESULTS_2.md) and architecture in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The MSR 2027 paper stays a dataset paper.
 
+Results so far (all regenerate from `paper/generated/`; details and caveats in `docs/RESULTS_2.md`): the E1 ranker reaches Recall@10 = 0.525 on a Java-only chronological test split, statistically indistinguishable from the best baseline (0.522; Gate 3 not met). E2 is a small-sample trade-off (18 not-mine pairs in the test split), not a working triager. E3 is interim: change-aware retrieval places the seeded function in the model's context for 69/70 tasks against 46/70 log-only (63/70 on the harder variant), and on the tasks run so far R2 beats R1 on plausible fixes (gpt-oss-120b, n = 47: 33 vs 20, one-sided p = 0.0036); the full 70-task runs wait for the free-tier quota.
+
 ## Why
 
 Change impact analysis is usually scored against co-change, and regression test selection against static reachability. Neither label records a test failure. Industrial predictive test selection (Meta, Google) uses the right label, but on private data. BR-Bench puts the right label on public data:

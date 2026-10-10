@@ -76,13 +76,14 @@ Every number below is copied from the file named next to it; regenerate with `ma
 19. **What does SHAP show?** Path proximity and history carry most of the model's use. `chg_` features are constant within an
     instance, so their SHAP share only says the model uses them in interactions; the ablation is the evidence for what matters:
     removing history costs 0.140 Recall@10, co-change 0.007 (inside the seed spread).
-20. **Gate 3 was not met. Is that a failure?** It is the result: Recall@10 0.525 vs 0.522 for the best baseline, adjusted p = 0.2656.
+20. **Gate 3 was not met. Is that a failure?** It is the result: Recall@10 0.525 vs 0.522 for the best baseline, Holm-adjusted p = 0.382.
     D-02 says a negative model result is publishable; D-56 keeps E1 out of the MSR paper.
 21. **Why seeded bugs for repair?** Real BR-Bench failures cannot be re-executed from the logs (no gold re-execution), and a repair
     needs a runnable suite. Seeded mutations give a known cause and a verifiable acceptance test, at the cost of being easier than real bugs.
 22. **Why is the LLM outside the core?** D-17: every published number must regenerate without a model. Only the repair step calls one
     (D-58), with a pinned model, temperature 0, and every reply cached and replayable.
 23. **What does a negative or small result mean here?** E2 has 18 not-mine pairs in its test split: the point estimates have wide
-    intervals and the confusion table shows a trade-off. E3's R2-vs-R1 difference is p = 0.51 and 0.11 at n = 20. Both are stated as such.
+    intervals and the confusion table shows a trade-off. E3 is interim: the primary test (R2 > R1, gpt-oss-120b, standard) is
+    p = 0.0036 on 47 of 70 tasks, and the remaining tasks and the hard variant wait for the free-tier quota. Both are stated as such.
 24. **Why not just Jenkins?** Jenkins executes; BlastRadius decides what to run first, why a test failed and how to fix it. The CI
     server's behaviour is the baseline row of every experiment.

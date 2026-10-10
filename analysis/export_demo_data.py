@@ -823,12 +823,14 @@ def intelligence(sha: str) -> dict:
     p3 = GENERATED / "rq4_repair.md"
     if p3.exists():
         t = _tables_by_heading(p3)
-        models = {k.split(":", 1)[1].split("(")[0].strip(): v for k, v in t.items() if k.startswith("Repair: ")}
+        models = {k: v for k, v in t.items() if re.search(r", (standard|hard) variant \(n = \d+ tasks\)$", k)}
         out["e3"] = {**src("rq4_repair.md"), "status": "run",
                      "detection": next((v for k, v in t.items() if k.startswith("Detection")), None),
-                     "retrieval": next((v for k, v in t.items() if k.startswith("Retrieval hit rate")), None),
-                     "models": models,
-                     "retrieval_note": _paragraph_after(p3, "Retrieval hit rate").splitlines()[:1]}
+                     "retrieval": t.get("Standard variant"),
+                     "retrieval_hard": next((v for k, v in t.items() if k.startswith("Hard variant")), None),
+                     "primary": _paragraph_after(p3, "Primary test"),
+                     "secondary": next((v for k, v in t.items() if k.startswith("Secondary tests")), None),
+                     "models": models, "cost": t.get("Cost")}
     else:
         out["e3"] = {"status": "not run", "note": "make repair-eval has not produced paper/generated/rq4_repair.md"}
     return out

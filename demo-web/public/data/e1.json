@@ -396,7 +396,7 @@
      "0.080",
      "0.085",
      "0.623",
-     "349.527",
+     "349.480",
      "0.396",
      "33/341 (9.68%)"
     ],
@@ -585,11 +585,11 @@
    ]
   },
   "source": "paper/generated/rq2_predictor.md",
-  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+  "source_generated_at_git_sha": "a109cca64b8f26188496012cd181b0332b9dc5fd",
   "stats": {
    "columns": [
-    "baseline",
-    "baseline mean",
+    "comparison",
+    "second method mean",
     "p",
     "Holm-adjusted p",
     "Cliff's delta",
@@ -597,67 +597,83 @@
    ],
    "rows": [
     [
-     "B0 retest-all (alphabetical)",
+     "ours vs B0 retest-all (alphabetical)",
      "0.089",
      "6.918e-17",
-     "5.535e-16",
+     "6.918e-16",
      "+0.527",
      "large"
     ],
     [
-     "B1 random (20 seeds)",
+     "ours vs B1 random (20 seeds)",
      "0.029",
      "2.39e-16",
-     "1.673e-15",
+     "2.151e-15",
      "+0.469",
      "medium"
     ],
     [
-     "B2 changed test files",
+     "ours vs B2 changed test files",
      "0.227",
      "1.379e-08",
-     "5.517e-08",
+     "8.275e-08",
      "+0.356",
      "medium"
     ],
     [
-     "B3 co-change support",
+     "ours vs B3 co-change support",
      "0.144",
      "5.111e-14",
-     "3.066e-13",
+     "4.088e-13",
      "+0.452",
      "medium"
     ],
     [
-     "B4 failure history",
+     "ours vs B4 failure history",
      "0.439",
      "0.002049",
-     "0.006148",
+     "0.01025",
      "+0.114",
      "negligible"
     ],
     [
-     "B5 BM25 path tokens",
+     "ours vs B5 BM25 path tokens",
      "0.141",
      "1.389e-13",
-     "6.945e-13",
+     "9.723e-13",
      "+0.458",
      "medium"
     ],
     [
-     "B6 history-only LTR",
+     "ours vs B6 history-only LTR",
      "0.477",
      "0.05583",
-     "0.1117",
+     "0.2233",
      "+0.071",
      "negligible"
     ],
     [
-     "B7 readily-available-info LTR",
+     "ours vs B7 readily-available-info LTR",
      "0.522",
      "0.2656",
-     "0.2656",
+     "0.3823",
      "+0.030",
+     "negligible"
+    ],
+    [
+     "B6 history-only LTR vs B4 failure history",
+     "0.439",
+     "0.1911",
+     "0.3823",
+     "+0.048",
+     "negligible"
+    ],
+    [
+     "B7 readily-available-info LTR vs B4 failure history",
+     "0.439",
+     "0.08101",
+     "0.243",
+     "+0.083",
      "negligible"
     ]
    ]
@@ -711,7 +727,7 @@
     ]
    ]
   },
-  "verdict": "Gate 3 (ROADMAP §37.1) is NOT MET: on the 148 test instances the ranker's Recall@10 is 0.525 (95% bootstrap CI [0.447, 0.599]) against 0.522 for the best baseline (B7 readily-available-info LTR); Holm-adjusted Wilcoxon p = 0.2656, Cliff's delta = +0.030 (negligible). The criterion is: higher mean, adjusted p < 0.05 and |delta| >= 0.147."
+  "verdict": "Gate 3 (ROADMAP §37.1) is NOT MET: on the 148 test instances the ranker's Recall@10 is 0.525 (95% bootstrap CI [0.447, 0.599]) against 0.522 for the best baseline (B7 readily-available-info LTR); Holm-adjusted Wilcoxon p = 0.3823, Cliff's delta = +0.030 (negligible). The criterion is: higher mean, adjusted p < 0.05 and |delta| >= 0.147."
  },
- "generated_at_git_sha": "11424577ebe9abe9b822bc7267d3e8d5eee0a6bb"
+ "generated_at_git_sha": "38cf56a5e4612225679d385b648a04a756a1e350"
 }

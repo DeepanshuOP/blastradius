@@ -14,7 +14,8 @@ type E2 = {
   source: string; classes: Tbl; chronological: Tbl | null; pooled: Tbl | null; dangerous_error: string; application: Tbl | null;
 } | null;
 type E3 = {
-  status: string; note?: string; source?: string; detection?: Tbl | null; retrieval?: Tbl | null; models?: Record<string, Tbl>;
+  status: string; note?: string; source?: string; detection?: Tbl | null; retrieval?: Tbl | null; retrieval_hard?: Tbl | null;
+  primary?: string; secondary?: Tbl | null; models?: Record<string, Tbl>; cost?: Tbl | null;
 } | null;
 
 async function load<T>(name: string, key: string): Promise<T | null> {
@@ -185,7 +186,9 @@ export default function Intelligence() {
           <Verdict ok={null} text={`Not run: ${e3?.note ?? "no results file"}. Run make repair-run, then make repair-eval.`} />
         ) : (
           <div className="space-y-4">
-            {e3.retrieval && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieval hit rate (no model, all tasks)</p><Table t={e3.retrieval} /></>}
+            {e3.primary && <Verdict ok={null} text={e3.primary} />}
+            {e3.retrieval && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieval hit rate, standard variant (no model, all tasks)</p><Table t={e3.retrieval} /></>}
+            {e3.retrieval_hard && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieval hit rate, hard variant</p><Table t={e3.retrieval_hard} /></>}
             {e3.detection && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Detection</p><Table t={e3.detection} /></>}
             {Object.entries(e3.models ?? {}).map(([m, t]) => (
               <div key={m}><p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{m}</p>

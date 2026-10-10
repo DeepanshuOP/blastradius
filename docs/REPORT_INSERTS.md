@@ -47,21 +47,23 @@ re-derives a sample of feature cells from raw rows and found 0 violations in 200
 
 ## 5. Results
 
-**E1.** The learned ranker reaches Recall@10 = 0.525 on the chronological test split (n = 148 instances, all Java), statistically
-indistinguishable from the strongest baseline B7 (0.522; Holm-adjusted p = 0.2656, Cliff's delta +0.030, negligible). Gate 3 is
-NOT MET (`rq2_predictor.md`). It ranks above the failure-history heuristic B4 (0.439; Holm-adjusted p = 0.006148) with a negligible
-effect (+0.114). Removing co-change features changes Recall@10 by -0.007 (seed std 0.012) and co-failure features by -0.001 (std
-0.009); removing history features gives -0.140 (`rq2_ablation.md`).
+**E1.** On the chronological test split (148 instances, all Java), the learned ranker reached Recall@10 = 0.525 (95% CI 0.447-0.599). A learned ranker restricted to readily available signals (B7, after Elsner et al.) reached 0.522. The difference is not significant (Holm-adjusted p = 0.382, Cliff's δ = 0.030, negligible), so Gate 3 is not met. Our ranker does place failing test files above the failure-history heuristic B4 (0.439; adjusted p = 0.010), but the effect is negligible (δ = 0.114); neither learned baseline separates from B4 after correction (B6 vs B4 adjusted p = 0.382, B7 vs B4 adjusted p = 0.243). The ablation explains the result: removing failure-history features costs 0.140 Recall@10 and removing path-proximity features 0.075, while removing co-change (−0.007) or co-failure (−0.001) features changes the score by less than the seed-to-seed spread (0.009-0.012). Once history and proximity are known, co-change adds no measurable signal. This agrees with RQ1, where co-change recovered 4.64% of fault-revealing tests. A random ordering reaches 0.029.
 
-**E2 (small-sample: 18 not-mine pairs in the test split).** On the test split LightGBM clears 10 of 18 not-mine failures and
-wrongly clears 33 of 1,015 mine failures; the rules R-branch and R-msg clear 11 and 12 of 18 at 125 and 223 wrongly cleared; logistic
-regression clears 3 of 18 at 30. Pooled over leave-one-repo-out (216 not-mine, 4,168 mine) LightGBM clears 31 of 216 at 57 wrongly
-cleared (`rq3_triage.md`). The numbers show a trade-off between the two kinds of error; they do not show that triage works.
+On the seeded Python repositories, which have no failure history, ordering tests with the BR-Bench model put the first failing test file at mean position 10.91, behind alphabetical order (8.11) and random order (10.37). The model's strongest signal, failure history, does not exist on a fresh repository, so a deployment needs history before ranking pays off.
 
-**E3.** The seeded function is among the shown chunks for 69/70 tasks (change-aware) against 46/70 (log-only), exact McNemar
-p = 2.384e-07; part of this is by construction, since the seeded edit lies inside the diff. Plausible-fix rates on a 20-task subset:
-gpt-oss-120b R1 10/20, R2 13/20, R3 14/20 (McNemar R2 vs R1 p = 0.5078); gpt-oss-20b R1 4/20, R2 10/20, R3 13/20 (p = 0.1094). R2 is
-higher in both, and the paired difference is not statistically distinguishable at this n (`rq4_repair.md`).
+**E2 (small-sample: 18 not-mine pairs in the test split).** Triage is a small-sample result: the whole corpus holds 216 not-mine failures (170 inherited, 46 flaky) against 4,168 mine, and the chronological test split holds 18 against 1,015. Every method trades one error for the other. Pooled across repositories, the branch rule clears 145 of 216 not-mine failures but wrongly clears 1,262 of 4,168 mine failures; the message rule clears 135 and wrongly clears 848. The learned models are more conservative: logistic regression clears 74 and wrongly clears 123, LightGBM clears 31 and wrongly clears 57. On the test split, LightGBM clears 10 of 18 not-mine failures and wrongly clears 33 of 1,015 mine failures. Blame-all, what a CI server does by default, clears nothing and errs on nothing. Separating a developer's own failures from inherited and flaky ones needs more not-mine examples than BR-Bench holds, so we report the trade-off, not a working triager.
+
+**E3.** **Completeness.** The pre-registered analysis covers 70 tasks per model and variant. At the time of writing the Groq free-tier daily quota stopped both runs: gpt-oss-120b has 47 and gpt-oss-20b 45 of the 70 standard tasks replayable from the cache, the hard variant has no model run yet, and no Bedrock model was usable (all four probed candidates returned HTTP 400 "Operation not allowed"). The tasks not yet run are the last ones in task-id order (markupsafe, shopcart and a few of the others), so the partial sample is not a random subset. Everything below is therefore interim.
+
+**Retrieval (all 70 tasks, no model).** On the standard variant the seeded edit lies inside the diff that R2 searches, so part of R2's retrieval advantage is by construction; the hard variant, which places 4-6 no-op edits inside functions the failing tests execute, measures how much remains. The seeded function is among the three chunks shown for 69/70 tasks (98.57%) with R2 against 46/70 (65.71%) with R1 on the standard variant (23 vs 0, exact McNemar p = 2.384e-07). On the hard variant R2 reaches 63/70 (90.00%) against 46/70 for R1 (17 vs 0, p = 1.526e-05), while 146 of R2's 210 chunks now sit in a distractor function (69.52%).
+
+**Primary pre-registered test (standard variant, gpt-oss-120b, n = 47 of 70 so far).** R2 has 33/47 plausible fixes (full suite green) against 20/47 for R1 (R2 only 17, R1 only 4; exact one-sided McNemar p = 0.0036). On this partial sample R2 > R1 is supported at alpha = 0.05; the confirmatory test at n = 70 is not yet complete.
+
+**Replication.** gpt-oss-20b, standard, n = 45 of 70: R2 29/45 against R1 10/45 (R2 only 21, R1 only 2; unadjusted one-sided p = 3.3e-05, Holm-adjusted p = 9.9e-05 in a family of 3). R3 (R2 plus up to two retries) is ahead of R2 by 4 tasks with no reversals in both models (37/47 vs 33/47 and 33/45 vs 29/45); the one-sided p is 0.0625 and the Holm-adjusted p 0.125, so this is not significant. R0 (notify only) fixes 0 tasks.
+
+**Descriptive.** Overfit patches (target tests pass, suite fails): gpt-oss-120b R1 0, R2 3, R3 2; gpt-oss-20b R1 0, R2 3, R3 1. Exact restore: gpt-oss-120b R2 30/47, gpt-oss-20b R2 27/45. Tokens per task: gpt-oss-120b R1 1,947, R2 1,449, R3 2,363; gpt-oss-20b R1 1,701, R2 1,419, R3 2,546. Cost: USD 0 (Groq free tier); Bedrock ledger total USD 0.00.
+
+**Pilot.** The 20-task pilot is reported separately in `paper/generated/rq4_repair.md` and is not part of the tests above.
 
 ## 6. Limitations
 
@@ -71,8 +73,10 @@ higher in both, and the paired difference is not statistically distinguishable a
   were configured on chronological validation data.
 - Labels are observational (no gold re-execution). Gate 1 is not met: 4,168 of 5,000 labels (`gates.md`). Binding is 94.29% combined
   and 63.83% full confidence, always reported together (`binding.md`).
-- E1 detection on the seeded repos: the E1 order places the first failing file at mean position 11.73, alphabetical order at 8.79
+- E1 detection on the seeded repos: the E1 order places the first failing file at mean position 10.91, alphabetical order at 8.11
   (`rq4_repair.md`). The model was trained on Java CI history and these repos have none.
+- E3 is interim: Groq free-tier daily quotas stopped the full-size runs at 47 and 45 of 70 standard tasks, the hard variant has
+  not been run with a model, and no Bedrock model was usable on this account (probe: HTTP 400 "Operation not allowed").
 - Corpus skew: 71 Java and 6 Python repos.
 
 ## 7. Future work
