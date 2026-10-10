@@ -14,6 +14,7 @@ graph = ["graphifyy", "duckdb"]
 dashboard = ["streamlit==1.65.0"]
 figures = ["matplotlib==3.11.2"]
 ml = ["lightgbm==4.7.0", "scikit-learn==1.9.1", "scipy==1.17.1"]
+rag = ["fastembed==0.9.0"]
 
 [dependency-groups]
 dev = [

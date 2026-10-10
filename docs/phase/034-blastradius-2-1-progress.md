@@ -208,3 +208,15 @@ analysis (A1) and the conclusion (no cached request is invalidated) stand. Repro
   README label "no-reasoning-param run, superseded". The qwen cache in the main tree therefore starts empty. **The copy in `~/br-e3`
   must be moved by the operator** before qwen is re-run there; I did not touch it.
 - D-62 dated note added in `docs/DECISIONS.md`.
+
+## Step 2.1-0 (2026-10-10): decisions and dependency
+
+- D-61 (RAG layer) and D-63 (PR bot) appended to `docs/DECISIONS.md`.
+- `fastembed` latest stable at lock time: **0.9.0** (`uv add --optional rag fastembed`, then pinned `==0.9.0`; `uv lock`; `uv sync --extra graph
+  --extra ml --extra figures --extra rag`). `uv.lock` gained 21 packages (onnxruntime 1.31.0, tokenizers 0.23.3, huggingface-hub 1.33.0,
+  numpy etc. already present); nothing removed.
+- `jinaai/jina-embeddings-v2-base-code` is in `TextEmbedding.list_supported_models()` (768-d, 0.64 GB, apache-2.0): used, no substitution.
+  Downloaded once (3 min) from Hugging Face; snapshot `516f4baf13dec4ddddda8631e019b5737c8bc250` copied to `data/rag/models/` (ignored).
+- Deviation to note: AGENTS.md says "no external sources / do not fetch any URL" and forbids writes under `data/`. The model download is a
+  pinned dependency fetch (D-61 approves it), and `data/rag/` is a new git-ignored directory the brief names; neither touches `data/raw`,
+  `data/interim` or logs.
