@@ -1,0 +1,48 @@
+// EXAMPLE, NOT DEPLOYED. A Jenkins pipeline in which Jenkins stays the executor and BlastRadius
+// decides WHAT to run first, WHY it failed, and HOW to fix it. Nothing here has been run on a
+// Jenkins server by this project; the commands are the ones `python -m src.agents` provides.
+//
+// Assumes: a checkout of the target repo in WORKSPACE, a checkout of BlastRadius at $BR_HOME with
+// `uv sync --extra graph --extra ml`, and (optionally) GROQ_API_KEY as a Jenkins credential for the
+// Repair stage. Without the key the Repair stage only suggests; it never merges anything.
+pipeline {
+  agent any
+  environment {
+    BR_HOME = "${env.BR_HOME ?: '/opt/blastradius'}"
+    BR = "uv run --project ${BR_HOME} --extra graph --extra ml python -m src.agents"
+    STATE = "${WORKSPACE}/.blastradius"
+  }
+  stages {
+    stage('Impact') {            // which tests will this change break? (E1 ranker + code graph)
+      steps {
+        sh '''${BR} impact --repo . --story "${CHANGE_TITLE:-$(git log -1 --pretty=%s)}" --provider offline'''
+      }
+    }
+    stage('Ordered test run') {  // risky tests first; the first failure surfaces early
+      steps {
+        sh '''IMPACT=$(ls -t ${STATE}/impact/*/impact.json | head -1)
+              ${BR} regress --repo . --impact "$IMPACT" --full || true'''
+      }
+    }
+    stage('Triage') {            // mine / inherited / flaky for each failure
+      when { expression { fileExists("${STATE}/reports") } }
+      steps {
+        sh '''REPORT=$(ls -t ${STATE}/reports/*/report.json | head -1)
+              ${BR} triage --repo . --report "$REPORT" --branch "${CHANGE_TARGET:-main}" | tee triage.json'''
+      }
+    }
+    stage('Repair suggestion') { // only failures triaged "mine"; the patch is proposed, never merged
+      when { expression { env.GROQ_API_KEY?.trim() } }
+      steps {
+        sh '''REPORT=$(ls -t ${STATE}/reports/*/report.json | head -1)
+              ${BR} repair --repo . --report "$REPORT" --provider groq | tee repair.json'''
+      }
+    }
+  }
+  post {
+    failure {
+      // BlastRadius also writes ${STATE}/notifications.jsonl; surface the triage verdicts here.
+      archiveArtifacts artifacts: 'triage.json, repair.json, .blastradius/reports/**/report.md', allowEmptyArchive: true
+    }
+  }
+}

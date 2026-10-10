@@ -41,13 +41,14 @@ class TestResult:
 
 @dataclass
 class SuiteRun:
-    """One pytest/runner invocation."""
+    """One pytest/runner invocation. ``order`` is the execution order of the test ids."""
 
     label: str
     command: list[str]
     exit_code: int
     wall_s: float
     results: list[TestResult] = field(default_factory=list)
+    order: list[str] = field(default_factory=list)
 
     @property
     def failed(self) -> list[TestResult]:
@@ -63,8 +64,11 @@ class SuiteRun:
         return out
 
 
-def parse_junit(paths: list[Path]) -> list[TestResult]:
-    """Parse JUnit XML files into results; ids are pytest node ids for Python files."""
+def parse_junit(paths: list[Path], sort: bool = True) -> list[TestResult]:
+    """Parse JUnit XML files into results; ids are pytest node ids for Python files.
+
+    ``sort=False`` keeps the XML order, which for pytest is the execution order.
+    """
     results: list[TestResult] = []
     for path in paths:
         root = ET.parse(path).getroot()
@@ -86,7 +90,12 @@ def parse_junit(paths: list[Path]) -> list[TestResult]:
                     message = (el.get("message") or (el.text or "")).strip().splitlines()[0][:300] if (el.get("message") or el.text) else ""
                     break
             results.append(TestResult(tid, outcome, round(float(case.get("time", 0) or 0), 4), message))
-    return sorted(results, key=lambda r: r.test_id)
+    return sorted(results, key=lambda r: r.test_id) if sort else results
+
+
+def execution_order(paths: list[Path]) -> list[str]:
+    """Test ids in the order they appear in the JUnit XML (xunit1: execution order)."""
+    return [r.test_id for r in parse_junit(paths, sort=False)]
 
 
 def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: str, python: str | None = None) -> SuiteRun:
@@ -102,7 +111,8 @@ def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: 
     proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=env)
     wall = time.perf_counter() - started
     results = parse_junit([out_xml]) if out_xml.exists() else []
-    return SuiteRun(label, cmd, proc.returncode, round(wall, 3), results)
+    order = execution_order([out_xml]) if out_xml.exists() else []
+    return SuiteRun(label, cmd, proc.returncode, round(wall, 3), results, order)
 
 
 def run_template(workdir: Path, template: str, tests: list[str] | None, junit_glob: str, label: str) -> SuiteRun:
@@ -129,6 +139,9 @@ class RegressionReport:
     selection_ratio: str
     markdown_path: str
     json_path: str
+    first_failure_position: int | None = None   # 1-based, in execution order (selected tests first, then the rest)
+    first_failure_test: str | None = None
+    ranker: str = "heuristic"
 
 
 class RegressionSuiteAgent:
@@ -156,7 +169,9 @@ class RegressionSuiteAgent:
         out.mkdir(parents=True, exist_ok=True)
         # File-level selection for Python: every test in a file the impact analysis put at risk, so tests the
         # change itself added to those files are run too. Other runners get the individual test ids.
-        selected_targets = sorted({t.file for t in impact.tests}) if not runner_cmd else [t.test_id for t in impact.tests]
+        # In the impact analysis's ranked order (E1 order when the model ranked them), so the likeliest
+        # failures run first; ``first_failure_position`` below measures how early the first one surfaces.
+        selected_targets = list(dict.fromkeys(t.file for t in impact.tests)) if not runner_cmd else [t.test_id for t in impact.tests]
 
         with gitops.worktree(repo, commit) as tree:
             if runner_cmd:
@@ -178,14 +193,26 @@ class RegressionSuiteAgent:
         total = len(full_run.results) if full_run else n_sel + len(impact.unaffected_tests)
         verdict = "FAIL" if sel.failed or (full_run and full_run.failed) or sel.exit_code not in (0, 5) else "PASS"
 
+        order = list(sel.order or [r.test_id for r in sel.results])
+        if full_run is not None:
+            seen = set(order)
+            order += [t for t in (full_run.order or [r.test_id for r in full_run.results]) if t not in seen]
+        failed_ids = {r.test_id for r in sel.failed} | ({r.test_id for r in full_run.failed} if full_run else set())
+        ff_pos = next((i for i, t in enumerate(order, 1) if t in failed_ids), None)
+        ff_test = order[ff_pos - 1] if ff_pos else None
+
         hist = state / "history" / "test_outcomes.jsonl"
         hist.parent.mkdir(parents=True, exist_ok=True)
         ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
         with hist.open("a", encoding="utf-8") as fh:
             for r in (full_run or sel).results:
-                fh.write(json.dumps({"ts": ts, "commit": commit, "test_id": r.test_id, "outcome": r.outcome}) + "\n")
+                fh.write(json.dumps({"ts": ts, "commit": commit, "test_id": r.test_id, "outcome": r.outcome,
+                                     "message": r.message, "branch": impact.base_branch}) + "\n")
 
         md = self._markdown(impact, commit, verdict, sel, full_run, recall, missed, total)
+        if ff_pos:
+            md += (f"\n_Execution order ({impact.ranker} ranking first): the first failing test, `{ff_test}`, ran at "
+                   f"position {ff_pos} of {len(order)}._\n")
         (out / "report.md").write_text(md, encoding="utf-8")
         report = RegressionReport(
             title=impact.title, commit=commit, verdict=verdict,
@@ -193,6 +220,7 @@ class RegressionSuiteAgent:
             full={"counts": full_run.counts(), "wall_s": full_run.wall_s, "results": [asdict(r) for r in full_run.results]} if full_run else None,
             impact_recall=recall, missed_failures=missed, selection_ratio=f"{n_sel}/{total}",
             markdown_path=str(out / "report.md"), json_path=str(out / "report.json"),
+            first_failure_position=ff_pos, first_failure_test=ff_test, ranker=impact.ranker,
         )
         (out / "report.json").write_text(json.dumps(asdict(report), indent=2), encoding="utf-8")
         return report

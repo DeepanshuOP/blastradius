@@ -45,13 +45,21 @@ class ImpactedFile:
 
 @dataclass
 class ImpactedTest:
-    """A test at risk, with why."""
+    """A test at risk, with why.
+
+    ``score`` is the E1 model's ranking score when ``ImpactAnalysis.ranker`` is ``e1-lgbm-v1`` (raw
+    lambdarank units, higher = more likely to fail) and the 0-1 heuristic otherwise. ``heuristic_score``
+    always keeps the keyword + reverse-reachability score. ``top_features`` are the three feature
+    contributions (SHAP) that moved the E1 score most.
+    """
 
     test_id: str
     file: str
     distance: int
     score: float
     reasons: list[str] = field(default_factory=list)
+    heuristic_score: float = 0.0
+    top_features: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -76,6 +84,7 @@ class ImpactAnalysis:
     cochange_hints: list[dict]
     history_used: bool
     graph_stats: dict
+    ranker: str = "heuristic"
 
     @property
     def change_files(self) -> list[str]:
@@ -122,8 +131,12 @@ class ImpactAnalysis:
             L += ["| File | Why |", "|---|---|"] + [f"| `{f.path}` | {'; '.join(f.reasons)} |" for f in dependents]
         else:
             L += ["None: no other source file depends on the files above."]
-        L += ["", "## 5. Tests at risk (ranked)", "", "| # | Test | Graph distance | Risk score | Why |", "|---:|---|---:|---:|---|"]
-        L += [f"| {i} | `{t.test_id}` | {t.distance} | {t.score:.2f} | {'; '.join(t.reasons)} |" for i, t in enumerate(self.tests, 1)]
+        e1 = self.ranker != "heuristic"
+        L += ["", "## 5. Tests at risk (ranked)", "",
+              f"| # | Test | Graph distance | {'E1 score' if e1 else 'Risk score'} | Why |", "|---:|---|---:|---:|---|"]
+        L += [f"| {i} | `{t.test_id}` | {t.distance} | {t.score:.2f} | "
+              f"{'; '.join(t.reasons + (['model: ' + ', '.join(t.top_features)] if t.top_features else []))} |"
+              for i, t in enumerate(self.tests, 1)]
         L += ["", "## 6. Tests not affected", ""]
         by_file = Counter(t.split("::")[0] if "::" in t else t.split("#")[0] for t in self.unaffected_tests)
         L += [f"- `{f}`: {n} test(s)" for f, n in sorted(by_file.items())] or ["- none"]
@@ -144,9 +157,22 @@ class ImpactAnalysis:
               "- Tests at risk = tests that reach a changed file along calls/imports/uses/tests edges (reverse reachability).",
               "- Risk score = 0.55 x graph proximity + 0.15 x story terms in the test name + 0.3 x past failure rate"
               + (" (failure history from earlier regression runs)." if self.history_used else " (no failure history recorded yet, so proximity only)."),
+              *(["- Ranking: the E1 LightGBM lambdarank model trained on BR-Bench (`models/e1_lgbm_v1.txt`) re-ranks "
+                 "the reachable tests; the heuristic above decides membership and remains the fallback."]
+                if self.ranker != "heuristic" else []),
               "- Static reachability over-approximates for direct callers and can miss dynamic dispatch and reflection; "
               "treat this as a ranked scope, not a safety guarantee.", ""]
         return "\n".join(L)
+
+
+def _e1_rank(repo: Path, changed: list[str]):
+    """E1 ranking of the repo's test files for a change touching ``changed``, or None (no model / no lightgbm)."""
+    try:
+        from src.features.online import rank_tests
+
+        return rank_tests(repo, changed, 0)
+    except Exception:  # the heuristic is the documented fallback; a model problem must never block analysis
+        return None
 
 
 def _history(state_dir: Path) -> dict[str, tuple[int, int]]:
@@ -277,6 +303,26 @@ class ImpactAnalysisAgent:
                 why.append(f"failed {fails}/{runs} past runs")
             tests.append(ImpactedTest(tid, tc.file, d, round(score, 3), why))
         tests.sort(key=lambda t: (-t.score, t.test_id))
+        ranker = "heuristic"
+        e1 = _e1_rank(repo, list(seeds))
+        if e1 is not None and tests:
+            by_file = {r.test_file: r for r in e1}
+            for t in tests:
+                r = by_file.get(t.file)
+                t.heuristic_score = t.score
+                if r is not None:
+                    t.score = round(r.score, 3)
+                    t.top_features = r.top_features
+                    t.reasons.append(f"E1 model score {r.score:+.2f}")
+            has = [t for t in tests if t.top_features or t.file in by_file]
+            rest = [t for t in tests if t not in has]
+            has.sort(key=lambda t: (-t.score, -t.heuristic_score, t.test_id))
+            rest.sort(key=lambda t: (-t.heuristic_score, t.test_id))
+            tests = has + rest
+            ranker = "e1-lgbm-v1"
+        else:
+            for t in tests:
+                t.heuristic_score = t.score
         unaffected = [tid for tid in index.tests if tid not in {t.test_id for t in tests}]
 
         gaps = []
@@ -305,6 +351,7 @@ class ImpactAnalysisAgent:
             interpretation=interpretation, acceptance_criteria=criteria, files=files, tests=tests,
             unaffected_tests=unaffected, risk=risk, risk_reasons=risk_reasons, gaps=gaps,
             cochange_hints=_cochange(repo, list(seeds)), history_used=bool(history), graph_stats=index.stats,
+            ranker=ranker,
         )
         out = state / "impact" / index.sha[:12]
         out.mkdir(parents=True, exist_ok=True)

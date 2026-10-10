@@ -4,9 +4,12 @@
     python -m src.agents code     --repo R --impact impact.json      -> branch, commit, PR
     python -m src.agents review   --repo R --impact impact.json --pr N -> verdict, merge commit id
     python -m src.agents deploy   --repo R --commit C --branch B     -> build, package, deploy / notify
-    python -m src.agents regress  --repo R --impact impact.json      -> test report
-    python -m src.agents pipeline --repo R --story "..."             -> all five, in order
-    python -m src.agents demo                                        -> three recorded scenarios, offline
+    python -m src.agents regress  --repo R --impact impact.json      -> test report (E1 order first)
+    python -m src.agents triage   --repo R --report report.json      -> mine / inherited / flaky per failure
+    python -m src.agents repair   --repo R --report report.json      -> patch for the failures triaged mine
+    python -m src.agents pipeline --repo R --story "..."             -> impact, code, regress, triage, repair, review, deploy
+    python -m src.agents pipeline --stages classic ...               -> the original five-agent order
+    python -m src.agents demo                                        -> four recorded scenarios, offline
 
 Every command prints one JSON object on stdout. Run from the BlastRadius repo
 root with ``uv run --extra graph``.
@@ -46,8 +49,18 @@ def _story(args) -> str:
 
 def pipeline(repo: Path, story: str, *, title: str | None = None, provider: str | None = None, forge_kind: str = "local",
              patch: str | None = None, scope_policy: str = "strict", full: bool = True, build_cmd: str | None = None,
-             state_dir: Path | None = None) -> dict:
-    """Run the five agents in order and return every step's output."""
+             state_dir: Path | None = None, stages: str = "classic", repair_llm=None) -> dict:
+    """Run the agents in order and return every step's output.
+
+    ``stages="classic"`` is the original five-agent order (review and merge, then deploy and regress).
+    ``stages="2.0"`` is impact, code, regress, triage, repair (<= 2 attempts), review, deploy
+    (:func:`src.agents.flow.pipeline_v2`); only its Repair step may call an LLM, passed as ``repair_llm``.
+    """
+    if stages == "2.0":
+        from src.agents.flow import pipeline_v2
+
+        return pipeline_v2(Path(repo), story, title=title, provider=provider, forge_kind=forge_kind, patch=patch,
+                           scope_policy=scope_policy, build_cmd=build_cmd, state_dir=state_dir, repair_llm=repair_llm)
     repo = Path(repo).resolve()
     state = state_dir or repo / ".blastradius"
     steps: list[dict] = []
@@ -84,6 +97,19 @@ def pipeline(repo: Path, story: str, *, title: str | None = None, provider: str 
     return result
 
 
+def _repair_llm(state: Path):
+    """The Repair agent's model for the pipeline: Groq (cached under the state dir) when a key is set, else None."""
+    import os
+
+    if os.environ.get("BR_OFFLINE") == "1" or not os.environ.get("GROQ_API_KEY"):
+        return None
+    from src.agents.llm import GroqLLM
+    from src.agents.llm_cache import LLMCache
+
+    return GroqLLM(api_key=os.environ["GROQ_API_KEY"], model=os.environ.get("BR_AGENT_MODEL") or "openai/gpt-oss-120b",
+                   cache=LLMCache(state / "llm_cache.jsonl"))
+
+
 def main(argv: list[str] | None = None) -> int:
     """Entry point."""
     p = argparse.ArgumentParser(prog="python -m src.agents", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -110,10 +136,22 @@ def main(argv: list[str] | None = None) -> int:
     sp = sub.add_parser("regress", help="impact analysis + regression suite -> test report"); common(sp, True)
     sp.add_argument("--commit"); sp.add_argument("--full", action="store_true")
     sp.add_argument("--runner-cmd", help="non-Python runner, e.g. 'mvn -q test -Dtest={tests}'"); sp.add_argument("--junit-glob", default="**/TEST-*.xml")
-    sp = sub.add_parser("pipeline", help="all five agents in order"); common(sp)
+    sp = sub.add_parser("triage", help="regression report + history -> mine / inherited / flaky per failure")
+    sp.add_argument("--repo", required=True); sp.add_argument("--state-dir")
+    sp.add_argument("--report", required=True, help="report.json from the Regression Suite Agent")
+    sp.add_argument("--branch", default="main"); sp.add_argument("--commit", default="")
+    sp.add_argument("--rules-only", action="store_true", help="ignore the E2 model; use R-branch / R-msg")
+    sp = sub.add_parser("repair", help="failure triaged mine -> patch, accepted only if the full suite passes")
+    sp.add_argument("--repo", required=True); sp.add_argument("--state-dir")
+    sp.add_argument("--report", required=True, help="report.json from the Regression Suite Agent")
+    sp.add_argument("--arm", choices=["R0", "R1", "R2", "R3"], default="R3")
+    sp.add_argument("--provider", choices=["offline", "groq"], help="LLM provider (default: groq if GROQ_API_KEY is set)")
+    sp.add_argument("--apply", action="store_true", help="write the accepted patch into the working tree")
+    sp = sub.add_parser("pipeline", help="impact, code, regress, triage, repair, review, deploy"); common(sp)
+    sp.add_argument("--stages", choices=["2.0", "classic"], default="2.0")
     sp.add_argument("--story"); sp.add_argument("--story-file"); sp.add_argument("--title"); sp.add_argument("--patch")
     sp.add_argument("--scope-policy", choices=["strict", "warn"], default="strict"); sp.add_argument("--build-cmd")
-    sp = sub.add_parser("demo", help="three recorded scenarios on a sample repo, fully offline")
+    sp = sub.add_parser("demo", help="four recorded scenarios on a sample repo, fully offline")
     sp.add_argument("--workdir", help="where to create the sample repos (default: a temp dir)")
     sp.add_argument("--export", help="also write the demo summary JSON here (e.g. demo-web/public/data/agents.json)")
 
@@ -123,6 +161,51 @@ def main(argv: list[str] | None = None) -> int:
 
         summary = run_demo(Path(args.workdir) if args.workdir else None, Path(args.export) if args.export else None)
         _emit({"workdir": summary["workdir"], "scenarios": [{k: s[k] for k in ("id", "title", "outcome")} for s in summary["scenarios"]]})
+        return 0
+    if args.cmd == "triage":
+        from src.agents.triage import TriageAgent, failures_of
+
+        state = _state(args)
+        rep = json.loads(Path(args.report).read_text(encoding="utf-8"))
+        res = TriageAgent(use_model=not args.rules_only).run(failures_of(rep), state / "history" / "test_outcomes.jsonl",
+                                                             branch=args.branch, commit=args.commit)
+        _emit({"model": res.model, "counts": res.counts(), "failures": [asdict(f) for f in res.failures]})
+        return 0
+    if args.cmd == "repair":
+        from src.agents.llm import GroqLLM, get_llm
+        from src.agents.llm_cache import LLMCache
+        from src.agents.repair import FailureReport, RepairAgent
+        from src.agents.triage import TriageAgent, failures_of
+        from src.eval.seeded.build import source_files
+
+        repo = Path(args.repo).resolve()
+        state = _state(args)
+        rep = json.loads(Path(args.report).read_text(encoding="utf-8"))
+        fails = failures_of(rep)
+        tri = TriageAgent().run(fails, state / "history" / "test_outcomes.jsonl")
+        mine = {f.test_id for f in tri.mine}
+        by_id = {f["test_id"]: f for f in fails}
+        llm = get_llm(args.provider or ("groq" if __import__("os").environ.get("GROQ_API_KEY") else "offline"))
+        if isinstance(llm, GroqLLM):
+            llm.cache = LLMCache(state / "llm_cache.jsonl")
+        report = FailureReport([{"test_id": t, "output": by_id[t].get("message", "")} for t in sorted(mine)] or
+                               [{"test_id": t, "output": by_id[t].get("message", "")} for t in sorted(by_id)],
+                               triage="mine" if mine else tri.failures[0].klass if tri.failures else "mine")
+        dirs = sorted({p.split("/")[0] for p in __import__("src.agents.gitops", fromlist=["x"]).tracked_files(repo)
+                       if p.endswith(".py") and not p.startswith(("tests/", "test"))})
+        srcs = source_files(repo, {"src_dirs": dirs})
+        files_out: dict = {}
+
+        def validate(files: dict[str, str]) -> tuple[bool, str]:
+            files_out.update(files)
+            return True, ""  # the CLI proposes; `pipeline` validates against the full suite
+
+        res = RepairAgent(llm, args.arm).run(repo, srcs, report, validate)
+        if args.apply and files_out:
+            for p, text in files_out.items():
+                (repo / p).write_text(text, encoding="utf-8")
+        _emit({"triage": tri.counts(), "action": res.action, "note": res.note, "chunks": [f"{c.file}::{c.qualname}" for c in res.chunks],
+               "attempts": len(res.attempts), "proposed_files": sorted(files_out), "applied": bool(args.apply and files_out)})
         return 0
 
     state = _state(args)
@@ -150,6 +233,7 @@ def main(argv: list[str] | None = None) -> int:
                                          runner_cmd=args.runner_cmd, junit_glob=args.junit_glob))
     elif args.cmd == "pipeline":
         res = pipeline(Path(args.repo), _story(args), title=args.title, provider=args.provider, forge_kind=args.forge,
-                       patch=args.patch, scope_policy=args.scope_policy, build_cmd=args.build_cmd, state_dir=state)
+                       patch=args.patch, scope_policy=args.scope_policy, build_cmd=args.build_cmd, state_dir=state,
+                       stages=args.stages, repair_llm=_repair_llm(state))
         _emit({"steps": res["steps"]})
     return 0

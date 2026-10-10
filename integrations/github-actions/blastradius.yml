@@ -1,0 +1,54 @@
+# EXAMPLE, NOT DEPLOYED. A reusable GitHub Actions workflow: GitHub Actions executes, BlastRadius
+# decides what to run first, why a failure happened and how to fix it. Not run by this project.
+#
+# Caller:
+#   jobs:
+#     blastradius:
+#       uses: <owner>/blastradius/.github/workflows/blastradius.yml@<sha>   # copy this file there
+#       with: { story: "${{ github.event.pull_request.title }}" }
+#       secrets: { GROQ_API_KEY: "${{ secrets.GROQ_API_KEY }}" }   # optional; without it nothing is repaired
+name: blastradius
+on:
+  workflow_call:
+    inputs:
+      story: { type: string, required: true }
+      branch: { type: string, default: main }
+    secrets:
+      GROQ_API_KEY: { required: false }
+
+jobs:
+  predict-run-triage:
+    runs-on: ubuntu-latest
+    env:
+      BR: uv run --project blastradius --extra graph --extra ml python -m src.agents
+      HAS_KEY: ${{ secrets.GROQ_API_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/checkout@v4
+        with: { repository: your-org/blastradius, path: blastradius }   # pin to a sha in real use
+      - uses: astral-sh/setup-uv@v3
+      - name: Impact (E1 ranker over the code graph)
+        run: ${{ env.BR }} impact --repo . --story "${{ inputs.story }}" --provider offline
+      - name: Ordered test run (likeliest failures first)
+        run: |
+          IMPACT=$(ls -t .blastradius/impact/*/impact.json | head -1)
+          ${{ env.BR }} regress --repo . --impact "$IMPACT" --full || true
+      - name: Triage (mine / inherited / flaky)
+        run: |
+          REPORT=$(ls -t .blastradius/reports/*/report.json | head -1)
+          ${{ env.BR }} triage --repo . --report "$REPORT" --branch "${{ inputs.branch }}" | tee triage.json
+      - name: Repair suggestion (failures triaged mine; proposes, never merges)
+        if: ${{ env.HAS_KEY == 'true' }}
+        env: { GROQ_API_KEY: "${{ secrets.GROQ_API_KEY }}" }
+        run: |
+          REPORT=$(ls -t .blastradius/reports/*/report.json | head -1)
+          ${{ env.BR }} repair --repo . --report "$REPORT" --provider groq | tee repair.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blastradius
+          path: |
+            triage.json
+            repair.json
+            .blastradius/reports/**/report.md
