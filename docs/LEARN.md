@@ -61,3 +61,28 @@ Every number below is copied from the file named next to it; regenerate with `ma
 13. **Why did graph reachability produce no result?** The 36 base SHAs were not buildable offline: 22 fla commits are absent from the clone, and saiku is a blobless partial clone. n = 0 is reported, not padded.
 14. **Is it deterministic?** Seeds fixed, dependencies pinned, no LLM in the reproducible pipeline (D-17); every paper number regenerates via `make tables`.
 15. **Limitations?** Gate 1 missed; 43.88% no_base; log expiry loses a third of failed runs; static reachability over-approximates and misses reflection; full-confidence binding below 70%; parser precision has no independent figure; Java + Python only.
+
+
+## BlastRadius 2.0: viva Q&A (E1-E3)
+
+16. **Why a chronological split and not a random one?** A random split lets a model see failures of a repo that happen after the
+    ones it is tested on. D-57 orders instances by `run_started_at` (60/20/20) and adds leave-one-repo-out. The test split is Java only,
+    which is reported, not hidden (`rq2_predictor.md`).
+17. **How do you know there is no leakage?** Every feature is computed through an interface that returns only events strictly before
+    the prediction time, and `leakage_audit.md` recomputes 200 sampled cells from raw rows with separate code: 0 violations. The
+    audit also shows its own power (cells where later rows exist).
+18. **Why lambdarank?** The task is ranking test files per change, scored at the top of the list; lambdarank optimises that
+    directly and handles one query group per instance. A binary classifier would be dominated by the thousands of negatives.
+19. **What does SHAP show?** Path proximity and history carry most of the model's use. `chg_` features are constant within an
+    instance, so their SHAP share only says the model uses them in interactions; the ablation is the evidence for what matters:
+    removing history costs 0.140 Recall@10, co-change 0.007 (inside the seed spread).
+20. **Gate 3 was not met. Is that a failure?** It is the result: Recall@10 0.525 vs 0.522 for the best baseline, adjusted p = 0.2656.
+    D-02 says a negative model result is publishable; D-56 keeps E1 out of the MSR paper.
+21. **Why seeded bugs for repair?** Real BR-Bench failures cannot be re-executed from the logs (no gold re-execution), and a repair
+    needs a runnable suite. Seeded mutations give a known cause and a verifiable acceptance test, at the cost of being easier than real bugs.
+22. **Why is the LLM outside the core?** D-17: every published number must regenerate without a model. Only the repair step calls one
+    (D-58), with a pinned model, temperature 0, and every reply cached and replayable.
+23. **What does a negative or small result mean here?** E2 has 18 not-mine pairs in its test split: the point estimates have wide
+    intervals and the confusion table shows a trade-off. E3's R2-vs-R1 difference is p = 0.51 and 0.11 at n = 20. Both are stated as such.
+24. **Why not just Jenkins?** Jenkins executes; BlastRadius decides what to run first, why a test failed and how to fix it. The CI
+    server's behaviour is the baseline row of every experiment.

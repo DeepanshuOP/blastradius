@@ -200,3 +200,13 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T6.12` `[new]` Pre-register the analysis plan before final runs
 
 ---
+## BlastRadius 2.0 (BITE497J, D-56..D-59; progress log `docs/phase/032-blastradius-2-progress.md`)
+
+- [x] Shared feature layer, metrics, baselines B0-B7 (`src/features/`, `src/eval/`)
+- [x] E1 ranker, statistics, ablation, leakage audit; **Gate 3 NOT MET** (`paper/generated/rq2_predictor.md`)
+- [x] E2 triage, labelled small-sample (`paper/generated/rq3_triage.md`)
+- [x] BR-Seeded benchmark (70 tasks) and E3 repair evaluation (`paper/generated/rq4_repair.md`, not part of `make tables`)
+- [x] Impact (E1 ranker), Triage and Repair agents, 2.0 pipeline, demo scenario 4, CI examples (`integrations/`)
+- [x] Intelligence tab; `docs/LITERATURE.md`, `ARCHITECTURE.md`, `RESULTS_2.md`, `REPORT_INSERTS.md`, `SLIDE_NOTES.md`
+- [ ] Human: verify the 35 papers against their PDFs and write `refs.bib` by hand
+- [ ] Human: write the interpretation paragraphs for E1/E2 (the generated files contain numbers only)

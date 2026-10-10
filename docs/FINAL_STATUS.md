@@ -42,3 +42,16 @@ Code commit `28d4323`; numbers snapshot tag `paper-numbers-v1.1` (v1 + D-53). Ev
 2. **Done:** GitHub release v1.0.0 of the source, archived by Zenodo as DOI 10.5281/zenodo.23250690.
 3. `CITATION.cff` is in the repository root (final author order).
 4. Licence decided: release bundle CC BY 4.0, source code MIT. The schema validator (T1.6a) remains blocked.
+
+
+## BlastRadius 2.0 status (D-56..D-59)
+
+| experiment | status | headline (source) |
+|---|---|---|
+| E1 predict | done; **Gate 3 NOT MET** | Recall@10 0.525 vs 0.522 for the best baseline B7, Holm-adjusted p = 0.2656, Cliff's delta negligible; n = 148 test instances, all Java (`paper/generated/rq2_predictor.md`) |
+| E2 triage | done; **small-sample (18 not-mine pairs in the test split)** | LightGBM clears 10/18 not-mine at 33/1,015 mine wrongly cleared; pooled 31/216 at 57/4,168 (`rq3_triage.md`) |
+| E3 repair | done on 70 seeded tasks, 20 per model | retrieval 69/70 vs 46/70; plausible fix R2 vs R1 13/20 vs 10/20 (120b) and 10/20 vs 4/20 (20b), McNemar p = 0.5078 and 0.1094 (`rq4_repair.md`) |
+
+**Per D-56, E1 is not part of the MSR 2027 paper.** The paper stays a dataset paper; E1 would enter it only if it passed Gate 3 and
+fit in four pages, and it did not pass. E2 and E3 are course deliverables only. `make tables` includes E1 and E2 (offline, no LLM);
+E3 is produced by `make repair-eval` from cached replies and is not part of `make tables`.

@@ -86,3 +86,9 @@ data/ are the only permitted sources. If you cannot answer from them, say so.
 Session reports are `docs/session/NNN-YYYY-MM-DD-<taskid>-<slug>.md`, where
 NNN is the next unused three-digit sequence number. Check the existing highest
 number before writing. Update docs/session/INDEX.md in the same step.
+
+## BlastRadius 2.0 exceptions (D-56..D-59)
+The rules above stand. Decisions D-56..D-59 (`docs/DECISIONS.md`) permit exactly these exceptions:
+- derived tables under `data/processed/` (`e1_features`, `e1_scores`, `e2_features`) are written by `analysis/build_e1_features.py`, `analysis/rq2_predictor.py` and `analysis/rq3_triage.py`; `data/raw` and `data/interim` stay read-only;
+- `docs/SCHEMAS.md` has a new trailing section "Derived tables v0.3"; its frozen sections are unchanged;
+- LLM calls (Groq free tier, cached under `eval/llm_cache/`) are permitted from `src/agents/repair.py` through `src/agents/llm.py` only. E1, E2, features, labels and `make tables` stay LLM-free.

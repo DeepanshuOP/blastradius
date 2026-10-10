@@ -6,6 +6,10 @@
 [![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23250690-blue)](https://doi.org/10.5281/zenodo.23250690)
 ![License: MIT (code), CC BY 4.0 (data)](https://img.shields.io/badge/license-MIT%20%2F%20CC%20BY%204.0-green)
 
+## BlastRadius 2.0 (course deliverable, D-56)
+
+On top of the dataset, BlastRadius 2.0 is a change-aware CI assistant in four stages: **predict** which test files a change will break (E1), **run** them first, **triage** each failure as the change's own, inherited or flaky (E2), and **repair** the ones that are the change's own, accepting a patch only if the full suite passes (E3). Each stage is an experiment scored on BR-Bench (E3 on a seeded-bug benchmark) and each may come out negative; results, including the ones that did not work, are in [`docs/RESULTS_2.md`](docs/RESULTS_2.md) and architecture in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The MSR 2027 paper stays a dataset paper.
+
 ## Why
 
 Change impact analysis is usually scored against co-change, and regression test selection against static reachability. Neither label records a test failure. Industrial predictive test selection (Meta, Google) uses the right label, but on private data. BR-Bench puts the right label on public data:
@@ -57,11 +61,15 @@ They run fully offline (`make agents-demo`), use a language model when `ANTHROPI
 WSL2 Ubuntu or Linux, Python 3.11, [uv](https://docs.astral.sh/uv/):
 
 ```bash
-uv sync --extra graph
+uv sync --extra graph --extra ml --extra figures
 make test            # full test suite
-make tables          # regenerate every number in paper/generated/ (offline, ~8 min; needs data/)
+make tables          # regenerate every number in paper/generated/ (offline, ~45 min incl. E1/E2; needs data/)
 make demo            # terminal walkthrough of one real instance
-make agents-demo     # the five agents, three recorded scenarios
+make agents-demo     # seven agents, four recorded scenarios (offline; scenario 4 replays one cached model reply)
+make e1 / make e2    # E1 ranker and baselines / E2 triage (offline, deterministic; both also run inside make tables)
+make seeded          # BR-Seeded benchmark (clones 3 repos, needs the network once)
+make repair-run MODEL=openai/gpt-oss-120b   # E3 live (Groq free tier, GROQ_API_KEY in .env), caches every reply
+make repair-eval     # E3 results from the cache, offline
 make demo-web        # demo site on http://localhost:3000 (Live run · Results · Analyze a repo · Agents · Corpus · Decisions)
 make analyze REPO=https://github.com/pallets/itsdangerous \
   STORY="Add a max_age grace period when validating timestamped signatures"
