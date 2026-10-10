@@ -268,3 +268,114 @@ Grain: one row per (run_id, job_id, test_id).
 | `frame_version` | a constant, not data; operator has not decided its value |
 | `split_strict`, `split_permissive`, `binding_strategy`, `instance_id` in outcomes | not added: split expressed by `split`; binding domain differs (`binding_status` ships verbatim); outcomes joins to instances via `run_id` |
 | design names `repo`/`window_end`/`confidence`/`n_cochanges` (cochange) | real names documented above; no renames or alias columns |
+
+---
+
+## Derived tables v0.3 (D-56..D-59), not part of the release
+
+> **Not part of `release/`, and not read by the T1.6a validator or `analysis/release_schema.py`.** These are derived, regenerable artifacts of the BlastRadius 2.0 experiments (E1 ranker, E2 triage, E3 repair). Nothing above this heading is changed by this section. Column types are written in lowercase (`int64`, `float64`, `str`) on purpose so that the v0.2 section parser, which reads upper-case physical types, never mistakes a row here for a release column. `Nullable` is the contract.
+> Time-safety rule for every feature: it uses only rows with timestamp **strictly before** the instance's `run_started_at` (committer time for co-change, `run_started_at` for outcomes).
+
+### `data/processed/e1_features.parquet` — one row per (instance, candidate test file)
+
+| column | type | nullable | meaning |
+|---|---|---|---|
+| repo | str | no | `owner/name` |
+| run_id | int64 | no | workflow run; `(repo, run_id)` is the instance key |
+| ts | int64 | no | epoch seconds of `run_started_at` |
+| test_file | str | no | candidate test file, repo-relative |
+| label | int8 | no | 1 if the file is in the instance's strict ground truth, else 0 |
+| split | str | no | `train` / `val` / `test` (D-57, chronological 60/20/20 by `(run_started_at, run_id)`) |
+| hist_fail_count | int32 | no | strict failures of this file in this repo before `ts` (one per instance) |
+| hist_fail_30d | int32 | no | the same, in `[ts - 30 d, ts)` |
+| hist_fail_90d | int32 | no | the same, in `[ts - 90 d, ts)` |
+| hist_days_since_last | float64 | yes | days since the last such failure; null if never |
+| hist_head_fail_count | int32 | no | head failures of this file, any split, before `ts` |
+| hist_repo_rank | int32 | no | rank of the file by `hist_fail_count` within the repo's candidates (1 = most failing, ties by path) |
+| cochg_max_support | int32 | no | max over changed files of trailing co-change support with this file (D-52 rule); 0 if none |
+| cochg_sum_support | int32 | no | sum of the same |
+| cochg_max_conf | float64 | no | max trailing confidence; 0 if none |
+| cochg_sum_conf | float64 | no | sum of the same |
+| cochg_n_files_with_partner | int32 | no | changed files that have any co-change partner at all |
+| cofail_max | int32 | no | max over changed files of `cofailure_count` (earlier strict instances where this file was a label and the changed file was in that change) |
+| cofail_sum | int32 | no | sum of the same |
+| prox_in_change | int8 | no | the test file is itself in the change |
+| prox_max_jaccard | float64 | no | max path-token Jaccard between the test file and any changed file (split on `/ _ - .` and camelCase, lowercased) |
+| prox_min_dir_dist | int32 | no | min over changed files of path segments between the two files' directories and their common ancestor |
+| prox_name_contains_stem | int8 | no | the test file's name contains a changed file's stem |
+| prox_same_module | int8 | no | same top-level source module as a changed file |
+| chg_n_files | int32 | no | files in the change (same on every row of an instance) |
+| chg_n_lines | int32 | no | additions + deletions |
+| chg_touches_test | int8 | no | `touches_test_file` |
+| chg_touches_build | int8 | no | `touches_build_config` |
+| chg_touches_ci | int8 | no | `touches_ci_config` |
+| chg_docs_only | int8 | no | `is_docs_only` |
+| graph_hops | float64 | yes | reverse-reachability hop distance from `src/graph`; null where no graph exists (optional family) |
+
+### `data/processed/e1_scores.parquet` — one row per (method, instance, candidate)
+
+| column | type | nullable | meaning |
+|---|---|---|---|
+| method | str | no | `B0`..`B7` or `ours` |
+| seed | int32 | yes | model seed; null for non-learned methods |
+| repo | str | no | |
+| run_id | int64 | no | |
+| test_file | str | no | |
+| score | float64 | no | higher = more likely to fail |
+| rank | int32 | no | 1-based rank within the instance, ties broken by path |
+| split | str | no | `train` / `val` / `test` |
+
+### `data/processed/e2_features.parquet` — one row per (run_id, test_id)
+
+| column | type | nullable | meaning |
+|---|---|---|---|
+| repo | str | no | |
+| run_id | int64 | no | |
+| test_id | str | no | canonical `test_id` (never altered) |
+| test_file | str | yes | bound file, if binding is `exact` |
+| label | str | no | `mine` (strict) / `inherited` (all minus relaxed) / `flaky` (relaxed minus strict) |
+| split | str | no | `train` / `val` / `test` (D-57) |
+| prior_head_fail_7d | int32 | no | head failures of this `test_id` in this repo in the 7 days before `ts` |
+| prior_head_fail_30d | int32 | no | the same, 30 days |
+| failed_prev3_branch | int8 | no | failed in any of the previous 3 runs on the same `base_ref` |
+| failed_prev10_branch | int8 | no | the same, previous 10 runs |
+| msg_hash_seen | int8 | no | the failure-message hash occurred in an earlier run of this repo |
+| fclass_environment / fclass_timeout / fclass_code / fclass_unknown | int8 | no | one-hot of `analysis/failure_class.classify` |
+| status_error | int8 | no | head status is `error` rather than `fail` |
+| n_job_rows | int32 | no | job rows carrying the failure |
+| duration_s | float64 | yes | head duration |
+| prox_*, cochg_* | as in e1 | no | raw E1-style features of the bound file against the change (null when unbound) |
+
+### `eval/seeded/tasks.jsonl` — one JSON object per E3 task
+
+| field | type | nullable | meaning |
+|---|---|---|---|
+| task_id | str | no | stable id `<repo-slug>-<operator>-<n>` |
+| repo | str | no | |
+| base_sha | str | no | pinned sha of `eval/seeded/repos.json` |
+| operator | str | no | `CMP_FLIP` / `ARITH_SWAP` / `NEGATE_COND` / `OFF_BY_ONE` / `BOOL_RETURN` / `DROP_CALL_ARG` |
+| mutant_patch | str | no | unified diff, exactly one hunk |
+| distractor_patch | str | no | unified diff of 2-3 harmless edits in other files |
+| pr_diff | str | no | mutant and distractors combined |
+| failing_tests | list[object] | no | `{test_id, output}`, output truncated to 4,000 chars |
+| gt_file / gt_function | str | no | where the bug was seeded |
+| gt_line | int32 | no | 1-based line of the mutation |
+| original_snippet / mutated_snippet | str | no | the replaced span, before and after |
+
+### `eval/llm_cache/*.jsonl` — one JSON object per LLM call
+
+| field | type | nullable | meaning |
+|---|---|---|---|
+| key | str | no | sha256 of (provider, model, system, messages, params) |
+| request | object | no | the exact body sent (no credentials) |
+| response_text | str | no | assistant content |
+| usage | object | yes | provider `usage` |
+| model | str | no | model name the provider returned |
+| provider_id | str | yes | `x_groq.id` or equivalent |
+| timestamp | str | no | UTC ISO-8601 |
+
+`eval/llm_cache/usage.jsonl` holds `{timestamp, model, tokens}` per live call (daily-quota ledger).
+
+### `models/*.txt` + `models/*.json` — model and manifest
+
+`*.txt` is the LightGBM text model. The JSON manifest holds: `git_sha`, `feature_list` (in column order), `params`, `seed`, `n_train` / `n_val` / `n_test` (instances for E1, pairs for E2), `train_date_range`, `trained_by_script`, `library_versions`.

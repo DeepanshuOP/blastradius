@@ -195,3 +195,31 @@ D-54 (2026-10-09) — Release schema v0.2. 030 found 39 divergent columns betwee
 **Context**: Deepanshu asked for five agents that take a user story to a deployed change: Impact Analysis (user story + codebase → impact analysis document), Coding (impact analysis + codebase → changed files + PR), PR Reviewer (PR + impact analysis → merge, commit id), Build & Deploy (commit id + branch → build and deploy, notify on failure) and Regression Suite (impact analysis + regression suite → test report). The agents may call an LLM, and CLAUDE.md lists "LLM anywhere in the pipeline" as a non-goal (D-17).
 **Decision**: The agents live in `src/agents/` with the same standing as the T4.4 re-ranker under D-17: a separate, cuttable demo path. Nothing in `src/harvest`, `src/parse`, `src/label` or `analysis/` imports them, and no number they produce reaches `make tables`, `release/` or the paper (the paper does not describe them; the course report and slides do). The impact analysis is built on the commit-pinned code graph from `src/graph/build.py` (D-48) and weights failure history above co-change, following RQ1. Every agent runs offline (keyword + graph impact analysis, recorded change sets, local forge); `ANTHROPIC_API_KEY` enables the model, `--forge github` real PRs. GitHub reads go through `get_with_backoff()`; writes go through the single `GitHubForge._write()`. No new dependency: the model is called over `requests`. `make agents-demo` records three scenarios (clean, blocked at review, build failure with notification) for the demo site's Agents tab.
 **Revisit trigger**: any request to put an agent output in the paper, or to call an agent from the reproducible pipeline.
+
+### D-56: BITE497J deliverable is dataset + predictor + triage + repair; the MSR paper stays a dataset paper
+**Date**: 2026-10-10.
+**Decided by**: Deepanshu.
+**Context**: The course guide's review verdict was that a normalised public dataset alone is not enough output for a capstone. D-02 fixes the MSR 2027 contribution as dataset plus honest evaluation.
+**Decision**: For BITE497J the contribution is BR-Bench plus four stages trained and scored on it: E1 predict (learned test-file ranker), E2 triage (mine / inherited / flaky), E3 repair (LLM patch accepted only if the full suite passes), with the existing agents (D-55) as the delivery path. The MSR 2027 Data & Tool paper stays a dataset paper; E1 enters it only if it passes Gate 3 (ROADMAP §37.1) and fits in four pages. Each experiment may come out negative and is then reported as such. Revisits D-02 for the course deliverable only.
+**Revisit trigger**: any request to put E2 or E3 in the MSR paper, or E1 failing Gate 3.
+
+### D-57: E1/E2 split protocol
+**Date**: 2026-10-10.
+**Decided by**: Deepanshu.
+**Context**: ROADMAP §32 gives calendar split dates (train <= 2026-08-31, validate September, test >= 2026-10-01) that fall after the harvest ended on 2026-08-29, so the test window would be empty.
+**Decision**: Instances are ordered by `run_started_at` (ties broken by `run_id`); the first 60% are train, the next 20% validation, the last 20% test. The second regime is leave-one-repo-out (LORO) over repos with >= 20 ground-truth instances. Never a random split. Hyperparameters are tuned on validation only.
+**Revisit trigger**: a corpus extension that makes the §32 calendar dates meaningful.
+
+### D-58: The Repair agent may call an LLM, on Groq's free tier, outside the reproducible core
+**Date**: 2026-10-10.
+**Decided by**: Deepanshu.
+**Context**: E3 needs a model that writes patches. D-17 forbids LLM calls in the reproducible pipeline; D-55 already carved out `src/agents/` as a cuttable demo path under a revisit trigger ("any request to ... call an agent from the reproducible pipeline").
+**Decision**: Only `src/agents/repair.py` (through `src/agents/llm.py`) and E3 may call an LLM. Provider: Groq free tier through its OpenAI-compatible endpoint, over plain `requests`, at zero cost. Primary model `openai/gpt-oss-120b`; replication model `openai/gpt-oss-20b`. The provider is switchable (`BR_AGENT_PROVIDER`) and the Anthropic provider stays. E3 uses a pinned model, seed 0, temperature 0, every request/response cached in `eval/llm_cache/`, a replay mode, and its own results file `paper/generated/rq4_repair.md`, which is NOT part of `make tables`. E1, E2, `make tables` and all feature and label code contain zero LLM calls. Fires the D-55 revisit trigger; this entry is the answer to it.
+**Revisit trigger**: switching provider or model. The old cache and results are then kept and labelled by model, never overwritten.
+
+### D-59: New optional extra `ml`
+**Date**: 2026-10-10.
+**Decided by**: Deepanshu.
+**Context**: The ranker, the triage classifier and the statistics need gradient boosting and a stats library; `CLAUDE.md` forbids new dependencies without asking.
+**Decision**: `ml = ["lightgbm==4.7.0", "scikit-learn==1.9.1", "scipy==1.17.1"]` in `pyproject.toml`, optional, locked in `uv.lock`. SHAP values come from LightGBM's built-in `pred_contrib=True`, so there is no `shap` dependency. LightGBM runs with `deterministic=True`, `force_row_wise=True`, `num_threads=1` for reported numbers.
+**Revisit trigger**: a result that cannot be produced deterministically with these versions.

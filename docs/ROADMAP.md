@@ -2599,6 +2599,8 @@ built_at, incremental_from, communities_inherited, graphify_commit
 
 **Splits.** Time-based. Train ≤ 2026-08-31, validate 2026-09-01 → 2026-09-30, test ≥ 2026-10-01. Additionally, leave-one-project-out for the cross-project regime. **Never random-split.**
 
+> **Note (D-57, 2026-10-10).** The calendar dates above fall after the harvest ended on 2026-08-29, so the BITE497J experiments use a chronological 60/20/20 split by `run_started_at` and leave-one-repo-out instead. The section above is left as written.
+
 **Primary metric.** Recall@k where k ∈ {1%, 5%, 10%, 20%} of the test suite — the practitioner-facing framing.
 
 **Secondary.** APFD/APTF, MAP, NDCG@10, safety violation, precision violation, suite reduction %, simulated CI-minutes saved. `[new]` Plus MRR, Precision@k, Brier/ECE, and abstain rate (§25.2).
