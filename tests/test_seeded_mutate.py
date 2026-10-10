@@ -82,3 +82,46 @@ def test_non_ascii_columns_are_byte_offsets() -> None:
 
 def test_unparsable_source_yields_nothing() -> None:
     assert find_mutations("def (:\n") == []
+
+
+# ---- hard-distractor edits -----------------------------------------------------------------------
+HARD_SRC = '''\
+def total(items, rate):
+    """Sum with tax."""
+    base = sum(items)
+    return base + base * rate
+'''
+
+
+def test_noop_edits_on_a_hand_written_function() -> None:
+    from src.eval.seeded.hard import apply_edits, functions_of, noop_edit
+
+    (fn,) = functions_of("m.py", HARD_SRC)
+    assert (fn.qualname, fn.first_stmt_line, fn.first_stmt_col) == ("total", 3, 4)
+    e = noop_edit(HARD_SRC, fn)
+    # the first single-line assignment/return in the body gets redundant parentheses on its right-hand side
+    assert e == ("PARENS", 3, 11, "sum(items)", "(sum(items))")
+    assert apply_edits(HARD_SRC, [e]).splitlines()[2] == "    base = (sum(items))"
+    comment = ("COMMENT", 3, 0, "", "    # reviewed: no functional change intended\n")
+    out = apply_edits(HARD_SRC, [comment, e]).splitlines()
+    assert out[2] == "    # reviewed: no functional change intended" and out[3] == "    base = (sum(items))"
+    assert out[:2] == HARD_SRC.splitlines()[:2] and len(out) == 5
+
+
+def test_a_distractor_that_changes_a_test_outcome_is_rejected(tmp_path) -> None:
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    from src.eval.seeded.hard import suite_outcome_same
+
+    (tmp_path / "m.py").write_text("def f(x):\n    return x + 1\n")
+    (tmp_path / "test_m.py").write_text("from m import f\n\n\ndef test_f():\n    assert f(1) == 2\n")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    old = {"m.py": (tmp_path / "m.py").read_text()}
+    py = Path(sys.executable)
+    noop = {"m.py": "def f(x):\n    return (x + 1)\n"}
+    breaking = {"m.py": "def f(x):\n    return x + 2\n"}
+    assert suite_outcome_same(tmp_path, py, old, noop, set(), set()) is True
+    assert suite_outcome_same(tmp_path, py, old, breaking, set(), set()) is False
+    assert (tmp_path / "m.py").read_text() == old["m.py"]  # restored either way
