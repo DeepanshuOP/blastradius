@@ -31,7 +31,7 @@
     "chg_docs_only"
   ],
   "fit_on": "train+val",
-  "git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
+  "git_sha": "9e28e70f62b111a9a22db140f34e30b385f949cb",
   "lightgbm": "4.7.0",
   "n_test_instances": 148,
   "n_train_instances": 586,
