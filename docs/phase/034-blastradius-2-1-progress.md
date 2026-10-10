@@ -195,3 +195,16 @@ analysis (A1) and the conclusion (no cached request is invalidated) stand. Repro
 - **Not a bug, but note:** 9 of the 22 qwen replies contain no SEARCH/REPLACE block (the model writes prose such as "I need to look at ...", one
   reply used all 1,500 completion tokens). With no reasoning parameter sent, qwen's visible reasoning counts against the completion budget.
   That is a property of the exploratory model under D-62, to be reported, not changed mid-run.
+
+## Step 0b (2026-10-10): qwen `reasoning_effort="none"`
+
+- `src/agents/llm.py`: `GROQ_REASONING_PARAMS` gains `"qwen/qwen3.8-27b": {"reasoning_effort": "none"}` (no `include_reasoning`). The
+  gpt-oss entry is untouched. The 400-drop logic still applies to it.
+- `tests/test_e3_replay.py`: the qwen assertion (was `{}`) now expects `{"reasoning_effort": "none"}`: that is the requested behaviour change,
+  not a fixture edit. New `test_gpt_oss_request_params_and_cache_keys_are_unchanged` re-derives every recorded key of both gpt-oss caches
+  from current code (real checked-in cache) and pins the params.
+- Archive: the qwen cache exists only in the frozen worktree `~/br-e3` (not in this tree). I **copied** it (read-only; the original is
+  untouched, md5 identical) to `eval/llm_cache/archive/e3_qwen_qwen3.8-27b.no-reasoning-param.jsonl` (52 records at 22:42 UTC) with a
+  README label "no-reasoning-param run, superseded". The qwen cache in the main tree therefore starts empty. **The copy in `~/br-e3`
+  must be moved by the operator** before qwen is re-run there; I did not touch it.
+- D-62 dated note added in `docs/DECISIONS.md`.

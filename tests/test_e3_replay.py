@@ -243,12 +243,30 @@ def test_a_second_process_waits_for_the_repo_lock(repo, bug_diff, tmp_path) -> N
 # ---- Part C: reasoning parameters follow the model ------------------------------------------------
 def test_reasoning_parameters_are_sent_only_to_models_known_to_take_them(tmp_path) -> None:
     assert groq_reasoning_params("openai/gpt-oss-120b") == {"reasoning_effort": "low", "include_reasoning": False}
-    assert groq_reasoning_params("qwen/qwen3.8-27b") == {}
+    # D-62 (2026-10-10 note): qwen3.8-27b gets reasoning_effort="none" and nothing else (Groq docs).
+    assert groq_reasoning_params("qwen/qwen3.8-27b") == {"reasoning_effort": "none"}
+    assert groq_reasoning_params("allam-2-7b") == {}
     q = GroqLLM(api_key="k", model="qwen/qwen3.8-27b", ledger=tmp_path / "u.jsonl")
-    assert set(q.request_params(1500)) == {"temperature", "seed", "max_completion_tokens"}
+    assert q.request_params(1500) == {"temperature": 0, "seed": 0, "reasoning_effort": "none",
+                                      "max_completion_tokens": 1500}
     g = GroqLLM(api_key="k", model="openai/gpt-oss-120b", ledger=tmp_path / "u.jsonl")
     assert g.request_params(1500) == {"temperature": 0, "seed": 0, "reasoning_effort": "low", "include_reasoning": False,
                                       "max_completion_tokens": 1500}
+
+
+@pytest.mark.parametrize("model", ["openai/gpt-oss-120b", "openai/gpt-oss-20b"])
+def test_gpt_oss_request_params_and_cache_keys_are_unchanged(model, tmp_path) -> None:
+    """Every recorded gpt-oss request must still hash to its recorded key (the real checked-in cache)."""
+    g = GroqLLM(api_key="k", model=model, ledger=tmp_path / "u.jsonl")
+    assert g.request_params(1500) == {"temperature": 0, "seed": 0, "reasoning_effort": "low",
+                                      "include_reasoning": False, "max_completion_tokens": 1500}
+    cache = Path(__file__).resolve().parents[1] / "eval" / "llm_cache" / f"e3_{model.replace('/', '_')}.jsonl"
+    recs = [json.loads(line) for line in cache.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert recs
+    for rec in recs:
+        (msg,) = rec["request"]["messages"]
+        assert g.request_key(rec["request"]["system"], msg["content"], rec["request"]["params"]["max_completion_tokens"]) \
+            == rec["key"]
 
 
 class Resp:

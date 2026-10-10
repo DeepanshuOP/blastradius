@@ -49,10 +49,14 @@ USAGE_LEDGER = Path("eval/llm_cache/usage.jsonl")
 
 
 # Sampling parameters sent besides the pinned temperature / seed / completion budget, by model-name prefix.
-# Only the gpt-oss family is known to take both (they were sent on every recorded request, so the cache keys
-# depend on them). Other models get neither: an unsupported parameter is a Groq 400, and `chat` drops a
-# parameter the 400 message names and retries (see `_unsupported_param`).
-GROQ_REASONING_PARAMS: dict[str, dict] = {"openai/gpt-oss": {"reasoning_effort": "low", "include_reasoning": False}}
+# The gpt-oss family takes both (they were sent on every recorded request, so the cache keys depend on them).
+# qwen/qwen3.8-27b takes only reasoning_effort="none" (Groq docs: none/default apply to Qwen 3.8 27B), so its
+# thinking does not eat the completion budget (D-62). Other models get neither: an unsupported parameter is a
+# Groq 400, and `chat` drops a parameter the 400 message names and retries (see `_unsupported_param`).
+GROQ_REASONING_PARAMS: dict[str, dict] = {
+    "openai/gpt-oss": {"reasoning_effort": "low", "include_reasoning": False},
+    "qwen/qwen3.8-27b": {"reasoning_effort": "none"},
+}
 
 
 def groq_reasoning_params(model: str) -> dict:
