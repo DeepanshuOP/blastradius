@@ -58,6 +58,18 @@ DERIVATIONS: dict[str, tuple[str, ...]] = {
 }
 
 
+#: Derived E1/E2 tables under `data/processed`, with inputs named relative to that root.
+PROCESSED_ROOT = Path("data/processed")
+PROCESSED_DERIVATIONS: dict[str, tuple[str, ...]] = {
+    "e1_features.parquet": ("../interim/outcomes.parquet", "../interim/binding.parquet",
+                            "../interim/changesets.parquet", "../interim/cochange.parquet",
+                            "../interim/instances_raw.parquet"),
+    "e1_scores.parquet": ("e1_features.parquet",),
+    "e2_features.parquet": ("../interim/outcomes.parquet", "../interim/parsed_outcomes.parquet",
+                            "../interim/binding.parquet", "../interim/instances_raw.parquet"),
+}
+
+
 @dataclass(frozen=True)
 class Staleness:
     """One artifact that is older than one of its inputs.
@@ -180,6 +192,14 @@ def main() -> None:
     args = parser.parse_args()
 
     findings, skipped = find_stale(args.root)
+    derived, derived_skipped = find_stale(PROCESSED_ROOT, PROCESSED_DERIVATIONS)
+    if derived:
+        for f in derived:
+            print(f"STALE DERIVED TABLE: {PROCESSED_ROOT / f.artifact} is older than {PROCESSED_ROOT / f.input_name} "
+                  f"by {f.lag_seconds:,.1f} s. Rebuild: uv run python -m analysis.build_e1_features "
+                  "&& uv run python -m analysis.rq2_predictor", file=sys.stderr)
+        raise SystemExit(1)
+    skipped += derived_skipped
     for name in skipped:
         print(f"[freshness] skipped: {name}")
 

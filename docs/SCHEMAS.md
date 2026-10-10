@@ -314,6 +314,8 @@ Grain: one row per (run_id, job_id, test_id).
 
 ### `data/processed/e1_scores.parquet` — one row per (method, instance, candidate)
 
+Test split only. Learned methods (`B6`, `B7`, `ours`) carry seeds 0-4; `B1` is seed 0 only (the reported B1 numbers average 20 seeds).
+
 | column | type | nullable | meaning |
 |---|---|---|---|
 | method | str | no | `B0`..`B7` or `ours` |
@@ -340,11 +342,12 @@ Grain: one row per (run_id, job_id, test_id).
 | failed_prev3_branch | int8 | no | failed in any of the previous 3 runs on the same `base_ref` |
 | failed_prev10_branch | int8 | no | the same, previous 10 runs |
 | msg_hash_seen | int8 | no | the failure-message hash occurred in an earlier run of this repo |
+| bound | int8 | no | 1 if the test id binds to a file (`exact`); the `prox_*` / `cochg_*` columns are null otherwise |
 | fclass_environment / fclass_timeout / fclass_code / fclass_unknown | int8 | no | one-hot of `analysis/failure_class.classify` |
 | status_error | int8 | no | head status is `error` rather than `fail` |
 | n_job_rows | int32 | no | job rows carrying the failure |
 | duration_s | float64 | yes | head duration |
-| prox_*, cochg_* | as in e1 | no | raw E1-style features of the bound file against the change (null when unbound) |
+| prox_*, cochg_* | as in e1 | yes | raw E1-style features of the bound file against the change (null when unbound) |
 
 ### `eval/seeded/tasks.jsonl` — one JSON object per E3 task
 
@@ -372,6 +375,7 @@ Grain: one row per (run_id, job_id, test_id).
 | usage | object | yes | provider `usage` |
 | model | str | no | model name the provider returned |
 | provider_id | str | yes | `x_groq.id` or equivalent |
+| latency_s | float64 | yes | wall time of the live call, seconds (null for demo records made before this field) |
 | timestamp | str | no | UTC ISO-8601 |
 
 `eval/llm_cache/usage.jsonl` holds `{timestamp, model, tokens}` per live call (daily-quota ledger).

@@ -29,8 +29,9 @@ def test_simple_baselines_and_tie_break() -> None:
 
 def test_random_baseline_is_seeded() -> None:
     g = frame()
-    assert np.array_equal(b.score_b1(g, 3), b.score_b1(g, 3))
-    assert not np.array_equal(b.score_b1(g, 3), b.score_b1(g, 4))
+    assert np.array_equal(b.score_b1(g, 3, 9), b.score_b1(g, 3, 9))
+    assert not np.array_equal(b.score_b1(g, 3, 9), b.score_b1(g, 4, 9))
+    assert not np.array_equal(b.score_b1(g, 3, 9), b.score_b1(g, 3, 10))  # instances are independent
 
 
 def test_b5_prefers_path_overlap() -> None:

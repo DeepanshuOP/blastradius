@@ -47,6 +47,42 @@ def assign_split(keys: list[tuple]) -> dict[tuple, str]:
     return out
 
 
+def make_context(repo: str, run_id: int, pr: str, started: str, head_sha: str | None, files: list[str],
+                 g: pd.DataFrame | None) -> ChangeContext:
+    """One :class:`ChangeContext` from a run's PR changeset rows.
+
+    Args:
+        repo: `owner/name`.
+        run_id: Workflow run id.
+        pr: PR number as a string.
+        started: `run_started_at`.
+        head_sha: The run's head commit.
+        files: Changed paths (RQ1's union over the PR's head shas).
+        g: The PR's rows of `changesets.parquet`, or None when there is no changeset.
+
+    Returns:
+        The context. Lines come from the rows of the run's own head sha when present, else all rows
+        (de-duplicated by filename); the touches flags are `any`, `is_docs_only` is `all` over the PR's rows.
+    """
+    lines, tt, tb, tc, docs = 0, False, False, False, False
+    if g is not None:
+        sub = g[g["head_sha"] == head_sha] if head_sha in set(g["head_sha"]) else g
+        sub = sub.drop_duplicates("filename", keep="last")
+        lines = int(sub["additions"].sum() + sub["deletions"].sum())
+        tt, tb, tc = bool(g["touches_test_file"].any()), bool(g["touches_build_config"].any()), bool(g["touches_ci_config"].any())
+        docs = bool(g["is_docs_only"].all())
+    return ChangeContext(repo=repo, instance_key=(repo, run_id), ts=run_ts(started), changed_files=tuple(sorted(files)),
+                         n_lines_changed=lines, touches_test_file=tt, touches_build_config=tb, touches_ci_config=tc,
+                         is_docs_only=docs, head_sha=head_sha)
+
+
+def load_changesets_by_pr() -> dict:
+    """`changesets.parquet` grouped by `(repo, pr_number as str)`."""
+    cs = pd.read_parquet("data/interim/changesets.parquet")
+    cs["pr_number"] = cs["pr_number"].astype(str)
+    return {k: g for k, g in cs.groupby(["repo", "pr_number"])}
+
+
 def build_contexts(data, gt: dict) -> list[tuple[ChangeContext, str]]:
     """One :class:`ChangeContext` per ground-truth instance, with its `run_started_at` string.
 
@@ -57,9 +93,7 @@ def build_contexts(data, gt: dict) -> list[tuple[ChangeContext, str]]:
     Returns:
         `(context, run_started_at)` per instance, unordered.
     """
-    cs = pd.read_parquet("data/interim/changesets.parquet")
-    cs["pr_number"] = cs["pr_number"].astype(str)
-    by_pr = {k: g for k, g in cs.groupby(["repo", "pr_number"])}
+    by_pr = load_changesets_by_pr()
     out = []
     for _, r in data.valid_runs.iterrows():
         key = (r["repo"], r["run_id"])
@@ -67,18 +101,8 @@ def build_contexts(data, gt: dict) -> list[tuple[ChangeContext, str]]:
             continue
         pr = str(r["pr_number"])
         files = sorted(data.pr_to_changed.get((r["repo"], pr), set()))
-        g = by_pr.get((r["repo"], pr))
-        lines, tt, tb, tc, docs = 0, False, False, False, False
-        if g is not None:
-            head = data.head_sha_of.get(r["run_id"])
-            sub = g[g["head_sha"] == head] if head in set(g["head_sha"]) else g
-            sub = sub.drop_duplicates("filename", keep="last")
-            lines = int(sub["additions"].sum() + sub["deletions"].sum())
-            tt, tb, tc = bool(g["touches_test_file"].any()), bool(g["touches_build_config"].any()), bool(g["touches_ci_config"].any())
-            docs = bool(g["is_docs_only"].all())
-        ctx = ChangeContext(repo=r["repo"], instance_key=key, ts=run_ts(r["run_started_at"]), changed_files=tuple(files),
-                            n_lines_changed=lines, touches_test_file=tt, touches_build_config=tb,
-                            touches_ci_config=tc, is_docs_only=docs, head_sha=data.head_sha_of.get(r["run_id"]))
+        ctx = make_context(r["repo"], r["run_id"], pr, r["run_started_at"], data.head_sha_of.get(r["run_id"]),
+                           files, by_pr.get((r["repo"], pr)))
         out.append((ctx, r["run_started_at"]))
     return out
 

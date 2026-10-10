@@ -25,13 +25,18 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from analysis import paper_md
 from analysis.rq1_divergence import (CLONES_DIR, COCHANGE_PIN, K_VALS, METHODS, Rq1Data, evaluate_k, ground_truth,
                                      historical_evidence, load_data, run_ts)
 
+E1_FEATURES = Path("data/processed/e1_features.parquet")
+E1_CELLS = 200
+DAY = 86400
 WINDOW_NOTE = "committer time, `[run_started_at - 365 d, run_started_at)`"
 
 
@@ -130,6 +135,153 @@ def audit_cochange(data: Rq1Data, as_of_ts: int) -> tuple[dict, dict]:
     return cur, leg
 
 
+def _own_commits(repo: str, until_ts: int) -> list[tuple[int, str, frozenset]]:
+    """Commits of the pinned clone read by this module's own `git log` parse (independent of `RepoHistory`).
+
+    Non-merge, no renames, committer time, commits touching 0 or more than 50 files dropped (D-52).
+    """
+    pins = json.loads(Path("docs/CLONE_PINS.json").read_text())["pins"]
+    clone = CLONES_DIR / repo.replace("/", "__")
+    out = subprocess.run(["git", "-C", str(clone), "log", pins[repo], "--no-merges", "--no-renames",
+                          "--format=@@@%H %ct", "--name-only"], capture_output=True, text=True, check=True,
+                         encoding="utf-8", errors="replace", env={**os.environ, "GIT_NO_LAZY_FETCH": "1"}).stdout
+    commits, cur = [], None
+    for line in out.splitlines():
+        if line.startswith("@@@"):
+            if cur and 0 < len(cur[2]) <= 50 and cur[0] <= until_ts:
+                commits.append((cur[0], cur[1], frozenset(cur[2])))
+            sha, ts = line[3:].split()
+            cur = (int(ts), sha, set())
+        elif line.strip() and cur is not None:
+            cur[2].add(line.strip())
+    if cur and 0 < len(cur[2]) <= 50 and cur[0] <= until_ts:
+        commits.append((cur[0], cur[1], frozenset(cur[2])))
+    return commits
+
+
+def audit_e1(data: Rq1Data, feats: pd.DataFrame, n_cells: int = E1_CELLS, seed: int = 0) -> dict:
+    """Recompute a random sample of E1 feature cells from raw rows and check time-safety.
+
+    For each sampled (instance, candidate, feature) cell the value is recomputed from the
+    raw tables with this module's own code (strict labels and head failures from the RQ1
+    frames, co-change from a fresh `git log` parse, co-failures from the ground truth), using
+    only source rows with time strictly before `run_started_at`. A cell is a violation if the
+    stored value differs, which is what any use of a row at or after the cutoff would cause.
+
+    Args:
+        data: Loaded RQ1 inputs.
+        feats: `e1_features.parquet`.
+        n_cells: Number of (row, feature) cells.
+        seed: Sampling seed.
+
+    Returns:
+        `{"cells": [...], "by_family": {...}, "violations": n, "max_source_gap_s": ...}`.
+    """
+    from analysis.rq1_divergence import ground_truth
+    from src.features.test_features import FAMILIES, FEATURE_COLS
+
+    fam_of = {c: f for f, cs in FAMILIES.items() for c in cs}
+    rng = np.random.default_rng(seed)
+    # half uniform, half from rows where history exists (labels, prior failures, co-failures), so the
+    # audit has power on the time-dependent families instead of sampling mostly all-zero rows
+    active = np.flatnonzero(((feats["label"] == 1) | (feats["hist_fail_count"] > 0) | (feats["hist_head_fail_count"] > 0)
+                             | (feats["cofail_max"] > 0)).to_numpy())
+    half = n_cells // 2
+    rows = np.concatenate([rng.integers(0, len(feats), n_cells - half),
+                           active[rng.integers(0, len(active), half)] if len(active) else
+                           rng.integers(0, len(feats), half)])
+    cols = rng.integers(0, len(FEATURE_COLS), n_cells)
+    pr_of = {(r["repo"], r["run_id"]): str(r["pr_number"]) for _, r in data.valid_runs.iterrows()}
+    started = {(r["repo"], r["run_id"]): run_ts(r["run_started_at"]) for _, r in data.valid_runs.iterrows()}
+    gt = ground_truth(data)
+    head_all = data.hist_legacy[data.hist_legacy["split"] == "all"].drop_duplicates(subset=["run_id", "test_id"])
+    commit_cache: dict[str, list] = {}
+    by_family: dict[str, dict] = {}
+    violations = 0
+    min_gap = None
+    for ri, ci in zip(rows, cols):
+        r, col = feats.iloc[int(ri)], FEATURE_COLS[int(ci)]
+        fam, repo, rid, tf, cutoff = fam_of[col], r["repo"], int(r["run_id"]), r["test_file"], int(r["ts"])
+        key = (repo, rid)
+        changed = sorted(data.pr_to_changed.get((repo, pr_of[key]), set()))
+        stat = by_family.setdefault(fam, {"cells": 0, "had_later_rows": 0, "mismatch": 0, "no_time_source": 0})
+        stat["cells"] += 1
+        expected = None
+        if fam == "hist_":
+            ev = data.hist_all[(data.hist_all["repo"] == repo) & (data.hist_all["resolved_path"] == tf)]
+            hv = head_all[(head_all["repo"] == repo) & (head_all["resolved_path"] == tf)]
+            t_ev = ev["run_started_at"].map(run_ts).to_numpy()
+            t_hd = hv["run_started_at"].map(run_ts).to_numpy()
+            before = t_ev[t_ev < cutoff]
+            stat["had_later_rows"] += int(bool((t_ev >= cutoff).any() or (t_hd >= cutoff).any()))
+            if before.size:
+                min_gap = cutoff - int(before.max()) if min_gap is None else min(min_gap, cutoff - int(before.max()))
+            if col == "hist_fail_count":
+                expected = before.size
+            elif col == "hist_fail_30d":
+                expected = int((before >= cutoff - 30 * DAY).sum())
+            elif col == "hist_fail_90d":
+                expected = int((before >= cutoff - 90 * DAY).sum())
+            elif col == "hist_days_since_last":
+                expected = (cutoff - before.max()) / DAY if before.size else float("nan")
+            elif col == "hist_head_fail_count":
+                expected = int((t_hd < cutoff).sum())
+            else:  # hist_repo_rank: recount every candidate of the instance from the raw frame
+                cand = feats[(feats["repo"] == repo) & (feats["run_id"] == rid)]["test_file"]
+                evr = data.hist_all[data.hist_all["repo"] == repo]
+                evr = evr[evr["run_started_at"].map(run_ts) < cutoff]
+                counts = evr["resolved_path"].value_counts().to_dict()
+                order = sorted(cand, key=lambda f: (-counts.get(f, 0), f))
+                expected = order.index(tf) + 1
+        elif fam == "cochg_":
+            if repo not in commit_cache:
+                commit_cache[repo] = _own_commits(repo, 2**40)
+            head = data.head_sha_of.get(rid)
+            lo = cutoff - 365 * DAY
+            sup_l, conf_l, with_partner = [], [], 0
+            for f in changed:
+                touching = [c for c in commit_cache[repo] if f in c[2] and lo <= c[0] < cutoff and c[1] != head]
+                stat["had_later_rows"] += int(any(f in c[2] and c[0] >= cutoff for c in commit_cache[repo]))
+                counts: dict[str, int] = {}
+                for c in touching:
+                    for g in c[2]:
+                        if g != f:
+                            counts[g] = counts.get(g, 0) + 1
+                kept = {g: n for g, n in counts.items() if n >= 2}
+                with_partner += int(bool(kept))
+                if tf in kept:
+                    sup_l.append(kept[tf])
+                    conf_l.append(kept[tf] / len(touching))
+                    gap = cutoff - max(c[0] for c in touching)
+                    min_gap = gap if min_gap is None else min(min_gap, gap)
+            expected = {"cochg_max_support": max(sup_l, default=0), "cochg_sum_support": sum(sup_l),
+                        "cochg_max_conf": max(conf_l, default=0.0), "cochg_sum_conf": sum(conf_l),
+                        "cochg_n_files_with_partner": with_partner}[col]
+        elif fam == "cofail_":
+            vals = []
+            for f in changed:
+                n = 0
+                for k2, files in gt.items():
+                    if k2[0] != repo or k2 not in started or tf not in files:
+                        continue
+                    if f in data.pr_to_changed.get((repo, pr_of[k2]), set()):
+                        if started[k2] < cutoff:
+                            n += 1
+                        else:
+                            stat["had_later_rows"] += 1
+                vals.append(n)
+            expected = max(vals, default=0) if col == "cofail_max" else sum(vals)
+        else:
+            stat["no_time_source"] += 1
+            continue
+        got = r[col]
+        ok = (np.isnan(got) and np.isnan(expected)) or abs(float(got) - float(expected)) < 1e-9
+        if not ok:
+            stat["mismatch"] += 1
+            violations += 1
+    return {"by_family": by_family, "violations": violations, "min_gap_s": min_gap, "cells": n_cells}
+
+
 def stage_table(data: Rq1Data) -> list[list]:
     """RQ1 at k=5/10/20 under each combination of fixes, so each effect is visible."""
     stages = (
@@ -200,6 +352,24 @@ def main() -> int:
              "stores each pair once as `file_a < file_b` and was looked up by `file_a` only, so only "
              "lexicographically later paths were ever candidates; stages 0-3 inherit that, stage 4 reads both directions.\n\n")
     text += paper_md.table(["k", "stage", "method", "n", "mean P", "mean R", "mean J"], stage_table(data))
+    e1 = None
+    if E1_FEATURES.exists():
+        e1 = audit_e1(data, pd.read_parquet(E1_FEATURES))
+        text += ("\n## E1 feature table (`data/processed/e1_features.parquet`)\n\n"
+                 f"A seeded sample of {e1['cells']} (candidate row, feature) cells (half uniform, half from rows with history) is recomputed from raw rows "
+                 "by this script's own code (strict labels and head failures from the RQ1 frames, co-change from a "
+                 "fresh `git log` parse of the pinned clone, co-failures from the ground truth), using only source "
+                 "rows strictly before the instance's `run_started_at`. A violation is a stored value that differs "
+                 "from that recomputation. 'Cells with later rows' counts cells where rows at or after the cutoff "
+                 "exist for the same keys, i.e. where a leak would have changed the value (the audit's power). "
+                 "`prox_` and `chg_` read only the change itself and have no time-dependent source.\n\n")
+        text += paper_md.table(
+            ["family", "cells audited", "cells with later rows (power)", "violations", "no time-dependent source"],
+            [[f, v["cells"], v["had_later_rows"], v["mismatch"], v["no_time_source"]]
+             for f, v in sorted(e1["by_family"].items())])
+        gap = e1["min_gap_s"]
+        text += ("\nSmallest gap between the cutoff and the newest source row used: "
+                 + (f"{gap:,} s" if gap is not None else "n/a") + ".\n")
     path = paper_md.write("leakage_audit.md", text)
 
     bad = {"historical": [k for k in ("not_before", "own_run", "non_strict", "duplicated") if cur_h[k]],
@@ -207,6 +377,10 @@ def main() -> int:
     print(f"Wrote {path}")
     for name, ks in bad.items():
         print(f"{name}: {'VIOLATIONS ' + ', '.join(ks) if ks else 'no violations'}")
+    if e1 is not None:
+        print(f"e1 features: {e1['violations']} violations in {e1['cells']} sampled cells")
+        if e1["violations"]:
+            return 1
     return 1 if any(bad.values()) else 0
 
 

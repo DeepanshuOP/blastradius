@@ -1,0 +1,61 @@
+{
+  "d57_split": {
+    "test": 148,
+    "train": 440,
+    "val": 146
+  },
+  "feature_list": [
+    "hist_fail_count",
+    "hist_fail_30d",
+    "hist_fail_90d",
+    "hist_days_since_last",
+    "hist_head_fail_count",
+    "hist_repo_rank",
+    "cochg_max_support",
+    "cochg_sum_support",
+    "cochg_max_conf",
+    "cochg_sum_conf",
+    "cochg_n_files_with_partner",
+    "cofail_max",
+    "cofail_sum",
+    "prox_in_change",
+    "prox_max_jaccard",
+    "prox_min_dir_dist",
+    "prox_name_contains_stem",
+    "prox_same_module",
+    "chg_n_files",
+    "chg_n_lines",
+    "chg_touches_test",
+    "chg_touches_build",
+    "chg_touches_ci",
+    "chg_docs_only"
+  ],
+  "fit_on": "train+val",
+  "git_sha": "7359fd9cd6549216cdc1c6f8ce31c1e881f50ddb",
+  "lightgbm": "4.7.0",
+  "n_test_instances": 148,
+  "n_train_instances": 586,
+  "n_val_instances_used_for_tuning": 146,
+  "params": {
+    "deterministic": true,
+    "eval_at": [
+      10
+    ],
+    "feature_fraction": 1.0,
+    "force_row_wise": true,
+    "learning_rate": 0.1,
+    "metric": "ndcg",
+    "min_data_in_leaf": 20,
+    "num_leaves": 31,
+    "num_threads": 1,
+    "objective": "lambdarank",
+    "verbosity": -1
+  },
+  "rounds": 66,
+  "seed": 0,
+  "train_date_range": [
+    "2026-05-24 17:46:32+00:00",
+    "2026-07-31 17:24:46+00:00"
+  ],
+  "trained_by_script": "analysis/rq2_predictor.py"
+}

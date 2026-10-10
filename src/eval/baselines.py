@@ -52,14 +52,16 @@ def score_b0(g: pd.DataFrame) -> np.ndarray:
     return np.zeros(len(g))
 
 
-def score_b1(g: pd.DataFrame, seed: int) -> np.ndarray:
+def score_b1(g: pd.DataFrame, seed: int, instance_id: int = 0) -> np.ndarray:
     """B1: a seeded uniform random score per candidate.
 
     Args:
         g: One instance's candidate rows.
-        seed: Permutation seed (combined with the row count so instances differ).
+        seed: Permutation seed.
+        instance_id: The instance's `run_id`; each instance gets its own stream, so
+            instances with equal candidate counts are not perfectly correlated.
     """
-    return np.random.default_rng([seed, len(g)]).random(len(g))
+    return np.random.default_rng([seed, int(instance_id)]).random(len(g))
 
 
 def score_b2(g: pd.DataFrame) -> np.ndarray:

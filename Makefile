@@ -1,4 +1,4 @@
-.PHONY: test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
+.PHONY: e1 e2 seeded repair-run repair-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
 
 test:
 	uv run pytest -q
@@ -68,6 +68,11 @@ tables:
 	uv run python analysis/paper_numbers.py
 	uv run python analysis/attrition_funnel.py
 	uv run python analysis/rq1_divergence.py
+	# E1 (D-56..D-59): feature table, then the ranker and baselines. No network, no LLM.
+	uv run --extra ml python -m analysis.build_e1_features
+	uv run --extra ml python -m analysis.rq2_predictor
+	# E2 (D-56..D-59): triage of failing tests as mine / inherited / flaky. No network, no LLM.
+	uv run --extra ml python -m analysis.rq3_triage
 	uv run python analysis/leakage_audit.py
 	uv run python analysis/infra_failure_audit.py
 	# The exact_green sweep itself needs PATs and runs for tens of minutes, so
@@ -137,8 +142,40 @@ analyze:
 	timeout 180 uv run --extra graph python -m src.agents impact --repo "$$dir" --story '$(STORY)' --provider offline \
 		&& echo "impact.md and impact.json: $$dir/.blastradius/impact/"
 
+# E1 figures (fig3-fig5) from data/processed/rq2_results.json; fig1/fig2 are written by rq1_divergence.py.
 figures:
-	@echo "not implemented"
+	uv run --extra figures --extra ml python analysis/rq2_figures.py
+
+# E3 (D-58). `seeded` clones three public repos and installs their test deps (network, once); NOT part of
+# `tables`. `repair-run` calls the model (Groq free tier, GROQ_API_KEY in .env) and caches every reply under
+# eval/llm_cache/; `repair-eval` replays the caches with the network forbidden and writes rq4_repair.md.
+#   make repair-run MODEL=openai/gpt-oss-120b      (replication: MODEL=openai/gpt-oss-20b)
+seeded:
+	uv run --extra ml python -m src.eval.seeded.build
+
+MODEL ?= openai/gpt-oss-120b
+repair-run:
+	uv run --env-file .env --extra ml python -m analysis.rq4_repair run --model $(MODEL)
+
+repair-eval: export BR_OFFLINE=1
+repair-eval: export BR_LLM_REPLAY=1
+repair-eval:
+	mkdir -p paper/generated
+	uv run --extra ml python -m analysis.rq4_repair eval
+
+# E2 only: failure triage. Offline, deterministic.
+e2: export BR_OFFLINE=1
+e2:
+	mkdir -p paper/generated
+	uv run --extra ml python -m analysis.rq3_triage
+
+# E1 only: feature table + ranker + baselines + leakage audit. Offline, deterministic.
+e1: export BR_OFFLINE=1
+e1:
+	mkdir -p paper/generated
+	uv run --extra ml python -m analysis.build_e1_features
+	uv run --extra ml python -m analysis.rq2_predictor
+	uv run python analysis/leakage_audit.py
 
 # T5.6b: the 3-repo graph-layer mini-corpus reproduction (docs/MINI_CORPUS.md),
 # budgeted under 15 minutes. Graph layer only -- per D-48 nothing it prints
