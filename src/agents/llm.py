@@ -152,6 +152,18 @@ class AnthropicLLM:
         return extract_json(text)
 
 
+class NetworkUnavailable(RuntimeError):
+    """The provider could not be reached (DNS, connection or timeout) after the retries; nothing was recorded."""
+
+
+NETWORK_ERRORS = (requests.exceptions.ConnectionError, requests.exceptions.Timeout)
+
+
+def network_backoff(attempt: int) -> float:
+    """Seconds to wait after the `attempt`-th (0-based) network failure: 5, 10, 20, 40, 80, then 120."""
+    return float(min(5 * 2 ** attempt, 120))
+
+
 class CostCapReached(RuntimeError):
     """The next Bedrock call's estimated cost would push the ledger past ``BR_BEDROCK_MAX_USD``."""
 
@@ -264,6 +276,7 @@ class GroqLLM:
             CacheMiss: In replay mode, for an unrecorded request.
             DailyQuotaReached: When the day's token budget cannot cover the next call.
             LLMError: On a non-retryable HTTP error or after the retries are spent.
+            NetworkUnavailable: When the provider cannot be reached after the retries (no record is written).
         """
         params = self.request_params(max_completion_tokens)
         messages = [{"role": "user", "content": user}]
@@ -285,8 +298,15 @@ class GroqLLM:
         for attempt in range(self.max_retries + 1):
             self._wait_for_minute(need)
             t0 = self.clock()
-            resp = requests.post(GROQ_URL, headers={"Authorization": f"Bearer {self.api_key}"}, json=body,
-                                 timeout=TIMEOUT)
+            try:
+                resp = requests.post(GROQ_URL, headers={"Authorization": f"Bearer {self.api_key}"}, json=body,
+                                     timeout=TIMEOUT)
+            except NETWORK_ERRORS as exc:
+                if attempt == self.max_retries:
+                    raise NetworkUnavailable(f"Groq unreachable after {self.max_retries} retries: "
+                                             f"{type(exc).__name__}") from exc
+                self.sleeper(network_backoff(attempt))
+                continue
             if resp.status_code == 429:
                 msg = resp.text.lower()
                 if "per day" in msg or "tpd" in msg or "requests per day" in msg:
@@ -440,9 +460,16 @@ class BedrockLLM:
         delay = 10.0
         for attempt in range(self.max_retries + 1):
             t0 = self.clock()
-            resp = requests.post(self.url(), headers={"Authorization": f"Bearer {self.api_key}",
-                                                      "Content-Type": "application/json"},
-                                 json=self.body(system, user, max_completion_tokens), timeout=TIMEOUT)
+            try:
+                resp = requests.post(self.url(), headers={"Authorization": f"Bearer {self.api_key}",
+                                                          "Content-Type": "application/json"},
+                                     json=self.body(system, user, max_completion_tokens), timeout=TIMEOUT)
+            except NETWORK_ERRORS as exc:
+                if attempt == self.max_retries:
+                    raise NetworkUnavailable(f"Bedrock unreachable after {self.max_retries} retries: "
+                                             f"{type(exc).__name__}") from exc
+                self.sleeper(network_backoff(attempt))
+                continue
             low = resp.text.lower()
             if resp.status_code == 429 or "throttlingexception" in low:
                 if attempt == self.max_retries:

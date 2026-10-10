@@ -32,7 +32,7 @@ from pathlib import Path
 import numpy as np
 
 from analysis import paper_md
-from src.agents.llm import BedrockLLM, CostCapReached, DailyQuotaReached, GroqLLM, bedrock_spend
+from src.agents.llm import BedrockLLM, CostCapReached, DailyQuotaReached, GroqLLM, NetworkUnavailable, bedrock_spend
 from src.agents.llm_cache import CacheMiss, LLMCache, model_slug
 from src.agents.repair import (ARMS, SYSTEM, FailureReport, RepairAgent, build_prompt, index_functions,
                                select_chunks)
@@ -583,8 +583,8 @@ def main(argv: list[str] | None = None) -> int:
                 done += 1
                 print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if rec[a]['accepted'] else 'no'}" for a in ("R1", "R2", "R3")),
                       flush=True)
-        except (DailyQuotaReached, CostCapReached) as exc:
-            print(f"{exc}: stopped at {current} (a request that was not in the cache); {done} of {len(sub)} tasks done; "
+        except (DailyQuotaReached, CostCapReached, NetworkUnavailable) as exc:
+            print(f"{exc}: stopped at {current} (a request that was not in the cache, or the provider was unreachable); {done} of {len(sub)} tasks done; "
                   "cached calls are kept, re-run the same command to resume.")
         if isinstance(llm, BedrockLLM):
             print(f"Bedrock ledger total: USD {bedrock_spend():.4f} (cap USD {llm.max_usd:.2f})")

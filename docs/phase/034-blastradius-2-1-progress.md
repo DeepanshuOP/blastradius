@@ -180,3 +180,18 @@ wrong. The 47 (120b) / 45 (20b) tasks are *fully cached*, but not a prefix: the 
 stops at the first never-run task (40th / 38th), because 8 pilot tasks per model sit later in task-id order. The 47 / 45 counts, the key
 analysis (A1) and the conclusion (no cached request is invalidated) stand. Reproduced in the frozen worktree `~/br-e3` at 8b1e922:
 120b 39 tasks then `CacheMiss`; 20b 37 tasks then `CacheMiss`; caches and ledger byte-identical to the main repo's.
+
+## Qwen run exit=2 at 7/70 (2026-10-10 20:00 and 21:15 UTC, `~/br-e3/e3_run.log`)
+
+- **Cause:** a dropped network, not the model. After 7 tasks (22 recorded replies, 7 tasks of live calls succeeded) the next live request failed
+  with `socket.gaierror: Temporary failure in name resolution` -> `requests.exceptions.ConnectionError` for `api.groq.com`.
+  `GroqLLM.chat` caught only HTTP statuses, so the exception escaped `run_task` and `main` and the process died (`make` exit 2). The 21:15 run
+  replayed the same 7 cached tasks and failed at the same first live request (DNS still down). No reply was lost: records are written only
+  after a response.
+- **Fix:** network errors (`ConnectionError`, `Timeout`) are retried with backoff 5, 10, 20, 40, 80, 120 s inside the existing retry budget;
+  if the provider stays unreachable `NetworkUnavailable` is raised, nothing is recorded, and `analysis/rq4_repair.py run` stops cleanly
+  ("re-run the same command to resume", exit 0) like a quota stop. Same for the Bedrock provider. No prompt, key or cache change.
+  Tests: backoff then success; persistent failure records nothing and writes no ledger line.
+- **Not a bug, but note:** 9 of the 22 qwen replies contain no SEARCH/REPLACE block (the model writes prose such as "I need to look at ...", one
+  reply used all 1,500 completion tokens). With no reasoning parameter sent, qwen's visible reasoning counts against the completion budget.
+  That is a property of the exploratory model under D-62, to be reported, not changed mid-run.

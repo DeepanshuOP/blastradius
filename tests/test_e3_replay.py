@@ -291,3 +291,39 @@ def test_a_400_about_temperature_is_never_worked_around(tmp_path, monkeypatch) -
     llm = GroqLLM(api_key="k", model="qwen/qwen3.8-27b", ledger=tmp_path / "u.jsonl", sleeper=lambda s: None)
     with pytest.raises(LLMError, match="400"):
         llm.chat("s", "u")
+
+
+# ---- a dropped network is a pause, not a crash -----------------------------------------------------
+def test_a_dns_failure_is_retried_with_backoff_then_succeeds(tmp_path, monkeypatch) -> None:
+    import requests
+
+    calls, waits = [], []
+
+    def post(url, headers=None, json=None, timeout=None):
+        calls.append(1)
+        if len(calls) <= 2:
+            raise requests.exceptions.ConnectionError("Temporary failure in name resolution")
+        return Resp(200, body=OK)
+
+    monkeypatch.setattr("src.agents.llm.requests.post", post)
+    llm = GroqLLM(api_key="k", model="qwen/qwen3.8-27b", cache=LLMCache(tmp_path / "c.jsonl"),
+                  ledger=tmp_path / "u.jsonl", sleeper=waits.append)
+    assert llm.chat("s", "u").text == "reply"
+    assert len(calls) == 3 and waits == [5.0, 10.0]
+
+
+def test_a_network_that_stays_down_stops_cleanly_and_records_nothing(tmp_path, monkeypatch) -> None:
+    import requests
+
+    from src.agents.llm import NetworkUnavailable
+
+    def post(*a, **k):
+        raise requests.exceptions.ConnectTimeout("timed out")
+
+    monkeypatch.setattr("src.agents.llm.requests.post", post)
+    cache = LLMCache(tmp_path / "c.jsonl")
+    llm = GroqLLM(api_key="k", model="qwen/qwen3.8-27b", cache=cache, ledger=tmp_path / "u.jsonl",
+                  sleeper=lambda s: None, max_retries=3)
+    with pytest.raises(NetworkUnavailable):
+        llm.chat("s", "u")
+    assert len(cache) == 0 and not (tmp_path / "u.jsonl").exists()
