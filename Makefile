@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
+.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
 
 test:
 	uv run pytest -q
@@ -149,7 +149,7 @@ figures:
 # E3 (D-58). `seeded` clones three public repos and installs their test deps (network, once); NOT part of
 # `tables`. `repair-run` calls the model (Groq free tier, GROQ_API_KEY in .env) and caches every reply under
 # eval/llm_cache/; `repair-eval` replays the caches with the network forbidden and writes rq4_repair.md.
-#   make repair-run MODEL=openai/gpt-oss-120b      (replication: MODEL=openai/gpt-oss-20b)
+#   make repair-run MODEL=openai/gpt-oss-120b      (replication: MODEL=openai/gpt-oss-20b; exploratory: MODEL=qwen/qwen3.8-27b, D-62)
 seeded:
 	uv run --extra ml python -m src.eval.seeded.build
 
@@ -157,6 +157,11 @@ MODEL ?= openai/gpt-oss-120b
 VARIANT ?= standard
 repair-run:
 	uv run --env-file .env --extra ml python -m analysis.rq4_repair run --model $(MODEL) --variant $(VARIANT)
+
+# Dry run: what is cached, what is left, worst-case tokens and days at the daily cap. No key, no request.
+#   make repair-estimate MODEL=qwen/qwen3.8-27b VARIANT=hard
+repair-estimate:
+	uv run --env-file .env --extra ml python -m analysis.rq4_repair estimate --model $(MODEL) --variant $(VARIANT)
 
 repair-eval: export BR_OFFLINE=1
 repair-eval: export BR_LLM_REPLAY=1

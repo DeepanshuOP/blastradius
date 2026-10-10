@@ -2,6 +2,7 @@
 
     uv run --env-file .env python -m analysis.rq4_repair run  --model openai/gpt-oss-120b   (live, Groq free tier)
     uv run python -m analysis.rq4_repair eval                                              (replay, offline)
+    uv run --extra ml python -m analysis.rq4_repair estimate --model ... [--variant hard]  (dry run, no key, no request)
 
 `run` calls the model through `src/agents/llm.py` (D-58) and caches every request and response in
 `eval/llm_cache/e3_<model-slug>.jsonl`. `eval` replays every cache file with the network
@@ -25,6 +26,7 @@ import re
 import sys
 import time
 from collections import defaultdict
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import numpy as np
@@ -46,6 +48,7 @@ TASKS = OUT / "tasks.jsonl"
 REPOS_JSON = OUT / "repos.json"
 RESULT_MD = "rq4_repair.md"
 DEFAULT_MODELS = ("openai/gpt-oss-120b", "openai/gpt-oss-20b")
+THIRD_MODEL = "qwen/qwen3.8-27b"   # D-62: exploratory; a Groq preview model, which can be withdrawn at short notice
 RANDOM_SEEDS = tuple(range(20))
 
 
@@ -234,7 +237,8 @@ def paired(recs: list[dict], a: str, b: str) -> tuple[int, int]:
 
 
 def is_groq(model: str) -> bool:
-    return model.startswith("openai/gpt-oss")
+    """Groq model ids are `org/model` (or a bare name such as `allam-2-7b`); Bedrock ids never contain `/`."""
+    return "/" in model or model.startswith("allam")
 
 
 def model_usage(model: str) -> tuple[int, float, int]:
@@ -458,16 +462,37 @@ def make_llm(model: str, replay: bool):
                       max_usd=float(os.environ.get("BR_BEDROCK_MAX_USD") or 10))
 
 
-def estimate_run(tasks: list[dict], pins: dict, llm) -> tuple[int, int, float | None]:
-    """Worst-case `(input tokens, completion tokens, usd)` of R1 + R2 + R3's two retries for tasks, without any call.
+@dataclass
+class Estimate:
+    """Worst-case cost of the requests a run would still have to send (cache hits excluded)."""
 
-    Prompts are built exactly as the agent builds them (retrieval needs no model); cache hits are not subtracted,
-    so this is an upper bound for a resumed run.
+    tasks: int = 0
+    tasks_live: int = 0            # tasks with at least one first call (R1 or R2) not in the cache
+    calls_cached: int = 0          # R1 / R2 first calls found in the cache
+    calls_live: int = 0            # R1 / R2 first calls that would go to the API
+    retries_cached: int = 0        # recorded R3 retries found for those R2 prompts
+    tin: int = 0
+    tout: int = 0
+    usd: float | None = None
+    live_tasks: list[str] = field(default_factory=list)
+
+
+def estimate_run(tasks: list[dict], pins: dict, llm) -> Estimate:
+    """Worst-case cost of the requests of R1 + R2 (+ R3's two retries) that are NOT in the cache, without any call.
+
+    Prompts are built exactly as the agent builds them (retrieval needs no model) and looked up with the
+    provider's own cache key, so recorded replies cost nothing and are not counted. A recorded R3 retry is found
+    by its prompt prefix; whether a *cached* R2 reply still needs a retry depends on the suite verdict of its
+    patch and is not estimated (the quota guard in `chat` still protects the day's budget).
     """
-    tin = tout = 0
+    est = Estimate(tasks=len(tasks))
+    cache = getattr(llm, "cache", None)
+    recorded = cache.user_messages() if cache is not None else []
+    tail = "\n\nReply with SEARCH/REPLACE blocks only."
     for t in tasks:
         slug = t["repo"]
         repo = SEEDED / "repos" / slug
+        live = False
         with head_state(repo, t["pr_diff"]):
             srcs = source_files(repo, {"src_dirs": pins[slug]["src_dirs"]})
             changed, n_lines = diff_stats(t["pr_diff"])
@@ -475,19 +500,58 @@ def estimate_run(tasks: list[dict], pins: dict, llm) -> tuple[int, int, float | 
             tie = e1_priority(repo, changed, n_lines)
             for arm in ("R1", "R2"):
                 ch = select_chunks(arm, repo, srcs, rep, tie if arm == "R2" else None)
-                chars = len(SYSTEM) + len(build_prompt(arm, rep, ch, repo))
+                prompt = build_prompt(arm, rep, ch, repo)
+                chars = len(SYSTEM) + len(prompt)
+                if cache is not None and llm.request_key(SYSTEM, prompt, 1500) in cache:
+                    est.calls_cached += 1
+                    if arm == "R2":
+                        head = prompt[:-len(tail)] if prompt.endswith(tail) else prompt
+                        est.retries_cached += sum(1 for u in recorded if u.startswith(head) and u != prompt)
+                    continue
+                live = True
+                est.calls_live += 1
                 calls = 1 + (2 if arm == "R2" else 0)  # R3 shares R2's first call; its retries add up to two
-                tin += int(chars / 3.5) * calls + (int(1000 / 3.5) * 2 if arm == "R2" else 0)
-                tout += 1500 * calls
-    usd = None
+                est.tin += int(chars / 3.5) * calls + (int(1000 / 3.5) * 2 if arm == "R2" else 0)
+                est.tout += 1500 * calls
+        if live:
+            est.tasks_live += 1
+            est.live_tasks.append(t["task_id"])
     if getattr(llm, "price_in", None) is not None and getattr(llm, "price_out", None) is not None:
-        usd = tin * llm.price_in / 1e6 + tout * llm.price_out / 1e6
-    return tin, tout, usd
+        est.usd = est.tin * llm.price_in / 1e6 + est.tout * llm.price_out / 1e6
+    return est
+
+
+def describe(model: str, variant: str, est: Estimate, llm) -> str:
+    """One status block: what is cached, what is left, tokens, and the days it needs at the daily cap."""
+    total = est.tin + est.tout
+    lines = [f"{model} [{variant}]: {est.tasks} tasks; first calls (R1+R2): {est.calls_cached} cached, {est.calls_live} to send "
+             f"({est.tasks_live} tasks need at least one live call, {est.tasks - est.tasks_live} fully cached; "
+             f"{est.retries_cached} recorded retries)",
+             f"  uncached remainder, worst case: {est.tin:,} input + {est.tout:,} output = {total:,} tokens"]
+    if isinstance(llm, GroqLLM):
+        used, _ = llm._day_total()
+        left = max(llm.tpd - used, 0)
+        days = -(-total // llm.tpd) if llm.tpd else 0
+        lines.append(f"  quota: {left:,} tokens left today by the client-side ledger (TPD {llm.tpd:,}); the remainder needs "
+                     f"{days} day(s) at {llm.tpd:,} tokens/day (the first day may start with less)")
+    if est.usd is not None:
+        lines.append(f"  estimated USD {est.usd:.2f}, ledger USD {bedrock_spend():.2f}, cap USD {llm.max_usd:.2f}")
+    return "\n".join(lines)
+
+
+def estimator_llm(model: str):
+    """A provider object with the real cache and ledger but no key, for dry runs (it can never reach the network)."""
+    cache = LLMCache(CACHE_DIR / f"e3_{model_slug(model)}.jsonl")
+    if is_groq(model):
+        return GroqLLM(api_key="estimate-only", model=model, cache=cache)
+    pi, po = os.environ.get("BR_PRICE_IN"), os.environ.get("BR_PRICE_OUT")
+    return BedrockLLM(api_key="estimate-only", model=model, cache=cache, price_in=float(pi) if pi else None,
+                      price_out=float(po) if po else None, max_usd=float(os.environ.get("BR_BEDROCK_MAX_USD") or 10))
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("mode", choices=["run", "eval"])
+    ap.add_argument("mode", choices=["run", "eval", "estimate"])
     ap.add_argument("--model", default=os.environ.get("MODEL") or os.environ.get("BR_AGENT_MODEL") or DEFAULT_MODELS[0])
     ap.add_argument("--variant", choices=["standard", "hard"], default="standard")
     args = ap.parse_args(argv)
@@ -495,30 +559,33 @@ def main(argv: list[str] | None = None) -> int:
     n_sub = int(os.environ.get("BR_E3_TASKS") or 20)
     pilot_ids = {t["task_id"] for t in subset(load_tasks(), 20)}
 
+    if args.mode == "estimate":   # dry run: no key needed, no request can be sent
+        sub = subset(load_variant(args.variant), n_sub)
+        llm = estimator_llm(args.model)
+        print(describe(args.model, args.variant, estimate_run(sub, pins, llm), llm), flush=True)
+        return 0
+
     if args.mode == "run":
         tasks_all = load_variant(args.variant)
         sub = subset(tasks_all, n_sub)
         llm = make_llm(args.model, replay=False)
-        tin, tout, usd = estimate_run(sub, pins, llm)
-        extra = ""
-        if isinstance(llm, GroqLLM):
-            used, _ = llm._day_total()
-            extra = f"; {max(llm.tpd - used, 0):,} tokens left today by the client-side ledger (TPD {llm.tpd:,})"
-        print(f"{args.model} [{args.variant}]: {len(sub)} tasks, worst case {tin:,} input + {tout:,} output tokens"
-              + (f", estimated USD {usd:.2f}, ledger USD {bedrock_spend():.2f}, cap USD {llm.max_usd:.2f}" if usd is not None else "")
-              + extra, flush=True)
+        est = estimate_run(sub, pins, llm)
+        print(describe(args.model, args.variant, est, llm), flush=True)
         if isinstance(llm, BedrockLLM):
-            llm.check_budget(usd or 0.0) if usd is not None else llm.estimate_usd("", "", 0)
+            llm.check_budget(est.usd or 0.0) if est.usd is not None else llm.estimate_usd("", "", 0)
         print("subset:", ", ".join(t["task_id"] for t in sub), flush=True)
         done = 0
+        current = ""
         try:
             for t in sub:
+                current = t["task_id"]
                 rec = run_task(t, llm, ("R1", "R2", "R3"), pins, True)
                 done += 1
                 print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if rec[a]['accepted'] else 'no'}" for a in ("R1", "R2", "R3")),
                       flush=True)
         except (DailyQuotaReached, CostCapReached) as exc:
-            print(f"{exc}: {done} of {len(sub)} tasks done; cached calls are kept, re-run the same command to resume.")
+            print(f"{exc}: stopped at {current} (a request that was not in the cache); {done} of {len(sub)} tasks done; "
+                  "cached calls are kept, re-run the same command to resume.")
         if isinstance(llm, BedrockLLM):
             print(f"Bedrock ledger total: USD {bedrock_spend():.4f} (cap USD {llm.max_usd:.2f})")
         print(f"cache: {llm.cache.path} ({len(llm.cache)} records)")

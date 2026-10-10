@@ -21,12 +21,17 @@ One attempt is one LLM call with the input capped near 3,000 tokens.
 from __future__ import annotations
 
 import ast
+import logging
+import math
 import re
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
-from src.eval.baselines import bm25_scores, path_token_list
+from src.eval.baselines import path_token_list
+
+log = logging.getLogger(__name__)
 
 ARMS = ("R0", "R1", "R2", "R3")
 MAX_CHUNKS = 3
@@ -150,6 +155,30 @@ def _doc_tokens(c: Chunk) -> list[str]:
     for w in _WORD.findall(c.text):
         toks += [p for p in path_token_list(w) if len(p) >= 3 and p not in _NOISE]
     return toks
+
+
+def bm25_scores(docs: list[list[str]], query: list[str], k1: float = 1.2, b: float = 0.75) -> list[float]:
+    """Okapi BM25 (same formula as `src.eval.baselines.bm25_scores`) with a hash-seed-independent summation order.
+
+    The baseline sums over `set(query)`, whose iteration order depends on `PYTHONHASHSEED`; float addition is not
+    associative, so scores could differ in the last bits between processes. Prompts must replay from the cache, so
+    the terms are summed in sorted order here. The baseline itself is left alone: it feeds `make tables`.
+    """
+    n = len(docs)
+    if n == 0 or not query:
+        return [0.0] * n
+    avgdl = sum(len(d) for d in docs) / n or 1.0
+    df: Counter[str] = Counter(t for d in docs for t in set(d))
+    out = [0.0] * n
+    terms = sorted(set(query))
+    for i, d in enumerate(docs):
+        tf = Counter(d)
+        norm = k1 * (1 - b + b * len(d) / avgdl)
+        for t in terms:
+            if t in tf:
+                idf = math.log(1 + (n - df[t] + 0.5) / (df[t] + 0.5))
+                out[i] += idf * tf[t] * (k1 + 1) / (tf[t] + norm)
+    return out
 
 
 def changed_line_ranges(pr_diff: str) -> dict[str, list[int]]:

@@ -48,6 +48,44 @@ GROQ_DEFAULT_MODEL = "openai/gpt-oss-120b"
 USAGE_LEDGER = Path("eval/llm_cache/usage.jsonl")
 
 
+# Sampling parameters sent besides the pinned temperature / seed / completion budget, by model-name prefix.
+# Only the gpt-oss family is known to take both (they were sent on every recorded request, so the cache keys
+# depend on them). Other models get neither: an unsupported parameter is a Groq 400, and `chat` drops a
+# parameter the 400 message names and retries (see `_unsupported_param`).
+GROQ_REASONING_PARAMS: dict[str, dict] = {"openai/gpt-oss": {"reasoning_effort": "low", "include_reasoning": False}}
+
+
+def groq_reasoning_params(model: str) -> dict:
+    """Reasoning-control parameters sent for `model` (empty for models not known to accept them)."""
+    for prefix, params in GROQ_REASONING_PARAMS.items():
+        if model.startswith(prefix):
+            return dict(params)
+    return {}
+
+
+_DROPPABLE = ("reasoning_effort", "include_reasoning")   # never temperature, seed or the completion budget
+
+
+def _unsupported_param(body: str, params: dict) -> str | None:
+    """The droppable parameter a Groq 400 message names, if it is one of `params` (read from the message)."""
+    low = body.lower()
+    for name in _DROPPABLE:
+        if name in params and name in low:
+            return name
+    return None
+
+
+def _param_variants(params: dict) -> list[dict]:
+    """`params` first, then every copy with some droppable parameters removed (what a refused-and-retried
+    request was recorded under), so a cache written after a 400 is found without asking the API again."""
+    names = [n for n in _DROPPABLE if n in params]
+    out = [params]
+    for mask in range(1, 1 << len(names)):
+        drop = {n for i, n in enumerate(names) if mask >> i & 1}
+        out.append({k: v for k, v in params.items() if k not in drop})
+    return out
+
+
 class LLMError(RuntimeError):
     """The provider answered, but not with usable JSON."""
 
@@ -152,6 +190,7 @@ class GroqLLM:
 
     def __post_init__(self) -> None:
         self._window: deque[tuple[float, int]] = deque()  # (time, tokens) of calls in the last minute
+        self._dropped: set[str] = set()                   # parameters a 400 told us this model does not accept
 
     def available(self) -> bool:
         """True when a key is configured."""
@@ -197,8 +236,21 @@ class GroqLLM:
                                  .isoformat(timespec="seconds"), "model": self.model, "tokens": tokens}) + "\n")
 
     # -- calls ------------------------------------------------------------------------------
+    def request_params(self, max_completion_tokens: int = 1500) -> dict:
+        """The sampling parameters of a request: pinned base plus the model's reasoning controls."""
+        extra = {k: v for k, v in groq_reasoning_params(self.model).items() if k not in self._dropped}
+        return {"temperature": 0, "seed": 0, **extra, "max_completion_tokens": max_completion_tokens}
+
+    def request_key(self, system: str, user: str, max_completion_tokens: int = 1500) -> str:
+        """The cache key `chat` would use for this request (no I/O)."""
+        return cache_key(self.name, self.model, system, [{"role": "user", "content": user}],
+                         self.request_params(max_completion_tokens))
+
     def chat(self, system: str, user: str, max_completion_tokens: int = 1500) -> ChatResult:
         """One chat completion, from the cache when recorded.
+
+        The cache is consulted first and a hit returns before any quota arithmetic, so a replayed request never
+        consumes (or is blocked by) the day's token budget.
 
         Args:
             system: System prompt.
@@ -213,15 +265,17 @@ class GroqLLM:
             DailyQuotaReached: When the day's token budget cannot cover the next call.
             LLMError: On a non-retryable HTTP error or after the retries are spent.
         """
-        params = {"temperature": 0, "seed": 0, "reasoning_effort": "low", "include_reasoning": False,
-                  "max_completion_tokens": max_completion_tokens}
+        params = self.request_params(max_completion_tokens)
         messages = [{"role": "user", "content": user}]
         key = cache_key(self.name, self.model, system, messages, params)
         if self.cache is not None:
-            rec = self.cache.get(key)
-            if rec is not None:
-                return ChatResult(rec["response_text"], rec.get("usage"), rec["model"], True, rec.get("provider_id"),
-                                  rec.get("latency_s"))
+            for alt in _param_variants(params):
+                alt_key = key if alt is params else cache_key(self.name, self.model, system, messages, alt)
+                if alt_key in self.cache:
+                    rec = self.cache.get(alt_key)
+                    return ChatResult(rec["response_text"], rec.get("usage"), rec["model"], True,
+                                      rec.get("provider_id"), rec.get("latency_s"))
+            self.cache.get(key)   # replay mode: a miss raises CacheMiss here, before any quota check
         need = self.estimate_tokens(system, user, max_completion_tokens)
         used, oldest = self._day_total()
         if used + need > self.tpd:
@@ -252,6 +306,14 @@ class GroqLLM:
                                          "params": params}, "", None, self.model, None,
                                    round(self.clock() - t0, 3))
                 return ChatResult("", None, self.model, False, None, round(self.clock() - t0, 3))
+            if resp.status_code == 400 and (bad := _unsupported_param(resp.text, params)) and attempt < self.max_retries:
+                # the 400 names a parameter this model does not accept: drop exactly that one and ask again; the
+                # request that is cached (and keyed) is the one that was actually accepted
+                params = {k: v for k, v in params.items() if k != bad}
+                self._dropped.add(bad)
+                body = {"model": self.model, "messages": [{"role": "system", "content": system}, *messages], **params}
+                key = cache_key(self.name, self.model, system, messages, params)
+                continue
             if resp.status_code != 200:
                 low = resp.text.lower()
                 if "billing" in low or "payment" in low:
@@ -328,6 +390,11 @@ class BedrockLLM:
         if spent + planned_usd > self.max_usd:
             raise CostCapReached(f"estimated USD {planned_usd:.4f} + ledger USD {spent:.4f} exceeds "
                                  f"BR_BEDROCK_MAX_USD {self.max_usd:.2f}")
+
+    def request_key(self, system: str, user: str, max_completion_tokens: int = 1500) -> str:
+        """The cache key `chat` would use for this request (no I/O)."""
+        return cache_key(self.name, self.model, system, [{"role": "user", "content": user}],
+                         {"temperature": 0, "maxTokens": max_completion_tokens})
 
     def url(self) -> str:
         from urllib.parse import quote

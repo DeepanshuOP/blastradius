@@ -71,6 +71,8 @@ make agents-demo     # seven agents, four recorded scenarios (offline; scenario 
 make e1 / make e2    # E1 ranker and baselines / E2 triage (offline, deterministic; both also run inside make tables)
 make seeded          # BR-Seeded benchmark (clones 3 repos, needs the network once)
 make repair-run MODEL=openai/gpt-oss-120b   # E3 live (Groq free tier, GROQ_API_KEY in .env), caches every reply
+                     # models: openai/gpt-oss-120b (primary), openai/gpt-oss-20b, qwen/qwen3.8-27b (exploratory preview model, D-62)
+make repair-estimate MODEL=qwen/qwen3.8-27b VARIANT=hard   # E3 dry run: cached vs left, tokens, days (no request)
 make repair-eval     # E3 results from the cache, offline
 make demo-web        # demo site on http://localhost:3000 (Live run · Results · Analyze a repo · Agents · Corpus · Decisions)
 make analyze REPO=https://github.com/pallets/itsdangerous \

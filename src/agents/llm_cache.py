@@ -59,6 +59,19 @@ class LLMCache:
     def __len__(self) -> int:
         return len(self._records)
 
+    def __contains__(self, key: str) -> bool:
+        """True when `key` is recorded. Never raises (unlike :meth:`get` in replay mode)."""
+        return key in self._records
+
+    def user_messages(self) -> list[str]:
+        """The user message of every record (used to find recorded retries of a prompt)."""
+        out = []
+        for r in self._records.values():
+            msgs = (r.get("request") or {}).get("messages") or []
+            if msgs:
+                out.append(msgs[0].get("content", ""))
+        return out
+
     def get(self, key: str) -> dict | None:
         """The stored record, or None; raises in replay mode on a miss."""
         rec = self._records.get(key)
