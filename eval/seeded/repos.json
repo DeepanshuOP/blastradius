@@ -1,0 +1,53 @@
+{
+  "click": {
+    "installs": [
+      "-e",
+      ".",
+      "pytest"
+    ],
+    "python": "3.11",
+    "sha": "2247b35ea1c47c727d7a06e51fa280e12a863ff6",
+    "src_dirs": [
+      "src/click"
+    ],
+    "url": "https://github.com/pallets/click"
+  },
+  "itsdangerous": {
+    "installs": [
+      "-e",
+      ".",
+      "pytest",
+      "freezegun"
+    ],
+    "python": "3.11",
+    "sha": "672971d66a2ef9f85151e53283113f33d642dabd",
+    "src_dirs": [
+      "src/itsdangerous"
+    ],
+    "url": "https://github.com/pallets/itsdangerous"
+  },
+  "markupsafe": {
+    "installs": [
+      "-e",
+      ".",
+      "pytest"
+    ],
+    "python": "3.11",
+    "sha": "4e111271b1494995708a9e878a10829b5e10c7ba",
+    "src_dirs": [
+      "src/markupsafe"
+    ],
+    "url": "https://github.com/pallets/markupsafe"
+  },
+  "shopcart": {
+    "installs": [
+      "pytest"
+    ],
+    "python": "3.11",
+    "sha": "d52069ee39f6ec511e49e4fd5ea95b3f3ebf0af3",
+    "src_dirs": [
+      "shopcart"
+    ],
+    "url": "src/agents/demo/sample_repo"
+  }
+}

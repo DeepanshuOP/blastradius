@@ -25,7 +25,7 @@
     "prox_same_module"
   ],
   "fit_on": "train+val",
-  "git_sha": "7359fd9cd6549216cdc1c6f8ce31c1e881f50ddb",
+  "git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
   "lightgbm": "4.7.0",
   "n_runs": 897,
   "n_test_pairs": 1033,
