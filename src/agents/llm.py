@@ -234,6 +234,16 @@ class GroqLLM:
                     raise LLMError(f"Groq rate limit persisted after {self.max_retries} retries")
                 self.sleeper(float(resp.headers.get("retry-after", 20)))
                 continue
+            if resp.status_code == 400 and "tool_use_failed" in resp.text:
+                # the model tried to call a tool we never offered: an unusable reply, recorded as an empty one so
+                # the attempt counts as failed (and replays identically) instead of aborting a whole run
+                self._window.append((self.clock(), need))
+                self._record_usage(need)
+                if self.cache is not None:
+                    self.cache.put(key, {"model": self.model, "system": system, "messages": messages,
+                                         "params": params}, "", None, self.model, None,
+                                   round(self.clock() - t0, 3))
+                return ChatResult("", None, self.model, False, None, round(self.clock() - t0, 3))
             if resp.status_code != 200:
                 low = resp.text.lower()
                 if "billing" in low or "payment" in low:

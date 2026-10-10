@@ -194,6 +194,16 @@ def test_groq_retries_429_with_retry_after_and_records_usage(tmp_path, monkeypat
     assert llm.chat("s", "u").from_cache  # second identical call is free
 
 
+def test_tool_call_reply_is_an_empty_cached_answer_not_a_crash(tmp_path, monkeypatch) -> None:
+    n = []
+    body = '{"error":{"message":"Tool choice is none, but model called a tool","code":"tool_use_failed"}}'
+    monkeypatch.setattr("src.agents.llm.requests.post", lambda *a, **k: n.append(1) or FakeResp(400, text=body))
+    llm = GroqLLM(api_key="k", ledger=tmp_path / "u.jsonl", sleeper=lambda s: None, cache=LLMCache(tmp_path / "c.jsonl"))
+    r = llm.chat("s", "u")
+    assert r.text == "" and not r.from_cache and len(n) == 1
+    assert llm.chat("s", "u").from_cache and len(n) == 1
+
+
 def test_other_4xx_is_not_retried(tmp_path, monkeypatch) -> None:
     n = []
     monkeypatch.setattr("src.agents.llm.requests.post", lambda *a, **k: n.append(1) or FakeResp(400, text="bad"))
