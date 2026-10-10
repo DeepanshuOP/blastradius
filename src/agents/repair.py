@@ -247,11 +247,30 @@ def select_chunks(arm: str, repo: Path, source_files: list[str], report: Failure
     return ranked
 
 
-def render_chunk(c: Chunk, repo: Path) -> str:
-    """The function's lines within +-CONTEXT_LINES of its focus line, numbered, under a path header."""
-    lines = (repo / c.file).read_text(encoding="utf-8").splitlines()
-    lo, hi = max(c.start, c.focus - CONTEXT_LINES), min(c.end, c.focus + CONTEXT_LINES)
-    body = "\n".join(f"{i:>5}| {lines[i - 1]}" for i in range(lo, hi + 1))
+CLAMPED: list[str] = []   # one entry per chunk whose focus or range had to be clamped (each one is a bug)
+
+
+def render_chunk(c: Chunk, repo: Path | None = None) -> str:
+    """The function's lines within +-CONTEXT_LINES of its focus line, numbered, under a path header.
+
+    Rendered from `c.text`, the exact text the chunk was indexed from, never from a second read of the file:
+    a chunk's line numbers and the lines shown for them cannot come from two versions of the tree. `repo` is
+    accepted for call compatibility and unused.
+
+    A focus line outside the function is clamped into it and logged as an error (and recorded in
+    :data:`CLAMPED`): it means the caller built the chunk from different content than it indexed.
+    """
+    body_lines = c.text.splitlines()
+    end = min(c.end, c.start + len(body_lines) - 1)
+    focus = c.focus
+    if not c.start <= focus <= end:
+        msg = (f"BUG: chunk {c.file}::{c.qualname} focus line {focus} outside its function ({c.start}-{end}); "
+               "clamped. The chunk was built from different content than it was indexed from.")
+        log.error(msg)
+        CLAMPED.append(msg)
+        focus = min(max(focus, c.start), end)
+    lo, hi = max(c.start, focus - CONTEXT_LINES), min(end, focus + CONTEXT_LINES)
+    body = "\n".join(f"{i:>5}| {body_lines[i - c.start]}" for i in range(lo, hi + 1))
     return f"### {c.file} :: {c.qualname} (lines {lo}-{hi})\n{body}"
 
 

@@ -162,6 +162,84 @@ def test_repair_bm25_matches_the_baseline_formula() -> None:
     assert repair.bm25_scores([], query) == [] and repair.bm25_scores(docs, []) == [0.0, 0.0, 0.0]
 
 
+# ---- Part B: chunks come from the text they were indexed from -------------------------------------
+MODULE = '''def helper(a):
+    return a + 1
+
+
+def target(x):
+    if x > 0:
+        return x
+    return 0
+'''
+
+
+def test_a_distractor_above_the_target_does_not_shift_the_rendered_chunk(tmp_path) -> None:
+    r = tmp_path / "m"
+    r.mkdir()
+    (r / "m.py").write_text(MODULE)
+    git(r, "init", "-q")
+    git(r, "add", "-A")
+    git(r, "commit", "-q", "-m", "base")
+    edited = MODULE.replace("def helper(a):\n", "def helper(a):\n    # reviewed: no functional change intended\n")
+    edited = edited.replace("if x > 0:", "if x >= 0:")      # the mutant, now one line further down
+    (r / "m.py").write_text(edited)
+    diff = git(r, "diff", "--no-color")
+    git(r, "checkout", "--", ".")
+    rep = FailureReport(failing=[{"test_id": "tests.test_m::test_target", "output": "target x 0"}], pr_diff=diff,
+                        triage="mine", changed_files=["m.py"])
+    with head_state(r, diff):
+        chunks = select_chunks("R2", r, ["m.py"], rep)
+        assert {c.qualname for c in chunks} == {"helper", "target"}
+        text = build_prompt("R2", rep, chunks, r)
+        want = (r / "m.py").read_text().splitlines().index("def target(x):") + 1
+    assert f"{want:>5}| def target(x):" in text
+    assert repair.CLAMPED == []
+
+
+def test_render_uses_the_indexed_text_not_a_second_read_of_the_file(tmp_path) -> None:
+    (tmp_path / "m.py").write_text(MODULE)
+    (c,) = [c for c in repair.index_functions(tmp_path, ["m.py"]) if c.qualname == "target"]
+    before = render_chunk(c, tmp_path)
+    (tmp_path / "m.py").write_text("x = 1\n")     # the tree changes under the chunk: formerly an IndexError
+    assert render_chunk(c, tmp_path) == before and "def target(x):" in before
+
+
+def test_a_focus_outside_the_function_is_clamped_and_logged_as_a_bug(tmp_path, caplog) -> None:
+    (tmp_path / "m.py").write_text(MODULE)
+    (c,) = [c for c in repair.index_functions(tmp_path, ["m.py"]) if c.qualname == "target"]
+    stale = Chunk(c.file, c.qualname, c.start, c.end, c.focus + 50, 0.0, c.text)
+    repair.CLAMPED.clear()
+    with caplog.at_level(logging.ERROR, logger="src.agents.repair"):
+        out = render_chunk(stale, tmp_path)
+    assert "def target(x):" in out and len(repair.CLAMPED) == 1 and "BUG" in caplog.text
+    repair.CLAMPED.clear()
+
+
+_LOCK_SCRIPT = '''
+import sys
+from pathlib import Path
+from src.eval.seeded.validate import head_state
+with head_state(Path(sys.argv[1]), Path(sys.argv[2]).read_text()):
+    print("entered", flush=True)
+'''
+
+
+def test_a_second_process_waits_for_the_repo_lock(repo, bug_diff, tmp_path) -> None:
+    """Two runs must not rewrite one working tree at once (the cause of ranges from one tree, text from another)."""
+    from src.eval.seeded.validate import repo_lock
+
+    diff = tmp_path / "bug.diff"
+    diff.write_text(bug_diff)
+    root = Path(__file__).resolve().parents[1]
+    cmd = [sys.executable, "-c", _LOCK_SCRIPT, str(repo), str(diff)]
+    with repo_lock(repo):
+        with pytest.raises(subprocess.TimeoutExpired):
+            subprocess.run(cmd, cwd=root, capture_output=True, text=True, timeout=4)
+    done = subprocess.run(cmd, cwd=root, capture_output=True, text=True, timeout=60)
+    assert done.returncode == 0 and "entered" in done.stdout
+
+
 # ---- Part C: reasoning parameters follow the model ------------------------------------------------
 def test_reasoning_parameters_are_sent_only_to_models_known_to_take_them(tmp_path) -> None:
     assert groq_reasoning_params("openai/gpt-oss-120b") == {"reasoning_effort": "low", "include_reasoning": False}

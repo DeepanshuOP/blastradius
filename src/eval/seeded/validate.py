@@ -7,6 +7,7 @@ passing while another test fails is an *overfit* patch and is rejected.
 from __future__ import annotations
 
 import contextlib
+import fcntl
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -16,21 +17,41 @@ from src.eval.seeded.build import Suite, git, run_suite
 
 
 @contextlib.contextmanager
+def repo_lock(repo: Path) -> Iterator[None]:
+    """Hold an exclusive lock on a seeded repo's working tree (blocks until another process lets go).
+
+    `head_state` rewrites the tree (`git checkout -- .`, `git apply`), so two runs on the same repo would read
+    each other's half-applied diffs: chunk line ranges from one tree rendered from another, prompts that never
+    replay. The lock file lives inside `.git/` so it is never part of the working tree.
+    """
+    lock = repo / ".git" / "br-seeded.lock"
+    with lock.open("a") as fh:
+        fcntl.flock(fh, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(fh, fcntl.LOCK_UN)
+
+
+@contextlib.contextmanager
 def head_state(repo: Path, pr_diff: str) -> Iterator[None]:
     """Apply `pr_diff` to the working tree for the duration of the block, then restore it.
+
+    The repo is locked for the whole block (see :func:`repo_lock`), so concurrent runs take turns.
 
     Raises:
         RuntimeError: If the diff does not apply to a clean tree.
     """
-    git(repo, "checkout", "--", ".")
-    p = subprocess.run(["git", "-C", str(repo), "apply", "--whitespace=nowarn", "-"], input=pr_diff,
-                       capture_output=True, text=True)
-    if p.returncode != 0:
-        raise RuntimeError(f"pr_diff does not apply: {p.stderr[:300]}")
-    try:
-        yield
-    finally:
+    with repo_lock(repo):
         git(repo, "checkout", "--", ".")
+        p = subprocess.run(["git", "-C", str(repo), "apply", "--whitespace=nowarn", "-"], input=pr_diff,
+                           capture_output=True, text=True)
+        if p.returncode != 0:
+            raise RuntimeError(f"pr_diff does not apply: {p.stderr[:300]}")
+        try:
+            yield
+        finally:
+            git(repo, "checkout", "--", ".")
 
 
 @dataclass
