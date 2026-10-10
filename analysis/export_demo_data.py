@@ -755,6 +755,85 @@ def panels(sha: str) -> dict:
             "decisions": decisions()}
 
 
+# -- E1 / E2 / E3 ("Intelligence" tab) ----------------------------------------
+
+
+def _tables_by_heading(path: Path) -> dict[str, dict]:
+    """`{last heading: {"columns": [...], "rows": [[...]]}}` of every table in a generated file."""
+    out: dict[str, dict] = {}
+    for trail, cols, rows in md_tables(path):
+        out.setdefault(trail[-1] if trail else "", {"columns": cols, "rows": rows})
+    return out
+
+
+def _paragraph_after(path: Path, heading_prefix: str) -> str:
+    """First non-empty paragraph under the first heading that starts with `heading_prefix`."""
+    lines = path.read_text(encoding="utf-8").splitlines()
+    for i, ln in enumerate(lines):
+        if ln.startswith("#") and ln.lstrip("#").strip().startswith(heading_prefix):
+            j = i + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            para = []
+            while j < len(lines) and lines[j].strip() and not lines[j].startswith(("#", "|")):
+                para.append(lines[j])
+                j += 1
+            return " ".join(para)
+    return ""
+
+
+def intelligence(sha: str) -> dict:
+    """E1, E2, E3 tables and verdict sentences, parsed from `paper/generated/rq2_*.md`, `rq3_triage.md`, `rq4_repair.md`."""
+    def src(name: str) -> dict:
+        p = GENERATED / name
+        return {"source": str(p), "source_generated_at_git_sha": source_sha(p) if p.exists() else None}
+
+    out: dict = {"generated_at_git_sha": sha}
+    p1 = GENERATED / "rq2_predictor.md"
+    pa = GENERATED / "rq2_ablation.md"
+    pf = GENERATED / "rq2_features.md"
+    if p1.exists():
+        t = _tables_by_heading(p1)
+        verdict = _paragraph_after(p1, "Gate 3 verdict")
+        out["e1"] = {**src("rq2_predictor.md"), "verdict": verdict, "gate3_met": verdict.startswith("Gate 3 (ROADMAP §37.1) is MET"),
+                     "main": t.get("Main result (test split)"), "ci": t.get("Recall@10 with bootstrap 95% CI (10,000 resamples, seed 0)"),
+                     "stats": next((v for k, v in t.items() if k.startswith("Paired statistics")), None),
+                     "loro": next((v for k, v in t.items() if k.startswith("Leave-one-repo-out")), None),
+                     "ablation": _tables_by_heading(pa).get("Ablation: drop one feature family") if pa.exists() else None,
+                     "alone": _tables_by_heading(pa).get("One family alone") if pa.exists() else None,
+                     "learning_curve": _tables_by_heading(pa).get("Learning curve") if pa.exists() else None,
+                     "strata": next((v for k, v in _tables_by_heading(pa).items() if k.startswith("Stratified")), None) if pa.exists() else None,
+                     "shap_family": _tables_by_heading(pf).get("By family") if pf.exists() else None,
+                     "recall_vs_suite": json.loads(Path("data/processed/rq2_results.json").read_text())["recall_vs_suite"]
+                     if Path("data/processed/rq2_results.json").exists() else None,
+                     "curve_fracs": json.loads(Path("data/processed/rq2_results.json").read_text())["curve_fracs"]
+                     if Path("data/processed/rq2_results.json").exists() else None}
+    else:
+        out["e1"] = None
+    p2 = GENERATED / "rq3_triage.md"
+    if p2.exists():
+        t = _tables_by_heading(p2)
+        out["e2"] = {**src("rq3_triage.md"), "classes": t.get("Class counts per split (pairs)"),
+                     "chronological": next((v for k, v in t.items() if k.startswith("Chronological test split")), None),
+                     "pooled": next((v for k, v in t.items() if k.startswith("Leave-one-repo-out")), None),
+                     "dangerous_error": _paragraph_after(p2, "The dangerous error"),
+                     "application": next((v for k, v in t.items() if k.startswith("Descriptive application")), None)}
+    else:
+        out["e2"] = None
+    p3 = GENERATED / "rq4_repair.md"
+    if p3.exists():
+        t = _tables_by_heading(p3)
+        models = {k.split(":", 1)[1].split("(")[0].strip(): v for k, v in t.items() if k.startswith("Repair: ")}
+        out["e3"] = {**src("rq4_repair.md"), "status": "run",
+                     "detection": next((v for k, v in t.items() if k.startswith("Detection")), None),
+                     "retrieval": next((v for k, v in t.items() if k.startswith("Retrieval hit rate")), None),
+                     "models": models,
+                     "retrieval_note": _paragraph_after(p3, "Retrieval hit rate").splitlines()[:1]}
+    else:
+        out["e3"] = {"status": "not run", "note": "make repair-eval has not produced paper/generated/rq4_repair.md"}
+    return out
+
+
 # -- main --------------------------------------------------------------------
 
 
@@ -770,6 +849,9 @@ def write_docs(out_dir: Path, sha: str) -> None:
     write_json(out_dir / "overview.json", overview(sha))
     write_json(out_dir / "corpus.json", corpus(sha))
     write_json(out_dir / "panels.json", panels(sha))
+    intel = intelligence(sha)
+    for key in ("e1", "e2", "e3"):
+        write_json(out_dir / f"{key}.json", {"generated_at_git_sha": sha, key: intel[key]})
     print(f"wrote {out_dir / 'results.json'}, {out_dir / 'overview.json'}, {out_dir / 'corpus.json'} and {out_dir / 'panels.json'}")
 
 

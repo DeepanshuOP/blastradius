@@ -208,16 +208,32 @@
    {
     "id": "D-55",
     "title": "Agentic workflow (five agents) as a separate demo path"
+   },
+   {
+    "id": "D-56",
+    "title": "BITE497J deliverable is dataset + predictor + triage + repair; the MSR paper stays a dataset paper"
+   },
+   {
+    "id": "D-57",
+    "title": "E1/E2 split protocol"
+   },
+   {
+    "id": "D-58",
+    "title": "The Repair agent may call an LLM, on Groq's free tier, outside the reproducible core"
+   },
+   {
+    "id": "D-59",
+    "title": "New optional extra `ml`"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "84b4fa5aba22e35d62ecb26032a4300d88afea32",
+ "generated_at_git_sha": "11424577ebe9abe9b822bc7267d3e8d5eee0a6bb",
  "panels": [
   {
    "id": "funnel",
    "source": "paper/generated/attrition_funnel.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -380,7 +396,7 @@
   {
    "id": "rq1_k5",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -583,7 +599,7 @@
   {
    "id": "rq1_k10",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -786,7 +802,7 @@
   {
    "id": "rq1_k20",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -989,7 +1005,7 @@
   {
    "id": "rq1_size",
    "source": "paper/generated/rq1.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -1257,7 +1273,7 @@
   {
    "id": "sensitivity",
    "source": "paper/generated/infra_failures.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -1684,7 +1700,7 @@
   {
    "id": "leakage",
    "source": "paper/generated/leakage_audit.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2478,6 +2494,53 @@
        "0.170"
       ]
      ]
+    },
+    {
+     "columns": [
+      "family",
+      "cells audited",
+      "cells with later rows (power)",
+      "violations",
+      "no time-dependent source"
+     ],
+     "heading": "E1 feature table (`data/processed/e1_features.parquet`)",
+     "rows": [
+      [
+       "chg_",
+       "57",
+       "0",
+       "0",
+       "57"
+      ],
+      [
+       "cochg_",
+       "36",
+       "495",
+       "0",
+       "0"
+      ],
+      [
+       "cofail_",
+       "17",
+       "106",
+       "0",
+       "0"
+      ],
+      [
+       "hist_",
+       "48",
+       "5",
+       "0",
+       "0"
+      ],
+      [
+       "prox_",
+       "42",
+       "0",
+       "0",
+       "42"
+      ]
+     ]
     }
    ],
    "title": "Leakage audit (before / after)"
@@ -2485,7 +2548,7 @@
   {
    "id": "flakiness",
    "source": "paper/generated/flakiness.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2510,7 +2573,7 @@
   {
    "id": "expiry",
    "source": "paper/generated/expiry_cliff.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2572,7 +2635,7 @@
   {
    "id": "expiry_d23",
    "source": "paper/generated/expiry_cliff.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2633,7 +2696,7 @@
   {
    "id": "parser",
    "source": "paper/generated/parser_precision.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2731,7 +2794,7 @@
   {
    "id": "binding",
    "source": "paper/generated/binding.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -2965,7 +3028,7 @@
   {
    "id": "classes",
    "source": "paper/generated/infra_failures.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [
@@ -3048,7 +3111,7 @@
   {
    "id": "gates",
    "source": "paper/generated/gates.md",
-   "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+   "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
    "tables": [
     {
      "columns": [

@@ -51,7 +51,7 @@
    }
   ],
   "source": "paper/generated/binding.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
  "environment_audit": {
   "instances": [
@@ -139,7 +139,7 @@
    }
   ],
   "source": "paper/generated/infra_failures.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
  "gates": {
   "rows": [
@@ -185,9 +185,9 @@
    }
   ],
   "source": "paper/generated/gates.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
- "generated_at_git_sha": "84b4fa5aba22e35d62ecb26032a4300d88afea32",
+ "generated_at_git_sha": "11424577ebe9abe9b822bc7267d3e8d5eee0a6bb",
  "leakage": {
   "audited": {
    "d": 762,
@@ -207,7 +207,7 @@
    "text": "640/713 (89.76%)"
   },
   "source": "paper/generated/leakage_audit.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
  "rq1_breakdowns": {
   "by_language": {
@@ -686,7 +686,7 @@
    ]
   },
   "source": "paper/generated/rq1.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
  "rq1_k10": {
   "k": 10,
@@ -783,11 +783,11 @@
    }
   ],
   "source": "paper/generated/rq1.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e"
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e"
  },
  "runs_funnel": {
   "source": "paper/generated/attrition_funnel.md",
-  "source_generated_at_git_sha": "6f1aefac1359e97efc97003f53ef593f981abf8e",
+  "source_generated_at_git_sha": "185dd28faaa4e3ff1e24aa2c7215c53115354c3e",
   "stages": [
    {
     "count": 165349,

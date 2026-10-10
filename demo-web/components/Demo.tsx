@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Agents from "./Agents";
 import Analyze from "./Analyze";
 import Corpus from "./Corpus";
+import Intelligence from "./Intelligence";
 import Overview from "./Overview";
 import { Decisions, MoreResults, type PanelsDoc } from "./Panels";
 import Results from "./Results";
@@ -11,7 +12,7 @@ import { STAGE_TITLES, StageCard } from "./Stages";
 import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
-const TABS = ["Overview", "How it works", "Live run", "Results", "Analyze a repo", "Agents", "Corpus", "Decisions"] as const;
+const TABS = ["Overview", "How it works", "Live run", "Results", "Intelligence", "Analyze a repo", "Agents", "Corpus", "Decisions"] as const;
 type Tab = (typeof TABS)[number];
 const STEP_MS = 800;
 
@@ -179,6 +180,7 @@ export default function Demo() {
         {tab === "How it works" && <HowItWorks />}
         {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
         {tab === "Results" && (results ? <><Results r={results} />{panels && <div className="mt-8"><MoreResults d={panels} /></div>}</> : loading)}
+        {tab === "Intelligence" && <Intelligence />}
         {tab === "Analyze a repo" && <Analyze />}
         {tab === "Agents" && <Agents />}
         {tab === "Corpus" && (corpus ? <Corpus c={corpus} /> : loading)}

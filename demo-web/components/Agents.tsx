@@ -24,7 +24,9 @@ const FLOW: [string, string, string][] = [
   ["Coding", "impact analysis + codebase", "changed files + pull request"],
   ["PR Reviewer", "PR + impact analysis", "review, merge, commit id"],
   ["Build & Deploy", "commit id + branch", "build, package, deploy / notify"],
-  ["Regression Suite", "impact analysis + suite", "test report"],
+  ["Regression Suite", "impact analysis + suite", "test report, E1 order first"],
+  ["Triage", "failures + history", "mine / inherited / flaky"],
+  ["Repair", "failures that are mine", "patch, accepted only if the suite passes"],
 ];
 const STEP_MS = 900;
 
@@ -108,11 +110,11 @@ export default function Agents() {
       <div>
         <h2 className="text-xl font-bold text-slate-900">From user story to deployed, regression-tested change</h2>
         <p className="mt-1 max-w-3xl text-sm text-slate-600">
-          Five agents hand work to each other. The impact analysis uses the BlastRadius code graph to decide which tests a change puts at risk,
-          and every later agent checks the work against it.
+          Seven agents hand work to each other. The impact analysis ranks which tests a change puts at risk (E1 model over the BlastRadius code graph),
+          the suite runs them first, failures are triaged, and only failures that are the change's own go to the Repair agent.
         </p>
       </div>
-      <ol className="grid gap-3 sm:grid-cols-5">
+      <ol className="grid gap-3 sm:grid-cols-4 lg:grid-cols-7">
         {FLOW.map(([name, input, output], i) => (
           <li key={name} className="relative rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
             <span className="text-[11px] font-semibold text-orange-600">AGENT {i + 1}</span>
@@ -126,7 +128,7 @@ export default function Agents() {
       <div className="rounded-lg border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-950">
         <span className="font-semibold">User story: </span>{doc.story}
       </div>
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
         {doc.scenarios.map((s) => (
           <button key={s.id} disabled={running} onClick={() => { stop(); setSid(s.id); setShown(0); }}
             className={`rounded-lg border p-4 text-left transition ${s.id === sc.id ? "border-slate-900 bg-white shadow" : "border-slate-200 bg-white/70 hover:border-slate-400"}`}>
@@ -142,7 +144,7 @@ export default function Agents() {
       <div className="flex items-center gap-4">
         <button onClick={run} disabled={running}
           className="rounded-md bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-400">
-          {running ? "Running…" : shown >= sc.steps.length ? "Run again" : "Run the five agents"}
+          {running ? "Running…" : shown >= sc.steps.length ? "Run again" : "Run the agents"}
         </button>
         {shown > 0 && (
           <div className="flex-1">

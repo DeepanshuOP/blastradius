@@ -1,0 +1,209 @@
+{
+ "e3": {
+  "detection": {
+   "columns": [
+    "order",
+    "tasks",
+    "mean position of the first failing test file",
+    "mean share of test files run before the first failure"
+   ],
+   "rows": [
+    [
+     "E1 model",
+     "63",
+     "11.73",
+     "0.482"
+    ],
+    [
+     "alphabetical (B0, retest-all)",
+     "63",
+     "8.79",
+     "0.582"
+    ],
+    [
+     "random (mean of 20 seeds)",
+     "63",
+     "11.14",
+     "0.479"
+    ]
+   ]
+  },
+  "models": {
+   "openai/gpt-oss-120b": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task",
+     "wall s / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "20",
+      "0/20 (0.00%)",
+      "[0.00, 0.00]",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "0",
+      "0.00",
+      "0.0"
+     ],
+     [
+      "R1",
+      "20",
+      "10/20 (50.00%)",
+      "[0.30, 0.70]",
+      "11/20 (55.00%)",
+      "11/20 (55.00%)",
+      "7/20 (35.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "1907",
+      "1.00",
+      "1.5"
+     ],
+     [
+      "R2",
+      "20",
+      "13/20 (65.00%)",
+      "[0.45, 0.85]",
+      "15/20 (75.00%)",
+      "15/20 (75.00%)",
+      "11/20 (55.00%)",
+      "1",
+      "0/20 (0.00%)",
+      "1452",
+      "1.00",
+      "2.0"
+     ],
+     [
+      "R3",
+      "20",
+      "14/20 (70.00%)",
+      "[0.50, 0.90]",
+      "17/20 (85.00%)",
+      "17/20 (85.00%)",
+      "11/20 (55.00%)",
+      "1",
+      "1/20 (5.00%)",
+      "2554",
+      "1.65",
+      "2.7"
+     ]
+    ]
+   },
+   "openai/gpt-oss-20b": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task",
+     "wall s / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "20",
+      "0/20 (0.00%)",
+      "[0.00, 0.00]",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "0",
+      "0.00",
+      "0.0"
+     ],
+     [
+      "R1",
+      "20",
+      "4/20 (20.00%)",
+      "[0.05, 0.40]",
+      "10/20 (50.00%)",
+      "9/20 (45.00%)",
+      "4/20 (20.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "1558",
+      "1.00",
+      "1.8"
+     ],
+     [
+      "R2",
+      "20",
+      "10/20 (50.00%)",
+      "[0.30, 0.70]",
+      "11/20 (55.00%)",
+      "11/20 (55.00%)",
+      "8/20 (40.00%)",
+      "1",
+      "0/20 (0.00%)",
+      "1390",
+      "1.00",
+      "1.9"
+     ],
+     [
+      "R3",
+      "20",
+      "13/20 (65.00%)",
+      "[0.45, 0.85]",
+      "13/20 (65.00%)",
+      "13/20 (65.00%)",
+      "11/20 (55.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "2754",
+      "1.90",
+      "1.8"
+     ]
+    ]
+   }
+  },
+  "retrieval": {
+   "columns": [
+    "arm",
+    "seeded function among the <= 3 chunks",
+    "seeded file among them",
+    "chunks that sit in a distractor file"
+   ],
+   "rows": [
+    [
+     "R1 log-only (BM25 over all functions)",
+     "46/70 (65.71%)",
+     "62/70 (88.57%)",
+     "48/210 (22.86%)"
+    ],
+    [
+     "R2 change-aware (functions touched by the diff)",
+     "69/70 (98.57%)",
+     "70/70 (100.00%)",
+     "47/117 (40.17%)"
+    ]
+   ]
+  },
+  "retrieval_note": [],
+  "source": "paper/generated/rq4_repair.md",
+  "source_generated_at_git_sha": "c987ad509944a5f1e6331c12c5755ee1b05a31fd",
+  "status": "run"
+ },
+ "generated_at_git_sha": "11424577ebe9abe9b822bc7267d3e8d5eee0a6bb"
+}

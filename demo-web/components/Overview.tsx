@@ -42,8 +42,11 @@ export default function Overview({ o }: { o: OverviewDoc }) {
       <section className="rounded-xl bg-gradient-to-br from-slate-900 to-slate-700 px-6 py-8 text-white shadow-md">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-300">Execution-grounded change impact</p>
         <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-snug sm:text-3xl">
-          BlastRadius mines real GitHub Actions runs to record which tests each pull request actually broke, then measures how well predictors could have told in advance.
+          When a pull request is opened, BlastRadius predicts which tests it will break, runs those first, tells the developer which failures are really theirs, and proposes a verified fix, using models trained on real GitHub Actions failures.
         </h2>
+        <p className="mt-3 max-w-3xl text-sm text-slate-300">
+          The foundation is BR-Bench: real GitHub Actions runs, recording which tests each pull request actually broke, so every predictor can be measured against what happened.
+        </p>
       </section>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
