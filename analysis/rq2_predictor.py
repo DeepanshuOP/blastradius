@@ -242,12 +242,44 @@ def main() -> int:
              "numbers are macro means over test instances unless marked micro. `±` is the standard deviation "
              "over seeds 0-4 of the test mean (the seed drives `feature_fraction` sampling and the row sample "
              "LightGBM uses to build feature bins). B1 is the mean over 20 random seeds.\n")
-    text += (f"\nCandidates per test instance: median {np.median(cand):g}, max {int(cand.max())}. "
-             f"Test instances with ground truth: {len(test_keys)}.\n")
+    def size_row(split: str) -> list:
+        ks = fr.keys(split)
+        n = np.array([len(fr.idx[k]) for k in ks])
+        pz = np.array([int(fr.label[fr.idx[k]].sum()) for k in ks])
+        return [split, len(ks), f"{n.min()} / {np.median(n):g} / {n.max()}", f"{pz.min()} / {np.median(pz):g} / {pz.max()}",
+                int(pz.sum())]
+
+    text += "\n## Candidates and positives per instance\n\n" + paper_md.table(
+        ["split", "instances", "candidates per instance (min / median / max)",
+         "positives per instance (min / median / max)", "positive files in total"],
+        [size_row("train"), size_row("val"), size_row("test")])
+    by_repo_test: dict[str, int] = defaultdict(int)
+    by_lang_test: dict[str, int] = defaultdict(int)
+    for k in test_keys:
+        by_repo_test[k[0]] += 1
+        by_lang_test[language.get(k) or "unknown"] += 1
+    only = (len(by_lang_test) == 1)
+    text += ("\n## Test split composition\n\n"
+             + paper_md.table(["repo", "test instances"], [[r, n] for r, n in sorted(by_repo_test.items(), key=lambda t: (-t[1], t[0]))])
+             + "\n" + paper_md.table(["language", "test instances"], [[l, n] for l, n in sorted(by_lang_test.items())])
+             + "\n" + (f"The chronological test split contains only {next(iter(by_lang_test))} instances "
+                        f"({len(test_keys)} of {len(test_keys)})." if only else
+                        "The chronological test split contains: " + ", ".join(f"{l} {n}" for l, n in sorted(by_lang_test.items())) + ".")
+             + "\n")
+
     text += "\n## Main result (test split)\n\n" + paper_md.table(
         ["method", "n", *[METRIC_LABELS[c] for c in METRIC_COLS], "micro Recall@10 (hits/actual)"], main_rows)
     text += "\n## Recall@10 with bootstrap 95% CI (10,000 resamples, seed 0)\n\n" + paper_md.table(
         ["method", "mean Recall@10", "95% CI"], ci_rows)
+    def ms(m: str, c: str) -> str:
+        if m in per_seed and len(per_seed[m]) > 1:
+            v = [f[c].mean() for f in per_seed[m]]
+            return f"{np.mean(v):.3f} ± {np.std(v):.3f}"
+        return f"{per_inst[m][c].mean():.3f} ± 0.000 (deterministic)"
+    text += ("\n## Side by side: Recall@10 and MAP, mean ± std over seeds 0-4\n\n"
+             "B1 (random, mean over 20 seeds, std over those 20) is the floor; B4 has no randomness.\n\n"
+             + paper_md.table(["method", "Recall@10", "MAP"],
+                              [[f"{m} {method_names[m]}", ms(m, "r10"), ms(m, "ap")] for m in ("ours", "B7", "B6", "B4", "B1")]))
     text += (f"\n## Paired statistics: ours vs each baseline (Recall@10, per test instance)\n\n"
              f"Wilcoxon signed-rank (two-sided, zero_method=zsplit), Holm correction over the {len(baselines)} "
              "baselines, Cliff's delta of ours minus baseline.\n\n"
@@ -282,19 +314,36 @@ def main() -> int:
                           f"{e_5['r10'].mean():.3f}"])
         loro_json[repo] = {"n": len(keys), "ours": float(e_o["r10"].mean()), "B4": float(e_4["r10"].mean()),
                            "B5": float(e_5["r10"].mean())}
+    repo_lang: dict[str, str] = {}
+    lang_votes: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    for k in all_keys:
+        lang_votes[k[0]][language.get(k) or "unknown"] += 1
+    for r_, v_ in lang_votes.items():
+        repo_lang[r_] = max(sorted(v_), key=lambda l: v_[l])
     wins = sum(1 for v in loro_json.values() if v["ours"] > max(v["B4"], v["B5"]))
+    lang_tables = ""
+    for lang in sorted(set(repo_lang.values())):
+        rows_l = [r for r in loro_rows if repo_lang.get(r[0]) == lang]
+        py_all = sorted((r_, n_per_repo[r_]) for r_ in repo_lang if repo_lang[r_] == lang)
+        lang_tables += (f"\n### {lang}: held-out repos with >= 20 instances ({len(rows_l)} of {len(py_all)} {lang} repos)\n\n"
+                        + (paper_md.table(["held-out repo", "instances", "ours Recall@10", "B4 Recall@10", "B5 Recall@10"], rows_l)
+                           if rows_l else f"No {lang} repo has >= 20 instances.\n")
+                        + f"\nAll {lang} repos and their instance counts: "
+                        + ", ".join(f"{r_} {n_}" for r_, n_ in sorted(py_all, key=lambda t: (-t[1], t[0]))) + ".\n")
     text += ("\n## Leave-one-repo-out (repos with >= 20 instances)\n\nTrain on every other repo (all splits, "
              f"configuration and round count fixed from the chronological tuning: `{json.dumps(p_best, sort_keys=True)}`, "
              f"{rounds_best} rounds), test on all instances of the held-out repo. History features still look at "
              "the held-out repo's own past, strictly before each instance.\n\n"
              + paper_md.table(["held-out repo", "instances", "ours Recall@10", "B4 Recall@10", "B5 Recall@10"], loro_rows)
-             + f"\nOurs beats both B4 and B5 on {wins} of {len(loro_repos)} held-out repos.\n")
+             + f"\nOurs beats both B4 and B5 on {wins} of {len(loro_repos)} held-out repos.\n"
+             + "\n### By language\n" + lang_tables)
     paper_md.write("rq2_predictor.md", text)
 
     # ---- ablation, learning curve, stratified ---------------------------------------------
     abl_rows = []
     full_r10, full_ap = per_inst["ours"]["r10"].mean(), per_inst["ours"]["ap"].mean()
     abl_json = {}
+    abl_std: dict[str, tuple[float, float]] = {}
     for fam, fcols in FAMILIES.items():
         if fam == "graph_":
             continue
@@ -304,6 +353,8 @@ def main() -> int:
             b = R.train(df, cols, s, p_best)
             evs.append(evaluate(fr, test_keys, R.predict(b, df, cols)))
         ev = mean_over(evs)
+        sd = float(np.std([e_["r10"].mean() for e_ in evs]))
+        abl_std[fam] = (float(ev["r10"].mean()), sd)
         abl_json[fam] = {"r10": float(ev["r10"].mean()), "ap": float(ev["ap"].mean())}
         abl_rows.append([f"without `{fam}`", len(cols), f"{ev['r10'].mean():.3f}",
                          f"{ev['r10'].mean() - full_r10:+.3f}", f"{ev['ap'].mean():.3f}",
@@ -350,6 +401,14 @@ def main() -> int:
              f"on validation. Full model: Recall@10 {full_r10:.3f}, MAP {full_ap:.3f}.\n")
     text += "\n## Ablation: drop one feature family\n\n" + paper_md.table(
         ["variant", "features", "Recall@10", "Δ Recall@10", "MAP", "Δ MAP"], abl_rows)
+    full_sd = float(np.std([f_["r10"].mean() for f_ in per_seed["ours"]]))
+    text += ("\n## Ablation deltas against seed variability (test Recall@10)\n\n"
+             f"Full model: {full_r10:.3f} ± {full_sd:.3f} (std over seeds 0-4). Each variant is retrained on seeds 0-4.\n\n"
+             + paper_md.table(["removed family", "Recall@10 (mean over seeds)", "std over seeds", "delta vs full",
+                               "full model std", "|delta| > both stds"],
+                              [[f"`{f}`", f"{m_:.3f}", f"{sd_:.3f}", f"{m_ - full_r10:+.3f}", f"{full_sd:.3f}",
+                                "yes" if abs(m_ - full_r10) > max(sd_, full_sd) else "no"]
+                               for f, (m_, sd_) in abl_std.items()]))
     text += "\n## One family alone\n\n" + paper_md.table(["variant", "features", "Recall@10", "MAP"], alone_rows)
     text += ("\n## Learning curve\n\nTrain on the most recent X% of the training instances (validation and test "
              "unchanged).\n\n" + paper_md.table(["training share", "train instances", "Recall@10", "MAP"], curve_rows))

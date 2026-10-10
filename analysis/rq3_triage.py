@@ -178,7 +178,8 @@ def metrics(y_not: np.ndarray, pred_not: np.ndarray, score: np.ndarray | None, l
     mine_pred = ~pred_not
     mp = int((mine & mine_pred).sum()) / int(mine_pred.sum()) if mine_pred.sum() else float("nan")
     mr = int((mine & mine_pred).sum()) / int(mine.sum()) if mine.sum() else float("nan")
-    out = {"n": len(y_not), "not_mine": int(y_not.sum()), "p": p, "r": r, "f1": f1, "mine_p": mp, "mine_r": mr,
+    tn = int((~y_not & ~pred_not).sum())
+    out = {"tp": tp, "fp": fp, "fn": fn, "tn": tn, "n": len(y_not), "not_mine": int(y_not.sum()), "p": p, "r": r, "f1": f1, "mine_p": mp, "mine_r": mr,
            "inherited_cleared": int(((label == "inherited") & pred_not).sum()),
            "inherited_total": int((label == "inherited").sum()),
            "flaky_cleared": int(((label == "flaky") & pred_not).sum()), "flaky_total": int((label == "flaky").sum()),
@@ -400,11 +401,38 @@ def main() -> int:
              + f"{int(y.sum())} not-mine pairs. Rules need no fitting; LR and LightGBM use the configuration "
              "and thresholds chosen on the chronological validation split.\n\n"
              + paper_md.table(cols, rows_of(pooled)))
+    def confusion(res: list[dict], where: str, n_pairs: int, n_not: int, n_mine: int) -> str:
+        head = (f"Population: {where}: {n_pairs:,} (run, test) pairs = {n_not:,} not-mine (inherited + flaky; the "
+                f"positive class) + {n_mine:,} mine. Positive = not-mine; predicted positive = cleared (told to ignore).\n\n")
+        rows = [[m["name"], m["tp"], m["fp"], m["fn"], m["tn"],
+                 paper_md.rate(m["tp"], m["tp"] + m["fn"]),
+                 f"**{paper_md.rate(m['fp'], m['fp'] + m['tn'])}**"] for m in res]
+        return head + paper_md.table(
+            ["method", "TP (not-mine cleared)", "FP (mine wrongly cleared)", "FN (not-mine kept)", "TN (mine kept)",
+             "not-mine recall (TP/(TP+FN))", "mine wrongly cleared (FP/(FP+TN))"], rows)
+
+    n_te_mine = int((te & (y == 0)).sum())
+    text += ("\n## Confusion matrices\n\n### (a) Chronological test split\n\n"
+             + confusion(chrono, "the chronological test split (D-57)", int(te.sum()), n_not_test, n_te_mine)
+             + "\n### (b) Pooled leave-one-repo-out\n\n"
+             + confusion(pooled, "all 897 known-base runs, pooled over held-out repos", int(len(feats)), int(y.sum()),
+                         int((y == 0).sum())))
+    o_all = pd.read_parquet("data/interim/outcomes.parquet").drop_duplicates(["run_id", "test_id", "split"])
+    cnt = o_all.groupby("split").size()
+    n_all, n_rel, n_str = int(cnt["all"]), int(cnt["relaxed"]), int(cnt["strict"])
+    n_inh, n_flk = int((lab == "inherited").sum()), int((lab == "flaky").sum())
+    text += ("\n## Class totals check (pair level, from `outcomes.parquet`)\n\n"
+             f"inherited = all - relaxed = {n_all:,} - {n_rel:,} = {n_all - n_rel:,} (labelled: {n_inh:,}); "
+             f"flaky = relaxed - strict = {n_rel:,} - {n_str:,} = {n_rel - n_str:,} (labelled: {n_flk:,}); "
+             f"inherited + flaky = {n_inh + n_flk:,} = all - strict = {n_all:,} - {n_str:,} = {n_all - n_str:,}: "
+             + ("holds." if n_inh + n_flk == n_all - n_str and n_inh == n_all - n_rel and n_flk == n_rel - n_str else "DOES NOT HOLD.")
+             + "\n")
     dangerous = {m["name"]: m["mine_wrongly_cleared"] for m in pooled}
     text += ("\n## The dangerous error\n\nA `mine` failure predicted not-mine is a real regression a developer would "
              "be told to ignore. Pooled leave-one-repo-out: "
              + "; ".join(f"{k}: {v}/{pooled[0]['mine_total']}" for k, v in dangerous.items())
-             + f". Chronological test split: "
+             + f" (denominator: the {pooled[0]['mine_total']:,} mine pairs of the pooled set, 897 runs). Chronological test split "
+             f"(denominator: the {chrono[0]['mine_total']:,} mine pairs of the test split): "
              + "; ".join(f"{m['name']}: {m['mine_wrongly_cleared']}/{m['mine_total']}" for m in chrono) + ".\n")
     text += (f"\n## Tuning (validation only)\n\nLightGBM `{json.dumps(g_best, sort_keys=True)}`, {rounds} rounds, "
              f"validation average precision {best[0]:.3f}, decision threshold {thr_gb:.3f}; logistic regression "
