@@ -27,8 +27,9 @@ Scripts lived in the session scratchpad (not committed). Everything below was ru
   -11 ... -17, shopcart-ARITH_SWAP-00, -01, shopcart-CMP_FLIP-00, shopcart-NEGATE_COND-00, -01, -02.
 - 20b: the same plus itsdangerous-NEGATE_COND-01, -02. One of them, itsdangerous-NEGATE_COND-01, has R1 cached and R2 not: that is where
   the 20b run actually stopped (quota between its two first calls).
-- **The 47 (120b) and 45 (20b) tasks the progress log called replayable all hit**, and in task-id order the first 47 / 37 tasks form a
-  prefix; the other 8 of the 20b's 45 are pilot tasks reused from the n = 20 run.
+- **The 47 (120b) and 45 (20b) tasks the progress log called replayable all hit**, and in task-id order the sequential runner replays a
+  prefix of 39 (120b) / 37 (20b) tasks and then hits the first never-run task; the remaining 8 fully cached tasks of each model are
+  pilot tasks (n = 20 run) that sit later in task-id order, so they are replayed only after the uncached ones are run.
 - Cached `system` prompt equals the current `SYSTEM` in 114 / 114 and 113 / 113 records.
 
 ### A2. Unified diff of cached vs current prompt for the first two missing tasks
@@ -40,13 +41,14 @@ the exact `Failing tests:` + `Test output` head of the prompt.)
 
 ### A3. The operator's symptom is not reproduced
 
-- Full replay of the 70 tasks through `RepairAgent` with the real suite validator (retries included), 120b: tasks 1-47 completed with every
+- Full replay of the 70 tasks through `RepairAgent` with the real suite validator (retries included), 120b: the 47 fully cached tasks completed with every
   call a cache hit, including the 8th task `click-BOOL_RETURN-01` (3 calls, 3 hits, R2 accepted so no retry) and every task that needed
   R3 retries: 188 calls, 109 distinct keys, every one a hit; the 109 are the 94 first calls plus 15 retries, and
-  the other 5 of the 114 records are the pre-masking orphans described in A4 (the dry run's "20 recorded retries" counts them too). First miss: task 48, `itsdangerous-NEGATE_COND-03`, a never-run task.
+  the other 5 of the 114 records are the pre-masking orphans described in A4 (the dry run's "20 recorded retries" counts them too). First miss in task-id order: task 40, `itsdangerous-NEGATE_COND-03`, a never-run task.
 - The operator's own command, `BR_LLM_REPLAY=1 BR_E3_TASKS=70 make repair-run MODEL=openai/gpt-oss-120b` (so `uv run --env-file .env`,
-  the real `.env`, never printed): printed `... 1,679 tokens left today by the client-side ledger`, replayed tasks 1-47, then raised
-  `CacheMiss` at task 48. Same for `MODEL=openai/gpt-oss-20b`: 37 tasks replayed, miss on the 38th (itsdangerous-NEGATE_COND-01, R2).
+  the real `.env`, never printed): printed `... 1,679 tokens left today by the client-side ledger`, replayed tasks 1-39, then raised
+  `CacheMiss` at task 40 (itsdangerous-NEGATE_COND-03). Same for `MODEL=openai/gpt-oss-20b`: 37 tasks replayed, miss on the 38th
+  (itsdangerous-NEGATE_COND-01, R2).
   With the network call removed this is exactly what the live command does until its first uncached request.
 - `PYTHONHASHSEED` 1, 2, 3 against the default: all 140 standard first-call prompts byte-identical.
 
@@ -170,3 +172,11 @@ never match a cached key). This is a hypothesis, not a finding; it is addressed 
 Both models resume from their cache; nothing already recorded is re-requested. See the final message of the session for commands and
 days. The client-side ledger frees tokens on a rolling 24 h window (about 100K tokens free from 2026-10-11 ~15:00 UTC for 120b and ~15:20
 for 20b; the earlier note "after 10:00 UTC" was too early by that ledger; Groq's own reset rule was not observed).
+
+## Correction (2026-10-10, frozen-runner setup)
+
+Earlier text and the end-of-step message said the 120b run replays 47 tasks in task-id order and first misses at task 48. That was
+wrong. The 47 (120b) / 45 (20b) tasks are *fully cached*, but not a prefix: the sequential runner replays 39 (120b) / 37 (20b) tasks and
+stops at the first never-run task (40th / 38th), because 8 pilot tasks per model sit later in task-id order. The 47 / 45 counts, the key
+analysis (A1) and the conclusion (no cached request is invalidated) stand. Reproduced in the frozen worktree `~/br-e3` at 8b1e922:
+120b 39 tasks then `CacheMiss`; 20b 37 tasks then `CacheMiss`; caches and ledger byte-identical to the main repo's.
