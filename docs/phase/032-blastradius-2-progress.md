@@ -38,3 +38,16 @@ Branch: `upgrade-2.0` (from `main` at 1198e1d). Operator: DeepanshuOP.
 **Baseline `make test`:** `821 passed, 3 skipped in 674.67s` (824 total). Matches the last recorded baseline.
 
 **Branch:** `upgrade-2.0` created from `main` (1198e1d). Identity verified: DeepanshuOP / 99538840+DeepanshuOP@users.noreply.github.com.
+
+## Phase 1: decisions, dependencies, schema section — done (commit 1d830b5)
+- D-56..D-59 appended to `docs/DECISIONS.md`; ROADMAP §32 note; CLAUDE.md 2.0 block.
+- `ml` extra pinned: lightgbm==4.7.0, scikit-learn==1.9.1, scipy==1.17.1 (`uv lock`, `uv sync --extra graph --extra ml --extra figures`).
+- `docs/SCHEMAS.md`: new trailing section "Derived tables v0.3"; frozen sections untouched. Types are lowercase so the v0.2 section parser (`analysis/release_schema.py`) does not pick them up; `tests/test_release_v02.py` still 12 passed.
+- `models/` and `eval/` are not gitignored; `data/` stays ignored.
+
+## Phase 2: shared feature layer — done
+- Files: `src/features/{context,test_features,candidates}.py`, `analysis/build_e1_features.py`, `tests/test_e1_features.py`, `tests/fixtures/e1/` (+ `make_fixture.py`).
+- Tests: `uv run pytest -q tests/test_e1_features.py` -> 9 passed. Full `make test`: 831 passed, 2 skipped, 0 failed (baseline 821 / 3).
+- `uv run python -m analysis.build_e1_features` (stdout): 734 instances (49 without a changeset); split 440 / 146 / 148; 608,903 rows; candidates per instance min/median/max 35 / 304.5 / 5,439; positives per instance 1 / 1 / 104; ground-truth files among candidates 1,527/1,527 (100.00%); all 36 repos from the pinned clone; 3 positives are non-conventional and unseen before (candidate only because they are labels; no feature exposes candidate provenance).
+- Decisions made: failure *events* are one per (run, test_id) so `hist_fail_count` equals RQ1's historical baseline count; `prox_min_dir_dist` is tree distance (up + down segments); stems shorter than 3 characters are ignored in `prox_name_contains_stem`; module = path prefix before the first src/tests/test segment.
+- `graph_` family: not implemented (optional; see Phase 4 note).

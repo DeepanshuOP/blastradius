@@ -286,11 +286,11 @@ Grain: one row per (run_id, job_id, test_id).
 | test_file | str | no | candidate test file, repo-relative |
 | label | int8 | no | 1 if the file is in the instance's strict ground truth, else 0 |
 | split | str | no | `train` / `val` / `test` (D-57, chronological 60/20/20 by `(run_started_at, run_id)`) |
-| hist_fail_count | int32 | no | strict failures of this file in this repo before `ts` (one per instance) |
+| hist_fail_count | int32 | no | strict failure events of this file in this repo before `ts` (one event per (run, test_id), as RQ1's historical baseline counts) |
 | hist_fail_30d | int32 | no | the same, in `[ts - 30 d, ts)` |
 | hist_fail_90d | int32 | no | the same, in `[ts - 90 d, ts)` |
 | hist_days_since_last | float64 | yes | days since the last such failure; null if never |
-| hist_head_fail_count | int32 | no | head failures of this file, any split, before `ts` |
+| hist_head_fail_count | int32 | no | head failure events of this file, any split, before `ts` (one per (run, test_id)) |
 | hist_repo_rank | int32 | no | rank of the file by `hist_fail_count` within the repo's candidates (1 = most failing, ties by path) |
 | cochg_max_support | int32 | no | max over changed files of trailing co-change support with this file (D-52 rule); 0 if none |
 | cochg_sum_support | int32 | no | sum of the same |
