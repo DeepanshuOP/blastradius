@@ -208,13 +208,22 @@ def main() -> int:
     r10 = {m: per_inst[m]["r10"].to_numpy() for m in order_methods}
     baselines = [m for m in order_methods if m != "ours"]
     best_b = max(baselines, key=lambda m: (r10[m].mean(), m))
-    pvals = [S.wilcoxon_p(r10["ours"], r10[m]) for m in baselines]
-    adj = S.holm_adjust(pvals)
+    # one Holm family over every test in this file: ours vs each baseline, plus the two learned baselines vs B4
+    extra = [("B6", "B4"), ("B7", "B4")]
+    pvals = [S.wilcoxon_p(r10["ours"], r10[m]) for m in baselines] + [S.wilcoxon_p(r10[a], r10[b]) for a, b in extra]
+    adj_all = S.holm_adjust(pvals)
+    adj = adj_all[:len(baselines)]
     stat_rows = []
     for m, p, a in zip(baselines, pvals, adj):
         d = S.cliffs_delta(r10["ours"], r10[m])
-        stat_rows.append([f"{m} {method_names[m]}", f"{r10[m].mean():.3f}", f"{p:.4g}", f"{a:.4g}",
+        stat_rows.append([f"ours vs {m} {method_names[m]}", f"{r10[m].mean():.3f}", f"{p:.4g}", f"{a:.4g}",
                           f"{d:+.3f}", S.cliffs_label(d)])
+    learned_vs_hist = []
+    for (a_, b_), p, ad in zip(extra, pvals[len(baselines):], adj_all[len(baselines):]):
+        d = S.cliffs_delta(r10[a_], r10[b_])
+        learned_vs_hist.append({"pair": f"{a_} vs {b_}", "p": p, "adj": ad, "delta": d})
+        stat_rows.append([f"{a_} {method_names[a_]} vs {b_} {method_names[b_]}", f"{r10[b_].mean():.3f}", f"{p:.4g}",
+                          f"{ad:.4g}", f"{d:+.3f}", S.cliffs_label(d)])
     i_best = baselines.index(best_b)
     d_best = S.cliffs_delta(r10["ours"], r10[best_b])
     beats = r10["ours"].mean() > r10[best_b].mean()
@@ -277,13 +286,15 @@ def main() -> int:
             return f"{np.mean(v):.3f} ± {np.std(v):.3f}"
         return f"{per_inst[m][c].mean():.3f} ± 0.000 (deterministic)"
     text += ("\n## Side by side: Recall@10 and MAP, mean ± std over seeds 0-4\n\n"
-             "B1 (random, mean over 20 seeds, std over those 20) is the floor; B4 has no randomness.\n\n"
+             f"B1 (random, mean over 20 seeds, std over those 20) is the floor; B4 has no randomness. Candidate test files per "
+             f"test instance: median {np.median([len(fr.idx[k]) for k in test_keys]):g}, max {max(len(fr.idx[k]) for k in test_keys)}.\n\n"
              + paper_md.table(["method", "Recall@10", "MAP"],
                               [[f"{m} {method_names[m]}", ms(m, "r10"), ms(m, "ap")] for m in ("ours", "B7", "B6", "B4", "B1")]))
-    text += (f"\n## Paired statistics: ours vs each baseline (Recall@10, per test instance)\n\n"
-             f"Wilcoxon signed-rank (two-sided, zero_method=zsplit), Holm correction over the {len(baselines)} "
-             "baselines, Cliff's delta of ours minus baseline.\n\n"
-             + paper_md.table(["baseline", "baseline mean", "p", "Holm-adjusted p", "Cliff's delta", "magnitude"],
+    text += (f"\n## Paired statistics (Recall@10, per test instance)\n\n"
+             f"Wilcoxon signed-rank (two-sided, zero_method=zsplit). One Holm family of {len(pvals)} tests: ours vs each of the "
+             f"{len(baselines)} baselines, plus B6 vs B4 and B7 vs B4. Cliff's delta is the first method minus the second; "
+             "'second method mean' is the Recall@10 of the second method.\n\n"
+             + paper_md.table(["comparison", "second method mean", "p", "Holm-adjusted p", "Cliff's delta", "magnitude"],
                               stat_rows))
     text += f"\n## Gate 3 verdict\n\n{verdict}\n"
     text += ("\n## Tuning (validation only)\n\n"
@@ -486,7 +497,7 @@ def main() -> int:
         "ablation": abl_json, "curve_fracs": list(CURVE_FRACS), "recall_vs_suite": curves,
         "learning_curve": curve_json, "family_importance": {f: float(v / total) for f, v in fam_imp.items()},
         "loro": loro_json, "tuning": {n: {"params": c["params"], "rounds": c["rounds"]} for n, c in chosen.items()},
-        "stat_rows": stat_rows}, indent=1, sort_keys=True), encoding="utf-8")
+        "stat_rows": stat_rows, "learned_vs_history": learned_vs_hist}, indent=1, sort_keys=True), encoding="utf-8")
     print("wrote paper/generated/rq2_predictor.md, rq2_ablation.md, rq2_features.md,", SCORES, RESULTS, MODEL_PATH)
     return 0
 
