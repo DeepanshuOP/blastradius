@@ -390,7 +390,7 @@ def apply_blocks(repo: Path, blocks: list[tuple[str, str, str]], allowed: set[st
 class RepairAgent:
     """Triage-routed, retrieval-grounded, validation-gated repair."""
 
-    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES, rag=None) -> None:
+    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES, rag=None, applier=None) -> None:
         """Create the agent.
 
         Args:
@@ -401,12 +401,15 @@ class RepairAgent:
             rag: For R4 only: an object with `select(repo, source_files, report, tie_break) -> list[Chunk]` and
                 `extras(repo, chunks, source_files) -> (history: list[str], similar: list[Chunk])`
                 (`src.rag.context.RagContext`).
+            applier: Replacement for :func:`apply_blocks` with the same signature (the PR bot passes an
+                indentation-tolerant one). The default keeps the pre-registered strict behaviour.
         """
         if arm not in ALL_ARMS:
             raise ValueError(f"unknown arm {arm!r}")
         if arm == "R4" and rag is None:
             raise ValueError("arm R4 needs a RAG context provider (src.rag.context.RagContext)")
         self.llm, self.arm, self.max_retries, self.rag = llm, arm, max_retries, rag
+        self.applier = applier or apply_blocks
 
     def run(self, repo: Path, source_files: list[str], report: FailureReport,
             validate: Callable[[dict[str, str]], tuple[bool, str]],
@@ -450,7 +453,7 @@ class RepairAgent:
             att = Attempt(len(SYSTEM) + len(prompt), r.text, r.usage, r.from_cache, False)
             res.attempts.append(att)
             try:
-                att.files = apply_blocks(repo, parse_blocks(r.text), {c.file for c in chunks})
+                att.files = self.applier(repo, parse_blocks(r.text), {c.file for c in chunks})
                 att.applied = True
             except ValueError as exc:
                 att.error = str(exc)

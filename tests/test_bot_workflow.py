@@ -14,7 +14,7 @@ def test_workflow_template_is_least_privilege_and_commands_the_documented_cli() 
     assert wf["permissions"] == {"contents": "read", "pull-requests": "write"}
     assert wf[True]["pull_request"]["types"] == ["opened", "synchronize"]      # YAML parses `on:` as True
     step = next(s for s in wf["jobs"]["comment"]["steps"] if s.get("name") == "Run the bot")
-    assert step["env"]["BR_AGENT_PROVIDER"] == "groq" and step["env"]["BR_AGENT_MODEL"] == "openai/gpt-oss-20b"
+    assert step["env"]["BR_AGENT_PROVIDER"] == "groq" and step["env"]["BR_AGENT_MODEL"] == "openai/gpt-oss-120b"
     assert "BR_LLM_CACHE_DIR" in step["env"] and "secrets.GROQ_API_KEY" in step["env"]["GROQ_API_KEY"]
     assert "python -m src.agents bot" in step["run"] and "--pr" in step["run"]
     assert "git push" not in path.read_text(encoding="utf-8")

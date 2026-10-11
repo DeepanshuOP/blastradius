@@ -62,7 +62,7 @@ jobs:
           # Groq free tier. Without it the bot still ranks, runs and triages; it just proposes no patch.
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           BR_AGENT_PROVIDER: groq
-          BR_AGENT_MODEL: openai/gpt-oss-20b
+          BR_AGENT_MODEL: openai/gpt-oss-120b
           # Every request and reply is cached here and uploaded below, so a run can be replayed offline.
           BR_LLM_CACHE_DIR: ${{ github.workspace }}/.blastradius-cache
         run: >
@@ -80,4 +80,5 @@ jobs:
           path: |
             .blastradius-cache
             .blastradius/reports
+          include-hidden-files: true   # both paths are dot-directories; v4 skips those by default
           if-no-files-found: ignore

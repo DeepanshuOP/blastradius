@@ -10,7 +10,7 @@ Stages, in order:
 2. **regression** `RegressionSuiteAgent`: the at-risk test files first, then the full suite, at the PR head.
 3. **triage**   `TriageAgent` per failing test. Each failing test is also run at the base commit and recorded in
                 the history first, so "inherited" rests on a run, not only on past history.
-4. **repair**   `RepairAgent` arm R3 with one retry (<= 2 attempts) for failures triaged `mine`; a patch is
+4. **repair**   `RepairAgent` arm R3 with up to two retries (<= 3 attempts) for failures triaged `mine`; a patch is
                 *validated* only if the FULL suite passes with it (minus tests already failing at the base).
 5. **render**   one comment (< 65,000 characters). A suggestion block appears only for a validated patch; any other
                 patch is a collapsed diff marked "not validated".
@@ -32,7 +32,7 @@ from pathlib import Path
 from src.agents import gitops
 from src.agents.impact import ImpactAnalysis, ImpactedTest
 from src.agents.regression import RegressionSuiteAgent, run_pytest
-from src.agents.repair import FailureReport, RepairAgent
+from src.agents.repair import FailureReport, RepairAgent, apply_blocks
 from src.agents.triage import TriageAgent, failures_of
 from src.eval.seeded.build import source_files
 from src.features.online import diff_stats, rank_tests
@@ -44,7 +44,9 @@ MAX_COMMENT = 65_000
 AT_RISK_ROWS = 10
 RESULT_ROWS = 40
 TRIAGE_ROWS = 20
-MAX_REPAIR_ATTEMPTS = 2
+MAX_REPAIR_RETRIES = 2          # R3: up to 2 retries, each carrying the failure feedback (3 attempts in all)
+MAX_REPAIR_ATTEMPTS = 1 + MAX_REPAIR_RETRIES
+_GUTTER = re.compile(r"^\s*\d+\|[ ]?")
 
 
 @dataclass
@@ -287,6 +289,69 @@ def build_impact(repo: Path, base: str, head: str, pr: int) -> tuple[ImpactAnaly
     return impact, rows, name
 
 
+def apply_blocks_tolerant(repo: Path, blocks: list[tuple[str, str, str]], allowed: set[str] | None = None) -> dict[str, str]:
+    """`repair.apply_blocks`, falling back to an indentation-insensitive match when the exact one fails.
+
+    The prompt shows code as `  141|<space><line>`; models routinely copy the gutter separator, or shift a whole
+    block by a few columns, and the strict applier then finds the SEARCH text 0 times. Here, a SEARCH that does
+    not match verbatim is retried as: a leading `NNN| ` gutter stripped, then compared line by line with
+    surrounding whitespace ignored. It must still match exactly one place, the replacement is shifted by the same
+    indentation offset, and the full-suite validation gate is unchanged. The strict `apply_blocks` (E3, R0-R3
+    arms) is untouched.
+
+    Raises:
+        ValueError: As :func:`repair.apply_blocks`; the message of a miss says what to fix, because it is
+            the retry feedback the model sees.
+    """
+    if not blocks:
+        return apply_blocks(repo, blocks, allowed)
+    files: dict[str, str] = {}
+    for path, search, replace in blocks:
+        if allowed is not None and path not in allowed:
+            raise ValueError(f"{path} was not one of the files shown")
+        p = repo / path
+        if not p.is_file() or ".." in Path(path).parts:
+            raise ValueError(f"{path} does not exist")
+        text = files.get(path, p.read_text(encoding="utf-8"))
+        if search and text.count(search) == 1:
+            files[path] = text.replace(search, replace, 1)
+        else:
+            files[path] = _tolerant_replace(text, path, search, replace)
+    return files
+
+
+def _tolerant_replace(text: str, path: str, search: str, replace: str) -> str:
+    gut = [_GUTTER.sub("", ln) for ln in search.split("\n")]
+    want = [ln.strip() for ln in gut]
+    while want and not want[0]:
+        want.pop(0), gut.pop(0)
+    while want and not want[-1]:
+        want.pop(), gut.pop()
+    lines = text.split("\n")
+    hits = [i for i in range(len(lines) - len(want) + 1)
+            if want and all(lines[i + k].strip() == w for k, w in enumerate(want))]
+    if len(hits) != 1:
+        first = next((w for w in want if w), "")
+        raise ValueError(
+            f"SEARCH text matches {len(hits)} times in {path} (must be exactly once); copy the lines verbatim, "
+            f"with the file's own indentation and without the 'NNN|' line-number gutter; the first SEARCH line "
+            f"was `{first[:80]}`")
+    i = hits[0]
+    first_real = next(k for k, w in enumerate(want) if w)
+    delta = (len(lines[i + first_real]) - len(lines[i + first_real].lstrip())) - (
+        len(gut[first_real]) - len(gut[first_real].lstrip()))
+    out = []
+    for ln in (_GUTTER.sub("", r) for r in replace.split("\n")):
+        if not ln.strip():
+            out.append("")
+        elif delta >= 0:
+            out.append(" " * delta + ln)
+        else:
+            drop = min(-delta, len(ln) - len(ln.lstrip()))
+            out.append(ln[drop:])
+    return "\n".join(lines[:i] + out + lines[i + len(want):])
+
+
 def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, *, llm=None,
             state_dir: Path | None = None, python: str | None = None) -> BotOutcome:
     """Run impact, regression, triage and repair on one PR and render the comment.
@@ -380,7 +445,7 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
             return (not bad and run.exit_code in (0, 1)), "\n".join(
                 f"{r.test_id}: {r.message}" for r in run.failed if r.test_id not in others)[:1000]
 
-        res = RepairAgent(llm, "R3", max_retries=MAX_REPAIR_ATTEMPTS - 1).run(tree, srcs, fr, validate)
+        res = RepairAgent(llm, "R3", max_retries=MAX_REPAIR_RETRIES, applier=apply_blocks_tolerant).run(tree, srcs, fr, validate)
         head_files = {}
         for a in res.attempts:
             for p in a.files:

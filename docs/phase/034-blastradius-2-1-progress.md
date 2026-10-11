@@ -356,3 +356,18 @@ study, so L5 moved from 68 / 57 to **69 / 58** (standard / hard) and the hard-va
 - **Seeded-tree contention.** A live E3 run in another checkout shares `data/seeded` through a symlink, so a replay queues on the
   per-repo `br-seeded.lock`. `BR_SEEDED_DIR` (default unchanged) points a replay at a copy of `data/seeded` whose venv `.pth` paths are
   rewritten; the figures were produced that way so the live run was not touched.
+
+## PR bot: "the model's reply could not be applied" (2026-10-11)
+
+- **Cause (reproduced locally with `make bot-local`, gpt-oss-20b, same 2,194 tokens).** Two attempts, both well-formed SEARCH/REPLACE
+  blocks aimed at the right line (`if age < max_age:` -> `>` in `TimestampSigner.unsign`), both found 0 times by the strict applier:
+  attempt 1 shifted the block four columns right; attempt 2 copied the separator space of the `NNN| ` gutter, so every line had one extra
+  leading space. Replies are checked in at `tests/fixtures/bot_tolerant/`.
+- **Why the artifact did not show it:** `upload-artifact@v4` skips dot-directories; the cache never reached the artifact. Now
+  `include-hidden-files: true`.
+- **Fix (bot only).** `bot.apply_blocks_tolerant`: exact match first; otherwise gutter stripped and lines compared with surrounding
+  whitespace ignored, must still match exactly once, replacement re-indented by the same offset; failure feedback tells the model to
+  drop the gutter and keep the file's indentation. `RepairAgent(applier=...)` (default `apply_blocks`, so E3 R0-R3 and the pinned prompt
+  hashes are untouched). Bot retries: 2 (3 attempts, R3 feedback). Workflow template model: `openai/gpt-oss-120b`.
+- Offline replay of the recorded 20b reply with the fix: patch applied on attempt 1, **validated by the full suite**, one suggestion
+  (`src/itsdangerous/timed.py` line 141).

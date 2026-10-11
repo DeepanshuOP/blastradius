@@ -1,0 +1,16 @@
+src/itsdangerous/timed.py
+<<<<<<< SEARCH
+             if age < max_age:
+                 raise SignatureExpired(
+                     f"Signature age {age} > {max_age} seconds",
+                     payload=value,
+                     date_signed=self.timestamp_to_datetime(ts_int),
+                 )
+=======
+             if age > max_age:
+                 raise SignatureExpired(
+                     f"Signature age {age} > {max_age} seconds",
+                     payload=value,
+                     date_signed=self.timestamp_to_datetime(ts_int),
+                 )
+>>>>>>> REPLACE

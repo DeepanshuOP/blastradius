@@ -175,3 +175,70 @@ def test_without_a_model_the_comment_says_so_and_offers_nothing(pr_repo, tmp_pat
     assert "```suggestion" not in out.comment and "No model is configured" in out.comment
     assert "**mine**" in out.comment
 
+
+
+# ---- indentation-tolerant apply (PR #1 on the itsdangerous fork) ----------------------------------
+# The two replies are the real ones gpt-oss-20b gave on that PR (fixtures/bot_tolerant): the first shifted the
+# block four columns, the second copied the "NNN| " gutter separator space. The strict applier found both 0 times.
+TOL = Path(__file__).resolve().parent / "fixtures" / "bot_tolerant"
+TIMED = "src/itsdangerous/timed.py"
+
+
+@pytest.fixture()
+def timed_repo(tmp_path) -> Path:
+    (tmp_path / TIMED).parent.mkdir(parents=True)
+    shutil.copy(TOL / "timed.py", tmp_path / TIMED)
+    return tmp_path
+
+
+def _expected(repo: Path) -> str:
+    text = (repo / TIMED).read_text()
+    assert text.count("            if age < max_age:\n") == 1
+    return text.replace("            if age < max_age:\n", "            if age > max_age:\n")
+
+
+@pytest.mark.parametrize("name", ["reply1.txt", "reply2.txt"])
+def test_strict_apply_rejects_the_real_replies_and_tolerant_apply_fixes_them(timed_repo, name) -> None:
+    from src.agents.repair import apply_blocks, parse_blocks
+
+    blocks = parse_blocks((TOL / name).read_text())
+    assert blocks and blocks[0][0] == TIMED
+    with pytest.raises(ValueError, match="matches 0 times"):
+        apply_blocks(timed_repo, blocks, {TIMED})
+    out = bot.apply_blocks_tolerant(timed_repo, blocks, {TIMED})
+    assert out == {TIMED: _expected(timed_repo)}
+
+
+def test_tolerant_apply_still_requires_one_match_and_says_how_to_fix(timed_repo) -> None:
+    miss = [(TIMED, "            if age == max_age:\n                pass", "x")]
+    with pytest.raises(ValueError, match=r"matches 0 times.*without the 'NNN\|' line-number gutter.*age == max_age"):
+        bot.apply_blocks_tolerant(timed_repo, miss, {TIMED})
+    twice = [(TIMED, "raise SignatureExpired(", "raise SignatureExpired(")]
+    with pytest.raises(ValueError, match="matches 2 times"):
+        bot.apply_blocks_tolerant(timed_repo, twice, {TIMED})
+    with pytest.raises(ValueError, match="was not one of the files shown"):
+        bot.apply_blocks_tolerant(timed_repo, miss, {"other.py"})
+
+
+def test_the_bot_retries_twice_with_the_failure_in_the_prompt(timed_repo) -> None:
+    from src.agents.llm import ChatResult
+    from src.agents.repair import FailureReport, RepairAgent
+
+    assert bot.MAX_REPAIR_RETRIES == 2 and bot.MAX_REPAIR_ATTEMPTS == 3
+    prompts: list[str] = []
+    replies = iter(["no blocks here", (TOL / "reply2.txt").read_text(), (TOL / "reply2.txt").read_text()])
+
+    class Fake:
+        def chat(self, system, user, max_tokens):
+            prompts.append(user)
+            return ChatResult(next(replies), {"total_tokens": 1}, "m", False)
+
+    report = FailureReport(failing=[{"test_id": "tests/test_timed.py::test_max_age", "output": "age check"}],
+                           pr_diff="", triage="mine", changed_files=[TIMED])
+    seen: list[dict] = []
+    res = RepairAgent(Fake(), "R3", max_retries=bot.MAX_REPAIR_RETRIES, applier=bot.apply_blocks_tolerant).run(
+        timed_repo, [TIMED], report, lambda files: (seen.append(files) or False, "tests/test_timed.py::x: still failing"))
+    assert len(res.attempts) == 3 and not res.accepted
+    assert "could not be applied" in prompts[1] and "no SEARCH/REPLACE blocks" in prompts[1]
+    assert "tests/test_timed.py::x: still failing" in prompts[2]
+    assert seen == [{TIMED: _expected(timed_repo)}] * 2

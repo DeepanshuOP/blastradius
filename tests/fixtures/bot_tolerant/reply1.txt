@@ -1,0 +1,38 @@
+src/itsdangerous/timed.py
+<<<<<<< SEARCH
+            if max_age is not None:
+                age = self.get_timestamp() - ts_int
+
+                if age < max_age:
+                    raise SignatureExpired(
+                        f"Signature age {age} > {max_age} seconds",
+                        payload=value,
+                        date_signed=self.timestamp_to_datetime(ts_int),
+                    )
+=======
+            if max_age is not None:
+                age = self.get_timestamp() - ts_int
+
+                if age > max_age:
+                    raise SignatureExpired(
+                        f"Signature age {age} > {max_age} seconds",
+                        payload=value,
+                        date_signed=self.timestamp_to_datetime(ts_int),
+                    )
+>>>>>>> REPLACE
+src/itsdangerous/timed.py
+<<<<<<< SEARCH
+                if age < 0:
+                    raise SignatureExpired(
+                        f"Signature age {age} < 0 seconds",
+                        payload=value,
+                        date_signed=self.timestamp_to_datetime(ts_int),
+                    )
+=======
+                if age < 0:
+                    raise SignatureExpired(
+                        f"Signature age {age} < 0 seconds",
+                        payload=value,
+                        date_signed=self.timestamp_to_datetime(ts_int),
+                    )
+>>>>>>> REPLACE
