@@ -16,3 +16,4 @@
 14. Enforced strict 5-page ceiling with `\clearpage` and balanced two-column bibliography layout using `\balance` from `balance.sty`.
 15. Verified and completed bibliographic metadata (DOIs, pages, conference proceedings) across all 12 literature entries in `refs.bib`.
 16. Added formal `@misc` bibliography entries for published Zenodo dataset (`brbench_data`) and code repository (`brbench_code`).
+17. B5 (BM25 path tokens) made independent of the Python hash seed (D-64: `sorted(set(query))`); the committed B5 values (Recall@20% 0.457, first-fail position 349.480) are reproduced exactly, and no table or Holm p changes.

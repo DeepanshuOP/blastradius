@@ -111,7 +111,7 @@ def bm25_scores(docs: list[list[str]], query: list[str], k1: float = 1.2, b: flo
     for i, d in enumerate(docs):
         tf = Counter(d)
         norm = k1 * (1 - b + b * len(d) / avgdl)
-        for t in set(query):
+        for t in sorted(set(query)):
             if t in tf:
                 idf = math.log(1 + (n - df[t] + 0.5) / (df[t] + 0.5))
                 out[i] += idf * tf[t] * (k1 + 1) / (tf[t] + norm)
