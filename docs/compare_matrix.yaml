@@ -602,7 +602,7 @@
      "br": {
       "value": "yes",
       "source": "LICENSE; paper/generated/cost_report.md (USD actually paid, from the ledger)",
-      "note": "Apache-2.0 code; the recorded runs used the Groq free tier",
+      "note": "MIT code, CC BY 4.0 data; the recorded runs used the Groq free tier",
       "proof": [
        "tests/test_cost_report.py::test_nothing_was_paid_and_the_report_says_so"
       ]
