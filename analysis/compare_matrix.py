@@ -15,6 +15,7 @@ MATRIX = Path("docs/compare_matrix.yaml")
 LITERATURE = Path("docs/LITERATURE.md")
 RESULTS = Path("docs/RESULTS_2.md")
 VALUES = ("yes", "no", "not_reported")
+PRODUCT_VALUES = ("yes", "no", "partial", "not_documented")
 #: Column id -> the # of the work in docs/LITERATURE.md (BlastRadius and retest-all are not literature rows).
 LIT_NUMBER = {"rtptorrent": 3, "tts": 10, "logsage": 23, "ci_repair_bench": 26, "chatrepair": 29, "agentless": 31}
 
@@ -67,8 +68,42 @@ def validate(doc: dict, root: Path = Path(".")) -> list[str]:
                     problems.append(f"{where}: retest-all cell must cite docs/RESULTS_2.md or paper/generated/")
                 if quotes and any(q not in res for q in quotes):
                     problems.append(f"{where}: quoted evidence not found verbatim in docs/RESULTS_2.md")
+    problems += validate_products(doc.get("products"), root)
     for item in doc["safety"]:
         if not item.get("tests"):
             problems.append(f"safety {item['claim']!r}: no test")
         problems += [f"safety {item['claim']!r}: {t} does not exist" for t in item.get("tests", []) if not test_exists(t, root)]
+    return problems
+
+
+def validate_products(products: dict | None, root: Path = Path(".")) -> list[str]:
+    """Rule violations of the commercial-tools matrix.
+
+    Every vendor cell carries a source made only of `https://` URLs (the vendor page it was read from); a
+    BlastRadius `yes` names an existing test; a `partial` BlastRadius cell explains itself in `note`.
+    """
+    if not products:
+        return ["products matrix missing"]
+    problems: list[str] = []
+    cols = [c["id"] for c in products["columns"]]
+    for row in products["rows"]:
+        if set(row["cells"]) != set(cols):
+            problems.append(f"products/{row['id']}: cells {sorted(row['cells'])} != columns")
+        for cid, cell in row["cells"].items():
+            where = f"products/{row['id']}/{cid}"
+            if cell.get("value") not in PRODUCT_VALUES:
+                problems.append(f"{where}: value {cell.get('value')!r}")
+            src = cell.get("source", "").strip()
+            if not src:
+                problems.append(f"{where}: no source")
+            elif cid != "br":
+                parts = [x for x in re.split(r"\s+and\s+|[\s,]+", src) if x]
+                if not parts or any(not re.fullmatch(r"https://\S+", x) for x in parts):
+                    problems.append(f"{where}: vendor cell must cite a vendor URL, got {src!r}")
+            else:
+                if cell.get("value") == "yes" and not cell.get("proof"):
+                    problems.append(f"{where}: BlastRadius yes without a proof test")
+                if cell.get("value") == "partial" and not cell.get("note"):
+                    problems.append(f"{where}: partial without an explanation")
+                problems += [f"{where}: proof {p} does not exist" for p in cell.get("proof", []) if not test_exists(p, root)]
     return problems

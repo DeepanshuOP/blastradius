@@ -5,6 +5,7 @@
 # for the retest-all column, by docs/RESULTS_2.md / paper/generated; otherwise "not_reported". "not_reported" means
 # the sources do not establish it, not that the capability is absent. Every cell has a "source"; every BlastRadius
 # "yes" names the test(s) that prove it. tests/test_compare_matrix.py enforces these rules.
+# The "products" matrix (vendor documentation) uses the values yes / no / partial / not_documented; every vendor cell's source is a URL.
 {
  "columns": [
   {
@@ -566,5 +567,312 @@
     "tests/test_rag_r4.py::test_r0_to_r3_prompts_and_system_are_byte_identical_to_the_recorded_hashes"
    ]
   }
- ]
+ ],
+ "products": {
+  "title": "Commercial tools (from vendor documentation, checked 2026-10-12)",
+  "checked": "2026-10-12",
+  "note": "Every vendor cell cites the vendor page it comes from. Only what those pages state is entered; anything they do not state is 'not documented', which is not a claim that the capability is absent.",
+  "columns": [
+   {
+    "id": "br",
+    "label": "BlastRadius"
+   },
+   {
+    "id": "develocity",
+    "label": "Develocity Predictive Test Selection"
+   },
+   {
+    "id": "cloudbees",
+    "label": "CloudBees Smart Tests (formerly Launchable)"
+   },
+   {
+    "id": "datadog",
+    "label": "Datadog Test Impact Analysis"
+   },
+   {
+    "id": "copilot",
+    "label": "GitHub Fix with Copilot for failing Actions"
+   }
+  ],
+  "rows": [
+   {
+    "id": "open_source",
+    "label": "open source and free to run",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "LICENSE; paper/generated/cost_report.md (USD actually paid, from the ledger)",
+      "note": "Apache-2.0 code; the recorded runs used the Groq free tier",
+      "proof": [
+       "tests/test_cost_report.py::test_nothing_was_paid_and_the_report_says_so"
+      ]
+     },
+     "develocity": {
+      "value": "no",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+      "note": "The page says it is enabled through Develocity support; a commercial product"
+     },
+     "cloudbees": {
+      "value": "no",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+      "note": "The page describes a demo or commercial offering"
+     },
+     "datadog": {
+      "value": "no",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+      "note": "The page describes a commercial product"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+      "note": "The posts say it is available on paid Copilot plans, which is not the same as stating the licence"
+     }
+    }
+   },
+   {
+    "id": "public_eval_data",
+    "label": "public evaluation data",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "README.md (Zenodo DOI 10.5281/zenodo.23250262), docs/DATASHEET.md",
+      "proof": [
+       "tests/test_release_v02.py::test_validator_passes_built_bundle"
+      ]
+     },
+     "develocity": {
+      "value": "not_documented",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/"
+     },
+     "cloudbees": {
+      "value": "not_documented",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/"
+     }
+    }
+   },
+   {
+    "id": "no_history",
+    "label": "works without project history",
+    "cells": {
+     "br": {
+      "value": "partial",
+      "source": "docs/RESULTS_2.md (E3 detection on fresh repositories), paper/generated/rq4_repair.md",
+      "note": "The ranker gains little on fresh repositories: removing failure-history features costs Recall@10 on BR-Bench, and a fresh repository has none. Repair and triage rules do not need history. See the E3 detection table in the Compare tab (Time panel)."
+     },
+     "develocity": {
+      "value": "no",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+      "note": "No prediction until a test task has 14 days of changes and at least 50 executions in 14 days"
+     },
+     "cloudbees": {
+      "value": "yes",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+      "note": "The page states selection is available from the first run"
+     },
+     "datadog": {
+      "value": "no",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+      "note": "The page states it needs a coverage baseline from a past passing run"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/"
+     }
+    }
+   },
+   {
+    "id": "per_test_prediction",
+    "label": "per-test failure prediction",
+    "cells": {
+     "br": {
+      "value": "partial",
+      "source": "docs/RESULTS_2.md (E1), paper/generated/rq2_predictor.md",
+      "note": "E1 ranks test files, not individual test ids; Gate 3 was not met"
+     },
+     "develocity": {
+      "value": "yes",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+      "note": "The page describes learning from test history to select tests"
+     },
+     "cloudbees": {
+      "value": "yes",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+      "note": "The page describes failure-probability ordering"
+     },
+     "datadog": {
+      "value": "no",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+      "note": "The page describes selection by matching per-test coverage and tracked files, not prediction"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/"
+     }
+    }
+   },
+   {
+    "id": "triage",
+    "label": "separates your failures from pre-existing and flaky ones",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "docs/RESULTS_2.md (E2), paper/generated/rq3_triage.md",
+      "note": "Measured on a small sample; see the E2 table",
+      "proof": [
+       "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+      ]
+     },
+     "develocity": {
+      "value": "no",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+      "note": "The page says it always selects recently flaky tests and does not triage or repair flaky tests"
+     },
+     "cloudbees": {
+      "value": "partial",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+      "note": "The page describes failure grouping by root cause linked to a likely commit and deprioritised flaky tests; pre-existing failures are not described"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/"
+     }
+    }
+   },
+   {
+    "id": "proposes_fixes",
+    "label": "proposes code fixes",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "src/agents/repair.py, src/agents/bot.py",
+      "proof": [
+       "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+      ]
+     },
+     "develocity": {
+      "value": "not_documented",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+      "note": "The page does not describe code fixes"
+     },
+     "cloudbees": {
+      "value": "not_documented",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+      "note": "The page describes no automated fixes"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+      "note": "The page does not describe code fixes"
+     },
+     "copilot": {
+      "value": "yes",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+      "note": "The posts say it investigates the failed run, pushes a fix to your branch and tags you for review"
+     }
+    }
+   },
+   {
+    "id": "fix_validated",
+    "label": "fix validated by the full test suite before it is shown",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "src/agents/repair.py, src/agents/bot.py",
+      "proof": [
+       "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch",
+       "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+      ]
+     },
+     "develocity": {
+      "value": "not_documented",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/"
+     },
+     "cloudbees": {
+      "value": "not_documented",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+      "note": "The posts do not describe validating the fix by running tests"
+     }
+    }
+   },
+   {
+    "id": "never_pushes",
+    "label": "never pushes or merges on its own",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "src/agents/bot.py, integrations/github-actions/blastradius-bot.yml (contents: read)",
+      "proof": [
+       "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+      ]
+     },
+     "develocity": {
+      "value": "not_documented",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/"
+     },
+     "cloudbees": {
+      "value": "not_documented",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/"
+     },
+     "copilot": {
+      "value": "no",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+      "note": "The posts say it pushes a fix to your branch (it tags you for review)"
+     }
+    }
+   },
+   {
+    "id": "explanation",
+    "label": "explanation per prediction",
+    "cells": {
+     "br": {
+      "value": "yes",
+      "source": "src/agents/bot.py (\"Why\" column)",
+      "proof": [
+       "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+      ]
+     },
+     "develocity": {
+      "value": "not_documented",
+      "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/"
+     },
+     "cloudbees": {
+      "value": "not_documented",
+      "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works"
+     },
+     "datadog": {
+      "value": "not_documented",
+      "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/"
+     },
+     "copilot": {
+      "value": "not_documented",
+      "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/"
+     }
+    }
+   }
+  ]
+ }
 }
