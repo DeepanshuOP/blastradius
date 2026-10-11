@@ -59,6 +59,52 @@ Triage is a small-sample result: the whole corpus holds 216 not-mine failures (1
 
 - Seeded bugs are simpler than real ones, and the operator mix is uneven (markupsafe: 18 of 19 tasks are NEGATE_COND).
 
+## Exploratory: RAG (BlastRadius 2.1, not pre-registered)
+
+Source: `paper/generated/rq5_retrieval.md`, produced by `make rag-eval` (not `make tables`); no model is involved in
+these numbers. Everything in this section is exploratory. Arm R4 has not been run against a model yet, so no repair number exists for it; the Ask
+and PR-bot recording runs are described at the end of this section.
+
+**Does smarter retrieval replace knowing the change? No, on these 70 seeded tasks.** Whole-repo hybrid retrieval (L3, BM25
+plus dense vectors, no knowledge of the change) puts the seeded function among its top three chunks for 32 of 70 tasks
+(45.71%), below whole-repo BM25 (L1, 46 of 70, 65.71%): 17 tasks only BM25 finds, 3 only hybrid (exact McNemar p = 0.0026,
+Holm-adjusted p = 0.010 in a family of 4). Knowing the change (L4, BM25 over the functions the diff touches) reaches 69 of 70
+(98.57%) on the standard variant and 63 of 70 (90.00%) on the hard variant. Dense retrieval alone (L2) finds 21 of 70 (30.00%).
+
+| mode (top 3 chunks, 70 tasks) | standard hit@3 | hard hit@3 | hard MRR |
+|---|---|---|---|
+| L1 BM25, whole repo (= R1) | 46/70 (65.71%) | 46/70 (65.71%) | 0.581 |
+| L2 dense, whole repo | 21/70 (30.00%) | 21/70 (30.00%) | 0.308 |
+| L3 hybrid, whole repo | 32/70 (45.71%) | 32/70 (45.71%) | 0.426 |
+| L4 BM25, touched functions (= R2) | 69/70 (98.57%) | 63/70 (90.00%) | 0.800 |
+| L5 hybrid, touched functions | 69/70 (98.57%) | 58/70 (82.86%) | 0.637 |
+
+Adding dense vectors to the change-aware retriever does not help: on the hard variant L5 has the seeded function in its top
+three for 58 tasks against 63 for L4 (3 only L5, 8 only L4; unadjusted p = 0.2266, Holm-adjusted p = 0.4531, not
+distinguishable from no difference with 70 tasks). The change-aware gain in E3 is therefore not explained by better generic
+retrieval; most of it comes from restricting the search to what the change touched. This is a statement about this
+embedding model (`jina-embeddings-v2-base-code`, untuned, queries are test output) and these Python repositories.
+
+**Failure-history retrieval (the Ask source; 709 test-split failures with a message, strictly earlier runs of the same
+repository).** Retrieving a past failure of the same test_id (90 queries have one): hit@1 61.11% for BM25 and dense, 58.89%
+for hybrid, against 16.74% for a random order; hit@5 76.67% / 71.11% / 75.56% against 29.14%. Retrieving a past failure
+of the same failure class is nearly saturated and only modestly above chance at rank 1 (hybrid 94.92% against 52.01%).
+
+**Ask: citation faithfulness (15 fixed questions, answers recorded once with openai/gpt-oss-20b, `rq5_retrieval.md`).** The
+assistant is shown 8 retrieved items and told to answer only from them and cite each claim. In all 15 answers no `[Sk]` points
+outside the retrieved items; 14 of 15 cite at least one item (test-failure 4/5, impact 5/5, history 5/5) and the 15th answered
+"not in the context". This scores citation hygiene only: whether an answer is correct was not scored, and several impact
+answers cite only the E1-ranker block. Recording cost 17,969 tokens in all (sum of the 15 usage records) (`eval/llm_cache/ask_openai_gpt-oss-20b.jsonl`).
+
+**PR bot: one recording run** on seeded task `itsdangerous-ARITH_SWAP-00` (`src/agents/demo/bot_comment.md`, replays
+offline from `eval/llm_cache/bot_openai_gpt-oss-20b.jsonl`). The seeded edit breaks the signer, so 260 of 297 tests fail and
+all 260 are triaged mine; the model proposed one one-line patch on its first attempt (1,495 tokens), the full suite passed
+with it, and the bot offered it as a suggestion on `src/itsdangerous/signer.py` line 204. This is one run on one seeded task,
+not a rate.
+
+**Not yet run.** Arm R4 against a model (`make repair-run ... ARMS=R4`, operator-run after the confirmatory runs) and the
+third model (`qwen/qwen3.8-27b`, exploratory, D-62), so no repair rate exists for either.
+
 ## Table 2: context only, different data
 
 | work | reported result | data |

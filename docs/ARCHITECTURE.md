@@ -1,4 +1,4 @@
-# BlastRadius 2.0: architecture
+# BlastRadius 2.0 / 2.1: architecture
 
 BlastRadius 2.0 turns the BR-Bench dataset into a change-aware CI assistant with four stages. All of them are
 trained and scored on BR-Bench (the seeded benchmark covers the repair stage). Decisions: D-56..D-59 in
@@ -95,3 +95,64 @@ into a Jenkinsfile and a GitHub Actions workflow; those files are examples, not 
   replies with the network forbidden).
 - Every LLM request and reply is stored under `eval/llm_cache/` keyed by a hash of provider, model, prompt and sampling
   parameters; a cache miss in replay mode is an error.
+
+## 6. The RAG layer (2.1, exploratory; D-61, D-63)
+
+2.1 adds retrieval in three places and a PR bot, all measured against what 2.0 already had and none of them
+pre-registered. The embedding model (`jinaai/jina-embeddings-v2-base-code`, ONNX through `fastembed`, CPU, pinned
+snapshot) is an encoder, not a generator; it stays out of E1, E2, features, labels and `make tables`.
+
+```mermaid
+flowchart TB
+    subgraph rag["src/rag/ (D-61)"]
+      CH["chunks.py<br/>function chunks: ast (Python), tree-sitter (Java)<br/>+ last 3 commit subjects"]
+      IX["index.py<br/>BM25 (the E3 retriever) + dense cosine<br/>+ reciprocal rank fusion k=60"]
+      HI["history.py<br/>up to 2 earlier commits that changed a function<br/>(git log -L, hunk <= 40 lines)"]
+      KB["knowledge.py<br/>code + BR-Bench failure history + docs"]
+    end
+    CH --> IX
+    IX --> LOC["Use 1: localization study<br/>L1-L5, no LLM (make rag-eval)"]
+    IX --> R4["Use 2: repair arm R4<br/>R2 + fix history + similar code<br/>(exploratory E3 arm)"]
+    HI --> R4
+    IX --> KB
+    KB --> ASK["Use 3: Ask BlastRadius<br/>answer only from context, cite [S1]..[S8]"]
+    E1["E1 ranker top-5 + SHAP"] --> ASK
+```
+
+| use | module | LLM | evidence it is measured against |
+|---|---|---|---|
+| localization | `analysis/rq5_retrieval.py` | no | R1 / R2 retrieval of E3 (BM25, whole repo / touched functions) |
+| repair context (R4) | `src/rag/context.py`, `src/agents/repair.py` | yes (E3 only) | arm R2 on the same tasks, paired McNemar |
+| Ask | `src/agents/ask.py`, `src/rag/knowledge.py` | yes (cached) | citation faithfulness on 15 fixed questions; time-safe failure retrieval |
+
+Arms R0-R3 are byte-identical to the pre-registered prompts (a test pins their hashes); R4 has its own cache keys and its
+input is capped at 3,500 tokens, trimming fix history first, then similar code, never the target chunks.
+
+### PR bot flow (D-63)
+
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant GH as GitHub (sandbox repo)
+    participant WF as Actions workflow
+    participant Bot as src.agents bot
+    participant E1 as E1 ranker + E2 triage
+    participant Rep as Repair agent (Groq, cached)
+    Dev->>GH: open / update a pull request
+    GH->>WF: pull_request opened, synchronize
+    WF->>Bot: --base --head --pr
+    Bot->>E1: rank tests for the changed files (SHAP reasons)
+    Bot->>Bot: run at-risk tests first, then the full suite
+    Bot->>E1: triage each failure (run it on the base too)
+    alt a failure is "mine" and a model is configured
+        Bot->>Rep: R3 retrieval, at most 2 attempts
+        Rep->>Bot: patch, validated by the FULL suite
+    end
+    Bot->>GH: edit its own comment (or create it)
+    Bot->>GH: inline suggestion review, only if validated and inside the diff
+    Dev->>GH: accept the suggestion (one click) or ignore it
+```
+
+The workflow's token is `contents: read, pull-requests: write`: the bot cannot push or merge. A patch that does not
+pass the full suite is shown as a collapsed diff marked "not validated", never as a suggestion.
+

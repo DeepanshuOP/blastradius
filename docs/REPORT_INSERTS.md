@@ -65,6 +65,20 @@ On the seeded Python repositories, which have no failure history, ordering tests
 
 **Pilot.** The 20-task pilot is reported separately in `paper/generated/rq4_repair.md` and is not part of the tests above.
 
+## 5b. Exploratory: retrieval-augmented generation (2.1)
+
+Not pre-registered; every number is from `paper/generated/rq5_retrieval.md` (`make rag-eval`) and involves no model. We asked
+whether the change-aware gain in repair is just better retrieval. It is not: whole-repo hybrid retrieval that does not know the
+change places the seeded function in its top three chunks for 32 of 70 tasks (45.71%), fewer than whole-repo BM25 (46 of 70,
+65.71%; exact McNemar p = 0.0026, Holm-adjusted 0.010), while retrieval restricted to the functions the diff touches reaches
+69 of 70 (98.57%) on the standard variant and 63 of 70 (90.00%) on the hard variant. Combining dense vectors with the
+change-aware search does not improve on BM25 alone (hard variant: 58 against 63 of 70; Holm-adjusted p = 0.453). Retrieval of past
+failures for the Ask assistant finds a past failure of the same test at rank 1 for 55 of 90 eligible test-split queries
+(61.11%) with BM25 or dense vectors, against 16.74% for a random order. In 15 recorded Ask answers (openai/gpt-oss-20b) no citation points outside the retrieved items and 14 cite at least
+one (the other answered "not in the context"); correctness was not scored. One recorded PR-bot run on a seeded task
+produced a patch that passed the full suite and was offered as a suggestion (1,495 tokens). The R4 repair arm is
+implemented and tested offline; its model run is pending and is not reported here.
+
 ## 6. Limitations
 
 - Seeded bugs are simpler than real failures, and 18 of the 19 markupsafe tasks use one operator.

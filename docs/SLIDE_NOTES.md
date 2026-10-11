@@ -43,6 +43,49 @@ are pending the next quota window. Seeded bugs are easier than real ones.
 **Why is the LLM outside the core?** Only the repair step may call a model (D-58), with a pinned model, temperature 0, every reply
 cached and replayable; E1, E2 and `make tables` contain no model call.
 
+## Slide 19 (new, exploratory): retrieval study
+**On slide:** hit@3 for the seeded function, 70 tasks, standard / hard: whole-repo BM25 46 / 46; whole-repo dense 21 / 21; whole-repo
+hybrid 32 / 32; change-aware BM25 69 / 63; change-aware hybrid 69 / 58 (`rq5_retrieval.md`, made by `make rag-eval`).
+**Say:** The reviewer's question is whether change-aware repair just has better retrieval. It does not: retrieval that is smarter but
+does not know the change is worse than plain BM25 here (L3 vs L1: 3 tasks vs 17, Holm-adjusted p = 0.010), and what helps is
+restricting the search to what the change touched. Exploratory; one untuned embedding model; seeded Python repos.
+
+## Slide 20a (new, exploratory): PR bot
+**On slide:** the comment from the recording run (`src/agents/demo/bot_comment.md`, excerpt; most rows elided here):
+
+```markdown
+## BlastRadius
+PR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first failure at position 9 of 297
+
+### 1. Tests most at risk (e1-lgbm-v1)
+| # | Test file | Score | Why |
+| 4 | `tests/test_itsdangerous/test_serializer.py` | -1.96 | cochg_n_files_with_partner=0 (+0.70); hist_repo_rank=3 (-0.48); ... |
+
+### 2. Results, risk-first
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
+
+### 3. Triage of each failure
+260 mine, 0 inherited, 0 flaky (of 260 failing).
+
+### 4. Proposed fix
+Validated: the full suite passed with this patch (1 attempt(s)).
+`src/itsdangerous/signer.py` line 204:
+    bytes, self.digest_method(self.salt + b"signer" + secret_key).digest()   <- shown as a GitHub suggestion
+
+<sub>model `openai/gpt-oss-20b` · 1,495 tokens · validated: full suite passed · this bot only comments</sub>
+```
+
+**Say:** One comment per pull request: tests most at risk with reasons, results risk-first, triage of each failure, and a fix only
+if the full suite passed with it. It only comments; the workflow token has `contents: read` and `pull-requests: write`. One
+recorded run on one seeded task, not a success rate. A patch that does not pass is shown as a collapsed diff, never as a suggestion.
+
+## Slide 20b (new, exploratory): Ask BlastRadius
+**On slide:** a question, the answer with `[S1]`-style citation chips, and the retrieved items; citation faithfulness over 15 fixed
+questions (openai/gpt-oss-20b, `rq5_retrieval.md`): no citation outside the retrieved items in 15/15 answers, 14/15 cite at least one,
+1 answered "not in the context"; failure-history retrieval (same test_id: hit@1 61.11% BM25 / dense, 58.89% hybrid vs 16.74% chance).
+**Say:** The model may answer only from retrieved context and must cite it; the check we run is that every citation points at a
+retrieved item, not that the answer is right (correctness was not scored).
+
 ## Slides 21-22: limitations and what is next
 - Gate 3 not met; E2 small-sample; E3 on seeded bugs; the E1 test split is Java only; the model's detection order is no better than
   alphabetical on the seeded repos (mean first-failure position 10.91 vs 8.11, `rq4_repair.md`).

@@ -1,0 +1,1777 @@
+{
+ "ask": {
+  "model": "openai/gpt-oss-20b",
+  "questions": [
+   {
+    "answer": "The failure occurs because the progress bar logic does not correctly handle a zero‑length bar when it is marked as finished. In the test case, `length=0`, `finished=True`, and `pos=8`, the expected output is a full bar `\"########\"`. However, the implementation still renders the remaining empty slots, producing `\"########----------------\"`. This mismatch is the cause of the assertion error. [S1]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_termui.py:179",
+      "source": "code",
+      "title": "tests/test_termui.py :: test_progressbar_format_bar"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_termui.py:155",
+      "source": "code",
+      "title": "tests/test_termui.py :: test_progressbar_format_eta"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_termui.py:112",
+      "source": "code",
+      "title": "tests/test_termui.py :: test_progressbar_lands_on_final_position"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_termui.py:193",
+      "source": "code",
+      "title": "tests/test_termui.py :: test_progressbar_format_progress_line"
+     },
+     {
+      "id": "S5",
+      "ref": "docs/utils.md#Showing Progress Bars (part 2)",
+      "source": "doc",
+      "title": "docs/utils.md :: Showing Progress Bars (part 2)"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/utils.md#Showing Progress Bars",
+      "source": "doc",
+      "title": "docs/utils.md :: Showing Progress Bars"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/virtualenv.md#Why Use Virtualenv?",
+      "source": "doc",
+      "title": "docs/virtualenv.md :: Why Use Virtualenv?"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27692998653 (dask/distributed, 2026-06-17)",
+      "source": "failure",
+      "title": "dask/distributed/distributed/tests/test_config.py::test_logging_default :: run-27692998653"
+     }
+    ],
+    "cited": [
+     1
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_termui.py:179",
+      "source": "code",
+      "text": "@pytest.mark.parametrize(\n    \"length, finished, pos, avg, expected\",\n    [\n        (8, False, 7, 0, \"#######-\"),\n        (0, True, 8, 0, \"########\"),\n    ],\n)\ndef test_progressbar_format_bar(runner, length, finished, pos, avg, expected):\n    with _create_progress(\n        length, width=8, pos=pos, finished=finished, avg=[avg]\n    ) as progress:\n        assert progress.format_bar() == expected"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_termui.py:155",
+      "source": "code",
+      "text": "@pytest.mark.parametrize(\n    \"eta, expected\",\n    [\n        (0, \"00:00:00\"),\n        (30, \"00:00:30\"),\n        (90, \"00:01:30\"),\n        (900, \"00:15:00\"),\n        (9000, \"02:30:00\"),\n        (99999999999, \"1157407d 09:46:39\"),\n        (None, \"\"),\n    ],\n)\ndef test_progressbar_format_eta(runner, eta, expected):\n    with _create_progress(1, eta_known=eta is not None, avg=[eta]) as progress:\n        assert progress.format_eta() == expected"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_termui.py:112",
+      "source": "code",
+      "text": "@pytest.mark.parametrize(\"update_min_steps\", [1, 2, 3, 7, 20, 25])\n@pytest.mark.parametrize(\"drive\", [\"iterate\", \"update\"])\ndef test_progressbar_lands_on_final_position(monkeypatch, update_min_steps, drive):\n    \"\"\"The bar reaches its total whatever the ``update_min_steps`` threshold.\n\n    Regression for issue #3571: a threshold that does not divide the length\n    left a remainder pending, so `show_pos` froze below completion, reporting\n    `14/20` for a length of 20 and a threshold of 7. Thresholds of 1 and 2 do\n    divide 20, and 25 exceeds it, so nothing is ever rendered until the end.\n    \"\"\"\n    monkeypatch.setattr(click._termui_impl, \"isatty\", lambda _: True)\n    stream = io.StringIO()\n\n    if drive == \"iterate\":\n        with click.progressbar(\n            range(20), show_pos=True, update_min_steps=update_min_steps, file=stream\n        ) as bar:\n            for _ in bar:\n                pass\n    else:\n        with click.progressbar(\n            length=20, show_pos=True, update_min_steps=update_min_steps, file=stream\n        ) as bar:\n            for _ in range(20):\n                bar.update(1)\n\n    assert bar.pos == 20\n    assert bar.finished\n    assert \"20/20\" in stream.getvalue()"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_termui.py:193",
+      "source": "code",
+      "text": "@pytest.mark.parametrize(\n    \"length, show_percent, show_pos, pos, expected\",\n    [\n        (0, True, True, 0, \"  [--------]  0/0    0%\"),\n        (0, False, True, 0, \"  [--------]  0/0\"),\n        (0, False, False, 0, \"  [--------]\"),\n        (0, False, False, 0, \"  [--------]\"),\n        (8, True, True, 8, \"  [########]  8/8  100%\"),\n    ],\n)\ndef test_progressbar_format_progress_line(\n    runner, length, show_percent, show_pos, pos, expected\n):\n    with _create_progress(\n        length,\n        width=8,\n        show_percent=show_percent,\n        pos=pos,\n        show_pos=show_pos,\n    ) as progress:\n        assert progress.format_progress_line() == expected"
+     },
+     {
+      "id": "S5",
+      "ref": "docs/utils.md#Showing Progress Bars (part 2)",
+      "source": "doc",
+      "text": "l render\ncorrectly:\n\n```python\nimport time\n\nwith click.progressbar([1, 2, 3]) as bar:\n    for x in bar:\n        click.echo(f\"sleep({x})...\")\n        time.sleep(x)\n```\n\nAnother useful feature is to associate a label with the progress bar which will be shown preceding the progress bar:\n\n```python\nwith click.progressbar(all_the_users_to_process,\n                       label='Modifying user accounts',\n                       length=number_of_users) as bar:\n    for user in bar:\n        modify_the_user(user)\n```\n\nSometimes, one may need to iterate over an external iterator, and advance the progress bar irregularly. To do so, you\nneed to specify the length (and no iterable), and use the update method on the context return value instead of iterating\ndirectly over it:\n\n```python\nwith click.progressbar(length=total_size,\n                       label='Unzipping archive') as bar:\n    for archive in zip_file:\n        archive.extract()\n        bar.update(archive.size)\n```"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/utils.md#Showing Progress Bars",
+      "source": "doc",
+      "text": "## Showing Progress Bars\n\nSometimes, you have command line scripts that need to process a lot of data, but you want to quickly show the user some\nprogress about how long that will take. Click supports simple progress bar rendering for that through the\n{func}`progressbar` function.\n\n```{note} If you find that you have requirements beyond what Click's progress bar supports, try using [tqdm](https://tqdm.github.io/).\n```\n\nThe basic usage is very simple: the idea is that you have an iterable that you want to operate on. For each item in the\niterable it might take some time to do processing. So say you have a loop like this:\n\n```python\nfor user in all_the_users_to_process:\n    modify_the_user(user)\n```\n\nTo hook this up with an automatically updating progress bar, all you need to do is to change the code to this:\n\n```python\nimport click\n\nwith click.progressbar(all_the_users_to_process) as bar:\n    for user in bar:\n        modify_the_user(user)\n```\n\nClick will then automatically print a progress bar to the terminal and calculate the remaining time for you. The\ncalculation of remaining time requires that the iterable has a length. If it does not have a length but you know the\nlength, you can explicitly provide it:\n\n```python\nwith click.progressbar(all_the_users_to_process,\n                       length=number_of_users) as bar:\n    for user in bar:\n        modify_the_user(user)\n```\n\nNote that {func}`progressbar` updates the bar *after* each iteration of the loop. So code like this wil"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/virtualenv.md#Why Use Virtualenv?",
+      "source": "doc",
+      "text": "## Why Use Virtualenv?\n\nYou should use [Virtualenv](https://virtualenv.pypa.io/en/latest/) because:\n\n- It allows you to install multiple versions of the same dependency.\n- If you have an operating system version of Python, it prevents you from changing its dependencies and potentially\n  messing up your os.\n"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27692998653 (dask/distributed, 2026-06-17)",
+      "source": "failure",
+      "text": "distributed/tests/test_config.py::test_logging_default | dask/distributed | 2026-06-17 | inherited\nAssertionError: assert [('distribute...: important')] == [('foo.bar', ..., '7: error')]"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q01",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "test-failure",
+    "question": "Why is tests.test_termui::test_progressbar_format_bar[0-True-8-0-########] failing? Its output starts: AssertionError: assert '########----------------' == '########'",
+    "repo": "click",
+    "task_id": "click-ARITH_SWAP-00",
+    "tokens": 1889,
+    "type": "test-failure"
+   },
+   {
+    "answer": "not in the context.",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_itsdangerous/test_serializer.py:122",
+      "source": "code",
+      "title": "tests/test_itsdangerous/test_serializer.py :: TestSerializer.test_alt_salt"
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/serializer.py:191",
+      "source": "code",
+      "title": "src/itsdangerous/serializer.py :: Serializer.__init__"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/serializer.py:140",
+      "source": "code",
+      "title": "src/itsdangerous/serializer.py :: Serializer.__init__"
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/serializer.py:310",
+      "source": "code",
+      "title": "src/itsdangerous/serializer.py :: Serializer.dumps"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#ItsDangerous",
+      "source": "doc",
+      "title": "README.md :: ItsDangerous"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#A Simple Example",
+      "source": "doc",
+      "title": "README.md :: A Simple Example"
+     },
+     {
+      "id": "S7",
+      "ref": "run 27015248456 (castorini/anserini, 2026-06-05)",
+      "source": "failure",
+      "title": "castorini/anserini/io.anserini.encoder.EncodeQueryTest#testSparseJsonlOutput :: run-27015248456"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27015248456 (castorini/anserini, 2026-06-05)",
+      "source": "failure",
+      "title": "castorini/anserini/io.anserini.encoder.EncodeQueryTest#testSparseCompressedOutput :: run-27015248456"
+     }
+    ],
+    "cited": [],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_itsdangerous/test_serializer.py:122",
+      "source": "code",
+      "text": "    def test_alt_salt(self, serializer: Serializer, value: Any):\n        signed = serializer.dumps(value, salt=\"other\")\n\n        with pytest.raises(BadSignature):\n            serializer.loads(signed)\n\n        assert serializer.loads(signed, salt=\"other\") == value"
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/serializer.py:191",
+      "source": "code",
+      "text": "    def __init__(\n        self,\n        secret_key: str | bytes | cabc.Iterable[str] | cabc.Iterable[bytes],\n        salt: str | bytes | None = b\"itsdangerous\",\n        serializer: t.Any | None = None,\n        serializer_kwargs: dict[str, t.Any] | None = None,\n        signer: type[Signer] | None = None,\n        signer_kwargs: dict[str, t.Any] | None = None,\n        fallback_signers: list[\n            dict[str, t.Any] | tuple[type[Signer], dict[str, t.Any]] | type[Signer]\n        ]\n        | None = None,\n    ):\n        #: The list of secret keys to try for verifying signatures, from\n        #: oldest to newest. The newest (last) key is used for signing.\n        #:\n        #: This allows a key rotation system to keep a list of allowed\n        #: keys and remove expired ones.\n        self.secret_keys: list[bytes] = _make_keys_list(secret_key)\n\n        if salt is not None:\n            salt = want_bytes(salt)\n            # if salt is None then the signer's default is used\n\n        self.salt = salt\n\n        if serializer is None:\n            serializer = self.default_serializer\n\n        self.serializer: _PDataSerializer[_TSerialized] = serializer\n        self.is_text_serializer: bool = is_text_serializer(serializer)\n\n        if signer is None:\n            signer = self.default_signer\n\n        self.signer: type[Signer] = signer\n        self.signer_kwargs: dict[str, t.Any] = signer_kwargs or {}\n\n        if fallback_signers is None:\n            fallback_signers = list(self.default_fallback_signers)\n\n        self.fallback_signers: list[\n            dict[str, t.Any] | tuple[type[Signer], dict[str, t.Any]] | type[Signer]\n        ] = fallback_signers\n        self.serializer_kwargs: dict[str, t.Any] = serializer_kwargs or {}"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/serializer.py:140",
+      "source": "code",
+      "text": "    @t.overload\n    def __init__(\n        self: Serializer[bytes],\n        secret_key: str | bytes | cabc.Iterable[str] | cabc.Iterable[bytes],\n        salt: str | bytes | None = b\"itsdangerous\",\n        *,\n        serializer: _PDataSerializer[bytes],\n        serializer_kwargs: dict[str, t.Any] | None = None,\n        signer: type[Signer] | None = None,\n        signer_kwargs: dict[str, t.Any] | None = None,\n        fallback_signers: list[\n            dict[str, t.Any] | tuple[type[Signer], dict[str, t.Any]] | type[Signer]\n        ]\n        | None = None,\n    ): ..."
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/serializer.py:310",
+      "source": "code",
+      "text": "    def dumps(self, obj: t.Any, salt: str | bytes | None = None) -> _TSerialized:\n        \"\"\"Returns a signed string serialized with the internal\n        serializer. The return value can be either a byte or unicode\n        string depending on the format of the internal serializer.\n        \"\"\"\n        payload = want_bytes(self.dump_payload(obj))\n        rv = self.make_signer(salt).sign(payload)\n\n        if self.is_text_serializer:\n            return rv.decode(\"utf-8\")  # type: ignore[return-value]\n\n        return rv  # type: ignore[return-value]"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#ItsDangerous",
+      "source": "doc",
+      "text": "# ItsDangerous\n\n... so better sign this\n\nVarious helpers to pass data to untrusted environments and to get it\nback safe and sound. Data is cryptographically signed to ensure that a\ntoken has not been tampered with.\n\nIt's possible to customize how data is serialized. Data is compressed as\nneeded. A timestamp can be added and verified automatically while\nloading a token.\n\n"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#A Simple Example",
+      "source": "doc",
+      "text": "## A Simple Example\n\nHere's how you could generate a token for transmitting a user's id and\nname between web requests.\n\n```python\nfrom itsdangerous import URLSafeSerializer\nauth_s = URLSafeSerializer(\"secret key\", \"auth\")\ntoken = auth_s.dumps({\"id\": 5, \"name\": \"itsdangerous\"})\n\nprint(token)"
+     },
+     {
+      "id": "S7",
+      "ref": "run 27015248456 (castorini/anserini, 2026-06-05)",
+      "source": "failure",
+      "text": "io.anserini.encoder.EncodeQueryTest#testSparseJsonlOutput | castorini/anserini | 2026-06-05 | mine\n» IO Server returned HTTP response code: 429 for URL: https://huggingface.co/castorini/splade-v3-onnx/resolve/main/splade-v3-vocab.txt"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27015248456 (castorini/anserini, 2026-06-05)",
+      "source": "failure",
+      "text": "io.anserini.encoder.EncodeQueryTest#testSparseCompressedOutput | castorini/anserini | 2026-06-05 | mine\n» IO Server returned HTTP response code: 429 for URL: https://huggingface.co/castorini/splade-v3-onnx/resolve/main/splade-v3-vocab.txt"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q02",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "test-failure",
+    "question": "Why is tests.test_itsdangerous.test_serializer.TestSerializer::test_alt_salt[Serializer] failing? Its output starts: TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes'",
+    "repo": "itsdangerous",
+    "task_id": "itsdangerous-ARITH_SWAP-00",
+    "tokens": 1364,
+    "type": "test-failure"
+   },
+   {
+    "answer": "The failure occurs because `Markup.striptags()` does not correctly remove the outer comment and the inner comment that contains newlines, so the resulting string is `\"<!-- outer c...th newlines'>\"` instead of the expected `\"Foo & Bar\"`. This indicates a bug in the `striptags` implementation that fails to handle comments with newlines properly. The test in the repository expects the stripped output to be `\"Foo & Bar\"` but the actual output contains the comment fragment, causing the assertion to fail. [S1]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_markupsafe.py:77",
+      "source": "code",
+      "title": "tests/test_markupsafe.py :: test_escaping"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_markupsafe.py:177",
+      "source": "code",
+      "title": "tests/test_markupsafe.py :: test_escape_silent"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_markupsafe.py:107",
+      "source": "code",
+      "title": "tests/test_markupsafe.py :: test_format"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_markupsafe.py:61",
+      "source": "code",
+      "title": "tests/test_markupsafe.py :: test_tuple_interpol"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#Examples",
+      "source": "doc",
+      "title": "README.md :: Examples"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "title": "README.md :: (top)"
+     },
+     {
+      "id": "S7",
+      "ref": "run 27692998653 (dask/distributed, 2026-06-17)",
+      "source": "failure",
+      "title": "dask/distributed/distributed/tests/test_config.py::test_logging_default :: run-27692998653"
+     },
+     {
+      "id": "S8",
+      "ref": "run 29257370683 (dask/distributed, 2026-07-13)",
+      "source": "failure",
+      "title": "dask/distributed/distributed/dashboard/tests/test_scheduler_bokeh.py::test_prefix_bokeh :: run-29257370683"
+     }
+    ],
+    "cited": [
+     1
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_markupsafe.py:77",
+      "source": "code",
+      "text": "def test_escaping() -> None:\n    assert escape(\"\\\"<>&'\") == \"&#34;&lt;&gt;&amp;&#39;\"\n    assert (\n        Markup(\n            \"<!-- outer comment -->\"\n            \"<em>Foo &amp; Bar\"\n            \" <!-- inner comment about <em> -->\\n \"\n            \"</em>\"\n            \"<!-- comment\\nwith\\nnewlines\\n-->\"\n            \"<meta content='tag\\nwith\\nnewlines'>\"\n        ).striptags()\n        == \"Foo & Bar\"\n    )"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_markupsafe.py:177",
+      "source": "code",
+      "text": "def test_escape_silent() -> None:\n    assert escape_silent(None) == Markup()\n    assert escape(None) == Markup(None)\n    assert escape_silent(\"<foo>\") == Markup(\"&lt;foo&gt;\")"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_markupsafe.py:107",
+      "source": "code",
+      "text": "def test_format() -> None:\n    result = Markup(\"<em>{awesome}</em>\").format(awesome=\"<awesome>\")\n    assert result == \"<em>&lt;awesome&gt;</em>\"\n\n    result = Markup(\"{0[1][bar]}\").format([0, {\"bar\": \"<bar/>\"}])\n    assert result == \"&lt;bar/&gt;\"\n\n    result = Markup(\"{0[1][bar]}\").format([0, {\"bar\": Markup(\"<bar/>\")}])\n    assert result == \"<bar/>\""
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_markupsafe.py:61",
+      "source": "code",
+      "text": "def test_tuple_interpol() -> None:\n    result = Markup(\"<em>%s:%s</em>\") % (\"<foo>\", \"<bar>\")\n    expect = Markup(\"<em>&lt;foo&gt;:&lt;bar&gt;</em>\")\n    assert result == expect"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#Examples",
+      "source": "doc",
+      "text": "## Examples\n\n```pycon\n>>> from markupsafe import Markup, escape\n\n>>> # escape replaces special characters and wraps in Markup\n>>> escape(\"<script>alert(document.cookie);</script>\")\nMarkup('&lt;script&gt;alert(document.cookie);&lt;/script&gt;')\n\n>>> # wrap in Markup to mark text \"safe\" and prevent escaping\n>>> Markup(\"<strong>Hello</strong>\")\nMarkup('<strong>hello</strong>')\n\n>>> escape(Markup(\"<strong>Hello</strong>\"))\nMarkup('<strong>hello</strong>')\n\n>>> # Markup is a str subclass\n>>> # methods and operators escape their arguments\n>>> template = Markup(\"Hello <em>{name}</em>\")\n>>> template.format(name='\"World\"')\nMarkup('Hello <em>&#34;World&#34;</em>')\n```\n"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "text": "<div align=\"center\"><img src=\"https://raw.githubusercontent.com/pallets/markupsafe/refs/heads/stable/docs/_static/markupsafe-name.svg\" alt=\"\" height=\"150\"></div>\n"
+     },
+     {
+      "id": "S7",
+      "ref": "run 27692998653 (dask/distributed, 2026-06-17)",
+      "source": "failure",
+      "text": "distributed/tests/test_config.py::test_logging_default | dask/distributed | 2026-06-17 | inherited\nAssertionError: assert [('distribute...: important')] == [('foo.bar', ..., '7: error')]"
+     },
+     {
+      "id": "S8",
+      "ref": "run 29257370683 (dask/distributed, 2026-07-13)",
+      "source": "failure",
+      "text": "distributed/dashboard/tests/test_scheduler_bokeh.py::test_prefix_bokeh | dask/distributed | 2026-07-13 | mine\nassert '<script type=\"text/javascript\" src=\"/foo-bar/static/' in '<!DOCTYPE html>\\n<html>\\n\\n<head>\\n    <meta charset=\"utf-8\" />\\n    <title>Dask Diagnostic UI</title>\\n    <meta name=\\'viewport\\' content=\\'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\\' />\\n    <link rel=\"stylesheet\" href=\"statics/css/base.css\" />\\n    <link rel=\"shortcut icon\" href=\"statics/images/favicon.ico\" />\\n    \\n    \\n    \\n    \\n    \\n    <script src=\"/foo-bar/static/js/bokeh.min.js?v=c85a71710df1e48619ab74e8acedef0c76cf5697889a829b79c262ad77b136cac00cbaf306c2df2bcafe14bff7ba1bf8f7f6922"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q03",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "test-failure",
+    "question": "Why is tests.test_markupsafe::test_escaping[markupsafe._native] failing? Its output starts: assert \"<!-- outer c...th newlines'>\" == 'Foo & Bar'",
+    "repo": "markupsafe",
+    "task_id": "markupsafe-ARITH_SWAP-00",
+    "tokens": 1326,
+    "type": "test-failure"
+   },
+   {
+    "answer": "The test `data.seeded.repos.shopcart.tests.test_cart::test_total_applies_discount_then_tax` fails because the `Cart.total` method returns `36827` instead of the expected `52993` (`44910 + 8083`). The expected calculation is based on a 10 % discount on `49900` (giving `44910`) followed by an 18 % GST of `8083` ([S1]). The mismatch indicates that the discount or tax computation inside `Cart.total` is incorrect.",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_cart.py:13",
+      "source": "code",
+      "title": "tests/test_cart.py :: test_total_applies_discount_then_tax"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_cart.py:6",
+      "source": "code",
+      "title": "tests/test_cart.py :: test_subtotal_sums_lines"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_tax.py:8",
+      "source": "code",
+      "title": "tests/test_tax.py :: test_export_is_zero_rated"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_tax.py:4",
+      "source": "code",
+      "title": "tests/test_tax.py :: test_gst_in_india"
+     },
+     {
+      "id": "S5",
+      "ref": "run 32121135532 (oracle/opengrok, 2026-08-18)",
+      "source": "failure",
+      "title": "oracle/opengrok/org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataAll :: run-32121135532"
+     },
+     {
+      "id": "S6",
+      "ref": "run 27567200309 (oracle/opengrok, 2026-06-15)",
+      "source": "failure",
+      "title": "oracle/opengrok/org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataSimple :: run-27567200309"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32125528579 (castorini/anserini, 2026-08-18)",
+      "source": "failure",
+      "title": "castorini/anserini/io.anserini.search.SearchInvertedDenseVectorsTest#searchInvalidReader :: run-32125528579"
+     },
+     {
+      "id": "S8",
+      "ref": "README.md#shopcart",
+      "source": "doc",
+      "title": "README.md :: shopcart"
+     }
+    ],
+    "cited": [
+     1
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_cart.py:13",
+      "source": "code",
+      "text": "def test_total_applies_discount_then_tax():\n    cart = Cart()\n    cart.add(\"BOOK-001\")\n    # 49900 - 10% = 44910; GST 18% of 44910 = 8083\n    assert cart.total(\"WELCOME10\") == 44910 + 8083"
+     },
+     {
+      "id": "S2",
+      "ref": "tests/test_cart.py:6",
+      "source": "code",
+      "text": "def test_subtotal_sums_lines():\n    cart = Cart()\n    cart.add(\"BOOK-001\", 2)\n    cart.add(\"PEN-010\")\n    assert cart.subtotal() == 2 * 49900 + 2500"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_tax.py:8",
+      "source": "code",
+      "text": "def test_export_is_zero_rated():\n    assert compute_tax(10000, \"EXPORT\") == 0"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_tax.py:4",
+      "source": "code",
+      "text": "def test_gst_in_india():\n    assert compute_tax(10000, \"IN\") == 1800"
+     },
+     {
+      "id": "S5",
+      "ref": "run 32121135532 (oracle/opengrok, 2026-08-18)",
+      "source": "failure",
+      "text": "org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataAll | oracle/opengrok | 2026-08-18 | mine\nexpected: <true> but was: <false>"
+     },
+     {
+      "id": "S6",
+      "ref": "run 27567200309 (oracle/opengrok, 2026-06-15)",
+      "source": "failure",
+      "text": "org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataSimple | oracle/opengrok | 2026-06-15 | mine\nexpected: <true> but was: <false>"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32125528579 (castorini/anserini, 2026-08-18)",
+      "source": "failure",
+      "text": "io.anserini.search.SearchInvertedDenseVectorsTest#searchInvalidReader | castorini/anserini | 2026-08-18 | mine\n->Assert.assertTrue:42->Assert.fail:89 Error output should contain the expected error message"
+     },
+     {
+      "id": "S8",
+      "ref": "README.md#shopcart",
+      "source": "doc",
+      "text": "# shopcart\n\nA tiny shopping-cart library. It is the target codebase for the BlastRadius\nagent demo (`python -m src.agents demo`): small enough to read in a minute,\nlarge enough that a change to pricing reaches some tests and not others."
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q04",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "test-failure",
+    "question": "Why is data.seeded.repos.shopcart.tests.test_cart::test_total_applies_discount_then_tax failing? Its output starts: AssertionError: assert 36827 == (44910 + 8083)",
+    "repo": "shopcart",
+    "task_id": "shopcart-ARITH_SWAP-00",
+    "tokens": 919,
+    "type": "test-failure"
+   },
+   {
+    "answer": "The failure occurs because the catalog does not contain a price entry for the SKU `\"BOOK-001\"`. When `cart.subtotal()` calls `unit_price(\"BOOK-001\")`, the function looks up the SKU in `PRICES`; since it is missing, a `KeyError` is raised, producing the message “unknown SKU BOOK-001” [S2]. This prevents the subtotal from being computed as expected in the test [S1].",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_cart.py:6",
+      "source": "code",
+      "title": "tests/test_cart.py :: test_subtotal_sums_lines"
+     },
+     {
+      "id": "S2",
+      "ref": "shopcart/catalog.py:11",
+      "source": "code",
+      "title": "shopcart/catalog.py :: unit_price"
+     },
+     {
+      "id": "S3",
+      "ref": "shopcart/cart.py:25",
+      "source": "code",
+      "title": "shopcart/cart.py :: Cart.subtotal"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_cart.py:13",
+      "source": "code",
+      "title": "tests/test_cart.py :: test_total_applies_discount_then_tax"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#shopcart",
+      "source": "doc",
+      "title": "README.md :: shopcart"
+     },
+     {
+      "id": "S6",
+      "ref": "run 30618194613 (apache/atlas, 2026-08-05)",
+      "source": "failure",
+      "title": "apache/atlas/org.apache.atlas.glossary.GlossaryServiceTest#testImportGlossaryData :: run-30618194613"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32121135532 (oracle/opengrok, 2026-08-18)",
+      "source": "failure",
+      "title": "oracle/opengrok/org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataAll :: run-32121135532"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27567200309 (oracle/opengrok, 2026-06-15)",
+      "source": "failure",
+      "title": "oracle/opengrok/org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataSimple :: run-27567200309"
+     }
+    ],
+    "cited": [
+     2,
+     1
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_cart.py:6",
+      "source": "code",
+      "text": "def test_subtotal_sums_lines():\n    cart = Cart()\n    cart.add(\"BOOK-001\", 2)\n    cart.add(\"PEN-010\")\n    assert cart.subtotal() == 2 * 49900 + 2500"
+     },
+     {
+      "id": "S2",
+      "ref": "shopcart/catalog.py:11",
+      "source": "code",
+      "text": "def unit_price(sku: str) -> int:\n    \"\"\"Return the unit price of `sku` in paise.\"\"\"\n    if not (sku not in PRICES):\n        raise KeyError(f\"unknown SKU {sku}\")\n    return PRICES[sku]"
+     },
+     {
+      "id": "S3",
+      "ref": "shopcart/cart.py:25",
+      "source": "code",
+      "text": "    def subtotal(self) -> int:\n        \"\"\"Sum of unit price x quantity, in paise.\"\"\"\n        return sum(unit_price(sku) * qty for sku, qty in self.items.items())"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_cart.py:13",
+      "source": "code",
+      "text": "def test_total_applies_discount_then_tax():\n    cart = Cart()\n    cart.add(\"BOOK-001\")\n    # 49900 - 10% = 44910; GST 18% of 44910 = 8083\n    assert cart.total(\"WELCOME10\") == 44910 + 8083"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#shopcart",
+      "source": "doc",
+      "text": "# shopcart\n\nA tiny shopping-cart library. It is the target codebase for the BlastRadius\nagent demo (`python -m src.agents demo`): small enough to read in a minute,\nlarge enough that a change to pricing reaches some tests and not others."
+     },
+     {
+      "id": "S6",
+      "ref": "run 30618194613 (apache/atlas, 2026-08-05)",
+      "source": "failure",
+      "text": "org.apache.atlas.glossary.GlossaryServiceTest#testImportGlossaryData | apache/atlas | 2026-08-05 | mine\n» NullPointer"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32121135532 (oracle/opengrok, 2026-08-18)",
+      "source": "failure",
+      "text": "org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataAll | oracle/opengrok | 2026-08-18 | mine\nexpected: <true> but was: <false>"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27567200309 (oracle/opengrok, 2026-06-15)",
+      "source": "failure",
+      "text": "org.opengrok.web.api.v1.controller.SuggesterControllerTest#testGetPopularityDataSimple | oracle/opengrok | 2026-06-15 | mine\nexpected: <true> but was: <false>"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q05",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "test-failure",
+    "question": "Why is data.seeded.repos.shopcart.tests.test_cart::test_subtotal_sums_lines failing? Its output starts: KeyError: 'unknown SKU BOOK-001'",
+    "repo": "shopcart",
+    "task_id": "shopcart-NEGATE_COND-01",
+    "tokens": 943,
+    "type": "test-failure"
+   },
+   {
+    "answer": "Changing `src/click/_termui_impl.py` risks breaking the terminal‑UI functionality used by the test suite. In particular, the tests in `tests/test_termui.py` rely on the `_termui_impl` module for progress‑bar handling and other UI helpers, and the tests in `tests/test_types/` depend on the same module for type‑related utilities. Modifying this file could cause failures in those tests, as indicated by the E1 ranker’s notes on test impact [S8].",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "src/click/termui.py:987",
+      "source": "code",
+      "title": "src/click/termui.py :: raw_terminal"
+     },
+     {
+      "id": "S2",
+      "ref": "src/click/_termui_impl.py:748",
+      "source": "code",
+      "title": "src/click/_termui_impl.py :: Editor.edit"
+     },
+     {
+      "id": "S3",
+      "ref": "src/click/_termui_impl.py:743",
+      "source": "code",
+      "title": "src/click/_termui_impl.py :: Editor.edit"
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_termui.py:101",
+      "source": "code",
+      "title": "tests/test_termui.py :: test_progressbar_hidden_manual"
+     },
+     {
+      "id": "S5",
+      "ref": "docs/quickstart.md#Examples (part 2)",
+      "source": "doc",
+      "title": "docs/quickstart.md :: Examples (part 2)"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/utils.md#Screen Clearing",
+      "source": "doc",
+      "title": "docs/utils.md :: Screen Clearing"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/wincmd.md#Windows Console Notes",
+      "source": "doc",
+      "title": "docs/wincmd.md :: Windows Console Notes"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "title": "E1 ranker top-5"
+     }
+    ],
+    "cited": [
+     8
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "src/click/termui.py:987",
+      "source": "code",
+      "text": "def raw_terminal() -> AbstractContextManager[int]:\n    from ._termui_impl import raw_terminal as f\n\n    return f()"
+     },
+     {
+      "id": "S2",
+      "ref": "src/click/_termui_impl.py:748",
+      "source": "code",
+      "text": "    @t.overload\n    def edit(self, text: str | None) -> str | None: ..."
+     },
+     {
+      "id": "S3",
+      "ref": "src/click/_termui_impl.py:743",
+      "source": "code",
+      "text": "    @t.overload\n    def edit(self, text: bytes | bytearray) -> bytes | None: ..."
+     },
+     {
+      "id": "S4",
+      "ref": "tests/test_termui.py:101",
+      "source": "code",
+      "text": "def test_progressbar_hidden_manual(runner, monkeypatch):\n    @click.command()\n    def cli():\n        with _create_progress(label=\"see nothing\", hidden=True) as progress:\n            for _ in progress:\n                pass\n\n    monkeypatch.setattr(click._termui_impl, \"isatty\", lambda _: True)\n    assert runner.invoke(cli, []).output == \"\""
+     },
+     {
+      "id": "S5",
+      "ref": "docs/quickstart.md#Examples (part 2)",
+      "source": "doc",
+      "text": "ermui](https://github.com/pallets/click/tree/main/examples/termui) : A simple example that showcases terminal UI\n  helpers provided by click.\n"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/utils.md#Screen Clearing",
+      "source": "doc",
+      "text": "## Screen Clearing\n\n```{versionadded} 2.0\n```\n\nTo clear the terminal screen, you can use the {func}`clear` function that is provided starting with Click 2.0. It does\nwhat the name suggests: it clears the entire visible screen in a platform-agnostic way:\n\n```python\nimport click\nclick.clear()\n```\n"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/wincmd.md#Windows Console Notes",
+      "source": "doc",
+      "text": "# Windows Console Notes\n\n```{versionadded} 6.0\n```\n\nClick emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform\ndifferent decoding of parameters.\n\nHere is a brief overview of how this works and what it means to you.\n"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "text": "E1 ranker (LightGBM, trained on BR-Bench), tests most at risk if src/click/_termui_impl.py changes:\n1. tests/test_termui.py score -0.918 because cochg_n_files_with_partner=0 (+0.87); prox_max_jaccard=0.285714 (+0.42); hist_repo_rank=23 (-0.38)\n2. tests/test_types/__init__.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=25 (-0.47); chg_touches_test=0 (+0.34)\n3. tests/test_types/test_Choice.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=26 (-0.47); chg_touches_test=0 (+0.34)\n4. tests/test_types/test_File.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=27 (-0.47); chg_touches_test=0 (+0.34)\n5. tests/test_types/test_FloatRange.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=28 (-0.46); chg_touches_test=0 (+0.34)"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q06",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "impact",
+    "question": "What is at risk if I change src/click/_termui_impl.py?",
+    "repo": "click",
+    "task_id": "click-ARITH_SWAP-00",
+    "tokens": 1050,
+    "type": "impact"
+   },
+   {
+    "answer": "Changing `src/click/parser.py` risks breaking the old parser API that is still re‑exported and used by tests. The module contains a `__getattr__` that warns and forwards deprecated names such as `OptionParser`, `Argument`, `Option`, `split_opt`, and `split_arg_string` to the old implementations in `optparse` [S2]. Tests in `tests/test_deprecations.py` explicitly import these names from `click.parser` and expect them to resolve to the legacy objects [S3]. If the file is altered, those imports may fail or the deprecation warnings may change, causing the tests to break. Additionally, the ranking model in `src/models/e1_ranker.py` lists several tests that are sensitive to changes in the parser implementation, indicating that parser behavior directly affects test outcomes [S8]. Therefore, modifying `src/click/parser.py` could break backward compatibility, deprecation handling, and the test suite.",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "src/click/core.py:2677",
+      "source": "code",
+      "title": "src/click/core.py :: Parameter.add_to_parser"
+     },
+     {
+      "id": "S2",
+      "ref": "src/click/parser.py:503",
+      "source": "code",
+      "title": "src/click/parser.py :: __getattr__"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_deprecations.py:13",
+      "source": "code",
+      "title": "tests/test_deprecations.py :: test_attr_deprecated"
+     },
+     {
+      "id": "S4",
+      "ref": "src/click/parser.py:217",
+      "source": "code",
+      "title": "src/click/parser.py :: _ParsingState.__init__"
+     },
+     {
+      "id": "S5",
+      "ref": "docs/index.md#Welcome to Click",
+      "source": "doc",
+      "title": "docs/index.md :: Welcome to Click"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/upgrade-guides.md#Deprecations",
+      "source": "doc",
+      "title": "docs/upgrade-guides.md :: Deprecations"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/why.md#Why Click?",
+      "source": "doc",
+      "title": "docs/why.md :: Why Click?"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "title": "E1 ranker top-5"
+     }
+    ],
+    "cited": [
+     2,
+     3,
+     8
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "src/click/core.py:2677",
+      "source": "code",
+      "text": "    @abstractmethod\n    def add_to_parser(self, parser: _OptionParser, ctx: Context) -> None: ..."
+     },
+     {
+      "id": "S2",
+      "ref": "src/click/parser.py:503",
+      "source": "code",
+      "text": "def __getattr__(name: str) -> object:\n    import warnings\n\n    if name in {\n        \"OptionParser\",\n        \"Argument\",\n        \"Option\",\n        \"split_opt\",\n        \"normalize_opt\",\n        \"ParsingState\",\n    }:\n        warnings.warn(\n            f\"'parser.{name}' is deprecated and will be removed in Click 9.0.\"\n            \" The old parser is available in 'optparse'.\",\n            DeprecationWarning,\n            stacklevel=2,\n        )\n        return globals()[f\"_{name}\"]\n\n    if name == \"split_arg_string\":\n        from .shell_completion import split_arg_string\n\n        warnings.warn(\n            \"Importing 'parser.split_arg_string' is deprecated, it will only be\"\n            \" available in 'shell_completion' in Click 9.0.\",\n            DeprecationWarning,\n            stacklevel=2,\n        )\n        return split_arg_string\n\n    raise AttributeError(name)"
+     },
+     {
+      "id": "S3",
+      "ref": "tests/test_deprecations.py:13",
+      "source": "code",
+      "text": "@pytest.mark.parametrize(\n    (\"module\", \"name\", \"target\"),\n    [\n        # Stream helpers, re-exported from both `click` and `click.utils`.\n        (click, \"get_binary_stream\", click.utils._get_binary_stream),\n        (click, \"get_text_stream\", click.utils._get_text_stream),\n        (click.utils, \"get_binary_stream\", click.utils._get_binary_stream),\n        (click.utils, \"get_text_stream\", click.utils._get_text_stream),\n        # Command-class aliases, re-exported from `click` and `click.core`.\n        (click, \"BaseCommand\", click.core._BaseCommand),\n        (click, \"MultiCommand\", click.core._MultiCommand),\n        (click.core, \"BaseCommand\", click.core._BaseCommand),\n        (click.core, \"MultiCommand\", click.core._MultiCommand),\n        # Old parser API (moved to `optparse`); `OptionParser` is also\n        # re-exported from the top-level `click` namespace.\n        (click, \"OptionParser\", click.parser._OptionParser),\n        (click.parser, \"OptionParser\", click.parser._OptionParser),\n        (click.parser, \"Argument\", click.parser._Argument),\n        (click.parser, \"Option\", click.parser._Option),\n        (click.parser, \"split_opt\", click.parser._split_opt),\n        (click.parser, \"normalize_opt\", click.parser._normalize_opt),\n        (click.parser, \"ParsingState\", click.parser._ParsingState),\n        (click.parser, \"split_arg_string\", click.shell_completion.split_arg_string),\n        # Deprecated `click.utils` utilities.\n        (click.utils, \"LazyFile\", click.utils._LazyFile),\n        (click.utils, \"KeepOpenFile\", click.utils._KeepOpenFile),\n        (click.utils, \"make_default_short_help\", click.utils._make_default_short_help),\n        (click.utils, \"PacifyFlushWrapper\", click.utils._PacifyFlushWrapper),\n        (click.utils, \"safecall\", click.utils._safecall),\n        # Version metadata attribute.\n        (click, \"__version__\", importlib.metadata.version(\"click\")),\n    ],\n    ids=lambda v: getattr(v, \"__name__\", v),\n)\ndef test_attr_deprecated(module, name, target):\n    with pytest.warns(DeprecationWarning, match=name):\n        value = getattr(module, name)\n\n    assert value == target"
+     },
+     {
+      "id": "S4",
+      "ref": "src/click/parser.py:217",
+      "source": "code",
+      "text": "    def __init__(self, rargs: list[str]) -> None:\n        self.opts: dict[str, t.Any] = {}\n        self.largs: list[str] = []\n        self.rargs = rargs\n        self.order: list[CoreParameter] = []"
+     },
+     {
+      "id": "S5",
+      "ref": "docs/index.md#Welcome to Click",
+      "source": "doc",
+      "text": "# Welcome to Click\n\n```{image} _static/click-name.svg\n:align: center\n:height: 200px\n```\n\nClick is a Python package for creating beautiful command line interfaces\nin a composable way with as little code as necessary. It's the \"Command\nLine Interface Creation Kit\". It's highly configurable but comes with\nsensible defaults out of the box.\n\nIt aims to make the process of writing command line tools quick and fun\nwhile also preventing any frustration caused by the inability to implement\nan intended CLI API.\n\nClick in three points:\n\n- arbitrary nesting of commands\n- automatic help page generation\n- supports lazy loading of subcommands at runtime\n\nWhat does it look like? Here is an example of a simple Click program:\n\n```{eval-rst}\n.. click:example::\n\n    import click\n\n    @click.command()\n    @click.option('--count', default=1, help='Number of greetings.')\n    @click.option('--name', prompt='Your name',\n                  help='The person to greet.')\n    def hello(count, name):\n        \"\"\"Simple program that greets NAME for a total of COUNT times.\"\"\"\n        for x in range(count):\n            click.echo(f\"Hello {name}!\")\n\n    if __name__ == '__main__':\n        hello()\n\n\nAnd what it looks like when run:\n\n\n.. click:run::\n\n    invoke(hello, ['--count=3'], prog_name='python hello.py', input='John\\n')\n\n\nIt automatically generates nicely formatted help pages:\n\n\n.. click:run::\n\n    invoke(hello, ['--help'], prog_name='python hello.py')\n```\n\nYou can get the library directly from PyPI:\n\n```\npi"
+     },
+     {
+      "id": "S6",
+      "ref": "docs/upgrade-guides.md#Deprecations",
+      "source": "doc",
+      "text": "### Deprecations\n\nFor each deprecation, provide a brief explanation, and direct users to new function / class if available.\n- A parameter name that is not a valid Python identifier, or that is a [Python keyword](https://docs.python.org/3/reference/lexical_analysis.html#keywords), is deprecated and raises `TypeError` in 9.0. [`str.isidentifier()`](https://docs.python.org/3/library/stdtypes.html#str.isidentifier) decides the first case, so `click.argument(\"0foo\")` fails it. It accepts a keyword, so `click.option(\"--from\")` names a parameter `from`, which no callback can declare. [Soft keywords](https://docs.python.org/3/reference/lexical_analysis.html#soft-keywords) such as `match` and `type` are contextual and unaffected, and `--True` and `--None` lower case out of the keyword set. To migrate, pass an explicit name (`click.option(\"--from\", \"source\")`, `click.option(\"--0-file\", \"zero_file\")`). An argument takes one declaration and has no explicit-name channel, so rename it and pass `metavar` to keep its old display (`click.argument(\"zero_file\", metavar=\"0-FILE\")`). See [#3827](https://github.com/pallets/click/pull/3827) and [#3866](https://github.com/pallets/click/pull/3866).\n- An option name written as a Python identifier is deprecated when it is not already lower cased: `click.option(\"--x\", \"Foo_Bar\")` names `foo_bar` rather than `Foo_Bar`. To migrate, spell the name the way the callback declares it. See [#3827](https://github.com/pallets/click/pull/3827).\n- `CliRunner.isolat"
+     },
+     {
+      "id": "S7",
+      "ref": "docs/why.md#Why Click?",
+      "source": "doc",
+      "text": "# Why Click?\n\nThere are so many libraries out there for writing command line utilities; why does Click exist?\n\nThis question is easy to answer: because there is not a single command line utility for Python out there which ticks the\nfollowing boxes:\n\n- Is lazily composable without restrictions.\n- Supports implementation of Unix/POSIX command line conventions.\n- Supports loading values from environment variables out of the box.\n- Support for prompting of custom values.\n- Is fully nestable and composable.\n- Supports file handling out of the box.\n- Comes with useful common helpers (getting terminal dimensions, ANSI colors, fetching direct keyboard input, screen\n  clearing, finding config paths, launching apps and editors, etc.).\n\nThere are many alternatives to Click; the obvious ones are `optparse` and `argparse` from the standard library. Have a\nlook to see if something else resonates with you.\n\nClick actually implements its own parsing of arguments and does not use `optparse` or `argparse` following the\n`optparse` parsing behavior. The reason it's not based on `argparse` is that `argparse` does not allow proper nesting of\ncommands by design and has some deficiencies when it comes to POSIX compliant argument handling.\n\nClick is designed to be fun and customizable but not overly flexible. For instance, the customizability of help pages is\nconstrained. This constraint is intentional because Click promises multiple Click instances will continue to function as\nintended when strung t"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "text": "E1 ranker (LightGBM, trained on BR-Bench), tests most at risk if src/click/parser.py changes:\n1. tests/test_parser.py score -1.515 because cochg_n_files_with_partner=0 (+0.76); hist_repo_rank=20 (-0.56); chg_n_lines=0 (+0.45)\n2. tests/test_types/test_FloatRange.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=28 (-0.46); chg_touches_test=0 (+0.34)\n3. tests/test_types/test_FuncParamType.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=29 (-0.46); chg_touches_test=0 (+0.34)\n4. tests/test_types/test_IntRange.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=30 (-0.46); chg_touches_test=0 (+0.34)\n5. tests/test_types/test_ParamType.py score -2.160 because cochg_n_files_with_partner=0 (+0.63); hist_repo_rank=31 (-0.46); chg_touches_test=0 (+0.34)"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q07",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "impact",
+    "question": "What is at risk if I change src/click/parser.py?",
+    "repo": "click",
+    "task_id": "click-ARITH_SWAP-02",
+    "tokens": 2201,
+    "type": "impact"
+   },
+   {
+    "answer": "Changing `src/itsdangerous/signer.py` risks breaking the following tests:  \n- `tests/test_itsdangerous/__init__.py`  \n- `tests/test_itsdangerous/test_encoding.py`  \n- `tests/test_itsdangerous/test_serializer.py`  \n- `tests/test_itsdangerous/test_timed.py`  \n- `tests/test_itsdangerous/test_url_safe.py`  \n\nThese tests are listed as most at risk in the model’s ranking data. [S8]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "src/itsdangerous/signer.py:36",
+      "source": "code",
+      "title": "src/itsdangerous/signer.py :: NoneAlgorithm.get_signature"
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/signer.py:222",
+      "source": "code",
+      "title": "src/itsdangerous/signer.py :: Signer.sign"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/serializer.py:278",
+      "source": "code",
+      "title": "src/itsdangerous/serializer.py :: Serializer.make_signer"
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/signer.py:20",
+      "source": "code",
+      "title": "src/itsdangerous/signer.py :: SigningAlgorithm.get_signature"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#itsdangerous",
+      "source": "doc",
+      "title": "README.md :: itsdangerous"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#ItsDangerous",
+      "source": "doc",
+      "title": "README.md :: ItsDangerous"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "title": "README.md :: (top)"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "title": "E1 ranker top-5"
+     }
+    ],
+    "cited": [
+     8
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "src/itsdangerous/signer.py:36",
+      "source": "code",
+      "text": "    def get_signature(self, key: bytes, value: bytes) -> bytes:\n        return b\"\""
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/signer.py:222",
+      "source": "code",
+      "text": "    def sign(self, value: str | bytes) -> bytes:\n        \"\"\"Signs the given string.\"\"\"\n        value = want_bytes(value)\n        return value + self.sep + self.get_signature(value)"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/serializer.py:278",
+      "source": "code",
+      "text": "    def make_signer(self, salt: str | bytes | None = None) -> Signer:\n        \"\"\"Creates a new instance of the signer to be used. The default\n        implementation uses the :class:`.Signer` base class.\n        \"\"\"\n        if salt is None:\n            salt = self.salt\n\n        return self.signer(self.secret_keys, salt=salt, **self.signer_kwargs)"
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/signer.py:20",
+      "source": "code",
+      "text": "    def get_signature(self, key: bytes, value: bytes) -> bytes:\n        \"\"\"Returns the signature for the given key and value.\"\"\"\n        raise NotImplementedError()"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#itsdangerous",
+      "source": "doc",
+      "text": "# itsdangerous\n```\n\n"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#ItsDangerous",
+      "source": "doc",
+      "text": "# ItsDangerous\n\n... so better sign this\n\nVarious helpers to pass data to untrusted environments and to get it\nback safe and sound. Data is cryptographically signed to ensure that a\ntoken has not been tampered with.\n\nIt's possible to customize how data is serialized. Data is compressed as\nneeded. A timestamp can be added and verified automatically while\nloading a token.\n\n"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "text": "<div align=\"center\"><img src=\"https://raw.githubusercontent.com/pallets/itsdangerous/refs/heads/stable/docs/_static/itsdangerous-name.svg\" alt=\"\" height=\"150\"></div>\n"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "text": "E1 ranker (LightGBM, trained on BR-Bench), tests most at risk if src/itsdangerous/signer.py changes:\n1. tests/test_itsdangerous/__init__.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); prox_max_jaccard=0.285714 (+0.37)\n2. tests/test_itsdangerous/test_encoding.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); prox_max_jaccard=0.285714 (+0.37)\n3. tests/test_itsdangerous/test_serializer.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); prox_max_jaccard=0.285714 (+0.37)\n4. tests/test_itsdangerous/test_timed.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); prox_max_jaccard=0.285714 (+0.37)\n5. tests/test_itsdangerous/test_url_safe.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); hist_repo_rank=6 (-0.36)"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q08",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "impact",
+    "question": "What is at risk if I change src/itsdangerous/signer.py?",
+    "repo": "itsdangerous",
+    "task_id": "itsdangerous-ARITH_SWAP-00",
+    "tokens": 1111,
+    "type": "impact"
+   },
+   {
+    "answer": "If you modify `src/itsdangerous/url_safe.py`, the following tests are most at risk of failing or having their scores affected:  \n1. `tests/test_itsdangerous/__init__.py`  \n2. `tests/test_itsdangerous/test_encoding.py`  \n3. `tests/test_itsdangerous/test_serializer.py`  \n4. `tests/test_itsdangerous/test_signer.py`  \n5. `tests/test_itsdangerous/test_timed.py`  \n\nThese tests have the highest predicted impact scores when that file changes. [S8]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "tests/test_itsdangerous/test_url_safe.py:12",
+      "source": "code",
+      "title": "tests/test_itsdangerous/test_url_safe.py :: TestURLSafeSerializer.serializer_factory"
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/encoding.py:20",
+      "source": "code",
+      "title": "src/itsdangerous/encoding.py :: base64_encode"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/encoding.py:28",
+      "source": "code",
+      "title": "src/itsdangerous/encoding.py :: base64_decode"
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/exc.py:18",
+      "source": "code",
+      "title": "src/itsdangerous/exc.py :: BadData.__str__"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#A Simple Example",
+      "source": "doc",
+      "title": "README.md :: A Simple Example"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "title": "README.md :: (top)"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#itsdangerous",
+      "source": "doc",
+      "title": "README.md :: itsdangerous"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "title": "E1 ranker top-5"
+     }
+    ],
+    "cited": [
+     8
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "tests/test_itsdangerous/test_url_safe.py:12",
+      "source": "code",
+      "text": "    @pytest.fixture()\n    def serializer_factory(self):\n        return partial(URLSafeSerializer, secret_key=\"secret-key\")"
+     },
+     {
+      "id": "S2",
+      "ref": "src/itsdangerous/encoding.py:20",
+      "source": "code",
+      "text": "def base64_encode(string: str | bytes) -> bytes:\n    \"\"\"Base64 encode a string of bytes or text. The resulting bytes are\n    safe to use in URLs.\n    \"\"\"\n    string = want_bytes(string)\n    return base64.urlsafe_b64encode(string).rstrip(b\"=\")"
+     },
+     {
+      "id": "S3",
+      "ref": "src/itsdangerous/encoding.py:28",
+      "source": "code",
+      "text": "def base64_decode(string: str | bytes) -> bytes:\n    \"\"\"Base64 decode a URL-safe string of bytes or text. The result is\n    bytes.\n    \"\"\"\n    string = want_bytes(string, encoding=\"ascii\", errors=\"ignore\")\n    string += b\"=\" * (-len(string) % 4)\n\n    try:\n        return base64.urlsafe_b64decode(string)\n    except (TypeError, ValueError) as e:\n        raise BadData(\"Invalid base64-encoded data\") from e"
+     },
+     {
+      "id": "S4",
+      "ref": "src/itsdangerous/exc.py:18",
+      "source": "code",
+      "text": "    def __str__(self) -> str:\n        return self.message"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#A Simple Example",
+      "source": "doc",
+      "text": "## A Simple Example\n\nHere's how you could generate a token for transmitting a user's id and\nname between web requests.\n\n```python\nfrom itsdangerous import URLSafeSerializer\nauth_s = URLSafeSerializer(\"secret key\", \"auth\")\ntoken = auth_s.dumps({\"id\": 5, \"name\": \"itsdangerous\"})\n\nprint(token)"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "text": "<div align=\"center\"><img src=\"https://raw.githubusercontent.com/pallets/itsdangerous/refs/heads/stable/docs/_static/itsdangerous-name.svg\" alt=\"\" height=\"150\"></div>\n"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#itsdangerous",
+      "source": "doc",
+      "text": "# itsdangerous\n```\n\n"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "text": "E1 ranker (LightGBM, trained on BR-Bench), tests most at risk if src/itsdangerous/url_safe.py changes:\n1. tests/test_itsdangerous/__init__.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.42); hist_repo_rank=1 (-0.36)\n2. tests/test_itsdangerous/test_encoding.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.42); hist_repo_rank=2 (-0.36)\n3. tests/test_itsdangerous/test_serializer.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.42); hist_repo_rank=3 (-0.36)\n4. tests/test_itsdangerous/test_signer.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.42); hist_repo_rank=4 (-0.36)\n5. tests/test_itsdangerous/test_timed.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); hist_repo_rank=5 (-0.36)"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q09",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "impact",
+    "question": "What is at risk if I change src/itsdangerous/url_safe.py?",
+    "repo": "itsdangerous",
+    "task_id": "itsdangerous-ARITH_SWAP-01",
+    "tokens": 1112,
+    "type": "impact"
+   },
+   {
+    "answer": "If you modify `src/markupsafe/__init__.py`, the following tests are most at risk of failing or having their scores change:  \n- `tests/test_ext_init.py`  \n- `tests/test_markupsafe.py`  \n- `tests/__init__.py`  \n- `tests/conftest.py`  \n- `tests/test_escape.py`  \n\nThese tests are identified as most sensitive to changes in `markupsafe/__init__.py` in the E1 ranker analysis. [S8]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "src/markupsafe/__init__.py:17",
+      "source": "code",
+      "title": "src/markupsafe/__init__.py :: _HasHTML.__html__"
+     },
+     {
+      "id": "S2",
+      "ref": "src/markupsafe/__init__.py:345",
+      "source": "code",
+      "title": "src/markupsafe/__init__.py :: EscapeFormatter.__init__"
+     },
+     {
+      "id": "S3",
+      "ref": "src/markupsafe/__init__.py:21",
+      "source": "code",
+      "title": "src/markupsafe/__init__.py :: _TPEscape.__call__"
+     },
+     {
+      "id": "S4",
+      "ref": "src/markupsafe/__init__.py:133",
+      "source": "code",
+      "title": "src/markupsafe/__init__.py :: Markup.__html__"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "title": "README.md :: (top)"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#Examples",
+      "source": "doc",
+      "title": "README.md :: Examples"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#MarkupSafe",
+      "source": "doc",
+      "title": "README.md :: MarkupSafe"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "title": "E1 ranker top-5"
+     }
+    ],
+    "cited": [
+     8
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "src/markupsafe/__init__.py:17",
+      "source": "code",
+      "text": "    def __html__(self, /) -> str: ..."
+     },
+     {
+      "id": "S2",
+      "ref": "src/markupsafe/__init__.py:345",
+      "source": "code",
+      "text": "    def __init__(self, escape: _TPEscape) -> None:\n        self.escape: _TPEscape = escape\n        super().__init__()"
+     },
+     {
+      "id": "S3",
+      "ref": "src/markupsafe/__init__.py:21",
+      "source": "code",
+      "text": "    def __call__(self, s: t.Any, /) -> Markup: ..."
+     },
+     {
+      "id": "S4",
+      "ref": "src/markupsafe/__init__.py:133",
+      "source": "code",
+      "text": "    def __html__(self, /) -> te.Self:\n        return self"
+     },
+     {
+      "id": "S5",
+      "ref": "README.md#(top)",
+      "source": "doc",
+      "text": "<div align=\"center\"><img src=\"https://raw.githubusercontent.com/pallets/markupsafe/refs/heads/stable/docs/_static/markupsafe-name.svg\" alt=\"\" height=\"150\"></div>\n"
+     },
+     {
+      "id": "S6",
+      "ref": "README.md#Examples",
+      "source": "doc",
+      "text": "## Examples\n\n```pycon\n>>> from markupsafe import Markup, escape\n\n>>> # escape replaces special characters and wraps in Markup\n>>> escape(\"<script>alert(document.cookie);</script>\")\nMarkup('&lt;script&gt;alert(document.cookie);&lt;/script&gt;')\n\n>>> # wrap in Markup to mark text \"safe\" and prevent escaping\n>>> Markup(\"<strong>Hello</strong>\")\nMarkup('<strong>hello</strong>')\n\n>>> escape(Markup(\"<strong>Hello</strong>\"))\nMarkup('<strong>hello</strong>')\n\n>>> # Markup is a str subclass\n>>> # methods and operators escape their arguments\n>>> template = Markup(\"Hello <em>{name}</em>\")\n>>> template.format(name='\"World\"')\nMarkup('Hello <em>&#34;World&#34;</em>')\n```\n"
+     },
+     {
+      "id": "S7",
+      "ref": "README.md#MarkupSafe",
+      "source": "doc",
+      "text": "# MarkupSafe\n\nMarkupSafe implements a text object that escapes characters so it is\nsafe to use in HTML and XML. Characters that have special meanings are\nreplaced so that they display as the actual characters. This mitigates\ninjection attacks, meaning untrusted user input can safely be displayed\non a page.\n\n"
+     },
+     {
+      "id": "S8",
+      "ref": "src/models/e1_ranker.py",
+      "source": "e1",
+      "text": "E1 ranker (LightGBM, trained on BR-Bench), tests most at risk if src/markupsafe/__init__.py changes:\n1. tests/test_ext_init.py score -0.934 because cochg_n_files_with_partner=0 (+0.92); chg_n_lines=0 (+0.43); prox_max_jaccard=0.285714 (+0.37)\n2. tests/test_markupsafe.py score -1.330 because cochg_n_files_with_partner=0 (+0.85); chg_n_lines=0 (+0.44); hist_repo_rank=7 (-0.40)\n3. tests/__init__.py score -2.089 because cochg_n_files_with_partner=0 (+0.77); hist_repo_rank=1 (-0.46); prox_max_jaccard=0.4 (-0.35)\n4. tests/conftest.py score -2.307 because cochg_n_files_with_partner=0 (+0.72); hist_repo_rank=2 (-0.55); prox_max_jaccard=0.166667 (-0.35)\n5. tests/test_escape.py score -2.307 because cochg_n_files_with_partner=0 (+0.69); hist_repo_rank=3 (-0.44); prox_max_jaccard=0.142857 (-0.40)"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q10",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "impact",
+    "question": "What is at risk if I change src/markupsafe/__init__.py?",
+    "repo": "markupsafe",
+    "task_id": "markupsafe-ARITH_SWAP-00",
+    "tokens": 1150,
+    "type": "impact"
+   },
+   {
+    "answer": "Yes. The test has failed on three separate runs:\n\n* 2026‑08‑06 – Failed with a timeout of >600.0 s from pytest‑timeout [S1].\n* 2026‑08‑07 – Failed with a timeout of >3600.0 s from pytest‑timeout [S3].\n* 2026‑08‑08 – Failed with a timeout of >3600.0 s from pytest‑timeout [S2].",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "run 31128759989 (apache/beam, 2026-08-06)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it :: run-31128759989"
+     },
+     {
+      "id": "S2",
+      "ref": "run 31256567510 (apache/beam, 2026-08-08)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it :: run-31256567510"
+     },
+     {
+      "id": "S3",
+      "ref": "run 31206201258 (apache/beam, 2026-08-07)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it :: run-31206201258"
+     },
+     {
+      "id": "S4",
+      "ref": "run 29332298983 (apache/beam, 2026-07-14)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/yaml/integration_tests.py::Runinference_HuggingfaceTest::test_only :: run-29332298983"
+     },
+     {
+      "id": "S5",
+      "ref": "run 26286811087 (apache/beam, 2026-05-26)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/yaml/integration_tests.py::Validate_With_SchemaTest::test_only :: run-26286811087"
+     },
+     {
+      "id": "S6",
+      "ref": "run 28035003259 (apache/beam, 2026-06-23)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/yaml/integration_tests.py::DeltaTest::test_only :: run-28035003259"
+     },
+     {
+      "id": "S7",
+      "ref": "run 28333166828 (apache/beam, 2026-06-28)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/yaml/integration_tests.py::IcebergTest::test_only :: run-28333166828"
+     },
+     {
+      "id": "S8",
+      "ref": "run 28035003259 (apache/beam, 2026-06-23)",
+      "source": "failure",
+      "title": "apache/beam/apache_beam/yaml/integration_tests.py::IcebergTest::test_only :: run-28035003259"
+     }
+    ],
+    "cited": [
+     1,
+     3,
+     2
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "run 31128759989 (apache/beam, 2026-08-06)",
+      "source": "failure",
+      "text": "apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it | apache/beam | 2026-08-06 | unknown\nFailed: Timeout (>600.0s) from pytest-timeout."
+     },
+     {
+      "id": "S2",
+      "ref": "run 31256567510 (apache/beam, 2026-08-08)",
+      "source": "failure",
+      "text": "apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it | apache/beam | 2026-08-08 | unknown\nFailed: Timeout (>3600.0s) from pytest-timeout."
+     },
+     {
+      "id": "S3",
+      "ref": "run 31206201258 (apache/beam, 2026-08-07)",
+      "source": "failure",
+      "text": "apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it | apache/beam | 2026-08-07 | unknown\nFailed: Timeout (>3600.0s) from pytest-timeout."
+     },
+     {
+      "id": "S4",
+      "ref": "run 29332298983 (apache/beam, 2026-07-14)",
+      "source": "failure",
+      "text": "apache_beam/yaml/integration_tests.py::Runinference_HuggingfaceTest::test_only | apache/beam | 2026-07-14 | unknown\ngrpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:"
+     },
+     {
+      "id": "S5",
+      "ref": "run 26286811087 (apache/beam, 2026-05-26)",
+      "source": "failure",
+      "text": "apache_beam/yaml/integration_tests.py::Validate_With_SchemaTest::test_only | apache/beam | 2026-05-26 | unknown\nValueError: Error applying transform \"ValidateWithSchema\" at line 29: name 'jsonschema' is not defined"
+     },
+     {
+      "id": "S6",
+      "ref": "run 28035003259 (apache/beam, 2026-06-23)",
+      "source": "failure",
+      "text": "apache_beam/yaml/integration_tests.py::DeltaTest::test_only | apache/beam | 2026-06-23 | unknown\nValueError: Error applying transform \"ReadFromDelta\" at line 26: Service failed to start up with error 1"
+     },
+     {
+      "id": "S7",
+      "ref": "run 28333166828 (apache/beam, 2026-06-28)",
+      "source": "failure",
+      "text": "apache_beam/yaml/integration_tests.py::IcebergTest::test_only | apache/beam | 2026-06-28 | unknown\nRuntimeError: Failed to create Iceberg table: {\"error\":{\"message\":\"Failed to create file: /tmp/tmp8ok4cjs_/db/labels/metadata/00000-41fe8c56-0d0c-4e24-8598-30fc3dd81adc.metadata.json\",\"type\":\"RuntimeIOException\",\"code\":500,\"stack\":[\"org.apache.iceberg.exceptions.RuntimeIOException: Failed to create file: /tmp/tmp8ok4cjs_/db/labels/metadata/00000-41fe8c56-0d0c-4e24-8598-30fc3dd81adc.metadata.json\",\"\\tat org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:87)\",\"\\tat org.apache.iceberg.TableMetadataParser.internalWrite(TableMetadataParser.java:124)\",\"\\tat org.apache"
+     },
+     {
+      "id": "S8",
+      "ref": "run 28035003259 (apache/beam, 2026-06-23)",
+      "source": "failure",
+      "text": "apache_beam/yaml/integration_tests.py::IcebergTest::test_only | apache/beam | 2026-06-23 | unknown\nValueError: Error applying transform \"WriteToIceberg\" at line 33: Service failed to start up with error 1"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q11",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "history",
+    "question": "Has apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it failed before? When and with what message?",
+    "repo": null,
+    "task_id": null,
+    "tokens": 1141,
+    "type": "history"
+   },
+   {
+    "answer": "Yes. The test `io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes` failed on three separate runs: run 27456511371 on 2026‑06‑13, run 27456888268 on 2026‑06‑13, and run 27457647172 on 2026‑06‑13. In each case the failure message was “1 expectation failed.” [S1][S2][S3]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes :: run-27456511371"
+     },
+     {
+      "id": "S2",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes :: run-27456888268"
+     },
+     {
+      "id": "S3",
+      "ref": "run 27457647172 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes :: run-27457647172"
+     },
+     {
+      "id": "S4",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes :: run-27456511371"
+     },
+     {
+      "id": "S5",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes :: run-27456888268"
+     },
+     {
+      "id": "S6",
+      "ref": "run 27457647172 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes :: run-27457647172"
+     },
+     {
+      "id": "S7",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeLoadBalancerAttributes :: run-27456511371"
+     },
+     {
+      "id": "S8",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "title": "floci-io/floci/io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeLoadBalancerAttributes :: run-27456888268"
+     }
+    ],
+    "cited": [
+     1,
+     2,
+     3
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S2",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S3",
+      "ref": "run 27457647172 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S4",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S5",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S6",
+      "ref": "run 27457647172 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#modifyListenerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S7",
+      "ref": "run 27456511371 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeLoadBalancerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     },
+     {
+      "id": "S8",
+      "ref": "run 27456888268 (floci-io/floci, 2026-06-13)",
+      "source": "failure",
+      "text": "io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeLoadBalancerAttributes | floci-io/floci | 2026-06-13 | unknown\n1 expectation failed."
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q12",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "history",
+    "question": "Has io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes failed before? When and with what message?",
+    "repo": null,
+    "task_id": null,
+    "tokens": 920,
+    "type": "history"
+   },
+   {
+    "answer": "Yes. The test `org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage` failed on 2026‑07‑10 in four separate runs: 29100903201, 29097183435, 29105710720, and 29104162858. The failure message was “IllegalArgument Undefined in…” in each case. [S1][S2][S3][S4]",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "run 29100903201 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage :: run-29100903201"
+     },
+     {
+      "id": "S2",
+      "ref": "run 29097183435 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage :: run-29097183435"
+     },
+     {
+      "id": "S3",
+      "ref": "run 29105710720 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage :: run-29105710720"
+     },
+     {
+      "id": "S4",
+      "ref": "run 29104162858 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage :: run-29104162858"
+     },
+     {
+      "id": "S5",
+      "ref": "run 29100903201 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage :: run-29100903201"
+     },
+     {
+      "id": "S6",
+      "ref": "run 29097183435 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage :: run-29097183435"
+     },
+     {
+      "id": "S7",
+      "ref": "run 29105710720 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage :: run-29105710720"
+     },
+     {
+      "id": "S8",
+      "ref": "run 29104162858 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "title": "apache/hugegraph/org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage :: run-29104162858"
+     }
+    ],
+    "cited": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "run 29100903201 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Undefined in..."
+     },
+     {
+      "id": "S2",
+      "ref": "run 29097183435 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Undefined in..."
+     },
+     {
+      "id": "S3",
+      "ref": "run 29105710720 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Undefined in..."
+     },
+     {
+      "id": "S4",
+      "ref": "run 29104162858 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Undefined in..."
+     },
+     {
+      "id": "S5",
+      "ref": "run 29100903201 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Und..."
+     },
+     {
+      "id": "S6",
+      "ref": "run 29097183435 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Und..."
+     },
+     {
+      "id": "S7",
+      "ref": "run 29105710720 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Und..."
+     },
+     {
+      "id": "S8",
+      "ref": "run 29104162858 (apache/hugegraph, 2026-07-10)",
+      "source": "failure",
+      "text": "org.apache.hugegraph.core.VertexCoreTest#testQueryBySingleRangePropertyInPage | apache/hugegraph | 2026-07-10 | mine\n» IllegalArgument Und..."
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q13",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "history",
+    "question": "Has org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage failed before? When and with what message?",
+    "repo": null,
+    "task_id": null,
+    "tokens": 939,
+    "type": "history"
+   },
+   {
+    "answer": "Yes. The test `org.apache.tika.io.TikaInputStreamTest#testPosition` failed on 2026‑08‑12 in three separate runs. The failures were reported as “NoClassDefFound: Could not initialize class org.apache.tika.metadata.TikaCoreProperties” [S1][S2][S3].",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testPosition :: run-31615644427"
+     },
+     {
+      "id": "S2",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testPosition :: run-31615644529"
+     },
+     {
+      "id": "S3",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testPosition :: run-31615644409"
+     },
+     {
+      "id": "S4",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength :: run-31615644529"
+     },
+     {
+      "id": "S5",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength :: run-31615644427"
+     },
+     {
+      "id": "S6",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength :: run-31615644409"
+     },
+     {
+      "id": "S7",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testSkipBeyondStreamLength :: run-31615644529"
+     },
+     {
+      "id": "S8",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.io.TikaInputStreamTest#testSkipBeyondStreamLength :: run-31615644427"
+     }
+    ],
+    "cited": [
+     1,
+     2,
+     3
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testPosition | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S2",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testPosition | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S3",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testPosition | apache/tika | 2026-08-12 | mine\n» NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S4",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S5",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S6",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testMarkBeyondStreamLength | apache/tika | 2026-08-12 | mine\n» NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S7",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testSkipBeyondStreamLength | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S8",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.io.TikaInputStreamTest#testSkipBeyondStreamLength | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q14",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "history",
+    "question": "Has org.apache.tika.io.TikaInputStreamTest#testPosition failed before? When and with what message?",
+    "repo": null,
+    "task_id": null,
+    "tokens": 894,
+    "type": "history"
+   },
+   {
+    "answer": "Yes. The test `org.apache.tika.sax.BodyContentHandlerTest#testLimit` failed on three separate runs on 2026‑08‑12. The failures were reported as `NoClassDefFoundError: Could not initialize class org.apache.tika.metadata.TikaCoreProperties` in each case [S1][S2][S3].",
+    "citations": [
+     {
+      "id": "S1",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testLimit :: run-31615644409"
+     },
+     {
+      "id": "S2",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testLimit :: run-31615644427"
+     },
+     {
+      "id": "S3",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testLimit :: run-31615644529"
+     },
+     {
+      "id": "S4",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testOutputStream :: run-31615644427"
+     },
+     {
+      "id": "S5",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testOutputStream :: run-31615644529"
+     },
+     {
+      "id": "S6",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.sax.BodyContentHandlerTest#testOutputStream :: run-31615644409"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32408759572 (apache/tika, 2026-08-20)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testNoRecordSizeOverflow :: run-32408759572"
+     },
+     {
+      "id": "S8",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "title": "apache/tika/org.apache.tika.extractor.ParsingEmbeddedDocumentExtractorTimeoutTest#testThrowOnDeadlinePropagatesThroughCompositeParserUnwrapped :: run-31615644427"
+     }
+    ],
+    "cited": [
+     1,
+     2,
+     3
+    ],
+    "context": [
+     {
+      "id": "S1",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testLimit | apache/tika | 2026-08-12 | mine\n->TikaTest.getResourceAsStream:267 » NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S2",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testLimit | apache/tika | 2026-08-12 | mine\n->TikaTest.getResourceAsStream:267 � NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S3",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testLimit | apache/tika | 2026-08-12 | mine\n->TikaTest.getResourceAsStream:267 � NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S4",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testOutputStream | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S5",
+      "ref": "run 31615644529 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testOutputStream | apache/tika | 2026-08-12 | mine\n� NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S6",
+      "ref": "run 31615644409 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.sax.BodyContentHandlerTest#testOutputStream | apache/tika | 2026-08-12 | mine\n» NoClassDefFound Could not initialize class org.apache.tika.metadata.TikaCoreProperties"
+     },
+     {
+      "id": "S7",
+      "ref": "run 32408759572 (apache/tika, 2026-08-20)",
+      "source": "failure",
+      "text": "org.apache.tika.parser.microsoft.ooxml.OOXMLParserTest#testNoRecordSizeOverflow | apache/tika | 2026-08-20 | mine\n->TikaTest.getText:574->TikaTest.getText:583->TikaTest.getText:588->TikaTest.getText:602 » Tika TIKA-237: Illegal SAXException from org.apache.tika.parser.DefaultParser@2a225b18"
+     },
+     {
+      "id": "S8",
+      "ref": "run 31615644427 (apache/tika, 2026-08-12)",
+      "source": "failure",
+      "text": "org.apache.tika.extractor.ParsingEmbeddedDocumentExtractorTimeoutTest#testThrowOnDeadlinePropagatesThroughCompositeParserUnwrapped | apache/tika | 2026-08-12 | mine\nmust reach the caller as the original EmbeddedLimitReachedException, not get wrapped into a generic TikaException that an enclosing handler could mistake for an ordinary recorded failure ==> Unexpected exception type thrown, expected: <org.apache.tika.exception.EmbeddedLimitReachedException> but was: <java.lang.NoClassDefFoundError>"
+     }
+    ],
+    "faithful": true,
+    "from_cache": true,
+    "id": "Q15",
+    "model": "openai/gpt-oss-20b",
+    "notes": [],
+    "qtype": "history",
+    "question": "Has org.apache.tika.sax.BodyContentHandlerTest#testLimit failed before? When and with what message?",
+    "repo": null,
+    "task_id": null,
+    "tokens": 1010,
+    "type": "history"
+   }
+  ]
+ },
+ "bot_comment_md": "<!-- blastradius-bot -->\n## BlastRadius\n\nPR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first failure at position 9 of 297\n\n### 1. Tests most at risk (e1-lgbm-v1)\n\n| # | Test file | Score | Why |\n|--:|---|--:|---|\n| 1 | `tests/test_itsdangerous/__init__.py` | -1.63 | cochg_n_files_with_partner=0 (+0.86); hist_repo_rank=1 (-0.54); chg_touches_test=0 (+0.31) |\n| 2 | `tests/test_itsdangerous/test_encoding.py` | -1.63 | cochg_n_files_with_partner=0 (+0.86); hist_repo_rank=2 (-0.54); chg_touches_test=0 (+0.31) |\n| 3 | `tests/test_itsdangerous/test_url_safe.py` | -1.63 | cochg_n_files_with_partner=0 (+0.86); hist_repo_rank=6 (-0.54); chg_touches_test=0 (+0.32) |\n| 4 | `tests/test_itsdangerous/test_serializer.py` | -1.96 | cochg_n_files_with_partner=0 (+0.70); hist_repo_rank=3 (-0.48); chg_touches_test=0 (+0.31) |\n| 5 | `tests/test_itsdangerous/test_signer.py` | -1.96 | cochg_n_files_with_partner=0 (+0.70); hist_repo_rank=4 (-0.48); chg_touches_test=0 (+0.31) |\n| 6 | `tests/test_itsdangerous/test_timed.py` | -1.96 | cochg_n_files_with_partner=0 (+0.70); hist_repo_rank=5 (-0.49); chg_touches_test=0 (+0.31) |\n\n### 2. Results, risk-first\n\n| Test | Outcome | Message |\n|---|---|---|\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[serializer_fact…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_exception[Se…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_exception[se…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_exception[…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_exception[…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[Serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[Serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[Serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[Serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signers[Seriali…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signers[seriali…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[serializer_factory1]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[serializer_…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-No…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-Tr…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-st…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-te…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-va…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[Serializer-va…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_serializer_kwargs[Serial…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_cls[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_cls[serializer_fa…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_kwargs[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_kwargs[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::test_alt_salt` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::test_alt_salt` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n| `tests/test_itsdangerous/test_serializer.py::test_alt_salt[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |\n\n_257 more passing tests not shown._\n\n### 3. Triage of each failure\n\n260 mine, 0 inherited, 0 flaky (of 260 failing).\n\n| Failing test | Class | Confidence | Why |\n|---|---|--:|---|\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Seria…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[seria…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[Serialize…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[serialize…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[S…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[s…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |\n\n_240 more failures not shown._\n\n_mine = caused by this change; inherited = already failing on the base; flaky = reruns flip._\n\n### 4. Proposed fix\n\nValidated: the full suite passed with this patch (1 attempt(s)). Review it, then accept the suggestion on the diff.\n\n`src/itsdangerous/signer.py` line 204:\n\n```suggestion\n                bytes, self.digest_method(self.salt + b\"signer\" + secret_key).digest()\n```\n\n\n---\n<sub>BlastRadius (exploratory) · model `openai/gpt-oss-20b` · 1,495 tokens · validated: full suite passed · this bot only comments; it never pushes or merges.</sub>\n",
+ "generated_at_git_sha": "53563937fd26870f9ce6f8522aa2bec7a8cadf88",
+ "retrieval_md": "# RQ5 (exploratory): sparse vs dense vs hybrid vs change-aware retrieval\n\nGenerated by `analysis/rq5_retrieval.py` at git `53563937fd26870f9ce6f8522aa2bec7a8cadf88`.\n\n**Exploratory, not pre-registered; produced by `make rag-eval`, not `make tables`.** The pre-registered E3 analysis (`docs/phase/033-e3-preregistration.md`) is unchanged. No LLM is involved: retrieval only. Dense vectors: `jinaai/jina-embeddings-v2-base-code` (pinned snapshot, CPU, D-61).\n\n## Localization: is the seeded function among the top 3 chunks? (no model, 70 tasks per variant)\n\nOn the standard variant the seeded edit lies inside the diff that L4 / L5 search, so their advantage is partly by construction; the hard variant (4-6 no-op edits inside executed functions) measures how much remains. Ties in L1 / L4 are broken exactly as in E3; ties in L2 / L3 / L5 by file path then line.\n\n### Standard variant (n = 70)\n\n| mode | hit@1 | hit@3 | MRR | top-3 chunks that are distractors |\n|---|---|---|---|---|\n| L1 BM25, whole repo (= R1) | 32/70 (45.71%) | 46/70 (65.71%) | 0.581 | 48/210 (22.86%) |\n| L2 dense, whole repo | 14/70 (20.00%) | 21/70 (30.00%) | 0.310 | 47/210 (22.38%) |\n| L3 hybrid (RRF), whole repo | 20/70 (28.57%) | 32/70 (45.71%) | 0.431 | 50/210 (23.81%) |\n| L4 BM25, functions touched by the diff (= R2) | 63/70 (90.00%) | 69/70 (98.57%) | 0.940 | 47/117 (40.17%) |\n| L5 hybrid (RRF), functions touched by the diff | 63/70 (90.00%) | 68/70 (97.14%) | 0.937 | 50/120 (41.67%) |\n\n### Hard variant (n = 70)\n\n| mode | hit@1 | hit@3 | MRR | top-3 chunks that are distractors |\n|---|---|---|---|---|\n| L1 BM25, whole repo (= R1) | 32/70 (45.71%) | 46/70 (65.71%) | 0.581 | 75/210 (35.71%) |\n| L2 dense, whole repo | 14/70 (20.00%) | 21/70 (30.00%) | 0.308 | 98/210 (46.67%) |\n| L3 hybrid (RRF), whole repo | 19/70 (27.14%) | 32/70 (45.71%) | 0.426 | 95/210 (45.24%) |\n| L4 BM25, functions touched by the diff (= R2) | 49/70 (70.00%) | 63/70 (90.00%) | 0.800 | 146/210 (69.52%) |\n| L5 hybrid (RRF), functions touched by the diff | 31/70 (44.29%) | 57/70 (81.43%) | 0.641 | 150/210 (71.43%) |\n\n### Paired tests\n\n\"first only\" = the first-named mode has the ground truth in its top 3 where the second does not. Exact McNemar, two-sided, Holm-adjusted over the four tests below.\n\n| variant | comparison (hit@3) | first only | second only | p (exact, two-sided) | Holm-adjusted (family of 4) |\n|---|---|---|---|---|---|\n| standard | L3 vs L1 | 3 | 17 | 0.002577 | 0.01031 |\n| standard | L5 vs L4 | 0 | 1 | 1 | 1 |\n| hard | L3 vs L1 | 3 | 17 | 0.002577 | 0.01031 |\n| hard | L5 vs L4 | 3 | 9 | 0.146 | 0.292 |\n\n### Reading\n\nstandard: hit@3 is 46/70 for whole-repo BM25 (L1), 32/70 for whole-repo hybrid (L3, no knowledge of the change) and 69/70 for change-aware BM25 (L4). Smarter retrieval alone does not close the gap: L3 is 14 task(s) below L1, while knowing the change (L4) is 23 above it. Change-aware hybrid (L5) reaches 68/70.\n\nhard: hit@3 is 46/70 for whole-repo BM25 (L1), 32/70 for whole-repo hybrid (L3, no knowledge of the change) and 63/70 for change-aware BM25 (L4). Smarter retrieval alone does not close the gap: L3 is 14 task(s) below L1, while knowing the change (L4) is 17 above it. Change-aware hybrid (L5) reaches 57/70.\n\n## Failure-history retrieval (the \"Ask\" failure source; no model, time-safe)\n\nQueries: the 709 failures with a parsed message among the runs of the E2 chronological test split (D-57). For each, documents are the failures with a message in the same repository whose run started strictly earlier (a test asserts none at or after the query time is ever retrieved). Documents are message text only. \"Same test\" = a past failure of the same `test_id`; \"same class\" = a past failure of the same failure class (environment / timeout / code / unknown, `analysis/failure_class.py`). A query counts only when such a document exists in its pool (n eligible). Chance rows are the expected hit@1 and hit@5 of a random order over the same pools.\n\n### Retrieved a past failure of the same test_id (n eligible = 90)\n\n| retriever | hit@1 | hit@5 | MRR |\n|---|---|---|---|\n| BM25 | 55/90 (61.11%) | 69/90 (76.67%) | 0.672 |\n| dense | 55/90 (61.11%) | 64/90 (71.11%) | 0.651 |\n| hybrid (RRF) | 53/90 (58.89%) | 68/90 (75.56%) | 0.664 |\n| chance (random order) | 16.74% | 29.14% | - |\n\n### Retrieved a past failure of the same failure class (n eligible = 708)\n\n| retriever | hit@1 | hit@5 | MRR |\n|---|---|---|---|\n| BM25 | 660/708 (93.22%) | 696/708 (98.31%) | 0.952 |\n| dense | 667/708 (94.21%) | 697/708 (98.45%) | 0.959 |\n| hybrid (RRF) | 672/708 (94.92%) | 705/708 (99.58%) | 0.971 |\n| chance (random order) | 52.01% | 93.43% | - |\n\n## Citation faithfulness of Ask (recorded once with openai/gpt-oss-20b, exploratory)\n\n15 fixed questions (`eval/ask/questions.jsonl`), answers recorded in `eval/llm_cache/ask_openai_gpt-oss-20b.jsonl`. Scored automatically; this says nothing about whether an answer is correct, only that its citations point at items the model was actually shown.\n\n| question type | answered | no [Sk] points outside the retrieved items | cites at least one item | both (every citation real, at least one) | answered \"not in the context\" |\n|---|---|---|---|---|---|\n| test-failure | 5 | 5/5 (100.00%) | 4/5 (80.00%) | 4/5 (80.00%) | 1 |\n| impact | 5 | 5/5 (100.00%) | 5/5 (100.00%) | 5/5 (100.00%) | 0 |\n| history | 5 | 5/5 (100.00%) | 5/5 (100.00%) | 5/5 (100.00%) | 0 |\n| all | 15 | 15/15 (100.00%) | 14/15 (93.33%) | 14/15 (93.33%) | 1 |\n"
+}

@@ -1,8 +1,8 @@
-# Literature review (35 papers, five groups)
+# Literature review (37 papers, six groups)
 
 Reading notes for the BITE497J report. **Each description is a summary of the paper's headline contribution written from its title and abstract; verify against the PDF before citing. No BibTeX or DOIs are given here on purpose: the team writes `refs.bib` entries by hand from the papers themselves.** URLs are the ones supplied with the task.
 
-Groups: A = test selection and prioritisation in CI, B = build outcome and culprit finding, C = flaky tests, D = CI logs and LLM failure analysis, E = LLM program repair and agents.
+Groups: A = test selection and prioritisation in CI, B = build outcome and culprit finding, C = flaky tests, D = CI logs and LLM failure analysis, E = LLM program repair and agents, F = retrieval-augmented repair (added in 2.1).
 
 ## Group A: Test selection and prioritisation in CI
 
@@ -63,6 +63,17 @@ Groups: A = test selection and prioritisation in CI, B = build outcome and culpr
 | 33 | Yaraghi et al., 2025 | [Automated Test Case Repair Using Language Models](https://arxiv.org/abs/2401.06765) | IEEE TSE (FSE 2025 journal-first) | Repairs broken test cases after production-code changes with fine-tuned language models. | Repairs tests rather than product code. | Complementary: BlastRadius repairs the product code and treats the tests as the oracle. |
 | 34 | Hou et al., 2024 | [Large Language Models for Software Engineering: A Systematic Literature Review](https://arxiv.org/abs/2308.10620) | ACM TOSEM | Survey of LLM use across software-engineering tasks. | Reports threats such as data leakage and reproducibility. | Background for the replay cache and pinned model in E3. |
 | 35 | Stengg, Macho, Pinzger, 2025 | [A Dataset and Preliminary Study of Using GPT-5 for Code-change Impact Analysis](https://arxiv.org/abs/2512.19481) | arXiv 2512.19481 | A dataset and a preliminary study of how well GPT-5 predicts the impact of code changes. | Preliminary; reports that a general model performs poorly at change impact analysis. | Supports using a trained ranker, not an LLM, for impact prediction. |
+
+## Group F: Retrieval-augmented repair (added in 2.1; venue to verify against the PDF)
+
+| # | Authors, year | Title | Venue | Approach | Open issue | What BlastRadius does with it |
+|---|---|---|---|---|---|---|
+| 36 | Liu, Bai, Yang, Utting, 2025 | [RelRepair: Enhancing Automated Program Repair by Retrieving Relevant Code](https://arxiv.org/abs/2509.16701) | arXiv 2509.16701 (venue to verify against the PDF) | Retrieves code relevant to the buggy function (project-specific context) and adds it to the repair prompt. | Retrieval quality and prompt cost; benchmarks differ from CI failures. | The idea behind arm R4's similar-code block and the dense / hybrid retrievers of the localization study (exploratory). |
+| 37 | Jin et al., 2023 | [InferFix: End-to-End Program Repair with LLMs over Retrieval-Augmented Prompts](https://arxiv.org/abs/2303.07263) | arXiv 2303.07263 (venue to verify against the PDF) | Augments the repair prompt with retrieved prior fixes and code context from the project's history. | Needs a store of past fixes; built around a static-analysis bug pipeline. | The idea behind R4's fix-history block (up to two earlier commits that changed the function, from the repository's own git history). |
+
+LogSage (#23) already uses retrieval-augmented generation over historical fixes, so R4's history block is not a new idea; what 2.1
+adds is measuring it, with a change-aware baseline, on executed seeded bugs and with a hard validity rule (full suite passes).
+Descriptions are written from titles and abstracts: verify against the PDFs before citing.
 
 ## Gap
 

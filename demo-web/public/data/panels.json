@@ -228,11 +228,23 @@
    {
     "id": "D-60",
     "title": "Amazon Bedrock as a third E3 provider, paid from AWS credits"
+   },
+   {
+    "id": "D-61",
+    "title": "RAG layer with a pinned local embedding model (assigned 2026-10-10; the number was skipped in the note above)"
+   },
+   {
+    "id": "D-62",
+    "title": "Exploratory third E3 model is `qwen/qwen3.8-27b` on Groq (a preview model)"
+   },
+   {
+    "id": "D-63",
+    "title": "Live PR bot on a sandbox repository the operator owns"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "38cf56a5e4612225679d385b648a04a756a1e350",
+ "generated_at_git_sha": "53563937fd26870f9ce6f8522aa2bec7a8cadf88",
  "panels": [
   {
    "id": "funnel",
