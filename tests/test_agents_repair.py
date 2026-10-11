@@ -321,3 +321,17 @@ def test_bedrock_throttling_backs_off_and_replay_miss_raises(tmp_path, monkeypat
     miss = _bedrock(tmp_path, cache=LLMCache(tmp_path / "other.jsonl", replay=True))
     with pytest.raises(CacheMiss):
         miss.chat("s", "u")
+
+
+def test_pytest_runs_import_the_worktree_src_not_an_editable_install(tmp_path) -> None:
+    """A `src/` package is imported from the directory the suite runs in (PYTHONPATH carries it first)."""
+    from src.agents.regression import run_pytest
+
+    (tmp_path / "src" / "pkg").mkdir(parents=True)
+    (tmp_path / "src" / "pkg" / "__init__.py").write_text("WHERE = 'worktree'\n")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests" / "test_where.py").write_text(
+        "import pkg\n\ndef test_where():\n    assert pkg.WHERE == 'worktree'\n    assert pkg.__file__.startswith(%r)\n"
+        % str(tmp_path))
+    run = run_pytest(tmp_path, None, tmp_path / "out.xml", "t")
+    assert run.exit_code == 0 and run.counts()["passed"] == 1

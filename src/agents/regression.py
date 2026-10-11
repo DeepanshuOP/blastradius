@@ -108,6 +108,10 @@ def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: 
         cmd += test_ids
     started = time.perf_counter()
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+    # Import the code of THIS worktree, not an editable install of another checkout (a `src/` layout installed with
+    # `pip install -e` would otherwise run the tests against the checkout the install points at).
+    paths = [str(workdir)] + ([str(workdir / "src")] if (workdir / "src").is_dir() else [])
+    env["PYTHONPATH"] = os.pathsep.join(paths + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
     proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=env)
     wall = time.perf_counter() - started
     results = parse_junit([out_xml]) if out_xml.exists() else []

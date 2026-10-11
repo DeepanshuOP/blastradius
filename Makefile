@@ -180,11 +180,11 @@ rag-eval:
 	uv run --extra ml --extra rag python -m analysis.rq5_retrieval
 
 # The PR bot flow locally (D-63): prints the comment instead of posting it.
-#   make bot-local REPO=/path/to/clone BASE=<sha> HEAD=<sha> [PR=1]
+#   make bot-local REPO=/path/to/clone BASE=<sha> HEAD=<sha> [PR=1] [PYTHON=/path/to/venv/bin/python]
 # Uses the Groq cache under REPO/.blastradius (BR_LLM_REPLAY=1 forbids any call; BR_OFFLINE=1 skips repair).
 PR ?= 1
 bot-local:
-	uv run --env-file .env --extra ml --extra rag python -m src.agents bot --repo $(REPO) --base $(BASE) --head $(HEAD) --pr $(PR) --no-post
+	uv run --env-file .env --extra ml --extra rag python -m src.agents bot --repo $(REPO) --base $(BASE) --head $(HEAD) --pr $(PR) --no-post $(if $(PYTHON),--python $(PYTHON))
 
 # E2 only: failure triage. Offline, deterministic.
 e2: export BR_OFFLINE=1

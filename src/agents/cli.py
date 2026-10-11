@@ -158,6 +158,7 @@ def main(argv: list[str] | None = None) -> int:
     sp = sub.add_parser("bot", help="PR bot: impact, regression, triage, validated repair -> one comment")
     sp.add_argument("--repo", required=True); sp.add_argument("--base", required=True); sp.add_argument("--head", required=True)
     sp.add_argument("--pr", type=int, required=True); sp.add_argument("--state-dir")
+    sp.add_argument("--python", help="interpreter for the target's test suites (default: this one)")
     sp.add_argument("--provider", choices=["offline", "groq"], help="LLM provider (default: groq if GROQ_API_KEY is set)")
     sp.add_argument("--forge", choices=["local", "github"], help="where to post (default: github on GitHub Actions, else local)")
     g = sp.add_mutually_exclusive_group()
@@ -235,7 +236,7 @@ def main(argv: list[str] | None = None) -> int:
         on_actions = os.environ.get("GITHUB_ACTIONS") == "true"
         provider = args.provider or ("groq" if os.environ.get("GROQ_API_KEY") else "offline")
         out = botmod.run_bot(repo, args.base, args.head, args.pr, llm=chat_llm(provider, state / "bot_llm_cache.jsonl"),
-                             state_dir=state)
+                             state_dir=state, python=args.python)
         print(out.comment)
         if args.post or (on_actions and not args.no_post):
             forge = get_forge(args.forge or ("github" if on_actions else "local"), repo, state)
