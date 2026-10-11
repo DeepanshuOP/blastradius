@@ -6,6 +6,22 @@
 [![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23250690-blue)](https://doi.org/10.5281/zenodo.23250690)
 ![License: MIT (code), CC BY 4.0 (data)](https://img.shields.io/badge/license-MIT%20%2F%20CC%20BY%204.0-green)
 
+## What it does, in one sentence
+
+BlastRadius tells a team, for each pull request, which tests are most at risk, runs them first, says which failures are the change's own, and proposes a fix only when the whole test suite passes with it; it comments, and never merges or pushes.
+
+## Three ways to use it
+
+| | | |
+|---|---|---|
+| **GitHub Action** | a comment on every pull request, with inline suggestions for validated patches | copy [`integrations/github-actions/blastradius-bot.yml`](integrations/github-actions/blastradius-bot.yml), follow [`BOT_SETUP.md`](integrations/github-actions/BOT_SETUP.md) |
+| **Jenkins** | Jenkins stays the executor; BlastRadius decides order, triage and fix | [`integrations/jenkins/Jenkinsfile`](integrations/jenkins/Jenkinsfile) (an example, not deployed on a Jenkins server) |
+| **Command line** | `impact`, `ask`, `bot`, `pipeline` | `uv run --extra graph --extra ml --extra rag python -m src.agents --help` |
+
+A live example, the bot's comment on a pull request in a sandbox repository: <https://github.com/DeepanshuOP/itsdangerous/pull/1>.
+
+The website replays everything offline. `make demo-data` (once, after any change to the generated files), then `make demo-web`, opens it at <http://localhost:3000>; the **Compare** tab sets BlastRadius against other work (same-data comparisons, cost, time, safety) and **Use it** has the setup steps with copy buttons. `make demo-check` runs an offline PASS/FAIL check of the whole demo before a presentation.
+
 ## BlastRadius 2.0 (course deliverable, D-56)
 
 On top of the dataset, BlastRadius 2.0 is a change-aware CI assistant in four stages: **predict** which test files a change will break (E1), **run** them first, **triage** each failure as the change's own, inherited or flaky (E2), and **repair** the ones that are the change's own, accepting a patch only if the full suite passes (E3). Each stage is an experiment scored on BR-Bench (E3 on a seeded-bug benchmark) and each may come out negative; results, including the ones that did not work, are in [`docs/RESULTS_2.md`](docs/RESULTS_2.md) and architecture in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The MSR 2027 paper stays a dataset paper.

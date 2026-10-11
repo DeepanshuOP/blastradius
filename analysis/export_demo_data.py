@@ -958,8 +958,8 @@ def compare_e3() -> dict | None:
         take = ("Plausible fixes (full suite green) by arm, " + "; ".join(parts) + ". " + "; ".join(gaps)
                 + ". Significance is in the primary and secondary tests above.")
     return {"source": "paper/generated/rq4_repair.md", "models": models, "primary": _paragraph_after(path, "Primary test"),
-            "secondary": sec, "progress": prog, "interim": any(p["interim"] for p in prog),
-            "interim_text": "; ".join(p["text"] for p in prog if p["interim"]), "takeaway": take,
+            "secondary": sec, "progress": prog, "interim": any(p["interim"] for p in prog if p["variant"] == "standard"),
+            "interim_text": "; ".join(p["text"] for p in prog if p["interim"] and p["variant"] == "standard"), "takeaway": take,
             "applier_note": "The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant "
                             "applier; E3 fix rates are therefore conservative relative to the bot."}
 
