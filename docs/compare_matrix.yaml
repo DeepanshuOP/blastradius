@@ -1,0 +1,570 @@
+# Capability matrix and safety checklist for the website's Compare tab (Panel 1 and Panel 6).
+# Valid YAML written in its JSON subset, so it parses with the standard library (no new dependency).
+# Rules: a cell is "yes" / "no" / "not_reported". For any work other than BlastRadius, "yes" or "no" must be
+# established by the summary in docs/LITERATURE.md (written from titles and abstracts; verify against the PDF) or,
+# for the retest-all column, by docs/RESULTS_2.md / paper/generated; otherwise "not_reported". "not_reported" means
+# the sources do not establish it, not that the capability is absent. Every cell has a "source"; every BlastRadius
+# "yes" names the test(s) that prove it. tests/test_compare_matrix.py enforces these rules.
+{
+ "columns": [
+  {
+   "id": "br",
+   "label": "BlastRadius"
+  },
+  {
+   "id": "retest_all",
+   "label": "Jenkins / GitHub Actions (retest-all)"
+  },
+  {
+   "id": "rtptorrent",
+   "label": "RTPTorrent (#3)"
+  },
+  {
+   "id": "tts",
+   "label": "T-TS (#10)"
+  },
+  {
+   "id": "logsage",
+   "label": "LogSage (#23)"
+  },
+  {
+   "id": "ci_repair_bench",
+   "label": "CI-Repair-Bench pipeline (#26)"
+  },
+  {
+   "id": "chatrepair",
+   "label": "ChatRepair (#29)"
+  },
+  {
+   "id": "agentless",
+   "label": "Agentless (#31)"
+  }
+ ],
+ "rows": [
+  {
+   "id": "public_dataset",
+   "label": "public dataset",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "README.md (Zenodo DOI 10.5281/zenodo.23250262), docs/DATASHEET.md",
+     "proof": [
+      "tests/test_release_v02.py::test_validator_passes_built_bundle"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "A scheduling practice, not a dataset"
+    },
+    "rtptorrent": {
+     "value": "yes",
+     "source": "docs/LITERATURE.md #3: \"An open dataset of CI builds with test outcomes\""
+    },
+    "tts": {
+     "value": "no",
+     "source": "docs/LITERATURE.md #10: \"trained on proprietary CI data\""
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "Described as a benchmark; the summary does not say it is released"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "per_test_labels",
+   "label": "per-test labels",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "docs/SCHEMAS.md (outcomes.parquet), release/v0.2",
+     "proof": [
+      "tests/test_fault_revealing.py::test_fail_head_not_base_is_revealing"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "rtptorrent": {
+     "value": "yes",
+     "source": "docs/LITERATURE.md #3: \"test outcomes\" recorded per CI build"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "base_subtracted",
+   "label": "pre-existing failures subtracted (base run)",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "docs/ROADMAP.md (base-run resolution), paper/generated/base_resolution.md",
+     "proof": [
+      "tests/test_fault_revealing.py::test_fail_head_and_base_not_revealing"
+     ]
+    },
+    "retest_all": {
+     "value": "no",
+     "source": "docs/RESULTS_2.md E2: \"Blame-all, what a CI server does by default, clears nothing\""
+    },
+    "rtptorrent": {
+     "value": "no",
+     "source": "docs/LITERATURE.md #3: \"whether a failure was already present before the change is not resolved per test\""
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "flaky_filtered",
+   "label": "flaky failures filtered",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "paper/generated/flakiness.md, docs/SCHEMAS.md (strict label)",
+     "proof": [
+      "tests/test_fault_revealing.py::test_strict_excludes_flaky"
+     ]
+    },
+    "retest_all": {
+     "value": "no",
+     "source": "docs/RESULTS_2.md E2: blame-all clears no inherited or flaky failure"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "change_aware",
+   "label": "change-aware localization",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "docs/RESULTS_2.md E3 (R2 searches the functions the diff touches)",
+     "proof": [
+      "tests/test_agents_repair.py::test_r2_searches_only_touched_functions_r1_searches_everything"
+     ]
+    },
+    "retest_all": {
+     "value": "no",
+     "source": "paper/generated/rq2_predictor.md: B0 retest-all orders tests alphabetically, ignoring the change"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "no",
+     "source": "docs/LITERATURE.md #23: \"it does not see which change caused the failure\""
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "patch_validated",
+   "label": "patch validated by full test suite before it is suggested",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "src/agents/repair.py, src/agents/bot.py",
+     "proof": [
+      "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch",
+      "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch"
+     ]
+    },
+    "retest_all": {
+     "value": "no",
+     "source": "docs/RESULTS_2.md E3: R0 (notify only) proposes no patch"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md #26 validates by re-running the CI workflow, a different criterion; not marked either way"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "never_merges",
+   "label": "never merges or pushes on its own",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "src/agents/bot.py, integrations/github-actions/blastradius-bot.yml (contents: read)",
+     "proof": [
+      "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "explanation",
+   "label": "explanation for every prediction",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "src/agents/bot.py (\"Why\" column)",
+     "proof": [
+      "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "replayable",
+   "label": "results replayable offline",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "src/agents/llm_cache.py, eval/llm_cache/",
+     "proof": [
+      "tests/test_agents_repair.py::test_replay_mode_cache_miss_raises_and_never_calls_the_network",
+      "tests/test_bot_demo.py::test_recorded_bot_run_replays_to_the_committed_comment"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "no",
+     "source": "docs/LITERATURE.md #10: \"cannot be re-run or compared on public data\""
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  },
+  {
+   "id": "free_tier",
+   "label": "runs at zero cost on a free tier",
+   "cells": {
+    "br": {
+     "value": "yes",
+     "source": "paper/generated/cost_report.md (USD actually paid, from the ledger)",
+     "proof": [
+      "tests/test_cost_report.py::test_nothing_was_paid_and_the_report_says_so"
+     ]
+    },
+    "retest_all": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "rtptorrent": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "tts": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "logsage": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "ci_repair_bench": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    },
+    "chatrepair": {
+     "value": "no",
+     "source": "docs/LITERATURE.md #29: \"$0.42 Each using ChatGPT\" (a paid model)"
+    },
+    "agentless": {
+     "value": "not_reported",
+     "source": "docs/LITERATURE.md",
+     "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent"
+    }
+   }
+  }
+ ],
+ "safety": [
+  {
+   "claim": "a patch is suggested only after the full suite passes",
+   "tests": [
+    "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch",
+    "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+   ]
+  },
+  {
+   "claim": "the bot never merges or pushes",
+   "tests": [
+    "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+   ]
+  },
+  {
+   "claim": "the bot edits its own comment instead of spamming",
+   "tests": [
+    "tests/test_bot.py::test_the_bot_edits_its_own_comment_instead_of_posting_again"
+   ]
+  },
+  {
+   "claim": "secrets are never written to logs or caches",
+   "tests": [
+    "tests/test_safety_claims.py::test_no_credential_in_the_llm_caches_the_ledger_or_the_recorded_comment"
+   ]
+  },
+  {
+   "claim": "replay mode cannot make network calls",
+   "tests": [
+    "tests/test_agents_repair.py::test_replay_mode_cache_miss_raises_and_never_calls_the_network",
+    "tests/test_bot.py::test_full_bot_run_then_replay_from_the_recorded_reply"
+   ]
+  },
+  {
+   "claim": "no LLM in E1, E2 or make tables",
+   "tests": [
+    "tests/test_safety_claims.py::test_no_llm_module_is_reachable_from_e1_e2_features_or_make_tables"
+   ]
+  },
+  {
+   "claim": "time-safe retrieval (no future data)",
+   "tests": [
+    "tests/test_ask.py::test_retrieval_is_time_safe_strictly_before_the_query",
+    "tests/test_leakage_audit_e1.py::test_real_features_have_no_violations_and_inflated_ones_are_caught"
+   ]
+  },
+  {
+   "claim": "deterministic prompts (hash test)",
+   "tests": [
+    "tests/test_e3_replay.py::test_the_same_prompt_has_identical_bytes_in_fresh_processes",
+    "tests/test_rag_r4.py::test_r0_to_r3_prompts_and_system_are_byte_identical_to_the_recorded_hashes"
+   ]
+  }
+ ]
+}
