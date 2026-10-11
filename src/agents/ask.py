@@ -20,6 +20,9 @@ from src.rag.knowledge import KDoc, Knowledge
 QUESTION_TYPES = ("impact", "history", "test-failure", "general")
 K_TOTAL = 8
 PER_SOURCE = 4
+# Which sources a question type searches (the rest default to all three). A "has this failed before" question is
+# answered from failure history only: code and docs cannot say when a test failed, and they crowd out the evidence.
+SOURCES_BY_TYPE = {"history": ("failure",)}
 ITEM_CHARS = 1200
 MAX_COMPLETION = 800
 NOT_IN_CONTEXT = "not in the context"
@@ -156,7 +159,9 @@ class AskAgent:
             block, note = self._e1_block(question)
             if note:
                 notes.append(note)
-        hits: list[KDoc] = self.kb.search(question, k - (1 if block else 0), PER_SOURCE)
+        only = SOURCES_BY_TYPE.get(qtype)
+        hits: list[KDoc] = self.kb.search(question, k - (1 if block else 0), PER_SOURCE if only is None else k,
+                                          sources=only)
         items: list[dict] = []
         cites: list[Citation] = []
         for d in hits:

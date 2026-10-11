@@ -168,3 +168,11 @@ def test_replay_of_a_recorded_answer(interim, tmp_path) -> None:
     # a different question is a miss in replay mode, never a network call
     with pytest.raises(CacheMiss):
         AskAgent(kb, SAMPLE, replay).ask("Why is test_other failing?")
+
+
+def test_history_questions_search_failure_history_only(interim) -> None:
+    res = AskAgent(_kb(interim), SAMPLE, Offline()).ask("Has a connection timed out before in tests.test_b::test_y?")
+    assert res.qtype == "history"
+    assert res.citations and {c.source for c in res.citations} == {"failure"}
+    # BM25 keeps only documents that share a token with the question; the only such failure is run 3's timeout
+    assert [c.ref for c in res.citations] == ["run 3 (org__r, 2026-01-03)"]

@@ -43,6 +43,7 @@ SUGGESTION_MARKER = "<!-- blastradius-suggestion:{h} -->"
 MAX_COMMENT = 65_000
 AT_RISK_ROWS = 10
 RESULT_ROWS = 40
+TRIAGE_ROWS = 20
 MAX_REPAIR_ATTEMPTS = 2
 
 
@@ -171,10 +172,17 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
         if len(shown) > RESULT_ROWS:
             L += ["", f"_{len(shown) - RESULT_ROWS} more passing tests not shown._"]
     if triage:
+        counts = {c: sum(1 for t in triage if t["class"] == c) for c in ("mine", "inherited", "flaky")}
+        order = {"mine": 0, "inherited": 1, "flaky": 2}
+        rows_ = sorted(triage, key=lambda t: (order.get(t["class"], 3), t["test"]))
         L += ["", "### 3. Triage of each failure", "",
+              f"{counts['mine']} mine, {counts['inherited']} inherited, {counts['flaky']} flaky "
+              f"(of {len(triage)} failing).", "",
               "| Failing test | Class | Confidence | Why |", "|---|---|--:|---|"]
         L += [f"| `{_cell(t['test'], 80)}` | **{t['class']}** | {t['confidence']:.2f} | {_cell(t['reason'], 120)} |"
-              for t in triage]
+              for t in rows_[:TRIAGE_ROWS]]
+        if len(rows_) > TRIAGE_ROWS:
+            L += ["", f"_{len(rows_) - TRIAGE_ROWS} more failures not shown._"]
         L += ["", "_mine = caused by this change; inherited = already failing on the base; flaky = reruns flip._"]
     if repair is not None:
         L += ["", "### 4. Proposed fix", ""]

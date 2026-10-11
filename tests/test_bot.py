@@ -65,6 +65,16 @@ def test_comment_stays_under_the_cap_and_keeps_failures_and_the_suggestion() -> 
     assert len(huge) <= bot.MAX_COMMENT and huge.count("```") % 2 == 0
 
 
+def test_triage_table_is_capped_and_summarised() -> None:
+    tri = [{"test": f"tests/t.py::t{i:03d}", "class": "inherited" if i % 4 == 0 else "mine", "confidence": 0.9,
+            "reason": "r"} for i in range(60)]
+    text = render(None, triage=tri)
+    assert "45 mine, 15 inherited, 0 flaky (of 60 failing)." in text
+    assert "_40 more failures not shown._" in text
+    sec = text.split("### 3. Triage of each failure")[1]
+    assert sec.count("| `tests/t.py::t") == 20 and "**inherited**" not in sec    # mine rows come first
+
+
 def test_the_bot_edits_its_own_comment_instead_of_posting_again(tmp_path) -> None:
     forge = LocalForge(tmp_path, tmp_path / "state")
     forge.create_comment(5, "someone else's comment")

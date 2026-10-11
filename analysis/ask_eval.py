@@ -97,9 +97,7 @@ def knowledge_for(q: dict, embedder, failure_docs):
     if q["repo"]:
         repo = SEEDED / "repos" / q["repo"]
         docs = code_docs(repo) + load_repo_docs(repo) + docs
-    else:
-        docs = load_repo_docs(Path(".")) + docs
-    return Knowledge(docs, embedder)
+    return Knowledge(docs, embedder)         # history questions search failure history only (SOURCES_BY_TYPE)
 
 
 def answer_all(llm, embedder) -> list[tuple[dict, AskResult]]:
