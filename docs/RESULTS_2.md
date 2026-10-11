@@ -48,6 +48,8 @@ Triage is a small-sample result: the whole corpus holds 216 not-mine failures (1
 
 **Descriptive.** Overfit patches (target tests pass, suite fails): gpt-oss-120b R1 0, R2 3, R3 2; gpt-oss-20b R1 0, R2 3, R3 1. Exact restore: gpt-oss-120b R2 30/47, gpt-oss-20b R2 27/45. Tokens per task: gpt-oss-120b R1 1,947, R2 1,449, R3 2,363; gpt-oss-20b R1 1,701, R2 1,419, R3 2,546. Cost: USD 0 (Groq free tier); Bedrock ledger total USD 0.00.
 
+The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant applier; E3 fix rates are therefore conservative relative to the bot. The strict applier is `apply_blocks` (`src/agents/repair.py`, tested by `tests/test_agents_repair.py::test_search_must_match_exactly_once`); the tolerant one is `apply_blocks_tolerant` (`src/agents/bot.py`, tested by `tests/test_bot.py::test_strict_apply_rejects_the_real_replies_and_tolerant_apply_fixes_them`).
+
 **Pilot.** The 20-task pilot is reported separately in `paper/generated/rq4_repair.md` and is not part of the tests above.
 
 | arm (standard variant, interim) | gpt-oss-120b (n = 47) | gpt-oss-20b (n = 45) |

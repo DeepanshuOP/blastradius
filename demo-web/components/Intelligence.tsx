@@ -194,6 +194,12 @@ export default function Intelligence() {
               <div key={m}><p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{m}</p>
                 <Table t={t} pick={["arm", "n", "plausible fix", "bootstrap", "edited seeded function", "tokens"]} /></div>
             ))}
+            <p className="text-xs text-slate-500">
+              The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant applier; E3 fix rates are
+              therefore conservative relative to the bot. Strict: <Mono>apply_blocks</Mono>, tested by{" "}
+              <Mono>tests/test_agents_repair.py::test_search_must_match_exactly_once</Mono>. Tolerant: <Mono>apply_blocks_tolerant</Mono>, tested by{" "}
+              <Mono>tests/test_bot.py::test_strict_apply_rejects_the_real_replies_and_tolerant_apply_fixes_them</Mono>.
+            </p>
             {e3.source && <Source file={e3.source} />}
           </div>
         )}
