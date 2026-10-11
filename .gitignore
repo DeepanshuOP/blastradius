@@ -8,6 +8,9 @@ worktrees/
 paper/generated/*
 !paper/generated/*.md
 !paper/generated/*.pdf
+# cost report inputs and output (analysis/cost_report.py), tracked so the report regenerates offline
+!paper/generated/cost_report.json
+!paper/generated/e3_usage.json
 # slide figures (make figures) ship as PNG too
 !paper/generated/fig6_e3_arms.png
 !paper/generated/fig7_retrieval.png

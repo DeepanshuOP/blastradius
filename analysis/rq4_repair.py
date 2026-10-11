@@ -471,6 +471,25 @@ def write_report(base: dict[str, list[dict]], runs: dict[tuple[str, str], list[d
     paper_md.write(RESULT_MD, text)
 
 
+def write_usage_json(runs: dict[tuple[str, str], list[dict]], path: Path = Path("paper/generated/e3_usage.json")) -> None:
+    """Per model, variant and arm: tasks, plausible fixes and summed prompt / completion tokens, from the replay.
+
+    `analysis/cost_report.py` reads this file so it needs neither the seeded repositories nor a replay.
+    """
+    out: dict[str, dict] = {}
+    for (model, variant), recs in sorted(runs.items()):
+        arms: dict[str, dict] = {}
+        for arm in ("R0", "R1", "R2", "R3", "R4"):
+            xs = [r[arm] for r in recs if arm in r]
+            if xs:
+                arms[arm] = {"n": len(xs), "accepted": sum(int(x["accepted"]) for x in xs),
+                             "prompt_tokens": sum(x["prompt_tokens"] for x in xs),
+                             "completion_tokens": sum(x["completion_tokens"] for x in xs),
+                             "calls": sum(x["attempts"] for x in xs)}
+        out[f"{model}|{variant}"] = {"model": model, "variant": variant, "n_tasks": len(recs), "arms": arms}
+    path.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def cache_models() -> list[str]:
     """Models that have an E3 cache file (original model name from the first record)."""
     out = []
@@ -705,6 +724,7 @@ def main(argv: list[str] | None = None) -> int:
     base, runs, notes = replay_runs(pins)
     primary = DEFAULT_MODELS[0]
     write_report(base, runs, pilot_ids, notes, primary)
+    write_usage_json(runs)
     print(f"wrote paper/generated/{RESULT_MD}")
     return 0
 
