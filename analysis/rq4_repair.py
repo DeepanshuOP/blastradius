@@ -34,7 +34,7 @@ import numpy as np
 from analysis import paper_md
 from src.agents.llm import BedrockLLM, CostCapReached, DailyQuotaReached, GroqLLM, NetworkUnavailable, bedrock_spend
 from src.agents.llm_cache import CacheMiss, LLMCache, model_slug
-from src.agents.repair import (ARMS, SYSTEM, FailureReport, RepairAgent, build_prompt, index_functions,
+from src.agents.repair import (ARMS, SYSTEM, FailureReport, RepairAgent, build_prompt, build_prompt_r4, index_functions,
                                select_chunks)
 from src.eval import stats as S
 from src.eval.seeded.build import SEEDED, source_files
@@ -49,6 +49,8 @@ REPOS_JSON = OUT / "repos.json"
 RESULT_MD = "rq4_repair.md"
 DEFAULT_MODELS = ("openai/gpt-oss-120b", "openai/gpt-oss-20b")
 THIRD_MODEL = "qwen/qwen3.8-27b"   # D-62: exploratory; a Groq preview model, which can be withdrawn at short notice
+EXPLORATORY_MODELS = (THIRD_MODEL,)   # never in the pre-registered Holm family (033, D-62)
+R4_MARKERS = ("Earlier commits that changed ", "Similar code elsewhere in this repository")
 RANDOM_SEEDS = tuple(range(20))
 
 
@@ -127,8 +129,19 @@ def norm_ws(s: str) -> str:
     return re.sub(r"\s+", "", s)
 
 
-def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool) -> dict:
-    """Evaluate one task: retrieval and detection always, repair arms when `run_llm`."""
+def make_rag_context(rev: str = "HEAD"):
+    """The R4 context provider: the pinned local embedding model plus the repository's own git history (D-61)."""
+    from src.rag.context import RagContext
+    from src.rag.index import FastEmbedder
+
+    return RagContext(FastEmbedder(), rev)
+
+
+def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool, rag=None) -> dict:
+    """Evaluate one task: retrieval and detection always, repair arms when `run_llm`.
+
+    `rag` is the R4 context provider (`make_rag_context()`), needed only when `arms` contains `R4`.
+    """
     slug = task["repo"]
     repo = SEEDED / "repos" / slug
     py = SEEDED / "venvs" / slug / "bin" / "python"
@@ -173,7 +186,8 @@ def run_task(task: dict, llm, arms: tuple[str, ...], pins: dict, run_llm: bool) 
             verdicts: list = []
             validate = make_validator(repo, py, preexisting, targets, on_verdict=verdicts.append)
             t0 = time.time()
-            res = RepairAgent(llm, arm).run(repo, srcs, report, validate, tie if arm in ("R2", "R3") else None)
+            res = RepairAgent(llm, arm, rag=rag if arm == "R4" else None).run(
+                repo, srcs, report, validate, tie if arm in ("R2", "R3") else None)
             wall = time.time() - t0
             last = next((a for a in reversed(res.attempts) if a.applied), None)
             edited_file = edited_fn = restore = False
@@ -254,9 +268,9 @@ def model_usage(model: str) -> tuple[int, float, int]:
     return tok, usd, n
 
 
-def arm_table(recs: list[dict]) -> str:
+def arm_table(recs: list[dict], arms: tuple[str, ...] = ARMS) -> str:
     tab = []
-    for arm in ARMS:
+    for arm in arms:
         xs = [r[arm] for r in recs if arm in r]
         if not xs:
             continue
@@ -312,9 +326,42 @@ CAVEAT = ("On the standard variant the seeded edit lies inside the diff that R2 
           "tests execute, measures how much remains.")
 
 
+def exploratory_section(runs: dict[tuple[str, str], list[dict]], notes: dict[tuple[str, str], str],
+                        n_tasks: dict[str, int]) -> str:
+    """Exploratory results (not pre-registered): the D-62 third model, and arm R4 (RAG context, D-61)."""
+    text = ("\n## Exploratory (not pre-registered)\n\nNothing in this section is part of the pre-registered family of "
+            "tests (`docs/phase/033-e3-preregistration.md`); rates are descriptive, with their n, and p-values are "
+            "unadjusted two-sided exact McNemar.\n")
+    any_row = False
+    for (m, v), recs in sorted(runs.items()):
+        if m in EXPLORATORY_MODELS and recs:
+            any_row = True
+            text += (f"\n### Third model {m}, {v} variant (n = {len(recs)} of {n_tasks.get(v, '?')} tasks; D-62, a Groq preview "
+                     f"model, same prompts and acceptance rule as the other models)\n\n")
+            if (m, v) in notes:
+                text += f"**{notes[(m, v)]}**\n\n"
+            text += arm_table(recs)
+            b, c = paired(recs, "R2", "R1")
+            text += f"\nPaired R2 vs R1: R2 only {b}, R1 only {c}, exact McNemar two-sided p = {mcnemar_twosided(b, c):.4g}.\n"
+    for (m, v), recs in sorted(runs.items()):
+        sub = [r for r in recs if "R4" in r and "R2" in r]
+        if sub:
+            any_row = True
+            b, c = paired(sub, "R4", "R2")
+            text += (f"\n### R4 (R2 + retrieved fix history and similar code), {m}, {v} variant (n = {len(sub)} tasks that have both "
+                     f"R2 and R4 recorded)\n\n" + arm_table(sub, ("R2", "R4"))
+                     + f"\nPaired R4 vs R2: R4 only {b}, R2 only {c}, exact McNemar two-sided p = {mcnemar_twosided(b, c):.4g}. "
+                     "R4 is one attempt like R2 (no retries); its input is capped at 3,500 tokens.\n")
+    if not any_row:
+        text += "\nNo exploratory cache exists yet (no third-model run, no R4 run): nothing to report.\n"
+    return text
+
+
 def write_report(base: dict[str, list[dict]], runs: dict[tuple[str, str], list[dict]], pilot_ids: set[str],
                  notes: dict[tuple[str, str], str], primary: str) -> None:
     std, hard = base["standard"], base["hard"]
+    all_runs = runs
+    runs = {k: v for k, v in runs.items() if k[0] not in EXPLORATORY_MODELS}   # D-62: not in the confirmatory family
     text = paper_md.header("RQ4 / E3: change-aware repair on BR-Seeded", "analysis/rq4_repair.py",
                            "Produced by `make repair-eval` from cached LLM responses under D-58 / D-60. It is NOT part of "
                            "`make tables`, and its repair numbers depend on the recorded model replies "
@@ -399,6 +446,7 @@ def write_report(base: dict[str, list[dict]], runs: dict[tuple[str, str], list[d
             continue
         text += arm_table(recs)
         text += breakdowns(recs)
+    text += exploratory_section(all_runs, notes, {"standard": len(std), "hard": len(hard)})
     # ---- pilot ----------------------------------------------------------------------------------
     text += "\n## Pilot (n = 20, standard variant): not confirmatory\n\n"
     text += ("The 20-task operator-stratified subset run on 2026-10-10 before the pre-registration was written. Reported "
@@ -477,7 +525,7 @@ class Estimate:
     live_tasks: list[str] = field(default_factory=list)
 
 
-def estimate_run(tasks: list[dict], pins: dict, llm) -> Estimate:
+def estimate_run(tasks: list[dict], pins: dict, llm, arms: tuple[str, ...] = ("R1", "R2"), rag=None) -> Estimate:
     """Worst-case cost of the requests of R1 + R2 (+ R3's two retries) that are NOT in the cache, without any call.
 
     Prompts are built exactly as the agent builds them (retrieval needs no model) and looked up with the
@@ -498,9 +546,14 @@ def estimate_run(tasks: list[dict], pins: dict, llm) -> Estimate:
             changed, n_lines = diff_stats(t["pr_diff"])
             rep = FailureReport(failing=t["failing_tests"], pr_diff=t["pr_diff"], triage="mine", changed_files=changed)
             tie = e1_priority(repo, changed, n_lines)
-            for arm in ("R1", "R2"):
-                ch = select_chunks(arm, repo, srcs, rep, tie if arm == "R2" else None)
-                prompt = build_prompt(arm, rep, ch, repo)
+            for arm in arms:
+                if arm == "R4":
+                    ch = rag.select(repo, srcs, rep, None)
+                    hist, sim = rag.extras(repo, ch, srcs) if ch else ([], [])
+                    prompt, _ = build_prompt_r4(rep, ch, repo, hist, sim)
+                else:
+                    ch = select_chunks(arm, repo, srcs, rep, tie if arm == "R2" else None)
+                    prompt = build_prompt(arm, rep, ch, repo)
                 chars = len(SYSTEM) + len(prompt)
                 if cache is not None and llm.request_key(SYSTEM, prompt, 1500) in cache:
                     est.calls_cached += 1
@@ -554,7 +607,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("mode", choices=["run", "eval", "estimate"])
     ap.add_argument("--model", default=os.environ.get("MODEL") or os.environ.get("BR_AGENT_MODEL") or DEFAULT_MODELS[0])
     ap.add_argument("--variant", choices=["standard", "hard"], default="standard")
+    ap.add_argument("--arms", default=os.environ.get("ARMS") or "R1,R2,R3",
+                    help="comma-separated arms to run (R1,R2,R3 pre-registered; R4 exploratory RAG, D-61)")
     args = ap.parse_args(argv)
+    run_arms = tuple(a for a in args.arms.split(",") if a)
+    bad = [a for a in run_arms if a not in ("R1", "R2", "R3", "R4")]
+    if bad:
+        ap.error(f"unknown arm(s) {bad}: choose from R1,R2,R3,R4")
     pins = json.loads(REPOS_JSON.read_text())
     n_sub = int(os.environ.get("BR_E3_TASKS") or 20)
     pilot_ids = {t["task_id"] for t in subset(load_tasks(), 20)}
@@ -562,14 +621,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.mode == "estimate":   # dry run: no key needed, no request can be sent
         sub = subset(load_variant(args.variant), n_sub)
         llm = estimator_llm(args.model)
-        print(describe(args.model, args.variant, estimate_run(sub, pins, llm), llm), flush=True)
+        est_arms = tuple(a for a in run_arms if a in ("R1", "R2", "R4")) if args.arms != "R1,R2,R3" else ("R1", "R2")
+        rag = make_rag_context() if "R4" in est_arms else None
+        print(describe(args.model, args.variant, estimate_run(sub, pins, llm, est_arms, rag), llm), flush=True)
         return 0
 
     if args.mode == "run":
         tasks_all = load_variant(args.variant)
         sub = subset(tasks_all, n_sub)
         llm = make_llm(args.model, replay=False)
-        est = estimate_run(sub, pins, llm)
+        rag = make_rag_context() if "R4" in run_arms else None
+        est_arms = tuple(a for a in run_arms if a in ("R1", "R2", "R4")) if args.arms != "R1,R2,R3" else ("R1", "R2")
+        est = estimate_run(sub, pins, llm, est_arms, rag)
         print(describe(args.model, args.variant, est, llm), flush=True)
         if isinstance(llm, BedrockLLM):
             llm.check_budget(est.usd or 0.0) if est.usd is not None else llm.estimate_usd("", "", 0)
@@ -579,9 +642,9 @@ def main(argv: list[str] | None = None) -> int:
         try:
             for t in sub:
                 current = t["task_id"]
-                rec = run_task(t, llm, ("R1", "R2", "R3"), pins, True)
+                rec = run_task(t, llm, run_arms, pins, True, rag)
                 done += 1
-                print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if rec[a]['accepted'] else 'no'}" for a in ("R1", "R2", "R3")),
+                print(f"  {t['task_id']}: " + ", ".join(f"{a}={'ok' if rec[a]['accepted'] else 'no'}" for a in run_arms),
                       flush=True)
         except (DailyQuotaReached, CostCapReached, NetworkUnavailable) as exc:
             print(f"{exc}: stopped at {current} (a request that was not in the cache, or the provider was unreachable); {done} of {len(sub)} tasks done; "
@@ -622,6 +685,13 @@ def main(argv: list[str] | None = None) -> int:
                     missed += 1
             if not recs and v == "hard":
                 continue
+            if recs and any(any(mk in u for mk in R4_MARKERS) for u in llm.cache.user_messages()):
+                rag = make_rag_context()    # R4 was recorded for this model: replay it (exploratory, D-61)
+                for rec, t in ((r, next(x for x in tasks if x["task_id"] == r["task_id"])) for r in recs):
+                    try:
+                        rec["R4"] = run_task(t, llm, ("R4",), pins, True, rag)["R4"]
+                    except CacheMiss:
+                        pass
             runs[(model, v)] = recs
             if missed:
                 notes[(model, v)] = f"{len(recs)} of {len(tasks)} tasks done; {missed} not run (cache incomplete)"

@@ -155,19 +155,21 @@ seeded:
 
 MODEL ?= openai/gpt-oss-120b
 VARIANT ?= standard
+# R4 is the exploratory RAG arm (D-61): make repair-run MODEL=... ARMS=R4 BR_E3_TASKS=70
+ARMS ?= R1,R2,R3
 repair-run:
-	uv run --env-file .env --extra ml python -m analysis.rq4_repair run --model $(MODEL) --variant $(VARIANT)
+	uv run --env-file .env --extra ml --extra rag python -m analysis.rq4_repair run --model $(MODEL) --variant $(VARIANT) --arms $(ARMS)
 
 # Dry run: what is cached, what is left, worst-case tokens and days at the daily cap. No key, no request.
 #   make repair-estimate MODEL=qwen/qwen3.8-27b VARIANT=hard
 repair-estimate:
-	uv run --env-file .env --extra ml python -m analysis.rq4_repair estimate --model $(MODEL) --variant $(VARIANT)
+	uv run --env-file .env --extra ml --extra rag python -m analysis.rq4_repair estimate --model $(MODEL) --variant $(VARIANT) --arms $(ARMS)
 
 repair-eval: export BR_OFFLINE=1
 repair-eval: export BR_LLM_REPLAY=1
 repair-eval:
 	mkdir -p paper/generated
-	uv run --extra ml python -m analysis.rq4_repair eval
+	uv run --extra ml --extra rag python -m analysis.rq4_repair eval
 
 # RAG retrieval studies (D-61), exploratory and NOT part of `tables`: localization (sparse / dense / hybrid /
 # change-aware) and time-safe failure-history retrieval. No LLM, no network (the pinned embedding model is

@@ -14,6 +14,9 @@ R2  change-aware: functions touched by the PR diff, ranked by the same BM25; tie
     the E1 model's score of the test file paired with the changed file; the triage class
     is stated in the prompt
 R3  R2 plus up to two retries, each feeding back the failing output (<= 1,000 chars)
+R4  (exploratory, v2.1, D-61) R2's task with retrieved context: chunks chosen by change-aware hybrid retrieval, plus the
+    fix history of the top chunk and up to two similar functions of the same repository, input capped at 3,500 tokens.
+    One attempt, like R2. R0-R3 prompts are unchanged.
 
 One attempt is one LLM call with the input capped near 3,000 tokens.
 """
@@ -33,7 +36,10 @@ from src.eval.baselines import path_token_list
 
 log = logging.getLogger(__name__)
 
-ARMS = ("R0", "R1", "R2", "R3")
+ARMS = ("R0", "R1", "R2", "R3")      # the pre-registered arms (033); everything that iterates ARMS is unchanged
+RAG_ARMS = ("R4",)                    # exploratory (D-61)
+ALL_ARMS = ARMS + RAG_ARMS
+R4_INPUT_TOKENS = 3500                # system + user message, estimated as characters / 3.5 like `estimate_run`
 MAX_CHUNKS = 3
 CONTEXT_LINES = 20
 OUTPUT_CHARS = 1500
@@ -302,6 +308,54 @@ def build_prompt(arm: str, report: FailureReport, chunks: list[Chunk], repo: Pat
     return "\n\n".join(parts)
 
 
+def estimate_tokens(text: str) -> int:
+    """Input-token estimate used by the R4 cap (characters / 3.5, the estimator of `analysis.rq4_repair`)."""
+    return int(len(text) / 3.5)
+
+
+def _r4_sections(report: FailureReport, chunks: list[Chunk], repo: Path, history: list[str], similar: list[Chunk],
+                 feedback: str) -> str:
+    ids = "\n".join(f"- {t['test_id']}" for t in report.failing[:8])
+    out = "\n".join(t.get("output", "") for t in report.failing)[:OUTPUT_CHARS]
+    parts = [f"Failing tests:\n{ids}", f"Test output (truncated):\n{out}",
+             "Triage: this failure is MINE, i.e. caused by the change under review (the tests passed before it).\n"
+             "Files changed by the change: " + ", ".join(sorted(report.changed_files) or ["(unknown)"]),
+             "Candidate code:\n" + "\n\n".join(render_chunk(c, repo) for c in chunks)]
+    if history:
+        parts.append(f"Earlier commits that changed {chunks[0].qualname} (project history, for context):\n"
+                     + "\n\n".join(history))
+    if similar:
+        parts.append("Similar code elsewhere in this repository (reference only, do not edit):\n"
+                     + "\n\n".join(render_chunk(c, repo) for c in similar))
+    if feedback:
+        parts.append("Your previous patch did not make the whole suite pass. Output of the run:\n"
+                     + clean_feedback(feedback, repo)[:RETRY_OUTPUT_CHARS])
+    parts.append("Reply with SEARCH/REPLACE blocks only.")
+    return "\n\n".join(parts)
+
+
+def build_prompt_r4(report: FailureReport, chunks: list[Chunk], repo: Path, history: list[str], similar: list[Chunk],
+                    feedback: str = "", cap: int = R4_INPUT_TOKENS) -> tuple[str, dict]:
+    """R4 user message: R2's sections, then fix history, then similar code, within `cap` input tokens.
+
+    Trimming rule (deterministic): while system + user exceeds `cap`, drop the last fix-history item, then (once
+    history is empty) the last similar chunk. The target chunks are never trimmed, even if they alone exceed the cap.
+
+    Returns:
+        `(prompt, info)` where info has `history`, `similar` (counts kept) and `tokens` (estimate).
+    """
+    h, sim = list(history), list(similar)
+    while True:
+        prompt = _r4_sections(report, chunks, repo, h, sim, feedback)
+        tokens = estimate_tokens(SYSTEM) + estimate_tokens(prompt)
+        if tokens <= cap or not (h or sim):
+            return prompt, {"history": len(h), "similar": len(sim), "tokens": tokens}
+        if h:
+            h.pop()
+        else:
+            sim.pop()
+
+
 # ---- applying a patch ----------------------------------------------------------------------
 def parse_blocks(text: str) -> list[tuple[str, str, str]]:
     """`(path, search, replace)` triples in a model reply (code fences tolerated)."""
@@ -336,18 +390,23 @@ def apply_blocks(repo: Path, blocks: list[tuple[str, str, str]], allowed: set[st
 class RepairAgent:
     """Triage-routed, retrieval-grounded, validation-gated repair."""
 
-    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES) -> None:
+    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES, rag=None) -> None:
         """Create the agent.
 
         Args:
             llm: An object with `chat(system, user, max_completion_tokens) -> ChatResult`
                 (`GroqLLM`), or an offline provider (then only R0 behaviour is possible).
-            arm: One of :data:`ARMS`.
+            arm: One of :data:`ALL_ARMS`.
             max_retries: Extra attempts for R3.
+            rag: For R4 only: an object with `select(repo, source_files, report, tie_break) -> list[Chunk]` and
+                `extras(repo, chunks, source_files) -> (history: list[str], similar: list[Chunk])`
+                (`src.rag.context.RagContext`).
         """
-        if arm not in ARMS:
+        if arm not in ALL_ARMS:
             raise ValueError(f"unknown arm {arm!r}")
-        self.llm, self.arm, self.max_retries = llm, arm, max_retries
+        if arm == "R4" and rag is None:
+            raise ValueError("arm R4 needs a RAG context provider (src.rag.context.RagContext)")
+        self.llm, self.arm, self.max_retries, self.rag = llm, arm, max_retries, rag
 
     def run(self, repo: Path, source_files: list[str], report: FailureReport,
             validate: Callable[[dict[str, str]], tuple[bool, str]],
@@ -372,12 +431,21 @@ class RepairAgent:
             return RepairResult(self.arm, "ignore", note="triaged inherited: already failing on the base, no patch")
         if self.arm == "R0" or not hasattr(self.llm, "chat"):
             return RepairResult(self.arm, "notify", note="notification only, no model call")
-        chunks = select_chunks("R1" if self.arm == "R1" else "R2", repo, source_files, report, tie_break)
+        history: list[str] = []
+        similar: list[Chunk] = []
+        if self.arm == "R4":
+            chunks = self.rag.select(repo, source_files, report, tie_break)
+            history, similar = self.rag.extras(repo, chunks, source_files) if chunks else ([], [])
+        else:
+            chunks = select_chunks("R1" if self.arm == "R1" else "R2", repo, source_files, report, tie_break)
         res = RepairResult(self.arm, "repair", chunks)
         feedback = ""
         tries = 1 + (self.max_retries if self.arm == "R3" else 0)
         for i in range(tries):
-            prompt = build_prompt(self.arm, report, chunks, repo, feedback)
+            if self.arm == "R4":
+                prompt, _ = build_prompt_r4(report, chunks, repo, history, similar, feedback)
+            else:
+                prompt = build_prompt(self.arm, report, chunks, repo, feedback)
             r = self.llm.chat(SYSTEM, prompt, 1500)
             att = Attempt(len(SYSTEM) + len(prompt), r.text, r.usage, r.from_cache, False)
             res.attempts.append(att)

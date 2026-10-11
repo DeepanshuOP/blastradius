@@ -238,3 +238,34 @@ analysis (A1) and the conclusion (no cached request is invalidated) stand. Repro
   `data/clones` does not hold them. `fix_history` on them returns nothing, so R4's history block would be empty for all 70 tasks until the
   clones are deepened (a `git fetch --deepen`, network, which I have not done). Raised to the operator in the Step 3 report.
 - `make test`: **931 passed, 2 skipped** (917 + 14 new) in 769 s.
+
+## Step 2 (2026-10-11): localization retrieval study (`analysis/rq5_retrieval.py`, `make rag-eval`)
+
+- No LLM. L1 and L4 are `repair.select_chunks` itself (cut at three lifted to read the rank), so they are R1 / R2 and not copies:
+  L1 = 46/70 and L4 = 69/70 (standard), 63/70 (hard) match `rq4_repair.md` (R1 46/70, R2 69/70 and 63/70).
+- Dense vectors: `jinaai/jina-embeddings-v2-base-code`, pinned snapshot, CPU, one thread, text cut at 2,000 characters; 868 unique
+  vectors for the 70 tasks x 2 variants (content-addressed in `data/rag/emb_*.sqlite`, git-ignored). First run ~35 min on one thread
+  (CPU embedding; batches sorted by length).
+- Result (source `paper/generated/rq5_retrieval.md`): hit@3 standard / hard: L1 46 / 46, L2 21 / 21, L3 32 / 32, L4 69 / 63, L5 68 / 57
+  of 70. L3 vs L1: 3 only L3, 17 only L1, p = 0.0026, Holm (family of 4) 0.010. L5 vs L4 hard: 3 vs 9, Holm 0.292.
+  **Smarter retrieval alone does not close the gap: it is worse than BM25 here.**
+- Deviation: the brief's Holm "across those tests" is taken as one family of 4 (two comparisons x two variants); stated in the file.
+- `tests/test_rq5.py` (3 tests): scoring, gap reading both ways, Holm arithmetic by hand.
+
+## Step 3 (2026-10-11): arm R4 (code; no live run)
+
+- `src/agents/repair.py`: `ARMS` is unchanged (`R0..R3`); `RAG_ARMS = ("R4",)`, `ALL_ARMS`. R4 = R2's sections + fix history of the top chunk + up
+  to two similar functions (dense search on the top chunk's code, target chunks excluded); cap 3,500 tokens (system + user, characters /
+  3.5), trimming history first, then similar chunks, never the target. One attempt (like R2). `build_prompt` is untouched.
+- `src/rag/context.py` (`RagContext`): L5 selection, history via `history.fix_history(repo, "HEAD", ...)`, similar via dense search.
+- `analysis/rq4_repair.py`: `--arms` (env `ARMS`, default `R1,R2,R3`), `estimate_run(..., arms, rag)`; `eval` replays R4 only if the cache
+  holds R4-marked prompts and reports it in a new "Exploratory (not pre-registered)" section (R4 next to R2, paired two-sided McNemar,
+  n stated). The third model (D-62) is excluded from the confirmatory family and tests and gets its own exploratory table.
+- Proof R0-R3 did not move: `tests/test_rag_r4.py` pins sha256 of SYSTEM and of the R1 / R2 / R3 prompts (with and without retry
+  feedback) recorded from commit 5807f36 on the shopcart sample (before R4 existed), and asserts `ARMS`. Full replay: see the
+  `make repair-eval` entry below.
+- **Limitation to decide on:** the seeded pallets repos are depth-1 clones, so `fix_history` returns nothing for them (a shallow boundary
+  commit is ignored on purpose). R4's history block is empty for all 70 tasks unless the clones are deepened with a network
+  `git fetch --deepen` (not done: needs your decision). The similar-code block works without history. See the final report.
+- Command for the operator (not run here): `make repair-run MODEL=openai/gpt-oss-120b ARMS=R4 BR_E3_TASKS=70` (and `VARIANT=hard`).
+  `make repair-estimate ... ARMS=R4` prints the uncached worst case first.
