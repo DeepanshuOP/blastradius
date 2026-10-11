@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
+.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check
 
 test:
 	uv run pytest -q
@@ -175,6 +175,15 @@ repair-eval: export BR_LLM_REPLAY=1
 repair-eval:
 	mkdir -p paper/generated
 	uv run --extra ml --extra rag python -m analysis.rq4_repair eval
+
+# Refresh E3 from the live runner (~/br-e3, read-only): copy its caches, replay offline, rebuild figures (against a scratch
+# copy of data/seeded), demo data and the cost report, print the primary test. Commits nothing; the operator commits.
+e3-sync:
+	bash scripts/e3_sync.sh
+
+# Token and USD report from usage.jsonl and the E3 caches. Offline; NOT part of `tables`.
+cost-report:
+	BR_OFFLINE=1 uv run python -m analysis.cost_report
 
 # RAG retrieval studies (D-61), exploratory and NOT part of `tables`: localization (sparse / dense / hybrid /
 # change-aware) and time-safe failure-history retrieval. No LLM, no network (the pinned embedding model is
