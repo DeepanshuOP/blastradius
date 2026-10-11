@@ -251,3 +251,13 @@ def test_history_ignores_the_boundary_commit_of_a_shallow_clone(repo, tmp_path) 
     deeper = tmp_path / "deeper"
     subprocess.run(["git", "clone", "-q", "--depth", "2", f"file://{repo}", str(deeper)], check=True)
     assert [i.subject for i in history.fix_history(deeper, "HEAD", "calc.py", "Cart.discount")] == [SUBJECTS[2]]
+
+
+def test_restrict_to_with_a_start_line_does_not_match_a_same_named_sibling() -> None:
+    src = ("def f(x):\n    return alpha\n\n\ndef f(x, y):\n    return alpha + y\n")        # a re-definition: same qualname twice
+    chunks = chunk_source(src, "m.py")
+    assert [(c.qualname, c.start) for c in chunks] == [("f", 1), ("f", 5)]
+    idx = Index(chunks)
+    assert len(idx.search("alpha", k=5, mode="bm25", restrict_to={("m.py", "f")})) == 2       # both, by name
+    one = idx.search("alpha", k=5, mode="bm25", restrict_to={("m.py", "f", 5)})                # exactly the second
+    assert [(h.qualname, h.start) for h in one] == [("f", 5)]

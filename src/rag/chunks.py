@@ -51,8 +51,13 @@ class CodeChunk:
 
     @property
     def key(self) -> tuple[str, str]:
-        """`(file, qualname)`: how a chunk is named in `restrict_to`."""
+        """`(file, qualname)`: how a chunk is named in `restrict_to` (overloads and re-definitions share one)."""
         return (self.file, self.qualname)
+
+    @property
+    def ukey(self) -> tuple[str, str, int]:
+        """`(file, qualname, start)`: unique per chunk, for a `restrict_to` that must not match a same-named sibling."""
+        return (self.file, self.qualname, self.start)
 
     def search_text(self) -> str:
         """What the dense retriever embeds: path, name, then the code (docstring is inside the code)."""

@@ -58,14 +58,14 @@ class RagContext:
         """L5: the top <= 3 touched functions by hybrid rank (ties by file, line; `tie_break` is not used)."""
         idx = self._idx(repo, source_files)
         ranges = changed_line_ranges(report.pr_diff)
-        focus: dict[tuple[str, str], int] = {}
+        focus: dict[tuple[str, str, int], int] = {}      # per chunk, not per name: overloads share a qualname
         for c in idx.chunks:
             hit = [ln for ln in ranges.get(c.file, []) if c.start <= ln <= c.end]
             if hit:
-                focus[c.key] = hit[0]
-        hits = idx.search(query_text(report.failing), repair.MAX_CHUNKS, "hybrid", restrict_to=focus or None,
+                focus[c.ukey] = hit[0]
+        hits = idx.search(query_text(report.failing), repair.MAX_CHUNKS, "hybrid", restrict_to=set(focus) or None,
                           tokens=query_tokens(report.failing))
-        return [Chunk(h.file, h.qualname, h.start, h.end, focus.get(h.key, h.start), h.score, h.text) for h in hits]
+        return [Chunk(h.file, h.qualname, h.start, h.end, focus.get(h.ukey, h.start), h.score, h.text) for h in hits]
 
     def extras(self, repo: Path, chunks: list[Chunk], source_files: list[str]) -> tuple[list[str], list[Chunk]]:
         """`(history blocks, similar chunks)` for the top target chunk."""

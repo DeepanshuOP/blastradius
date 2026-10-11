@@ -78,7 +78,7 @@ def ranks_for(task: dict, repo: Path, srcs: list[str], embedder: Embedder) -> di
     chunks = chunk_repo(repo, None, srcs)
     idx = from_chunks(chunks, embedder)
     touched_lines = changed_line_ranges(task["pr_diff"])
-    touched = {c.key for c in chunks if any(c.start <= ln <= c.end for ln in touched_lines.get(c.file, []))}
+    touched = {c.ukey for c in chunks if any(c.start <= ln <= c.end for ln in touched_lines.get(c.file, []))}
     restrict = touched or None          # the same fallback as R2: no touched function -> the whole repo
     q, toks = query_text(task["failing_tests"]), query_tokens(task["failing_tests"])
     n = len(chunks)
@@ -297,6 +297,9 @@ def main(argv: list[str] | None = None) -> int:
         text += failure_history_section(failure_history(embedder))
     else:
         text += "\n## Failure-history retrieval\n\nNot computed: `data/interim` is not present on this machine.\n"
+    from analysis.ask_eval import section_from_answers
+
+    text += section_from_answers()
     paper_md.write(RESULT_MD, text)
     print(f"wrote paper/generated/{RESULT_MD}")
     return 0

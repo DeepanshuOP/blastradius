@@ -134,11 +134,17 @@ class Index:
             self._tokens = [_doc_tokens(c) for c in self.chunks]
         return self._tokens
 
-    def pool(self, restrict_to: Iterable[tuple[str, str]] | None) -> list[int]:
-        """Chunk indices a search may return (`restrict_to` is a set of `(file, qualname)`; None = all)."""
+    def pool(self, restrict_to: Iterable[tuple] | None) -> list[int]:
+        """Chunk indices a search may return.
+
+        `restrict_to` is None (all), a set of `(file, qualname)` (every chunk of that name, so typing overloads and
+        re-definitions come along), or a set of `(file, qualname, start)` (exactly those chunks).
+        """
         if restrict_to is None:
             return list(range(len(self.chunks)))
         want = set(restrict_to)
+        if want and len(next(iter(want))) == 3:
+            return [i for i, c in enumerate(self.chunks) if c.ukey in want]
         return [i for i, c in enumerate(self.chunks) if c.key in want]
 
     def sparse_ranking(self, tokens: list[str], pool: list[int]) -> list[tuple[int, float]]:
@@ -160,7 +166,7 @@ class Index:
         return sorted(rows, key=lambda r: (-round(r[1], 6), self.chunks[r[0]].file, self.chunks[r[0]].start))
 
     def search(self, query: str, k: int = 5, mode: str = "hybrid",
-               restrict_to: Iterable[tuple[str, str]] | None = None,
+               restrict_to: Iterable[tuple] | None = None,
                tokens: list[str] | None = None) -> list[CodeChunk]:
         """Top-`k` chunks (copies carrying `score`) for `query`.
 
