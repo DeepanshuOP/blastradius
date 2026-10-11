@@ -845,12 +845,29 @@ def write_json(path: Path, obj: dict) -> None:
     path.write_text(json.dumps(obj, indent=1, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def rag_doc(sha: str) -> dict:
+    """The exploratory RAG layer for the site's Ask tab: recorded answers, retrieval tables, the bot comment.
+
+    Everything is read from files that other targets wrote (`make rag-eval`, `analysis/ask_eval.py`, the bot
+    recording run); a missing file is `null` and the page says so. Nothing is computed here.
+    """
+    def read(path: Path) -> str | None:
+        return path.read_text(encoding="utf-8") if path.exists() else None
+
+    answers = Path("eval/ask/answers.json")
+    return {"generated_at_git_sha": sha,
+            "ask": json.loads(answers.read_text(encoding="utf-8")) if answers.exists() else None,
+            "retrieval_md": read(GENERATED / "rq5_retrieval.md"),
+            "bot_comment_md": read(Path("src/agents/demo/bot_comment.md"))}
+
+
 def write_docs(out_dir: Path, sha: str) -> None:
     """Write the three documents that need only `paper/generated` (and, optionally, the parquet)."""
     write_json(out_dir / "results.json", results(sha))
     write_json(out_dir / "overview.json", overview(sha))
     write_json(out_dir / "corpus.json", corpus(sha))
     write_json(out_dir / "panels.json", panels(sha))
+    write_json(out_dir / "rag.json", rag_doc(sha))
     intel = intelligence(sha)
     for key in ("e1", "e2", "e3"):
         write_json(out_dir / f"{key}.json", {"generated_at_git_sha": sha, key: intel[key]})

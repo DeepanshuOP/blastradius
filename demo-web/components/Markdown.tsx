@@ -31,6 +31,7 @@ export default function Markdown({ text }: { text: string }) {
           <tbody>{body.map((r, k) => <tr key={k} className="odd:bg-slate-50">{r.map((c, j) => <td key={j} className="px-2 py-1.5 align-top">{inline(c)}</td>)}</tr>)}</tbody>
         </table></div>);
     } else if (l.startsWith("# ")) out.push(<h4 key={i} className="mt-1 text-base font-bold text-slate-900">{inline(l.slice(2))}</h4>);
+    else if (l.startsWith("### ")) out.push(<h6 key={i} className="mt-2 text-[13px] font-semibold text-slate-800">{inline(l.slice(4))}</h6>);
     else if (l.startsWith("## ")) out.push(<h5 key={i} className="mt-3 text-sm font-semibold text-slate-800">{inline(l.slice(3))}</h5>);
     else if (l.startsWith("> ")) out.push(<blockquote key={i} className="border-l-2 border-orange-400 pl-3 italic text-slate-700">{inline(l.slice(2))}</blockquote>);
     else if (/^\s*- /.test(l)) out.push(<li key={i} className={`ml-5 list-disc ${l.startsWith("  ") ? "ml-10" : ""}`}>{inline(l.replace(/^\s*- /, ""))}</li>);
