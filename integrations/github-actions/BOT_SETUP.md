@@ -17,7 +17,7 @@ Not run live yet by this project until you do the steps below on a repository yo
 
 Repository → Settings → Secrets and variables → Actions → **New repository secret**: `GROQ_API_KEY` = your Groq key.
 Without it the bot still ranks, runs and triages, and says "No model is configured".
-The model is `openai/gpt-oss-20b` (free tier, 200K tokens/day); a run costs a few thousand tokens.
+The model is `openai/gpt-oss-120b` (free tier, daily token cap); a run costs a few thousand tokens.
 
 ## 3. The workflow
 
