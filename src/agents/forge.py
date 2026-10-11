@@ -94,6 +94,31 @@ class LocalForge:
         """Local forge has no CI; the reviewer runs the tests itself."""
         return "none"
 
+    # -- issue comments (the PR bot edits its own comment instead of posting a new one) ----------
+    def _comments_path(self, number: int) -> Path:
+        return self.dir / f"comments-{number}.json"
+
+    def list_comments(self, number: int) -> list[dict]:
+        """Comments on PR ``number``: ``[{"id", "body"}]``."""
+        p = self._comments_path(number)
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+
+    def create_comment(self, number: int, body: str) -> dict:
+        """Add a comment; returns it."""
+        items = self.list_comments(number)
+        c = {"id": max((x["id"] for x in items), default=0) + 1, "body": body}
+        self._comments_path(number).write_text(json.dumps(items + [c], indent=2), encoding="utf-8")
+        return c
+
+    def update_comment(self, number: int, comment_id: int, body: str) -> dict:
+        """Replace the body of comment ``comment_id``."""
+        items = self.list_comments(number)
+        for c in items:
+            if c["id"] == comment_id:
+                c["body"] = body
+        self._comments_path(number).write_text(json.dumps(items, indent=2), encoding="utf-8")
+        return next(c for c in items if c["id"] == comment_id)
+
     def merge(self, pr: PullRequest) -> str:
         """``git merge --no-ff`` the head into the base; return the merge commit id."""
         gitops.git(self.repo, "checkout", "-q", pr.base)
@@ -199,6 +224,38 @@ class GitHubForge:
         if resp.status_code >= 300:
             raise RuntimeError(f"merge failed ({resp.status_code}): {resp.text[:300]}")
         return resp.json()["sha"]
+
+    # -- issue comments (the PR bot edits its own comment instead of posting a new one) ----------
+    def list_comments(self, number: int) -> list[dict]:
+        """Comments on PR ``number``: ``[{"id", "body"}]`` (first 100)."""
+        items = self._get(f"/repos/{self.slug}/issues/{number}/comments", {"per_page": 100})
+        return [{"id": c["id"], "body": c.get("body") or ""} for c in items]
+
+    def create_comment(self, number: int, body: str) -> dict:
+        """Post a new comment."""
+        resp = self._write("POST", f"/repos/{self.slug}/issues/{number}/comments", {"body": body})
+        if resp.status_code >= 300:
+            raise RuntimeError(f"comment failed ({resp.status_code}): {resp.text[:300]}")
+        return {"id": resp.json()["id"], "body": body}
+
+    def update_comment(self, number: int, comment_id: int, body: str) -> dict:
+        """Edit comment ``comment_id`` in place."""
+        resp = self._write("PATCH", f"/repos/{self.slug}/issues/comments/{comment_id}", {"body": body})
+        if resp.status_code >= 300:
+            raise RuntimeError(f"comment edit failed ({resp.status_code}): {resp.text[:300]}")
+        return {"id": comment_id, "body": body}
+
+    def list_review_comments(self, number: int) -> list[dict]:
+        """Inline review comments on PR ``number`` (first 100): ``[{"id", "body", "path"}]``."""
+        items = self._get(f"/repos/{self.slug}/pulls/{number}/comments", {"per_page": 100})
+        return [{"id": c["id"], "body": c.get("body") or "", "path": c.get("path", "")} for c in items]
+
+    def review_suggestions(self, number: int, commit_id: str, body: str, comments: list[dict]) -> None:
+        """Submit one review (event COMMENT) whose inline comments carry ``suggestion`` blocks; never approves."""
+        resp = self._write("POST", f"/repos/{self.slug}/pulls/{number}/reviews",
+                           {"commit_id": commit_id, "event": "COMMENT", "body": body, "comments": comments})
+        if resp.status_code >= 300:
+            raise RuntimeError(f"suggestion review failed ({resp.status_code}): {resp.text[:300]}")
 
     def dispatch_workflow(self, workflow: str, ref: str, inputs: dict) -> None:
         """Trigger a ``workflow_dispatch`` run."""

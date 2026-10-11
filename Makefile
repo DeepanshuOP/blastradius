@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
+.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
 
 test:
 	uv run pytest -q
@@ -178,6 +178,13 @@ rag-eval: export BR_OFFLINE=1
 rag-eval:
 	mkdir -p paper/generated
 	uv run --extra ml --extra rag python -m analysis.rq5_retrieval
+
+# The PR bot flow locally (D-63): prints the comment instead of posting it.
+#   make bot-local REPO=/path/to/clone BASE=<sha> HEAD=<sha> [PR=1]
+# Uses the Groq cache under REPO/.blastradius (BR_LLM_REPLAY=1 forbids any call; BR_OFFLINE=1 skips repair).
+PR ?= 1
+bot-local:
+	uv run --env-file .env --extra ml --extra rag python -m src.agents bot --repo $(REPO) --base $(BASE) --head $(HEAD) --pr $(PR) --no-post
 
 # E2 only: failure triage. Offline, deterministic.
 e2: export BR_OFFLINE=1

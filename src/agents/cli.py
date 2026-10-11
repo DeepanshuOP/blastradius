@@ -11,6 +11,7 @@
     python -m src.agents pipeline --stages classic ...               -> the original five-agent order
     python -m src.agents demo                                        -> four recorded scenarios, offline
     python -m src.agents ask      --repo R --question "..."          -> answer with [S1]..[S8] citations (exploratory RAG)
+    python -m src.agents bot      --repo R --base B --head H --pr N  -> the PR comment (posts it on GitHub Actions)
 
 Every command prints one JSON object on stdout. Run from the BlastRadius repo
 root with ``uv run --extra graph``.
@@ -154,6 +155,14 @@ def main(argv: list[str] | None = None) -> int:
                                                     help="LLM provider (default: groq if GROQ_API_KEY is set)")
     sp.add_argument("--interim", default="data/interim", help="BR-Bench interim tables for the failure-history source")
     sp.add_argument("--no-dense", action="store_true", help="BM25 only (no embedding model)")
+    sp = sub.add_parser("bot", help="PR bot: impact, regression, triage, validated repair -> one comment")
+    sp.add_argument("--repo", required=True); sp.add_argument("--base", required=True); sp.add_argument("--head", required=True)
+    sp.add_argument("--pr", type=int, required=True); sp.add_argument("--state-dir")
+    sp.add_argument("--provider", choices=["offline", "groq"], help="LLM provider (default: groq if GROQ_API_KEY is set)")
+    sp.add_argument("--forge", choices=["local", "github"], help="where to post (default: github on GitHub Actions, else local)")
+    g = sp.add_mutually_exclusive_group()
+    g.add_argument("--post", action="store_true", help="post the comment (default on GitHub Actions)")
+    g.add_argument("--no-post", action="store_true", help="only print the comment")
     sp = sub.add_parser("pipeline", help="impact, code, regress, triage, repair, review, deploy"); common(sp)
     sp.add_argument("--stages", choices=["2.0", "classic"], default="2.0")
     sp.add_argument("--story"); sp.add_argument("--story-file"); sp.add_argument("--title"); sp.add_argument("--patch")
@@ -213,6 +222,24 @@ def main(argv: list[str] | None = None) -> int:
                 (repo / p).write_text(text, encoding="utf-8")
         _emit({"triage": tri.counts(), "action": res.action, "note": res.note, "chunks": [f"{c.file}::{c.qualname}" for c in res.chunks],
                "attempts": len(res.attempts), "proposed_files": sorted(files_out), "applied": bool(args.apply and files_out)})
+        return 0
+
+    if args.cmd == "bot":
+        import os
+
+        from src.agents import bot as botmod
+        from src.agents.ask import chat_llm
+
+        repo = Path(args.repo).resolve()
+        state = _state(args)
+        on_actions = os.environ.get("GITHUB_ACTIONS") == "true"
+        provider = args.provider or ("groq" if os.environ.get("GROQ_API_KEY") else "offline")
+        out = botmod.run_bot(repo, args.base, args.head, args.pr, llm=chat_llm(provider, state / "bot_llm_cache.jsonl"),
+                             state_dir=state)
+        print(out.comment)
+        if args.post or (on_actions and not args.no_post):
+            forge = get_forge(args.forge or ("github" if on_actions else "local"), repo, state)
+            print(json.dumps(botmod.post(out, forge, args.pr, args.head)), file=sys.stderr)
         return 0
 
     if args.cmd == "ask":
