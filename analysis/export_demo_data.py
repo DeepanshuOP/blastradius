@@ -906,7 +906,7 @@ def compare_e1() -> dict | None:
         s = stats.get(key)
         rows.append({"id": key, "method": main[key]["method"], "n": int(main[key]["n"]),
                      "recall10": main[key]["Recall@10"], "map": main[key]["MAP"], "ci": [float(lo), float(hi)],
-                     "p_adj": float(s["Holm-adjusted p"]) if s else None, "delta": s["Cliff's delta"] if s else None,
+                     "p_adj": float(s["Holm-adjusted p"]) if s else None, "p_adj_text": s["Holm-adjusted p"] if s else None, "delta": s["Cliff's delta"] if s else None,
                      "magnitude": s["magnitude"] if s else None})
     by = {r["id"]: r for r in rows}
 
@@ -915,10 +915,10 @@ def compare_e1() -> dict | None:
 
     parts = [f"Ours reaches Recall@10 {r10('ours'):.3f} against {r10('B7'):.3f} for the readily-available-information ranker B7"]
     b7 = by["B7"]
-    parts[0] += (f" (Holm-adjusted p = {b7['p_adj']:.3f}, Cliff's \u03b4 = {b7['delta']}, {b7['magnitude']}): "
+    parts[0] += (f" (Holm-adjusted p = {b7['p_adj_text']}, Cliff's \u03b4 = {b7['delta']}, {b7['magnitude']}): "
                  + ("a measurable difference." if b7["p_adj"] < 0.05 else "no measurable difference."))
     b4 = by["B4"]
-    parts.append(f"Against failure history B4 ({r10('B4'):.3f}) the adjusted p is {b4['p_adj']:.3f} and the effect is {b4['magnitude']} "
+    parts.append(f"Against failure history B4 ({r10('B4'):.3f}) the adjusted p is {b4['p_adj_text']} and the effect is {b4['magnitude']} "
                  f"(\u03b4 = {b4['delta']}); against random order ({r10('B1'):.3f}) the effect is {by['B1']['magnitude']} (\u03b4 = {by['B1']['delta']}).")
     return {"source": "paper/generated/rq2_predictor.md", "n": rows[0]["n"], "split": "chronological test split, Java only",
             "test": _paragraph_after(path, "Paired statistics"), "verdict": _paragraph_after(path, "Gate 3 verdict"),

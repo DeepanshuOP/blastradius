@@ -181,6 +181,11 @@ repair-eval:
 e3-sync:
 	bash scripts/e3_sync.sh
 
+# One-command pre-presentation check, offline: tests, demo-data, site build, agents demo, Ask and bot replays,
+# every JSON the site loads, Compare numbers against their sources. Prints a PASS/FAIL table; non-zero on any FAIL.
+demo-check:
+	uv run --extra graph --extra ml --extra rag --extra figures python -m analysis.demo_check
+
 # Token and USD report from usage.jsonl and the E3 caches. Offline; NOT part of `tables`.
 cost-report:
 	BR_OFFLINE=1 uv run python -m analysis.cost_report

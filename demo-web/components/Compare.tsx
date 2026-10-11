@@ -10,7 +10,7 @@ type Matrix = {
   safety: { claim: string; tests: string[] }[];
 };
 type Tbl = { columns: string[]; rows: string[][] };
-type E1Row = { id: string; method: string; n: number; recall10: string; map: string; ci: [number, number]; p_adj: number | null; delta: string | null; magnitude: string | null };
+type E1Row = { id: string; method: string; n: number; recall10: string; map: string; ci: [number, number]; p_adj: number | null; p_adj_text: string | null; delta: string | null; magnitude: string | null };
 type Arm = { arm: string; label: string; k: number; n: number; wilson: [number, number] };
 type LocRow = { mode: string; k: number; n: number; wilson: [number, number]; cell: string; mrr: string };
 type CostRow = {
@@ -142,7 +142,7 @@ function E1Table({ e1 }: { e1: NonNullable<CompareDoc["e1"]> }) {
           {e1.rows.map((r) => (
             <tr key={r.id} className={`border-b border-slate-100 last:border-0 ${r.id === "ours" ? "bg-sky-50" : ""}`}>
               <Td className="whitespace-normal">{r.method}</Td><Td>{r.n}</Td><Td>{r.recall10}</Td><Td>[{r.ci[0].toFixed(3)}, {r.ci[1].toFixed(3)}]</Td>
-              <Td>{r.map}</Td><Td>{r.p_adj === null ? "n/a" : r.p_adj.toPrecision(3)}</Td><Td>{r.delta ?? "n/a"}</Td><Td>{r.magnitude ?? "n/a"}</Td>
+              <Td>{r.map}</Td><Td>{r.p_adj_text ?? "n/a"}</Td><Td>{r.delta ?? "n/a"}</Td><Td>{r.magnitude ?? "n/a"}</Td>
             </tr>
           ))}
         </tbody>
