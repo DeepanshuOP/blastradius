@@ -30,7 +30,9 @@ from pathlib import Path
 from src.eval.seeded.mutate import OPERATORS, Mutation, apply, find_mutations
 
 ROOT = Path(__file__).resolve().parents[3]
-SEEDED = ROOT / "data" / "seeded"
+# BR_SEEDED_DIR points replays at a copy (venvs included, with their .pth paths rewritten) so they do not queue behind
+# a live run on the same working trees.
+SEEDED = Path(os.environ["BR_SEEDED_DIR"]) if os.environ.get("BR_SEEDED_DIR") else ROOT / "data" / "seeded"
 REPOS = SEEDED / "repos"
 VENVS = SEEDED / "venvs"
 OUT = ROOT / "eval" / "seeded"

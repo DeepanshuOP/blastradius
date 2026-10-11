@@ -602,6 +602,54 @@ def estimator_llm(model: str):
                       price_out=float(po) if po else None, max_usd=float(os.environ.get("BR_BEDROCK_MAX_USD") or 10))
 
 
+def replay_runs(pins: dict) -> tuple[dict[str, list[dict]], dict[tuple[str, str], list[dict]], dict[tuple[str, str], str]]:
+    """Replay every cached model over every task, network forbidden. Shared by `eval` and the slide figures.
+
+    Returns `(base, runs, notes)`: `base[variant]` the model-free detection and retrieval records, `runs[(model, variant)]`
+    the replayed R0-R3 (and R4 where recorded) records, `notes` a remark for each incomplete cache.
+    """
+    os.environ["BR_LLM_REPLAY"] = "1"
+    os.environ["BR_OFFLINE"] = "1"
+    base: dict[str, list[dict]] = {}
+    tasks_by_variant: dict[str, list[dict]] = {}
+    for v in ("standard", "hard"):
+        try:
+            tasks_by_variant[v] = load_variant(v)
+        except FileNotFoundError:
+            tasks_by_variant[v] = []
+        base[v] = []
+        for t in tasks_by_variant[v]:
+            r = run_task(t, None, (), pins, False)
+            r["n_hard"] = t.get("n_hard_distractors", 0)
+            base[v].append(r)
+    runs: dict[tuple[str, str], list[dict]] = {}
+    notes: dict[tuple[str, str], str] = {}
+    models = cache_models()
+    for model in models:
+        llm = make_llm(model, replay=True)
+        for v in ("standard", "hard"):
+            tasks = tasks_by_variant[v]
+            recs, missed = [], 0
+            for t in tasks:
+                try:
+                    recs.append(run_task(t, llm, ("R0", "R1", "R2", "R3"), pins, True))
+                except CacheMiss:
+                    missed += 1
+            if not recs and v == "hard":
+                continue
+            if recs and any(any(mk in u for mk in R4_MARKERS) for u in llm.cache.user_messages()):
+                rag = make_rag_context()    # R4 was recorded for this model: replay it (exploratory, D-61)
+                for rec, t in ((r, next(x for x in tasks if x["task_id"] == r["task_id"])) for r in recs):
+                    try:
+                        rec["R4"] = run_task(t, llm, ("R4",), pins, True, rag)["R4"]
+                    except CacheMiss:
+                        pass
+            runs[(model, v)] = recs
+            if missed:
+                notes[(model, v)] = f"{len(recs)} of {len(tasks)} tasks done; {missed} not run (cache incomplete)"
+    return base, runs, notes
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("mode", choices=["run", "eval", "estimate"])
@@ -654,47 +702,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"cache: {llm.cache.path} ({len(llm.cache)} records)")
         return 0
 
-    # eval: replay only, no network
-    os.environ["BR_LLM_REPLAY"] = "1"
-    os.environ["BR_OFFLINE"] = "1"
-    base: dict[str, list[dict]] = {}
-    tasks_by_variant: dict[str, list[dict]] = {}
-    for v in ("standard", "hard"):
-        try:
-            tasks_by_variant[v] = load_variant(v)
-        except FileNotFoundError:
-            tasks_by_variant[v] = []
-        base[v] = []
-        for t in tasks_by_variant[v]:
-            r = run_task(t, None, (), pins, False)
-            r["n_hard"] = t.get("n_hard_distractors", 0)
-            base[v].append(r)
-    runs: dict[tuple[str, str], list[dict]] = {}
-    notes: dict[tuple[str, str], str] = {}
-    models = cache_models()
+    base, runs, notes = replay_runs(pins)
     primary = DEFAULT_MODELS[0]
-    for model in models:
-        llm = make_llm(model, replay=True)
-        for v in ("standard", "hard"):
-            tasks = tasks_by_variant[v]
-            recs, missed = [], 0
-            for t in tasks:
-                try:
-                    recs.append(run_task(t, llm, ("R0", "R1", "R2", "R3"), pins, True))
-                except CacheMiss:
-                    missed += 1
-            if not recs and v == "hard":
-                continue
-            if recs and any(any(mk in u for mk in R4_MARKERS) for u in llm.cache.user_messages()):
-                rag = make_rag_context()    # R4 was recorded for this model: replay it (exploratory, D-61)
-                for rec, t in ((r, next(x for x in tasks if x["task_id"] == r["task_id"])) for r in recs):
-                    try:
-                        rec["R4"] = run_task(t, llm, ("R4",), pins, True, rag)["R4"]
-                    except CacheMiss:
-                        pass
-            runs[(model, v)] = recs
-            if missed:
-                notes[(model, v)] = f"{len(recs)} of {len(tasks)} tasks done; {missed} not run (cache incomplete)"
     write_report(base, runs, pilot_ids, notes, primary)
     print(f"wrote paper/generated/{RESULT_MD}")
     return 0

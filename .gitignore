@@ -8,6 +8,9 @@ worktrees/
 paper/generated/*
 !paper/generated/*.md
 !paper/generated/*.pdf
+# slide figures (make figures) ship as PNG too
+!paper/generated/fig6_e3_arms.png
+!paper/generated/fig7_retrieval.png
 __pycache__/
 .venv/
 *.parquet

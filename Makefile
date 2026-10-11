@@ -143,8 +143,13 @@ analyze:
 		&& echo "impact.md and impact.json: $$dir/.blastradius/impact/"
 
 # E1 figures (fig3-fig5) from data/processed/rq2_results.json; fig1/fig2 are written by rq1_divergence.py.
+# fig6 (E3 arms, replayed from eval/llm_cache/, so it grows with the caches) and fig7 (paper/generated/rq5_retrieval.md,
+# refreshed by `make rag-eval`) are slide figures; no network, no LLM.
+figures: export BR_OFFLINE=1
+figures: export BR_LLM_REPLAY=1
 figures:
-	uv run --extra figures --extra ml python analysis/rq2_figures.py
+	uv run --extra figures --extra ml --extra rag python analysis/rq2_figures.py
+	uv run --extra figures --extra ml --extra rag python -m analysis.slide_figures
 
 # E3 (D-58). `seeded` clones three public repos and installs their test deps (network, once); NOT part of
 # `tables`. `repair-run` calls the model (Groq free tier, GROQ_API_KEY in .env) and caches every reply under

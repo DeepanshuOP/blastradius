@@ -338,3 +338,21 @@ Keys are now `(file, qualname, start)` (`CodeChunk.ukey`; `Index.search(restrict
 `test_restrict_to_with_a_start_line_does_not_match_a_same_named_sibling`). The same key fix applies to the L5 mode of the localization
 study, so L5 moved from 68 / 57 to **69 / 58** (standard / hard) and the hard-variant L5 vs L4 test from p = 0.146 to 0.2266
 (Holm 0.4531). L1 to L4, L2 and L3 and the failure-history tables did not change. Docs were patched to the regenerated file.
+
+## Slide figures and the PR-bot sandbox (2026-10-11)
+
+- **Pushed** `upgrade-2.0` and `upgrade-2.1` to origin after checking all 39 commits not on origin/main: author and committer
+  DeepanshuOP (noreply), no trailer lines (`git log --format=%(trailers)` empty, no `Co-Authored-By` / `Claude-Session`).
+- **PR bot, first live run** on a fork of `pallets/itsdangerous` (`DeepanshuOP/itsdangerous`, workflow pinned to a pushed sha).
+  Run 1 failed in 16 s: `ModuleNotFoundError: networkx`. `networkx` arrives with the `graph` extra (`graphifyy`), which the template did
+  not install. Fix: `uv sync` and `uv run` take `--extra graph --extra ml --extra rag` in `blastradius-bot.yml` and in `make bot-local`.
+  Run 2 succeeded (job 26 s). The sandbox's own dependency step also needed `freezegun` (its tests import it).
+- **Bot output on the demo bug** (`age > max_age` flipped to `<` in `TimestampSigner.unsign`, 5 of 297 tests fail): E1 listed six test
+  files, E2 called all five failures "mine", and the model reply "could not be applied", so the patch is shown as **not validated**
+  (no suggestion). One model call, 2,194 tokens.
+- **fig6 / fig7** (`analysis/slide_figures.py`, `make figures`). fig6 replays the E3 caches through `rq4_repair.replay_runs` (the code
+  `repair-eval` uses; extracted from `eval`, same behaviour) with 95% Wilson intervals; fig7 parses `rq5_retrieval.md`. Replay at
+  this commit reproduces `rq4_repair.md` (120b R1/R2/R3 20/33/37 of 47, 20b 10/29/33 of 45).
+- **Seeded-tree contention.** A live E3 run in another checkout shares `data/seeded` through a symlink, so a replay queues on the
+  per-repo `br-seeded.lock`. `BR_SEEDED_DIR` (default unchanged) points a replay at a copy of `data/seeded` whose venv `.pth` paths are
+  rewritten; the figures were produced that way so the live run was not touched.
