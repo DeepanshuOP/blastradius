@@ -135,11 +135,26 @@ def faithfulness_section(pairs: list[tuple[dict, AskResult]]) -> str:
     for typ in ("test-failure", "impact", "history", "all"):
         rs = [r for q, r in pairs if typ == "all" or q["type"] == typ]
         s = score_answers(rs)
-        rows.append([typ, s["answered"], paper_md.rate(s["all_citations_real"], s["answered"]),
-                     paper_md.rate(s["cites_at_least_one"], s["answered"]), s["abstained"]])
-    text += paper_md.table(["question type", "answered", "every [Sk] points to a retrieved item (and at least one)",
-                            "cites at least one item", "answered \"not in the context\""], rows)
+        rows.append([typ, s["answered"], paper_md.rate(s["all_citations_real_or_none"], s["answered"]),
+                     paper_md.rate(s["cites_at_least_one"], s["answered"]),
+                     paper_md.rate(s["all_citations_real"], s["answered"]), s["abstained"]])
+    text += paper_md.table(["question type", "answered", "no [Sk] points outside the retrieved items",
+                            "cites at least one item", "both (every citation real, at least one)",
+                            "answered \"not in the context\""], rows)
     return text
+
+
+def section_from_answers(path: Path = ANSWERS) -> str:
+    """The faithfulness section from the recorded `answers.json` (no model, no index): what `make rag-eval` includes."""
+    from types import SimpleNamespace
+
+    if not path.exists():
+        return ("\n## Citation faithfulness of Ask\n\nNot recorded yet: run `python -m analysis.ask_eval record` "
+                "(one Groq run with " + MODEL + ", cached).\n")
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    pairs = [({"type": q["type"]}, SimpleNamespace(answer=q["answer"], faithful=q["faithful"], cited=q["cited"]))
+             for q in doc["questions"]]
+    return faithfulness_section(pairs)
 
 
 def main(argv: list[str] | None = None) -> int:

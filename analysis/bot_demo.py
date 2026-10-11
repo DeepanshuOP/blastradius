@@ -31,8 +31,9 @@ TASKS = Path("eval/seeded/tasks.jsonl")
 
 
 def git(repo: Path, *args: str) -> str:
+    env = dict(os.environ, GIT_AUTHOR_DATE="2026-10-11T00:00:00Z", GIT_COMMITTER_DATE="2026-10-11T00:00:00Z")  # stable sha
     p = subprocess.run(["git", "-C", str(repo), "-c", "user.name=blastradius-demo", "-c", "user.email=demo@example.invalid",
-                        *args], capture_output=True, text=True, check=True)
+                        *args], capture_output=True, text=True, check=True, env=env)
     return p.stdout.strip()
 
 
@@ -67,7 +68,6 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit("record needs GROQ_API_KEY (`uv run --env-file .env ...`)")
         llm = GroqLLM(api_key=key, model=MODEL, cache=LLMCache(CACHE))
     else:
-        os.environ["BR_LLM_REPLAY"] = "1"
         llm = GroqLLM(api_key="replay", model=MODEL, cache=LLMCache(CACHE, replay=True), ledger=Path(os.devnull))
     py = SEEDED / "venvs" / "itsdangerous" / "bin" / "python"
     if not py.exists():

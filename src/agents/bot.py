@@ -190,8 +190,8 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
             L += [f"Validated: the full suite passed with this patch ({repair['attempts']} attempt(s)). "
                   "Review it, then accept the suggestion on the diff.", ""]
             for s in repair["suggestions"]:
-                span = f"{s.start}" if s.start == s.end else f"{s.start}-{s.end}"
-                L += [f"`{s.path}` lines {span}:", "", s.body(), ""]
+                where = f"line {s.start}" if s.start == s.end else f"lines {s.start}-{s.end}"
+                L += [f"`{s.path}` {where}:", "", s.body(), ""]
         else:
             L += [f"**Not validated** ({repair.get('note', 'the full suite did not pass')}). This patch is shown for "
                   "information only and is not offered as a suggestion.", "",
