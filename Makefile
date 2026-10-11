@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
+.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze
 
 test:
 	uv run pytest -q
@@ -168,6 +168,14 @@ repair-eval: export BR_LLM_REPLAY=1
 repair-eval:
 	mkdir -p paper/generated
 	uv run --extra ml python -m analysis.rq4_repair eval
+
+# RAG retrieval studies (D-61), exploratory and NOT part of `tables`: localization (sparse / dense / hybrid /
+# change-aware) and time-safe failure-history retrieval. No LLM, no network (the pinned embedding model is
+# read from data/rag/models/), writes paper/generated/rq5_retrieval.md.
+rag-eval: export BR_OFFLINE=1
+rag-eval:
+	mkdir -p paper/generated
+	uv run --extra ml --extra rag python -m analysis.rq5_retrieval
 
 # E2 only: failure triage. Offline, deterministic.
 e2: export BR_OFFLINE=1

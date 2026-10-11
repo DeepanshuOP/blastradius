@@ -47,6 +47,13 @@ def parse_log_l(out: str, max_lines: int = MAX_HUNK_LINES) -> list[HistoryItem]:
     return items
 
 
+def _shallow_boundary(repo: Path) -> set[str]:
+    """Commits a shallow clone grafted on: each one "adds" every line it contains, which is not a change to a function."""
+    rel = run_git(repo, "rev-parse", "--git-path", "shallow").strip()
+    path = (repo / rel) if rel else None
+    return set(path.read_text(encoding="utf-8").split()) if path is not None and path.is_file() else set()
+
+
 def fix_history(repo: Path, rev: str, file: str, qualname: str, n: int = MAX_COMMITS,
                 max_lines: int = MAX_HUNK_LINES) -> list[HistoryItem]:
     """Up to `n` earlier commits (newest first) that changed `file::qualname`, as of `rev`.
@@ -71,5 +78,7 @@ def fix_history(repo: Path, rev: str, file: str, qualname: str, n: int = MAX_COM
             break
     else:
         return []
-    out = run_git(repo, "log", "-L", f"{c.start},{c.end}:{file}", "-n", str(n), "--format=%x01%H%x02%s", rev)
-    return parse_log_l(out, max_lines)[:n]
+    shallow = _shallow_boundary(repo)
+    out = run_git(repo, "log", "-L", f"{c.start},{c.end}:{file}", "-n", str(n + len(shallow)),
+                  "--format=%x01%H%x02%s", rev)
+    return [i for i in parse_log_l(out, max_lines) if i.sha not in shallow][:n]

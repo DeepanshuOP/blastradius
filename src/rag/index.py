@@ -68,7 +68,7 @@ class FastEmbedder:
 
     def embed(self, texts: Sequence[str]) -> np.ndarray:
         """Float32 matrix, one row per text."""
-        return np.asarray(list(self._m.embed(list(texts), batch_size=16)), dtype=np.float32)
+        return np.asarray(list(self._m.embed(list(texts), batch_size=8)), dtype=np.float32)
 
 
 def _unit(v: np.ndarray) -> np.ndarray:
@@ -93,7 +93,8 @@ class VectorStore:
             q = ",".join("?" * len(part))
             for h, _d, b in self.db.execute(f"SELECT h, d, b FROM v WHERE h IN ({q})", part):
                 have[h] = np.frombuffer(b, dtype=np.float32)
-        todo = sorted({h: t for h, t in zip(hs, texts) if h not in have}.items())
+        # shortest first: a batch is padded to its longest text, so length-sorted batches waste far less CPU
+        todo = sorted({h: t for h, t in zip(hs, texts) if h not in have}.items(), key=lambda r: (len(r[1]), r[0]))
         if todo:
             vecs = _unit(embedder.embed([t for _, t in todo]))
             with self.db:

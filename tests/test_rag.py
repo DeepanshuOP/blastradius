@@ -239,3 +239,15 @@ def test_real_model_embeds_deterministically() -> None:
     b = m.embed(["def add(a, b):\n    return a + b"])
     assert m.name == MODEL and a.shape == (2, 768) and np.isfinite(a).all()
     assert np.allclose(a[0], b[0], atol=1e-5)
+
+
+def test_history_ignores_the_boundary_commit_of_a_shallow_clone(repo, tmp_path) -> None:
+    shallow = tmp_path / "shallow"
+    subprocess.run(["git", "clone", "-q", "--depth", "1", f"file://{repo}", str(shallow)], check=True)
+    assert (shallow / ".git" / "shallow").is_file()
+    # the grafted root "adds" every line of the function; it is not an earlier change to it
+    assert history.fix_history(shallow, "HEAD", "calc.py", "Cart.discount") == []
+    # at depth 2 the newest commit is a real change; the second is the grafted boundary and is dropped
+    deeper = tmp_path / "deeper"
+    subprocess.run(["git", "clone", "-q", "--depth", "2", f"file://{repo}", str(deeper)], check=True)
+    assert [i.subject for i in history.fix_history(deeper, "HEAD", "calc.py", "Cart.discount")] == [SUBJECTS[2]]
