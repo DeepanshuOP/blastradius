@@ -21,5 +21,6 @@ risk, and a repair is never merged without a human or the CI gate.
 
 - `jenkins/Jenkinsfile`: Impact -> ordered test run -> Triage -> Repair suggestion -> archive.
 - `github-actions/blastradius.yml`: the same as a reusable workflow.
+- `github-actions/blastradius-bot.yml` + `BOT_SETUP.md`: the PR bot (D-63, exploratory): one comment per PR with a validated suggestion.
 
 Results to quote for what this buys are in `docs/RESULTS_2.md`, including the ones that did not work.

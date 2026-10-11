@@ -50,6 +50,16 @@ Same story each time: *"As a shopper, I want to apply the discount code FESTIVE2
 2. **Out-of-scope change blocked.** The change set also rewrites `receipt.py`. The reviewer's scope check fails and it requests changes; nothing merges.
 3. **Build fails, team notified.** The same change with the reviewer in warn mode: it merges, the full build fails on the two receipt tests, the deploy agent sends a `build_failed` notification and deploys nothing, and the regression report shows impact recall 0/2, both failures outside the predicted scope.
 
+## 2.1 additions (exploratory, D-61, D-63)
+
+| Command | What it does |
+|---|---|
+| `python -m src.agents ask --repo R --question "..."` | retrieval-grounded answer with `[S1]`..`[S8]` citations over code, BR-Bench failure history and the repo's docs (`src/agents/ask.py`); `--provider offline` returns retrieval only |
+| `python -m src.agents bot --repo R --base B --head H --pr N` | the PR bot: E1 ranking, risk-first run, triage, validated repair, one Markdown comment (`src/agents/bot.py`); posts on GitHub Actions, prints otherwise (`--no-post`) |
+
+`make bot-local REPO=... BASE=... HEAD=...` runs the bot flow locally; setup for the live workflow is in
+`integrations/github-actions/BOT_SETUP.md`. The bot only comments: it never pushes, merges or approves.
+
 ## Decision D-55 and limits
 
 This package is a separate, cuttable demo path with the same standing as the T4.4 re-ranker under D-17. It may call an LLM, so nothing in the reproducible pipeline imports it, and no number it produces reaches `make tables`, `release/` or the paper. GitHub reads go through `get_with_backoff()`; writes (open PR, review, merge, workflow dispatch) go through the single `GitHubForge._write()`.
