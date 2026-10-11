@@ -1,0 +1,72 @@
+{
+ "openai/gpt-oss-120b|standard": {
+  "arms": {
+   "R0": {
+    "accepted": 0,
+    "calls": 0,
+    "completion_tokens": 0,
+    "n": 47,
+    "prompt_tokens": 0
+   },
+   "R1": {
+    "accepted": 20,
+    "calls": 47,
+    "completion_tokens": 15474,
+    "n": 47,
+    "prompt_tokens": 76027
+   },
+   "R2": {
+    "accepted": 33,
+    "calls": 47,
+    "completion_tokens": 9678,
+    "n": 47,
+    "prompt_tokens": 58417
+   },
+   "R3": {
+    "accepted": 37,
+    "calls": 71,
+    "completion_tokens": 15736,
+    "n": 47,
+    "prompt_tokens": 95327
+   }
+  },
+  "model": "openai/gpt-oss-120b",
+  "n_tasks": 47,
+  "variant": "standard"
+ },
+ "openai/gpt-oss-20b|standard": {
+  "arms": {
+   "R0": {
+    "accepted": 0,
+    "calls": 0,
+    "completion_tokens": 0,
+    "n": 45,
+    "prompt_tokens": 0
+   },
+   "R1": {
+    "accepted": 10,
+    "calls": 45,
+    "completion_tokens": 12988,
+    "n": 45,
+    "prompt_tokens": 63563
+   },
+   "R2": {
+    "accepted": 29,
+    "calls": 45,
+    "completion_tokens": 7705,
+    "n": 45,
+    "prompt_tokens": 56160
+   },
+   "R3": {
+    "accepted": 33,
+    "calls": 74,
+    "completion_tokens": 15942,
+    "n": 45,
+    "prompt_tokens": 98614
+   }
+  },
+  "model": "openai/gpt-oss-20b",
+  "n_tasks": 45,
+  "variant": "standard"
+ }
+}

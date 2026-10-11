@@ -41,11 +41,16 @@ TEST_SUBSET = ["tests/test_agents.py", "tests/test_agents_repair.py", "tests/tes
                "tests/test_export_demo_data.py"]
 
 
-def _env() -> dict[str, str]:
+def _env(replay: bool = True) -> dict[str, str]:
+    """Environment without credentials. `replay` forces offline replay; the test suite runs without it, as `make test`
+    does (several tests exercise live-mode code paths against recorded transports and fail if replay is forced)."""
     env = {k: v for k, v in os.environ.items()
            if not k.endswith(("_API_KEY", "_PAT_1", "_PAT_2", "_PAT_3")) and k != "AWS_BEARER_TOKEN_BEDROCK"}
-    env["BR_OFFLINE"] = "1"
-    env["BR_LLM_REPLAY"] = "1"
+    for k in ("BR_OFFLINE", "BR_LLM_REPLAY"):
+        env.pop(k, None)
+    if replay:
+        env["BR_OFFLINE"] = "1"
+        env["BR_LLM_REPLAY"] = "1"
     return env
 
 
@@ -81,20 +86,21 @@ def scratch_seeded() -> Path:
 
 
 def check_tests() -> tuple[bool, str]:
-    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", *TEST_SUBSET])
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", *TEST_SUBSET], env=_env(replay=False))
     return rc == 0, last(out, 1)
 
 
 def check_safety_tests() -> tuple[bool, str]:
     ids = sorted({t for item in cm.load()["safety"] for t in item["tests"]})
-    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", *ids])
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", *ids], env=_env(replay=False))
     skipped = re.search(r"(\d+) skipped", out)
     return rc == 0 and not skipped, f"{len(ids)} named tests; " + last(out, 1)
 
 
 def check_demo_data() -> tuple[bool, str]:
     rc, out = run(["make", "demo-data"])
-    return rc == 0, last(out, 2)
+    wrote = [ln for ln in out.splitlines() if ln.startswith("wrote ")]
+    return rc == 0, f"{len(wrote)} 'wrote' lines; " + (wrote[-1][:100] if wrote else last(out, 2))
 
 
 def check_build() -> tuple[bool, str]:
@@ -103,9 +109,14 @@ def check_build() -> tuple[bool, str]:
 
 
 def check_agents_demo() -> tuple[bool, str]:
-    rc, out = run(["make", "agents-demo"])
-    n = len(json.loads((DATA / "agents.json").read_text(encoding="utf-8")).get("scenarios", [])) if rc == 0 else 0
-    return rc == 0 and n == 4, f"{n} scenarios"
+    """The `make agents-demo` command, exported to a scratch file so the site's recorded agents.json is not rewritten."""
+    out = Path(tempfile.mkdtemp(prefix="br-agents-")) / "agents.json"
+    try:
+        rc, log = run(["uv", "run", "--extra", "graph", "python", "-m", "src.agents", "demo", "--export", str(out)])
+        n = len(json.loads(out.read_text(encoding="utf-8")).get("scenarios", [])) if rc == 0 and out.exists() else 0
+    finally:
+        shutil.rmtree(out.parent, ignore_errors=True)
+    return rc == 0 and n == 4, f"{n} scenarios" if rc == 0 else last(log)
 
 
 def check_ask(seeded: Path) -> tuple[bool, str]:
@@ -220,7 +231,7 @@ def main() -> int:
              ("safety checklist: named tests pass, none skipped", check_safety_tests),
              ("make demo-data", check_demo_data),
              ("npm run build", check_build),
-             ("make agents-demo (4 scenarios)", check_agents_demo),
+             ("agents demo, 4 recorded scenarios (the make agents-demo command)", check_agents_demo),
              ("Ask replay of the 15 recorded questions", None),
              ("PR bot replay on the recorded task", None),
              ("every JSON file the website loads exists and parses", check_json),

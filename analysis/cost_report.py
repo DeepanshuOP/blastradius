@@ -130,7 +130,7 @@ def render(doc: dict) -> str:
              f"\n**USD actually paid: {paid:.4f}** (sum of paid rows in the ledger).")
     pr = doc["prices"]
     text += ("\n\n**USD at Groq's paid list prices** (constants in `analysis/cost_report.py`, "
-             f"{pr['date']}, {pr['url']}): " + "; ".join(f"{m} ${p[0]} in / ${p[1]} out per million tokens"
+             f"{pr['date']}, {pr['url']}): " + "; ".join(f"{m} ${p[0]:.3f} in / ${p[1]:.3f} out per million tokens"
                                                           for m, p in pr["usd_per_million_in_out"].items())
              + ". These are what the same tokens would cost on the paid plan, not money spent.\n")
     rows = [[r["model"], r["arm"], r["n"], r["accepted"], _n(r["in_per_task"]), _n(r["out_per_task"]),

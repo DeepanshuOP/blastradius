@@ -1,5 +1,201 @@
 {
- "cost": null,
+ "cost": {
+  "ask": [
+   {
+    "calls": 15,
+    "completion_tokens": 2377,
+    "file": "ask_openai_gpt-oss-20b.jsonl",
+    "model": "openai/gpt-oss-20b",
+    "prompt_tokens": 15592,
+    "tokens_per_call": 1197.9333333333334,
+    "usd_list_per_call": 0.00012550000000000001,
+    "usd_list_total": 0.0018825
+   }
+  ],
+  "bot": [
+   {
+    "calls": 1,
+    "completion_tokens": 133,
+    "file": "bot_openai_gpt-oss-20b.jsonl",
+    "model": "openai/gpt-oss-20b",
+    "prompt_tokens": 1362,
+    "tokens_per_call": 1495.0,
+    "usd_list_per_call": 0.00014204999999999998,
+    "usd_list_total": 0.00014204999999999998
+   }
+  ],
+  "bot_live": {
+   "file": "pr1_comment.md",
+   "model": "openai/gpt-oss-120b",
+   "tokens": 1008
+  },
+  "context": "ChatRepair reported $0.42 per fixed bug (ChatGPT, Defects4J, 2024). Different bugs and model; context only.",
+  "e3": [
+   {
+    "accepted": 0,
+    "arm": "R0",
+    "calls": 0,
+    "completion_tokens": 0,
+    "in_per_fix": null,
+    "in_per_task": 0.0,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "out_per_fix": null,
+    "out_per_task": 0.0,
+    "prompt_tokens": 0,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": 0.0,
+    "usd_list_total": 0.0,
+    "variant": "standard"
+   },
+   {
+    "accepted": 20,
+    "arm": "R1",
+    "calls": 47,
+    "completion_tokens": 15474,
+    "in_per_fix": 3801.35,
+    "in_per_task": 1617.595744680851,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "out_per_fix": 773.7,
+    "out_per_task": 329.2340425531915,
+    "prompt_tokens": 76027,
+    "usd_list_per_fix": 0.0010344224999999999,
+    "usd_list_per_task": 0.0004401797872340425,
+    "usd_list_total": 0.020688449999999997,
+    "variant": "standard"
+   },
+   {
+    "accepted": 33,
+    "arm": "R2",
+    "calls": 47,
+    "completion_tokens": 9678,
+    "in_per_fix": 1770.2121212121212,
+    "in_per_task": 1242.9148936170213,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "out_per_fix": 293.27272727272725,
+    "out_per_task": 205.91489361702128,
+    "prompt_tokens": 58417,
+    "usd_list_per_fix": 0.00044149545454545447,
+    "usd_list_per_task": 0.0003099861702127659,
+    "usd_list_total": 0.014569349999999998,
+    "variant": "standard"
+   },
+   {
+    "accepted": 37,
+    "arm": "R3",
+    "calls": 71,
+    "completion_tokens": 15736,
+    "in_per_fix": 2576.4054054054054,
+    "in_per_task": 2028.2340425531916,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "out_per_fix": 425.2972972972973,
+    "out_per_task": 334.8085106382979,
+    "prompt_tokens": 95327,
+    "usd_list_per_fix": 0.0006416391891891891,
+    "usd_list_per_task": 0.0005051202127659574,
+    "usd_list_total": 0.02374065,
+    "variant": "standard"
+   },
+   {
+    "accepted": 0,
+    "arm": "R0",
+    "calls": 0,
+    "completion_tokens": 0,
+    "in_per_fix": null,
+    "in_per_task": 0.0,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "out_per_fix": null,
+    "out_per_task": 0.0,
+    "prompt_tokens": 0,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": 0.0,
+    "usd_list_total": 0.0,
+    "variant": "standard"
+   },
+   {
+    "accepted": 10,
+    "arm": "R1",
+    "calls": 45,
+    "completion_tokens": 12988,
+    "in_per_fix": 6356.3,
+    "in_per_task": 1412.5111111111112,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "out_per_fix": 1298.8,
+    "out_per_task": 288.6222222222222,
+    "prompt_tokens": 63563,
+    "usd_list_per_fix": 0.0008663624999999998,
+    "usd_list_per_task": 0.00019252499999999995,
+    "usd_list_total": 0.008663624999999998,
+    "variant": "standard"
+   },
+   {
+    "accepted": 29,
+    "arm": "R2",
+    "calls": 45,
+    "completion_tokens": 7705,
+    "in_per_fix": 1936.551724137931,
+    "in_per_task": 1248.0,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "out_per_fix": 265.6896551724138,
+    "out_per_task": 171.22222222222223,
+    "prompt_tokens": 56160,
+    "usd_list_per_fix": 0.00022494827586206896,
+    "usd_list_per_task": 0.00014496666666666665,
+    "usd_list_total": 0.0065235,
+    "variant": "standard"
+   },
+   {
+    "accepted": 33,
+    "arm": "R3",
+    "calls": 74,
+    "completion_tokens": 15942,
+    "in_per_fix": 2988.3030303030305,
+    "in_per_task": 2191.4222222222224,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "out_per_fix": 483.09090909090907,
+    "out_per_task": 354.26666666666665,
+    "prompt_tokens": 98614,
+    "usd_list_per_fix": 0.00036905,
+    "usd_list_per_task": 0.00027063666666666663,
+    "usd_list_total": 0.01217865,
+    "variant": "standard"
+   }
+  ],
+  "ledger": {
+   "by_model": {
+    "openai/gpt-oss-120b": {
+     "calls": 115,
+     "tokens": 198321
+    },
+    "openai/gpt-oss-20b": {
+     "calls": 131,
+     "tokens": 219583
+    }
+   },
+   "paid_usd": 0.0
+  },
+  "prices": {
+   "date": "2026-10-11",
+   "url": "https://groq.com/pricing",
+   "usd_per_million_in_out": {
+    "openai/gpt-oss-120b": [
+     0.15,
+     0.6
+    ],
+    "openai/gpt-oss-20b": [
+     0.075,
+     0.3
+    ]
+   }
+  }
+ },
  "e1": {
   "n": 148,
   "rows": [
@@ -15,6 +211,7 @@
     "method": "ours BlastRadius ranker (all families)",
     "n": 148,
     "p_adj": null,
+    "p_adj_text": null,
     "recall10": "0.525 ± 0.010"
    },
    {
@@ -29,6 +226,7 @@
     "method": "B7 readily-available-info LTR",
     "n": 148,
     "p_adj": 0.3823,
+    "p_adj_text": "0.3823",
     "recall10": "0.522 ± 0.021"
    },
    {
@@ -43,6 +241,7 @@
     "method": "B6 history-only LTR",
     "n": 148,
     "p_adj": 0.2233,
+    "p_adj_text": "0.2233",
     "recall10": "0.477 ± 0.021"
    },
    {
@@ -57,6 +256,7 @@
     "method": "B5 BM25 path tokens",
     "n": 148,
     "p_adj": 9.723e-13,
+    "p_adj_text": "9.723e-13",
     "recall10": "0.141"
    },
    {
@@ -71,6 +271,7 @@
     "method": "B4 failure history",
     "n": 148,
     "p_adj": 0.01025,
+    "p_adj_text": "0.01025",
     "recall10": "0.439"
    },
    {
@@ -85,12 +286,13 @@
     "method": "B1 random (20 seeds)",
     "n": 148,
     "p_adj": 2.151e-15,
+    "p_adj_text": "2.151e-15",
     "recall10": "0.029 ± 0.011"
    }
   ],
   "source": "paper/generated/rq2_predictor.md",
   "split": "chronological test split, Java only",
-  "takeaway": "Ours reaches Recall@10 0.525 against 0.522 for the readily-available-information ranker B7 (Holm-adjusted p = 0.382, Cliff's δ = +0.030, negligible): no measurable difference. Against failure history B4 (0.439) the adjusted p is 0.010 and the effect is negligible (δ = +0.114); against random order (0.029) the effect is medium (δ = +0.469).",
+  "takeaway": "Ours reaches Recall@10 0.525 against 0.522 for the readily-available-information ranker B7 (Holm-adjusted p = 0.3823, Cliff's δ = +0.030, negligible): no measurable difference. Against failure history B4 (0.439) the adjusted p is 0.01025 and the effect is negligible (δ = +0.114); against random order (0.029) the effect is medium (δ = +0.469).",
   "test": "Wilcoxon signed-rank (two-sided, zero_method=zsplit). One Holm family of 10 tests: ours vs each of the 8 baselines, plus B6 vs B4 and B7 vs B4. Cliff's delta is the first method minus the second; 'second method mean' is the Recall@10 of the second method.",
   "verdict": "Gate 3 (ROADMAP §37.1) is NOT MET: on the 148 test instances the ranker's Recall@10 is 0.525 (95% bootstrap CI [0.447, 0.599]) against 0.522 for the best baseline (B7 readily-available-info LTR); Holm-adjusted Wilcoxon p = 0.3823, Cliff's delta = +0.030 (negligible). The criterion is: higher mean, adjusted p < 0.05 and |delta| >= 0.147."
  },
@@ -250,7 +452,7 @@
   "/figures/fig6_e3_arms.png",
   "/figures/fig7_retrieval.png"
  ],
- "generated_at_git_sha": "d2086a5559db7072885c4173479364bf9b882576",
+ "generated_at_git_sha": "fff638f63333052aedaa12c88895ee1c20e773ed",
  "localization": {
   "l4_vs_l1": [
    {
