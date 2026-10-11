@@ -10,6 +10,7 @@
     python -m src.agents pipeline --repo R --story "..."             -> impact, code, regress, triage, repair, review, deploy
     python -m src.agents pipeline --stages classic ...               -> the original five-agent order
     python -m src.agents demo                                        -> four recorded scenarios, offline
+    python -m src.agents ask      --repo R --question "..."          -> answer with [S1]..[S8] citations (exploratory RAG)
 
 Every command prints one JSON object on stdout. Run from the BlastRadius repo
 root with ``uv run --extra graph``.
@@ -147,6 +148,12 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--arm", choices=["R0", "R1", "R2", "R3"], default="R3")
     sp.add_argument("--provider", choices=["offline", "groq"], help="LLM provider (default: groq if GROQ_API_KEY is set)")
     sp.add_argument("--apply", action="store_true", help="write the accepted patch into the working tree")
+    sp = sub.add_parser("ask", help="question about a change or failing test -> answer with citations (exploratory RAG)")
+    sp.add_argument("--repo", required=True); sp.add_argument("--question", required=True)
+    sp.add_argument("--state-dir"); sp.add_argument("--provider", choices=["offline", "groq"],
+                                                    help="LLM provider (default: groq if GROQ_API_KEY is set)")
+    sp.add_argument("--interim", default="data/interim", help="BR-Bench interim tables for the failure-history source")
+    sp.add_argument("--no-dense", action="store_true", help="BM25 only (no embedding model)")
     sp = sub.add_parser("pipeline", help="impact, code, regress, triage, repair, review, deploy"); common(sp)
     sp.add_argument("--stages", choices=["2.0", "classic"], default="2.0")
     sp.add_argument("--story"); sp.add_argument("--story-file"); sp.add_argument("--title"); sp.add_argument("--patch")
@@ -206,6 +213,30 @@ def main(argv: list[str] | None = None) -> int:
                 (repo / p).write_text(text, encoding="utf-8")
         _emit({"triage": tri.counts(), "action": res.action, "note": res.note, "chunks": [f"{c.file}::{c.qualname}" for c in res.chunks],
                "attempts": len(res.attempts), "proposed_files": sorted(files_out), "applied": bool(args.apply and files_out)})
+        return 0
+
+    if args.cmd == "ask":
+        from src.agents.ask import AskAgent, chat_llm
+        from src.rag.knowledge import Knowledge, code_docs, load_failure_docs, load_repo_docs
+
+        repo = Path(args.repo).resolve()
+        state = _state(args)
+        embedder = None
+        if not args.no_dense:
+            try:
+                from src.rag.index import FastEmbedder
+
+                embedder = FastEmbedder()
+            except Exception as exc:   # no fastembed or no weights on disk: BM25 only, said in the output
+                print(f"dense retrieval unavailable ({type(exc).__name__}); BM25 only", file=sys.stderr)
+        docs = code_docs(repo) + load_repo_docs(repo)
+        interim = Path(args.interim)
+        if (interim / "parsed_outcomes.parquet").exists():
+            docs += load_failure_docs(interim)
+        kb = Knowledge(docs, embedder)
+        provider = args.provider or ("groq" if __import__("os").environ.get("GROQ_API_KEY") else "offline")
+        llm = chat_llm(provider, state / "ask_llm_cache.jsonl")
+        _emit(AskAgent(kb, repo, llm).ask(args.question).to_json())
         return 0
 
     state = _state(args)

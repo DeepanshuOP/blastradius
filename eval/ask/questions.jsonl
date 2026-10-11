@@ -1,0 +1,15 @@
+{"type": "test-failure", "task_id": "click-ARITH_SWAP-00", "repo": "click", "question": "Why is tests.test_termui::test_progressbar_format_bar[0-True-8-0-########] failing? Its output starts: AssertionError: assert '########----------------' == '########'", "id": "Q01"}
+{"type": "test-failure", "task_id": "itsdangerous-ARITH_SWAP-00", "repo": "itsdangerous", "question": "Why is tests.test_itsdangerous.test_serializer.TestSerializer::test_alt_salt[Serializer] failing? Its output starts: TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes'", "id": "Q02"}
+{"type": "test-failure", "task_id": "markupsafe-ARITH_SWAP-00", "repo": "markupsafe", "question": "Why is tests.test_markupsafe::test_escaping[markupsafe._native] failing? Its output starts: assert \"<!-- outer c...th newlines'>\" == 'Foo & Bar'", "id": "Q03"}
+{"type": "test-failure", "task_id": "shopcart-ARITH_SWAP-00", "repo": "shopcart", "question": "Why is data.seeded.repos.shopcart.tests.test_cart::test_total_applies_discount_then_tax failing? Its output starts: AssertionError: assert 36827 == (44910 + 8083)", "id": "Q04"}
+{"type": "test-failure", "task_id": "shopcart-NEGATE_COND-01", "repo": "shopcart", "question": "Why is data.seeded.repos.shopcart.tests.test_cart::test_subtotal_sums_lines failing? Its output starts: KeyError: 'unknown SKU BOOK-001'", "id": "Q05"}
+{"type": "impact", "task_id": "click-ARITH_SWAP-00", "repo": "click", "question": "What is at risk if I change src/click/_termui_impl.py?", "id": "Q06"}
+{"type": "impact", "task_id": "click-ARITH_SWAP-02", "repo": "click", "question": "What is at risk if I change src/click/parser.py?", "id": "Q07"}
+{"type": "impact", "task_id": "itsdangerous-ARITH_SWAP-00", "repo": "itsdangerous", "question": "What is at risk if I change src/itsdangerous/signer.py?", "id": "Q08"}
+{"type": "impact", "task_id": "itsdangerous-ARITH_SWAP-01", "repo": "itsdangerous", "question": "What is at risk if I change src/itsdangerous/url_safe.py?", "id": "Q09"}
+{"type": "impact", "task_id": "markupsafe-ARITH_SWAP-00", "repo": "markupsafe", "question": "What is at risk if I change src/markupsafe/__init__.py?", "id": "Q10"}
+{"type": "history", "task_id": null, "repo": null, "question": "Has apache_beam/examples/wordcount_it_test.py::WordCountIT::test_wordcount_it failed before? When and with what message?", "id": "Q11"}
+{"type": "history", "task_id": null, "repo": null, "question": "Has io.github.hectorvent.floci.services.elbv2.ElbV2IntegrationTest#describeListenerAttributes failed before? When and with what message?", "id": "Q12"}
+{"type": "history", "task_id": null, "repo": null, "question": "Has org.apache.hugegraph.core.VertexCoreTest#testQueryByRangeIndexInPage failed before? When and with what message?", "id": "Q13"}
+{"type": "history", "task_id": null, "repo": null, "question": "Has org.apache.tika.io.TikaInputStreamTest#testPosition failed before? When and with what message?", "id": "Q14"}
+{"type": "history", "task_id": null, "repo": null, "question": "Has org.apache.tika.sax.BodyContentHandlerTest#testLimit failed before? When and with what message?", "id": "Q15"}
