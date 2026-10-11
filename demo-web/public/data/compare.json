@@ -1,0 +1,1106 @@
+{
+ "cost": null,
+ "e1": {
+  "n": 148,
+  "rows": [
+   {
+    "ci": [
+     0.447,
+     0.599
+    ],
+    "delta": null,
+    "id": "ours",
+    "magnitude": null,
+    "map": "0.381 ± 0.006",
+    "method": "ours BlastRadius ranker (all families)",
+    "n": 148,
+    "p_adj": null,
+    "recall10": "0.525 ± 0.010"
+   },
+   {
+    "ci": [
+     0.447,
+     0.594
+    ],
+    "delta": "+0.030",
+    "id": "B7",
+    "magnitude": "negligible",
+    "map": "0.359 ± 0.020",
+    "method": "B7 readily-available-info LTR",
+    "n": 148,
+    "p_adj": 0.3823,
+    "recall10": "0.522 ± 0.021"
+   },
+   {
+    "ci": [
+     0.4,
+     0.553
+    ],
+    "delta": "+0.071",
+    "id": "B6",
+    "magnitude": "negligible",
+    "map": "0.341 ± 0.013",
+    "method": "B6 history-only LTR",
+    "n": 148,
+    "p_adj": 0.2233,
+    "recall10": "0.477 ± 0.021"
+   },
+   {
+    "ci": [
+     0.09,
+     0.197
+    ],
+    "delta": "+0.458",
+    "id": "B5",
+    "magnitude": "medium",
+    "map": "0.080",
+    "method": "B5 BM25 path tokens",
+    "n": 148,
+    "p_adj": 9.723e-13,
+    "recall10": "0.141"
+   },
+   {
+    "ci": [
+     0.359,
+     0.52
+    ],
+    "delta": "+0.114",
+    "id": "B4",
+    "magnitude": "negligible",
+    "map": "0.249",
+    "method": "B4 failure history",
+    "n": 148,
+    "p_adj": 0.01025,
+    "recall10": "0.439"
+   },
+   {
+    "ci": [
+     0.021,
+     0.039
+    ],
+    "delta": "+0.469",
+    "id": "B1",
+    "magnitude": "medium",
+    "map": "0.020 ± 0.003",
+    "method": "B1 random (20 seeds)",
+    "n": 148,
+    "p_adj": 2.151e-15,
+    "recall10": "0.029 ± 0.011"
+   }
+  ],
+  "source": "paper/generated/rq2_predictor.md",
+  "split": "chronological test split, Java only",
+  "takeaway": "Ours reaches Recall@10 0.525 against 0.522 for the readily-available-information ranker B7 (Holm-adjusted p = 0.382, Cliff's δ = +0.030, negligible): no measurable difference. Against failure history B4 (0.439) the adjusted p is 0.010 and the effect is negligible (δ = +0.114); against random order (0.029) the effect is medium (δ = +0.469).",
+  "test": "Wilcoxon signed-rank (two-sided, zero_method=zsplit). One Holm family of 10 tests: ours vs each of the 8 baselines, plus B6 vs B4 and B7 vs B4. Cliff's delta is the first method minus the second; 'second method mean' is the Recall@10 of the second method.",
+  "verdict": "Gate 3 (ROADMAP §37.1) is NOT MET: on the 148 test instances the ranker's Recall@10 is 0.525 (95% bootstrap CI [0.447, 0.599]) against 0.522 for the best baseline (B7 readily-available-info LTR); Holm-adjusted Wilcoxon p = 0.3823, Cliff's delta = +0.030 (negligible). The criterion is: higher mean, adjusted p < 0.05 and |delta| >= 0.147."
+ },
+ "e3": {
+  "applier_note": "The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant applier; E3 fix rates are therefore conservative relative to the bot.",
+  "interim": true,
+  "interim_text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing; openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+  "models": [
+   {
+    "arms": [
+     {
+      "arm": "R0",
+      "k": 0,
+      "label": "R0 notify only (what Jenkins / GitHub Actions do)",
+      "n": 47,
+      "wilson": [
+       0.0,
+       0.07555760416399632
+      ]
+     },
+     {
+      "arm": "R1",
+      "k": 20,
+      "label": "R1 log-only (the failure log, no change; as in LogSage #23 and CI-Bench #25)",
+      "n": 47,
+      "wilson": [
+       0.2951362834367996,
+       0.5671808065450721
+      ]
+     },
+     {
+      "arm": "R2",
+      "k": 33,
+      "label": "R2 change-aware (functions the diff touches)",
+      "n": 47,
+      "wilson": [
+       0.5602232608095393,
+       0.8134874949539516
+      ]
+     },
+     {
+      "arm": "R3",
+      "k": 37,
+      "label": "R3 R2 + up to 2 retries",
+      "n": 47,
+      "wilson": [
+       0.6509597329080159,
+       0.88010292001905
+      ]
+     }
+    ],
+    "model": "openai/gpt-oss-120b",
+    "n": 47
+   },
+   {
+    "arms": [
+     {
+      "arm": "R0",
+      "k": 0,
+      "label": "R0 notify only (what Jenkins / GitHub Actions do)",
+      "n": 45,
+      "wilson": [
+       0.0,
+       0.07865159873288836
+      ]
+     },
+     {
+      "arm": "R1",
+      "k": 10,
+      "label": "R1 log-only (the failure log, no change; as in LogSage #23 and CI-Bench #25)",
+      "n": 45,
+      "wilson": [
+       0.12544685532626396,
+       0.36269292174756296
+      ]
+     },
+     {
+      "arm": "R2",
+      "k": 29,
+      "label": "R2 change-aware (functions the diff touches)",
+      "n": 45,
+      "wilson": [
+       0.4983581419637687,
+       0.7678091739578413
+      ]
+     },
+     {
+      "arm": "R3",
+      "k": 33,
+      "label": "R3 R2 + up to 2 retries",
+      "n": 45,
+      "wilson": [
+       0.5896116224686505,
+       0.8403509647893348
+      ]
+     }
+    ],
+    "model": "openai/gpt-oss-20b",
+    "n": 45
+   }
+  ],
+  "primary": "Standard variant, openai/gpt-oss-120b, n = 47: R2 plausible-fix rate 33/47 vs R1 20/47; R2 only 17, R1 only 4; exact McNemar one-sided p = 0.003599 (alpha = 0.05): **R2 > R1 supported**. (47 of 70 tasks done; 23 not run (cache incomplete))",
+  "progress": [
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing",
+    "total": 70,
+    "variant": "standard"
+   },
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "text": "openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+    "total": 70,
+    "variant": "standard"
+   }
+  ],
+  "secondary": {
+   "columns": [
+    "test",
+    "first only",
+    "second only",
+    "p (unadjusted)",
+    "Holm-adjusted p"
+   ],
+   "rows": [
+    [
+     "R3 > R2, openai/gpt-oss-120b, standard",
+     "4",
+     "0",
+     "0.0625",
+     "0.125"
+    ],
+    [
+     "R2 > R1, openai/gpt-oss-20b, standard",
+     "21",
+     "2",
+     "3.302e-05",
+     "9.906e-05"
+    ],
+    [
+     "R3 > R2, openai/gpt-oss-20b, standard",
+     "4",
+     "0",
+     "0.0625",
+     "0.125"
+    ]
+   ]
+  },
+  "source": "paper/generated/rq4_repair.md",
+  "takeaway": "Plausible fixes (full suite green) by arm, openai/gpt-oss-120b: R0 0/47, R1 20/47, R2 33/47, R3 37/47; openai/gpt-oss-20b: R0 0/45, R1 10/45, R2 29/45, R3 33/45. openai/gpt-oss-120b: R2 is +13 tasks against R1 and R3 is +4 against R2; openai/gpt-oss-20b: R2 is +19 tasks against R1 and R3 is +4 against R2. Significance is in the primary and secondary tests above."
+ },
+ "figures": [
+  "/figures/fig6_e3_arms.png",
+  "/figures/fig7_retrieval.png"
+ ],
+ "generated_at_git_sha": "d2086a5559db7072885c4173479364bf9b882576",
+ "localization": {
+  "l4_vs_l1": [
+   {
+    "n": 70,
+    "p": "2.384e-07",
+    "r1_only": 0,
+    "r2_only": 23,
+    "variant": "standard"
+   },
+   {
+    "n": 70,
+    "p": "1.526e-05",
+    "r1_only": 0,
+    "r2_only": 17,
+    "variant": "hard"
+   }
+  ],
+  "paired": {
+   "columns": [
+    "variant",
+    "comparison (hit@3)",
+    "first only",
+    "second only",
+    "p (exact, two-sided)",
+    "Holm-adjusted (family of 4)"
+   ],
+   "rows": [
+    [
+     "standard",
+     "L3 vs L1",
+     "3",
+     "17",
+     "0.002577",
+     "0.01031"
+    ],
+    [
+     "standard",
+     "L5 vs L4",
+     "0",
+     "0",
+     "1",
+     "1"
+    ],
+    [
+     "hard",
+     "L3 vs L1",
+     "3",
+     "17",
+     "0.002577",
+     "0.01031"
+    ],
+    [
+     "hard",
+     "L5 vs L4",
+     "3",
+     "8",
+     "0.2266",
+     "0.4531"
+    ]
+   ]
+  },
+  "source": "paper/generated/rq5_retrieval.md",
+  "takeaway": "Knowing the change (L4) puts the seeded function in the top three for 69/70 tasks on the standard variant and 63/70 on the hard one, against 46/70 for whole-repo BM25 (L1); whole-repo dense (L2, 21/70) and hybrid (L3, 32/70) do not make up the gap.",
+  "variants": {
+   "hard": [
+    {
+     "cell": "46/70 (65.71%)",
+     "k": 46,
+     "mode": "L1 BM25, whole repo (= R1)",
+     "mrr": "0.581",
+     "n": 70,
+     "wilson": [
+      0.5403954969794421,
+      0.7575401119773312
+     ]
+    },
+    {
+     "cell": "21/70 (30.00%)",
+     "k": 21,
+     "mode": "L2 dense, whole repo",
+     "mrr": "0.308",
+     "n": 70,
+     "wilson": [
+      0.2053660525763799,
+      0.4154431723877268
+     ]
+    },
+    {
+     "cell": "32/70 (45.71%)",
+     "k": 32,
+     "mode": "L3 hybrid (RRF), whole repo",
+     "mrr": "0.426",
+     "n": 70,
+     "wilson": [
+      0.3457274259756359,
+      0.5730174079452441
+     ]
+    },
+    {
+     "cell": "63/70 (90.00%)",
+     "k": 63,
+     "mode": "L4 BM25, functions touched by the diff (= R2)",
+     "mrr": "0.800",
+     "n": 70,
+     "wilson": [
+      0.807670851514326,
+      0.9507106985574605
+     ]
+    },
+    {
+     "cell": "58/70 (82.86%)",
+     "k": 58,
+     "mode": "L5 hybrid (RRF), functions touched by the diff",
+     "mrr": "0.637",
+     "n": 70,
+     "wilson": [
+      0.7238335196785457,
+      0.8991227535947075
+     ]
+    }
+   ],
+   "standard": [
+    {
+     "cell": "46/70 (65.71%)",
+     "k": 46,
+     "mode": "L1 BM25, whole repo (= R1)",
+     "mrr": "0.581",
+     "n": 70,
+     "wilson": [
+      0.5403954969794421,
+      0.7575401119773312
+     ]
+    },
+    {
+     "cell": "21/70 (30.00%)",
+     "k": 21,
+     "mode": "L2 dense, whole repo",
+     "mrr": "0.310",
+     "n": 70,
+     "wilson": [
+      0.2053660525763799,
+      0.4154431723877268
+     ]
+    },
+    {
+     "cell": "32/70 (45.71%)",
+     "k": 32,
+     "mode": "L3 hybrid (RRF), whole repo",
+     "mrr": "0.431",
+     "n": 70,
+     "wilson": [
+      0.3457274259756359,
+      0.5730174079452441
+     ]
+    },
+    {
+     "cell": "69/70 (98.57%)",
+     "k": 69,
+     "mode": "L4 BM25, functions touched by the diff (= R2)",
+     "mrr": "0.940",
+     "n": 70,
+     "wilson": [
+      0.9234181286879168,
+      0.9974737535421097
+     ]
+    },
+    {
+     "cell": "69/70 (98.57%)",
+     "k": 69,
+     "mode": "L5 hybrid (RRF), functions touched by the diff",
+     "mrr": "0.940",
+     "n": 70,
+     "wilson": [
+      0.9234181286879168,
+      0.9974737535421097
+     ]
+    }
+   ]
+  }
+ },
+ "matrix": {
+  "columns": [
+   {
+    "id": "br",
+    "label": "BlastRadius"
+   },
+   {
+    "id": "retest_all",
+    "label": "Jenkins / GitHub Actions (retest-all)"
+   },
+   {
+    "id": "rtptorrent",
+    "label": "RTPTorrent (#3)"
+   },
+   {
+    "id": "tts",
+    "label": "T-TS (#10)"
+   },
+   {
+    "id": "logsage",
+    "label": "LogSage (#23)"
+   },
+   {
+    "id": "ci_repair_bench",
+    "label": "CI-Repair-Bench pipeline (#26)"
+   },
+   {
+    "id": "chatrepair",
+    "label": "ChatRepair (#29)"
+   },
+   {
+    "id": "agentless",
+    "label": "Agentless (#31)"
+   }
+  ],
+  "rows": [
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_release_v02.py::test_validator_passes_built_bundle"
+      ],
+      "source": "README.md (Zenodo DOI 10.5281/zenodo.23250262), docs/DATASHEET.md",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "Described as a benchmark; the summary does not say it is released",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "A scheduling practice, not a dataset",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "source": "docs/LITERATURE.md #3: \"An open dataset of CI builds with test outcomes\"",
+      "value": "yes"
+     },
+     "tts": {
+      "source": "docs/LITERATURE.md #10: \"trained on proprietary CI data\"",
+      "value": "no"
+     }
+    },
+    "id": "public_dataset",
+    "label": "public dataset"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_fault_revealing.py::test_fail_head_not_base_is_revealing"
+      ],
+      "source": "docs/SCHEMAS.md (outcomes.parquet), release/v0.2",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "source": "docs/LITERATURE.md #3: \"test outcomes\" recorded per CI build",
+      "value": "yes"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "per_test_labels",
+    "label": "per-test labels"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_fault_revealing.py::test_fail_head_and_base_not_revealing"
+      ],
+      "source": "docs/ROADMAP.md (base-run resolution), paper/generated/base_resolution.md",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "source": "docs/RESULTS_2.md E2: \"Blame-all, what a CI server does by default, clears nothing\"",
+      "value": "no"
+     },
+     "rtptorrent": {
+      "source": "docs/LITERATURE.md #3: \"whether a failure was already present before the change is not resolved per test\"",
+      "value": "no"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "base_subtracted",
+    "label": "pre-existing failures subtracted (base run)"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_fault_revealing.py::test_strict_excludes_flaky"
+      ],
+      "source": "paper/generated/flakiness.md, docs/SCHEMAS.md (strict label)",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "source": "docs/RESULTS_2.md E2: blame-all clears no inherited or flaky failure",
+      "value": "no"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "flaky_filtered",
+    "label": "flaky failures filtered"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_agents_repair.py::test_r2_searches_only_touched_functions_r1_searches_everything"
+      ],
+      "source": "docs/RESULTS_2.md E3 (R2 searches the functions the diff touches)",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "source": "docs/LITERATURE.md #23: \"it does not see which change caused the failure\"",
+      "value": "no"
+     },
+     "retest_all": {
+      "source": "paper/generated/rq2_predictor.md: B0 retest-all orders tests alphabetically, ignoring the change",
+      "value": "no"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "change_aware",
+    "label": "change-aware localization"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch",
+       "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch"
+      ],
+      "source": "src/agents/repair.py, src/agents/bot.py",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md #26 validates by re-running the CI workflow, a different criterion; not marked either way",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "source": "docs/RESULTS_2.md E3: R0 (notify only) proposes no patch",
+      "value": "no"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "patch_validated",
+    "label": "patch validated by full test suite before it is suggested"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+      ],
+      "source": "src/agents/bot.py, integrations/github-actions/blastradius-bot.yml (contents: read)",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "never_merges",
+    "label": "never merges or pushes on its own"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+      ],
+      "source": "src/agents/bot.py (\"Why\" column)",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "explanation",
+    "label": "explanation for every prediction"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_agents_repair.py::test_replay_mode_cache_miss_raises_and_never_calls_the_network",
+       "tests/test_bot_demo.py::test_recorded_bot_run_replays_to_the_committed_comment"
+      ],
+      "source": "src/agents/llm_cache.py, eval/llm_cache/",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "source": "docs/LITERATURE.md #10: \"cannot be re-run or compared on public data\"",
+      "value": "no"
+     }
+    },
+    "id": "replayable",
+    "label": "results replayable offline"
+   },
+   {
+    "cells": {
+     "agentless": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "br": {
+      "proof": [
+       "tests/test_cost_report.py::test_nothing_was_paid_and_the_report_says_so"
+      ],
+      "source": "paper/generated/cost_report.md (USD actually paid, from the ledger)",
+      "value": "yes"
+     },
+     "chatrepair": {
+      "source": "docs/LITERATURE.md #29: \"$0.42 Each using ChatGPT\" (a paid model)",
+      "value": "no"
+     },
+     "ci_repair_bench": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "logsage": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "retest_all": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "rtptorrent": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     },
+     "tts": {
+      "note": "docs/LITERATURE.md does not establish it; this is not a claim that it is absent",
+      "source": "docs/LITERATURE.md",
+      "value": "not_reported"
+     }
+    },
+    "id": "free_tier",
+    "label": "runs at zero cost on a free tier"
+   }
+  ],
+  "safety": [
+   {
+    "claim": "a patch is suggested only after the full suite passes",
+    "tests": [
+     "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch",
+     "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+    ]
+   },
+   {
+    "claim": "the bot never merges or pushes",
+    "tests": [
+     "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+    ]
+   },
+   {
+    "claim": "the bot edits its own comment instead of spamming",
+    "tests": [
+     "tests/test_bot.py::test_the_bot_edits_its_own_comment_instead_of_posting_again"
+    ]
+   },
+   {
+    "claim": "secrets are never written to logs or caches",
+    "tests": [
+     "tests/test_safety_claims.py::test_no_credential_in_the_llm_caches_the_ledger_or_the_recorded_comment"
+    ]
+   },
+   {
+    "claim": "replay mode cannot make network calls",
+    "tests": [
+     "tests/test_agents_repair.py::test_replay_mode_cache_miss_raises_and_never_calls_the_network",
+     "tests/test_bot.py::test_full_bot_run_then_replay_from_the_recorded_reply"
+    ]
+   },
+   {
+    "claim": "no LLM in E1, E2 or make tables",
+    "tests": [
+     "tests/test_safety_claims.py::test_no_llm_module_is_reachable_from_e1_e2_features_or_make_tables"
+    ]
+   },
+   {
+    "claim": "time-safe retrieval (no future data)",
+    "tests": [
+     "tests/test_ask.py::test_retrieval_is_time_safe_strictly_before_the_query",
+     "tests/test_leakage_audit_e1.py::test_real_features_have_no_violations_and_inflated_ones_are_caught"
+    ]
+   },
+   {
+    "claim": "deterministic prompts (hash test)",
+    "tests": [
+     "tests/test_e3_replay.py::test_the_same_prompt_has_identical_bytes_in_fresh_processes",
+     "tests/test_rag_r4.py::test_r0_to_r3_prompts_and_system_are_byte_identical_to_the_recorded_hashes"
+    ]
+   }
+  ]
+ },
+ "table2": {
+  "rows": [
+   {
+    "authors": "Plyusnin et al., 2025",
+    "data": "proprietary",
+    "lit_number": 10,
+    "result": "recall 0.95 at 15% of tests",
+    "title": "Targeted Test Selection Approach in Continuous Integration",
+    "url": "https://arxiv.org/abs/2509.10279",
+    "work": "T-TS (Plyusnin et al., 2025)"
+   },
+   {
+    "authors": "Pan, Pradel, 2021",
+    "data": "242 projects",
+    "lit_number": 6,
+    "result": "suite-level AUC gain of 13.9%",
+    "title": "Continuous Test Suite Failure Prediction",
+    "url": "https://cispa.de/en/research/publications/104367-continuous-test-suite-failure-prediction",
+    "work": "Pan & Pradel, ISSTA 2021"
+   },
+   {
+    "authors": "Xu et al., 2025",
+    "data": "367 failures",
+    "lit_number": 23,
+    "result": "RCA precision above 98%",
+    "title": "LogSage: An LLM-Based Framework for CI/CD Failure Detection and Remediation with Industrial Validation",
+    "url": "https://arxiv.org/abs/2506.03691",
+    "work": "LogSage (Xu et al., 2025)"
+   },
+   {
+    "authors": "Nabil, Zhu, Rubio-González, 2026",
+    "data": "100 BugSwarm failures",
+    "lit_number": 25,
+    "result": "13-36% repair success",
+    "title": "CI-Bench: A Framework for Evaluating Large Language Model Tools on CI Failures",
+    "url": "https://conf.researchr.org/details/icse-2026/icse-2026-demonstrations/9/CI-Bench-A-Framework-for-Evaluating-Large-Language-Model-Tools-on-CI-Failures",
+    "work": "CI-Bench (Nabil et al., 2026)"
+   },
+   {
+    "authors": "Muna, Rafi, Chen, 2026",
+    "data": "567 GitHub Actions failures",
+    "lit_number": 26,
+    "result": "Pass@1 7.9-18.9%",
+    "title": "CI-Repair-Bench: A Repository-Aware Benchmark for Automated Patch Validation via CI Workflows",
+    "url": "https://arxiv.org/abs/2604.27148",
+    "work": "CI-Repair-Bench (Muna et al., 2026)"
+   }
+  ],
+  "source": "docs/RESULTS_2.md (Table 2); links from docs/LITERATURE.md"
+ },
+ "time": {
+  "e1": {
+   "candidates_median": "B1 (random, mean over 20 seeds, std over those 20) is the floor; B4 has no randomness. Candidate test files per test instance: median 595, max 3079.",
+   "history_drop_recall10": 0.14,
+   "n": 148,
+   "rows": [
+    {
+     "apfd": "0.469",
+     "first_fail_pos": "551.088",
+     "id": "B0",
+     "method": "B0 retest-all (alphabetical)",
+     "recall_first_10pct": "0.119",
+     "suite_frac_full_recall": "0.541"
+    },
+    {
+     "apfd": "0.766",
+     "first_fail_pos": "233.858",
+     "id": "B4",
+     "method": "B4 failure history",
+     "recall_first_10pct": "0.634",
+     "suite_frac_full_recall": "0.255"
+    },
+    {
+     "apfd": "0.852",
+     "first_fail_pos": "169.792",
+     "id": "ours",
+     "method": "ours BlastRadius ranker (all families)",
+     "recall_first_10pct": "0.735",
+     "suite_frac_full_recall": "0.175"
+    }
+   ],
+   "source": "paper/generated/rq2_predictor.md"
+  },
+  "e3_detection": {
+   "paragraph": null,
+   "rows": [
+    {
+     "mean position of the first failing test file": "10.91",
+     "mean share of test files run before the first failure": "0.485",
+     "order": "E1 model",
+     "tasks": "70"
+    },
+    {
+     "mean position of the first failing test file": "8.11",
+     "mean share of test files run before the first failure": "0.553",
+     "order": "alphabetical (B0, retest-all)",
+     "tasks": "70"
+    },
+    {
+     "mean position of the first failing test file": "10.37",
+     "mean share of test files run before the first failure": "0.481",
+     "order": "random (mean of 20 seeds)",
+     "tasks": "70"
+    }
+   ],
+   "source": "paper/generated/rq4_repair.md",
+   "takeaway": "On fresh repositories with no failure history the E1 order puts the first failing file at mean position 10.91, behind alphabetical order (8.11) and level with random (10.37); by mean share of files run first it is ahead of alphabetical (0.485 vs 0.553). The strongest signal, failure history, does not exist on a fresh repository."
+  }
+ }
+}

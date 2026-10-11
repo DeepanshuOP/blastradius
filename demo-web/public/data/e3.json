@@ -194,6 +194,24 @@
    }
   },
   "primary": "Standard variant, openai/gpt-oss-120b, n = 47: R2 plausible-fix rate 33/47 vs R1 20/47; R2 only 17, R1 only 4; exact McNemar one-sided p = 0.003599 (alpha = 0.05): **R2 > R1 supported**. (47 of 70 tasks done; 23 not run (cache incomplete))",
+  "progress": [
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-120b",
+    "n": 47,
+    "text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing",
+    "total": 70,
+    "variant": "standard"
+   },
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-20b",
+    "n": 45,
+    "text": "openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+    "total": 70,
+    "variant": "standard"
+   }
+  ],
   "retrieval": {
    "columns": [
     "arm",
@@ -271,8 +289,8 @@
    ]
   },
   "source": "paper/generated/rq4_repair.md",
-  "source_generated_at_git_sha": "67f961477ba050b244124efcb6ffb65943763c4c",
+  "source_generated_at_git_sha": "c92e0d52cd393c6ba05af87426cb19a48f8057c7",
   "status": "run"
  },
- "generated_at_git_sha": "38cf56a5e4612225679d385b648a04a756a1e350"
+ "generated_at_git_sha": "d2086a5559db7072885c4173479364bf9b882576"
 }

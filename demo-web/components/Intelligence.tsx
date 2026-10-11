@@ -16,6 +16,7 @@ type E2 = {
 type E3 = {
   status: string; note?: string; source?: string; detection?: Tbl | null; retrieval?: Tbl | null; retrieval_hard?: Tbl | null;
   primary?: string; secondary?: Tbl | null; models?: Record<string, Tbl>; cost?: Tbl | null;
+  progress?: { model: string; variant: string; n: number; total: number; interim: boolean; text: string }[];
 } | null;
 
 async function load<T>(name: string, key: string): Promise<T | null> {
@@ -186,6 +187,11 @@ export default function Intelligence() {
           <Verdict ok={null} text={`Not run: ${e3?.note ?? "no results file"}. Run make repair-run, then make repair-eval.`} />
         ) : (
           <div className="space-y-4">
+            {(e3.progress ?? []).some((p) => p.interim) && (
+              <p className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                Interim: {(e3.progress ?? []).filter((p) => p.interim).map((p) => p.text).join("; ")}.
+              </p>
+            )}
             {e3.primary && <Verdict ok={null} text={e3.primary} />}
             {e3.retrieval && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieval hit rate, standard variant (no model, all tasks)</p><Table t={e3.retrieval} /></>}
             {e3.retrieval_hard && <><p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieval hit rate, hard variant</p><Table t={e3.retrieval_hard} /></>}

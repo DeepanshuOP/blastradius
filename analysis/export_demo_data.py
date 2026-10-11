@@ -830,10 +830,283 @@ def intelligence(sha: str) -> dict:
                      "retrieval_hard": next((v for k, v in t.items() if k.startswith("Hard variant")), None),
                      "primary": _paragraph_after(p3, "Primary test"),
                      "secondary": next((v for k, v in t.items() if k.startswith("Secondary tests")), None),
-                     "models": models, "cost": t.get("Cost")}
+                     "models": models, "cost": t.get("Cost"), "progress": e3_progress(p3)}
     else:
         out["e3"] = {"status": "not run", "note": "make repair-eval has not produced paper/generated/rq4_repair.md"}
     return out
+
+
+# -- Compare tab ---------------------------------------------------------------
+
+E3_TOTAL_RE = re.compile(r"^(\d+) tasks:", re.M)
+E3_HEAD_RE = re.compile(r"^### (.+), (standard|hard) variant \(n = (\d+) tasks\)$", re.M)
+E3_ARM_LABELS = {
+    "R0": "R0 notify only (what Jenkins / GitHub Actions do)",
+    "R1": "R1 log-only (the failure log, no change; as in LogSage #23 and CI-Bench #25)",
+    "R2": "R2 change-aware (functions the diff touches)",
+    "R3": "R3 R2 + up to 2 retries"}
+TABLE2_LIT = {"T-TS": 10, "Pan & Pradel": 6, "LogSage": 23, "CI-Bench": 25, "CI-Repair-Bench": 26}
+_RATE_CELL = re.compile(r"^([\d,]+)/([\d,]+)")
+
+
+def wilson(k: int, n: int, z: float = 1.959963984540054) -> list[float]:
+    """Wilson score interval for `k` of `n` (`[0, 1]` when `n` is 0)."""
+    if n == 0:
+        return [0.0, 1.0]
+    p = k / n
+    den = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / den
+    half = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / den
+    return [max(0.0, centre - half), min(1.0, centre + half)]
+
+
+def _frac(cell: str) -> tuple[int, int]:
+    m = _RATE_CELL.match(cell)
+    if not m:
+        raise SystemExit(f"BLOCKED: not a k/n cell: {cell!r}")
+    return int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))
+
+
+def e3_progress(path: Path = GENERATED / "rq4_repair.md") -> list[dict]:
+    """n of the standard variant per confirmatory model, and whether it is below the 70 tasks pre-registered."""
+    if not path.exists():
+        return []
+    text = path.read_text(encoding="utf-8")
+    m = E3_TOTAL_RE.search(text)
+    total = int(m.group(1)) if m else 70
+    out = []
+    for model, variant, n in E3_HEAD_RE.findall(text):
+        k = int(n)
+        out.append({"model": model, "variant": variant, "n": k, "total": total, "interim": k < total,
+                    "text": f"{model} {variant}: " + (f"interim, n = {k} of {total}; run continuing" if k < total
+                                                      else f"complete, n = {k} of {total}")})
+    return out
+
+
+def _by_label(tables: dict[str, dict], prefix: str) -> dict | None:
+    return next((v for k, v in tables.items() if k.startswith(prefix)), None)
+
+
+def _rows(t: dict) -> list[dict]:
+    return [dict(zip(t["columns"], r)) for r in t["rows"]]
+
+
+def compare_e1() -> dict | None:
+    """Panel 2a: ours vs B7 / B6 / B5 / B4 / B1 on the chronological test split, from `rq2_predictor.md`."""
+    path = GENERATED / "rq2_predictor.md"
+    if not path.exists():
+        return None
+    t = _tables_by_heading(path)
+    main = {r["method"].split(" ")[0]: r for r in _rows(t["Main result (test split)"])}
+    ci = {r["method"].split(" ")[0]: r for r in _rows(t["Recall@10 with bootstrap 95% CI (10,000 resamples, seed 0)"])}
+    stats = {r["comparison"].split(" ")[2]: r for r in _rows(_by_label(t, "Paired statistics")) if r["comparison"].startswith("ours vs ")}
+    rows = []
+    for key in ("ours", "B7", "B6", "B5", "B4", "B1"):
+        lo, hi = re.findall(r"[\d.]+", ci[key]["95% CI"])
+        s = stats.get(key)
+        rows.append({"id": key, "method": main[key]["method"], "n": int(main[key]["n"]),
+                     "recall10": main[key]["Recall@10"], "map": main[key]["MAP"], "ci": [float(lo), float(hi)],
+                     "p_adj": float(s["Holm-adjusted p"]) if s else None, "delta": s["Cliff's delta"] if s else None,
+                     "magnitude": s["magnitude"] if s else None})
+    by = {r["id"]: r for r in rows}
+
+    def r10(k: str) -> float:
+        return float(by[k]["recall10"].split(" ")[0])
+
+    parts = [f"Ours reaches Recall@10 {r10('ours'):.3f} against {r10('B7'):.3f} for the readily-available-information ranker B7"]
+    b7 = by["B7"]
+    parts[0] += (f" (Holm-adjusted p = {b7['p_adj']:.3f}, Cliff's \u03b4 = {b7['delta']}, {b7['magnitude']}): "
+                 + ("a measurable difference." if b7["p_adj"] < 0.05 else "no measurable difference."))
+    b4 = by["B4"]
+    parts.append(f"Against failure history B4 ({r10('B4'):.3f}) the adjusted p is {b4['p_adj']:.3f} and the effect is {b4['magnitude']} "
+                 f"(\u03b4 = {b4['delta']}); against random order ({r10('B1'):.3f}) the effect is {by['B1']['magnitude']} (\u03b4 = {by['B1']['delta']}).")
+    return {"source": "paper/generated/rq2_predictor.md", "n": rows[0]["n"], "split": "chronological test split, Java only",
+            "test": _paragraph_after(path, "Paired statistics"), "verdict": _paragraph_after(path, "Gate 3 verdict"),
+            "rows": rows, "takeaway": " ".join(parts)}
+
+
+def compare_e3() -> dict | None:
+    """Panel 2b: R0-R3 per confirmatory model (standard variant) with Wilson intervals, and the primary test line."""
+    path = GENERATED / "rq4_repair.md"
+    if not path.exists():
+        return None
+    t = _tables_by_heading(path)
+    prog = e3_progress(path)
+    models = []
+    for key, tab in t.items():
+        m = E3_HEAD_RE.match("### " + key)
+        if not m or m.group(2) != "standard":
+            continue
+        arms = []
+        for r in _rows(tab):
+            if r["arm"] not in E3_ARM_LABELS:
+                continue
+            k, n = _frac(r["plausible fix (full suite green)"])
+            arms.append({"arm": r["arm"], "label": E3_ARM_LABELS[r["arm"]], "k": k, "n": n, "wilson": wilson(k, n)})
+        models.append({"model": m.group(1), "n": int(m.group(3)), "arms": arms})
+    sec = next((v for k, v in t.items() if k.startswith("Secondary tests")), None)
+    ex = {m["model"]: {a["arm"]: a for a in m["arms"]} for m in models}
+    parts = []
+    for m, arms in ex.items():
+        if {"R0", "R1", "R2"} <= set(arms):
+            parts.append(f"{m}: R0 {arms['R0']['k']}/{arms['R0']['n']}, R1 {arms['R1']['k']}/{arms['R1']['n']}, "
+                         f"R2 {arms['R2']['k']}/{arms['R2']['n']}" + (f", R3 {arms['R3']['k']}/{arms['R3']['n']}" if "R3" in arms else ""))
+    take = ""
+    if parts:
+        gaps = [f"{m}: R2 is {a['R2']['k'] - a['R1']['k']:+d} tasks against R1 and R3 is {a['R3']['k'] - a['R2']['k']:+d} against R2"
+                for m, a in ex.items() if {"R1", "R2", "R3"} <= set(a)]
+        take = ("Plausible fixes (full suite green) by arm, " + "; ".join(parts) + ". " + "; ".join(gaps)
+                + ". Significance is in the primary and secondary tests above.")
+    return {"source": "paper/generated/rq4_repair.md", "models": models, "primary": _paragraph_after(path, "Primary test"),
+            "secondary": sec, "progress": prog, "interim": any(p["interim"] for p in prog),
+            "interim_text": "; ".join(p["text"] for p in prog if p["interim"]), "takeaway": take,
+            "applier_note": "The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant "
+                            "applier; E3 fix rates are therefore conservative relative to the bot."}
+
+
+def compare_localization() -> dict | None:
+    """Panel 2c: L1-L5 hit@3 on the standard and hard variants with Wilson intervals, and the paired tests."""
+    path = GENERATED / "rq5_retrieval.md"
+    if not path.exists():
+        return None
+    t = _tables_by_heading(path)
+    out: dict = {"source": "paper/generated/rq5_retrieval.md", "variants": {}}
+    for name, prefix in (("standard", "Standard variant"), ("hard", "Hard variant")):
+        tab = _by_label(t, prefix)
+        rows = []
+        for r in _rows(tab):
+            k, n = _frac(r["hit@3"])
+            rows.append({"mode": r["mode"], "k": k, "n": n, "wilson": wilson(k, n), "cell": r["hit@3"], "mrr": r["MRR"]})
+        out["variants"][name] = rows
+    out["paired"] = _by_label(t, "Paired tests")
+    text = (GENERATED / "rq4_repair.md").read_text(encoding="utf-8") if (GENERATED / "rq4_repair.md").exists() else ""
+    out["l4_vs_l1"] = [{"variant": v, "r2_only": int(a), "r1_only": int(b), "p": p, "n": int(n)} for v, (a, b, p, n) in zip(
+        ("standard", "hard"), re.findall(r"Paired, R2 hits where R1 misses: (\d+); R1 hits where R2 misses: (\d+); "
+                                         r"exact McNemar \(two-sided\) p = ([0-9.e-]+) \(n = (\d+)\)", text))]
+    s, h = out["variants"]["standard"], out["variants"]["hard"]
+    if len(s) == 5 and len(h) == 5:
+        out["takeaway"] = (f"Knowing the change (L4) puts the seeded function in the top three for {s[3]['k']}/{s[3]['n']} tasks on the "
+                           f"standard variant and {h[3]['k']}/{h[3]['n']} on the hard one, against {s[0]['k']}/{s[0]['n']} for whole-repo BM25 (L1); "
+                           f"whole-repo dense (L2, {s[1]['k']}/{s[1]['n']}) and hybrid (L3, {s[2]['k']}/{s[2]['n']}) do not make up the gap.")
+    return out
+
+
+def compare_table2() -> dict:
+    """Panel 3: Table 2 of `docs/RESULTS_2.md` with each work's link from `docs/LITERATURE.md`."""
+    lit = {}
+    for ln in Path("docs/LITERATURE.md").read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^\| (\d+) \| ([^|]+)\| \[([^\]]+)\]\(([^)]+)\)", ln)
+        if m:
+            lit[int(m.group(1))] = {"authors": m.group(2).strip(), "title": m.group(3), "url": m.group(4)}
+    cols, rows = find_table(Path("docs/RESULTS_2.md"), "Table 2: context only, different data")
+    out = []
+    for r in rows:
+        num_ = next((v for k, v in TABLE2_LIT.items() if r[0].startswith(k)), None)
+        out.append({"work": r[0], "result": r[1], "data": r[2], "lit_number": num_, **(lit.get(num_, {}))})
+    return {"source": "docs/RESULTS_2.md (Table 2); links from docs/LITERATURE.md", "rows": out}
+
+
+def compare_time() -> dict:
+    """Panel 5: where the first failing test file lands (E1, BR-Bench) and the E3 detection result on fresh repositories."""
+    out: dict = {"e1": None, "e3_detection": None}
+    p1 = GENERATED / "rq2_predictor.md"
+    if p1.exists():
+        t = _tables_by_heading(p1)
+        main = {r["method"].split(" ")[0]: r for r in _rows(t["Main result (test split)"])}
+        out["e1"] = {"source": "paper/generated/rq2_predictor.md", "n": int(main["ours"]["n"]),
+                     "candidates_median": _paragraph_after(p1, "Side by side"),
+                     "rows": [{"id": k, "method": main[k]["method"], "first_fail_pos": main[k]["first-fail pos."],
+                               "recall_first_10pct": main[k]["Recall@10%"], "apfd": main[k]["APFD"],
+                               "suite_frac_full_recall": main[k]["suite frac. for full recall"]} for k in ("B0", "B4", "ours")]}
+    p3 = GENERATED / "rq4_repair.md"
+    if p3.exists():
+        t = _tables_by_heading(p3)
+        det = _by_label(t, "Detection")
+        if det:
+            rows = _rows(det)
+            def pick(prefix: str) -> dict:
+                return next(r for r in rows if r["order"].startswith(prefix))
+            e1m, alpha, rnd = pick("E1"), pick("alphabetical"), pick("random")
+            pos = lambda r: float(r["mean position of the first failing test file"])
+            sh = lambda r: float(r["mean share of test files run before the first failure"])
+            dpos = "behind" if pos(e1m) > pos(alpha) else "ahead of"
+            dsh = "ahead of" if sh(e1m) < sh(alpha) - 0.005 else ("behind" if sh(e1m) > sh(alpha) + 0.005 else "level with")
+            out["e3_detection"] = {
+                "source": "paper/generated/rq4_repair.md", "rows": rows,
+                "takeaway": (f"On fresh repositories with no failure history the E1 order puts the first failing file at mean position "
+                             f"{pos(e1m):.2f}, {dpos} alphabetical order ({pos(alpha):.2f}) and level with random ({pos(rnd):.2f}); by mean share of "
+                             f"files run first it is {dsh} alphabetical ({sh(e1m):.3f} vs {sh(alpha):.3f}). The strongest signal, failure history, "
+                             "does not exist on a fresh repository."),
+                "paragraph": _paragraph_after(p3, "Detection") or None}
+    res = Path("data/processed/rq2_results.json")
+    if res.exists() and out["e1"]:
+        r = json.loads(res.read_text())
+        out["e1"]["history_drop_recall10"] = round(r["main"]["ours"]["r10"] - r["ablation"]["hist_"]["r10"], 3)
+    return out
+
+
+def compare_cost() -> dict | None:
+    """Panel 4: the cost report's JSON as written by `analysis/cost_report.py` (None until it has run)."""
+    p = GENERATED / "cost_report.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
+
+def compare_doc(sha: str) -> dict:
+    """Everything the Compare tab renders; labels only live in the TSX."""
+    from analysis import compare_matrix as cm
+    matrix = cm.load()
+    problems = cm.validate(matrix)
+    if problems:
+        raise SystemExit("BLOCKED: docs/compare_matrix.yaml violates its rules:\n  " + "\n  ".join(problems))
+    figs = Path("demo-web/public/figures")
+    figs.mkdir(parents=True, exist_ok=True)
+    have = []
+    for name in ("fig6_e3_arms.png", "fig7_retrieval.png"):
+        if (GENERATED / name).exists():
+            shutil.copyfile(GENERATED / name, figs / name)
+            have.append(f"/figures/{name}")
+    return {"generated_at_git_sha": sha, "matrix": matrix, "e1": compare_e1(), "e3": compare_e3(),
+            "localization": compare_localization(), "table2": compare_table2(), "cost": compare_cost(),
+            "time": compare_time(), "figures": have}
+
+
+# -- Use it tab ----------------------------------------------------------------
+
+LIVE_PR_URL = "https://github.com/DeepanshuOP/itsdangerous/pull/1"
+CLI_USE = {
+    "impact": 'impact --repo . --story "Tighten the timestamp check" --provider offline',
+    "ask": 'ask --repo . --question "Why does test_max_age fail?" --provider offline',
+    "bot": "bot --repo . --base <base-sha> --head <head-sha> --pr 1 --no-post",
+    "pipeline": 'pipeline --repo . --story "Tighten the timestamp check" --provider offline',
+}
+
+
+def _setup_steps(path: Path = Path("integrations/github-actions/BOT_SETUP.md")) -> list[dict]:
+    """The numbered `## N. title` sections 1-3 of BOT_SETUP.md (sandbox repo, secret, workflow), verbatim."""
+    text = path.read_text(encoding="utf-8")
+    steps = []
+    for m in re.finditer(r"^## ([123])\. (.+?)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
+        steps.append({"n": int(m.group(1)), "title": m.group(2).strip(), "body": m.group(3).strip()})
+    return steps
+
+
+def use_it_doc(sha: str) -> dict:
+    """The three ways to adopt BlastRadius, read from files in the repository (nothing typed into the page)."""
+    wf = Path("integrations/github-actions/blastradius-bot.yml").read_text(encoding="utf-8")
+    pinned, n = re.subn(r"^(\s*)ref: upgrade-2\.1 .*$", rf"\1ref: {sha}   # pinned to this commit", wf, flags=re.M)
+    if n != 1:
+        raise SystemExit("BLOCKED: blastradius-bot.yml has no single `ref: upgrade-2.1` line to pin")
+    cli = Path("src/agents/cli.py").read_text(encoding="utf-8")
+    helps = dict(re.findall(r'sub\.add_parser\("(\w+)", help="([^"]+)"\)', cli))
+    comment = Path("src/agents/demo/pr1_comment.md")
+    return {"generated_at_git_sha": sha, "pinned_ref": sha, "live_pr_url": LIVE_PR_URL,
+            "setup_steps": _setup_steps(), "workflow_yaml": pinned,
+            "bot_comment_md": comment.read_text(encoding="utf-8") if comment.exists() else None,
+            "bot_comment_source": "latest comment of the github-actions bot on " + LIVE_PR_URL + " (read with gh api)",
+            "recorded_seeded_comment_md": Path("src/agents/demo/bot_comment.md").read_text(encoding="utf-8"),
+            "jenkinsfile": Path("integrations/jenkins/Jenkinsfile").read_text(encoding="utf-8"),
+            "cli": [{"cmd": k, "help": helps[k],
+                     "line": "uv run --extra graph --extra ml --extra rag python -m src.agents " + v} for k, v in CLI_USE.items()]}
 
 
 # -- main --------------------------------------------------------------------
@@ -868,6 +1141,8 @@ def write_docs(out_dir: Path, sha: str) -> None:
     write_json(out_dir / "corpus.json", corpus(sha))
     write_json(out_dir / "panels.json", panels(sha))
     write_json(out_dir / "rag.json", rag_doc(sha))
+    write_json(out_dir / "compare.json", compare_doc(sha))
+    write_json(out_dir / "use_it.json", use_it_doc(sha))
     intel = intelligence(sha)
     for key in ("e1", "e2", "e3"):
         write_json(out_dir / f"{key}.json", {"generated_at_git_sha": sha, key: intel[key]})

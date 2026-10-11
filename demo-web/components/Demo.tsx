@@ -4,16 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import Agents from "./Agents";
 import Analyze from "./Analyze";
 import Ask from "./Ask";
+import Compare from "./Compare";
 import Corpus from "./Corpus";
 import Intelligence from "./Intelligence";
 import Overview from "./Overview";
 import { Decisions, MoreResults, type PanelsDoc } from "./Panels";
 import Results from "./Results";
+import UseIt from "./UseIt";
 import { STAGE_TITLES, StageCard } from "./Stages";
 import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
 import { Card, Mono, short } from "./ui";
 
-const TABS = ["Overview", "How it works", "Live run", "Results", "Intelligence", "Analyze a repo", "Ask", "Agents", "Corpus", "Decisions"] as const;
+const TABS = ["Overview", "How it works", "Live run", "Results", "Intelligence", "Compare", "Use it", "Analyze a repo", "Ask", "Agents", "Corpus", "Decisions"] as const;
 type Tab = (typeof TABS)[number];
 const STEP_MS = 800;
 
@@ -156,6 +158,10 @@ export default function Demo() {
     getJson<PanelsDoc>("/data/panels.json").then(setPanels).catch((e) => setErr(String(e)));
   }, []);
 
+  const go = (t: Tab, anchor?: string) => {
+    setTab(t);
+    if (anchor) setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" }), 350);
+  };
   const loading = !err && <p className="text-sm text-slate-500">Loading…</p>;
   return (
     <div className="flex min-h-screen flex-col">
@@ -182,6 +188,8 @@ export default function Demo() {
         {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
         {tab === "Results" && (results ? <><Results r={results} />{panels && <div className="mt-8"><MoreResults d={panels} /></div>}</> : loading)}
         {tab === "Intelligence" && <Intelligence />}
+        {tab === "Compare" && <Compare />}
+        {tab === "Use it" && <UseIt onEvidence={(n) => go("Compare", `compare-panel-${n}`)} />}
         {tab === "Analyze a repo" && <Analyze />}
         {tab === "Ask" && <Ask />}
         {tab === "Agents" && <Agents />}
