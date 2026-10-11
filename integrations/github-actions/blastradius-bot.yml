@@ -41,9 +41,9 @@ jobs:
         uses: astral-sh/setup-uv@v3
       - run: uv python install 3.11
 
-      - name: Install BlastRadius (ml extra for the E1 and E2 models, rag extra for retrieval)
+      - name: Install BlastRadius (graph extra for networkx, ml extra for the E1 and E2 models, rag extra for retrieval)
         working-directory: .blastradius-tool
-        run: uv sync --extra ml --extra rag
+        run: uv sync --extra graph --extra ml --extra rag
 
       - name: Install the sandbox repository's own dependencies into the same environment
         # EDIT THIS to the way your sandbox repository installs itself and its tests' dependencies.
@@ -66,7 +66,7 @@ jobs:
           # Every request and reply is cached here and uploaded below, so a run can be replayed offline.
           BR_LLM_CACHE_DIR: ${{ github.workspace }}/.blastradius-cache
         run: >
-          uv run --extra ml --extra rag python -m src.agents bot
+          uv run --extra graph --extra ml --extra rag python -m src.agents bot
           --repo "$GITHUB_WORKSPACE"
           --base ${{ github.event.pull_request.base.sha }}
           --head ${{ github.event.pull_request.head.sha }}
