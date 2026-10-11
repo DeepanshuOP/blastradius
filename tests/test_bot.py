@@ -242,3 +242,16 @@ def test_the_bot_retries_twice_with_the_failure_in_the_prompt(timed_repo) -> Non
     assert "could not be applied" in prompts[1] and "no SEARCH/REPLACE blocks" in prompts[1]
     assert "tests/test_timed.py::x: still failing" in prompts[2]
     assert seen == [{TIMED: _expected(timed_repo)}] * 2
+
+
+# ---- every prediction carries a reason (Compare > Safety / capability matrix) --------------------------
+def test_every_risk_row_and_every_triaged_failure_carries_a_reason(pr_repo, tmp_path) -> None:
+    repo, base, head = pr_repo
+    _, rows_, _ = bot.build_impact(repo, base, head, 7)
+    assert rows_ and all(r["why"].strip() for r in rows_)
+    out = bot.run_bot(repo, base, head, 7, llm=None, state_dir=tmp_path / "s", python=sys.executable)
+    section = out.comment.split("### 3. Triage of each failure")[1].split("###")[0]
+    cells = [ln.strip("|").split("|") for ln in section.splitlines() if ln.startswith("| `")]
+    assert cells and all(len(c) == 4 and c[3].strip() for c in cells)
+    risk = out.comment.split("### 1. Tests most at risk")[1].split("###")[0]
+    assert all(ln.strip("|").split("|")[3].strip() for ln in risk.splitlines() if ln.startswith("| 1") or ln[:3] == "| 2")
