@@ -74,7 +74,7 @@ def _lock():
 def _parse_run(ns: argparse.Namespace):
     from src.lab.engine import LabArgs
 
-    a = LabArgs(repo=ns.repo, url=ns.url, task=ns.task, variant=ns.variant, model=ns.model, use_llm=not ns.no_llm,
+    a = LabArgs(repo=ns.repo, url=ns.url, pr=ns.pr, task=ns.task, variant=ns.variant, model=ns.model, use_llm=not ns.no_llm,
                 record=ns.record, timeout=ns.timeout, install=not ns.no_install, title=ns.title,
                 description=ns.description, command=sys.argv[1:], repair_arena=ns.repair_arena)
     if ns.base_patch:
@@ -102,8 +102,8 @@ def cmd_run(ns: argparse.Namespace) -> int:
         raise SystemExit("--mode live | replay NAME")
     if ns.model not in MODELS:
         raise SystemExit(f"--model must be one of {', '.join(MODELS)}")
-    if bool(ns.repo) == bool(ns.url):
-        raise SystemExit("give exactly one of --repo / --url")
+    if sum(map(bool, (ns.repo, ns.url, ns.pr))) != 1:
+        raise SystemExit("give exactly one of --repo / --url / --pr")
     args = _parse_run(ns)
     from src.lab.engine import Lab
     from src.lab.events import Emitter
@@ -299,6 +299,82 @@ def quota() -> dict:
     return out
 
 
+PROBE_MAX = 5
+PROBE_CAP_S = 60
+
+
+def cmd_probe(ns: argparse.Namespace) -> int:
+    """Suite strength on one function: up to five mutants, one at a time, each against the full suite (no model).
+
+    Stops at the cap (60 s per repository) and says so. Events go to stdout like a run's.
+    """
+    import shutil
+
+    from src.agents.regression import run_pytest
+    from src.eval.seeded import mutate
+    from src.lab.events import Emitter, now_iso
+    from src.lab.workspace import PREPARED, new_scratch, prepare_seeded
+
+    if ns.repo not in PREPARED:
+        raise SystemExit("unknown repo")
+    events_out = sys.stdout
+    sys.stdout = sys.stderr
+    em = Emitter(events_out)
+    with _lock():
+        scratch = new_scratch("probe")
+        try:
+            em.emit("meta", "run.header", "ok", {"date": now_iso(), "mode": "probe", "model": None, "llm": "not used",
+                                                 "run_id": f"probe-{ns.repo}", "command": ["python", "-m", "src.lab", *sys.argv[1:]],
+                                                 "title": f"Suite strength: {ns.function}", "cap_s": PROBE_CAP_S})
+            ws = prepare_seeded(ns.repo, scratch)
+            em.emit("repo", "repo.info", "ok", {"name": ws.name, "url": ws.url, "commit": ws.base, "language": ws.language,
+                                                "n_files": ws.n_files, "tests_runnable": ws.runnable, "reason": ws.reason,
+                                                "prepared": True})
+            path = ws.repo_dir / ns.file
+            if ".." in Path(ns.file).parts or not path.is_file():
+                raise SystemExit("not a file of the repository")
+            text = path.read_text(encoding="utf-8")
+            every = [m for m in mutate.find_mutations(text) if m.function == ns.function]
+            seen: dict[str, int] = {}
+            ranked = []                             # one of each operator first (in line order), then the rest
+            for m in sorted(every, key=lambda m: (m.line, m.start)):
+                seen[m.operator] = seen.get(m.operator, 0) + 1
+                ranked.append((seen[m.operator], m.line, m.start, m))
+            muts = [x[3] for x in sorted(ranked, key=lambda x: x[:3])][:PROBE_MAX]
+            if not muts:
+                em.emit("arena", "arena.probe", "skipped", {"reason": f"no mutation operator applies to {ns.function}"})
+                em.emit("meta", "run.end", "ok", {})
+                return 0
+            rows, t0 = [], time.perf_counter()
+            for i, m in enumerate(muts, 1):
+                left = PROBE_CAP_S - (time.perf_counter() - t0)
+                if left <= 1:
+                    break
+                em.emit("arena", "arena.probe", "running", {"i": i, "n": len(muts), "operator": m.operator, "line": m.line,
+                                                            "old": m.old, "new": m.new})
+                path.write_text(mutate.apply(text, m), encoding="utf-8")
+                t1 = time.perf_counter()
+                try:
+                    run = run_pytest(ws.repo_dir, None, scratch / f"probe-{i}.xml", "probe", ws.python, timeout=left)
+                finally:
+                    path.write_text(text, encoding="utf-8")
+                failed = sorted({r.test_id for r in run.failed})
+                rows.append({"i": i, "operator": m.operator, "line": m.line, "old": m.old, "new": m.new,
+                             "caught": bool(failed), "failed": len(failed), "first_failed": failed[0] if failed else None,
+                             "cases": len(run.results), "wall_s": round(time.perf_counter() - t1, 2), "timed_out": run.timed_out})
+            stopped = len(rows) < len(muts)
+            em.emit("arena", "arena.probe", "ok", {
+                "function": ns.function, "file": ns.file, "rows": rows, "caught": sum(r["caught"] for r in rows),
+                "survived": sum(not r["caught"] for r in rows), "n": len(muts), "cap_s": PROBE_CAP_S,
+                "wall_s": round(time.perf_counter() - t0, 2),
+                "note": (f"stopped at the {PROBE_CAP_S} s cap after {len(rows)} of {len(muts)} mutants" if stopped else
+                         f"{len(rows)} mutant(s), each run against the full suite, one at a time; no model")})
+            em.emit("meta", "run.end", "ok", {})
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
+    return 0
+
+
 def cmd_status(_ns: argparse.Namespace) -> int:
     print(json.dumps({"llm": bool(os.environ.get("GROQ_API_KEY")), "quota": quota()}))
     return 0
@@ -311,6 +387,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--mode", nargs="+")
     r.add_argument("--repo")
     r.add_argument("--url")
+    r.add_argument("--pr", help="a public pull request URL: its merge base -> head is the change")
     r.add_argument("--task")
     r.add_argument("--variant", choices=["standard", "hard"], default="standard")
     r.add_argument("--inject")
@@ -340,6 +417,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("graph")
     s.add_argument("--repo", required=True)
     s.set_defaults(fn=cmd_graph)
+    s = sub.add_parser("probe")
+    s.add_argument("--repo", required=True)
+    s.add_argument("--file", required=True)
+    s.add_argument("--function", required=True)
+    s.set_defaults(fn=cmd_probe)
     s = sub.add_parser("status")
     s.set_defaults(fn=cmd_status)
     ns = ap.parse_args(argv)

@@ -8,6 +8,7 @@ import { GraphView } from "./GraphView";
 import { CheckList } from "./Panels";
 import { MarkdownLite } from "./Report";
 import { ArenaTable, arenaOf } from "./Arena";
+import { TestGapPanel, gapOf } from "./BreakIt";
 import type { GEdge, GNode, LabState, Lane } from "./types";
 
 type G = { nodes: GNode[]; edges: GEdge[]; changed: string[]; paths: string[][]; atRisk: string[]; outcomes: Record<string, "passed" | "failed"> };
@@ -235,9 +236,10 @@ const SCREENS: Screen[] = [
   {
     id: "verdict", title: "Verdict and PR comment",
     ready: (s) => Boolean(s.report.comment), done: (s) => Boolean(s.report.comment),
-    caption: (s) => s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it on the pull request, with all the evidence attached." : "No fix was accepted, so the bot reports the risk and the triage, and suggests nothing it could not prove.",
+    caption: (s) => gapOf(s) ? "A known bug went straight through: every test passed. That is a gap in the tests, found here before a user finds it." : s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it on the pull request, with all the evidence attached." : "No fix was accepted, so the bot reports the risk and the triage, and suggests nothing it could not prove.",
     real: (s) => `${mode(s)}: this is the exact comment text the PR bot rendered in this run. Nothing was posted anywhere.`,
     render: (s) => {
+      if (gapOf(s)) return <div className="flex h-full flex-col justify-center"><TestGapPanel s={s} large /></div>;
       const v = s.validate.verdict;
       const ok = v?.accepted === true && v.status === "ok";
       return (

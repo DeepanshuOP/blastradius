@@ -148,7 +148,9 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       const cy = cytoscape({ container: box.current, style: styleSheet(), wheelSensitivity: 0.25, minZoom: 0.08, maxZoom: 4, boxSelectionEnabled: false });
       cy.on("tap", "node", (e) => { const n = e.target as NodeSingular; if (!n.isParent()) cb.current.select?.(n.id()); });
       cy.on("tap", (e) => { if (e.target === cy) cb.current.select?.(null); });
-      cy.on("cxttap", "node", (e) => { const n = e.target as NodeSingular; const rp = n.renderedPosition(); if (!n.isParent()) cb.current.context?.(n.id(), rp.x, rp.y); });
+      const ctx = (e: { target: unknown }) => { const n = e.target as NodeSingular; const rp = n.renderedPosition(); if (!n.isParent()) cb.current.context?.(n.id(), rp.x, rp.y); };
+      cy.on("cxttap", "node", ctx);
+      cy.on("taphold", "node", ctx);                // long-press on a touch screen
       cy.on("mouseover", "node", (e) => (e.target as NodeSingular).addClass("hover"));
       cy.on("mouseout", "node", (e) => (e.target as NodeSingular).removeClass("hover"));
       cy.on("viewport resize", drawGuides);

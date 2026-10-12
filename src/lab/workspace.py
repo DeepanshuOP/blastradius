@@ -16,6 +16,8 @@ from src.eval.seeded.build import REPOS, ROOT, SEEDED, VENVS
 PREPARED = ("click", "itsdangerous", "markupsafe", "shopcart")
 LAB_ROOT = Path(tempfile.gettempdir()) / "br-lab"
 URL_RE = re.compile(r"^https://github\.com/([\w.-]+)/([\w.-]+?)(\.git)?$")
+PR_RE = re.compile(r"^https://github\.com/([\w.-]+)/([\w.-]+)/pull/(\d+)/?$")
+PR_FETCH_DEPTH = 300
 INSTALL_TIMEOUT_S = 180
 CLONE_TIMEOUT_S = 120
 _SKIP = {".git", "node_modules", "build", "target", "dist", "__pycache__", ".venv", "venv"}
@@ -151,3 +153,48 @@ def prepare_github(url: str, scratch: Path, install: bool = True) -> Workspace:
         ws.reason = "uv venv failed: " + (exc.stderr or str(exc))[-200:]
     ws.timings["install_s"] = round(time.perf_counter() - t1, 1)
     return ws
+
+
+def pr_info(owner: str, repo: str, number: int) -> dict:
+    """Base and head of a public pull request, from the GitHub API (through `get_with_backoff`, the one HTTP path)."""
+    from src.harvest.ratelimit import TokenPool, get_with_backoff
+
+    try:
+        pool = TokenPool.from_env()
+    except ValueError as exc:
+        raise RuntimeError("PR mode reads the pull request from the GitHub API and needs GITHUB_PAT_1 in .env") from exc
+    r = get_with_backoff(f"https://api.github.com/repos/{owner}/{repo}/pulls/{number}", pool=pool)
+    if r.status_code != 200:
+        raise RuntimeError(f"GitHub API returned {r.status_code} for pull request {number}")
+    j = r.json()
+    return {"number": number, "title": j.get("title"), "state": j.get("state"), "merged": bool(j.get("merged_at")),
+            "merged_at": j.get("merged_at"), "base_sha": j["base"]["sha"], "head_sha": j["head"]["sha"],
+            "base_ref": j["base"]["ref"], "html_url": j.get("html_url"), "changed_files": j.get("changed_files"),
+            "additions": j.get("additions"), "deletions": j.get("deletions")}
+
+
+def prepare_pr(url: str, scratch: Path, install: bool = True) -> tuple[Workspace, dict]:
+    """Shallow-clone the repository of a public pull request, fetch `pull/<n>/head` and its base, and set the base to
+    the merge base (the commit the pull request's diff is taken against, as GitHub shows it)."""
+    import time
+
+    m = PR_RE.match(url.strip())
+    if not m:
+        raise ValueError("only https://github.com/<owner>/<repo>/pull/<n> URLs are accepted")
+    owner, name, number = m.group(1), m.group(2), int(m.group(3))
+    info = pr_info(owner, name, number)
+    ws = prepare_github(f"https://github.com/{owner}/{name}", scratch, install=install)
+    t0 = time.perf_counter()
+    git(ws.repo_dir, "fetch", "--quiet", f"--depth={PR_FETCH_DEPTH}", "origin", f"pull/{number}/head", timeout=CLONE_TIMEOUT_S)
+    head = git(ws.repo_dir, "rev-parse", "FETCH_HEAD")
+    if not head.startswith(info["head_sha"][:12]):
+        info["head_note"] = f"pull/{number}/head is {head[:12]}, the API's head is {info['head_sha'][:12]}"
+    git(ws.repo_dir, "fetch", "--quiet", f"--depth={PR_FETCH_DEPTH}", "origin", info["base_sha"], timeout=CLONE_TIMEOUT_S)
+    base = git(ws.repo_dir, "merge-base", info["base_sha"], head, check=False)
+    if not base:
+        base = info["base_sha"]
+        info["base_note"] = f"no merge base within {PR_FETCH_DEPTH} commits: the diff is taken against the API's base {base[:12]}"
+    ws.base = base
+    info.update({"merge_base": base, "head": head})
+    ws.timings["fetch_pr_s"] = round(time.perf_counter() - t0, 1)
+    return ws, info

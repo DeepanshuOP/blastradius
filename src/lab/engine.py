@@ -36,6 +36,7 @@ class LabArgs:
 
     repo: str | None = None                 # a prepared repository slug
     url: str | None = None                  # or a public GitHub URL
+    pr: str | None = None                   # or a public pull request URL: its base -> head is the change
     task: str | None = None
     variant: str = "standard"
     inject: tuple[str, str, str, int | None] | None = None   # (file, function, operator, line)
@@ -116,15 +117,21 @@ class Lab:
     # -- stages ------------------------------------------------------------------------------
     def repo_stage(self) -> Workspace:
         e = self.em
-        e.emit("repo", "repo.info", "running", {"name": self.a.repo or self.a.url})
+        e.emit("repo", "repo.info", "running", {"name": self.a.repo or self.a.url or self.a.pr})
         t0 = time.perf_counter()
-        ws = (prepare_seeded(self.a.repo, self.scratch) if self.a.repo
-              else prepare_github(self.a.url, self.scratch, install=self.a.install))
+        if self.a.pr:
+            from src.lab.workspace import prepare_pr
+
+            ws, self.pr_info = prepare_pr(self.a.pr, self.scratch, install=self.a.install)
+        else:
+            ws = (prepare_seeded(self.a.repo, self.scratch) if self.a.repo
+                  else prepare_github(self.a.url, self.scratch, install=self.a.install))
         e.emit("repo", "repo.info", "ok", {
             "name": ws.name, "url": ws.url, "commit": ws.base, "language": ws.language, "n_files": ws.n_files,
             "prepared": ws.prepared, "tests_runnable": ws.runnable, "reason": ws.reason, "timings": ws.timings,
             "interpreter": "the prepared virtualenv of data/seeded (read-only)" if ws.prepared else
-                           ("a fresh scratch virtualenv" if ws.runnable else None)},
+                           ("a fresh scratch virtualenv" if ws.runnable else None),
+            **({"pr": self.pr_info} if self.a.pr else {})},
                dur_ms=(time.perf_counter() - t0) * 1000)
         return ws
 
@@ -153,6 +160,8 @@ class Lab:
 
     def change_commit(self, ws: Workspace) -> changes.Change:
         a = self.a
+        if a.pr:
+            return changes.from_pr(ws, self.pr_info)
         if a.task:
             return changes.apply_task(ws, a.task, a.variant)
         if a.inject:
@@ -282,11 +291,41 @@ class Lab:
         doc["history"] = {"n_runs": len(hist), "store": str(arena.history_path(key))}
         doc["cochange"] = {"n_commits": cc[1], **({"reason": cc[2]} if cc[2] else {})}
         e.emit("arena", "arena.result", "ok", doc)
+        if ch.source.get("kind") == "inject" and doc["n_failing"] == 0:
+            e.emit("arena", "arena.gap", "ok", self.test_gap(doc, cov))
         from src.lab.events import now_iso
 
         arena.append_history(key, {"run_id": self.run_id, "date": now_iso(), "change": ch.source,
                                    "failed": sorted({r["id"] for r in self.results if r["outcome"] in FAILED}),
                                    "n_cases": len(self.results)})
+
+    def test_gap(self, doc: dict, cov: dict) -> dict:
+        """A known semantic change (an injected mutation) that the whole suite let through, and the tests that reach it."""
+        from src.lab import arena
+
+        src = self.change.source
+        before = self.change.base_sources.get(src["file"], "").splitlines()
+        line = before[src["line"] - 1] if 0 < src["line"] <= len(before) else ""
+        after = line.replace(src["old"], src["new"], 1)
+        fns = [{"file": src["file"], "function": src["function"]}]
+        covering: list[str] = []
+        if cov.get("status") == "ok":
+            covering = [self.results[i]["id"] for i in arena.coverage_selection(self.results, cov, fns)[0]]
+        files = sorted(arena.reaching_test_files(self.view, self.changed_nodes)) if self.view.get("nodes") and self.changed_nodes else []
+        n, k = doc["n_cases"], len(dict.fromkeys(covering))
+        if cov.get("status") != "ok":
+            reach = f"coverage was not recorded ({cov.get('reason')}), and {len(files)} test file(s) reach it in the graph"
+        elif k:
+            reach = f"{k} test(s) execute {src['function']} at the base commit and {len(files)} test file(s) reach it in the graph"
+        else:
+            reach = f"no test executes {src['function']} at all, though {len(files)} test file(s) reach it in the graph"
+        sentence = (f"All {n} tests passed with `{src['old']}` changed to `{src['new']}` on line {src['line']} of {src['file']}. "
+                    f"{reach[0].upper() + reach[1:]}, yet none of them tells the two versions of this line apart, so "
+                    f"this change would ship unnoticed.")
+        return {"file": src["file"], "function": src["function"], "operator": src["operator"], "line": src["line"],
+                "old": src["old"], "new": src["new"], "before": line, "after": after, "n_cases": n,
+                "covering": list(dict.fromkeys(covering)), "coverage_status": cov.get("status"), "graph_files": files,
+                "sentence": sentence}
 
     def repair_arena_stage(self) -> None:
         """R1 (log-only) against the run's R2 on the same failures, and what an unvalidated push would ship."""

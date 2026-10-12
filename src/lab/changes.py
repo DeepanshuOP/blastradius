@@ -67,7 +67,11 @@ def mutations_of(source: str) -> list[dict]:
     for m in mutate.find_mutations(source):
         by_fn.setdefault(m.function, []).append({"operator": m.operator, "line": m.line, "col": m.start - starts[m.line - 1],
                                                  "old": m.old, "new": m.new})
-    return [{"function": f, "mutations": ms} for f, ms in by_fn.items()]
+    from src.lab.graphview import function_spans
+
+    spans = {q: (first, last, d) for first, last, q, d in function_spans(source)}
+    return [{"function": f, "mutations": ms, **({"start": spans[f][0], "end": spans[f][1], "def_line": spans[f][2]} if f in spans else {})}
+            for f, ms in by_fn.items()]
 
 
 def _commit(ws: Workspace, message: str) -> str:
@@ -131,6 +135,23 @@ def inject_bug(ws: Workspace, file: str, function: str, operator: str, line: int
     path.write_text(mutate.apply(text, m), encoding="utf-8")
     return _finish(ws, {"kind": "inject", "file": file, "function": function, "operator": operator, "line": m.line,
                         "old": m.old, "new": m.new}, ws.base, f"change: {operator} in {function}")
+
+
+def from_pr(ws: Workspace, info: dict) -> Change:
+    """A pull request's own commits as the change: merge base -> pull/<n>/head (nothing is committed here)."""
+    base, head = info["merge_base"], info["head"]
+    diff = git(ws.repo_dir, "diff", base, head)
+    files = [f for f in git(ws.repo_dir, "diff", "--name-only", base, head).splitlines() if f]
+    srcs = {}
+    for f in files:
+        try:
+            srcs[f] = git(ws.repo_dir, "show", f"{base}:{f}")
+        except RuntimeError:
+            srcs[f] = ""
+    source = {"kind": "pr", "url": info.get("html_url"), "number": info["number"], "title": info.get("title"),
+              "merged": info.get("merged"), "base_sha": info["base_sha"], "head_sha": info["head_sha"]}
+    return Change(source, base, head, diff + "\n" if diff else "", files, srcs,
+                  note="; ".join(x for x in (info.get("base_note"), info.get("head_note")) if x))
 
 
 def custom_edit(ws: Workspace, file: str, new_text: str) -> Change:

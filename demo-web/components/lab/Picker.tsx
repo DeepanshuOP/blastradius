@@ -10,14 +10,19 @@ export interface RepoInfo {
 }
 export interface RunInfo { name: string; date?: string; model?: string | null; git_sha?: string; title?: string; description?: string }
 export type Mutation = { operator: string; line: number; col: number; old: string; new: string };
-export type FnMut = { function: string; mutations: Mutation[] };
+export type FnMut = { function: string; mutations: Mutation[]; start?: number; end?: number; def_line?: number };
 
-export type Scenario = { kind: "repo"; name: string } | { kind: "github"; url: string } | { kind: "replay"; name: string } | null;
+export type Scenario = { kind: "repo"; name: string } | { kind: "github"; url: string } | { kind: "pr"; url: string } | { kind: "replay"; name: string } | null;
 export type Change =
   | { kind: "inject"; file: string; function: string; operator: string; line: number | null }
   | { kind: "edit"; file: string; text: string }
   | { kind: "task"; id: string; variant: "standard" | "hard" }
   | null;
+
+export const PR_RE = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+\/?$/;
+export const TESTED_PRS: { url: string; note: string }[] = [
+  { url: "https://github.com/tkem/cachetools/pull/424", note: "merged 2026-09-27; verified here 2026-10-12: 353 tests, about 28 s end to end" },
+];
 
 export const TESTED_EXAMPLES = [
   { url: "https://github.com/tkem/cachetools", note: "338 tests, installs in about 1 s" },
@@ -76,11 +81,11 @@ export function Picker({ repos, runs, live, reason, scenario, setScenario, chang
         {repos === null && live && <Empty>Loading repositories.</Empty>}
       </div>
       <div className="mt-3 grid gap-3 lg:grid-cols-2">
-        <div className={`rounded border px-3 py-2 ${scenario?.kind === "github" ? "border-accent bg-accent/10" : "border-rule bg-page"}`}>
-          <label className="ui block text-sm font-semibold" htmlFor="gh-url">Any public GitHub repo</label>
+        <div className={`rounded border px-3 py-2 ${scenario?.kind === "github" || scenario?.kind === "pr" ? "border-accent bg-accent/10" : "border-rule bg-page"}`}>
+          <label className="ui block text-sm font-semibold" htmlFor="gh-url">Any public GitHub repo, or a pull request</label>
           <div className="mt-1 flex gap-2">
-            <input id="gh-url" type="url" value={url} placeholder="https://github.com/owner/repo" disabled={disabled || !live}
-              onChange={(e) => { setUrl(e.target.value); setScenario(e.target.value.trim() ? { kind: "github", url: e.target.value.trim() } : null); setChange(null); }}
+            <input id="gh-url" type="url" value={url} placeholder="https://github.com/owner/repo  or  …/pull/123" disabled={disabled || !live}
+              onChange={(e) => { const v = e.target.value.trim(); setUrl(e.target.value); setScenario(!v ? null : PR_RE.test(v) ? { kind: "pr", url: v } : { kind: "github", url: v }); setChange(null); }}
               className="mono min-w-0 flex-1 px-2 py-1 text-sm disabled:opacity-40" />
           </div>
           <p className="ui m-0 mt-1 text-xs text-muted">Shallow clone, then <span className="mono">uv pip install -e .</span> (180 s cap). If it cannot be installed the run still ranks and graphs it, and says why tests did not run.</p>
@@ -88,6 +93,10 @@ export function Picker({ repos, runs, live, reason, scenario, setScenario, chang
             {TESTED_EXAMPLES.map((x, i) => (
               <span key={x.url}>{i ? " · " : ""}<button type="button" disabled={disabled || !live} className="mono text-blue underline disabled:opacity-40" title={x.note}
                 onClick={() => { setUrl(x.url); setScenario({ kind: "github", url: x.url }); setChange(null); }}>{x.url.replace("https://github.com/", "")}</button></span>
+            ))}
+            {TESTED_PRS.map((x) => (
+              <span key={x.url}> · <button type="button" disabled={disabled || !live} className="mono text-blue underline disabled:opacity-40" title={x.note}
+                onClick={() => { setUrl(x.url); setScenario({ kind: "pr", url: x.url }); setChange(null); }}>{x.url.replace("https://github.com/", "")}</button></span>
             ))}
           </p>
         </div>
@@ -108,6 +117,9 @@ export function Picker({ repos, runs, live, reason, scenario, setScenario, chang
       </div>
       {(scenario?.kind === "repo" || scenario?.kind === "github") && (
         <ChangePicker scenario={scenario} repo={repo} change={change} setChange={setChange} disabled={disabled} />
+      )}
+      {scenario?.kind === "pr" && (
+        <p className="ui m-0 mt-3 text-sm text-muted">Pull-request mode: the repository is cloned shallowly, <span className="mono">pull/&lt;n&gt;/head</span> is fetched, and the pull request&apos;s own diff (merge base to head) is the change. Python suites only; the 180 s install cap and the test timeouts apply. Nothing is posted to the pull request.</p>
       )}
       {scenario?.kind === "replay" && (
         <p className="ui m-0 mt-3 text-sm text-muted">This replays a recording of a real run, event by event, with its original timing. Nothing is computed in this session.</p>

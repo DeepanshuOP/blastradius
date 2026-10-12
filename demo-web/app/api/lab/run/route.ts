@@ -12,6 +12,7 @@ import { MODELS, OPERATORS, PREPARED, REPO_ROOT, SSE_HEADERS, fail, isLocal, kil
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const URL_RE = /^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+?)(\.git)?$/;
+const PR_RE = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+\/?$/;
 const MAX_RUN_MS = 15 * 60_000;
 
 export async function GET(req: Request) {
@@ -23,7 +24,8 @@ export async function GET(req: Request) {
 }
 
 type Body = {
-  repo?: string; url?: string; task?: string; variant?: "standard" | "hard";
+  repo?: string; url?: string; pr?: string; task?: string; variant?: "standard" | "hard";
+  probe?: { file: string; function: string };
   inject?: { file: string; function: string; operator: string; line?: number };
   edit?: { file: string; text: string }; model?: string; noLlm?: boolean; repairArena?: boolean;
 };
@@ -32,22 +34,33 @@ export async function POST(req: Request) {
   if (!isLocal(req)) return fail(403, "The lab only serves localhost.");
   let b: Body;
   try { b = await req.json(); } catch { return fail(400, "Body must be JSON."); }
-  const args: string[] = ["run", "--mode", "live"];
-  if (b.repo) {
+  let args: string[] = ["run", "--mode", "live"];
+  if (b.probe) {                          // suite strength: up to five mutants of one function, no model
+    if (!b.repo || !PREPARED.includes(b.repo)) return fail(400, `repo must be one of: ${PREPARED.join(", ")}`);
+    if (!safePath(b.probe.file) || !b.probe.file.endsWith(".py")) return fail(400, "probe.file must be a repository-relative .py path");
+    if (!/^[\w.<>]{1,120}$/.test(b.probe.function)) return fail(400, "Invalid function name.");
+    args = ["probe", "--repo", b.repo, "--file", b.probe.file, "--function", b.probe.function];
+  } else if (b.pr) {
+    if (!PR_RE.test(b.pr.trim())) return fail(400, "Only https://github.com/<owner>/<repo>/pull/<n> URLs are accepted.");
+    args.push("--pr", b.pr.trim());
+  } else if (b.repo) {
     if (!PREPARED.includes(b.repo)) return fail(400, `repo must be one of: ${PREPARED.join(", ")}`);
     args.push("--repo", b.repo);
   } else if (b.url) {
     if (!URL_RE.test(b.url.trim())) return fail(400, "Only https://github.com/<owner>/<repo> URLs are accepted.");
     args.push("--url", b.url.trim());
-  } else return fail(400, "Give repo or url.");
-  if (b.model) {
+  } else return fail(400, "Give repo, url or pr.");
+  if (b.model && !b.probe) {
     if (!MODELS.includes(b.model)) return fail(400, `model must be one of: ${MODELS.join(", ")}`);
     args.push("--model", b.model);
   }
-  if (b.noLlm) args.push("--no-llm");
+  if (b.probe) { /* no model, no flags */ }
+  else if (b.noLlm) args.push("--no-llm");
   else if (b.repairArena) args.push("--repair-arena");
   let tmp: string | null = null;
-  if (b.task) {
+  if (b.probe || b.pr) {
+    /* the change is the pull request itself, or the probe's own mutants */
+  } else if (b.task) {
     if (!safeName(b.task)) return fail(400, "Invalid task id.");
     args.push("--task", b.task, "--variant", b.variant === "hard" ? "hard" : "standard");
   } else if (b.inject) {
@@ -67,9 +80,9 @@ export async function POST(req: Request) {
 
   const st = lock();
   if (st.busy) { if (tmp) rmSync(tmp, { recursive: true, force: true }); return fail(409, "A lab run is already active.", st.what); }
-  st.busy = true; st.since = Date.now(); st.what = `${b.repo ?? b.url}: ${b.task ?? (b.inject ? "inject" : "edit")}`;
+  st.busy = true; st.since = Date.now(); st.what = b.probe ? `probe ${b.repo}: ${b.probe.function}` : b.pr ? `pull request ${b.pr}` : `${b.repo ?? b.url}: ${b.task ?? (b.inject ? "inject" : "edit")}`;
 
-  const { cmd, argv } = labCommand(args, !b.noLlm);
+  const { cmd, argv } = labCommand(args, !b.noLlm || Boolean(b.pr));
   const child = spawn(cmd, argv, { cwd: REPO_ROOT, env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1" }, detached: true });
   const enc = new TextEncoder();
   let done = false;

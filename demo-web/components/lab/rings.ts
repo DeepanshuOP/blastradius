@@ -84,14 +84,31 @@ export function ringLayout(nodes: GNode[], edges: GEdge[], seeds: string[]): Rin
     const slots: (GNode | null)[] = [];
     ns.forEach((n, i) => { if (i > 0 && ns[i - 1].file !== n.file) slots.push(null); slots.push(n); });
     if (ns.length > 1 && ns[0].file !== ns[ns.length - 1].file) slots.push(null);
+    // a crowded ring is split into bands (a ring of 300 nodes would otherwise dwarf the rings inside it);
     // a gap at twelve o'clock keeps the ring's label clear of its nodes
-    const r = Math.max(prev + RING_GAP, ((slots.length + 3) * SLOT) / (2 * Math.PI));
-    const gap = Math.min((3 * SLOT) / r, Math.PI / 2);
-    slots.forEach((n, i) => {
-      if (!n) return;
-      const a = -Math.PI / 2 + gap / 2 + ((2 * Math.PI - gap) * (i + 0.5)) / slots.length;
-      positions[n.id] = { x: r * Math.cos(a), y: r * Math.sin(a) };
+    const bands: (GNode | null)[][] = [];
+    let r = prev + RING_GAP, i0 = 0;
+    const radii: number[] = [];
+    while (i0 < slots.length) {
+      const cap = Math.max(8, Math.floor((2 * Math.PI * r) / SLOT) - 3);
+      const rest = slots.length - i0;
+      const take = bands.length === 0 && rest <= cap * 1.15 ? rest : Math.min(cap, rest);   // no band of a handful of nodes
+      bands.push(slots.slice(i0, i0 + take));
+      radii.push(r);
+      i0 += take;
+      r += SLOT * 1.4;
+    }
+    bands.forEach((band, b) => {
+      const rb = Math.max(radii[b], ((band.length + 3) * SLOT) / (2 * Math.PI));
+      radii[b] = rb;
+      const gap = Math.min((3 * SLOT) / rb, Math.PI / 2);
+      band.forEach((n, i) => {
+        if (!n) return;
+        const a = -Math.PI / 2 + gap / 2 + ((2 * Math.PI - gap) * (i + 0.5)) / band.length;
+        positions[n.id] = { x: rb * Math.cos(a), y: rb * Math.sin(a) };
+      });
     });
+    r = radii[radii.length - 1];
     rings.push({ index: k, radius: r, label: ringLabel(k, mode), count: ns.length });
     prev = r;
   }

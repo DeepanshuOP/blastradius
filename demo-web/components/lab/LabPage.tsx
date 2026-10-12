@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArenaPanel } from "./Arena";
+import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
 import { CodePanel } from "./CodePanel";
 import { BTN, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
@@ -128,6 +129,8 @@ export default function LabPage() {
   const [waveKey, setWaveKey] = useState(0);
   const [tab, setTab] = useState<TabId>("impact");
   const [presenting, setPresenting] = useState(false);
+  const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
+  const { probe, startProbe, clearProbe } = useProbe();
   const lastReplay = useRef<{ name: string; speed: number } | null>(null);
   const pinnedAt = useRef<Stage | null>(null);
   const graphRef = useRef<GraphHandle>(null);
@@ -170,7 +173,21 @@ export default function LabPage() {
   const q = avail.quota?.[model];
   const quotaReason = q && !q.ok ? `the daily token quota of ${model} is used up (${q.used.toLocaleString()} of ${q.cap.toLocaleString()} tokens in the last 24 h, E3 and lab ledgers together)${q.resume_after ? `; the next call is possible after ${q.resume_after.replace("T", " ")} UTC` : ""}` : "";
   const modelOk = avail.llm && !quotaReason;
-  const canRun = scenario !== null && (scenario.kind === "replay" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
+  const canRun = scenario !== null && (scenario.kind === "replay" || scenario.kind === "pr" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
+  const breakable = (n: GNode | undefined | null) => Boolean(n && n.type === "function" && repoName && avail.live && !s.running && !n.is_test_file);
+  /** Start a live run of `ch` on `sc` (the Run button, and the graph's "Inject a bug here" menu). */
+  const launch = useCallback((sc: NonNullable<Scenario>, ch: Change) => {
+    if (sc.kind === "replay") return;
+    lastReplay.current = null;
+    const body: Record<string, unknown> = { model, ...(sc.kind === "repo" ? { repo: sc.name } : sc.kind === "pr" ? { pr: sc.url } : { url: sc.url }) };
+    if (ch?.kind === "task") Object.assign(body, { task: ch.id, variant: ch.variant });
+    if (ch?.kind === "inject") body.inject = { file: ch.file, function: ch.function, operator: ch.operator, ...(ch.line ? { line: ch.line } : {}) };
+    if (ch?.kind === "edit") body.edit = { file: ch.file, text: ch.text };
+    if (!avail.llm) body.noLlm = true;
+    if (repairArena && modelOk) body.repairArena = true;
+    startLive(body);
+  }, [model, avail.llm, repairArena, modelOk, startLive]);
+
   const run = useCallback(() => {
     if (!scenario) return;
     if (scenario.kind === "replay") {
@@ -178,16 +195,9 @@ export default function LabPage() {
       startReplay(lastReplay.current.name, lastReplay.current.speed);
       return;
     }
-    lastReplay.current = null;
-    if (!change) return;
-    const body: Record<string, unknown> = { model, ...(scenario.kind === "repo" ? { repo: scenario.name } : { url: scenario.url }) };
-    if (change.kind === "task") Object.assign(body, { task: change.id, variant: change.variant });
-    if (change.kind === "inject") body.inject = { file: change.file, function: change.function, operator: change.operator, ...(change.line ? { line: change.line } : {}) };
-    if (change.kind === "edit") body.edit = { file: change.file, text: change.text };
-    if (!avail.llm) body.noLlm = true;
-    if (repairArena && modelOk) body.repairArena = true;
-    startLive(body);
-  }, [scenario, change, model, avail.llm, repairArena, modelOk, startLive, startReplay]);
+    if (scenario.kind !== "pr" && !change) return;
+    launch(scenario, change);
+  }, [scenario, change, launch, startReplay]);
 
   const graphFail = stageFailure(s, "graph");
   const counts = s.graph?.counts ?? g.runGraph?.counts;
@@ -243,11 +253,30 @@ export default function LabPage() {
               </div>
             )}
             <GraphView ref={graphRef} className="absolute inset-0" nodes={g.nodes} edges={g.edges} layout="rings"
-              changed={g.changed} waveKey={waveKey} paths={g.paths} atRisk={g.atRisk} outcomes={g.outcomes} selected={selected} onSelect={setSelected}
-              ariaLabel="Blast-radius graph"
+              changed={g.changed} waveKey={waveKey} paths={g.paths} atRisk={g.atRisk} outcomes={g.outcomes} selected={selected} onSelect={(id) => { setSelected(id); setCtx(null); }}
+              onContext={(id, x, y) => { const n = g.nodes.find((k) => k.id === id); if (breakable(n)) { setSelected(null); setCtx({ id, x, y }); } }}
+              ariaLabel="Blast-radius graph. Right-click, long-press or press the context-menu key on a function to inject a bug there"
               renderCard={(id, info) => sel && sel.id === id ? (
-                <NodeCard node={sel} nodes={g.nodes} edges={g.edges} repo={repoName} s={s} info={info} onClose={() => setSelected(null)} onSelect={(x) => { setSelected(x); graphRef.current?.center(x); }} />
+                <NodeCard node={sel} nodes={g.nodes} edges={g.edges} repo={repoName} s={s} info={info} onClose={() => setSelected(null)} onSelect={(x) => { setSelected(x); graphRef.current?.center(x); }}
+                  actions={breakable(sel) ? (<>
+                    <button type="button" className={BTN} onClick={() => { setCtx({ id: sel.id, x: 40, y: 40 }); setSelected(null); }}><Icon name="bug" />Inject a bug here</button>
+                    <button type="button" className={BTN} disabled={probe?.running} onClick={async () => {
+                      const r = await fetch(`/api/lab/mutations?repo=${repoName}&file=${encodeURIComponent(sel.file)}`).then((x) => x.json()).catch(() => null);
+                      const { matchFunction } = await import("./BreakIt");
+                      const fn = r ? matchFunction(sel, r.functions ?? []) : null;
+                      if (repoName && fn) startProbe(repoName, sel.file, fn.function);
+                    }}>Probe suite strength</button>
+                  </>) : undefined} />
               ) : null} />
+            {ctx && repoName && g.nodes.find((n) => n.id === ctx.id) && (
+              <InjectMenu node={g.nodes.find((n) => n.id === ctx.id)!} repo={repoName} x={ctx.x} y={ctx.y} disabled={s.running}
+                onClose={() => setCtx(null)}
+                onRun={(c) => {
+                  const sc: Scenario = { kind: "repo", name: repoName };
+                  const ch: Change = { kind: "inject", ...c };
+                  setCtx(null); setScenario(sc); setChange(ch); launch(sc, ch);
+                }} />
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-rule px-3 py-2">
             <GraphLegend outcomes={g.outcomes} />
@@ -273,6 +302,8 @@ export default function LabPage() {
         </Drawer>
       )}
 
+      <TestGapPanel s={s} />
+      {probe && <ProbePanel p={probe} onClose={clearProbe} />}
       <section ref={results} id="results" className="scroll-mt-16 rounded-md border border-rule bg-panel" aria-label="Results">
         <div className="flex flex-wrap items-center gap-1 border-b border-rule px-2 pt-2" role="tablist" aria-label="Result views">
           {RESULT_TABS.map((t) => (
