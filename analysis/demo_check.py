@@ -14,7 +14,11 @@ Checks, in order:
   10. the site structure: four tabs (Live Lab, Graph Explorer, Evidence, Use it), the four Evidence sections, footer;
   11. the Live Lab engine tests (`tests/test_lab.py`: stage order, streamed results, replay, injection, no writes);
   12. every recorded lab run validates against the event schema and replays identically through the CLI;
-  13. `/api/lab/*` smoke calls on a started server (localhost guard, repos, mutations, file, graph, replay, one run).
+  13. `/api/lab/*` smoke calls on a started server (localhost guard, repos, mutations, file, graph, replay, one run);
+  14. the strategy arena against a real recorded run, with hand-counted expected values (`tests/test_lab_arena.py`);
+  15. the sys.settrace coverage plugin on itsdangerous: identical function sets across two cold runs;
+  16. every presenter screen rendered from every recorded run (react-dom/server, offline, no browser);
+  17. the token ledgers are separate: the lab writes only `lab_usage.jsonl`, E3's `usage.jsonl` holds no lab row.
 
 Replays run against a scratch copy of `data/seeded` (BR_SEEDED_DIR) so they never queue behind a live E3 run's repo
 locks. No step can reach a model or the network: replay mode is forced and the keys are removed from the environment.
@@ -172,8 +176,63 @@ def check_structure() -> tuple[bool, str]:
 
 
 def check_lab_tests() -> tuple[bool, str]:
-    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab.py"], env=_env(replay=False))
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab.py", "tests/test_lab_breakit.py"],
+                  env=_env(replay=False))
     return rc == 0, last(out, 1)
+
+
+def check_arena() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k", "not coverage_plugin"],
+                  env=_env(replay=False))
+    return rc == 0, last(out, 1)
+
+
+def check_coverage_plugin() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k", "coverage_plugin"],
+                  env=_env(replay=False))
+    return rc == 0 and "skipped" not in out, last(out, 1)
+
+
+def check_presenter() -> tuple[bool, str]:
+    """Compile `demo-web/scripts/presenter_check.tsx` with the site's own TypeScript and render every screen of every
+    recording with react-dom/server."""
+    web = ROOT / "demo-web"
+    out_dir = Path(tempfile.mkdtemp(prefix="br-presenter-"))
+    try:
+        rc, out = run(["npx", "tsc", "--outDir", str(out_dir), "--rootDir", ".", "--module", "commonjs", "--moduleResolution", "node",
+                       "--jsx", "react-jsx", "--target", "es2020", "--esModuleInterop", "--skipLibCheck", "--resolveJsonModule",
+                       "--strict", "scripts/presenter_check.tsx"], cwd=web)
+        if rc != 0:
+            return False, "tsc: " + last(out, 2)
+        env = {**os.environ, "NODE_PATH": str(web / "node_modules")}
+        rc, out = run(["node", str(out_dir / "scripts" / "presenter_check.js"), str(web / "public" / "lab" / "runs")], cwd=web, env=env)
+    finally:
+        shutil.rmtree(out_dir, ignore_errors=True)
+    docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+    n = sum(len(d["screens"]) for d in docs)
+    bad = [f"{d['recording']}/{s['id']}: {s['problem']}" for d in docs for s in d["screens"] if not s["ok"]]
+    shown = sum(1 for d in docs for s in d["screens"] if s["state"] == "shown")
+    return rc == 0 and not bad and n > 0, (f"{len(docs)} recordings x 8 screens: {shown} shown, {n - shown} with a stated reason"
+                                           if not bad else "; ".join(bad[:3]))
+
+
+def check_ledger() -> tuple[bool, str]:
+    """The lab's calls are counted in its own ledger: the client defaults to it, the lab code never names E3's ledger,
+    no lab row sits in usage.jsonl, and the ledger tests pass."""
+    problems = []
+    lab = ROOT / "eval/llm_cache/lab_usage.jsonl"
+    e3 = ROOT / "eval/llm_cache/usage.jsonl"
+    lab_rows = set(lab.read_text(encoding="utf-8").splitlines()) if lab.exists() else set()
+    e3_rows = set(e3.read_text(encoding="utf-8").splitlines()) if e3.exists() else set()
+    if lab_rows & e3_rows:
+        problems.append(f"{len(lab_rows & e3_rows)} lab row(s) also in usage.jsonl")
+    for f in (ROOT / "src/lab").rglob("*.py"):
+        if "USAGE_LEDGER" in f.read_text(encoding="utf-8"):
+            problems.append(f"{f.relative_to(ROOT)} names USAGE_LEDGER")
+    rc, out = run(["uv", "run", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_ledger.py"], env=_env(replay=False))
+    if rc != 0:
+        problems.append("ledger tests: " + last(out, 1))
+    return not problems, (f"lab_usage.jsonl {len(lab_rows)} row(s), none in usage.jsonl; " + last(out, 1)) if not problems else "; ".join(problems[:3])
 
 
 def check_lab_runs() -> tuple[bool, str]:
@@ -211,6 +270,8 @@ def check_lab_api() -> tuple[bool, str]:
     port = 3217
     env = {**os.environ, "NEXT_TELEMETRY_DISABLED": "1"}
     env.pop("GROQ_API_KEY", None)
+    # the check's run must not add to the lab's failure-history store or coverage cache: give it its own temp root
+    env["TMPDIR"] = tempfile.mkdtemp(prefix="br-demo-check-")
     proc = subprocess.Popen(["npx", "next", "start", "-H", "127.0.0.1", "-p", str(port)], cwd=ROOT / "demo-web", env=env,
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
     base = f"http://127.0.0.1:{port}"
@@ -376,7 +437,20 @@ def check_numbers() -> tuple[bool, str]:
             _in(rq5, f"| {r['cell']} |", misses, f"L {r['mode']}")
     cost_md = (GEN / "cost_report.md").read_text(encoding="utf-8") if (GEN / "cost_report.md").exists() else ""
     cost_json = json.loads((GEN / "cost_report.json").read_text(encoding="utf-8")) if (GEN / "cost_report.json").exists() else None
-    if d["cost"] != cost_json:
+    # the Live Lab's ledger (D-65) is read by export_demo_data directly, so compare.json may carry it before the committed
+    # report is regenerated: those two keys are checked against the ledger itself, everything else against the report
+    lab_keys = ("lab_ledger", "lab")
+    if d["cost"] is not None and cost_json is not None:
+        from analysis import cost_report as cr
+
+        core = {k: v for k, v in d["cost"].items() if k not in lab_keys or k in cost_json}
+        if core != cost_json:
+            misses.append("panel 4: compare.json cost differs from paper/generated/cost_report.json")
+        if "lab_ledger" in d["cost"] and d["cost"]["lab_ledger"] != cr.ledger_summary(cr.LAB_LEDGER):
+            misses.append("panel 4: compare.json lab_ledger differs from eval/llm_cache/lab_usage.jsonl")
+        if "lab" in d["cost"] and d["cost"]["lab"] != cr.recorded_runs("lab"):
+            misses.append("panel 4: compare.json lab runs differ from eval/llm_cache/lab_*.jsonl")
+    elif d["cost"] != cost_json:
         misses.append("panel 4: compare.json cost differs from paper/generated/cost_report.json")
     if d["cost"]:
         for r in d["cost"]["e3"]:
@@ -403,9 +477,13 @@ def main() -> int:
              ("PR bot replay on the recorded task", None),
              ("every JSON file the website loads exists and parses", check_json),
              ("Compare panels 2 and 4 match their generated sources", check_numbers),
-             ("live lab engine tests (stage order, streaming, replay, injection, no writes)", check_lab_tests),
+             ("live lab engine tests (stage order, streaming, replay, injection, no writes, test gap, probe, PR)", check_lab_tests),
              ("recorded lab runs: schema-valid and replay identically", check_lab_runs),
-             ("/api/lab/* smoke calls on a started server", check_lab_api)]
+             ("/api/lab/* smoke calls on a started server", check_lab_api),
+             ("strategy arena against a recorded run, hand-counted values", check_arena),
+             ("coverage plugin on itsdangerous: same function sets in two runs", check_coverage_plugin),
+             ("presenter: every screen renders from every recording", check_presenter),
+             ("token ledgers separated (lab_usage.jsonl vs usage.jsonl)", check_ledger)]
     try:
         for name, fn in steps:
             t0 = time.time()

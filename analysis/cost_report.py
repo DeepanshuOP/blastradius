@@ -150,7 +150,7 @@ def render(doc: dict) -> str:
     for title, key in (("PR bot: recorded runs", "bot"), ("Ask: recorded questions", "ask"),
                        ("Live Lab: cached replies (D-65, not E3)", "lab")):
         rr = [[r["model"], r["calls"], f"{r['prompt_tokens']:,}", f"{r['completion_tokens']:,}",
-               _n(r["tokens_per_call"]), _n(r["usd_list_per_call"], 5), r["file"]] for r in doc[key]]
+               _n(r["tokens_per_call"]), _n(r["usd_list_per_call"], 5), r["file"]] for r in doc.get(key, [])]
         text += (f"\n## {title}\n\n" + paper_md.table(
             ["model", "model calls", "input tokens", "output tokens", "tokens / call", "USD at list / call", "cache file"], rr)
             if rr else f"\n## {title}\n\nNone recorded.\n")

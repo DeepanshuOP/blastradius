@@ -208,26 +208,35 @@ const SCREENS: Screen[] = [
   },
   {
     id: "repair", title: "Repair",
-    ready: (s) => s.repair.chunks.length > 0, done: (s) => Boolean(s.validate.verdict),
+    ready: (s) => s.repair.chunks.length > 0, done: (s) => Boolean(s.validate.verdict) || Boolean(s.repair.unavailable),
     absent: (s) => s.repair.unavailable ? `The model was unavailable (${s.repair.unavailable.kind}): ${s.repair.unavailable.reason}` : s.repair.skipped ? `Repair did not run: ${s.repair.skipped}` : null,
     caption: () => "The model sees only the few functions the change touched, writes a patch, and the patch counts only if all five checks pass, the full test suite among them.",
-    real: (s) => `${mode(s)}: the context, the model's reply and its token count are from this run${s.repair.replies.some((r) => r.from_cache) ? " (the reply was answered from the lab cache)" : ""}; the five checks were executed, not simulated.`,
+    real: (s) => s.repair.unavailable
+      ? `${mode(s)}: the context was chosen in this run; the model was not called (${s.repair.unavailable.kind}), so no patch and no checks exist for this run.`
+      : `${mode(s)}: the context, the model's reply and its token count are from this run${s.repair.replies.some((r) => r.from_cache) ? " (the reply was answered from the lab cache)" : ""}; the five checks were executed, not simulated.`,
     render: (s) => {
       const attempt = Math.max(1, ...s.validate.checks.map((c) => c.attempt));
+      const un = s.repair.unavailable;
       const pf = parseDiff(String(s.repair.patch?.diff ?? ""))[0];
       const lines = pf ? dedent(pf.lines.filter((l) => l.kind === "add" || l.kind === "del")).slice(0, 10) : [];
       return (
         <div className="grid h-full grid-cols-3 gap-6">
           <div className="min-w-0"><p className="ui m-0 mb-3 text-xl font-semibold">1 · Context</p>
             <ul className="m-0 list-none space-y-3 p-0">{s.repair.chunks.map((c) => <li key={`${c.file}${c.qualname}`} className="rounded border border-rule bg-page p-3"><Id id={c.qualname} n={28} className="text-lg" /><span className="ui block text-base text-muted">{midEllipsis(String(c.why), 70)}</span></li>)}</ul>
-            <p className="ui m-0 mt-3 text-lg text-muted"><span className="num mono text-ink">{s.tokens.total.toLocaleString()}</span> tokens</p>
+            {!un && <p className="ui m-0 mt-3 text-lg text-muted"><span className="num mono text-ink">{s.tokens.total.toLocaleString()}</span> tokens</p>}
           </div>
           <div className="min-w-0"><p className="ui m-0 mb-3 text-xl font-semibold">2 · Patch</p>
-            {pf ? <div className="mono overflow-hidden rounded border border-rule bg-page py-3 text-base leading-[28px]"><p className="m-0 mb-2 px-3 text-sm text-muted">{pf.path}</p>{lines.map((l, k) => <div key={k} className={`flex ${l.kind === "add" ? "bg-green/20" : "bg-red/20"}`}><span className="num w-12 shrink-0 pr-2 text-right text-muted">{l.new ?? l.old}</span><span className={`w-5 shrink-0 text-center ${l.kind === "add" ? "text-green" : "text-red"}`}>{l.kind === "add" ? "+" : "−"}</span><span className="overflow-hidden text-ellipsis whitespace-pre pr-3">{l.text}</span></div>)}</div>
+            {un ? <p className="ui text-lg text-muted">no patch: the model was not called</p> : pf ? <div className="mono overflow-hidden rounded border border-rule bg-page py-3 text-base leading-[28px]"><p className="m-0 mb-2 px-3 text-sm text-muted">{pf.path}</p>{lines.map((l, k) => <div key={k} className={`flex ${l.kind === "add" ? "bg-green/20" : "bg-red/20"}`}><span className="num w-12 shrink-0 pr-2 text-right text-muted">{l.new ?? l.old}</span><span className={`w-5 shrink-0 text-center ${l.kind === "add" ? "text-green" : "text-red"}`}>{l.kind === "add" ? "+" : "−"}</span><span className="overflow-hidden text-ellipsis whitespace-pre pr-3">{l.text}</span></div>)}</div>
               : <p className="ui text-lg text-muted">{s.running ? "waiting for the model…" : "no applicable patch"}</p>}
           </div>
           <div className="min-w-0"><p className="ui m-0 mb-3 text-xl font-semibold">3 · Five checks</p>
-            <CheckList checks={s.validate.checks} attempt={attempt} large />
+            {un ? (
+              <div className="rounded-md border border-amber p-4" role="status">
+                <p className="ui m-0 flex items-center gap-2 text-xl font-semibold text-amber"><Icon name="warn" />The model is unavailable</p>
+                <p className="ui m-0 mt-2 text-lg">{un.reason}.</p>
+                <p className="ui m-0 mt-2 text-base text-muted">Nothing was retried. The recorded run &quot;Seeded task: one swapped operator&quot; shows this step end to end.</p>
+              </div>
+            ) : <CheckList checks={s.validate.checks} attempt={attempt} large />}
           </div>
         </div>
       );
@@ -236,18 +245,22 @@ const SCREENS: Screen[] = [
   {
     id: "verdict", title: "Verdict and PR comment",
     ready: (s) => Boolean(s.report.comment), done: (s) => Boolean(s.report.comment),
-    caption: (s) => gapOf(s) ? "A known bug went straight through: every test passed. That is a gap in the tests, found here before a user finds it." : s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it on the pull request, with all the evidence attached." : "No fix was accepted, so the bot reports the risk and the triage, and suggests nothing it could not prove.",
-    real: (s) => `${mode(s)}: this is the exact comment text the PR bot rendered in this run. Nothing was posted anywhere.`,
+    caption: (s) => gapOf(s) ? "A known bug went straight through: every test passed. That is a gap in the tests, found here before a user finds it." : s.repair.unavailable ? "No fix this time: the model could not be called. The bot still reports the risk, the results and the triage." : s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it on the pull request, with all the evidence attached." : "No fix was accepted, so the bot reports the risk and the triage, and suggests nothing it could not prove.",
+    real: (s) => gapOf(s)
+      ? `${mode(s)}: the mutation was committed in a scratch copy and the full suite ran against it; the tests named were measured by per-test coverage at the base commit and by the code graph.`
+      : `${mode(s)}: this is the exact comment text the PR bot rendered in this run. Nothing was posted anywhere.`,
     render: (s) => {
       if (gapOf(s)) return <div className="flex h-full flex-col justify-center"><TestGapPanel s={s} large /></div>;
       const v = s.validate.verdict;
       const ok = v?.accepted === true && v.status === "ok";
+      const un = s.repair.unavailable;
+      const failed = Number(s.tests.done?.counts?.failed ?? 0) + Number(s.tests.done?.counts?.error ?? 0);
       return (
         <div className="grid h-full grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8">
           <div className="flex flex-col justify-center">
-            <p className={`ui m-0 flex items-center gap-3 text-2xl font-semibold ${ok ? "text-green" : "text-ink"}`}><Icon name={ok ? "check" : "minus"} />{ok ? "Accepted" : v?.status === "skipped" ? "Nothing to repair" : "Not accepted"}</p>
-            <p className="ui m-0 mt-3 text-xl text-muted">{ok ? "The full suite passed with the patch." : v?.note ?? v?.reason ?? "No patch was proposed."}</p>
-            {s.tests.done?.counts && <p className="num mono m-0 mt-6 text-xl">{s.tests.done.counts.total} tests · {s.tests.done.counts.failed} failed before the fix</p>}
+            <p className={`ui m-0 flex items-center gap-3 text-2xl font-semibold ${ok ? "text-green" : un ? "text-amber" : "text-ink"}`}><Icon name={ok ? "check" : un ? "warn" : "minus"} />{ok ? "Accepted" : un ? "Not repaired" : failed === 0 ? "Nothing to repair" : "Not accepted"}</p>
+            <p className="ui m-0 mt-3 text-xl text-muted">{ok ? "The full suite passed with the patch." : un ? `The model was unavailable (${un.kind}); no patch was attempted.` : failed === 0 ? "No test failed." : v?.note ?? v?.reason ?? "No patch was proposed."}</p>
+            {s.tests.done?.counts && <p className="num mono m-0 mt-6 text-xl">{s.tests.done.counts.total} tests · {failed} failed{ok ? " before the fix" : ""}</p>}
           </div>
           <div className="relative min-h-0 overflow-hidden">
             <MarkdownLite text={s.report.comment ?? ""} className="h-full overflow-hidden text-base" />
@@ -284,6 +297,23 @@ function EvidenceSlide() {
 
 const DWELL = 7000;
 
+/** Why a screen shows nothing once the run is over (null while it can still arrive, or when it is ready). */
+export function absentReason(sc: Screen, s: LabState): string | null {
+  return !sc.ready(s) && !s.running ? (sc.absent?.(s) ?? "This stage produced nothing in this run.") : null;
+}
+
+/** One screen's body: the screen when its events have arrived, why it is empty after the run, or "running…". */
+export function ScreenBody({ s, g, i, enterKey = 1 }: { s: LabState; g: G; i: number; enterKey?: number }) {
+  const sc = SCREENS[i];
+  const absent = absentReason(sc, s);
+  if (sc.ready(s)) return <>{sc.render(s, g, enterKey)}</>;
+  if (absent) return <div className="grid h-full place-items-center"><p className="ui m-0 max-w-3xl text-center text-2xl text-muted">{absent}</p></div>;
+  return <Running s={s} what={s.running ? `waiting for the ${sc.title.toLowerCase()} stage` : "waiting for a run to start"} />;
+}
+
+export { SCREENS };
+export type { G as PresenterGraph };
+
 /** Full-screen, projector-sized walkthrough of the current or replayed run: one stage per screen. */
 export function Presenter({ s, g, onClose, onRestart }: { s: LabState; g: G; onClose: () => void; onRestart: () => void }) {
   const root = useRef<HTMLDivElement>(null);
@@ -304,7 +334,7 @@ export function Presenter({ s, g, onClose, onRestart }: { s: LabState; g: G; onC
 
   // autoplay: a screen moves on once everything it shows has arrived and the reader had time to read it
   const ready = sc.ready(s), done = sc.done(s);
-  const absent = !ready && !s.running ? (sc.absent?.(s) ?? "This stage produced nothing in this run.") : null;
+  const absent = absentReason(sc, s);
   useEffect(() => {
     if (!playing || i >= SCREENS.length - 1 || !(done || absent)) return;
     const t = window.setTimeout(() => go(i + 1), absent ? 2500 : DWELL);
@@ -344,9 +374,7 @@ export function Presenter({ s, g, onClose, onRestart }: { s: LabState; g: G; onC
         </div>
       </header>
       <main className="min-h-0 flex-1 px-10 pb-4 pt-8">
-        {ready ? sc.render(s, g, enterKey) : absent ? (
-          <div className="grid h-full place-items-center"><p className="ui m-0 max-w-3xl text-center text-2xl text-muted">{absent}</p></div>
-        ) : <Running s={s} what={s.running ? `waiting for the ${sc.title.toLowerCase()} stage` : "waiting for a run to start"} />}
+        <ScreenBody s={s} g={g} i={i} enterKey={enterKey} />
       </main>
       <footer className="shrink-0 border-t border-rule px-10 py-4">
         <p className="ui m-0 text-xl leading-snug">{sc.caption(s)}</p>
@@ -357,4 +385,3 @@ export function Presenter({ s, g, onClose, onRestart }: { s: LabState; g: G; onC
   );
 }
 
-export const PRESENTER_SCREENS = SCREENS.map((x) => x.id);

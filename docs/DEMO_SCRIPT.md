@@ -1,112 +1,126 @@
-# Demo script: 7 minutes, live, in front of the review panel
+# Demo script: 8 minutes, live, in front of the review panel
 
 The home page is the **Live Lab**: a working simulation of the whole system. Everything in it is real execution shown as it
 happens, or an honest replay of a recorded run (the badge at top left says which: green LIVE, amber REPLAY with the recording date).
-The research results sit under **Evidence**; nothing was removed.
+The talk is given from **presenter mode** (the Present button): one stage per screen, projector-sized, with a plain-English
+caption and a "what is real here" footnote on every screen. The research results sit under **Evidence**; nothing was removed.
 
 ## Before you go in (5 minutes, once)
 
-1. `make demo-check` the day before. It prints PASS or FAIL per check and needs no network; the last three checks cover the lab
-   (engine tests, recorded runs, `/api/lab/*` on a started server).
-2. `make demo-web` (builds and serves http://127.0.0.1:3000, localhost only). Open it and look at the badge: **READY · live
-   available** means the Python side is reachable; **READY · replay only** means this is a static build, and the picker says why.
-3. Check the model line under the top bar. If it says the key is missing or the daily quota is used up, live runs still go through
-   graph, prediction, tests and triage; the Repair studio then says "unavailable" and you switch to the recorded run for that
-   step (see Fallbacks). `python -m src.lab status` prints whether a key exists; it does not print the key.
-4. Do one dry run of the flow below so the first run on stage is not the first run of the day (the graph of a repository is
-   built once and cached).
+1. `make demo-check` the day before. It prints PASS or FAIL per check and needs no network. The last seven cover the lab: engine
+   tests (stage order, test gap, probe, PR mode), recorded runs, `/api/lab/*` on a started server, the strategy arena against a
+   recorded run, the coverage plugin, every presenter screen from every recording, and the separate token ledgers.
+2. `make demo-web` (builds and serves http://127.0.0.1:3000, localhost only). The badge should read **READY · live available**.
+3. Check the model line under the top bar. `uv run --env-file .env python -m src.lab quota --need 4000` prints the rolling 24 h
+   total of E3's ledger and the lab's ledger together against the daily cap. If the line under the top bar says the quota is used
+   up, live runs still go through graph, prediction, tests, arena and triage, and the repair step says "unavailable"; use the
+   recorded runs for that step (see Fallbacks).
+4. Do one dry run of the flow so the first run on stage is not the first run of the day: the graph and the per-test coverage of a
+   repository are built once and cached (coverage of itsdangerous takes about 2 s the first time).
 
-## The flow (7 minutes)
+## The flow (8 minutes)
 
 | min | what | where |
 |---|---|---|
-| 0:00 | Pick itsdangerous | Step 1, repository cards: the graph appears in the centre panel |
-| 0:45 | Inject a bug in front of the panel | Step 2, "Inject a bug" |
-| 1:45 | Graph wave | centre panel, the moment the run starts |
-| 2:30 | Test race against retest-all | panel "Test race" |
-| 3:30 | Triage | panel "Triage" |
-| 4:30 | Live repair and validation | panel "Repair studio" |
-| 5:45 | Jenkins stage view | pipeline rail |
-| 6:15 | Evidence for the numbers | Evidence tab |
+| 0:00 | Pick itsdangerous; a panel member chooses a function in the graph | Scenario cards, then right-click a function node |
+| 1:00 | Run the injected bug, open **Present** | top bar |
+| 1:15 | The change and the blast radius | presenter screens 1 and 2 |
+| 2:15 | Test race | presenter screen 3 |
+| 3:00 | Strategy arena: how others choose tests, against ours | presenter screen 4 |
+| 4:15 | Triage, then live repair and the five checks | presenter screens 5 and 6 |
+| 5:30 | The test-gap example | recorded run "Test gap", presenter screen 7 |
+| 6:45 | Evidence, and close | presenter screen 8 |
 
-### 1. Pick itsdangerous (0:45)
+### 1. A panel member chooses the function (1:00)
 
-**Click.** The itsdangerous card. Point at the graph that appears: files, classes, functions and tests, coloured by type.
-The line under it says how many nodes, edges and parse failures the builder reported.
+**Click.** The itsdangerous card. The graph appears in rings by node type (no change yet). Ask a panel member to name a function,
+or point at `TimestampSigner.unsign` in `timed.py`. Right-click it (long-press on a touch screen; on the keyboard, focus the graph,
+arrow to the node, Shift+F10). The menu lists the real mutation operators for that function with a diff preview. A good choice
+for a visible result is `NEGATE_COND L141` (`if age > max_age:` becomes `if not (age > max_age):`). Press **Run this bug**, then
+**Present**.
 
-**Say.** "This is a real Python library, 15 source files and a 297-case test suite. The graph is built by our own builder at a pinned
-commit, not drawn by hand; the counts under it come from that build."
+**Say.** "You chose the function; the operators come from the source, not from a script. The change is committed in a scratch copy
+of a real library, 15 source files and a 297-case test suite."
 
-### 2. Inject a bug (1:00)
+### 2. The change and the blast radius (1:00)
 
-**Click.** "Inject a bug", file `src/itsdangerous/timed.py`, function `TimestampSigner.unsign`, operator `ARITH_SWAP` (line 139:
-`age = self.get_timestamp() - ts_int` becomes `+`). The side-by-side preview shows exactly what will be committed. Press **Run**.
+**Watch.** Screen 1: the edit on the left, the changed function at the centre of the graph on the right. Screen 2: the shockwave
+sweeps out ring by ring (1, 2, 3, 4 or more hops), the paths to the at-risk test files light up, and the four most at-risk files
+are listed with their three strongest reasons. In live mode a screen holds and shows "running…" until its stage has finished.
 
-**Say.** "I am choosing a real function and a real mutation operator from the list the tool derives from the source, so this is the
-same kind of change our seeded benchmark makes. Nothing is scripted: the change is committed in a scratch copy of the repository."
+**Say.** "The rings are hop distances in our own code graph of this commit. The ranking and its reasons are the E1 model's."
 
-### 3. The wave (0:45)
+### 3. The test race (0:45)
 
-**Watch.** Orange rings expand from the changed function through the graph, hop by hop, then the event log fills.
+**Watch.** Two lanes fill left to right: retest-all in alphabetical order on top, BlastRadius risk-first below, with the first
+failure marked in each and the time saved underneath.
 
-**Say.** "The rings are the blast radius: how far the change can reach in the code graph. The ranking next to it is the E1 model's,
-with its top three reasons per test file."
+**Say.** "Both lanes are this one run. The bottom lane is the order pytest actually ran. The top lane is computed from the same
+measured durations in alphabetical order; we did not run it twice, and the footnote says so. On the rehearsal run of the PR 1
+change (`if age > max_age` flipped to `<`), the first failure came at test 127 risk-first against 283 alphabetical. Read the numbers
+off the screen; they depend on the change."
 
-### 4. The race (1:00)
+### 4. The strategy arena (1:15)
 
-**Point at.** The two lanes under "Test race". Each tick is one test case, green or red.
+**Watch.** Screen 4: one row per strategy, each re-implemented here and scored on this run's full-suite results: retest-all,
+static reachability (STARTS-style), per-test coverage (the approach Datadog TIA documents), failure history (Develocity /
+Meta-style), co-change, and BlastRadius. Columns: tests run, failures caught, first failure, CI time. The caption is the takeaway
+sentence, generated from the numbers.
 
-**Say.** "Both lanes are this one run. The bottom lane is the order pytest actually ran, at-risk files first. The top lane is what a
-retest-all job does, alphabetical order; we did not run it separately, we computed it from the durations we measured in this run, and
-the panel says so. On the rehearsal run the first failure was at position 127 of 297 risk-first and 283 alphabetical; read the numbers
-off the screen, they depend on the machine."
+**Say.** "None of these is the vendor's product, and none was run separately: each is computed from this run's measured results.
+On the rehearsal of the PR 1 change, BlastRadius ran all 297 tests, because the ranker marked all six test files at risk, and caught
+5 of 5 failures with the first at test 127; per-test coverage ran 97 tests (33%) and caught all 5. Failure history shows 'cold
+start: no history' on a fresh repository: that is the honest point, and it matches BR-Bench, where history is the strongest signal
+once it exists. Co-change has no history here: the prepared repositories are pinned one-commit snapshots, and the row says so."
 
-### 5. Triage (1:00)
+### 5. Triage, live repair and validation (1:15)
 
-**Point at.** The three columns. Open one card.
+**Watch.** Screen 5: mine, inherited and flaky, with base and head outcomes. Screen 6: the context chunks, then the patch, then the
+five checks ticking: patch applies, syntax compiles, previously failing tests pass, **full suite passes**, no edits outside the
+allowed files.
 
-**Say.** "Every failing test was re-run on the base commit. All five are 'mine': they passed before the change. If a test had already
-been failing it would sit in 'inherited' and nobody should be paged for it. Counts are per unique test id; where one test method is
-inherited by several subclasses the panel states how many cases that is."
+**Say.** "Every failing test was re-run on the base commit; a test that already failed there is inherited and nobody is paged for
+it. The model sees at most three functions; a patch is accepted only after the full suite passes, and the checks are the evidence.
+This is about 1,500 tokens."
 
-### 6. Repair and validation (1:15)
+### 6. The test gap (1:15)
 
-**Point at.** The context chunks and why each was chosen, the token count, then the five checks ticking: patch applies, syntax
-compiles, previously failing tests pass, **full suite passes**, no edits outside the allowed files. Open "Show the model's reply".
+**Click.** Esc, Reset, pick the recorded run **"Test gap: a real bug the whole suite lets through"**, Run, Present, go to screen 7
+(or run it live: inject `CMP_FLIP L141` in `TimestampSigner.unsign`; it needs no model and takes about 8 s).
 
-**Say.** "The model sees at most three functions: those the diff touches, ranked against the failure output. A patch is shown as
-accepted only after the full suite passes with it, and the check list is the evidence. This is about 1,500 tokens."
+**Say.** "This change flips `>` to `>=` on line 141. All 297 tests pass. The panel names the tests that execute this function and
+the test files that reach it in the graph: none of them tells the two versions of this line apart. Nobody had to write a bug report
+for us to find that."
 
-### 7. Jenkins stage view (0:30)
+### 7. Evidence (0:45)
 
-**Click.** "Show as Jenkins stage view", then "Jenkinsfile".
+**Watch.** Screen 8: the four BR-Bench results, each with the file it was read from.
 
-**Say.** "This is the same run laid out the way Jenkins draws a pipeline. No Jenkins server was involved, and the Jenkinsfile is an
-example we have not deployed; the point is that these are stages you add to the job you already have."
-
-### 8. Evidence (0:45)
-
-**Click.** Evidence tab. Read the four cards at the top, each with its source file.
-
-**Say.** "None of the numbers on this tab come from the live run. Gate 3 is not met: the ranker is not significantly better than the
-best baseline, and we report that. The repair result is the pre-registered one: R2 against R1, exact McNemar."
+**Say.** "None of these numbers comes from the live run. RQ1: co-change recovers 4.64% of failing test files at k = 10, failure
+history 39.44%. Gate 3 is not met: the ranker is not significantly better than the best baseline, and we report that. The repair
+result is the pre-registered one: R2 against R1, exact McNemar."
 
 ## Fallbacks
 
 | problem | what you see | what to do |
 |---|---|---|
-| No network (clone, model) | prepared repositories still run; the model call fails | Run as usual. The Repair studio shows "model unavailable (network)" and **nothing was retried**. Pick the recorded run "Seeded task: one swapped operator, fixed and validated" and press Run to show the repair step. |
-| Quota exhausted | Repair studio: "daily token quota is used up (next call possible after ...)" | Same as above. The recorded run is labelled REPLAY with its date. |
-| A test run hangs | the Tests stage stays running; each pytest process has a timeout (300 s by default) | Press **Reset**: the server kills the whole process group. Use the recorded run. |
-| Static build, no server | badge "READY · replay only" with the reason | Recorded runs replay in the browser, with their original timing. Add `?speed=2` to the URL to play faster. |
-| Anything looks wrong | | Open **Integrity** (top bar): commands, SHAs, model and temperature, cache file, what was live and what was recorded. |
+| Quota exhausted | top line: "Repair is unavailable: the daily token quota of … is used up"; the repair-arena toggle is disabled with that reason | Run as usual: graph, prediction, tests, arena and triage are live. For screen 6 pick the recorded run "Seeded task: one swapped operator, fixed and validated" (REPLAY, with its date). |
+| No network (clone, model) | prepared repositories still run; the model call fails | Same as above. The Repair tab shows "model unavailable (network)"; nothing was retried. |
+| A test run hangs | the Tests stage stays running; each pytest process has a timeout (300 s by default) | Press **Reset**: the server kills the whole process group. Use a recorded run. |
+| Static build, no server | badge "READY · replay only" with the reason | Recorded runs replay in the browser, with their original timing; `?speed=2` plays faster. Presenter mode works on a replay. |
+| Anything looks wrong | | Open **Integrity** (top bar or the last result tab): commands, SHAs, model and temperature, cache and ledger files, what was live and what was recorded. |
+
+The model recordings of `make lab-record` (`itsdangerous-pr1`, `inherited-failure`, `hard-decoys`, `repair-arena`) are made when the
+quota allows; `make lab-record` checks first and stops if 16,000 more tokens do not fit under the cap.
 
 ## "Jenkins can do this" in three lines
 
-1. "Jenkins runs the stages, and it will run all of them: it reports every red test in alphabetical order. That is the top lane."
-2. "BlastRadius decides the order (the bottom lane), tells you whose failure each one is (mine, inherited, flaky), and proposes a fix it
-   has already verified on the full suite. Those three are the columns Jenkins does not have."
-3. "It sits inside Jenkins as stages; you keep your job, your agents and your reports."
+1. "Jenkins runs every test in a fixed order and reports every red one: that is the **Retest-all** row of the arena, first failure
+   at its alphabetical position, 100% of the suite every time."
+2. "The arena puts that row next to static reachability, per-test coverage, failure history, co-change and ours, on the same
+   change and the same measured results, so you can see what each one buys and what it misses."
+3. "BlastRadius adds the order, whose failure each one is, and a fix it has verified on the full suite, as stages inside the
+   Jenkins job you already have."
 
 ## Likely panel questions
 

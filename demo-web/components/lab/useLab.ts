@@ -15,7 +15,7 @@ export const initialState: LabState = {
 
 type Action = { t: "reset" } | { t: "start"; mode: "live" | "replay" } | { t: "events"; evs: LabEvent[] } | { t: "end"; error?: string } | { t: "tick" };
 
-function apply(s: LabState, ev: LabEvent): LabState {
+export function applyEvent(s: LabState, ev: LabEvent): LabState {
   const d = ev.data;
   const stage = ev.stage === "meta" ? s.stage : {
     ...s.stage,
@@ -65,7 +65,7 @@ function reducer(s: LabState, a: Action): LabState {
   switch (a.t) {
     case "reset": return initialState;
     case "start": return { ...initialState, mode: a.mode, running: true, startedAt: Date.now() };
-    case "events": return a.evs.reduce(apply, s);
+    case "events": return a.evs.reduce(applyEvent, s);
     case "end": return { ...s, running: false, error: a.error ?? s.error };
     case "tick": return s.running && s.startedAt ? { ...s, elapsedMs: Date.now() - s.startedAt } : s;
   }
