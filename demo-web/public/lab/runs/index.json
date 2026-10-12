@@ -8,6 +8,38 @@
   "description": "A harmless comment edit in itsdangerous. BlastRadius ranks, runs the suite, finds no failure and does not call the model."
  },
  {
+  "name": "hard-decoys",
+  "date": "2026-10-12T16:52:14.620+00:00",
+  "model": "openai/gpt-oss-120b",
+  "git_sha": "190e467873",
+  "title": "Hard variant: decoy edits beside the bug",
+  "description": "A hard-variant seeded task: the bug plus decoy edits (comments, parentheses) in the diff."
+ },
+ {
+  "name": "inherited-failure",
+  "date": "2026-10-12T16:52:03.988+00:00",
+  "model": "openai/gpt-oss-120b",
+  "git_sha": "190e467873",
+  "title": "Inherited failure plus a real bug",
+  "description": "Scratch repository whose base commit already fails test_known_sku_price; the change adds a real bug. One failure is inherited, the others mine; repair targets only the mine ones."
+ },
+ {
+  "name": "itsdangerous-pr1",
+  "date": "2026-10-12T16:51:48.310+00:00",
+  "model": "openai/gpt-oss-120b",
+  "git_sha": "190e467873",
+  "title": "PR 1: one comparison flipped in TimestampSigner.unsign",
+  "description": "The live PR 1 change (if age > max_age becomes if age < max_age), from detection to a validated fix."
+ },
+ {
+  "name": "repair-arena",
+  "date": "2026-10-12T16:52:34.974+00:00",
+  "model": "openai/gpt-oss-120b",
+  "git_sha": "190e467873",
+  "title": "Repair arena on the PR 1 change: R1, R2 and an unvalidated push",
+  "description": "The PR 1 change with one extra model call: R1 sees only the failure log, R2 also sees the change; the third column is the R1 patch pushed without running the full suite."
+ },
+ {
   "name": "seeded-arith-swap",
   "date": "2026-10-12T05:12:09.301+00:00",
   "model": "openai/gpt-oss-20b",
@@ -17,9 +49,9 @@
  },
  {
   "name": "test-gap",
-  "date": "2026-10-12T12:07:14.530+00:00",
+  "date": "2026-10-12T16:51:41.035+00:00",
   "model": null,
-  "git_sha": "e040c66bb9",
+  "git_sha": "190e467873",
   "title": "Test gap: a real bug the whole suite lets through",
   "description": "CMP_FLIP on timed.py:141 (if age > max_age becomes if age >= max_age). All 297 tests pass; the lab names the tests that run the line. No model call."
  }
