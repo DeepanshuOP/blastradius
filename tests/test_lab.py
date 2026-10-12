@@ -55,6 +55,10 @@ def seeded_copy():
     mp = pytest.MonkeyPatch()
     mp.setattr(workspace, "REPOS", d / "repos")
     mp.setattr(workspace, "VENVS", d / "venvs")
+    from src.lab import arena                      # the arena's history and coverage cache go to a throw-away directory
+    state = Path(workspace.new_scratch("arena-state"))
+    mp.setattr(arena, "HISTORY_DIR", state / "history")
+    mp.setattr(arena, "COVERAGE_DIR", state / "coverage")
     before = tree_hash(d)
     try:
         yield d, before

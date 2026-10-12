@@ -57,10 +57,10 @@ export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean 
                 <span className={`ui block ${S} text-muted`}>{x.status === "ok" ? x.what : x.note}</span>
               </td>
               {!large && <td className={`ui pr-4 ${S} text-muted`}>{x.source}</td>}
-              <td className="num mono pr-4 text-right">{x.status === "unavailable" ? "–" : <>{x.selected}<span className="text-muted"> · {x.pct.toFixed(0)}%</span></>}</td>
-              <td className="num mono pr-4 text-right">{x.status === "unavailable" ? "–" : a.n_failing === 0 ? "no failures" : <>{x.caught}/{a.n_failing}<span className="text-muted"> · {pct(x.recall)}</span></>}</td>
-              <td className="num mono pr-4 text-right">{x.first_failure_position ? <>#{x.first_failure_position}<span className="text-muted"> · {fmtMs(x.first_failure_ms)}</span></> : "–"}</td>
-              <td className="num mono pr-4 text-right">{x.status === "unavailable" ? "–" : fmtMs(x.ci_ms)}</td>
+              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : <>{x.selected}<span className="text-muted"> · {x.pct.toFixed(0)}%</span></>}</td>
+              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : a.n_failing === 0 ? "no failures" : <>{x.caught}/{a.n_failing}<span className="text-muted"> · {pct(x.recall)}</span></>}</td>
+              <td className="num mono whitespace-nowrap pr-4 text-right">{x.first_failure_position ? <>#{x.first_failure_position}<span className="text-muted"> · {fmtMs(x.first_failure_ms)}</span></> : "–"}</td>
+              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" || x.selected === 0 ? "–" : fmtMs(x.ci_ms)}</td>
               {!large && <td className={`${S}`}>{x.status !== "ok" || a.n_failing === 0 ? "–" : x.missed.length === 0 ? <span className="flex items-center gap-1 text-green"><Icon name="check" />none</span> : <MissedList ids={x.missed} />}</td>}
             </tr>
           ))}
@@ -163,10 +163,8 @@ export function ArenaPanel({ s }: { s: LabState }) {
   return (
     <div className="space-y-5">
       <p className="ui m-0 rounded border border-rule bg-page px-3 py-2 text-base"><span className="font-semibold">Takeaway.</span> {a.takeaway}</p>
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
-        <ArenaTable a={a} />
-        <ArenaChart a={a} />
-      </div>
+      <ArenaTable a={a} />
+      <div className="max-w-3xl"><ArenaChart a={a} /></div>
       <dl className="ui m-0 grid gap-3 text-xs sm:grid-cols-3">
         <div><dt className="text-muted">Per-test coverage (one-time cost)</dt><dd className="m-0">{a.coverage.status === "ok" ? <><span className="num mono">{a.coverage.wall_s?.toFixed(1)} s</span> for {a.coverage.n_tests} tests at the base commit{a.coverage.cached ? ", read from the cache this run" : ", recorded this run"}</> : a.coverage.reason}</dd></div>
         <div><dt className="text-muted">Failure history</dt><dd className="m-0">history: {a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository on this machine{a.history.n_runs === 0 ? " (cold start)" : ""}</dd></div>

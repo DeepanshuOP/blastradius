@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -45,6 +46,7 @@ class LabArgs:
     timeout: int = TEST_TIMEOUT_S
     install: bool = True
     base_patch: str | None = None           # a diff committed as the base commit first (scenario construction)
+    repair_arena: bool = False              # one extra model call: R1 (log-only) against the run's R2, and the unvalidated push
     title: str | None = None
     description: str | None = None
     command: list[str] = field(default_factory=list)
@@ -223,6 +225,8 @@ class Lab:
             e.emit(stage, type_, status, {**data, "order_respected": rc["order_respected"],
                                           "order_note": rc["order_note"]})
             e.emit("tests", "tests.race", "ok", rc)
+            if self.results and not data.get("timed_out"):
+                self.arena_stage()
         elif type_ == "report.comment":
             if not self.validate_seen:                   # no patch was proposed: validation is a stage that did not run
                 self.validate_seen = True
@@ -240,6 +244,81 @@ class Lab:
             if stage == "validate":
                 self.validate_seen = True
             e.emit(stage, type_, status, data)
+
+    # -- arena -------------------------------------------------------------------------------
+    def repo_key(self) -> str:
+        """History and coverage are kept per repository: the prepared slug, or owner__repo for a URL."""
+        ws = self.ws
+        if ws.prepared:
+            return ws.name
+        m = re.match(r"^https://github\.com/([\w.-]+)/([\w.-]+?)(\.git)?$", ws.url or "")
+        return f"{m.group(1)}__{m.group(2)}" if m else ws.name
+
+    def arena_stage(self) -> None:
+        """Six strategies scored on this run's measured results (no strategy is run separately)."""
+        from src.lab import arena
+
+        e, ws, ch = self.em, self.ws, self.change
+        key = self.repo_key()
+        e.emit("arena", "arena.coverage", "running", {"what": "per-test function coverage at the base commit"})
+        cov: dict | None
+        if ws.python:
+            try:
+                cov = arena.run_coverage(ws.repo_dir, ch.base, ws.python, key)
+            except Exception as exc:  # noqa: BLE001 - the strategy is reported unavailable, the run goes on
+                cov = {"status": "skipped", "reason": f"{type(exc).__name__}: {exc}"[:300]}
+        else:
+            cov = {"status": "skipped", "reason": "no interpreter for this repository"}
+        e.emit("arena", "arena.coverage", "ok" if cov["status"] == "ok" else "skipped",
+               {k: v for k, v in cov.items() if k != "tests"})
+        hist = arena.read_history(key)
+        try:
+            cc = arena.cochange_counts(ws.repo_dir, ch.base, ch.changed_files)
+        except Exception as exc:  # noqa: BLE001
+            cc = (arena.Counter(), 0, f"git log failed: {exc}"[:200])
+        doc = arena.compute(self.results, order_files=self.order_files, view=self.view, changed_nodes=self.changed_nodes,
+                            changed_fns=getattr(self, "changed_detail", []), coverage=cov, history=hist, cochange=cc)
+        doc["coverage"] = {k: v for k, v in cov.items() if k != "tests"}
+        doc["history"] = {"n_runs": len(hist), "store": str(arena.history_path(key))}
+        doc["cochange"] = {"n_commits": cc[1], **({"reason": cc[2]} if cc[2] else {})}
+        e.emit("arena", "arena.result", "ok", doc)
+        from src.lab.events import now_iso
+
+        arena.append_history(key, {"run_id": self.run_id, "date": now_iso(), "change": ch.source,
+                                   "failed": sorted({r["id"] for r in self.results if r["outcome"] in FAILED}),
+                                   "n_cases": len(self.results)})
+
+    def repair_arena_stage(self) -> None:
+        """R1 (log-only) against the run's R2 on the same failures, and what an unvalidated push would ship."""
+        from src.lab import repair_arena
+
+        e = self.em
+        tri = next((ev for ev in reversed(e.history) if ev["type"] == "triage.result"), None)
+        mine = [r for r in (tri["data"]["rows"] if tri else []) if r["class"] == "mine"]
+        if not self.llm:
+            e.emit("arena", "arena.repair", "skipped", {"reason": "no model is available, so the extra R1 call cannot be made"})
+            return
+        if not mine:
+            e.emit("arena", "arena.repair", "skipped", {"reason": "no failure was triaged mine, so there is nothing to repair"})
+            return
+        e.emit("arena", "arena.repair", "running", {"failure": [m["test"] for m in mine[:8]]})
+        try:
+            r1, push = repair_arena.run_r1(self.ws.repo_dir, self.change.base, self.change.head, mine, self.llm, self.ws.python,
+                                           self.scratch / "state", self.a.timeout,
+                                           {r["test"] for r in tri["data"]["rows"] if r["class"] != "mine"})
+        except Exception as exc:  # noqa: BLE001 - quota, network, cache miss: say so and keep the run
+            e.emit("arena", "arena.repair", "skipped", {"reason": f"the R1 call could not be made: {type(exc).__name__}: {exc}"[:400]})
+            return
+        if r1.get("tokens"):
+            self.tokens["calls"] += 1
+            self.tokens["total"] += int(r1["tokens"])
+            self.tokens["cached"] += int(r1["tokens"]) if r1.get("from_cache") else 0
+        r2 = repair_arena.r2_column(e.history)
+        e.emit("arena", "arena.repair", "ok", {
+            "failure": [m["test"] for m in mine[:8]], "columns": [r1, r2, push], "tokens": (r1.get("tokens") or 0) + (r2.get("tokens") or 0),
+            "note": ("The same failing tests, the same model and the same five checks. R1 sees only the failure log; R2 also "
+                     "sees the change. The third column is what an agent that pushes without running the full suite would "
+                     "have shipped: the R1 patch, with the full-suite result measured afterwards in this run.")})
 
     # -- run ---------------------------------------------------------------------------------
     def header(self) -> None:
@@ -262,6 +341,7 @@ class Lab:
         e = self.em
         self.header()
         ws = self.repo_stage()
+        self.ws = ws
         if self.a.base_patch:
             ws.base = self._commit_base(ws)
         ch = self.change_commit(ws)
@@ -275,6 +355,8 @@ class Lab:
                               timeout=self.a.timeout)
             stats = out.stats
             validated = out.validated
+            if self.a.repair_arena:
+                self.repair_arena_stage()
         else:
             self._impact_only(ws, ch, bot)
             stats, validated = {}, False

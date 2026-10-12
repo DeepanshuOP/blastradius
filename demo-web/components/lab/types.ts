@@ -3,7 +3,7 @@ export type Stage = "meta" | "repo" | "graph" | "change" | "impact" | "tests" | 
 export type Data = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type Status = "running" | "ok" | "failed" | "skipped";
 
-export const STAGES: Stage[] = ["repo", "graph", "change", "impact", "tests", "triage", "repair", "validate", "report"];
+export const STAGES: Stage[] = ["repo", "graph", "change", "impact", "tests", "arena", "triage", "repair", "validate", "report"];
 
 export interface LabEvent {
   seq: number;

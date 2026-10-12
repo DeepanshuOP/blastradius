@@ -76,7 +76,7 @@ def _parse_run(ns: argparse.Namespace):
 
     a = LabArgs(repo=ns.repo, url=ns.url, task=ns.task, variant=ns.variant, model=ns.model, use_llm=not ns.no_llm,
                 record=ns.record, timeout=ns.timeout, install=not ns.no_install, title=ns.title,
-                description=ns.description, command=sys.argv[1:])
+                description=ns.description, command=sys.argv[1:], repair_arena=ns.repair_arena)
     if ns.base_patch:
         a.base_patch = Path(ns.base_patch).read_text(encoding="utf-8")
     if ns.inject:
@@ -276,8 +276,31 @@ def cmd_graph(ns: argparse.Namespace) -> int:
         shutil.rmtree(scratch, ignore_errors=True)
 
 
+#: Tokens one lab repair call may take (prompt about 1,000, completion budget 1,500, with slack); used for headroom only.
+CALL_ESTIMATE = 4000
+
+
+def quota() -> dict:
+    """Per model: tokens in the rolling 24 h over E3's ledger and the lab's together, against the daily cap."""
+    from datetime import datetime, timezone
+
+    from src.lab.cache import QUOTA_LEDGERS, day_tokens
+    from src.lab.engine import MODELS
+
+    cap = int(os.environ.get("BR_GROQ_TPD") or 200000)
+    now = time.time()
+    out = {}
+    for m in MODELS:
+        used, oldest = day_tokens(m, now)
+        ok = used + CALL_ESTIMATE <= cap
+        out[m] = {"used": used, "cap": cap, "ok": ok, "ledgers": [p.name for p in QUOTA_LEDGERS],
+                  "resume_after": None if ok or oldest is None else
+                  datetime.fromtimestamp(oldest + 86400, timezone.utc).isoformat(timespec="minutes")}
+    return out
+
+
 def cmd_status(_ns: argparse.Namespace) -> int:
-    print(json.dumps({"llm": bool(os.environ.get("GROQ_API_KEY"))}))
+    print(json.dumps({"llm": bool(os.environ.get("GROQ_API_KEY")), "quota": quota()}))
     return 0
 
 
@@ -301,6 +324,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--base-patch")
     r.add_argument("--speed", type=float, default=1.0)
     r.add_argument("--timeout", type=int, default=300)
+    r.add_argument("--repair-arena", action="store_true", help="one extra model call: R1 (log-only) against R2, and the unvalidated push")
     r.set_defaults(fn=cmd_run)
     s = sub.add_parser("repos")
     s.set_defaults(fn=cmd_repos)

@@ -18,14 +18,14 @@ export async function GET(req: Request) {
   if (!isLocal(req)) return fail(403, "The lab only serves localhost.");
   const st = lock();
   const s = await labJson(["status"], 60_000, true);
-  const llm = s.code === 0 ? Boolean(JSON.parse(s.out).llm) : false;
-  return Response.json({ ok: true, live: true, llm, busy: st.busy, since: st.busy ? st.since : null, what: st.what });
+  const j = s.code === 0 ? JSON.parse(s.out) : {};
+  return Response.json({ ok: true, live: true, llm: Boolean(j.llm), quota: j.quota ?? null, busy: st.busy, since: st.busy ? st.since : null, what: st.what });
 }
 
 type Body = {
   repo?: string; url?: string; task?: string; variant?: "standard" | "hard";
   inject?: { file: string; function: string; operator: string; line?: number };
-  edit?: { file: string; text: string }; model?: string; noLlm?: boolean;
+  edit?: { file: string; text: string }; model?: string; noLlm?: boolean; repairArena?: boolean;
 };
 
 export async function POST(req: Request) {
@@ -45,6 +45,7 @@ export async function POST(req: Request) {
     args.push("--model", b.model);
   }
   if (b.noLlm) args.push("--no-llm");
+  else if (b.repairArena) args.push("--repair-arena");
   let tmp: string | null = null;
   if (b.task) {
     if (!safeName(b.task)) return fail(400, "Invalid task id.");

@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timezone
 from typing import IO
 
-STAGES = ("meta", "repo", "graph", "change", "impact", "tests", "triage", "repair", "validate", "report")
+STAGES = ("meta", "repo", "graph", "change", "impact", "tests", "arena", "triage", "repair", "validate", "report")
 STATUSES = ("running", "ok", "failed", "skipped")
 #: Event types each stage may carry (the schema `validate_event` checks recorded runs against).
 TYPES: dict[str, tuple[str, ...]] = {
@@ -23,6 +23,7 @@ TYPES: dict[str, tuple[str, ...]] = {
     "change": ("change.applied",),
     "impact": ("impact.ranking", "impact.paths"),
     "tests": ("tests.start", "test.result", "tests.done", "tests.race"),
+    "arena": ("arena.coverage", "arena.result", "arena.repair", "arena.probe"),
     "triage": ("triage.result",),
     "repair": ("repair.chunks", "repair.request", "repair.reply", "repair.blocks", "repair.patch", "repair.skipped",
                "repair.unavailable"),
@@ -38,6 +39,8 @@ REQUIRED_DATA: dict[str, tuple[str, ...]] = {
     "test.result": ("id", "outcome", "duration_s"),
     "tests.done": ("counts",),
     "tests.race": ("lanes",),
+    "arena.result": ("strategies", "basis", "takeaway"),
+    "arena.repair": ("columns",),
     "triage.result": ("rows", "counts"),
     "validate.check": ("name", "ok", "evidence"),
     "validate.verdict": ("accepted",),

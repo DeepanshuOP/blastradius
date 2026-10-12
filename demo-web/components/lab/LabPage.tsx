@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ArenaPanel } from "./Arena";
 import { CodePanel } from "./CodePanel";
 import { BTN, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
@@ -17,10 +18,11 @@ import { useLab } from "./useLab";
 
 const MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
 
-export type TabId = "impact" | "race" | "triage" | "repair" | "comment" | "integrity";
+export type TabId = "impact" | "race" | "arena" | "triage" | "repair" | "comment" | "integrity";
 export const RESULT_TABS: { id: TabId; label: string; stages: Stage[] }[] = [
   { id: "impact", label: "Impact", stages: ["repo", "graph", "change", "impact"] },
   { id: "race", label: "Test race", stages: ["tests"] },
+  { id: "arena", label: "Strategy arena", stages: ["arena"] },
   { id: "triage", label: "Triage", stages: ["triage"] },
   { id: "repair", label: "Repair", stages: ["repair", "validate"] },
   { id: "comment", label: "PR comment", stages: ["report"] },
@@ -119,6 +121,7 @@ export default function LabPage() {
   const [scenario, setScenario] = useState<Scenario>(null);
   const [change, setChange] = useState<Change>(null);
   const [model, setModel] = useState(MODELS[0]);
+  const [repairArena, setRepairArena] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [logOpen, setLogOpen] = useState(false);
   const [codeOpen, setCodeOpen] = useState(false);
@@ -164,6 +167,9 @@ export default function LabPage() {
 
   const sel = g.nodes.find((n) => n.id === selected) ?? null;
   const repoName = (s.repo?.prepared ? s.repo.name : null) ?? (scenario?.kind === "repo" ? scenario.name : null);
+  const q = avail.quota?.[model];
+  const quotaReason = q && !q.ok ? `the daily token quota of ${model} is used up (${q.used.toLocaleString()} of ${q.cap.toLocaleString()} tokens in the last 24 h, E3 and lab ledgers together)${q.resume_after ? `; the next call is possible after ${q.resume_after.replace("T", " ")} UTC` : ""}` : "";
+  const modelOk = avail.llm && !quotaReason;
   const canRun = scenario !== null && (scenario.kind === "replay" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
   const run = useCallback(() => {
     if (!scenario) return;
@@ -179,8 +185,9 @@ export default function LabPage() {
     if (change.kind === "inject") body.inject = { file: change.file, function: change.function, operator: change.operator, ...(change.line ? { line: change.line } : {}) };
     if (change.kind === "edit") body.edit = { file: change.file, text: change.text };
     if (!avail.llm) body.noLlm = true;
+    if (repairArena && modelOk) body.repairArena = true;
     startLive(body);
-  }, [scenario, change, model, avail.llm, startLive, startReplay]);
+  }, [scenario, change, model, avail.llm, repairArena, modelOk, startLive, startReplay]);
 
   const graphFail = stageFailure(s, "graph");
   const counts = s.graph?.counts ?? g.runGraph?.counts;
@@ -198,7 +205,12 @@ export default function LabPage() {
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <label className="ui text-xs text-muted" htmlFor="model">Model for the repair step</label>
           <select id="model" value={model} onChange={(e) => setModel(e.target.value)} className="mono px-2 py-1 text-xs">{MODELS.map((m) => <option key={m}>{m}</option>)}</select>
+          <label className={`ui flex items-center gap-1.5 text-xs ${modelOk ? "text-ink" : "text-muted"}`} title={modelOk ? "Adds one model call: R1 (log-only) on the same failure, and what an unvalidated push would ship" : quotaReason || avail.reason}>
+            <input type="checkbox" checked={repairArena && modelOk} disabled={!modelOk} onChange={(e) => setRepairArena(e.target.checked)} />
+            Repair arena (one extra model call){avail.checked && !modelOk ? `: unavailable, ${quotaReason ? "quota used up" : avail.live ? "no model key on the server" : "static build"}` : ""}
+          </label>
           {avail.checked && !avail.llm && avail.live && <span className="ui text-xs text-amber">{avail.reason}</span>}
+          {quotaReason && <span className="ui text-xs text-amber" role="status">Repair is unavailable: {quotaReason}. Live runs still go through graph, prediction, tests, arena and triage.</span>}
         </div>
       )}
       <PipelineRail s={s} active={null} onPick={pickStage} />
@@ -274,6 +286,7 @@ export default function LabPage() {
         <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="p-4">
           {tab === "impact" && <ImpactPanel s={s} />}
           {tab === "race" && <RacePanel s={s} />}
+          {tab === "arena" && <ArenaPanel s={s} />}
           {tab === "triage" && <TriagePanel s={s} />}
           {tab === "repair" && <RepairPanel s={s} />}
           {tab === "comment" && <ReportPanel s={s} />}
