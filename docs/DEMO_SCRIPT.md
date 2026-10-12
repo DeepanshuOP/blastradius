@@ -1,84 +1,112 @@
-# Demo script: 10 minutes for the review panel
+# Demo script: 7 minutes, live, in front of the review panel
 
-Run `make demo-web` (site at http://127.0.0.1:3000) and open the page in a browser. The page is one scroll with a table of contents
-on the left (a menu at the top on a phone). Every number below is on the page and comes from a generated file named in the page. If
-the network is down, nothing here breaks: the page replays recorded data, and the steps that are live say so on screen. Run
-`make demo-check` the day before; it prints PASS or FAIL per check and needs no network.
+The home page is the **Live Lab**: a working simulation of the whole system. Everything in it is real execution shown as it
+happens, or an honest replay of a recorded run (the badge at top left says which: green LIVE, amber REPLAY with the recording date).
+The research results sit under **Evidence**; nothing was removed.
 
-| min | section | what to click |
+## Before you go in (5 minutes, once)
+
+1. `make demo-check` the day before. It prints PASS or FAIL per check and needs no network; the last three checks cover the lab
+   (engine tests, recorded runs, `/api/lab/*` on a started server).
+2. `make demo-web` (builds and serves http://127.0.0.1:3000, localhost only). Open it and look at the badge: **READY · live
+   available** means the Python side is reachable; **READY · replay only** means this is a static build, and the picker says why.
+3. Check the model line under the top bar. If it says the key is missing or the daily quota is used up, live runs still go through
+   graph, prediction, tests and triage; the Repair studio then says "unavailable" and you switch to the recorded run for that
+   step (see Fallbacks). `python -m src.lab status` prints whether a key exists; it does not print the key.
+4. Do one dry run of the flow below so the first run on stage is not the first run of the day (the graph of a repository is
+   built once and cached).
+
+## The flow (7 minutes)
+
+| min | what | where |
 |---|---|---|
-| 0:00 | Overview | scroll slowly |
-| 1:30 | Data | funnel figure, corpus table, Known limits |
-| 3:00 | Results | RQ1, E1, E2, E3 |
-| 5:30 | Compare | papers matrix, products matrix, cost |
-| 7:30 | Try it | Agent scenarios, live-run replay, Ask |
-| 9:00 | Use it | workflow YAML, live PR link |
+| 0:00 | Pick itsdangerous | Step 1, repository cards: the graph appears in the centre panel |
+| 0:45 | Inject a bug in front of the panel | Step 2, "Inject a bug" |
+| 1:45 | Graph wave | centre panel, the moment the run starts |
+| 2:30 | Test race against retest-all | panel "Test race" |
+| 3:30 | Triage | panel "Triage" |
+| 4:30 | Live repair and validation | panel "Repair studio" |
+| 5:45 | Jenkins stage view | pipeline rail |
+| 6:15 | Evidence for the numbers | Evidence tab |
 
-## 1. Overview (1.5 min)
+### 1. Pick itsdangerous (0:45)
 
-**Click.** Stay on Overview. Point at Figure 1 (the pull request 1 comment), then Figure 2 (the pipeline), then the three findings.
-Click "Open the live pull request".
+**Click.** The itsdangerous card. Point at the graph that appears: files, classes, functions and tests, coloured by type.
+The line under it says how many nodes, edges and parse failures the builder reported.
 
-**Say.** "A pull request flipped one comparison in itsdangerous. Five of 297 tests failed; BlastRadius traced them to
-`src/itsdangerous/timed.py:141`, proposed the one-line fix, and showed it only because all 297 tests passed with it. The pipeline has four
-stages, predict, run, triage, repair, all measured on BR-Bench, a dataset of tests that really failed in GitHub Actions."
+**Say.** "This is a real Python library, 15 source files and a 297-case test suite. The graph is built by our own builder at a pinned
+commit, not drawn by hand; the counts under it come from that build."
 
-**If the network is down.** The figure is recorded data; the live-PR link will not open, so say the comment text is the recorded one.
+### 2. Inject a bug (1:00)
 
-## 2. Data (1.5 min)
+**Click.** "Inject a bug", file `src/itsdangerous/timed.py`, function `TimestampSigner.unsign`, operator `ARITH_SWAP` (line 139:
+`age = self.get_timestamp() - ts_int` becomes `+`). The side-by-side preview shows exactly what will be committed. Press **Run**.
 
-**Click.** Funnel figure, the corpus table, then open "Known limits".
+**Say.** "I am choosing a real function and a real mutation operator from the list the tool derives from the source, so this is the
+same kind of change our seeded benchmark makes. Nothing is scripted: the change is committed in a scratch copy of the repository."
 
-**Say.** "A test is labelled when it fails at head, did not fail at the base commit, and is not flaky. The funnel goes from 165,349
-discovered runs to 762 instances with a strict label, 4,168 labels. We did not reach the 5,000-label gate, and binding is
-94.29% combined but 63.83% at full confidence; we always show both. The corpus is 35 Java and 2 Python repositories, and parser
-precision was measured on development sets only."
+### 3. The wave (0:45)
 
-**If the network is down.** No change; this section is static.
+**Watch.** Orange rings expand from the changed function through the graph, hop by hop, then the event log fills.
 
-## 3. Results (2.5 min)
+**Say.** "The rings are the blast radius: how far the change can reach in the code graph. The ranking next to it is the E1 model's,
+with its top three reasons per test file."
 
-**Click.** RQ1 table, E1 figure and table, E2 table, E3 tables (120b standard first).
+### 4. The race (1:00)
 
-**Say.** "Co-change names 4.64% of the failing tests in its top 10 and failure history 39.44%, so history beats co-change. The E1
-ranker reaches Recall@10 0.525 against 0.522 for the best baseline; the difference is not significant, Gate 3 is not met, and that is a
-result, not a failure of the project. Triage is a small-sample trade-off: 18 not-mine pairs in the test split. Repair is the
-confirmatory result: on 70 seeded tasks, change-aware repair fixed 50 against 33 for log-only, exact one-sided McNemar p = 0.0007569,
-pre-registered in docs/phase/033. The hard variant and the third model are interim and still running; R4 is built but not run."
+**Point at.** The two lanes under "Test race". Each tick is one test case, green or red.
 
-**If the network is down.** No change; results are read from files.
+**Say.** "Both lanes are this one run. The bottom lane is the order pytest actually ran, at-risk files first. The top lane is what a
+retest-all job does, alphabetical order; we did not run it separately, we computed it from the durations we measured in this run, and
+the panel says so. On the rehearsal run the first failure was at position 127 of 297 risk-first and 283 alphabetical; read the numbers
+off the screen, they depend on the machine."
 
-## 4. Compare (2 min)
+### 5. Triage (1:00)
 
-**Click.** Papers matrix (click one "not reported" cell and one BlastRadius cell), products matrix (click the Develocity "works without
-project history" cell), then the same-data table, the "other data" banner, and Cost.
+**Point at.** The three columns. Open one card.
 
-**Say.** "Each mark has a source; a BlastRadius yes names the test that proves it. The commercial tools are shown only as their own
-documentation describes them, with the vendor URL on each cell; anything their pages do not state says 'not documented'. Same-data
-results and other papers' numbers are never in one table. We paid USD 0.00; at list prices the tokens would cost a fraction of a cent per task."
+**Say.** "Every failing test was re-run on the base commit. All five are 'mine': they passed before the change. If a test had already
+been failing it would sit in 'inherited' and nobody should be paged for it. Counts are per unique test id; where one test method is
+inherited by several subclasses the panel states how many cases that is."
 
-**If the network is down.** The vendor URLs will not open; the cell text and the URL are still shown.
+### 6. Repair and validation (1:15)
 
-## 5. Try it (1.5 min)
+**Point at.** The context chunks and why each was chosen, the token count, then the five checks ticking: patch applies, syntax
+compiles, previously failing tests pass, **full suite passes**, no edits outside the allowed files. Open "Show the model's reply".
 
-**Click.** Agent scenarios: pick the clean scenario, "Run the agents". Live-run replay: "Replay run". Ask: read the mode line, open
-one recorded answer and click a citation chip.
+**Say.** "The model sees at most three functions: those the diff touches, ranked against the failure output. A patch is shown as
+accepted only after the full suite passes with it, and the check list is the evidence. This is about 1,500 tokens."
 
-**Say.** "These replay recordings, nothing is executed. Ask says on screen whether it is live or recorded; with a key and the
-network it calls the model, otherwise it shows the recorded answers. Citation checks say only that citations point at retrieved
-items, not that answers are correct."
+### 7. Jenkins stage view (0:30)
 
-**If the network is down.** This is the fallback: Ask shows "recorded answers", the rest is unchanged. "Analyze repository" needs
-a clone and a local server; if it is unavailable, use the command-line twin shown on the page.
+**Click.** "Show as Jenkins stage view", then "Jenkinsfile".
 
-## 6. Use it (1 min)
+**Say.** "This is the same run laid out the way Jenkins draws a pipeline. No Jenkins server was involved, and the Jenkinsfile is an
+example we have not deployed; the point is that these are stages you add to the job you already have."
 
-**Click.** Copy the workflow YAML; show the Jenkinsfile and the CLI lines.
+### 8. Evidence (0:45)
 
-**Say.** "Three ways in: a GitHub Action that comments on every pull request, a Jenkins stage where Jenkins stays the executor, and a
-command line. The bot only comments; it never pushes or merges, and that is a tested claim in the Compare safety panel."
+**Click.** Evidence tab. Read the four cards at the top, each with its source file.
 
-**If the network is down.** Static content; the live-PR link will not open.
+**Say.** "None of the numbers on this tab come from the live run. Gate 3 is not met: the ranker is not significantly better than the
+best baseline, and we report that. The repair result is the pre-registered one: R2 against R1, exact McNemar."
+
+## Fallbacks
+
+| problem | what you see | what to do |
+|---|---|---|
+| No network (clone, model) | prepared repositories still run; the model call fails | Run as usual. The Repair studio shows "model unavailable (network)" and **nothing was retried**. Pick the recorded run "Seeded task: one swapped operator, fixed and validated" and press Run to show the repair step. |
+| Quota exhausted | Repair studio: "daily token quota is used up (next call possible after ...)" | Same as above. The recorded run is labelled REPLAY with its date. |
+| A test run hangs | the Tests stage stays running; each pytest process has a timeout (300 s by default) | Press **Reset**: the server kills the whole process group. Use the recorded run. |
+| Static build, no server | badge "READY · replay only" with the reason | Recorded runs replay in the browser, with their original timing. Add `?speed=2` to the URL to play faster. |
+| Anything looks wrong | | Open **Integrity** (top bar): commands, SHAs, model and temperature, cache file, what was live and what was recorded. |
+
+## "Jenkins can do this" in three lines
+
+1. "Jenkins runs the stages, and it will run all of them: it reports every red test in alphabetical order. That is the top lane."
+2. "BlastRadius decides the order (the bottom lane), tells you whose failure each one is (mine, inherited, flaky), and proposes a fix it
+   has already verified on the full suite. Those three are the columns Jenkins does not have."
+3. "It sits inside Jenkins as stages; you keep your job, your agents and your reports."
 
 ## Likely panel questions
 

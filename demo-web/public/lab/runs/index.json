@@ -1,17 +1,17 @@
 [
  {
   "name": "clean-change",
-  "date": "2026-10-12T05:04:51.114+00:00",
+  "date": "2026-10-12T05:12:05.112+00:00",
   "model": "openai/gpt-oss-120b",
-  "git_sha": "d65ce053c8",
+  "git_sha": "ca56f0f4cc",
   "title": "Clean change: no failures, no model call",
   "description": "A harmless comment edit in itsdangerous. BlastRadius ranks, runs the suite, finds no failure and does not call the model."
  },
  {
   "name": "seeded-arith-swap",
-  "date": "2026-10-12T05:04:53.776+00:00",
+  "date": "2026-10-12T05:12:09.301+00:00",
   "model": "openai/gpt-oss-20b",
-  "git_sha": "d65ce053c8",
+  "git_sha": "ca56f0f4cc",
   "title": "Seeded task: one swapped operator, fixed and validated",
   "description": "BR-Seeded task itsdangerous-ARITH_SWAP-00 (a + turned into a -). The model answer is the recorded one for this exact prompt (bot cache); the validation runs the full suite live."
  }

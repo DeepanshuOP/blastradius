@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check
+.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
 
 test:
 	uv run pytest -q
@@ -185,6 +185,20 @@ e3-sync:
 # every JSON the site loads, Compare numbers against their sources. Prints a PASS/FAIL table; non-zero on any FAIL.
 demo-check:
 	uv run --extra graph --extra ml --extra rag --extra figures python -m analysis.demo_check
+
+# Live Lab (D-65): record the demonstration scenarios that need the model. Each is one live run (about 1,500 tokens per
+# repair) and shares the Groq daily quota with the E3 loop; run them when the quota has room (`python -m src.lab status`
+# only says whether a key exists; a refused call is recorded as repair.unavailable, so check the output before committing).
+LAB = uv run --env-file .env --extra graph --extra ml --extra rag python -m src.lab run --mode live --model openai/gpt-oss-120b
+lab-record:
+	$(LAB) --repo itsdangerous --edit "src/itsdangerous/timed.py=@eval/lab/pr1_timed.py" --record itsdangerous-pr1 \
+	  --title "PR 1: one comparison flipped in TimestampSigner.unsign" \
+	  --description "The live PR 1 change (if age > max_age becomes if age < max_age), from detection to a validated fix."
+	$(LAB) --repo shopcart --base-patch eval/lab/inherited_base.patch --inject "shopcart/cart.py::Cart.add::ARITH_SWAP" \
+	  --record inherited-failure --title "Inherited failure plus a real bug" \
+	  --description "Scratch repository whose base commit already fails test_known_sku_price; the change adds a real bug. One failure is inherited, the others mine; repair targets only the mine ones."
+	$(LAB) --repo itsdangerous --task itsdangerous-CMP_FLIP-00 --variant hard --record hard-decoys \
+	  --title "Hard variant: decoy edits beside the bug" --description "A hard-variant seeded task: the bug plus decoy edits (comments, parentheses) in the diff."
 
 # Token and USD report from usage.jsonl and the E3 caches. Offline; NOT part of `tables`.
 cost-report:

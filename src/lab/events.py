@@ -61,11 +61,14 @@ class Emitter:
         self.seq = 0
         self.started: dict[str, float] = {}
         self.history: list[dict] = []
+        self._last: float | None = None
 
     def emit(self, stage: str, type_: str, status: str, data: dict | None = None, dur_ms: float | None = None) -> dict:
         """Write one event. `dur_ms` defaults to the time since the stage's first event."""
         t = time.perf_counter()
-        self.started.setdefault(stage, t)
+        # a stage starts when the previous event was emitted (the work between two events belongs to the later one)
+        self.started.setdefault(stage, self._last if self._last is not None else t)
+        self._last = t
         self.seq += 1
         ev = {"seq": self.seq, "ts": now_iso(), "stage": stage, "type": type_, "status": status,
               "dur_ms": round(dur_ms if dur_ms is not None else (t - self.started[stage]) * 1000, 1),
