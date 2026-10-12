@@ -153,6 +153,34 @@ def cmd_run(ns: argparse.Namespace) -> int:
     return rc
 
 
+def _test_cases(slug: str, commit: str) -> int | None:
+    """Number of collected test cases, counted by pytest in a scratch copy and cached by commit."""
+    import shutil
+    import subprocess
+
+    from src.lab.workspace import LAB_ROOT, new_scratch, prepare_seeded
+
+    cache = LAB_ROOT / f"cases-{slug}-{commit[:12]}.json"
+    if cache.exists():
+        return json.loads(cache.read_text())["n"]
+    scratch = new_scratch("count")
+    try:
+        ws = prepare_seeded(slug, scratch)
+        if not ws.python:
+            return None
+        paths = [str(ws.repo_dir)] + ([str(ws.repo_dir / "src")] if (ws.repo_dir / "src").is_dir() else [])
+        p = subprocess.run([ws.python, "-m", "pytest", "--collect-only", "-q", "-p", "no:cacheprovider"], cwd=ws.repo_dir,
+                           capture_output=True, text=True, timeout=120,
+                           env={**os.environ, "PYTHONPATH": os.pathsep.join(paths), "PYTHONDONTWRITEBYTECODE": "1"})
+        n = sum(1 for ln in p.stdout.splitlines() if "::" in ln)
+        cache.write_text(json.dumps({"n": n}))
+        return n
+    except Exception:  # noqa: BLE001
+        return None
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
+
+
 def cmd_repos(ns: argparse.Namespace) -> int:
     from src.lab import changes
     from src.lab.workspace import PREPARED, REPOS, VENVS, count_files, git, prepared_info
@@ -167,6 +195,7 @@ def cmd_repos(ns: argparse.Namespace) -> int:
         tests = sum(1 for p in d.rglob("test*.py") if "__pycache__" not in p.parts)
         out.append({"name": slug, "url": pins.get(slug, {}).get("url"), "commit": git(d, "rev-parse", "HEAD"),
                     "language": "python", "n_files": n_py + n_java, "test_files": tests,
+                    "n_tests": _test_cases(slug, git(d, "rev-parse", "HEAD")),
                     "runnable": (VENVS / slug / "bin" / "python").exists(),
                     "tasks": changes.list_tasks(slug)})
     runs = []

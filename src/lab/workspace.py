@@ -63,9 +63,19 @@ def count_files(root: Path) -> tuple[int, int, int]:
 
 
 def new_scratch(prefix: str = "run") -> Path:
-    """A fresh directory under the OS temp directory."""
+    """A fresh directory under the OS temp directory; scratch directories left by killed runs (> 3 h old) are swept."""
+    import atexit
+    import time
+
     LAB_ROOT.mkdir(parents=True, exist_ok=True)
-    return Path(tempfile.mkdtemp(prefix=f"{prefix}-", dir=LAB_ROOT))
+    now = time.time()
+    for old in LAB_ROOT.iterdir():
+        if old.is_dir() and old.name != "graphs" and now - old.stat().st_mtime > 3 * 3600:
+            shutil.rmtree(old, ignore_errors=True)
+    d = Path(tempfile.mkdtemp(prefix=f"{prefix}-", dir=LAB_ROOT))
+    # registered before the graph library is imported, so it runs after that library's own exit hooks
+    atexit.register(lambda: shutil.rmtree(d, ignore_errors=True))
+    return d
 
 
 def prepared_info() -> dict[str, dict]:
