@@ -28,7 +28,7 @@ function MdTable({ t }: { t: Table }) {
       <h4 className="mb-1 text-[13px] font-semibold text-slate-500">{t.heading}</h4>
       <div className="max-h-96 overflow-auto">
         <table className="w-full text-left text-[13px]">
-          <thead className="sticky top-0 bg-white"><tr>{t.columns.map((c, i) => <th key={i} className="border-b border-slate-200 px-2 py-1.5 font-semibold text-slate-600">{inline(c)}</th>)}</tr></thead>
+          <thead className="sticky top-0 bg-panel"><tr>{t.columns.map((c, i) => <th key={i} className="border-b border-slate-200 px-2 py-1.5 font-semibold text-slate-600">{inline(c)}</th>)}</tr></thead>
           <tbody>{t.rows.map((r, i) => (
             <tr key={i} className="odd:bg-slate-50">{r.map((c, j) => <td key={j} className={`px-2 py-1.5 align-top ${j > 0 ? "tabular-nums" : ""}`}>{inline(c)}</td>)}</tr>))}
           </tbody>

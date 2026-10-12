@@ -29,7 +29,7 @@ function PrExample({ o }: { o: OverviewDoc }) {
         <p className="mb-1 mt-3 text-muted">The failures trace to one line:</p>
         <p className="m-0"><Mono>{p.file}:{p.line}</Mono></p>
         <p className="mb-1 mt-3 text-muted">One-line patch that the bot proposed:</p>
-        <pre className="m-0 overflow-x-auto border border-rule bg-white p-2 text-[13px] leading-snug">
+        <pre className="m-0 overflow-x-auto border border-rule bg-panel p-2 text-[13px] leading-snug">
           {p.old !== null && <span className="block text-fail">{`- ${p.old.trim()}`}</span>}
           <span className="block text-pass">{`+ ${p.new.trim()}`}</span>
         </pre>

@@ -50,7 +50,7 @@ export default function LiveRun({ index }: { index: IndexDoc }) {
           <span className="mb-1 block text-[13px] font-medium text-muted">Instance</span>
           <select value={id} disabled={running}
             onChange={(e) => { stop(); setId(e.target.value); setShown(0); setDoc(null); }}
-            className="w-full border border-rule bg-white px-3 py-2 text-[15px]">
+            className="w-full border border-rule bg-panel px-3 py-2 text-[15px]">
             {index.instances.map((x) => (
               <option key={x.id} value={x.id}>
                 {x.repo}, PR {x.pr_number}, run {x.run_id}, {x.failure_class}, {x.test_count} fault-revealing test{x.test_count === 1 ? "" : "s"}

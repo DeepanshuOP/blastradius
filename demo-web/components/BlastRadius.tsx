@@ -6,8 +6,8 @@ import type { BlastDoc, BlastNode } from "./types";
 const SIZE = 760;
 const C = SIZE / 2;
 const RING_LABELS = ["changed", "1 hop", "2 hops", "3 hops", "4 hops", "outer / unreachable"];
-const ORANGE = "#ea580c";
-const BLUE = "#2563eb";
+const ORANGE = "var(--accent)";
+const BLUE = "var(--blue)";
 
 function ringRadius(i: number, centreCount: number): number {
   if (i === 0) return centreCount <= 1 ? 0 : 55;
@@ -36,7 +36,7 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
 
   const nodeR = (n: BlastNode) => (n.kind === "file" || n.kind === "test" || !n.in_graph ? 5.5 : 3.5);
   const fill = (n: BlastNode) =>
-    n.changed ? "#0f172a" : n.actual_failing ? "#dc2626" : n.kind === "test" ? "#fca5a5" : n.in_graph ? "#cbd5e1" : "#e2e8f0";
+    n.changed ? "var(--ink)" : n.actual_failing ? "var(--red)" : n.kind === "test" ? "rgb(var(--red-rgb) / 0.55)" : n.in_graph ? "var(--muted)" : "var(--rule)";
   const coHits = b.nodes.filter((n) => n.cochange_pred && n.actual_failing).length;
   const histHits = b.nodes.filter((n) => n.history_pred && n.actual_failing).length;
 
@@ -60,9 +60,9 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
             if (r === 0) return null;
             return (
               <g key={i}>
-                <circle cx={C} cy={C} r={r} fill="none" stroke={i === b.max_hops + 1 ? "#cbd5e1" : "#e2e8f0"}
+                <circle cx={C} cy={C} r={r} fill="none" stroke={i === b.max_hops + 1 ? "var(--muted)" : "var(--rule)"}
                   strokeDasharray={i === b.max_hops + 1 ? "4 4" : undefined} />
-                <text x={C} y={C - r - 4} textAnchor="middle" fontSize="10" fill="#94a3b8">
+                <text x={C} y={C - r - 4} textAnchor="middle" fontSize="10" fill="var(--muted)">
                   {RING_LABELS[i]}, {cnt}
                 </text>
               </g>
@@ -71,7 +71,7 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
           {b.edges.map((e) => {
             const s = pos.out.get(e.source), t = pos.out.get(e.target);
             if (!s || !t) return null;
-            return <line key={`${e.source}|${e.target}`} x1={s.x} y1={s.y} x2={t.x} y2={t.y} stroke="#94a3b8" strokeOpacity={0.22} />;
+            return <line key={`${e.source}|${e.target}`} x1={s.x} y1={s.y} x2={t.x} y2={t.y} stroke="var(--muted)" strokeOpacity={0.22} />;
           })}
           {b.nodes.map((n) => {
             const p = pos.out.get(n.id)!;
@@ -86,14 +86,14 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
                   <circle cx={p.x} cy={p.y} r={r + 3} stroke={ORANGE} strokeWidth={1.6}
                     fill={n.actual_failing ? ORANGE : "none"} fillOpacity={n.actual_failing ? 0.5 : 0} />
                 )}
-                <circle cx={p.x} cy={p.y} r={r} fill={fill(n)} stroke="#fff" strokeWidth={0.8} />
+                <circle cx={p.x} cy={p.y} r={r} fill={fill(n)} stroke="var(--panel)" strokeWidth={0.8} />
                 <circle cx={p.x} cy={p.y} r={10} fill="transparent" />
               </g>
             );
           })}
         </svg>
         {hover && (
-          <div className="pointer-events-none absolute z-10 max-w-xs -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1.5 text-[12.5px] text-white-lg"
+          <div className="pointer-events-none absolute z-10 max-w-xs -translate-x-1/2 rounded-md bg-ink px-2.5 py-1.5 text-[12.5px] text-page shadow-lg"
             style={{ left: `${(hover.x / SIZE) * 100}%`, top: `calc(${(hover.y / SIZE) * 100}% + 14px)` }}>
             <div className="break-all font-mono">{hover.n.path ?? hover.n.label}</div>
             {hover.n.kind !== "file" && hover.n.in_graph && <div className="text-slate-300">{hover.n.kind}, {hover.n.label}</div>}

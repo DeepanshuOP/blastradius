@@ -149,6 +149,7 @@ def cmd_run(ns: argparse.Namespace) -> int:
                 if gf and Path(gf).exists():
                     (RUNS / f"{args.record}.graph.json").write_bytes(Path(gf).read_bytes())
                 rec.close()
+                write_index()
             lab.cleanup()
     return rc
 
@@ -179,6 +180,24 @@ def _test_cases(slug: str, commit: str) -> int | None:
         return None
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
+
+
+def write_index() -> None:
+    """`demo-web/public/lab/runs/index.json`: the recorded runs, so a static build can list them."""
+    out = []
+    for p in sorted(RUNS.glob("*.jsonl")):
+        try:
+            first = json.loads(p.read_text(encoding="utf-8").split("\n", 1)[0])["data"]
+        except Exception:  # noqa: BLE001
+            continue
+        out.append({"name": p.stem, "date": first.get("date"), "model": first.get("model"), "git_sha": first.get("git_sha"),
+                    "title": first.get("title"), "description": first.get("description")})
+    (RUNS / "index.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+
+
+def cmd_index(_ns: argparse.Namespace) -> int:
+    write_index()
+    return 0
 
 
 def cmd_repos(ns: argparse.Namespace) -> int:
@@ -293,6 +312,8 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("tasks")
     s.add_argument("--repo")
     s.set_defaults(fn=cmd_tasks)
+    s = sub.add_parser("index")
+    s.set_defaults(fn=cmd_index)
     s = sub.add_parser("graph")
     s.add_argument("--repo", required=True)
     s.set_defaults(fn=cmd_graph)

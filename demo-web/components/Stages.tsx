@@ -45,7 +45,7 @@ function RawLog({ s }: { s: S["raw_log"] }) {
       <p className="mb-2">Job <Mono>{s.job_id}</Mono>: lines naming <Mono>{s.test_name_token}</Mono>; failure lines highlighted.</p>
       <pre className="overflow-x-auto border border-rule bg-panel p-3 font-mono text-[12.5px] leading-5 text-ink">
         {s.lines.map((l, i) => (
-          <div key={i} className={l.failing ? "-mx-3 border-l-2 border-fail bg-white px-3 text-fail" : ""}>{l.text}</div>
+          <div key={i} className={l.failing ? "-mx-3 border-l-2 border-fail bg-panel px-3 text-fail" : ""}>{l.text}</div>
         ))}
       </pre>
     </>
@@ -189,9 +189,9 @@ function Mark({ ok }: { ok: boolean }) {
   return <span className={`ui shrink-0 text-[13px] font-medium ${ok ? "text-pass" : "text-fail"}`}>{ok ? "hit" : "miss"}</span>;
 }
 
-const OV_ORANGE = "#ea580c";
-const OV_BLUE = "#2563eb";
-const OV_RED = "#dc2626";
+const OV_ORANGE = "var(--accent)";
+const OV_BLUE = "var(--blue)";
+const OV_RED = "var(--red)";
 
 /** Three-set overlap of the failing test files (red), co-change picks (orange) and history picks (blue). Not to scale. */
 function Overlap({ s }: { s: S["predictions"] }) {
@@ -208,7 +208,7 @@ function Overlap({ s }: { s: S["predictions"] }) {
   const coHits = r.ac + r.ach;
   const hiHits = r.ah + r.ach;
   const T = (x: number, y: number, v: number, big = true) => (
-    <text x={x} y={y} textAnchor="middle" className="tabular-nums" fontSize={big ? 20 : 15} fontWeight={700} fill={v ? "#0f172a" : "#94a3b8"}>{v}</text>
+    <text x={x} y={y} textAnchor="middle" className="tabular-nums" fontSize={big ? 20 : 15} fontWeight={700} fill={v ? "var(--ink)" : "var(--muted)"}>{v}</text>
   );
   return (
     <figure className="mb-4 rounded border border-slate-100 bg-slate-50/60 p-3">
@@ -224,7 +224,7 @@ function Overlap({ s }: { s: S["predictions"] }) {
         {T(132, 252, r.cOnly)}
         {T(388, 252, r.hOnly)}
         {T(260, 262, r.ch)}
-        <text x={260} y={80} textAnchor="middle" fontSize={11} fill="#64748b">missed by both</text>
+        <text x={260} y={80} textAnchor="middle" fontSize={11} fill="var(--muted)">missed by both</text>
         <text x={8} y={20} fontSize={12} fontWeight={700} fill={OV_RED}>Actually failed: {A.size}</text>
         <text x={8} y={344} fontSize={12} fontWeight={700} fill={OV_ORANGE}>Co-change: {C.size} picked, {coHits} hit</text>
         <text x={512} y={344} textAnchor="end" fontSize={12} fontWeight={700} fill={OV_BLUE}>History: {H.size} picked, {hiHits} hit</text>
