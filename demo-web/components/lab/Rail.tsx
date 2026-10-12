@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { STAGE_LABEL, StatusIcon, fmtMs, summarize, type Tone } from "./common";
+import { Explain, Info } from "./Info";
 import { foldTests } from "./Log";
 import { STAGES, type LabState, type Stage, type Status } from "./types";
 
@@ -36,7 +37,9 @@ export function PipelineRail({ s, stages = STAGES, active, onPick }: { s: LabSta
   return (
     <div className="rounded-md border border-rule bg-panel px-3 py-2">
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-        <h2 className="ui m-0 text-sm font-semibold">{jenkins ? "Jenkins stage view (illustration)" : "Pipeline"}</h2>
+        <h2 className="ui m-0 flex items-center gap-1.5 text-sm font-semibold">{jenkins ? "Jenkins stage view" : "Pipeline"}
+          <Info label="About the pipeline"><span className="block">{jenkins ? "The same stages and durations as this run, drawn the way Jenkins draws a pipeline. An illustration: no Jenkins server was involved." : "One chip per stage of this run. A chip opens that stage's result."}</span></Info>
+        </h2>
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => setSnippet(!snippet)} className="ui text-xs text-blue underline" aria-expanded={snippet}>Jenkinsfile</button>
           <label className="ui flex cursor-pointer items-center gap-1.5 text-xs text-muted">
@@ -45,7 +48,7 @@ export function PipelineRail({ s, stages = STAGES, active, onPick }: { s: LabSta
         </div>
       </div>
       {!jenkins ? (
-        <ol className="m-0 flex list-none items-stretch gap-1 overflow-x-auto p-0" aria-label="Pipeline stages">
+        <ol className="relative m-0 flex list-none items-stretch gap-1 overflow-x-auto p-0" aria-label="Pipeline stages">
           {stages.map((k) => {
             const x = s.stage[k];
             const st = x?.status ?? "pending";
@@ -73,7 +76,7 @@ function JenkinsView({ s, open, setOpen }: { s: LabState; open: string | null; s
   const lines = useMemo(() => (col ? foldTests(s.events.filter((e) => col.stages.includes(e.stage)), false) : []), [col, s.events]);
   return (
     <>
-      <div className="flex items-stretch overflow-x-auto pb-1" role="list" aria-label="Jenkins stages">
+      <div className="relative flex items-stretch overflow-x-auto pb-1" role="list" aria-label="Jenkins stages">
         {JENKINS.map((c, i) => {
           const m = merged(s, c.stages);
           return (
@@ -103,7 +106,7 @@ function JenkinsView({ s, open, setOpen }: { s: LabState; open: string | null; s
           ))}
         </div>
       )}
-      <p className="cap m-0 mt-2 text-xs">The same stages and durations as this run, drawn the way Jenkins draws a pipeline. No Jenkins server was involved: this shows where the stages would sit in an existing job. The example Jenkinsfile is not deployed. Click a stage for its log lines.</p>
+      <Explain className="mt-2">Click a stage for its log lines. The example Jenkinsfile is not deployed.</Explain>
     </>
   );
 }

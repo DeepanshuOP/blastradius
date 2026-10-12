@@ -4,35 +4,42 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArenaPanel } from "./Arena";
 import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
 import { CodePanel } from "./CodePanel";
-import { BTN, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
+import { BTN, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
-import { EventLog } from "./Log";
+import { ExplainContext, Info } from "./Info";
+import { EventLog, Ticker } from "./Log";
 import { NodeCard } from "./NodeDetails";
-import { ImpactPanel, RacePanel, RepairPanel, TriagePanel, stageFailure } from "./Panels";
-import { Picker, type Change, type RepoInfo, type RunInfo, type Scenario } from "./Picker";
+import { ImpactPanel, RacePanel, RepairPanel, TriagePanel, VerdictPanel, stageFailure } from "./Panels";
+import { ChangePicker, RepoCards, type Change, type RepoInfo, type RunInfo, type Scenario } from "./Picker";
 import { Presenter } from "./Presenter";
 import { PipelineRail } from "./Rail";
 import { IntegrityPanel, ReportPanel } from "./Report";
+import { importantNodes, reachCounts, sizeByReach } from "./reach";
+import { useSessionTally } from "./Scoreboard";
+import { RunPanel, Steps } from "./Start";
 import { TopBar } from "./TopBar";
 import type { GEdge, GNode, GraphDoc, LabState, Stage } from "./types";
 import { useLab } from "./useLab";
 
 const MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
 
-export type TabId = "impact" | "race" | "arena" | "triage" | "repair" | "comment" | "integrity";
+export type TabId = "impact" | "race" | "arena" | "triage" | "repair" | "verdict" | "comment" | "integrity";
 export const RESULT_TABS: { id: TabId; label: string; stages: Stage[] }[] = [
   { id: "impact", label: "Impact", stages: ["repo", "graph", "change", "impact"] },
   { id: "race", label: "Test race", stages: ["tests"] },
   { id: "arena", label: "Strategy arena", stages: ["arena"] },
   { id: "triage", label: "Triage", stages: ["triage"] },
   { id: "repair", label: "Repair", stages: ["repair", "validate"] },
-  { id: "comment", label: "PR comment", stages: ["report"] },
+  { id: "verdict", label: "Verdict", stages: ["report"] },
+  { id: "comment", label: "PR comment", stages: [] },
   { id: "integrity", label: "Integrity", stages: [] },
 ];
 export const tabOf = (st: Stage): TabId => RESULT_TABS.find((t) => t.stages.includes(st))?.id ?? "impact";
 
-function tabTone(s: LabState, stages: Stage[]): Tone {
-  const xs = stages.map((k) => s.stage[k]?.status).filter(Boolean);
+function tabTone(s: LabState, t: { id: TabId; stages: Stage[] }): Tone | null {
+  if (t.id === "comment") return s.report.comment ? "ok" : "pending";
+  if (t.stages.length === 0) return null;
+  const xs = t.stages.map((k) => s.stage[k]?.status).filter(Boolean);
   if (!xs.length) return "pending";
   return xs.includes("failed") ? "failed" : xs.includes("running") ? "running" : xs.every((x) => x === "skipped") ? "skipped" : "ok";
 }
@@ -98,19 +105,30 @@ export function useRunGraph(s: LabState, preview: GraphDoc | null) {
   return { runGraph, nodes, edges, outcomes, paths, atRisk, changed, full, loadFull };
 }
 
-export function GraphLegend({ outcomes }: { outcomes: Record<string, "passed" | "failed"> }) {
-  const passed = Object.values(outcomes).filter((x) => x === "passed").length;
-  const failed = Object.values(outcomes).length - passed;
+type Filter = "file" | "class" | "function" | "test" | "passed" | "failed";
+const LEGEND: { k: Filter; label: string; swatch: React.ReactNode }[] = [
+  { k: "file", label: "file", swatch: <span className="inline-block h-2.5 w-3 rounded-sm bg-blue" /> },
+  { k: "class", label: "class", swatch: <span className="inline-block h-2.5 w-2.5 rotate-45 bg-amber" /> },
+  { k: "function", label: "function", swatch: <span className="inline-block h-2.5 w-2.5 rounded-full bg-muted" /> },
+  { k: "test", label: "test", swatch: <span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-green" /> },
+  { k: "passed", label: "passed", swatch: <StatusIcon tone="passed" /> },
+  { k: "failed", label: "failed", swatch: <StatusIcon tone="failed" /> },
+];
+
+/** Legend chips that are also the filters: a chip that is off hides that kind of node. */
+export function GraphFilters({ hidden, toggle, counts }: { hidden: Filter[]; toggle: (k: Filter) => void; counts: Partial<Record<Filter, number>> }) {
   return (
-    <div className="ui flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
-      <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-3 rounded-sm bg-blue" />file</span>
-      <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rotate-45 bg-amber" />class</span>
-      <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-full bg-muted" />function</span>
-      <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-green" />test</span>
-      <span className="flex items-center gap-1 text-accent"><Icon name="bolt" />changed</span>
-      <span className="flex items-center gap-1"><StatusIcon tone="passed" />passed</span>
-      <span className="flex items-center gap-1"><StatusIcon tone="failed" />failed</span>
-      {passed + failed > 0 && <span>test nodes: <span className="num text-ink">{passed}</span> passed, <span className="num text-ink">{failed}</span> with a failure</span>}
+    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Graph filters">
+      {LEGEND.map((x) => {
+        const off = hidden.includes(x.k);
+        return (
+          <button key={x.k} type="button" onClick={() => toggle(x.k)} aria-pressed={!off}
+            className={`ui inline-flex min-h-[26px] items-center gap-1.5 rounded-full border px-2 text-xs ${off ? "border-rule text-muted line-through opacity-60" : "border-rule text-ink hover:border-muted"}`}>
+            {x.swatch}{x.label}{counts[x.k] !== undefined && <span className="num text-muted">{counts[x.k]}</span>}
+          </button>
+        );
+      })}
+      <span className="ui inline-flex items-center gap-1 text-xs text-accent"><Icon name="bolt" />changed</span>
     </div>
   );
 }
@@ -125,12 +143,15 @@ export default function LabPage() {
   const [repairArena, setRepairArena] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [logOpen, setLogOpen] = useState(false);
-  const [codeOpen, setCodeOpen] = useState(false);
+  const [otherOpen, setOtherOpen] = useState(false);
   const [waveKey, setWaveKey] = useState(0);
   const [tab, setTab] = useState<TabId>("impact");
   const [presenting, setPresenting] = useState(false);
+  const [explain, setExplain] = useState(false);
+  const [hidden, setHidden] = useState<Filter[]>([]);
   const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
   const { probe, startProbe, clearProbe } = useProbe();
+  const tally = useSessionTally(s);
   const lastReplay = useRef<{ name: string; speed: number } | null>(null);
   const pinnedAt = useRef<Stage | null>(null);
   const graphRef = useRef<GraphHandle>(null);
@@ -149,7 +170,8 @@ export default function LabPage() {
     return () => { alive = false; };
   }, [avail.live]);
 
-  const previewUrl = s.mode !== "idle" ? null : scenario?.kind === "repo" ? `/api/lab/graph?repo=${scenario.name}` : scenario?.kind === "replay" ? `/lab/runs/${scenario.name}.graph.json` : null;
+  const idle = s.mode === "idle";
+  const previewUrl = !idle ? null : scenario?.kind === "repo" ? `/api/lab/graph?repo=${scenario.name}` : scenario?.kind === "replay" ? `/lab/runs/${scenario.name}.graph.json` : null;
   const preview = useGraphDoc(previewUrl);
   const g = useRunGraph(s, preview.doc);
   useEffect(() => { setSelected(null); setTab("impact"); pinnedAt.current = null; }, [s.startedAt]);
@@ -168,6 +190,33 @@ export default function LabPage() {
   const pick = (t: TabId) => { setTab(t); pinnedAt.current = runningStage; };
   const pickStage = (st: Stage) => { pick(tabOf(st)); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); };
 
+  const reach = useMemo(() => reachCounts(g.nodes, g.edges), [g.nodes, g.edges]);
+  const sizeBy = useMemo(() => sizeByReach(reach, g.nodes), [reach, g.nodes]);
+  const important = useMemo(() => importantNodes(g.nodes, reach), [g.nodes, reach]);
+  const hiddenTypes = hidden.filter((k) => ["file", "class", "function", "test"].includes(k));
+  const hiddenIds = useMemo(() => {
+    const out: string[] = [];
+    if (hidden.includes("passed")) Object.entries(g.outcomes).forEach(([id, o]) => { if (o === "passed") out.push(id); });
+    if (hidden.includes("failed")) Object.entries(g.outcomes).forEach(([id, o]) => { if (o === "failed") out.push(id); });
+    return out;
+  }, [hidden, g.outcomes]);
+  const typeCounts = useMemo(() => {
+    const c: Partial<Record<Filter, number>> = {};
+    g.nodes.forEach((n) => { c[n.type as Filter] = (c[n.type as Filter] ?? 0) + 1; });
+    const o = Object.values(g.outcomes);
+    if (o.length) { c.passed = o.filter((x) => x === "passed").length; c.failed = o.filter((x) => x === "failed").length; }
+    return c;
+  }, [g.nodes, g.outcomes]);
+  const hops = (s.impact.paths?.reachability?.hops ?? {}) as Record<string, number>;
+  const tooltipOf = useCallback((id: string) => {
+    const n = g.nodes.find((x) => x.id === id);
+    if (!n) return [];
+    const r = reach.count[id] ?? 0;
+    return [n.label.replace(/^\./, ""), `${n.type} · ${n.file}${n.line ? `:${n.line}` : ""}`,
+      n.type === "test" ? "a test" : `reached by ${r} test${r === 1 ? "" : "s"}`,
+      ...(hops[id] !== undefined ? [hops[id] === 0 ? "the changed code" : `${hops[id]} hop${hops[id] === 1 ? "" : "s"} from the change`] : [])];
+  }, [g.nodes, reach, hops]);
+
   const sel = g.nodes.find((n) => n.id === selected) ?? null;
   const repoName = (s.repo?.prepared ? s.repo.name : null) ?? (scenario?.kind === "repo" ? scenario.name : null);
   const q = avail.quota?.[model];
@@ -175,7 +224,10 @@ export default function LabPage() {
   const modelOk = avail.llm && !quotaReason;
   const canRun = scenario !== null && (scenario.kind === "replay" || scenario.kind === "pr" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
   const breakable = (n: GNode | undefined | null) => Boolean(n && n.type === "function" && repoName && avail.live && !s.running && !n.is_test_file);
-  /** Start a live run of `ch` on `sc` (the Run button, and the graph's "Inject a bug here" menu). */
+  const why = s.running ? "Running…" : !scenario ? "Pick a repo first" : !avail.live && scenario.kind !== "replay" ? "Live runs need the local server" : scenario.kind !== "replay" && scenario.kind !== "pr" && !change ? "Click a function to break it" : "";
+  const stage: 1 | 2 | 3 | 4 = s.events.length ? 4 : !scenario ? 1 : scenario.kind === "pr" || scenario.kind === "replay" || change ? 3 : 2;
+
+  /** Start a live run of `ch` on `sc`. */
   const launch = useCallback((sc: NonNullable<Scenario>, ch: Change) => {
     if (sc.kind === "replay") return;
     lastReplay.current = null;
@@ -199,101 +251,163 @@ export default function LabPage() {
     launch(scenario, change);
   }, [scenario, change, launch, startReplay]);
 
+  const replay = useCallback((name: string) => {
+    setScenario({ kind: "replay", name });
+    setChange(null);
+    lastReplay.current = { name, speed: Number(new URLSearchParams(window.location.search).get("speed")) || 1 };
+    startReplay(name, lastReplay.current.speed);
+  }, [startReplay]);
+
   const graphFail = stageFailure(s, "graph");
   const counts = s.graph?.counts ?? g.runGraph?.counts;
-  const graphEmpty = s.running ? "Building the code graph of the base commit." : graphFail ? "" : preview.error ? `The graph could not be loaded: ${preview.error}` : scenario ? "Loading the graph (the first build of a repository takes a few seconds)." : "Pick a repository or a recorded run: its code graph appears here, and when the run applies the change the graph re-forms into rings around it.";
+  const graphEmpty = s.running ? "Building the code graph." : graphFail ? "" : preview.error ? `The graph could not be loaded: ${preview.error}` : scenario ? "Loading the graph…" : "Pick a repo to see its code graph.";
+  const prepared = scenario?.kind === "repo" ? repos?.find((r) => r.name === scenario.name) ?? null : null;
+  const changePreviewNode = change?.kind === "inject" ? g.nodes.find((n) => n.type === "function" && n.file === change.file && n.label.replace(/^\./, "").replace(/\(\)$/, "") === change.function.split(".").slice(-1)[0]) : undefined;
 
   return (
-    <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3">
-      <TopBar s={s} avail={avail} model={model} canRun={canRun} onRun={run} onReset={() => { reset(); setScenario(null); setChange(null); }}
-        onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
-      {presenting && (
-        <Presenter s={s} g={{ nodes: g.nodes, edges: g.edges, changed: g.changed, paths: g.paths, atRisk: g.atRisk, outcomes: g.outcomes }} onClose={() => setPresenting(false)}
-          onRestart={() => { if (s.mode === "replay" && lastReplay.current) startReplay(lastReplay.current.name, lastReplay.current.speed); }} />
-      )}
-      {s.mode === "idle" && (
-        <div className="flex flex-wrap items-center gap-3 text-sm">
-          <label className="ui text-xs text-muted" htmlFor="model">Model for the repair step</label>
-          <select id="model" value={model} onChange={(e) => setModel(e.target.value)} className="mono px-2 py-1 text-xs">{MODELS.map((m) => <option key={m}>{m}</option>)}</select>
-          <label className={`ui flex items-center gap-1.5 text-xs ${modelOk ? "text-ink" : "text-muted"}`} title={modelOk ? "Adds one model call: R1 (log-only) on the same failure, and what an unvalidated push would ship" : quotaReason || avail.reason}>
-            <input type="checkbox" checked={repairArena && modelOk} disabled={!modelOk} onChange={(e) => setRepairArena(e.target.checked)} />
-            Repair arena (one extra model call){avail.checked && !modelOk ? `: unavailable, ${quotaReason ? "quota used up" : avail.live ? "no model key on the server" : "static build"}` : ""}
-          </label>
-          {avail.checked && !avail.llm && avail.live && <span className="ui text-xs text-amber">{avail.reason}</span>}
-          {quotaReason && <span className="ui text-xs text-amber" role="status">Repair is unavailable: {quotaReason}. Live runs still go through graph, prediction, tests, arena and triage.</span>}
-        </div>
-      )}
-      <PipelineRail s={s} active={null} onPick={pickStage} />
-      {s.error && <p className="ui m-0 flex items-center gap-2 rounded border border-red px-3 py-2 text-sm text-red" role="alert"><Icon name="warn" />{s.error}</p>}
-      {s.repo && s.repo.tests_runnable === false && s.repo.reason && (
-        <p className="ui m-0 rounded border border-amber px-3 py-2 text-sm text-amber" role="status">Tests were not run: {s.repo.reason}. The graph and the impact ranking are still real.</p>
-      )}
-      {s.mode === "idle" && (
-        <Picker repos={repos} runs={runs} live={avail.live} reason={avail.reason} scenario={scenario} setScenario={setScenario} change={change} setChange={setChange} disabled={s.running} />
-      )}
+    <ExplainContext.Provider value={explain}>
+      <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3 pb-14">
+        <h1 className="sr-only">Live Lab</h1>
+        <TopBar s={s} avail={avail} model={model} tally={tally} explain={explain} setExplain={setExplain}
+          onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); }}
+          onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
+        {presenting && (
+          <Presenter s={s} g={{ nodes: g.nodes, edges: g.edges, changed: g.changed, paths: g.paths, atRisk: g.atRisk, outcomes: g.outcomes }} onClose={() => setPresenting(false)}
+            onRestart={() => { if (s.mode === "replay" && lastReplay.current) startReplay(lastReplay.current.name, lastReplay.current.speed); }} />
+        )}
+        <Steps stage={stage} />
+        {s.error && <p className="ui m-0 flex items-center gap-2 rounded border border-red px-3 py-2 text-sm text-red" role="alert"><Icon name="warn" />{s.error}</p>}
+        {s.repo && s.repo.tests_runnable === false && s.repo.reason && (
+          <p className="ui m-0 rounded border border-amber px-3 py-2 text-sm text-amber" role="status">Tests were not run: {s.repo.reason}</p>
+        )}
+        {!avail.live && avail.checked && idle && (
+          <p className="ui m-0 rounded border border-amber px-3 py-2 text-sm text-amber" role="status">Live runs are off: {avail.reason}</p>
+        )}
 
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_320px] lab:grid-cols-[380px_minmax(0,1fr)_340px]">
-        <Panel id="panel-code" title="The change" className="hidden min-h-0 flex-col lab:flex" bodyClass="flex min-h-0 flex-1 flex-col" right={<Prov mode={s.change ? s.mode : "idle"} />}>
-          <CodePanel change={s.change} className="h-[clamp(420px,calc(100vh-300px),640px)]" />
-        </Panel>
-        <Panel id="panel-graph" title="Blast radius" bodyClass="p-0" right={
-          <>
-            <Prov mode={s.graph ? s.mode : "idle"} />
-            <button type="button" onClick={() => setCodeOpen(true)} className={`${BTN} lab:hidden`} aria-haspopup="dialog">Change</button>
-            <button type="button" onClick={() => setLogOpen(true)} className={`${BTN} lg:hidden`} aria-haspopup="dialog">Log</button>
-            <button type="button" onClick={() => graphRef.current?.fit()} className={BTN} aria-label="Fit the graph">fit</button>
-            <button type="button" onClick={() => graphRef.current?.zoomIn()} className={BTN} aria-label="Zoom in">+</button>
-            <button type="button" onClick={() => graphRef.current?.zoomOut()} className={BTN} aria-label="Zoom out">−</button>
-          </>}>
-          <div className="relative h-[clamp(420px,calc(100vh-300px),640px)] overflow-hidden bg-page">
-            {g.nodes.length === 0 && (
-              <div className="absolute inset-0 grid place-items-center px-8 text-center">
-                {graphFail ? <div className="max-w-md text-left"><p className="ui m-0 text-sm font-semibold text-red">The graph could not be built.</p><p className="mono m-0 mt-1 text-xs">{String(graphFail.data.reason)}</p><p className="ui m-0 mt-1 text-xs text-muted">Next: the run continues without it (ranking, tests and triage do not need the graph). Check the file named above, or pick a prepared repository.</p></div>
-                  : <p className="ui m-0 max-w-md text-sm text-muted">{graphEmpty}</p>}
-              </div>
-            )}
-            <GraphView ref={graphRef} className="absolute inset-0" nodes={g.nodes} edges={g.edges} layout="rings"
-              changed={g.changed} waveKey={waveKey} paths={g.paths} atRisk={g.atRisk} outcomes={g.outcomes} selected={selected} onSelect={(id) => { setSelected(id); setCtx(null); }}
-              onContext={(id, x, y) => { const n = g.nodes.find((k) => k.id === id); if (breakable(n)) { setSelected(null); setCtx({ id, x, y }); } }}
-              ariaLabel="Blast-radius graph. Right-click, long-press or press the context-menu key on a function to inject a bug there"
-              renderCard={(id, info) => sel && sel.id === id ? (
-                <NodeCard node={sel} nodes={g.nodes} edges={g.edges} repo={repoName} s={s} info={info} onClose={() => setSelected(null)} onSelect={(x) => { setSelected(x); graphRef.current?.center(x); }}
-                  actions={breakable(sel) ? (<>
-                    <button type="button" className={BTN} onClick={() => { setCtx({ id: sel.id, x: 40, y: 40 }); setSelected(null); }}><Icon name="bug" />Inject a bug here</button>
-                    <button type="button" className={BTN} disabled={probe?.running} onClick={async () => {
-                      const r = await fetch(`/api/lab/mutations?repo=${repoName}&file=${encodeURIComponent(sel.file)}`).then((x) => x.json()).catch(() => null);
-                      const { matchFunction } = await import("./BreakIt");
-                      const fn = r ? matchFunction(sel, r.functions ?? []) : null;
-                      if (repoName && fn) startProbe(repoName, sel.file, fn.function);
-                    }}>Probe suite strength</button>
-                  </>) : undefined} />
-              ) : null} />
-            {ctx && repoName && g.nodes.find((n) => n.id === ctx.id) && (
-              <InjectMenu node={g.nodes.find((n) => n.id === ctx.id)!} repo={repoName} x={ctx.x} y={ctx.y} disabled={s.running}
-                onClose={() => setCtx(null)}
-                onRun={(c) => {
-                  const sc: Scenario = { kind: "repo", name: repoName };
-                  const ch: Change = { kind: "inject", ...c };
-                  setCtx(null); setScenario(sc); setChange(ch); launch(sc, ch);
-                }} />
-            )}
-          </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-rule px-3 py-2">
-            <GraphLegend outcomes={g.outcomes} />
-            {g.runGraph && <span className="num mono ml-auto text-xs text-muted">{s.graph?.n_nodes ?? g.nodes.length} nodes · {s.graph?.n_edges ?? g.edges.length} edges{counts ? ` · ${counts.nodes.test ?? 0} tests` : ""} · {s.graph?.parse_failures ?? g.runGraph.parse_failures ?? 0} parse failures</span>}
-          </div>
-          {s.graph?.truncated && !g.full && (
-            <p className="ui m-0 border-t border-rule px-3 py-1.5 text-xs text-amber">Showing files and the 2-hop neighbourhood of the change ({s.graph.streamed_nodes ?? g.nodes.length} of {s.graph.n_nodes} nodes). <button type="button" className="underline" onClick={g.loadFull}>Load the full graph</button></p>
+        <div className="grid gap-3 lg:grid-cols-[minmax(300px,340px)_minmax(0,1fr)_minmax(260px,300px)]">
+          {idle ? (
+            <Panel id="panel-pick" title={<span className="flex items-center gap-2"><span className="num text-accent">1</span>Pick a repo</span>} bodyClass="p-3">
+              <RepoCards repos={repos} live={avail.live} disabled={s.running} scenario={scenario} setScenario={setScenario} setChange={setChange} />
+            </Panel>
+          ) : (
+            <Panel id="panel-code" title="The change" className="hidden min-h-0 flex-col lg:flex" bodyClass="flex min-h-0 flex-1 flex-col" right={<Prov mode={s.change ? s.mode : "idle"} />}>
+              <CodePanel change={s.change} className="h-[clamp(420px,calc(100vh-300px),640px)]" />
+            </Panel>
           )}
-        </Panel>
-        <Panel id="panel-log" title="Event log" className="hidden min-h-0 flex-col lg:flex" bodyClass="flex min-h-0 flex-1 flex-col" right={<Prov mode={s.mode} />}>
-          <EventLog events={s.events} className="h-[clamp(420px,calc(100vh-300px),640px)]" />
-        </Panel>
+
+          <Panel id="panel-graph" title={idle ? <span className="flex items-center gap-2"><span className="num text-accent">2</span>Break it</span> : "Blast radius"} bodyClass="p-0" right={
+            <>
+              <Prov mode={s.graph ? s.mode : "idle"} />
+              <button type="button" onClick={() => graphRef.current?.fit()} className={BTN} aria-label="Fit the graph">fit</button>
+              <button type="button" onClick={() => graphRef.current?.zoomIn()} className={BTN} aria-label="Zoom in">+</button>
+              <button type="button" onClick={() => graphRef.current?.zoomOut()} className={BTN} aria-label="Zoom out">−</button>
+            </>}>
+            <div className="relative h-[clamp(420px,calc(100vh-300px),640px)] overflow-hidden bg-page">
+              {g.nodes.length === 0 && (
+                <div className="absolute inset-0 grid place-items-center px-8 text-center">
+                  {graphFail ? <div className="max-w-md text-left"><p className="ui m-0 text-sm font-semibold text-red">The graph could not be built.</p><p className="mono m-0 mt-1 text-xs">{String(graphFail.data.reason)}</p></div>
+                    : <p className="ui m-0 max-w-md text-md text-muted">{graphEmpty}</p>}
+                </div>
+              )}
+              {idle && prepared && !change && g.nodes.length > 0 && (
+                <span className="ui pointer-events-none absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-full border border-accent bg-panel px-3 py-1 text-sm font-semibold text-accent shadow-[0_4px_16px_rgb(0_0_0/0.4)]">Click a function to break it</span>
+              )}
+              <GraphView ref={graphRef} className="absolute inset-0" nodes={g.nodes} edges={g.edges} layout="rings"
+                changed={g.changed} waveKey={waveKey} paths={g.paths} atRisk={g.atRisk} outcomes={g.outcomes}
+                selected={changePreviewNode && idle ? changePreviewNode.id : selected} focusSelected={!idle}
+                hiddenNodeTypes={hiddenTypes} hiddenIds={hiddenIds} sizeBy={sizeBy} important={important} tooltipOf={tooltipOf}
+                onSelect={(id) => { const n = g.nodes.find((k) => k.id === id); if (idle && breakable(n)) return; setSelected(id); setCtx(null); }}
+                onTap={(id, x, y) => { const n = g.nodes.find((k) => k.id === id); if (idle && breakable(n)) { setSelected(null); setCtx({ id, x, y }); } }}
+                onContext={(id, x, y) => { const n = g.nodes.find((k) => k.id === id); if (breakable(n)) { setSelected(null); setCtx({ id, x, y }); } }}
+                ariaLabel="Blast-radius graph. Click, long-press or press Enter on a function to break it"
+                renderCard={(id, info) => sel && sel.id === id ? (
+                  <NodeCard node={sel} nodes={g.nodes} edges={g.edges} repo={repoName} s={s} info={info} onClose={() => setSelected(null)} onSelect={(x) => { setSelected(x); graphRef.current?.center(x); }}
+                    actions={breakable(sel) ? (<>
+                      <button type="button" className={BTN} onClick={() => { setCtx({ id: sel.id, x: 40, y: 40 }); setSelected(null); }}><Icon name="bug" />Break it</button>
+                      <button type="button" className={BTN} disabled={probe?.running} onClick={async () => {
+                        const r = await fetch(`/api/lab/mutations?repo=${repoName}&file=${encodeURIComponent(sel.file)}`).then((x) => x.json()).catch(() => null);
+                        const { matchFunction } = await import("./BreakIt");
+                        const fn = r ? matchFunction(sel, r.functions ?? []) : null;
+                        if (repoName && fn) startProbe(repoName, sel.file, fn.function);
+                      }}>Probe suite strength</button>
+                    </>) : undefined} />
+                ) : null} />
+              {ctx && repoName && g.nodes.find((n) => n.id === ctx.id) && (
+                <InjectMenu node={g.nodes.find((n) => n.id === ctx.id)!} repo={repoName} x={ctx.x} y={ctx.y} disabled={s.running}
+                  onClose={() => setCtx(null)}
+                  onRun={(c) => { setScenario({ kind: "repo", name: repoName }); setChange({ kind: "inject", ...c }); setCtx(null); }} />
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-rule px-3 py-2">
+              <GraphFilters hidden={hidden} counts={typeCounts} toggle={(k) => setHidden((h) => (h.includes(k) ? h.filter((x) => x !== k) : [...h, k]))} />
+              {g.runGraph && <span className="num mono ml-auto text-xs text-muted">{s.graph?.n_nodes ?? g.nodes.length} nodes · {s.graph?.n_edges ?? g.edges.length} edges{counts ? ` · ${counts.nodes.test ?? 0} tests` : ""}</span>}
+              <Info label="About the graph" align="right">
+                <span className="block">Node size is the number of tests that reach it along calls and imports. Click a node to focus it; click empty space to clear.</span>
+                <span className="mt-1 block">{s.graph?.parse_failures ?? g.runGraph?.parse_failures ?? 0} parse failures in this graph.</span>
+              </Info>
+            </div>
+            {s.graph?.truncated && !g.full && (
+              <p className="ui m-0 border-t border-rule px-3 py-1.5 text-xs text-amber">Showing files and the 2-hop neighbourhood of the change. <button type="button" className="underline" onClick={g.loadFull}>Load the full graph</button></p>
+            )}
+          </Panel>
+
+          <Panel id="panel-run" title={<span className="flex items-center gap-2"><span className="num text-accent">3</span>Run</span>} bodyClass="p-3">
+            <RunPanel scenario={scenario} change={change} running={s.running} canRun={canRun} why={why} onRun={run} runs={runs} onReplay={replay}
+              stageLabel={runningStage ? `Running · ${runningStage}` : "Running"}
+              extra={(scenario?.kind === "repo" || scenario?.kind === "github") && idle ? (
+                <button type="button" onClick={() => setOtherOpen(true)} className={`${BTN} justify-center`} aria-haspopup="dialog">Other ways to change code</button>
+              ) : undefined}>
+              <details className="rounded border border-rule bg-page">
+                <summary className="ui cursor-pointer px-2 py-1.5 text-sm">Options</summary>
+                <div className="space-y-2 border-t border-rule p-2">
+                  <label className="ui block text-xs text-muted" htmlFor="model">Model for the repair step</label>
+                  <select id="model" value={model} onChange={(e) => setModel(e.target.value)} className="mono w-full px-2 py-1 text-xs">{MODELS.map((m) => <option key={m}>{m}</option>)}</select>
+                  <label className={`ui flex items-center gap-1.5 text-xs ${modelOk ? "text-ink" : "text-muted"}`} title={modelOk ? "One extra model call: R1 (log-only) on the same failure" : quotaReason || avail.reason}>
+                    <input type="checkbox" checked={repairArena && modelOk} disabled={!modelOk} onChange={(e) => setRepairArena(e.target.checked)} />
+                    Repair arena (one extra call)
+                  </label>
+                  {avail.checked && !modelOk && <p className="ui m-0 text-xs text-amber" role="status">{quotaReason ? "Repair is off: quota used up." : avail.live ? "Repair is off: no model key." : "Static build: replays only."}</p>}
+                </div>
+              </details>
+            </RunPanel>
+          </Panel>
+        </div>
+
+        <PipelineRail s={s} active={null} onPick={pickStage} />
+
+        <TestGapPanel s={s} />
+        {probe && <ProbePanel p={probe} onClose={clearProbe} />}
+        <section ref={results} id="results" className="scroll-mt-16 rounded-md border border-rule bg-panel" aria-label="Results">
+          <div className="flex flex-wrap items-center gap-1 border-b border-rule px-2 pt-2" role="tablist" aria-label="Result views">
+            {RESULT_TABS.map((t) => {
+              const tone = tabTone(s, t);
+              return (
+                <button key={t.id} type="button" role="tab" id={`tab-${t.id}`} aria-selected={tab === t.id} aria-controls={`tabpanel-${t.id}`} onClick={() => pick(t.id)}
+                  className={`ui -mb-px flex min-h-[34px] items-center gap-1.5 rounded-t border border-b-0 px-3 py-1.5 text-sm ${tab === t.id ? "border-rule bg-panel font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}>
+                  {tone && <StatusIcon tone={tone} className="text-xs" />}{t.label}
+                </button>
+              );
+            })}
+            <span className="ml-auto pb-1.5 pr-1"><Prov mode={s.mode} /></span>
+          </div>
+          <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="p-4">
+            {tab === "impact" && <ImpactPanel s={s} />}
+            {tab === "race" && <RacePanel s={s} />}
+            {tab === "arena" && <ArenaPanel s={s} />}
+            {tab === "triage" && <TriagePanel s={s} />}
+            {tab === "repair" && <RepairPanel s={s} />}
+            {tab === "verdict" && <VerdictPanel s={s} />}
+            {tab === "comment" && <ReportPanel s={s} />}
+            {tab === "integrity" && <IntegrityPanel s={s} />}
+          </div>
+        </section>
       </div>
 
-      {codeOpen && (
-        <Drawer side="left" title="The change" onClose={() => setCodeOpen(false)}>
-          <CodePanel change={s.change} className="min-h-0 flex-1" />
+      {otherOpen && (scenario?.kind === "repo" || scenario?.kind === "github") && (
+        <Drawer side="left" title="Other ways to change code" onClose={() => setOtherOpen(false)}>
+          <div className="min-h-0 flex-1 overflow-y-auto p-3">
+            <ChangePicker scenario={scenario} repo={prepared} change={change} setChange={(c) => { setChange(c); if (c) setOtherOpen(false); }} disabled={s.running} />
+          </div>
         </Drawer>
       )}
       {logOpen && (
@@ -301,51 +415,7 @@ export default function LabPage() {
           <EventLog events={s.events} className="min-h-0 flex-1" />
         </Drawer>
       )}
-
-      <TestGapPanel s={s} />
-      {probe && <ProbePanel p={probe} onClose={clearProbe} />}
-      <section ref={results} id="results" className="scroll-mt-16 rounded-md border border-rule bg-panel" aria-label="Results">
-        <div className="flex flex-wrap items-center gap-1 border-b border-rule px-2 pt-2" role="tablist" aria-label="Result views">
-          {RESULT_TABS.map((t) => (
-            <button key={t.id} type="button" role="tab" id={`tab-${t.id}`} aria-selected={tab === t.id} aria-controls={`tabpanel-${t.id}`} onClick={() => pick(t.id)}
-              className={`ui -mb-px flex items-center gap-1.5 rounded-t border border-b-0 px-3 py-1.5 text-sm ${tab === t.id ? "border-rule bg-panel font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}>
-              {t.stages.length > 0 && <StatusIcon tone={tabTone(s, t.stages)} className="text-xs" />}{t.label}
-            </button>
-          ))}
-          <span className="ml-auto pb-1.5 pr-1"><Prov mode={s.mode} /></span>
-        </div>
-        <div role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`} className="p-4">
-          {tab === "impact" && <ImpactPanel s={s} />}
-          {tab === "race" && <RacePanel s={s} />}
-          {tab === "arena" && <ArenaPanel s={s} />}
-          {tab === "triage" && <TriagePanel s={s} />}
-          {tab === "repair" && <RepairPanel s={s} />}
-          {tab === "comment" && <ReportPanel s={s} />}
-          {tab === "integrity" && <IntegrityPanel s={s} />}
-        </div>
-      </section>
-    </div>
+      <Ticker events={s.events} onOpen={() => setLogOpen(true)} />
+    </ExplainContext.Provider>
   );
 }
-
-export function Drawer({ side, title, onClose, children }: { side: "left" | "right"; title: string; onClose: () => void; children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const prev = document.activeElement as HTMLElement | null;
-    ref.current?.focus();
-    const on = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", on);
-    return () => { window.removeEventListener("keydown", on); prev?.focus?.(); };
-  }, [onClose]);
-  return (
-    <>
-      <div className="fixed inset-0 z-30 bg-page/60" onClick={onClose} aria-hidden="true" />
-      <aside ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-label={title}
-        className={`fixed inset-y-0 z-40 flex w-full max-w-[520px] flex-col border-rule bg-panel shadow-[0_0_40px_rgb(0_0_0/0.5)] outline-none ${side === "left" ? "left-0 border-r" : "right-0 border-l"}`}>
-        <header className="flex items-center justify-between border-b border-rule px-3 py-2"><h3 className="ui m-0 text-sm font-semibold">{title}</h3><button type="button" onClick={onClose} className={BTN}>Close</button></header>
-        {children}
-      </aside>
-    </>
-  );
-}
-

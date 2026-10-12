@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Icon, Id, StatusIcon, fmtMs, midEllipsis } from "./common";
+import { Info } from "./Info";
 import { parseDiff } from "./CodePanel";
-import { useEvidence } from "./EvidenceStrip";
+import { MiniBars, useEvidence } from "./EvidenceStrip";
 import { GraphView } from "./GraphView";
 import { CheckList } from "./Panels";
 import { MarkdownLite } from "./Report";
@@ -103,7 +104,7 @@ const SCREENS: Screen[] = [
   {
     id: "change", title: "The change",
     ready: (s) => Boolean(s.change), done: (s) => Boolean(s.change) && Boolean(s.graph),
-    caption: () => "Someone changed one line of code. Left: the exact edit. Right: where that function sits among all the code, at the centre.",
+    caption: () => "One line changed. Left: the edit. Right: where it sits in the code.",
     real: (s) => `${mode(s)}: the edit was committed in a scratch copy of the repository; the graph was built from the base commit by our own builder (measured, not drawn by hand).`,
     render: (s, g) => (
       <div className="grid h-full grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8">
@@ -117,7 +118,7 @@ const SCREENS: Screen[] = [
   {
     id: "radius", title: "Blast radius",
     ready: (s) => Boolean(s.impact.ranking), done: (s) => Boolean(s.impact.paths),
-    caption: () => "The change ripples outward, one ring per step through the code. These are the test files most likely to break, and the three strongest reasons for each.",
+    caption: () => "The change ripples outward, one ring per hop. These test files are most at risk.",
     real: (s) => `${mode(s)}: the rings are hop distances in the real graph; the ranking and its reasons are the E1 model's output for this diff (computed).`,
     render: (s, g, k) => {
       const rows = ((s.impact.ranking?.rows ?? []) as { test: string; score: number; reasons: string[] }[]).slice(0, 4);
@@ -144,7 +145,11 @@ const SCREENS: Screen[] = [
     id: "race", title: "Test race",
     ready: (s) => Boolean(s.tests.race), done: (s) => Boolean(s.tests.race),
     absent: (s) => (s.tests.done?.reason ? `The suite was not run: ${s.tests.done.reason}` : null),
-    caption: () => "Both lanes are the same tests. Retest-all runs them alphabetically; BlastRadius runs the risky ones first, so a broken change is caught sooner.",
+    caption: (s) => {
+      const [risk, alpha] = s.tests.race?.lanes ?? [];
+      const a = risk?.first_failure_position, b = alpha?.first_failure_position;
+      return a && b ? `Same tests, two orders: first failure at test ${a} risk-first, ${b} retest-all.` : "Same tests in two orders; no test failed in this run.";
+    },
     real: (s) => `${mode(s)}: the risk-first lane is the order pytest actually ran, with measured durations. The retest-all lane and the time saved are computed from those durations, not a second run.`,
     render: (s, _g, k) => {
       const race = s.tests.race!;
@@ -168,14 +173,14 @@ const SCREENS: Screen[] = [
     id: "arena", title: "Strategy arena",
     ready: (s) => Boolean(arenaOf(s)), done: (s) => Boolean(arenaOf(s)),
     absent: () => "This run has no strategy arena (it was recorded before the arena existed, or its tests did not run).",
-    caption: (s) => arenaOf(s)?.takeaway ?? "How other tools would have chosen tests on this same change, against how we choose.",
+    caption: (s) => arenaOf(s)?.takeaway ?? "Other test-selection strategies on this same change, against ours.",
     real: (s) => `${mode(s)}: every row is computed from this run's full-suite results; no strategy was run separately. Each is an approach re-implemented here, not the vendor's product.`,
     render: (s) => <ArenaTable a={arenaOf(s)!} large />,
   },
   {
     id: "triage", title: "Triage",
     ready: (s) => Boolean(s.triage), done: (s) => Boolean(s.triage),
-    caption: () => "Not every red test is this change's fault. Each failure is re-run on the code before the change: if it failed there too, it was inherited.",
+    caption: () => "Each failure is re-run before the change: failing there too means inherited.",
     real: (s) => `${mode(s)}: base and head outcomes are measured by re-running the failing tests on the base commit; the flaky call is the E2 model's (computed).`,
     render: (s) => {
       const t = s.triage!;
@@ -210,7 +215,7 @@ const SCREENS: Screen[] = [
     id: "repair", title: "Repair",
     ready: (s) => s.repair.chunks.length > 0, done: (s) => Boolean(s.validate.verdict) || Boolean(s.repair.unavailable),
     absent: (s) => s.repair.unavailable ? `The model was unavailable (${s.repair.unavailable.kind}): ${s.repair.unavailable.reason}` : s.repair.skipped ? `Repair did not run: ${s.repair.skipped}` : null,
-    caption: () => "The model sees only the few functions the change touched, writes a patch, and the patch counts only if all five checks pass, the full test suite among them.",
+    caption: () => "The model sees the touched functions; a patch counts only if five checks pass.",
     real: (s) => s.repair.unavailable
       ? `${mode(s)}: the context was chosen in this run; the model was not called (${s.repair.unavailable.kind}), so no patch and no checks exist for this run.`
       : `${mode(s)}: the context, the model's reply and its token count are from this run${s.repair.replies.some((r) => r.from_cache) ? " (the reply was answered from the lab cache)" : ""}; the five checks were executed, not simulated.`,
@@ -245,7 +250,7 @@ const SCREENS: Screen[] = [
   {
     id: "verdict", title: "Verdict and PR comment",
     ready: (s) => Boolean(s.report.comment), done: (s) => Boolean(s.report.comment),
-    caption: (s) => gapOf(s) ? "A known bug went straight through: every test passed. That is a gap in the tests, found here before a user finds it." : s.repair.unavailable ? "No fix this time: the model could not be called. The bot still reports the risk, the results and the triage." : s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it on the pull request, with all the evidence attached." : "No fix was accepted, so the bot reports the risk and the triage, and suggests nothing it could not prove.",
+    caption: (s) => gapOf(s) ? "Every test passed on a known bug: a gap in the tests." : s.repair.unavailable ? "No fix: the model was unavailable. Risk, results and triage still reported." : s.validate.verdict?.accepted ? "The fix passed every test, so the bot would suggest it." : "No fix accepted, so the bot suggests nothing it cannot prove.",
     real: (s) => gapOf(s)
       ? `${mode(s)}: the mutation was committed in a scratch copy and the full suite ran against it; the tests named were measured by per-test coverage at the base commit and by the code graph.`
       : `${mode(s)}: this is the exact comment text the PR bot rendered in this run. Nothing was posted anywhere.`,
@@ -273,7 +278,7 @@ const SCREENS: Screen[] = [
   {
     id: "evidence", title: "Evidence",
     ready: () => true, done: () => true,
-    caption: () => "What one run shows, the benchmark measures at scale. These four results come from BR-Bench, each read from the file that generates it.",
+    caption: () => "What one run shows, the benchmark measures at scale.",
     real: () => "FROM BR-BENCH: read from paper/generated at build time, not from this run.",
     render: () => <EvidenceSlide />,
   },
@@ -287,7 +292,8 @@ function EvidenceSlide() {
         <div key={c.title} className="flex min-h-0 flex-col rounded-md border border-rule bg-panel p-5">
           <p className="ui m-0 text-lg font-semibold text-muted">{c.title}</p>
           <p className="num mono m-0 mt-1 text-2xl font-semibold">{c.big}</p>
-          <p className="ui m-0 mt-2 line-clamp-4 text-lg leading-snug">{c.body}</p>
+          <MiniBars bars={c.bars} label={c.barsLabel} />
+          <p className="ui m-0 mt-2 line-clamp-3 text-lg leading-snug">{c.body}</p>
           <p className="mono m-0 mt-auto pt-2 text-sm text-muted">Source: {c.source}</p>
         </div>
       ))}
@@ -376,10 +382,13 @@ export function Presenter({ s, g, onClose, onRestart }: { s: LabState; g: G; onC
       <main className="min-h-0 flex-1 px-10 pb-4 pt-8">
         <ScreenBody s={s} g={g} i={i} enterKey={enterKey} />
       </main>
-      <footer className="shrink-0 border-t border-rule px-10 py-4">
-        <p className="ui m-0 text-xl leading-snug">{sc.caption(s)}</p>
-        <p className="ui m-0 mt-1.5 text-sm text-muted"><span className="font-semibold">What is real here:</span> {sc.real(s)}</p>
-        <p className="ui m-0 mt-1 text-xs text-muted">← → step · space {playing ? "pause" : "play"} · R restart · Esc close</p>
+      <footer className="flex shrink-0 items-center gap-4 border-t border-rule px-10 py-4">
+        <p className="ui m-0 min-w-0 flex-1 truncate text-xl leading-snug" title={sc.caption(s)}>{sc.caption(s)}</p>
+        <Info label="What is real here" align="right" up>
+          <span className="block font-semibold">What is real here</span>
+          <span className="mt-1 block">{sc.real(s)}</span>
+        </Info>
+        <span className="ui hidden text-xs text-muted lg:inline">← → step · space {playing ? "pause" : "play"} · R restart · Esc close</span>
       </footer>
     </div>
   );

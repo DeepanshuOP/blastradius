@@ -90,3 +90,23 @@ export function EventLog({ events, className = "" }: { events: LabEvent[]; class
     </div>
   );
 }
+
+/** A slim bar at the bottom of the screen: the latest event, and a button that opens the full log in a drawer. */
+export function Ticker({ events, onOpen }: { events: LabEvent[]; onOpen: () => void }) {
+  const last = events[events.length - 1];
+  let n = 0, failed = 0;
+  for (const e of events) if (e.type === "test.result") { n += 1; failed += e.data.outcome === "failed" || e.data.outcome === "error" ? 1 : 0; }
+  const text = !last ? "waiting for a run" : last.type === "test.result" ? `tests ${n}${last.data.of ? `/${last.data.of}` : ""} · ${failed} failed` : summarize(last.type, last.data, last.status);
+  const tone = !last ? "pending" : last.type === "test.result" ? (failed ? "failed" : "running") : (TONE[last.status] ?? "ok");
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-panel" role="status" aria-live="off">
+      <div className="mx-auto flex h-9 max-w-[1760px] items-center gap-3 px-3">
+        <StatusIcon tone={tone as Tone} />
+        <span className="ui w-16 shrink-0 text-xs text-blue">{last ? STAGE_LABEL[last.stage] : "idle"}</span>
+        <span className="mono min-w-0 flex-1 truncate text-xs" title={text}>{text}</span>
+        <span className="num mono shrink-0 text-xs text-muted">{events.length} events</span>
+        <button type="button" onClick={onOpen} className="ui shrink-0 rounded border border-rule px-2 py-0.5 text-xs hover:border-muted" aria-haspopup="dialog">Log</button>
+      </div>
+    </div>
+  );
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import type { LabState, Stage } from "./types";
 
 export const fmtMs = (ms: number | null | undefined) =>
@@ -86,7 +86,7 @@ export function Panel({ id, title, right, children, className = "", bodyClass = 
   return (
     <section id={id} className={`min-w-0 rounded-md border border-rule bg-panel ${className}`} aria-label={typeof title === "string" ? title : undefined}>
       <header className="flex min-h-[40px] items-center justify-between gap-3 border-b border-rule px-3 py-2">
-        <h3 className="ui m-0 text-sm font-semibold text-ink">{title}</h3>
+        <h2 className="ui m-0 text-sm font-semibold text-ink">{title}</h2>
         <div className="flex items-center gap-2">{right}</div>
       </header>
       <div className={bodyClass}>{children}</div>
@@ -139,11 +139,12 @@ export function summarize(type: string, d: Record<string, unknown>, status: stri
     case "change.applied": return `${(g("changed_files") as string[]).length} file(s) · ${(g("changed_nodes") as string[]).length} graph node(s) changed · head ${sha(g("head"))}`;
     case "impact.ranking": return `${g("ranker")} ranked ${g("n_test_files")} test files; top ${midEllipsis(((g("at_risk_files") as string[]) ?? [])[0] ?? "none", 44)}`;
     case "impact.paths": return `${((g("paths") as unknown[]) ?? []).length} paths · ${(g("reachability") as { n_reachable: number }).n_reachable} nodes reachable`;
-    case "tests.start": return "running the suite, at-risk files first";
+    case "tests.start": return "running the suite in the BlastRadius order";
     case "test.result": return `${String(g("outcome"))} ${midEllipsis(String(g("id")), 52)} ${fmtMs(Number(g("duration_s")) * 1000)}`;
     case "tests.done": return status === "skipped" ? `not run: ${g("reason")}` : `${counts?.passed} passed · ${counts?.failed} failed of ${counts?.total} cases`;
-    case "tests.race": return "race: risk-first against alphabetical";
+    case "tests.race": return "race: BlastRadius order against alphabetical";
     case "arena.coverage": return status === "running" ? "recording per-test coverage at the base commit" : status === "skipped" ? `coverage skipped: ${g("reason")}` : `coverage: ${g("n_tests")} tests · ${fmtMs(Number(g("wall_s")) * 1000)}${g("cached") ? " (cached)" : ""}`;
+    case "arena.upstream": return status === "running" ? "fetching git history for co-change" : status === "skipped" ? `no upstream history: ${g("reason")}` : g("status") === "not-needed" ? "git history: the clone's own" : `git history: ${g("commits")} commits (${g("status")})`;
     case "arena.result": return `${((g("strategies") as unknown[]) ?? []).length} strategies compared on this run's results`;
     case "arena.repair": return status === "running" ? "repair arena: R1 log-only call" : status === "skipped" ? `repair arena skipped: ${g("reason")}` : "repair arena: R1, R2 and the unvalidated push compared";
     case "arena.probe": return status === "running" ? `suite strength: mutant ${g("i")}/${g("n")}` : `suite strength: ${g("caught")} caught, ${g("survived")} survived`;
@@ -162,3 +163,27 @@ export function summarize(type: string, d: Record<string, unknown>, status: stri
     default: return type;
   }
 }
+
+
+/** A side drawer: focus moves into it, Escape and a click on the backdrop close it, focus returns afterwards. */
+export function Drawer({ side, title, onClose, children }: { side: "left" | "right"; title: string; onClose: () => void; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null;
+    ref.current?.focus();
+    const on = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", on);
+    return () => { window.removeEventListener("keydown", on); prev?.focus?.(); };
+  }, [onClose]);
+  return (
+    <>
+      <div className="fixed inset-0 z-30 bg-page/60" onClick={onClose} aria-hidden="true" />
+      <aside ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-label={title}
+        className={`fixed inset-y-0 z-40 flex w-full max-w-[520px] flex-col border-rule bg-panel shadow-[0_0_40px_rgb(0_0_0/0.5)] outline-none ${side === "left" ? "left-0 border-r" : "right-0 border-l"}`}>
+        <header className="flex items-center justify-between border-b border-rule px-3 py-2"><h3 className="ui m-0 text-sm font-semibold">{title}</h3><button type="button" onClick={onClose} className={BTN}>Close</button></header>
+        {children}
+      </aside>
+    </>
+  );
+}
+

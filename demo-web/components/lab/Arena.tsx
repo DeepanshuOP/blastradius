@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Empty, Icon, Id, StatusIcon, fmtMs, type Tone } from "./common";
+import { Explain } from "./Info";
+import { ArenaRace, Podium } from "./Race";
 import { UnifiedDiff } from "./Diff";
 import { CHECKS } from "./Panels";
 import type { LabState } from "./types";
@@ -47,7 +49,7 @@ export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean 
       <span className={`ui block ${S} text-muted`}>{x.status === "ok" || x.kind === "orderer" ? x.what : x.note}</span>
     </td>
   );
-  const needs = (x: Strategy) => <td className={`ui ${S} text-muted`}>{x.needs ?? "–"}</td>;
+  const needs = (x: Strategy) => <td className={`ui ${S} min-w-[15rem] text-muted`}>{x.needs ?? "–"}</td>;
   const head = (cols: string[]) => (
     <thead>
       <tr className={`ui text-left ${S} uppercase tracking-wide text-muted`}>
@@ -56,7 +58,7 @@ export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean 
     </thead>
   );
   return (
-    <div className="space-y-4 overflow-x-auto">
+    <div className="relative space-y-4 overflow-x-auto">
       <section aria-label="Orderers">
         <h4 className={`ui m-0 mb-1 ${S} font-semibold uppercase tracking-wide text-muted`}>Orderers: run all {a.n_cases} tests, change the order</h4>
         <table className={`w-full ${T}`}>
@@ -155,8 +157,8 @@ export function RepairArena({ s }: { s: LabState }) {
   const d = ev.data as RepairArenaDoc;
   return (
     <div>
-      <h4 className="ui m-0 mb-1 text-sm font-semibold">Repair arena: the same failure, three behaviours</h4>
-      <p className="ui m-0 mb-3 text-xs text-muted">{d.note}</p>
+      <h4 className="ui m-0 mb-2 text-sm font-semibold">Repair arena: R1, R2 and an unvalidated push</h4>
+      <Explain className="mb-3">{d.note}</Explain>
       <div className="grid gap-3 lg:grid-cols-3">
         {d.columns.map((c) => (
           <div key={c.id} className={`min-w-0 rounded-md border p-3 ${c.id === "R2" ? "border-accent/60" : "border-rule"} bg-page`}>
@@ -181,24 +183,33 @@ export function RepairArena({ s }: { s: LabState }) {
   );
 }
 
-/** The arena tab: the table, the chart, the generated takeaway, and the repair arena when it ran. */
+/** The arena tab: the race and the podium; the tables, chart and sources behind Details; the repair arena when it ran. */
 export function ArenaPanel({ s }: { s: LabState }) {
   const a = arenaOf(s);
   const cov = [...s.events].reverse().find((e) => e.type === "arena.coverage");
   if (!a) {
-    if (cov?.status === "running") return <p className="ui m-0 flex items-center gap-2 text-sm text-blue"><span className="br-pulse inline-block h-2 w-2 rounded-full bg-blue" />Recording per-test coverage at the base commit (one-time cost per repository and commit)…</p>;
-    return <Empty title="Six test-selection strategies are compared here once the full suite has run.">Retest-all, static reachability, per-test coverage, failure history, co-change and BlastRadius, each scored on this run&apos;s measured results: tests run, failures caught, first failure and CI time.</Empty>;
+    if (cov?.status === "running") return <p className="ui m-0 flex items-center gap-2 text-sm text-blue"><span className="br-pulse inline-block h-2 w-2 rounded-full bg-blue" />Recording per-test coverage at the base commit…</p>;
+    return <Empty title="Six strategies race here once the full suite has run." />;
   }
   return (
-    <div className="space-y-5">
-      <p className="ui m-0 rounded border border-rule bg-page px-3 py-2 text-base"><span className="font-semibold">Takeaway.</span> {a.takeaway}</p>
-      <ArenaTable a={a} />
-      <div className="max-w-3xl"><ArenaChart a={a} /></div>
-      <dl className="ui m-0 grid gap-3 text-xs sm:grid-cols-3">
-        <div><dt className="text-muted">Per-test coverage (one-time cost)</dt><dd className="m-0">{a.coverage.status === "ok" ? <><span className="num mono">{a.coverage.wall_s?.toFixed(1)} s</span> for {a.coverage.n_tests} tests at the base commit{a.coverage.cached ? ", read from the cache this run" : ", recorded this run"}</> : a.coverage.reason}</dd></div>
-        <div><dt className="text-muted">Failure history</dt><dd className="m-0">{a.history.n_runs === null ? "not known for this recording" : <>history: {a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository on this machine{a.history.n_runs === 0 ? " (cold start)" : ""}</>}</dd></div>
-        <div><dt className="text-muted">Co-change</dt><dd className="m-0">{a.cochange.reason ?? `${a.cochange.n_commits} commits of git history before the base${a.cochange.upstream?.status === "fetched" ? `, fetched from upstream in ${a.cochange.upstream.fetch_s.toFixed(1)} s` : a.cochange.upstream?.status === "cached" ? ", from the upstream cache" : ""}`}</dd></div>
-      </dl>
+    <div className="space-y-4">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+        <ArenaRace a={a} />
+        <Podium a={a} />
+      </div>
+      <Explain>{a.takeaway}</Explain>
+      <details className="rounded-md border border-rule bg-page">
+        <summary className="ui cursor-pointer px-3 py-2 text-sm font-semibold">Details</summary>
+        <div className="space-y-5 border-t border-rule p-3">
+          <ArenaTable a={a} />
+          <div className="max-w-3xl"><ArenaChart a={a} /></div>
+          <dl className="ui m-0 grid gap-3 text-xs sm:grid-cols-3">
+            <div><dt className="text-muted">Per-test coverage (one-time cost)</dt><dd className="m-0">{a.coverage.status === "ok" ? <><span className="num mono">{a.coverage.wall_s?.toFixed(1)} s</span> for {a.coverage.n_tests} tests at the base commit{a.coverage.cached ? ", read from the cache" : ", recorded this run"}</> : a.coverage.reason}</dd></div>
+            <div><dt className="text-muted">Failure history</dt><dd className="m-0">{a.history.n_runs === null ? "not known for this recording" : <>{a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository{a.history.n_runs === 0 ? " (cold start)" : ""}</>}</dd></div>
+            <div><dt className="text-muted">Co-change</dt><dd className="m-0">{a.cochange.reason ?? `${a.cochange.n_commits} commits of git history before the base${a.cochange.upstream?.status === "fetched" ? `, fetched from upstream in ${a.cochange.upstream.fetch_s.toFixed(1)} s` : a.cochange.upstream?.status === "cached" ? ", from the upstream cache" : ""}`}</dd></div>
+          </dl>
+        </div>
+      </details>
       <RepairArena s={s} />
     </div>
   );

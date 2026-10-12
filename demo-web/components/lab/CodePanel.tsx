@@ -126,9 +126,10 @@ export function CodePanel({ change, className = "" }: { change: Data | null; cla
         )}
       </div>
       {change && (
-        <p className="ui m-0 border-t border-rule px-3 py-1.5 text-xs text-muted">
-          <span className="mono">{String(change.base).slice(0, 10)}</span> → <span className="mono">{String(change.head).slice(0, 10)}</span>, {change.source?.kind === "pr" ? `pull request #${change.source.number}'s merge base to its head, fetched; nothing was committed` : "committed in a scratch worktree"}.
-          {fns.filter((x) => x.function !== "<module>").length ? <> Changed: <span className="mono text-ink">{fns.filter((x) => x.function !== "<module>").map((x) => x.function).join(", ")}</span>.</> : null}
+        <p className="ui m-0 flex items-center gap-2 border-t border-rule px-3 py-1.5 text-xs text-muted"
+          title={`${String(change.base)} → ${String(change.head)}${change.source?.kind === "pr" ? ": fetched from the pull request; nothing was committed" : ": committed in a scratch worktree"}`}>
+          <span className="mono">{String(change.base).slice(0, 7)}</span>→<span className="mono">{String(change.head).slice(0, 7)}</span>
+          <span className="truncate">{fns.filter((x) => x.function !== "<module>").map((x) => x.function).join(", ") || "module-level code"}</span>
         </p>
       )}
     </div>

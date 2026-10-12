@@ -49,12 +49,12 @@ export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
       className="ui absolute z-30 w-[420px] rounded-md border border-rule bg-panel p-3 shadow-[0_8px_28px_rgb(0_0_0/0.5)] outline-none"
       style={{ left: Math.max(8, x - 20), top: Math.max(8, y + 14) }}>
       <div className="mb-2 flex items-start justify-between gap-2">
-        <p className="m-0 flex items-center gap-1.5 text-sm font-semibold"><Icon name="bug" className="text-accent" />Inject a bug here</p>
+        <p className="m-0 flex items-center gap-1.5 text-sm font-semibold"><Icon name="bug" className="text-accent" />Break this function</p>
         <button type="button" onClick={onClose} className="rounded p-0.5 text-muted hover:text-ink" aria-label="Close the menu"><Icon name="close" /></button>
       </div>
       {err ? <p className="m-0 text-xs text-red">Could not list mutations: {err}</p>
         : fn === undefined ? <p className="m-0 text-xs text-muted">Reading the function&apos;s mutation operators…</p>
-        : fn === null ? <Empty title="No mutation operator applies to this function.">The operators are CMP_FLIP, ARITH_SWAP, NEGATE_COND, OFF_BY_ONE and BOOL_RETURN; this function has none of their patterns.</Empty>
+        : fn === null ? <Empty title="No mutation operator applies to this function." />
         : (
           <>
             <p className="mono m-0 mb-2 truncate text-xs text-muted" title={`${node.file}::${fn.function}`}>{node.file}::{fn.function}</p>
@@ -71,10 +71,10 @@ export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
             <div className="mt-2 flex items-center justify-end gap-2">
               <button type="button" onClick={onClose} className={BTN}>Cancel</button>
               <button type="button" disabled={!pick || disabled} onClick={() => pick && onRun({ file: node.file, function: fn.function, operator: pick.operator, line: pick.line })} className={BTN_PRIMARY}>
-                Run this bug
+                Break it
               </button>
             </div>
-            {disabled && <p className="m-0 mt-1 text-xs text-muted">A run is in progress; wait for it to finish.</p>}
+            {disabled && <p className="m-0 mt-1 text-xs text-muted">A run is in progress.</p>}
           </>
         )}
     </div>

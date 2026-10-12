@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Empty, Panel, Prov } from "./common";
+import { Empty, Icon } from "./common";
+import { Explain, Info } from "./Info";
 import { SideBySide, changedLines } from "./Diff";
 
 export interface RepoInfo {
@@ -59,76 +60,91 @@ export function EditableCode({ original, value, onChange }: { original: string; 
   );
 }
 
-export function Picker({ repos, runs, live, reason, scenario, setScenario, change, setChange, disabled }: {
-  repos: RepoInfo[] | null; runs: RunInfo[]; live: boolean; reason: string; scenario: Scenario; setScenario: (s: Scenario) => void;
-  change: Change; setChange: (c: Change) => void; disabled: boolean;
+/** A two-letter mark for a repository card; the colour comes from the name, so a card keeps its look. */
+export function monogram(name: string): { text: string; tone: string } {
+  const tones = ["bg-blue/20 text-blue", "bg-accent/20 text-accent", "bg-green/20 text-green", "bg-amber/20 text-amber"];
+  const h = Array.from(name).reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  return { text: name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "?", tone: tones[h % tones.length] };
+}
+
+const LANG: Record<string, string> = { python: "Python", java: "Java" };
+
+/** Step 1: one card per prepared repository (monogram, language chip, file and test counts) and a GitHub URL card. */
+export function RepoCards({ repos, live, disabled, scenario, setScenario, setChange }: {
+  repos: RepoInfo[] | null; live: boolean; disabled: boolean; scenario: Scenario; setScenario: (s: Scenario) => void; setChange: (c: Change) => void;
 }) {
   const [url, setUrl] = useState("");
-  const repo = scenario?.kind === "repo" ? repos?.find((r) => r.name === scenario.name) ?? null : null;
+  const pick = (sc: Scenario, u = "") => { setUrl(u); setScenario(sc); setChange(null); };
+  const gh = scenario?.kind === "github" || scenario?.kind === "pr";
   return (
-    <Panel id="panel-picker" title="Scenario" right={<Prov mode="idle" />}>
-      {!live && <p className="ui m-0 mb-3 rounded border border-amber px-3 py-2 text-sm text-amber" role="status">Live runs are unavailable: {reason} Recorded runs replay in the browser.</p>}
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-        {(repos ?? []).map((r) => (
-          <button key={r.name} type="button" disabled={disabled || !live} onClick={() => { setScenario({ kind: "repo", name: r.name }); setChange(null); }}
-            aria-pressed={scenario?.kind === "repo" && scenario.name === r.name}
-            className={`rounded border px-3 py-2 text-left disabled:opacity-40 ${scenario?.kind === "repo" && scenario.name === r.name ? "border-accent bg-accent/10" : "border-rule bg-page hover:border-muted"}`}>
-            <span className="ui block text-base font-semibold">{r.name}</span>
-            <span className="mono block text-xs text-muted">{r.n_files} files · {r.n_tests ?? "?"} tests · {r.commit.slice(0, 7)}</span>
-            <span className="ui block text-xs text-muted">prepared · {r.runnable ? "tests runnable" : "no interpreter"}</span>
-          </button>
-        ))}
-        {repos === null && live && <Empty>Loading repositories.</Empty>}
-      </div>
-      <div className="mt-3 grid gap-3 lg:grid-cols-2">
-        <div className={`rounded border px-3 py-2 ${scenario?.kind === "github" || scenario?.kind === "pr" ? "border-accent bg-accent/10" : "border-rule bg-page"}`}>
-          <label className="ui block text-sm font-semibold" htmlFor="gh-url">Any public GitHub repo, or a pull request</label>
-          <div className="mt-1 flex gap-2">
-            <input id="gh-url" type="url" value={url} placeholder="https://github.com/owner/repo  or  …/pull/123" disabled={disabled || !live}
-              onChange={(e) => { const v = e.target.value.trim(); setUrl(e.target.value); setScenario(!v ? null : PR_RE.test(v) ? { kind: "pr", url: v } : { kind: "github", url: v }); setChange(null); }}
-              className="mono min-w-0 flex-1 px-2 py-1 text-sm disabled:opacity-40" />
-          </div>
-          <p className="ui m-0 mt-1 text-xs text-muted">Shallow clone, then <span className="mono">uv pip install -e .</span> (180 s cap). If it cannot be installed the run still ranks and graphs it, and says why tests did not run.</p>
-          <p className="ui m-0 mt-1 text-xs text-muted">Tested here:{" "}
-            {TESTED_EXAMPLES.map((x, i) => (
-              <span key={x.url}>{i ? " · " : ""}<button type="button" disabled={disabled || !live} className="mono text-blue underline disabled:opacity-40" title={x.note}
-                onClick={() => { setUrl(x.url); setScenario({ kind: "github", url: x.url }); setChange(null); }}>{x.url.replace("https://github.com/", "")}</button></span>
-            ))}
-            {TESTED_PRS.map((x) => (
-              <span key={x.url}> · <button type="button" disabled={disabled || !live} className="mono text-blue underline disabled:opacity-40" title={x.note}
-                onClick={() => { setUrl(x.url); setScenario({ kind: "pr", url: x.url }); setChange(null); }}>{x.url.replace("https://github.com/", "")}</button></span>
-            ))}
-          </p>
-        </div>
-        <div className="rounded border border-rule bg-page px-3 py-2">
-          <span className="ui block text-sm font-semibold">Recorded scenarios (replay)</span>
-          <div className="mt-1 flex flex-wrap gap-2">
-            {runs.length === 0 && <span className="ui text-xs text-muted">None recorded yet.</span>}
-            {runs.map((r) => (
-              <button key={r.name} type="button" disabled={disabled} title={r.description} onClick={() => { setScenario({ kind: "replay", name: r.name }); setChange(null); }}
-                aria-pressed={scenario?.kind === "replay" && scenario.name === r.name}
-                className={`ui rounded border px-2 py-1 text-left text-xs ${scenario?.kind === "replay" && scenario.name === r.name ? "border-amber bg-amber/10" : "border-rule hover:border-muted"}`}>
-                <span className="block font-medium">{r.title ?? r.name}</span>
-                <span className="mono block text-2xs text-muted">{(r.date ?? "").slice(0, 10)} · {r.model ?? "no model"}</span>
+    <div className="space-y-2">
+      <ul className="m-0 grid list-none gap-2 p-0 sm:grid-cols-2 lg:grid-cols-1">
+        {(repos ?? []).map((r) => {
+          const on = scenario?.kind === "repo" && scenario.name === r.name;
+          const m = monogram(r.name);
+          return (
+            <li key={r.name}>
+              <button type="button" disabled={disabled || !live} onClick={() => pick({ kind: "repo", name: r.name })} aria-pressed={on}
+                className={`flex w-full items-center gap-2.5 rounded-md border p-2 text-left disabled:opacity-40 ${on ? "border-accent bg-accent/10" : "border-rule bg-page hover:border-muted"}`}>
+                <span className={`ui grid h-10 w-10 shrink-0 place-items-center rounded-md text-md font-bold ${m.tone}`} aria-hidden="true">{m.text}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="ui flex flex-wrap items-center gap-x-1.5 text-base font-semibold">{r.name}<span className="ui rounded bg-panel2 px-1.5 text-2xs font-medium text-muted">{LANG[r.language] ?? r.language}</span></span>
+                  <span className="num mono block truncate text-xs text-muted">{r.n_files} files · {r.n_tests ?? "?"} tests</span>
+                </span>
               </button>
-            ))}
+            </li>
+          );
+        })}
+        {repos === null && live && <li className="ui text-sm text-muted">Loading…</li>}
+      </ul>
+      <div className={`rounded-md border p-2 ${gh ? "border-accent bg-accent/10" : "border-rule bg-page"}`}>
+        <div className="flex items-center gap-2">
+          <span className="ui grid h-10 w-10 shrink-0 place-items-center rounded-md bg-panel2 text-xs font-bold text-muted" aria-hidden="true">GH</span>
+          <div className="min-w-0 flex-1">
+            <label className="ui flex items-center gap-1.5 text-sm font-semibold" htmlFor="gh-url">GitHub URL
+              <Info label="About GitHub URLs">
+                <span className="block">Any public repository, or a pull request URL.</span>
+                <span className="mt-1 block">Shallow clone, then <span className="mono">uv pip install -e .</span> with a 180 s cap. If it cannot be installed the run still graphs and ranks it, and says why tests did not run.</span>
+              </Info>
+            </label>
+            <input id="gh-url" type="url" value={url} placeholder="github.com/owner/repo or …/pull/1" disabled={disabled || !live}
+              onChange={(e) => { const v = e.target.value.trim(); pick(!v ? null : PR_RE.test(v) ? { kind: "pr", url: v } : { kind: "github", url: v }, e.target.value); }}
+              className="mono mt-0.5 w-full min-w-0 px-2 py-1 text-xs disabled:opacity-40" />
           </div>
         </div>
+        <div className="mt-1.5 flex flex-wrap gap-1.5" aria-label="Tested examples">
+          {TESTED_EXAMPLES.map((x) => (
+            <button key={x.url} type="button" disabled={disabled || !live} title={x.note} onClick={() => pick({ kind: "github", url: x.url }, x.url)}
+              className="mono rounded-full border border-rule px-2 py-0.5 text-2xs text-muted hover:text-ink disabled:opacity-40">{x.url.replace("https://github.com/", "")}</button>
+          ))}
+          {TESTED_PRS.map((x) => (
+            <button key={x.url} type="button" disabled={disabled || !live} title={x.note} onClick={() => pick({ kind: "pr", url: x.url }, x.url)}
+              className="mono rounded-full border border-rule px-2 py-0.5 text-2xs text-muted hover:text-ink disabled:opacity-40">{x.url.replace("https://github.com/", "").replace("/pull/", " #")}</button>
+          ))}
+        </div>
       </div>
-      {(scenario?.kind === "repo" || scenario?.kind === "github") && (
-        <ChangePicker scenario={scenario} repo={repo} change={change} setChange={setChange} disabled={disabled} />
-      )}
-      {scenario?.kind === "pr" && (
-        <p className="ui m-0 mt-3 text-sm text-muted">Pull-request mode: the repository is cloned shallowly, <span className="mono">pull/&lt;n&gt;/head</span> is fetched, and the pull request&apos;s own diff (merge base to head) is the change. Python suites only; the 180 s install cap and the test timeouts apply. Nothing is posted to the pull request.</p>
-      )}
-      {scenario?.kind === "replay" && (
-        <p className="ui m-0 mt-3 text-sm text-muted">This replays a recording of a real run, event by event, with its original timing. Nothing is computed in this session.</p>
-      )}
-    </Panel>
+    </div>
   );
 }
 
-function ChangePicker({ scenario, repo, change, setChange, disabled }: {
+/** Recorded scenarios as small chips; pressing one replays it. */
+export function ReplayChips({ runs, disabled, onReplay }: { runs: RunInfo[]; disabled: boolean; onReplay: (name: string) => void }) {
+  if (runs.length === 0) return null;
+  return (
+    <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0" aria-label="Recorded scenarios">
+      {runs.map((r) => (
+        <li key={r.name}>
+          <button type="button" disabled={disabled} onClick={() => onReplay(r.name)} title={`${r.title ?? r.name}${r.description ? `: ${r.description}` : ""}`}
+            className="ui inline-flex items-center gap-1 rounded-full border border-amber/60 px-2 py-0.5 text-2xs text-amber hover:bg-amber/10 disabled:opacity-40">
+            <Icon name="play" className="text-2xs" />Replay<span className="text-muted">·</span><span className="max-w-[9rem] truncate text-ink">{(r.title ?? r.name).replace(/:.*$/, "")}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function ChangePicker({ scenario, repo, change, setChange, disabled }: {
   scenario: NonNullable<Scenario>; repo: RepoInfo | null; change: Change; setChange: (c: Change) => void; disabled: boolean;
 }) {
   const prepared = scenario.kind === "repo" && repo;
@@ -231,7 +247,7 @@ function ChangePicker({ scenario, repo, change, setChange, disabled }: {
           {prepared && text !== null && (
             <>
               <EditableCode original={text} value={edited} onChange={(v) => { setEdited(v); setChange(v === text ? null : { kind: "edit", file, text: v }); }} />
-              <p className="ui m-0 mt-1 text-xs text-muted">Highlighted lines differ from the file at the base commit. The whole new file is sent to the lab, committed in a scratch worktree, and every later stage runs on it.</p>
+              <Explain>Highlighted lines differ from the file at the base commit. The whole new file is sent to the lab, committed in a scratch worktree, and every later stage runs on it.</Explain>
             </>
           )}
         </div>
@@ -266,7 +282,7 @@ function GithubInject({ change, setChange, disabled }: { change: Change; setChan
         {["CMP_FLIP", "ARITH_SWAP", "NEGATE_COND", "OFF_BY_ONE", "BOOL_RETURN"].map((o) => <option key={o}>{o}</option>)}
       </select>
       <input type="text" value={ln} disabled={disabled} placeholder="line (optional)" aria-label="Line" onChange={(e) => { setLn(e.target.value); push(f, fn, op, e.target.value); }} className="mono px-2 py-1 text-xs" />
-      <p className="ui m-0 text-xs text-muted sm:col-span-4">For a repository that is not prepared the lab applies the operator to that function after cloning, and fails with the list of what is available if there is none.{change?.kind === "inject" ? "" : ""}</p>
+      <Explain className="sm:col-span-4">For a repository that is not prepared the lab applies the operator to that function after cloning, and fails with the list of what is available if there is none.</Explain>
     </div>
   );
 }

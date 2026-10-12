@@ -21,6 +21,12 @@ export interface GraphViewProps {
   atRisk?: string[];                             // node ids of at-risk test files
   hiddenNodeTypes?: string[];
   hiddenEdgeTypes?: string[];
+  hiddenIds?: string[];                          // individual nodes to hide (an outcome filter)
+  onTap?: (id: string, x: number, y: number) => void;   // a tap, with the node's position in the box
+  sizeBy?: Record<string, number>;               // node id -> 0..1; node size (default: PageRank)
+  important?: string[];                          // node ids that carry a label (every other node is unlabelled until hovered)
+  focusSelected?: boolean;                       // a selected node dims everything except itself and its neighbours
+  tooltipOf?: (id: string) => string[];          // lines of the hover tooltip
   search?: string;
   trace?: string[];
   selected?: string | null;
@@ -76,6 +82,9 @@ function styleSheet() {
     { selector: "node.kbd", style: { label: "data(short)", "border-color": c.ink, "border-width": 3, "z-index": 40 } },
     { selector: "node.trace, node.sel", style: { "border-color": c.ink, "border-width": 4, label: "data(short)", "z-index": 30 } },
     { selector: "edge.trace", style: { "line-color": c.ink, width: 3, opacity: 1, "z-index": 25 } },
+    { selector: "node.imp", style: { label: "data(short)", "z-index": 12 } },
+    { selector: "node.dim", style: { opacity: 0.12 } },
+    { selector: "edge.dim", style: { opacity: 0.03 } },
     { selector: ".hidden", style: { display: "none" } },
   ] as never;
 }
@@ -92,11 +101,12 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
   const waves = useRef<SVGGElement>(null);
   const timers = useRef<number[]>([]);
   const sig = useRef("");
-  const cb = useRef({ select: p.onSelect, context: p.onContext });
-  cb.current = { select: p.onSelect, context: p.onContext };
+  const cb = useRef({ select: p.onSelect, context: p.onContext, tap: p.onTap });
+  cb.current = { select: p.onSelect, context: p.onContext, tap: p.onTap };
   const [ready, setReady] = useState(0);
   const [cardAt, setCardAt] = useState<{ x: number; y: number } | null>(null);
   const [kbd, setKbd] = useState<number>(-1);
+  const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null);
   const layout = p.layout ?? "rings";
   const seeds = useMemo(() => p.seeds ?? p.changed ?? [], [p.seeds, p.changed]);
   const rl = useMemo(() => (layout === "rings" ? ringLayout(p.nodes, p.edges, seeds) : null), [layout, p.nodes, p.edges, seeds]);
@@ -146,13 +156,24 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       const cytoscape = (await import("cytoscape")).default;
       if (dead || !box.current || cyRef.current) return;
       const cy = cytoscape({ container: box.current, style: styleSheet(), wheelSensitivity: 0.25, minZoom: 0.08, maxZoom: 4, boxSelectionEnabled: false });
-      cy.on("tap", "node", (e) => { const n = e.target as NodeSingular; if (!n.isParent()) cb.current.select?.(n.id()); });
+      cy.on("tap", "node", (e) => {
+        const n = e.target as NodeSingular;
+        if (n.isParent()) return;
+        const rp = n.renderedPosition();
+        cb.current.tap?.(n.id(), rp.x, rp.y);
+        cb.current.select?.(n.id());
+      });
       cy.on("tap", (e) => { if (e.target === cy) cb.current.select?.(null); });
       const ctx = (e: { target: unknown }) => { const n = e.target as NodeSingular; const rp = n.renderedPosition(); if (!n.isParent()) cb.current.context?.(n.id(), rp.x, rp.y); };
       cy.on("cxttap", "node", ctx);
       cy.on("taphold", "node", ctx);                // long-press on a touch screen
-      cy.on("mouseover", "node", (e) => (e.target as NodeSingular).addClass("hover"));
-      cy.on("mouseout", "node", (e) => (e.target as NodeSingular).removeClass("hover"));
+      cy.on("mouseover", "node", (e) => {
+        const n = e.target as NodeSingular;
+        n.addClass("hover");
+        if (!n.isParent()) { const rp = n.renderedPosition(); setTip({ id: n.id(), x: rp.x, y: rp.y }); }
+      });
+      cy.on("mouseout", "node", (e) => { (e.target as NodeSingular).removeClass("hover"); setTip(null); });
+      cy.on("pan zoom", () => setTip(null));
       cy.on("viewport resize", drawGuides);
       cyRef.current = cy;
       setReady((x) => x + 1);
@@ -166,8 +187,9 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
   useEffect(() => {
     const cy = cyRef.current;
     if (!cy) return;
-    const content = `${layout}:${p.nodes.length}:${p.edges.length}:${p.nodes[0]?.id ?? ""}:${p.nodes[p.nodes.length - 1]?.id ?? ""}`;
+    const content = `${layout}:${p.nodes.length}:${p.edges.length}:${p.nodes[0]?.id ?? ""}:${p.nodes[p.nodes.length - 1]?.id ?? ""}:${p.sizeBy ? "reach" : "pr"}`;
     const maxPr = Math.max(1e-6, ...p.nodes.map((n) => n.pagerank));
+    const size = (n: GNode) => (p.sizeBy ? Math.max(0.05, p.sizeBy[n.id] ?? 0) : Math.sqrt(n.pagerank / maxPr));
     if (sig.current !== content) {
       sig.current = content;
       const ids = new Set(p.nodes.map((n) => n.id));
@@ -176,7 +198,7 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
         const files = Array.from(new Set(p.nodes.map((n) => n.file)));
         files.forEach((f) => els.push({ group: "nodes", data: { id: `grp:${f}`, short: f.split("/").slice(-2).join("/"), type: "group", file: f } }));
       }
-      p.nodes.forEach((n) => els.push({ group: "nodes", data: { id: n.id, type: n.type, label: n.label, file: n.file, short: shortLabel(n), size: Math.sqrt(n.pagerank / maxPr),
+      p.nodes.forEach((n) => els.push({ group: "nodes", data: { id: n.id, type: n.type, label: n.label, file: n.file, short: shortLabel(n), size: size(n),
         ...(layout === "groups" ? { parent: `grp:${n.file}` } : {}) }, classes: n.is_test_file && n.type === "file" ? "testfile" : "" }));
       p.edges.filter((e) => ids.has(e.source) && ids.has(e.target)).forEach((e) => els.push({ group: "edges", data: { id: e.id, source: e.source, target: e.target, type: e.type } }));
       cy.elements().remove();
@@ -193,14 +215,15 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
     }
     drawGuides();
     window.setTimeout(drawGuides, 500);
-  }, [ready, layout, p.nodes, p.edges, rl]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready, layout, p.nodes, p.edges, rl, p.sizeBy]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // state classes
   useEffect(() => {
     const cy = cyRef.current;
     if (!cy) return;
     cy.batch(() => {
-      cy.elements().removeClass("changed onpath atrisk pass fail hidden hit trace sel path faded");
+      cy.elements().removeClass("changed onpath atrisk pass fail hidden hit trace sel path faded imp dim");
+      (p.important ?? []).forEach((id) => cy.getElementById(id).addClass("imp"));
       (p.changed ?? []).forEach((id) => cy.getElementById(id).addClass("changed"));
       (p.atRisk ?? []).forEach((id) => cy.getElementById(id).addClass("atrisk"));
       const paths = p.paths ?? [];
@@ -214,15 +237,24 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       Object.entries(p.outcomes ?? {}).forEach(([id, o]) => cy.getElementById(id).addClass(o === "failed" ? "fail" : "pass"));
       (p.hiddenNodeTypes ?? []).forEach((t) => cy.nodes(`[type = "${t}"]`).addClass("hidden"));
       (p.hiddenEdgeTypes ?? []).forEach((t) => cy.edges(`[type = "${t}"]`).addClass("hidden"));
+      (p.hiddenIds ?? []).forEach((id) => cy.getElementById(id).addClass("hidden"));
       const q = (p.search ?? "").trim().toLowerCase();
       if (q) cy.nodes().filter((n) => !n.isParent() && (String(n.data("label")).toLowerCase().includes(q) || String(n.data("file")).toLowerCase().includes(q))).addClass("hit");
       (p.trace ?? []).forEach((id, i, a) => {
         cy.getElementById(id).addClass("trace");
         if (i > 0) edgeBetween(cy, a[i - 1], id).addClass("trace");
       });
-      if (p.selected) cy.getElementById(p.selected).addClass("sel");
+      if (p.selected) {
+        const n = cy.getElementById(p.selected);
+        n.addClass("sel");
+        if (p.focusSelected && n.nonempty()) {
+          const keep = n.closedNeighborhood();
+          cy.elements().not(keep).addClass("dim");
+          keep.nodes().addClass("imp");           // the focused neighbourhood is labelled
+        }
+      }
     });
-  }, [ready, p.changed, p.atRisk, p.paths, p.outcomes, p.hiddenNodeTypes, p.hiddenEdgeTypes, p.search, p.trace, p.selected, p.nodes, p.edges, layout]);
+  }, [ready, p.changed, p.atRisk, p.paths, p.outcomes, p.hiddenNodeTypes, p.hiddenEdgeTypes, p.hiddenIds, p.search, p.trace, p.selected, p.nodes, p.edges, layout, p.important, p.focusSelected]);
 
   // the card sits beside the selected node, kept inside the graph box
   useEffect(() => {
@@ -287,6 +319,8 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
   const sel = p.selected ? p.nodes.find((n) => n.id === p.selected) : undefined;
   const W = box.current?.clientWidth ?? 800, H = box.current?.clientHeight ?? 500;
   const card = sel && cardAt && p.renderCard ? p.renderCard(sel.id, { hop: rl?.hops[sel.id] ?? null, ring: rl?.ring[sel.id] ?? -1, mode: rl?.mode ?? "type" }) : null;
+  const tipNode = tip ? p.nodes.find((n) => n.id === tip.id) : undefined;
+  const tipLines = tipNode ? (p.tooltipOf ? p.tooltipOf(tipNode.id) : [tipNode.label.replace(/^\./, ""), `${tipNode.type} · ${tipNode.file}${tipNode.line ? `:${tipNode.line}` : ""}`]) : [];
   const CW = 340;
   const left = cardAt ? (cardAt.x + 18 + CW < W ? cardAt.x + 18 : Math.max(8, cardAt.x - 18 - CW)) : 0;
   const top = cardAt ? Math.min(Math.max(8, cardAt.y - 40), Math.max(8, H - 330)) : 0;
@@ -307,6 +341,12 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
         }}
         onContextMenu={(e) => e.preventDefault()} />
       <p className="sr-only" aria-live="polite">{kbdNode ? `${kbdNode.type} ${kbdNode.label} in ${kbdNode.file}${rl && rl.mode === "change" ? `, ${rl.hops[kbdNode.id] === null ? "not reachable from the change" : `${rl.hops[kbdNode.id]} hops from the change`}` : ""}` : ""}</p>
+      {tip && tipLines.length > 0 && !card && (
+        <div className="ui pointer-events-none absolute z-10 max-w-[260px] rounded border border-rule bg-panel px-2 py-1 text-xs shadow-[0_4px_16px_rgb(0_0_0/0.4)]"
+          style={{ left: Math.min(Math.max(8, tip.x + 14), Math.max(8, W - 270)), top: Math.max(8, tip.y - 12) }} role="tooltip">
+          {tipLines.map((l, i) => <div key={i} className={i === 0 ? "mono font-semibold" : "text-muted"}>{l}</div>)}
+        </div>
+      )}
       {card && (
         <div className="absolute z-20" style={{ left, top, width: CW }}>{card}</div>
       )}
