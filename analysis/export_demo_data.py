@@ -625,6 +625,41 @@ def corpus(sha: str, interim: Path = Path("data/interim")) -> dict:
     }
 
 
+PR1_COMMENT = Path("src/agents/demo/pr1_comment.md")
+#: The itsdangerous checkout the live PR #1 ran on; its `timed.py` line 141 is the seeded bug (a real checked-in fixture).
+PR1_SOURCE_FIXTURE = Path("tests/fixtures/bot_tolerant/timed.py")
+
+
+def pr1_example(comment: Path = PR1_COMMENT, source: Path = PR1_SOURCE_FIXTURE) -> dict | None:
+    """The live PR #1 example for the Overview page, read from the bot's recorded comment and the source fixture.
+
+    Nothing is typed in: failing tests and messages come from the comment's section 2, the traced line and the
+    one-line suggestion from its section 4, the total from its header, and the line the suggestion replaces from
+    the source fixture at that line number.
+
+    Args:
+        comment: The bot's latest comment on PR #1.
+        source: Checked-in copy of the file the bot patched.
+
+    Returns:
+        `{tests_total, failing: [{test_id, message}], file, line, old, new, validated}` or None without the comment.
+    """
+    if not comment.exists():
+        return None
+    md = comment.read_text(encoding="utf-8")
+    head = re.search(r"· (\d+) tests · \*\*(\d+) failing\*\*", md)
+    fails = [{"test_id": m[0], "message": m[1].strip()}
+             for m in re.findall(r"^\| `([^`]+)` \| failed \| (.*?) \|$", md, re.M)]
+    sug = re.search(r"`([^`]+)` line (\d+):\n\n```suggestion\n(.*?)\n```", md, re.S)
+    if not (head and sug and fails):
+        raise SystemExit(f"BLOCKED: {comment} no longer has the header, failures and suggestion this export reads")
+    line = int(sug.group(2))
+    old = source.read_text(encoding="utf-8").splitlines()[line - 1] if source.exists() else None
+    return {"tests_total": int(head.group(1)), "failing_count": int(head.group(2)), "failing": fails,
+            "file": sug.group(1), "line": line, "old": old, "new": sug.group(3),
+            "validated": "Validated: the full suite passed with this patch" in md, "source": str(comment)}
+
+
 def overview(sha: str) -> dict:
     """KPI cards and the headline recall chart, parsed out of `paper/generated/*.md`."""
     def row(rows: list[list[str]], first: str) -> list[str]:
@@ -658,6 +693,9 @@ def overview(sha: str) -> dict:
                     "full_confidence": rate(row(bind, "full confidence (exact, fully-qualified class name)")[1])},
         "headline": {"source": str(p_r), "source_generated_at_git_sha": source_sha(p_r), "k": 10,
                      "methods": methods},
+        "pr1": pr1_example(),
+        "live_pr_url": LIVE_PR_URL,
+        "built_from": sha,
     }
 
 
@@ -830,7 +868,9 @@ def intelligence(sha: str) -> dict:
                      "retrieval_hard": next((v for k, v in t.items() if k.startswith("Hard variant")), None),
                      "primary": _paragraph_after(p3, "Primary test"),
                      "secondary": next((v for k, v in t.items() if k.startswith("Secondary tests")), None),
-                     "models": models, "cost": t.get("Cost"), "progress": e3_progress(p3)}
+                     "models": models, "cost": t.get("Cost"), "progress": e3_progress(p3),
+                     "exploratory": {k: v for k, v in t.items() if k.startswith("Third model")},
+                     "pilot": {k: v for k, v in t.items() if re.search(r"\(pilot, n = \d+\)$", k)}}
     else:
         out["e3"] = {"status": "not run", "note": "make repair-eval has not produced paper/generated/rq4_repair.md"}
     return out

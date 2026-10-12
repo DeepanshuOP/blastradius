@@ -39,7 +39,7 @@
     "in_per_fix": null,
     "in_per_task": 0.0,
     "model": "openai/gpt-oss-120b",
-    "n": 47,
+    "n": 70,
     "out_per_fix": null,
     "out_per_task": 0.0,
     "prompt_tokens": 0,
@@ -49,54 +49,54 @@
     "variant": "standard"
    },
    {
-    "accepted": 20,
-    "arm": "R1",
-    "calls": 47,
-    "completion_tokens": 15474,
-    "in_per_fix": 3801.35,
-    "in_per_task": 1617.595744680851,
-    "model": "openai/gpt-oss-120b",
-    "n": 47,
-    "out_per_fix": 773.7,
-    "out_per_task": 329.2340425531915,
-    "prompt_tokens": 76027,
-    "usd_list_per_fix": 0.0010344224999999999,
-    "usd_list_per_task": 0.0004401797872340425,
-    "usd_list_total": 0.020688449999999997,
-    "variant": "standard"
-   },
-   {
     "accepted": 33,
-    "arm": "R2",
-    "calls": 47,
-    "completion_tokens": 9678,
-    "in_per_fix": 1770.2121212121212,
-    "in_per_task": 1242.9148936170213,
+    "arm": "R1",
+    "calls": 70,
+    "completion_tokens": 22508,
+    "in_per_fix": 3162.969696969697,
+    "in_per_task": 1491.1142857142856,
     "model": "openai/gpt-oss-120b",
-    "n": 47,
-    "out_per_fix": 293.27272727272725,
-    "out_per_task": 205.91489361702128,
-    "prompt_tokens": 58417,
-    "usd_list_per_fix": 0.00044149545454545447,
-    "usd_list_per_task": 0.0003099861702127659,
-    "usd_list_total": 0.014569349999999998,
+    "n": 70,
+    "out_per_fix": 682.060606060606,
+    "out_per_task": 321.54285714285714,
+    "prompt_tokens": 104378,
+    "usd_list_per_fix": 0.0008836818181818182,
+    "usd_list_per_task": 0.00041659285714285715,
+    "usd_list_total": 0.0291615,
     "variant": "standard"
    },
    {
-    "accepted": 37,
-    "arm": "R3",
-    "calls": 71,
-    "completion_tokens": 15736,
-    "in_per_fix": 2576.4054054054054,
-    "in_per_task": 2028.2340425531916,
+    "accepted": 50,
+    "arm": "R2",
+    "calls": 70,
+    "completion_tokens": 14758,
+    "in_per_fix": 1621.34,
+    "in_per_task": 1158.1,
     "model": "openai/gpt-oss-120b",
-    "n": 47,
-    "out_per_fix": 425.2972972972973,
-    "out_per_task": 334.8085106382979,
-    "prompt_tokens": 95327,
-    "usd_list_per_fix": 0.0006416391891891891,
-    "usd_list_per_task": 0.0005051202127659574,
-    "usd_list_total": 0.02374065,
+    "n": 70,
+    "out_per_fix": 295.16,
+    "out_per_task": 210.82857142857142,
+    "prompt_tokens": 81067,
+    "usd_list_per_fix": 0.000420297,
+    "usd_list_per_task": 0.00030021214285714284,
+    "usd_list_total": 0.021014849999999998,
+    "variant": "standard"
+   },
+   {
+    "accepted": 55,
+    "arm": "R3",
+    "calls": 105,
+    "completion_tokens": 23650,
+    "in_per_fix": 2377.4545454545455,
+    "in_per_task": 1868.0,
+    "model": "openai/gpt-oss-120b",
+    "n": 70,
+    "out_per_fix": 430.0,
+    "out_per_task": 337.85714285714283,
+    "prompt_tokens": 130760,
+    "usd_list_per_fix": 0.0006146181818181819,
+    "usd_list_per_task": 0.0004829142857142857,
+    "usd_list_total": 0.033804,
     "variant": "standard"
    },
    {
@@ -107,7 +107,7 @@
     "in_per_fix": null,
     "in_per_task": 0.0,
     "model": "openai/gpt-oss-20b",
-    "n": 45,
+    "n": 70,
     "out_per_fix": null,
     "out_per_task": 0.0,
     "prompt_tokens": 0,
@@ -117,66 +117,138 @@
     "variant": "standard"
    },
    {
-    "accepted": 10,
+    "accepted": 19,
     "arm": "R1",
-    "calls": 45,
-    "completion_tokens": 12988,
-    "in_per_fix": 6356.3,
-    "in_per_task": 1412.5111111111112,
+    "calls": 70,
+    "completion_tokens": 18676,
+    "in_per_fix": 4916.105263157895,
+    "in_per_task": 1334.3714285714286,
     "model": "openai/gpt-oss-20b",
-    "n": 45,
-    "out_per_fix": 1298.8,
-    "out_per_task": 288.6222222222222,
-    "prompt_tokens": 63563,
-    "usd_list_per_fix": 0.0008663624999999998,
-    "usd_list_per_task": 0.00019252499999999995,
-    "usd_list_total": 0.008663624999999998,
+    "n": 70,
+    "out_per_fix": 982.9473684210526,
+    "out_per_task": 266.8,
+    "prompt_tokens": 93406,
+    "usd_list_per_fix": 0.0006635921052631578,
+    "usd_list_per_task": 0.00018011785714285714,
+    "usd_list_total": 0.01260825,
     "variant": "standard"
    },
    {
-    "accepted": 29,
+    "accepted": 41,
     "arm": "R2",
-    "calls": 45,
-    "completion_tokens": 7705,
-    "in_per_fix": 1936.551724137931,
-    "in_per_task": 1248.0,
+    "calls": 70,
+    "completion_tokens": 15935,
+    "in_per_fix": 1977.2439024390244,
+    "in_per_task": 1158.1,
     "model": "openai/gpt-oss-20b",
-    "n": 45,
-    "out_per_fix": 265.6896551724138,
-    "out_per_task": 171.22222222222223,
-    "prompt_tokens": 56160,
-    "usd_list_per_fix": 0.00022494827586206896,
-    "usd_list_per_task": 0.00014496666666666665,
-    "usd_list_total": 0.0065235,
+    "n": 70,
+    "out_per_fix": 388.6585365853659,
+    "out_per_task": 227.64285714285714,
+    "prompt_tokens": 81067,
+    "usd_list_per_fix": 0.0002648908536585366,
+    "usd_list_per_task": 0.00015515035714285712,
+    "usd_list_total": 0.010860525,
     "variant": "standard"
    },
    {
-    "accepted": 33,
+    "accepted": 48,
     "arm": "R3",
-    "calls": 74,
-    "completion_tokens": 15942,
-    "in_per_fix": 2988.3030303030305,
-    "in_per_task": 2191.4222222222224,
+    "calls": 122,
+    "completion_tokens": 28459,
+    "in_per_fix": 3089.9583333333335,
+    "in_per_task": 2118.8285714285716,
     "model": "openai/gpt-oss-20b",
-    "n": 45,
-    "out_per_fix": 483.09090909090907,
-    "out_per_task": 354.26666666666665,
-    "prompt_tokens": 98614,
-    "usd_list_per_fix": 0.00036905,
-    "usd_list_per_task": 0.00027063666666666663,
-    "usd_list_total": 0.01217865,
+    "n": 70,
+    "out_per_fix": 592.8958333333334,
+    "out_per_task": 406.5571428571429,
+    "prompt_tokens": 148318,
+    "usd_list_per_fix": 0.000409615625,
+    "usd_list_per_task": 0.0002808792857142857,
+    "usd_list_total": 0.01966155,
+    "variant": "standard"
+   },
+   {
+    "accepted": 0,
+    "arm": "R0",
+    "calls": 0,
+    "completion_tokens": 0,
+    "in_per_fix": null,
+    "in_per_task": 0.0,
+    "model": "qwen/qwen3.8-27b",
+    "n": 25,
+    "out_per_fix": null,
+    "out_per_task": 0.0,
+    "prompt_tokens": 0,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": null,
+    "usd_list_total": null,
+    "variant": "standard"
+   },
+   {
+    "accepted": 8,
+    "arm": "R1",
+    "calls": 25,
+    "completion_tokens": 8070,
+    "in_per_fix": 6202.625,
+    "in_per_task": 1984.84,
+    "model": "qwen/qwen3.8-27b",
+    "n": 25,
+    "out_per_fix": 1008.75,
+    "out_per_task": 322.8,
+    "prompt_tokens": 49621,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": null,
+    "usd_list_total": null,
+    "variant": "standard"
+   },
+   {
+    "accepted": 12,
+    "arm": "R2",
+    "calls": 25,
+    "completion_tokens": 4845,
+    "in_per_fix": 2948.8333333333335,
+    "in_per_task": 1415.44,
+    "model": "qwen/qwen3.8-27b",
+    "n": 25,
+    "out_per_fix": 403.75,
+    "out_per_task": 193.8,
+    "prompt_tokens": 35386,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": null,
+    "usd_list_total": null,
+    "variant": "standard"
+   },
+   {
+    "accepted": 13,
+    "arm": "R3",
+    "calls": 50,
+    "completion_tokens": 8358,
+    "in_per_fix": 5827.692307692308,
+    "in_per_task": 3030.4,
+    "model": "qwen/qwen3.8-27b",
+    "n": 25,
+    "out_per_fix": 642.9230769230769,
+    "out_per_task": 334.32,
+    "prompt_tokens": 75760,
+    "usd_list_per_fix": null,
+    "usd_list_per_task": null,
+    "usd_list_total": null,
     "variant": "standard"
    }
   ],
   "ledger": {
    "by_model": {
     "openai/gpt-oss-120b": {
-     "calls": 115,
-     "tokens": 198321
+     "calls": 233,
+     "tokens": 396252
     },
     "openai/gpt-oss-20b": {
-     "calls": 131,
-     "tokens": 219583
+     "calls": 233,
+     "tokens": 395912
+    },
+    "qwen/qwen3.8-27b": {
+     "calls": 116,
+     "tokens": 224367
     }
    },
    "paid_usd": 0.0
@@ -298,8 +370,8 @@
  },
  "e3": {
   "applier_note": "The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant applier; E3 fix rates are therefore conservative relative to the bot.",
-  "interim": true,
-  "interim_text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing; openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+  "interim": false,
+  "interim_text": "",
   "models": [
    {
     "arms": [
@@ -307,45 +379,45 @@
       "arm": "R0",
       "k": 0,
       "label": "R0 notify only (what Jenkins / GitHub Actions do)",
-      "n": 47,
+      "n": 70,
       "wilson": [
        0.0,
-       0.07555760416399632
+       0.05202306241026692
       ]
      },
      {
       "arm": "R1",
-      "k": 20,
+      "k": 33,
       "label": "R1 log-only (the failure log, no change; as in LogSage #23 and CI-Bench #25)",
-      "n": 47,
+      "n": 70,
       "wilson": [
-       0.2951362834367996,
-       0.5671808065450721
+       0.3590487639638429,
+       0.5867811253167438
       ]
      },
      {
       "arm": "R2",
-      "k": 33,
+      "k": 50,
       "label": "R2 change-aware (functions the diff touches)",
-      "n": 47,
+      "n": 70,
       "wilson": [
-       0.5602232608095393,
-       0.8134874949539516
+       0.5994980341827975,
+       0.8067777962128025
       ]
      },
      {
       "arm": "R3",
-      "k": 37,
+      "k": 55,
       "label": "R3 R2 + up to 2 retries",
-      "n": 47,
+      "n": 70,
       "wilson": [
-       0.6509597329080159,
-       0.88010292001905
+       0.676088137365211,
+       0.8656129698289221
       ]
      }
     ],
     "model": "openai/gpt-oss-120b",
-    "n": 47
+    "n": 70
    },
    {
     "arms": [
@@ -353,64 +425,80 @@
       "arm": "R0",
       "k": 0,
       "label": "R0 notify only (what Jenkins / GitHub Actions do)",
-      "n": 45,
+      "n": 70,
       "wilson": [
        0.0,
-       0.07865159873288836
+       0.05202306241026692
       ]
      },
      {
       "arm": "R1",
-      "k": 10,
+      "k": 19,
       "label": "R1 log-only (the failure log, no change; as in LogSage #23 and CI-Bench #25)",
-      "n": 45,
+      "n": 70,
       "wilson": [
-       0.12544685532626396,
-       0.36269292174756296
+       0.1811959968818828,
+       0.38544311736281056
       ]
      },
      {
       "arm": "R2",
-      "k": 29,
+      "k": 41,
       "label": "R2 change-aware (functions the diff touches)",
-      "n": 45,
+      "n": 70,
       "wilson": [
-       0.4983581419637687,
-       0.7678091739578413
+       0.46881211784560456,
+       0.6936982143126353
       ]
      },
      {
       "arm": "R3",
-      "k": 33,
+      "k": 48,
       "label": "R3 R2 + up to 2 retries",
-      "n": 45,
+      "n": 70,
       "wilson": [
-       0.5896116224686505,
-       0.8403509647893348
+       0.5697286201420141,
+       0.7823770995341724
       ]
      }
     ],
     "model": "openai/gpt-oss-20b",
-    "n": 45
+    "n": 70
    }
   ],
-  "primary": "Standard variant, openai/gpt-oss-120b, n = 47: R2 plausible-fix rate 33/47 vs R1 20/47; R2 only 17, R1 only 4; exact McNemar one-sided p = 0.003599 (alpha = 0.05): **R2 > R1 supported**. (47 of 70 tasks done; 23 not run (cache incomplete))",
+  "primary": "Standard variant, openai/gpt-oss-120b, n = 70: R2 plausible-fix rate 50/70 vs R1 33/70; R2 only 22, R1 only 5; exact McNemar one-sided p = 0.0007569 (alpha = 0.05): **R2 > R1 supported**.",
   "progress": [
    {
-    "interim": true,
+    "interim": false,
     "model": "openai/gpt-oss-120b",
-    "n": 47,
-    "text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing",
+    "n": 70,
+    "text": "openai/gpt-oss-120b standard: complete, n = 70 of 70",
+    "total": 70,
+    "variant": "standard"
+   },
+   {
+    "interim": false,
+    "model": "openai/gpt-oss-20b",
+    "n": 70,
+    "text": "openai/gpt-oss-20b standard: complete, n = 70 of 70",
     "total": 70,
     "variant": "standard"
    },
    {
     "interim": true,
-    "model": "openai/gpt-oss-20b",
-    "n": 45,
-    "text": "openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+    "model": "openai/gpt-oss-120b",
+    "n": 29,
+    "text": "openai/gpt-oss-120b hard: interim, n = 29 of 70; run continuing",
     "total": 70,
-    "variant": "standard"
+    "variant": "hard"
+   },
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-20b",
+    "n": 17,
+    "text": "openai/gpt-oss-20b hard: interim, n = 17 of 70; run continuing",
+    "total": 70,
+    "variant": "hard"
    }
   ],
   "secondary": {
@@ -424,35 +512,63 @@
    "rows": [
     [
      "R3 > R2, openai/gpt-oss-120b, standard",
-     "4",
+     "5",
      "0",
-     "0.0625",
-     "0.125"
+     "0.03125",
+     "0.09375"
     ],
     [
      "R2 > R1, openai/gpt-oss-20b, standard",
-     "21",
-     "2",
-     "3.302e-05",
-     "9.906e-05"
+     "25",
+     "3",
+     "1.372e-05",
+     "9.604e-05"
     ],
     [
      "R3 > R2, openai/gpt-oss-20b, standard",
-     "4",
+     "7",
      "0",
-     "0.0625",
-     "0.125"
+     "0.007812",
+     "0.03125"
+    ],
+    [
+     "R2 > R1, openai/gpt-oss-120b, hard",
+     "8",
+     "0",
+     "0.003906",
+     "0.01953"
+    ],
+    [
+     "R3 > R2, openai/gpt-oss-120b, hard",
+     "5",
+     "0",
+     "0.03125",
+     "0.09375"
+    ],
+    [
+     "R2 > R1, openai/gpt-oss-20b, hard",
+     "9",
+     "0",
+     "0.001953",
+     "0.01172"
+    ],
+    [
+     "R3 > R2, openai/gpt-oss-20b, hard",
+     "1",
+     "0",
+     "0.5",
+     "0.5"
     ]
    ]
   },
   "source": "paper/generated/rq4_repair.md",
-  "takeaway": "Plausible fixes (full suite green) by arm, openai/gpt-oss-120b: R0 0/47, R1 20/47, R2 33/47, R3 37/47; openai/gpt-oss-20b: R0 0/45, R1 10/45, R2 29/45, R3 33/45. openai/gpt-oss-120b: R2 is +13 tasks against R1 and R3 is +4 against R2; openai/gpt-oss-20b: R2 is +19 tasks against R1 and R3 is +4 against R2. Significance is in the primary and secondary tests above."
+  "takeaway": "Plausible fixes (full suite green) by arm, openai/gpt-oss-120b: R0 0/70, R1 33/70, R2 50/70, R3 55/70; openai/gpt-oss-20b: R0 0/70, R1 19/70, R2 41/70, R3 48/70. openai/gpt-oss-120b: R2 is +17 tasks against R1 and R3 is +5 against R2; openai/gpt-oss-20b: R2 is +22 tasks against R1 and R3 is +7 against R2. Significance is in the primary and secondary tests above."
  },
  "figures": [
   "/figures/fig6_e3_arms.png",
   "/figures/fig7_retrieval.png"
  ],
- "generated_at_git_sha": "fff638f63333052aedaa12c88895ee1c20e773ed",
+ "generated_at_git_sha": "84a3a30ee0084565b44773412c104a86741f64a3",
  "localization": {
   "l4_vs_l1": [
    {
@@ -668,6 +784,313 @@
     "label": "Agentless (#31)"
    }
   ],
+  "products": {
+   "checked": "2026-10-12",
+   "columns": [
+    {
+     "id": "br",
+     "label": "BlastRadius"
+    },
+    {
+     "id": "develocity",
+     "label": "Develocity Predictive Test Selection"
+    },
+    {
+     "id": "cloudbees",
+     "label": "CloudBees Smart Tests (formerly Launchable)"
+    },
+    {
+     "id": "datadog",
+     "label": "Datadog Test Impact Analysis"
+    },
+    {
+     "id": "copilot",
+     "label": "GitHub Fix with Copilot for failing Actions"
+    }
+   ],
+   "note": "Every vendor cell cites the vendor page it comes from. Only what those pages state is entered; anything they do not state is 'not documented', which is not a claim that the capability is absent.",
+   "rows": [
+    {
+     "cells": {
+      "br": {
+       "note": "MIT code, CC BY 4.0 data; the recorded runs used the Groq free tier",
+       "proof": [
+        "tests/test_cost_report.py::test_nothing_was_paid_and_the_report_says_so"
+       ],
+       "source": "LICENSE; paper/generated/cost_report.md (USD actually paid, from the ledger)",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "note": "The page describes a demo or commercial offering",
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "no"
+      },
+      "copilot": {
+       "note": "The posts say it is available on paid Copilot plans, which is not the same as stating the licence",
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "note": "The page describes a commercial product",
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "no"
+      },
+      "develocity": {
+       "note": "The page says it is enabled through Develocity support; a commercial product",
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "no"
+      }
+     },
+     "id": "open_source",
+     "label": "open source and free to run"
+    },
+    {
+     "cells": {
+      "br": {
+       "proof": [
+        "tests/test_release_v02.py::test_validator_passes_built_bundle"
+       ],
+       "source": "README.md (Zenodo DOI 10.5281/zenodo.23250262), docs/DATASHEET.md",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "not_documented"
+      },
+      "copilot": {
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "not_documented"
+      }
+     },
+     "id": "public_eval_data",
+     "label": "public evaluation data"
+    },
+    {
+     "cells": {
+      "br": {
+       "note": "The ranker gains little on fresh repositories: removing failure-history features costs Recall@10 on BR-Bench, and a fresh repository has none. Repair and triage rules do not need history. See the E3 detection table in the Compare tab (Time panel).",
+       "source": "docs/RESULTS_2.md (E3 detection on fresh repositories), paper/generated/rq4_repair.md",
+       "value": "partial"
+      },
+      "cloudbees": {
+       "note": "The page states selection is available from the first run",
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "yes"
+      },
+      "copilot": {
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "note": "The page states it needs a coverage baseline from a past passing run",
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "no"
+      },
+      "develocity": {
+       "note": "No prediction until a test task has 14 days of changes and at least 50 executions in 14 days",
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "no"
+      }
+     },
+     "id": "no_history",
+     "label": "works without project history"
+    },
+    {
+     "cells": {
+      "br": {
+       "note": "E1 ranks test files, not individual test ids; Gate 3 was not met",
+       "source": "docs/RESULTS_2.md (E1), paper/generated/rq2_predictor.md",
+       "value": "partial"
+      },
+      "cloudbees": {
+       "note": "The page describes failure-probability ordering",
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "yes"
+      },
+      "copilot": {
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "note": "The page describes selection by matching per-test coverage and tracked files, not prediction",
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "no"
+      },
+      "develocity": {
+       "note": "The page describes learning from test history to select tests",
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "yes"
+      }
+     },
+     "id": "per_test_prediction",
+     "label": "per-test failure prediction"
+    },
+    {
+     "cells": {
+      "br": {
+       "note": "Measured on a small sample; see the E2 table",
+       "proof": [
+        "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+       ],
+       "source": "docs/RESULTS_2.md (E2), paper/generated/rq3_triage.md",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "note": "The page describes failure grouping by root cause linked to a likely commit and deprioritised flaky tests; pre-existing failures are not described",
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "partial"
+      },
+      "copilot": {
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "note": "The page says it always selects recently flaky tests and does not triage or repair flaky tests",
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "no"
+      }
+     },
+     "id": "triage",
+     "label": "separates your failures from pre-existing and flaky ones"
+    },
+    {
+     "cells": {
+      "br": {
+       "proof": [
+        "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+       ],
+       "source": "src/agents/repair.py, src/agents/bot.py",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "note": "The page describes no automated fixes",
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "not_documented"
+      },
+      "copilot": {
+       "note": "The posts say it investigates the failed run, pushes a fix to your branch and tags you for review",
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "yes"
+      },
+      "datadog": {
+       "note": "The page does not describe code fixes",
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "note": "The page does not describe code fixes",
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "not_documented"
+      }
+     },
+     "id": "proposes_fixes",
+     "label": "proposes code fixes"
+    },
+    {
+     "cells": {
+      "br": {
+       "proof": [
+        "tests/test_bot.py::test_suggestion_block_only_for_a_validated_patch",
+        "tests/test_agents_repair.py::test_full_suite_accepts_the_real_fix_and_rejects_an_overfit_patch"
+       ],
+       "source": "src/agents/repair.py, src/agents/bot.py",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "not_documented"
+      },
+      "copilot": {
+       "note": "The posts do not describe validating the fix by running tests",
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "not_documented"
+      }
+     },
+     "id": "fix_validated",
+     "label": "fix validated by the full test suite before it is shown"
+    },
+    {
+     "cells": {
+      "br": {
+       "proof": [
+        "tests/test_safety_claims.py::test_bot_never_merges_pushes_or_approves"
+       ],
+       "source": "src/agents/bot.py, integrations/github-actions/blastradius-bot.yml (contents: read)",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "not_documented"
+      },
+      "copilot": {
+       "note": "The posts say it pushes a fix to your branch (it tags you for review)",
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "no"
+      },
+      "datadog": {
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "not_documented"
+      }
+     },
+     "id": "never_pushes",
+     "label": "never pushes or merges on its own"
+    },
+    {
+     "cells": {
+      "br": {
+       "proof": [
+        "tests/test_bot.py::test_every_risk_row_and_every_triaged_failure_carries_a_reason"
+       ],
+       "source": "src/agents/bot.py (\"Why\" column)",
+       "value": "yes"
+      },
+      "cloudbees": {
+       "source": "https://www.cloudbees.com/blog/how-cloudbees-smart-tests-works",
+       "value": "not_documented"
+      },
+      "copilot": {
+       "source": "https://github.blog/changelog/2026-05-18-one-click-fixes-for-failing-actions-with-copilot-cloud-agent/ and https://github.blog/changelog/2026-06-04-fix-with-copilot-for-failing-actions-now-in-pro-pro-and-max/",
+       "value": "not_documented"
+      },
+      "datadog": {
+       "source": "https://docs.datadoghq.com/tests/test_impact_analysis/how_it_works/",
+       "value": "not_documented"
+      },
+      "develocity": {
+       "source": "https://docs.develocity.ai/2026.3/guides/predictive-test-selection/",
+       "value": "not_documented"
+      }
+     },
+     "id": "explanation",
+     "label": "explanation per prediction"
+    }
+   ],
+   "title": "Commercial tools (from vendor documentation, checked 2026-10-12)"
+  },
   "rows": [
    {
     "cells": {

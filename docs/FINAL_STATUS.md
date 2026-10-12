@@ -50,7 +50,7 @@ Code commit `28d4323`; numbers snapshot tag `paper-numbers-v1.1` (v1 + D-53). Ev
 |---|---|---|
 | E1 predict | done; **Gate 3 NOT MET** | Recall@10 0.525 vs 0.522 for the best baseline B7, Holm-adjusted p = 0.382, Cliff's delta +0.030 (negligible); n = 148 test instances, all Java (`paper/generated/rq2_predictor.md`) |
 | E2 triage | done; **small-sample (18 not-mine pairs in the test split)** | LightGBM clears 10/18 not-mine at 33/1,015 mine wrongly cleared; pooled 31/216 at 57/4,168 (`rq3_triage.md`) |
-| E3 repair | **interim**: 70 seeded tasks built (standard and hard variants); Groq quota stopped the runs at 47 / 45 of 70; hard variant not yet run with a model; no Bedrock model usable | retrieval 69/70 vs 46/70 (standard), 63/70 vs 46/70 (hard); primary test gpt-oss-120b standard n = 47: R2 33 vs R1 20 plausible fixes, one-sided McNemar p = 0.0036 (`rq4_repair.md`) |
+| E3 repair | **confirmatory (standard, n = 70)** for gpt-oss-120b and gpt-oss-20b; hard variant interim (29 and 17 of 70); qwen interim (25 of 70); R4 built, not run; no Bedrock model usable | retrieval 69/70 vs 46/70 (standard), 63/70 vs 46/70 (hard); primary test gpt-oss-120b standard n = 70: R2 50 vs R1 33 plausible fixes, one-sided McNemar p = 0.0007569 (`rq4_repair.md`) |
 
 **Per D-56, E1 is not part of the MSR 2027 paper.** The paper stays a dataset paper; E1 would enter it only if it passed Gate 3 and
 fit in four pages, and it did not pass. E2 and E3 are course deliverables only. `make tables` includes E1 and E2 (offline, no LLM);

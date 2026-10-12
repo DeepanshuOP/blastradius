@@ -35,11 +35,11 @@ also clears many mine ones. This is a trade-off, not a working triage. 18 not-mi
 
 ## Slide 18: repair (E3)
 **On slide:** retrieval hit rate over 70 seeded tasks: change-aware 69 (98.57%), log-only 46 (65.71%), McNemar p = 2.384e-07.
-Plausible fix, standard variant, interim (47 and 45 of 70 tasks), R1 / R2 / R3: gpt-oss-120b 20 / 33 / 37 of 47; gpt-oss-20b 10 / 29 / 33
-of 45; pre-registered primary test (120b) one-sided McNemar p = 0.0036 (`rq4_repair.md`). Hard variant retrieval: R2 63/70, R1 46/70.
-**Say:** Change-awareness puts the bug in front of the model far more often, partly because the seeded edit lies in the diff. The
-interim repair result supports the pre-registered primary hypothesis on the tasks run so far; the full 70-task test and the hard variant
-are pending the next quota window. Seeded bugs are easier than real ones.
+Plausible fix, standard variant, n = 70 (pre-registered, docs/phase/033), R1 / R2 / R3: gpt-oss-120b 33 / 50 / 55 of 70; gpt-oss-20b
+19 / 41 / 48 of 70; primary test (120b, R2 > R1) one-sided McNemar p = 0.0007569, R2 only 22, R1 only 5 (`rq4_repair.md`). Hard variant
+(interim, run continuing): 120b 9 / 17 / 22 of 29; 20b 0 / 9 / 10 of 17. qwen (exploratory, interim): 8 / 12 / 13 of 25. R4: built, not run.
+**Say:** Change-awareness puts the bug in front of the model far more often, partly because the seeded edit lies in the diff. On all
+70 standard tasks the pre-registered test supports R2 over R1. The hard variant and the third model are still running. Seeded bugs are easier than real ones.
 **Why is the LLM outside the core?** Only the repair step may call a model (D-58), with a pinned model, temperature 0, every reply
 cached and replayable; E1, E2 and `make tables` contain no model call.
 

@@ -119,3 +119,16 @@ def test_corpus_has_no_top_repos_without_parquet(tmp_path: Path) -> None:
     assert c["top_repos"] is None
     assert c["harvested_repos_by_language"]["Java"] == 71
     assert c["strict_by_language"]["rows"][0]["instances"]["text"].startswith("638/762")
+
+
+def test_pr1_example_is_read_from_the_recorded_comment_and_source_fixture() -> None:
+    """The Overview hero: failing tests, traced line and one-line diff come from checked-in files, nothing typed in."""
+    from analysis.export_demo_data import pr1_example
+
+    ex = pr1_example()
+    assert ex is not None
+    assert ex["tests_total"] == 297 and ex["failing_count"] == 5 and len(ex["failing"]) == 5
+    assert ex["file"] == "src/itsdangerous/timed.py" and ex["line"] == 141
+    assert ex["old"].strip() == "if age < max_age:" and ex["new"].strip() == "if age > max_age:"
+    assert ex["validated"] is True
+    assert all(f["test_id"].endswith("test_max_age") or "test_max_age[" in f["test_id"] for f in ex["failing"])

@@ -240,11 +240,15 @@
    {
     "id": "D-63",
     "title": "Live PR bot on a sandbox repository the operator owns"
+   },
+   {
+    "id": "D-64",
+    "title": "B5 BM25 made hash-seed independent"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "fff638f63333052aedaa12c88895ee1c20e773ed",
+ "generated_at_git_sha": "84a3a30ee0084565b44773412c104a86741f64a3",
  "panels": [
   {
    "id": "funnel",

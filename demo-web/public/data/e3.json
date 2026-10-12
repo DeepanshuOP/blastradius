@@ -12,15 +12,15 @@
     [
      "openai/gpt-oss-120b",
      "Groq free tier",
-     "114",
-     "197,690",
+     "232",
+     "395,621",
      "0.00"
     ],
     [
      "openai/gpt-oss-20b",
      "Groq free tier",
-     "113",
-     "181,008",
+     "217",
+     "345,152",
      "0.00"
     ]
    ]
@@ -53,8 +53,8 @@
     ]
    ]
   },
-  "models": {
-   "openai/gpt-oss-120b, standard variant (n = 47 tasks)": {
+  "exploratory": {
+   "Third model qwen/qwen3.8-27b, standard variant (n = 25 of 70 tasks; D-62, a Groq preview model, same prompts and acceptance rule as the other models)": {
     "columns": [
      "arm",
      "n",
@@ -71,145 +71,510 @@
     "rows": [
      [
       "R0",
-      "47",
-      "0/47 (0.00%)",
+      "25",
+      "0/25 (0.00%)",
       "[0.00, 0.00]",
-      "0/47 (0.00%)",
-      "0/47 (0.00%)",
-      "0/47 (0.00%)",
+      "0/25 (0.00%)",
+      "0/25 (0.00%)",
+      "0/25 (0.00%)",
       "0",
-      "0/47 (0.00%)",
+      "0/25 (0.00%)",
       "0",
       "0.00"
      ],
      [
       "R1",
-      "47",
-      "20/47 (42.55%)",
-      "[0.28, 0.57]",
-      "23/47 (48.94%)",
-      "22/47 (46.81%)",
-      "15/47 (31.91%)",
+      "25",
+      "8/25 (32.00%)",
+      "[0.16, 0.52]",
+      "9/25 (36.00%)",
+      "9/25 (36.00%)",
+      "6/25 (24.00%)",
       "0",
-      "0/47 (0.00%)",
-      "1947",
+      "1/25 (4.00%)",
+      "2308",
       "1.00"
      ],
      [
       "R2",
-      "47",
-      "33/47 (70.21%)",
-      "[0.57, 0.83]",
-      "40/47 (85.11%)",
-      "40/47 (85.11%)",
-      "30/47 (63.83%)",
-      "3",
-      "0/47 (0.00%)",
-      "1449",
-      "1.00"
-     ],
-     [
-      "R3",
-      "47",
-      "37/47 (78.72%)",
-      "[0.66, 0.89]",
-      "43/47 (91.49%)",
-      "43/47 (91.49%)",
-      "32/47 (68.09%)",
-      "2",
-      "1/47 (2.13%)",
-      "2363",
-      "1.51"
-     ]
-    ]
-   },
-   "openai/gpt-oss-20b, standard variant (n = 45 tasks)": {
-    "columns": [
-     "arm",
-     "n",
-     "plausible fix (full suite green)",
-     "bootstrap 95% CI",
-     "edited seeded file",
-     "edited seeded function",
-     "exact restore",
-     "overfit (target tests pass, suite fails)",
-     "patch landed in a distractor file",
-     "tokens / task",
-     "model calls / task"
-    ],
-    "rows": [
-     [
-      "R0",
-      "45",
-      "0/45 (0.00%)",
-      "[0.00, 0.00]",
-      "0/45 (0.00%)",
-      "0/45 (0.00%)",
-      "0/45 (0.00%)",
-      "0",
-      "0/45 (0.00%)",
-      "0",
-      "0.00"
-     ],
-     [
-      "R1",
-      "45",
-      "10/45 (22.22%)",
-      "[0.11, 0.36]",
-      "20/45 (44.44%)",
-      "18/45 (40.00%)",
-      "10/45 (22.22%)",
-      "0",
-      "0/45 (0.00%)",
-      "1701",
-      "1.00"
-     ],
-     [
-      "R2",
-      "45",
-      "29/45 (64.44%)",
-      "[0.51, 0.78]",
-      "36/45 (80.00%)",
-      "36/45 (80.00%)",
-      "27/45 (60.00%)",
-      "3",
-      "0/45 (0.00%)",
-      "1419",
-      "1.00"
-     ],
-     [
-      "R3",
-      "45",
-      "33/45 (73.33%)",
-      "[0.60, 0.84]",
-      "38/45 (84.44%)",
-      "38/45 (84.44%)",
-      "31/45 (68.89%)",
+      "25",
+      "12/25 (48.00%)",
+      "[0.28, 0.68]",
+      "16/25 (64.00%)",
+      "15/25 (60.00%)",
+      "10/25 (40.00%)",
       "1",
-      "0/45 (0.00%)",
-      "2546",
-      "1.64"
+      "0/25 (0.00%)",
+      "1609",
+      "1.00"
+     ],
+     [
+      "R3",
+      "25",
+      "13/25 (52.00%)",
+      "[0.32, 0.72]",
+      "17/25 (68.00%)",
+      "16/25 (64.00%)",
+      "11/25 (44.00%)",
+      "1",
+      "0/25 (0.00%)",
+      "3365",
+      "2.00"
      ]
     ]
    }
   },
-  "primary": "Standard variant, openai/gpt-oss-120b, n = 47: R2 plausible-fix rate 33/47 vs R1 20/47; R2 only 17, R1 only 4; exact McNemar one-sided p = 0.003599 (alpha = 0.05): **R2 > R1 supported**. (47 of 70 tasks done; 23 not run (cache incomplete))",
+  "models": {
+   "openai/gpt-oss-120b, hard variant (n = 29 tasks)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "29",
+      "0/29 (0.00%)",
+      "[0.00, 0.00]",
+      "0/29 (0.00%)",
+      "0/29 (0.00%)",
+      "0/29 (0.00%)",
+      "0",
+      "0/29 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "29",
+      "9/29 (31.03%)",
+      "[0.14, 0.48]",
+      "13/29 (44.83%)",
+      "12/29 (41.38%)",
+      "8/29 (27.59%)",
+      "0",
+      "0/29 (0.00%)",
+      "2025",
+      "1.00"
+     ],
+     [
+      "R2",
+      "29",
+      "17/29 (58.62%)",
+      "[0.41, 0.76]",
+      "20/29 (68.97%)",
+      "19/29 (65.52%)",
+      "14/29 (48.28%)",
+      "0",
+      "0/29 (0.00%)",
+      "1860",
+      "1.00"
+     ],
+     [
+      "R3",
+      "29",
+      "22/29 (75.86%)",
+      "[0.59, 0.90]",
+      "24/29 (82.76%)",
+      "22/29 (75.86%)",
+      "18/29 (62.07%)",
+      "0",
+      "0/29 (0.00%)",
+      "3268",
+      "1.66"
+     ]
+    ]
+   },
+   "openai/gpt-oss-120b, standard variant (n = 70 tasks)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "70",
+      "0/70 (0.00%)",
+      "[0.00, 0.00]",
+      "0/70 (0.00%)",
+      "0/70 (0.00%)",
+      "0/70 (0.00%)",
+      "0",
+      "0/70 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "70",
+      "33/70 (47.14%)",
+      "[0.36, 0.59]",
+      "37/70 (52.86%)",
+      "36/70 (51.43%)",
+      "24/70 (34.29%)",
+      "0",
+      "0/70 (0.00%)",
+      "1813",
+      "1.00"
+     ],
+     [
+      "R2",
+      "70",
+      "50/70 (71.43%)",
+      "[0.61, 0.81]",
+      "58/70 (82.86%)",
+      "58/70 (82.86%)",
+      "43/70 (61.43%)",
+      "3",
+      "0/70 (0.00%)",
+      "1369",
+      "1.00"
+     ],
+     [
+      "R3",
+      "70",
+      "55/70 (78.57%)",
+      "[0.69, 0.89]",
+      "62/70 (88.57%)",
+      "62/70 (88.57%)",
+      "45/70 (64.29%)",
+      "2",
+      "1/70 (1.43%)",
+      "2206",
+      "1.50"
+     ]
+    ]
+   },
+   "openai/gpt-oss-20b, hard variant (n = 17 tasks)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "17",
+      "0/17 (0.00%)",
+      "[0.00, 0.00]",
+      "0/17 (0.00%)",
+      "0/17 (0.00%)",
+      "0/17 (0.00%)",
+      "0",
+      "0/17 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "17",
+      "0/17 (0.00%)",
+      "[0.00, 0.00]",
+      "3/17 (17.65%)",
+      "3/17 (17.65%)",
+      "0/17 (0.00%)",
+      "1",
+      "0/17 (0.00%)",
+      "1922",
+      "1.00"
+     ],
+     [
+      "R2",
+      "17",
+      "9/17 (52.94%)",
+      "[0.29, 0.76]",
+      "11/17 (64.71%)",
+      "11/17 (64.71%)",
+      "7/17 (41.18%)",
+      "0",
+      "0/17 (0.00%)",
+      "1811",
+      "1.00"
+     ],
+     [
+      "R3",
+      "17",
+      "10/17 (58.82%)",
+      "[0.35, 0.82]",
+      "13/17 (76.47%)",
+      "12/17 (70.59%)",
+      "8/17 (47.06%)",
+      "0",
+      "1/17 (5.88%)",
+      "3692",
+      "1.88"
+     ]
+    ]
+   },
+   "openai/gpt-oss-20b, standard variant (n = 70 tasks)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "70",
+      "0/70 (0.00%)",
+      "[0.00, 0.00]",
+      "0/70 (0.00%)",
+      "0/70 (0.00%)",
+      "0/70 (0.00%)",
+      "0",
+      "0/70 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "70",
+      "19/70 (27.14%)",
+      "[0.17, 0.37]",
+      "32/70 (45.71%)",
+      "29/70 (41.43%)",
+      "19/70 (27.14%)",
+      "0",
+      "0/70 (0.00%)",
+      "1601",
+      "1.00"
+     ],
+     [
+      "R2",
+      "70",
+      "41/70 (58.57%)",
+      "[0.47, 0.70]",
+      "53/70 (75.71%)",
+      "53/70 (75.71%)",
+      "39/70 (55.71%)",
+      "3",
+      "0/70 (0.00%)",
+      "1386",
+      "1.00"
+     ],
+     [
+      "R3",
+      "70",
+      "48/70 (68.57%)",
+      "[0.57, 0.79]",
+      "58/70 (82.86%)",
+      "58/70 (82.86%)",
+      "46/70 (65.71%)",
+      "1",
+      "1/70 (1.43%)",
+      "2525",
+      "1.74"
+     ]
+    ]
+   }
+  },
+  "pilot": {
+   "openai/gpt-oss-120b (pilot, n = 20)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "20",
+      "0/20 (0.00%)",
+      "[0.00, 0.00]",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "20",
+      "10/20 (50.00%)",
+      "[0.30, 0.70]",
+      "11/20 (55.00%)",
+      "11/20 (55.00%)",
+      "7/20 (35.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "1907",
+      "1.00"
+     ],
+     [
+      "R2",
+      "20",
+      "13/20 (65.00%)",
+      "[0.45, 0.85]",
+      "15/20 (75.00%)",
+      "15/20 (75.00%)",
+      "11/20 (55.00%)",
+      "1",
+      "0/20 (0.00%)",
+      "1452",
+      "1.00"
+     ],
+     [
+      "R3",
+      "20",
+      "14/20 (70.00%)",
+      "[0.50, 0.90]",
+      "17/20 (85.00%)",
+      "17/20 (85.00%)",
+      "11/20 (55.00%)",
+      "1",
+      "1/20 (5.00%)",
+      "2554",
+      "1.65"
+     ]
+    ]
+   },
+   "openai/gpt-oss-20b (pilot, n = 20)": {
+    "columns": [
+     "arm",
+     "n",
+     "plausible fix (full suite green)",
+     "bootstrap 95% CI",
+     "edited seeded file",
+     "edited seeded function",
+     "exact restore",
+     "overfit (target tests pass, suite fails)",
+     "patch landed in a distractor file",
+     "tokens / task",
+     "model calls / task"
+    ],
+    "rows": [
+     [
+      "R0",
+      "20",
+      "0/20 (0.00%)",
+      "[0.00, 0.00]",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0/20 (0.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "0",
+      "0.00"
+     ],
+     [
+      "R1",
+      "20",
+      "4/20 (20.00%)",
+      "[0.05, 0.40]",
+      "10/20 (50.00%)",
+      "9/20 (45.00%)",
+      "4/20 (20.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "1558",
+      "1.00"
+     ],
+     [
+      "R2",
+      "20",
+      "10/20 (50.00%)",
+      "[0.30, 0.70]",
+      "11/20 (55.00%)",
+      "11/20 (55.00%)",
+      "8/20 (40.00%)",
+      "1",
+      "0/20 (0.00%)",
+      "1390",
+      "1.00"
+     ],
+     [
+      "R3",
+      "20",
+      "13/20 (65.00%)",
+      "[0.45, 0.85]",
+      "13/20 (65.00%)",
+      "13/20 (65.00%)",
+      "11/20 (55.00%)",
+      "0",
+      "0/20 (0.00%)",
+      "2754",
+      "1.90"
+     ]
+    ]
+   }
+  },
+  "primary": "Standard variant, openai/gpt-oss-120b, n = 70: R2 plausible-fix rate 50/70 vs R1 33/70; R2 only 22, R1 only 5; exact McNemar one-sided p = 0.0007569 (alpha = 0.05): **R2 > R1 supported**.",
   "progress": [
    {
-    "interim": true,
+    "interim": false,
     "model": "openai/gpt-oss-120b",
-    "n": 47,
-    "text": "openai/gpt-oss-120b standard: interim, n = 47 of 70; run continuing",
+    "n": 70,
+    "text": "openai/gpt-oss-120b standard: complete, n = 70 of 70",
+    "total": 70,
+    "variant": "standard"
+   },
+   {
+    "interim": false,
+    "model": "openai/gpt-oss-20b",
+    "n": 70,
+    "text": "openai/gpt-oss-20b standard: complete, n = 70 of 70",
     "total": 70,
     "variant": "standard"
    },
    {
     "interim": true,
-    "model": "openai/gpt-oss-20b",
-    "n": 45,
-    "text": "openai/gpt-oss-20b standard: interim, n = 45 of 70; run continuing",
+    "model": "openai/gpt-oss-120b",
+    "n": 29,
+    "text": "openai/gpt-oss-120b hard: interim, n = 29 of 70; run continuing",
     "total": 70,
-    "variant": "standard"
+    "variant": "hard"
+   },
+   {
+    "interim": true,
+    "model": "openai/gpt-oss-20b",
+    "n": 17,
+    "text": "openai/gpt-oss-20b hard: interim, n = 17 of 70; run continuing",
+    "total": 70,
+    "variant": "hard"
    }
   ],
   "retrieval": {
@@ -267,30 +632,58 @@
    "rows": [
     [
      "R3 > R2, openai/gpt-oss-120b, standard",
-     "4",
+     "5",
      "0",
-     "0.0625",
-     "0.125"
+     "0.03125",
+     "0.09375"
     ],
     [
      "R2 > R1, openai/gpt-oss-20b, standard",
-     "21",
-     "2",
-     "3.302e-05",
-     "9.906e-05"
+     "25",
+     "3",
+     "1.372e-05",
+     "9.604e-05"
     ],
     [
      "R3 > R2, openai/gpt-oss-20b, standard",
-     "4",
+     "7",
      "0",
-     "0.0625",
-     "0.125"
+     "0.007812",
+     "0.03125"
+    ],
+    [
+     "R2 > R1, openai/gpt-oss-120b, hard",
+     "8",
+     "0",
+     "0.003906",
+     "0.01953"
+    ],
+    [
+     "R3 > R2, openai/gpt-oss-120b, hard",
+     "5",
+     "0",
+     "0.03125",
+     "0.09375"
+    ],
+    [
+     "R2 > R1, openai/gpt-oss-20b, hard",
+     "9",
+     "0",
+     "0.001953",
+     "0.01172"
+    ],
+    [
+     "R3 > R2, openai/gpt-oss-20b, hard",
+     "1",
+     "0",
+     "0.5",
+     "0.5"
     ]
    ]
   },
   "source": "paper/generated/rq4_repair.md",
-  "source_generated_at_git_sha": "fff638f63333052aedaa12c88895ee1c20e773ed",
+  "source_generated_at_git_sha": "84a3a30ee0084565b44773412c104a86741f64a3",
   "status": "run"
  },
- "generated_at_git_sha": "fff638f63333052aedaa12c88895ee1c20e773ed"
+ "generated_at_git_sha": "84a3a30ee0084565b44773412c104a86741f64a3"
 }

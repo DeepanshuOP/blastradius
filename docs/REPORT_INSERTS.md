@@ -53,15 +53,21 @@ On the seeded Python repositories, which have no failure history, ordering tests
 
 **E2 (small-sample: 18 not-mine pairs in the test split).** Triage is a small-sample result: the whole corpus holds 216 not-mine failures (170 inherited, 46 flaky) against 4,168 mine, and the chronological test split holds 18 against 1,015. Every method trades one error for the other. Pooled across repositories, the branch rule clears 145 of 216 not-mine failures but wrongly clears 1,262 of 4,168 mine failures; the message rule clears 135 and wrongly clears 848. The learned models are more conservative: logistic regression clears 74 and wrongly clears 123, LightGBM clears 31 and wrongly clears 57. On the test split, LightGBM clears 10 of 18 not-mine failures and wrongly clears 33 of 1,015 mine failures. Blame-all, what a CI server does by default, clears nothing and errs on nothing. Separating a developer's own failures from inherited and flaky ones needs more not-mine examples than BR-Bench holds, so we report the trade-off, not a working triager.
 
-**E3.** **Completeness.** The pre-registered analysis covers 70 tasks per model and variant. At the time of writing the Groq free-tier daily quota stopped both runs: gpt-oss-120b has 47 and gpt-oss-20b 45 of the 70 standard tasks replayable from the cache, the hard variant has no model run yet, and no Bedrock model was usable (all four probed candidates returned HTTP 400 "Operation not allowed"). The tasks not yet run are the last ones in task-id order (markupsafe, shopcart and a few of the others), so the partial sample is not a random subset. Everything below is therefore interim.
+**E3.** **Completeness.** The pre-registered analysis covers 70 tasks per model and variant. The standard variant is complete for both pre-registered models (gpt-oss-120b and gpt-oss-20b, 70 of 70 tasks each) and is the **confirmatory** result, pre-registered in `docs/phase/033-e3-preregistration.md`. The hard variant is **interim, run continuing**: gpt-oss-120b has 29 of 70 and gpt-oss-20b 17 of 70 tasks replayable from the cache, because the Groq free-tier daily quota stopped the runs. The exploratory third model (qwen/qwen3.8-27b, D-62) is **interim, run continuing** at 25 of 70 standard tasks. Arm R4 is **built, not run**. No Bedrock model was usable (all four probed candidates returned HTTP 400 "Operation not allowed").
 
 **Retrieval (all 70 tasks, no model).** On the standard variant the seeded edit lies inside the diff that R2 searches, so part of R2's retrieval advantage is by construction; the hard variant, which places 4-6 no-op edits inside functions the failing tests execute, measures how much remains. The seeded function is among the three chunks shown for 69/70 tasks (98.57%) with R2 against 46/70 (65.71%) with R1 on the standard variant (23 vs 0, exact McNemar p = 2.384e-07). On the hard variant R2 reaches 63/70 (90.00%) against 46/70 for R1 (17 vs 0, p = 1.526e-05), while 146 of R2's 210 chunks now sit in a distractor function (69.52%).
 
-**Primary pre-registered test (standard variant, gpt-oss-120b, n = 47 of 70 so far).** R2 has 33/47 plausible fixes (full suite green) against 20/47 for R1 (R2 only 17, R1 only 4; exact one-sided McNemar p = 0.0036). On this partial sample R2 > R1 is supported at alpha = 0.05; the confirmatory test at n = 70 is not yet complete.
+**Primary pre-registered test (confirmatory, standard variant, gpt-oss-120b, n = 70).** R2 has 50/70 plausible fixes (full suite green) against 33/70 for R1 (R2 only 22, R1 only 5; exact one-sided McNemar p = 0.0007569). R2 > R1 is supported at alpha = 0.05.
 
-**Replication.** gpt-oss-20b, standard, n = 45 of 70: R2 29/45 against R1 10/45 (R2 only 21, R1 only 2; unadjusted one-sided p = 3.3e-05, Holm-adjusted p = 9.9e-05 in a family of 3). R3 (R2 plus up to two retries) is ahead of R2 by 4 tasks with no reversals in both models (37/47 vs 33/47 and 33/45 vs 29/45); the one-sided p is 0.0625 and the Holm-adjusted p 0.125, so this is not significant. R0 (notify only) fixes 0 tasks.
+**Replication (confirmatory).** gpt-oss-20b, standard, n = 70: R2 41/70 against R1 19/70 (R2 only 25, R1 only 3; one-sided p = 1.372e-05, Holm-adjusted p = 9.604e-05 in the pre-registered family of 7). R3 (R2 plus up to two retries) is ahead of R2 by 5 tasks with no reversals for gpt-oss-120b (55/70 vs 50/70; p = 0.03125, Holm-adjusted 0.09375, not significant) and by 7 for gpt-oss-20b (48/70 vs 41/70; p = 0.007812, Holm-adjusted 0.03125). R0 (notify only) fixes 0 tasks.
 
-**Descriptive.** Overfit patches (target tests pass, suite fails): gpt-oss-120b R1 0, R2 3, R3 2; gpt-oss-20b R1 0, R2 3, R3 1. Exact restore: gpt-oss-120b R2 30/47, gpt-oss-20b R2 27/45. Tokens per task: gpt-oss-120b R1 1,947, R2 1,449, R3 2,363; gpt-oss-20b R1 1,701, R2 1,419, R3 2,546. Cost: USD 0 (Groq free tier); Bedrock ledger total USD 0.00.
+**Hard variant (interim, run continuing).** gpt-oss-120b, n = 29 of 70: R1 9/29, R2 17/29, R3 22/29 (R2 > R1: 8 vs 0, Holm-adjusted p = 0.01953). gpt-oss-20b, n = 17 of 70: R1 0/17, R2 9/17, R3 10/17 (R2 > R1: 9 vs 0, Holm-adjusted p = 0.01172). These are partial samples and may move.
+
+**Third model (exploratory, interim, run continuing).** qwen/qwen3.8-27b, standard, n = 25 of 70: R1 8/25, R2 12/25, R3 13/25 (R2 only 6, R1 only 2, unadjusted two-sided exact McNemar p = 0.2891). Not part of the pre-registered family.
+
+**Descriptive (standard, n = 70).** Overfit patches (target tests pass, suite fails): gpt-oss-120b R1 0, R2 3, R3 2; gpt-oss-20b R1 0, R2 3, R3 1. Exact restore: gpt-oss-120b R2 43/70, gpt-oss-20b R2 39/70. Tokens per task: gpt-oss-120b R1 1,813, R2 1,369, R3 2,206; gpt-oss-20b R1 1,601, R2 1,386, R3 2,525. Cost: USD 0 (Groq free tier).
+
+The E3 evaluation uses a strict patch applier (exact match), while the PR bot uses a whitespace-tolerant applier; E3 fix rates are therefore conservative relative to the bot. The strict applier is `apply_blocks` (`src/agents/repair.py`, tested by `tests/test_agents_repair.py::test_search_must_match_exactly_once`); the tolerant one is `apply_blocks_tolerant` (`src/agents/bot.py`, tested by `tests/test_bot.py::test_strict_apply_rejects_the_real_replies_and_tolerant_apply_fixes_them`).
 
 **Pilot.** The 20-task pilot is reported separately in `paper/generated/rq4_repair.md` and is not part of the tests above.
 
@@ -89,8 +95,8 @@ implemented and tested offline; its model run is pending and is not reported her
   and 63.83% full confidence, always reported together (`binding.md`).
 - E1 detection on the seeded repos: the E1 order places the first failing file at mean position 10.91, alphabetical order at 8.11
   (`rq4_repair.md`). The model was trained on Java CI history and these repos have none.
-- E3 is interim: Groq free-tier daily quotas stopped the full-size runs at 47 and 45 of 70 standard tasks, the hard variant has
-  not been run with a model, and no Bedrock model was usable on this account (probe: HTTP 400 "Operation not allowed").
+- E3: the standard variant is complete at n = 70 for both pre-registered models (confirmatory). The hard variant (29 and 17 of 70) and the
+  third model (25 of 70) are interim, run continuing; arm R4 is built, not run; no Bedrock model was usable (probe: HTTP 400 "Operation not allowed").
 - Corpus skew: 71 Java and 6 Python repos.
 
 ## 7. Future work
