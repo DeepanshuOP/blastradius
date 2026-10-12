@@ -217,3 +217,65 @@ def test_unreachable_upstream_is_reported_not_raised(tmp_path: Path) -> None:
     _git(tmp_path, "init", "-q", "-b", "main", str(scratch))
     info = workspace.fetch_history(scratch, f"file://{tmp_path / 'no-such-upstream'}", "0" * 40, tmp_path / "c.git")
     assert info["status"] == "unavailable" and info["commits"] == 0 and info["reason"]
+
+
+# -- the failure-history row with and without runs of the same diff (2026-10-12) -------------------------------------
+def _arena(hist: list[dict], *, exclude: bool = True, same=lambda r: r.get("same", False)) -> dict:
+    results, change, order, view, _ = load()
+    return arena.compute(results, order_files=order, view=view, changed_nodes=change["changed_nodes"],
+                         changed_fns=change["changed_functions"], coverage=None, history=hist,
+                         cochange=(Counter(), 0, "none"), rule=RULE, same_diff=same, exclude_same_diff=exclude)
+
+
+def test_same_diff_runs_are_excluded_by_default_and_both_rows_are_kept() -> None:
+    results, _, _, _, hist = load()
+    own = {**hist[0], "same": True}           # the line the PR 1 run itself appended: a run of this very diff
+    # a run of a DIFFERENT change that failed one test which passes in this run: count its cases by id
+    passing = next(r["id"] for r in results if r["outcome"] == "passed")
+    other = {"run_id": "other", "change": {"kind": "inject"}, "failed": [passing], "n_cases": 297}
+    n_cases_of_it = sum(1 for r in results if r["id"] == passing)
+
+    doc = _arena([own, other])
+    h = row(doc, "history")
+    # default: the same-diff run is excluded, so only `other` is learned from and it catches none of the 5 failures
+    assert (h["status"], h["selected"], h["caught"], h["first_failure_position"]) == ("ok", n_cases_of_it, 0, None)
+    assert h["note"] == "history: 2 earlier runs, 1 of them on this same diff (excluded)"
+    assert doc["history"] == {"n_runs": 2, "n_same_diff": 1, "n_other": 1, "excluded": True}
+    # both ways are in the document, the included one has seen the answer
+    inc, exc = doc["history_variants"]["include"], doc["history_variants"]["exclude"]
+    assert (exc["selected"], exc["caught"]) == (n_cases_of_it, 0)
+    # included: the 5 failing ids plus `other`'s passing id, ranked by count (all 1) then id; the first failure comes
+    # after every selected case whose id sorts before the smallest failing id
+    failing = sorted({r["id"] for r in results if r["outcome"] in ("failed", "error")})
+    before = sum(1 for r in results if r["id"] < failing[0] and r["id"] == passing)
+    assert inc["caught"] == 5 and inc["first_failure_position"] == before + 1 and inc["note"].endswith("(included)")
+
+    inc_doc = _arena([own, other], exclude=False)
+    assert row(inc_doc, "history")["first_failure_position"] == before + 1 and inc_doc["history"]["excluded"] is False
+    assert inc_doc["history_variants"] == doc["history_variants"]          # the same two rows whichever is shown
+
+
+def test_only_same_diff_runs_left_is_a_cold_start_that_says_why() -> None:
+    _, _, _, _, hist = load()
+    doc = _arena([{**hist[0], "same": True}])
+    h = row(doc, "history")
+    assert h["status"] == "cold-start" and h["selected"] == 0 and len(h["missed"]) == 5
+    assert "no earlier run of a different change" in h["note"] and "1 of them on this same diff" in h["note"]
+    assert "no earlier run of a different change to learn from" in doc["takeaway"]
+    assert "same diff; those are excluded" in h["needs"]
+
+
+def test_diff_identity_and_reset(tmp_path: Path) -> None:
+    key = arena.diff_key("--- a\n+++ b\n@@\n-x\n+y\n")
+    assert key == arena.diff_key("--- a\n+++ b\n@@\n-x\n+y\n\n")           # trailing whitespace is not a different diff
+    assert key != arena.diff_key("--- a\n+++ b\n@@\n-x\n+z\n")
+    src = {"kind": "inject", "file": "a.py", "function": "f", "operator": "CMP_FLIP", "line": 3}
+    assert arena.is_same_diff({"diff_key": key}, src, key)
+    assert not arena.is_same_diff({"diff_key": "0" * 40}, src, key)
+    assert arena.is_same_diff({"change": src}, src, key)                    # lines written before diff_key existed
+    assert not arena.is_same_diff({"change": {**src, "line": 4}}, src, key)
+
+    p = tmp_path / "h.jsonl"
+    arena.append_history("r", {"run_id": "1"}, p)
+    arena.append_history("r", {"run_id": "2"}, p)
+    assert arena.reset_history("r", p) == 2 and arena.read_history("r", p) == [] and arena.reset_history("r", p) == 0

@@ -23,11 +23,13 @@ this run's measured per-case durations. Nothing here calls a model; nothing here
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
 import time
 from collections import Counter, deque
+from typing import Callable
 from pathlib import Path
 
 from src.lab.workspace import LAB_ROOT, git
@@ -179,12 +181,45 @@ def append_history(repo_key: str, run: dict, path: Path | None = None) -> None:
         fh.write(json.dumps(run, sort_keys=True) + "\n")
 
 
-def history_selection(results: list[dict], runs: list[dict]) -> tuple[list[int] | None, str, str]:
+def diff_key(diff: str) -> str:
+    """Identity of a change for the history store: a digest of its unified diff text (whitespace at the ends ignored)."""
+    return hashlib.sha1(diff.strip().encode("utf-8")).hexdigest()
+
+
+def is_same_diff(run: dict, source: dict, key: str) -> bool:
+    """Whether an earlier history line is a run of the same change as the current one.
+
+    Lines written since 2026-10-12 carry `diff_key`; earlier lines are compared by their change source (the
+    injected operator and line, the edited file and text, the task, the pull request), which is what named the diff.
+    """
+    if run.get("diff_key"):
+        return run["diff_key"] == key
+    return json.dumps(run.get("change"), sort_keys=True) == json.dumps(source, sort_keys=True)
+
+
+def reset_history(repo_key: str, path: Path | None = None) -> int:
+    """Forget every earlier run of a repository; returns how many lines were removed."""
+    p = path or history_path(repo_key)
+    n = len(read_history(repo_key, p))
+    p.unlink(missing_ok=True)
+    return n
+
+
+def history_selection(results: list[dict], runs: list[dict], *, n_all: int | None = None, n_same: int | None = None,
+                      excluded: bool = False) -> tuple[list[int] | None, str, str]:
+    """Tests ranked by how often they failed in `runs`. `n_all` and `n_same` (when known) label the row with the
+    history it used: how many earlier runs the store holds and how many were runs of this same diff."""
+    total = len(runs) if n_all is None else n_all
+    label = f"history: {total} earlier run{'s' if total != 1 else ''}"
+    if n_same is not None:
+        label += f", {n_same} of them on this same diff"
+        label += " (excluded)" if excluded else " (included)"
     if not runs:
-        return [], "cold-start", "cold start: no history"
+        why = "no earlier run of a different change" if n_all and excluded else "no history"
+        return [], "cold-start", f"cold start: {why}" if n_same is None else f"{label}; cold start: {why}"
     count = Counter(t for r in runs for t in set(r.get("failed", [])))
     keep = [i for i, r in enumerate(results) if count.get(r["id"], 0) > 0]
-    note = f"history: {len(runs)} earlier run{'s' if len(runs) != 1 else ''}"
+    note = label
     if not keep:
         note += "; no test of this suite failed in them"
     return sorted(keep, key=lambda i: (-count[results[i]["id"]], results[i]["id"], i)), "ok", note
@@ -248,8 +283,10 @@ def takeaway(strats: list[dict], n_cases: int, n_failing: int) -> str:
     if worst:
         w = min(worst, key=lambda x: (x["caught"], x["pct"]))
         s += f"; {w['name'].lower()} missed {n_failing - w['caught']}"
-    if any(x["status"] == "cold-start" for x in strats):
-        s += "; failure history had no earlier runs to learn from"
+    cold = [x for x in strats if x["status"] == "cold-start"]
+    if cold:
+        s += ("; failure history had no earlier run of a different change to learn from" if "(excluded)" in cold[0]["note"]
+              else "; failure history had no earlier runs to learn from")
     return s + "."
 
 
@@ -280,16 +317,25 @@ def needs_text(sid: str, row: dict, coverage: dict | None, history: list[dict], 
 
 def compute(results: list[dict], *, order_files: list[str], view: dict, changed_nodes: list[str],
             changed_fns: list[dict], coverage: dict | None, history: list[dict], cochange: tuple[Counter, int, str | None],
-            rule: dict | None = None, cochange_info: dict | None = None) -> dict:
+            rule: dict | None = None, cochange_info: dict | None = None,
+            same_diff: Callable[[dict], bool] | None = None, exclude_same_diff: bool = True) -> dict:
     """The arena for one run. `results` are the run's executed cases, in execution order.
 
     `rule` is the BlastRadius test-case rule payload (`src.lab.order.rule_payload`); without it the BlastRadius row
     cannot be ordered and is reported unavailable.
+
+    `history` is every earlier run of the repository. When `same_diff` is given, the failure-history row is computed
+    both ways, over the runs of other changes only (`exclude`) and over all of them (`include`), and the row used in
+    `strategies` is the one `exclude_same_diff` names; both rows are kept in `history_variants`. Without `same_diff`
+    the row uses `history` as given (no way to tell which runs were of this diff).
     """
     from src.lab import order as case_order
 
     n = len(results)
     out = []
+    same = [r for r in history if same_diff(r)] if same_diff else []
+    other = [r for r in history if not (same_diff and same_diff(r))]
+    used = (other if exclude_same_diff else history) if same_diff else history
     for sid, name, what, source, ours, kind in STRATEGIES:
         meta = {"id": sid, "name": name, "what": what, "source": source, "ours": ours, "kind": kind}
         if sid == "retest-all":
@@ -308,7 +354,8 @@ def compute(results: list[dict], *, order_files: list[str], view: dict, changed_
                 sel, note = coverage_selection(results, coverage, changed_fns)
                 row = score(results, sel, note=note)
         elif sid == "history":
-            sel, st, note = history_selection(results, history)
+            kw = {"n_all": len(history), "n_same": len(same)} if same_diff else {}
+            sel, st, note = history_selection(results, used, excluded=exclude_same_diff, **kw)
             row = score(results, sel, status=st, note=note)
         elif sid == "cochange":
             counts, used, reason = cochange
@@ -326,11 +373,27 @@ def compute(results: list[dict], *, order_files: list[str], view: dict, changed_
                             note=f"E1 file rank, then graph hops, then id ({len(set(rule['tiers'].values()))} tier(s), "
                                  f"{len(order_files)} test file(s))")
         row["needs"] = needs_text(sid, row, coverage, history, cochange, cochange_info)
+        if sid == "history" and same_diff:
+            row["needs"] = (f"earlier runs ({len(history)} in this repository's lab history, {len(same)} of them on this "
+                            f"same diff; {'those are excluded' if exclude_same_diff else 'those are included'})")
         row["orders_all"] = kind == "orderer" and row["selected"] == n
         out.append({**meta, **row})
     n_failing = sum(1 for r in results if r["outcome"] in FAILED)
+    hist_doc: dict = {"n_runs": len(history)}
+    variants: dict | None = None
+    if same_diff:
+        hist_doc.update({"n_same_diff": len(same), "n_other": len(other), "excluded": bool(exclude_same_diff)})
+        variants = {}
+        for name, runs, ex in (("exclude", other, True), ("include", history, False)):
+            sel, st, note = history_selection(results, runs, n_all=len(history), n_same=len(same), excluded=ex)
+            variants[name] = score(results, sel, status=st, note=note)
+            variants[name]["needs"] = (f"earlier runs ({len(history)} in this repository's lab history, {len(same)} of them "
+                                       f"on this same diff; {'those are excluded' if ex else 'those are included'})")
     doc = {"basis": BASIS, "unit": "test cases (one executed item each)", "n_cases": n, "n_failing": n_failing,
            "suite_ms": round(sum(float(r["duration_s"]) * 1000 for r in results), 1), "strategies": out,
            "takeaway": takeaway(out, n, n_failing),
-           "rule": {"id": case_order.RULE_ID, "fixed": case_order.RULE_FIXED, "text": case_order.RULE_TEXT}}
+           "rule": {"id": case_order.RULE_ID, "fixed": case_order.RULE_FIXED, "text": case_order.RULE_TEXT},
+           "history": hist_doc}
+    if variants is not None:
+        doc["history_variants"] = variants
     return doc

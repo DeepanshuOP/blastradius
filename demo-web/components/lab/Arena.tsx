@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Empty, Icon, Id, StatusIcon, fmtMs, type Tone } from "./common";
+import { BTN, Empty, Icon, Id, StatusIcon, fmtMs, type Tone } from "./common";
 import { Explain } from "./Info";
 import { ArenaRace, Podium } from "./Race";
 import { UnifiedDiff } from "./Diff";
@@ -16,10 +16,13 @@ export interface Strategy {
   selected: number; pct: number; caught: number; n_failing: number; recall: number | null;
   first_failure_position: number | null; first_failure_ms: number | null; ci_ms: number; missed: string[];
 }
+export type ArenaRow = Pick<Strategy, "status" | "note" | "needs" | "selected" | "pct" | "caught" | "n_failing" | "recall" | "first_failure_position" | "first_failure_ms" | "ci_ms" | "missed">;
 export interface ArenaDoc {
   basis: string; unit: string; n_cases: number; n_failing: number; suite_ms: number; strategies: Strategy[]; takeaway: string;
   coverage: { status: string; wall_s?: number; cached?: boolean; n_tests?: number; n_functions?: number; reason?: string };
-  history: { n_runs: number | null; store?: string };
+  history: { n_runs: number | null; store?: string; n_same_diff?: number; n_other?: number; excluded?: boolean };
+  /** The failure-history row computed both ways; absent in recordings made before 2026-10-12. */
+  history_variants?: { exclude: ArenaRow; include: ArenaRow };
   cochange: { n_commits: number; reason?: string; upstream?: { status: string; commits: number; fetch_s: number; reason: string } };
   rule?: { id: string; fixed: string; text: string };
   rederived?: { date: string; rule: string; rows: string[]; note: string; before: Record<string, { first_failure_position: number | null; first_failure_ms: number | null; status: string }> };
@@ -34,6 +37,15 @@ export interface RepairArenaDoc { failure: string[]; columns: RepairColumn[]; no
 export const arenaOf = (s: LabState): ArenaDoc | null => ([...s.events].reverse().find((e) => e.type === "arena.result")?.data as ArenaDoc | undefined) ?? null;
 export const repairArenaOf = (s: LabState) => [...s.events].reverse().find((e) => e.type === "arena.repair");
 
+/** The arena with its failure-history row taken from the variant that `excludeSame` names (the doc's own row when the
+ * recording holds one history row only). */
+export function withHistoryView(a: ArenaDoc, excludeSame: boolean): ArenaDoc {
+  const v = a.history_variants?.[excludeSame ? "exclude" : "include"];
+  if (!v) return a;
+  return { ...a, strategies: a.strategies.map((x) => (x.id === "history" ? { ...x, ...v, orders_all: false } : x)),
+    history: { ...a.history, excluded: excludeSame } };
+}
+
 const pct = (x: number | null) => (x === null ? "–" : `${(x * 100).toFixed(x === 1 || x === 0 ? 0 : 1)}%`);
 
 /** The comparison tables: orderers (run every test, change the order) and selectors (run fewer tests), every number
@@ -46,7 +58,7 @@ export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean 
   const name = (x: Strategy) => (
     <td className={`pr-4 ${large ? "py-2" : "py-1.5"}`}>
       <span className="ui font-semibold">{x.name}</span>{x.ours && <span className={`ui ml-2 rounded bg-accent/20 px-1.5 ${S} font-semibold text-accent`}>ours</span>}
-      <span className={`ui block ${S} text-muted`}>{x.status === "ok" || x.kind === "orderer" ? x.what : x.note}</span>
+      <span className={`ui block ${S} text-muted`}>{x.id === "history" ? x.note : x.status === "ok" || x.kind === "orderer" ? x.what : x.note}</span>
     </td>
   );
   const needs = (x: Strategy) => <td className={`ui ${S} min-w-[15rem] text-muted`}>{x.needs ?? "–"}</td>;
@@ -183,21 +195,59 @@ export function RepairArena({ s }: { s: LabState }) {
   );
 }
 
+/** Reads, and on request resets, the failure-history store the arena's history row learns from. */
+function HistoryControls({ a, mode, excludeSame, setExcludeSame }: {
+  a: ArenaDoc; mode: LabState["mode"]; excludeSame: boolean; setExcludeSame: (v: boolean) => void;
+}) {
+  const key = (a.history.store ?? "").split("/").pop()?.replace(/\.jsonl$/, "") ?? "";
+  const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const both = Boolean(a.history_variants);
+  const reset = async () => {
+    setBusy(true);
+    try {
+      const r = await fetch("/api/lab/history", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ repo: key }) });
+      const j = await r.json();
+      setMsg(r.ok ? `History reset: ${j.removed} earlier run${j.removed === 1 ? "" : "s"} forgotten. The next run starts cold.` : String(j.error ?? "Reset failed."));
+    } catch { setMsg("Reset failed: the local server is not reachable."); }
+    setBusy(false);
+  };
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2" role="group" aria-label="Failure history">
+      <label className={`ui flex items-center gap-2 text-sm ${both ? "" : "text-muted"}`} title={both ? "" : "This recording holds one history row only"}>
+        <input type="checkbox" checked={both ? excludeSame : Boolean(a.history.excluded)} disabled={!both} onChange={(e) => setExcludeSame(e.target.checked)} />
+        Exclude runs of this same diff
+      </label>
+      {a.history.n_runs !== null && a.history.n_same_diff !== undefined && (
+        <span className="ui text-xs text-muted">history: <span className="num mono text-ink">{a.history.n_runs}</span> earlier run{a.history.n_runs === 1 ? "" : "s"}, <span className="num mono text-ink">{a.history.n_same_diff}</span> of them on this same diff</span>
+      )}
+      <button type="button" onClick={reset} disabled={busy || mode === "replay" || !key} className={`${BTN} ml-auto`}
+        title={mode === "replay" ? "A replay has no live history to reset" : "Forget every earlier run of this repository"}>Reset history</button>
+      {msg && <p className="ui m-0 w-full text-xs text-muted" role="status">{msg}</p>}
+    </div>
+  );
+}
+
 /** The arena tab: the race and the podium; the tables, chart and sources behind Details; the repair arena when it ran. */
 export function ArenaPanel({ s }: { s: LabState }) {
-  const a = arenaOf(s);
+  const raw = arenaOf(s);
+  const [excludeSame, setExcludeSame] = useState(true);
   const cov = [...s.events].reverse().find((e) => e.type === "arena.coverage");
-  if (!a) {
+  if (!raw) {
     if (cov?.status === "running") return <p className="ui m-0 flex items-center gap-2 text-sm text-blue"><span className="br-pulse inline-block h-2 w-2 rounded-full bg-blue" />Recording per-test coverage at the base commit…</p>;
     return <Empty title="Six strategies race here once the full suite has run." />;
   }
+  const a = withHistoryView(raw, excludeSame);
+  const hist = a.strategies.find((x) => x.id === "history");
   return (
     <div className="space-y-4">
+      <HistoryControls a={raw} mode={s.mode} excludeSame={excludeSame} setExcludeSame={setExcludeSame} />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         <ArenaRace a={a} />
         <Podium a={a} />
       </div>
-      <Explain>{a.takeaway}</Explain>
+      {hist && <Explain>{hist.note}</Explain>}
+      {a.takeaway && (!raw.history_variants || excludeSame === (raw.history.excluded ?? true)) && <Explain>{a.takeaway}</Explain>}
       <details className="rounded-md border border-rule bg-page">
         <summary className="ui cursor-pointer px-3 py-2 text-sm font-semibold">Details</summary>
         <div className="space-y-5 border-t border-rule p-3">
@@ -205,7 +255,7 @@ export function ArenaPanel({ s }: { s: LabState }) {
           <div className="max-w-3xl"><ArenaChart a={a} /></div>
           <dl className="ui m-0 grid gap-3 text-xs sm:grid-cols-3">
             <div><dt className="text-muted">Per-test coverage (one-time cost)</dt><dd className="m-0">{a.coverage.status === "ok" ? <><span className="num mono">{a.coverage.wall_s?.toFixed(1)} s</span> for {a.coverage.n_tests} tests at the base commit{a.coverage.cached ? ", read from the cache" : ", recorded this run"}</> : a.coverage.reason}</dd></div>
-            <div><dt className="text-muted">Failure history</dt><dd className="m-0">{a.history.n_runs === null ? "not known for this recording" : <>{a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository{a.history.n_runs === 0 ? " (cold start)" : ""}</>}</dd></div>
+            <div><dt className="text-muted">Failure history</dt><dd className="m-0">{a.history.n_runs === null ? "not known for this recording" : <>{a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository{a.history.n_same_diff !== undefined ? `, ${a.history.n_same_diff} of them on this same diff` : ""}{a.history.n_runs === 0 ? " (cold start)" : ""}</>}</dd></div>
             <div><dt className="text-muted">Co-change</dt><dd className="m-0">{a.cochange.reason ?? `${a.cochange.n_commits} commits of git history before the base${a.cochange.upstream?.status === "fetched" ? `, fetched from upstream in ${a.cochange.upstream.fetch_s.toFixed(1)} s` : a.cochange.upstream?.status === "cached" ? ", from the upstream cache" : ""}`}</dd></div>
           </dl>
         </div>

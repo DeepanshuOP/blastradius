@@ -76,7 +76,8 @@ def _parse_run(ns: argparse.Namespace):
 
     a = LabArgs(repo=ns.repo, url=ns.url, pr=ns.pr, task=ns.task, variant=ns.variant, model=ns.model, use_llm=not ns.no_llm,
                 record=ns.record, timeout=ns.timeout, install=not ns.no_install, title=ns.title,
-                description=ns.description, command=sys.argv[1:], repair_arena=ns.repair_arena)
+                description=ns.description, command=sys.argv[1:], repair_arena=ns.repair_arena,
+                exclude_same_diff=not ns.include_same_diff)
     if ns.base_patch:
         a.base_patch = Path(ns.base_patch).read_text(encoding="utf-8")
     if ns.inject:
@@ -196,6 +197,23 @@ def write_index() -> None:
 
 def cmd_index(_ns: argparse.Namespace) -> int:
     write_index()
+    return 0
+
+
+def cmd_history(ns: argparse.Namespace) -> int:
+    """How many earlier runs the arena's failure-history store holds for a repository; `--reset` forgets them."""
+    import re
+
+    from src.lab import arena
+
+    if not re.fullmatch(r"[\w.-]{1,80}(__[\w.-]{1,80})?", ns.repo):
+        raise SystemExit("--repo must be a prepared slug or owner__repo")
+    with _lock():
+        removed = arena.reset_history(ns.repo) if ns.reset else 0
+        runs = arena.read_history(ns.repo)
+    print(json.dumps({"repo": ns.repo, "n_runs": len(runs), "removed": removed,
+                      "runs": [{"run_id": r.get("run_id"), "date": r.get("date"), "kind": (r.get("change") or {}).get("kind"),
+                                "n_failed": len(r.get("failed", []))} for r in runs[-20:]]}))
     return 0
 
 
@@ -428,6 +446,8 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--speed", type=float, default=1.0)
     r.add_argument("--timeout", type=int, default=300)
     r.add_argument("--repair-arena", action="store_true", help="one extra model call: R1 (log-only) against R2, and the unvalidated push")
+    r.add_argument("--include-same-diff", action="store_true",
+                   help="the arena's failure-history row also learns from earlier runs of this same diff (both rows are always reported)")
     r.set_defaults(fn=cmd_run)
     s = sub.add_parser("repos")
     s.set_defaults(fn=cmd_repos)
@@ -440,6 +460,10 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(fn=cmd_tasks)
     s = sub.add_parser("index")
     s.set_defaults(fn=cmd_index)
+    s = sub.add_parser("history", help="the arena's failure-history store of a repository (--reset forgets it)")
+    s.add_argument("--repo", required=True)
+    s.add_argument("--reset", action="store_true")
+    s.set_defaults(fn=cmd_history)
     s = sub.add_parser("rederive", help="apply the test-case rule to recordings made before it")
     s.add_argument("names", nargs="+")
     s.add_argument("--dry-run", action="store_true")

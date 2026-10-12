@@ -48,6 +48,7 @@ class LabArgs:
     install: bool = True
     base_patch: str | None = None           # a diff committed as the base commit first (scenario construction)
     repair_arena: bool = False              # one extra model call: R1 (log-only) against the run's R2, and the unvalidated push
+    exclude_same_diff: bool = True          # the arena's failure-history row ignores earlier runs of this same diff
     title: str | None = None
     description: str | None = None
     command: list[str] = field(default_factory=list)
@@ -337,19 +338,22 @@ class Lab:
             cc = (arena.Counter(), 0, f"git log failed: {exc}"[:200])
         if cc[2] and up["status"] == "unavailable":      # say why the history is missing, not just that it is
             cc = (cc[0], cc[1], up["reason"])
+        dkey = arena.diff_key(ch.diff)
         doc = arena.compute(self.results, order_files=self.order_files, view=self.view, changed_nodes=self.changed_nodes,
                             changed_fns=getattr(self, "changed_detail", []), coverage=cov, history=hist, cochange=cc,
                             rule=self.rule, cochange_info={"source": up["status"] if up["status"] in ("fetched", "cached") else None,
-                                                           "fetch_s": up.get("fetch_s", 0.0)})
+                                                           "fetch_s": up.get("fetch_s", 0.0)},
+                            same_diff=lambda r: arena.is_same_diff(r, ch.source, dkey),
+                            exclude_same_diff=self.a.exclude_same_diff)
         doc["coverage"] = {k: v for k, v in cov.items() if k != "tests"}
-        doc["history"] = {"n_runs": len(hist), "store": str(arena.history_path(key))}
+        doc["history"] = {**doc["history"], "store": str(arena.history_path(key))}
         doc["cochange"] = {"n_commits": cc[1], "upstream": up, **({"reason": cc[2]} if cc[2] else {})}
         e.emit("arena", "arena.result", "ok", doc)
         if ch.source.get("kind") == "inject" and doc["n_failing"] == 0:
             e.emit("arena", "arena.gap", "ok", self.test_gap(doc, cov))
         from src.lab.events import now_iso
 
-        arena.append_history(key, {"run_id": self.run_id, "date": now_iso(), "change": ch.source,
+        arena.append_history(key, {"run_id": self.run_id, "date": now_iso(), "change": ch.source, "diff_key": dkey,
                                    "failed": sorted({r["id"] for r in self.results if r["outcome"] in FAILED}),
                                    "n_cases": len(self.results)})
 
