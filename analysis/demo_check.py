@@ -18,7 +18,14 @@ Checks, in order:
   14. the strategy arena against a real recorded run, with hand-counted expected values (`tests/test_lab_arena.py`);
   15. the sys.settrace coverage plugin on itsdangerous: identical function sets across two cold runs;
   16. every presenter screen rendered from every recorded run (react-dom/server, offline, no browser);
-  17. the token ledgers are separate: the lab writes only `lab_usage.jsonl`, E3's `usage.jsonl` holds no lab row.
+  17. the token ledgers are separate: the lab writes only `lab_usage.jsonl`, E3's `usage.jsonl` holds no lab row;
+  18. the BlastRadius test-case order against the hand-computed order of a recorded run (tests/test_lab_order.py;
+      that expected order is ground truth: fix the code if it fails, never the expectation);
+  19. the arena columns (orderers and selectors, `needs`) and the failure-history row with and without runs of the
+      same diff (tests/test_lab_arena.py);
+  20. the reviewer challenge: the same seed names the same function and operator (tests/test_lab_challenge.py);
+  21. the text budget of the Live Lab main screen, counted in server-rendered HTML: no visible paragraph over 2 lines,
+      no caption over 14 words (demo-web/scripts/text_budget.tsx).
 
 Replays run against a scratch copy of `data/seeded` (BR_SEEDED_DIR) so they never queue behind a live E3 run's repo
 locks. No step can reach a model or the network: replay mode is forced and the keys are removed from the environment.
@@ -214,6 +221,47 @@ def check_presenter() -> tuple[bool, str]:
     shown = sum(1 for d in docs for s in d["screens"] if s["state"] == "shown")
     return rc == 0 and not bad and n > 0, (f"{len(docs)} recordings x 8 screens: {shown} shown, {n - shown} with a stated reason"
                                            if not bad else "; ".join(bad[:3]))
+
+
+def check_order_rule() -> tuple[bool, str]:
+    """The tie-breaking rule against the hand-computed order of a recorded run. A failure here means the code is
+    wrong; the expected order is ground truth and is never edited to make the check pass."""
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_order.py"], env=_env(replay=False))
+    return rc == 0 and "passed" in out and "skipped" not in out, last(out, 1)
+
+
+def check_arena_columns() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k",
+                   "columns or same_diff or diff_identity or cold_start or hand_counts"], env=_env(replay=False))
+    return rc == 0 and "passed" in out, last(out, 1)
+
+
+def check_challenge() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", "tests/test_lab_challenge.py"], env=_env(replay=False))
+    return rc == 0 and "passed" in out, last(out, 1)
+
+
+def check_text_budget() -> tuple[bool, str]:
+    """Compile `demo-web/scripts/text_budget.tsx` and count paragraph lines in the server-rendered HTML of the idle page
+    and of every result panel of every recording."""
+    web = ROOT / "demo-web"
+    out_dir = Path(tempfile.mkdtemp(prefix="br-budget-"))
+    try:
+        rc, out = run(["npx", "tsc", "--outDir", str(out_dir), "--rootDir", ".", "--module", "commonjs", "--moduleResolution", "node",
+                       "--jsx", "react-jsx", "--target", "es2020", "--esModuleInterop", "--skipLibCheck", "--resolveJsonModule",
+                       "--strict", "scripts/text_budget.tsx"], cwd=web)
+        if rc != 0:
+            return False, "tsc: " + last(out, 2)
+        env = {**os.environ, "NODE_PATH": str(web / "node_modules")}
+        rc, out = run(["node", str(out_dir / "scripts" / "text_budget.js"), str(web / "public" / "lab" / "runs")], cwd=web, env=env)
+    finally:
+        shutil.rmtree(out_dir, ignore_errors=True)
+    docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+    bad = [f"{d['screen']}: " + (d.get("error") or "; ".join(f"{o['lines']} lines/{o['words']} words '{o['text'][:40]}'" for o in d["over"][:1]))
+           for d in docs if d.get("error") or d.get("over") or d.get("ok") is False]
+    n = sum(d.get("paragraphs", 0) for d in docs)
+    return rc == 0 and not bad and len(docs) > 1, (f"{len(docs) - 1} screens, {n} visible paragraphs, none over 2 lines or 14 caption words"
+                                                   if not bad else "; ".join(bad[:3]))
 
 
 def check_ledger() -> tuple[bool, str]:
@@ -483,7 +531,11 @@ def main() -> int:
              ("strategy arena against a recorded run, hand-counted values", check_arena),
              ("coverage plugin on itsdangerous: same function sets in two runs", check_coverage_plugin),
              ("presenter: every screen renders from every recording", check_presenter),
-             ("token ledgers separated (lab_usage.jsonl vs usage.jsonl)", check_ledger)]
+             ("token ledgers separated (lab_usage.jsonl vs usage.jsonl)", check_ledger),
+             ("BlastRadius test-case order against the hand-computed order of a recorded run", check_order_rule),
+             ("arena columns, and the history row with and without runs of the same diff", check_arena_columns),
+             ("reviewer challenge: the same seed names the same bug", check_challenge),
+             ("text budget of the main screen in server-rendered HTML (2 lines, 14 caption words)", check_text_budget)]
     try:
         for name, fn in steps:
             t0 = time.time()

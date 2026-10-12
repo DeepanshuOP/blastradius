@@ -85,6 +85,13 @@ export const gapOf = (s: LabState) => [...s.events].reverse().find((e) => e.type
   | { file: string; function: string; operator: string; line: number; old: string; new: string; before: string; after: string; n_cases: number;
       covering: string[]; coverage_status: string; graph_files: string[]; sentence: string } | undefined;
 
+/** The test-gap sentence of the main screen, built from the event's own numbers (the presenter shows the full one). */
+function shortGap(g: NonNullable<ReturnType<typeof gapOf>>): string {
+  const n = g.coverage_status === "ok" ? g.covering.length : g.graph_files.length;
+  const who = g.coverage_status === "ok" ? `${n} test${n === 1 ? "" : "s"} run ${g.function}` : `${n} test file${n === 1 ? "" : "s"} reach it`;
+  return `All ${g.n_cases} tests passed. ${who}; none tells the two lines apart.`;
+}
+
 /** A known semantic change that the whole suite let through. */
 export function TestGapPanel({ s, large = false }: { s: LabState; large?: boolean }) {
   const g = gapOf(s);
@@ -96,7 +103,7 @@ export function TestGapPanel({ s, large = false }: { s: LabState; large?: boolea
         <div className="flex bg-red/15"><span className="num w-14 shrink-0 pr-2 text-right text-muted">{g.line}</span><span className="w-5 text-red">−</span><span className="whitespace-pre">{g.before.trimStart()}</span></div>
         <div className="flex bg-green/15"><span className="num w-14 shrink-0 pr-2 text-right text-muted">{g.line}</span><span className="w-5 text-green">+</span><span className="whitespace-pre">{g.after.trimStart()}</span></div>
       </div>
-      <p className={`ui m-0 mt-3 ${large ? "text-xl" : "text-base"}`}>{g.sentence}</p>
+      <p className={`ui m-0 mt-3 ${large ? "text-xl" : "text-base"}`}>{large ? g.sentence : shortGap(g)}</p>
       {!large && (
         <div className="mt-3 grid gap-4 md:grid-cols-2">
           <div>

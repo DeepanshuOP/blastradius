@@ -279,3 +279,28 @@ def test_diff_identity_and_reset(tmp_path: Path) -> None:
     arena.append_history("r", {"run_id": "1"}, p)
     arena.append_history("r", {"run_id": "2"}, p)
     assert arena.reset_history("r", p) == 2 and arena.read_history("r", p) == [] and arena.reset_history("r", p) == 0
+
+
+def test_arena_columns_orderers_selectors_and_needs() -> None:
+    """The columns of the arena (2026-10-12): orderers run every test and are judged by tests and time until the first
+    failure; selectors run fewer tests; `needs` names what each approach requires, with its measured cost."""
+    results, change, order, view, hist = load()
+    cov = {"status": "ok", "wall_s": 2.5, "n_tests": 297, "cached": False, "tests": {}}
+    cc = (Counter({"tests/test_itsdangerous/test_timed.py": 4}), 120, None)
+    doc = arena.compute(results, order_files=order, view=view, changed_nodes=change["changed_nodes"],
+                        changed_fns=change["changed_functions"], coverage=cov, history=hist, cochange=cc, rule=RULE,
+                        cochange_info={"source": "fetched", "fetch_s": 3.2})
+    assert [s["id"] for s in doc["strategies"]] == ["retest-all", "static-rts", "coverage", "history", "cochange", "blastradius"]
+    assert {s["id"] for s in doc["strategies"] if s["kind"] == "orderer"} == {"retest-all", "blastradius"}
+    assert {s["id"] for s in doc["strategies"] if s["kind"] == "selector"} == {"static-rts", "coverage", "history", "cochange"}
+    for s in doc["strategies"]:
+        assert s["orders_all"] is (s["kind"] == "orderer")                    # "orders all N" only for orderers
+        assert s["kind"] == "orderer" and s["selected"] == 297 or s["kind"] == "selector"
+    assert {s["id"]: s["needs"] for s in doc["strategies"]} == {
+        "retest-all": "nothing",
+        "static-rts": "code graph",
+        "coverage": "an instrumented coverage run at base: 2.5 s for 297 tests",
+        "history": "earlier runs (1 in this repository's lab history)",
+        "cochange": "git history (120 commits, fetched from upstream in 3.2 s)",
+        "blastradius": "graph and model (E1)",
+    }

@@ -153,7 +153,10 @@ export default function LabPage() {
   const [hidden, setHidden] = useState<Filter[]>([]);
   const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
   const { probe, startProbe, clearProbe } = useProbe();
-  const tally = useSessionTally(s);
+  const fixRuns = useRef<Set<number>>(new Set());          // runs started by the challenge's "Fix it": their bug is already counted
+  const fixPending = useRef(false);
+  useEffect(() => { if (fixPending.current && s.startedAt) { fixRuns.current.add(s.startedAt); fixPending.current = false; } }, [s.startedAt]);
+  const tally = useSessionTally(s, fixRuns.current);
   const lastReplay = useRef<{ name: string; speed: number } | null>(null);
   const pinnedAt = useRef<Stage | null>(null);
   const graphRef = useRef<GraphHandle>(null);
@@ -289,6 +292,7 @@ export default function LabPage() {
               const name = scenario?.kind === "repo" ? scenario.name : String(s.repo?.name ?? "");
               const sc = { kind: "repo", name } as NonNullable<Scenario>;
               const ch: Change = { kind: "inject", ...c };
+              fixPending.current = !opts.noLlm;
               setScenario(sc); setChange(ch); launch(sc, ch, opts);
             }}
             onPickMyself={() => { setChallenge(false); document.getElementById("panel-graph")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}

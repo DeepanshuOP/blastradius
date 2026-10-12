@@ -19,8 +19,13 @@ const sum = (a: Tally, b: Tally): Tally => ({ bugs: a.bugs + b.bugs, caught: a.c
  *   fixed    a validate.verdict that was accepted
  *   tokens   tokens spent by model calls (answers served from the lab cache cost nothing)
  */
-export function contribution(s: LabState): Tally {
+export function contribution(s: LabState, fixRun = false): Tally {
   const t = { ...EMPTY };
+  if (fixRun) {                                            // "Fix it" re-runs a bug already counted: only its fix and tokens are new
+    if (s.validate.verdict?.accepted === true && s.validate.verdict.status === "ok") t.fixed = 1;
+    t.tokens = Math.max(0, s.tokens.total - s.tokens.cached);
+    return t;
+  }
   const kind = String(s.change?.source?.kind ?? "");
   if (["inject", "seeded-task", "edit"].includes(kind)) t.bugs = 1;
   const c = s.tests.done?.counts as Record<string, number> | undefined;
@@ -47,13 +52,13 @@ const write = (t: Tally) => { try { sessionStorage.setItem(KEY, JSON.stringify(t
  * The session tally: finished live runs (kept in sessionStorage) plus the run in progress. A replay adds nothing: the
  * scoreboard counts what this browser session ran, not what was recorded earlier.
  */
-export function useSessionTally(s: LabState): Tally {
+export function useSessionTally(s: LabState, fixRuns?: ReadonlySet<number>): Tally {
   const [base, setBase] = useState<Tally>(EMPTY);
   const last = useRef<{ key: string | null; c: Tally }>({ key: null, c: EMPTY });
   useEffect(() => { setBase(read()); }, []);
   useEffect(() => () => { if (last.current.key) write(sum(read(), last.current.c)); }, []);   // leaving the page banks the run
   const key = s.mode === "live" && s.startedAt ? String(s.startedAt) : null;
-  const cur = key ? contribution(s) : EMPTY;
+  const cur = key ? contribution(s, fixRuns?.has(Number(key))) : EMPTY;
   useEffect(() => {
     if (last.current.key !== key) {                         // a run ended, was reset, or a new one started: bank it
       if (last.current.key) {
