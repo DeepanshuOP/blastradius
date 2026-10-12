@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Empty, Panel, Prov, fmtMs, sha } from "./common";
+import { BTN, Empty, fmtMs, sha } from "./common";
 import type { LabState } from "./types";
 
 function download(name: string, text: string, type: string) {
@@ -18,19 +18,20 @@ export function ReportPanel({ s }: { s: LabState }) {
   const [raw, setRaw] = useState(false);
   const html = c ?? "";
   return (
-    <Panel id="panel-report" title="PR comment preview" right={<>
-      <Prov mode={s.mode} />
-      <button type="button" disabled={!c} onClick={() => c && download("blastradius-run.md", c, "text/markdown")} className="ui rounded border border-rule px-2 py-0.5 text-[12px] disabled:opacity-40">Download .md</button>
-      <button type="button" disabled={!s.events.length} onClick={() => download("blastradius-run.json", JSON.stringify({ header: s.header, summary: s.report.summary, comment: c, events: s.events }, null, 1), "application/json")} className="ui rounded border border-rule px-2 py-0.5 text-[12px] disabled:opacity-40">Download .json</button>
-    </>}>
-      {!c ? <Empty>The comment is rendered at the end of the run.</Empty> : (
+    <>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <label className="ui flex items-center gap-1 text-xs text-muted"><input type="checkbox" checked={raw} disabled={!c} onChange={(e) => setRaw(e.target.checked)} /> raw Markdown</label>
+        <span className="flex-1" />
+        <button type="button" disabled={!c} onClick={() => c && download("blastradius-run.md", c, "text/markdown")} className={BTN}>Download .md</button>
+        <button type="button" disabled={!s.events.length} onClick={() => download("blastradius-run.json", JSON.stringify({ header: s.header, summary: s.report.summary, comment: c, events: s.events }, null, 1), "application/json")} className={BTN}>Download .json</button>
+      </div>
+      {!c ? <Empty title="The pull-request comment is rendered here at the end of the run.">It is the text the PR bot would post: the at-risk tests, the results in risk-first order, the triage and the validated patch, if any. Nothing is posted anywhere.</Empty> : (
         <>
-          <label className="ui mb-2 flex items-center gap-1 text-[12px] text-muted"><input type="checkbox" checked={raw} onChange={(e) => setRaw(e.target.checked)} /> show raw Markdown</label>
-          {raw ? <pre className="mono m-0 max-h-[28rem] overflow-auto whitespace-pre-wrap rounded bg-page p-3 text-[12px]">{html}</pre> : <MarkdownLite text={html} />}
-          <p className="cap m-0 mt-2 text-[12px]">This is the text <span className="mono">src.agents.bot.render_comment</span> produced in this run. Nothing was posted anywhere.</p>
+          {raw ? <pre className="mono m-0 max-h-[28rem] overflow-auto whitespace-pre-wrap rounded bg-page p-3 text-xs">{html}</pre> : <MarkdownLite text={html} />}
+          <p className="cap m-0 mt-2 text-xs">This is the text <span className="mono">src.agents.bot.render_comment</span> produced in this run. Nothing was posted anywhere.</p>
         </>
       )}
-    </Panel>
+    </>
   );
 }
 
@@ -40,7 +41,7 @@ function MarkdownLite({ text }: { text: string }) {
   const out: JSX.Element[] = [];
   let i = 0;
   const inline = (t: string) => t.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((p, k) =>
-    p.startsWith("`") ? <code key={k} className="mono rounded bg-page px-1 text-[12px]">{p.slice(1, -1)}</code>
+    p.startsWith("`") ? <code key={k} className="mono rounded bg-page px-1 text-xs">{p.slice(1, -1)}</code>
       : p.startsWith("**") ? <strong key={k}>{p.slice(2, -2)}</strong> : p);
   while (i < lines.length) {
     const l = lines[i];
@@ -49,7 +50,7 @@ function MarkdownLite({ text }: { text: string }) {
       i++;
       while (i < lines.length && !lines[i].startsWith("```")) buf.push(lines[i++]);
       i++;
-      out.push(<pre key={i} className="mono m-0 mb-2 max-h-72 overflow-auto rounded bg-page p-2 text-[11.5px]">{buf.join("\n")}</pre>);
+      out.push(<pre key={i} className="mono m-0 mb-2 max-h-72 overflow-auto rounded bg-page p-2 text-xs">{buf.join("\n")}</pre>);
     } else if (l.startsWith("|")) {
       const rows: string[][] = [];
       while (i < lines.length && lines[i].startsWith("|")) {
@@ -57,19 +58,19 @@ function MarkdownLite({ text }: { text: string }) {
         i++;
       }
       out.push(
-        <div key={i} className="mb-2 overflow-x-auto"><table className="w-full text-[12px]"><thead><tr>{rows[0].map((h, k) => <th key={k} className="ui border-b border-rule px-1.5 py-1 text-left text-muted">{inline(h)}</th>)}</tr></thead>
+        <div key={i} className="mb-2 overflow-x-auto"><table className="w-full text-xs"><thead><tr>{rows[0].map((h, k) => <th key={k} className="ui border-b border-rule px-1.5 py-1 text-left text-muted">{inline(h)}</th>)}</tr></thead>
           <tbody>{rows.slice(1).map((r, k) => <tr key={k}>{r.map((c, j) => <td key={j} className="border-b border-rule px-1.5 py-1 align-top">{inline(c)}</td>)}</tr>)}</tbody></table></div>);
-    } else if (l.startsWith("### ")) { out.push(<h4 key={i} className="ui m-0 mb-1 mt-3 text-[14px]">{inline(l.slice(4))}</h4>); i++; }
-    else if (l.startsWith("## ")) { out.push(<h3 key={i} className="ui m-0 mb-1 text-[16px]">{inline(l.slice(3))}</h3>); i++; }
+    } else if (l.startsWith("### ")) { out.push(<h4 key={i} className="ui m-0 mb-1 mt-3 text-base">{inline(l.slice(4))}</h4>); i++; }
+    else if (l.startsWith("## ")) { out.push(<h3 key={i} className="ui m-0 mb-1 text-md">{inline(l.slice(3))}</h3>); i++; }
     else if (l.startsWith("<")) { i++; }
     else if (l.trim() === "" || l.startsWith("---")) { i++; }
-    else { const t = l.replace(/<\/?sub>/g, ""); out.push(<p key={i} className={`ui m-0 mb-1.5 text-[13px] ${/^_.*_$/.test(t) ? "italic text-muted" : ""}`}>{inline(/^_.*_$/.test(t) ? t.slice(1, -1) : t)}</p>); i++; }
+    else { const t = l.replace(/<\/?sub>/g, ""); out.push(<p key={i} className={`ui m-0 mb-1.5 text-sm ${/^_.*_$/.test(t) ? "italic text-muted" : ""}`}>{inline(/^_.*_$/.test(t) ? t.slice(1, -1) : t)}</p>); i++; }
   }
   return <div className="max-h-[32rem] overflow-y-auto rounded border border-rule bg-panel p-3">{out}</div>;
 }
 
 /** Everything needed to audit the run: commands, SHAs, model and sampling, cache, durations, mode, live vs recorded. */
-export function IntegrityDrawer({ s, onClose }: { s: LabState; onClose: () => void }) {
+export function IntegrityPanel({ s }: { s: LabState }) {
   const h = s.header ?? {};
   const rep = s.mode === "replay";
   const sum = s.report.summary;
@@ -91,26 +92,23 @@ export function IntegrityDrawer({ s, onClose }: { s: LabState; onClose: () => vo
     ["Unit of counts", String(sum?.unit ?? s.triage?.unit ?? "test cases for the suite, unique canonical test ids for triage")],
   ];
   if (h.scenario_note || s.repo?.scenario_note) rows.splice(2, 0, ["Scenario", String(h.scenario_note ?? s.repo?.scenario_note)]);
+  if (!s.events.length) return <Empty title="The audit trail of the run appears here as soon as it starts.">The command, both commits, the interpreter, the model and its sampling, the cache and ledger files, every stage duration, and which numbers are live and which are replayed.</Empty>;
   return (
-    <aside className="fixed inset-y-0 right-0 z-40 flex w-full max-w-md flex-col border-l border-rule bg-panel shadow-2xl" aria-label="Integrity">
-      <header className="flex items-center justify-between border-b border-rule px-4 py-3">
-        <h3 className="ui m-0 text-[14px] font-semibold">Integrity</h3>
-        <button type="button" onClick={onClose} className="ui rounded border border-rule px-2 py-0.5 text-[12px]">Close</button>
-      </header>
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">
-        <dl className="m-0">
-          {rows.map(([k, v]) => (
-            <div key={k} className="mb-3"><dt className="ui text-[11px] uppercase tracking-wide text-muted">{k}</dt><dd className="mono m-0 break-words text-[12px]">{v}</dd></div>
-          ))}
-        </dl>
-        <h4 className="ui m-0 mb-1 mt-4 text-[12px] font-semibold uppercase text-muted">Live and recorded</h4>
-        <ul className="ui m-0 list-disc pl-5 text-[12.5px]">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+      <dl className="m-0 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+        {rows.map(([k, v]) => (
+          <div key={k} className="mb-3 min-w-0"><dt className="ui text-2xs uppercase tracking-wide text-muted">{k}</dt><dd className="mono m-0 text-xs [overflow-wrap:anywhere]">{v}</dd></div>
+        ))}
+      </dl>
+      <div>
+        <h4 className="ui m-0 mb-1 text-xs font-semibold uppercase tracking-wide text-muted">Live and recorded</h4>
+        <ul className="ui m-0 list-disc space-y-1 pl-5 text-sm">
           <li>{rep ? "Every event on screen is read from a recorded run; none was computed in this session." : "Graph, ranking, test results, triage, patch checks and counts were computed in this session."}</li>
           <li>{h.model ? (rep ? "The model reply was recorded at the time of the run." : live > 0 ? `${live} model call(s) went to the provider in this run${cached ? `; ${cached} came from the lab cache` : ""}.` : "The model reply came from the lab cache; no tokens were spent in this session.") : "No model was called."}</li>
           <li>The alphabetical lane of the test race is computed from measured durations, not a second run.</li>
           <li>Numbers labelled FROM BR-BENCH are read from <span className="mono">paper/generated</span>, not from this run.</li>
         </ul>
       </div>
-    </aside>
+    </div>
   );
 }

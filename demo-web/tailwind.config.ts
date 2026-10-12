@@ -35,7 +35,9 @@ const config: Config = {
       orange: { 50: "rgb(var(--accent-rgb) / 0.12)", 100: "rgb(var(--accent-rgb) / 0.16)", 200: "rgb(var(--accent-rgb) / 0.4)", 300: c("accent"), 400: c("accent"), 500: c("accent"), 600: c("accent"), 700: c("accent"), 800: c("accent"), 900: c("accent") },
     },
     extend: {
-      screens: { wide: "1400px" },
+      screens: { wide: "1400px", lab: "1440px" },
+      fontSize: Object.fromEntries(["2xs", "xs", "sm", "base", "md", "lg", "xl", "2xl", "3xl"].map((k) => [k, [`var(--fs-${k})`, { lineHeight: `var(--lh-${k})` }]])),
+      spacing: Object.fromEntries([["0.5", "0-5"], ["1", "1"], ["1.5", "1-5"], ["2", "2"], ["2.5", "2-5"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["8", "8"], ["10", "10"], ["12", "12"], ["16", "16"]].map(([k, v]) => [k, `var(--space-${v})`])),
       fontFamily: {
         serif: ["var(--font-sans)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Arial", "sans-serif"],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Arial", "sans-serif"],

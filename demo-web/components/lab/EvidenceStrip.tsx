@@ -13,10 +13,10 @@ type Results = { rq1_k10: { k: number; methods: { method: string; micro_recall: 
 function Card({ title, big, body, source }: { title: string; big: string; body: string; source: string }) {
   return (
     <div className="min-w-0 rounded-md border border-rule bg-panel p-3">
-      <div className="mb-1 flex items-center justify-between gap-2"><span className="ui text-[11.5px] font-semibold uppercase tracking-wide text-muted">{title}</span><Prov mode="bench" /></div>
-      <div className="mono text-[22px] font-semibold leading-tight">{big}</div>
-      <p className="ui m-0 mt-1 text-[12.5px] leading-snug">{body}</p>
-      <p className="cap m-0 mt-1.5 text-[11px]">Source: <span className="mono text-[11px]">{source}</span></p>
+      <div className="mb-1 flex items-center justify-between gap-2"><span className="ui text-xs font-semibold uppercase tracking-wide text-muted">{title}</span><Prov mode="bench" /></div>
+      <div className="mono text-lg font-semibold leading-tight">{big}</div>
+      <p className="ui m-0 mt-1 text-sm leading-snug">{body}</p>
+      <p className="cap m-0 mt-1.5 text-2xs">Source: <span className="mono text-2xs">{source}</span></p>
     </div>
   );
 }

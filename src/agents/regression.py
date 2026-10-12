@@ -155,6 +155,7 @@ def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[
         env["BR_LAB_ORDER"] = _json.dumps(order_files)
     cmd = [*cmd[:3], "-p", "br_lab_plugin", *cmd[3:]]
     streamed: list[TestResult] = []
+    n_collected: int | None = None             # the plugin reports how many items pytest collected, before the first result
     with tempfile.TemporaryFile() as sink:
         proc = subprocess.Popen(cmd, cwd=workdir, env=env, stdout=sink, stderr=subprocess.STDOUT, pass_fds=[w_fd])
         os.close(w_fd)
@@ -174,6 +175,9 @@ def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[
                         ev = _json.loads(line)
                     except ValueError:
                         continue
+                    if ev.get("k") == "collected":
+                        n_collected = int(ev.get("n") or 0) or None
+                        continue
                     if ev.get("k") != "result":
                         continue
                     tid = junit_test_id(ev.get("file"), ev.get("classname", ""), ev.get("name", ""))
@@ -182,7 +186,7 @@ def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[
                     if on_result:
                         on_result({"id": tid, "nodeid": ev.get("nodeid", ""), "outcome": res.outcome,
                                    "duration_s": res.duration_s, "message": res.message, "index": len(streamed),
-                                   "t": ev.get("t")})
+                                   "t": ev.get("t"), "of": n_collected})
             proc.wait()
         finally:
             if timer:

@@ -63,9 +63,9 @@ export function SideBySide({ path, before, after, context = 3 }: { path: string;
   const bg = { del: "bg-red/20", add: "bg-green/20", chg: "", same: "" };
   return (
     <div className="mb-3 overflow-hidden rounded border border-rule">
-      <div className="mono border-b border-rule bg-page px-2 py-1 text-[12px]">{path}</div>
+      <div className="mono border-b border-rule bg-page px-2 py-1 text-xs">{path}</div>
       <div className="max-h-96 overflow-auto">
-        <table className="mono w-full table-fixed border-collapse text-[11.5px] leading-[1.5]">
+        <table className="mono w-full table-fixed border-collapse text-xs leading-[1.5]">
           <colgroup><col className="w-10" /><col /><col className="w-10" /><col /></colgroup>
           <tbody>
             {view.map((r, i) => r === null ? (
@@ -87,7 +87,7 @@ export function SideBySide({ path, before, after, context = 3 }: { path: string;
 
 export function UnifiedDiff({ diff }: { diff: string }) {
   return (
-    <pre className="mono m-0 max-h-96 overflow-auto rounded border border-rule bg-page p-2 text-[11.5px] leading-[1.5]">
+    <pre className="mono m-0 max-h-96 overflow-auto rounded border border-rule bg-page p-2 text-xs leading-[1.5]">
       {diff.split("\n").map((ln, i) => (
         <div key={i} className={ln.startsWith("+") && !ln.startsWith("+++") ? "bg-green/20" : ln.startsWith("-") && !ln.startsWith("---") ? "bg-red/20" : ln.startsWith("@@") ? "text-blue" : ln.startsWith("diff") || ln.startsWith("index") || ln.startsWith("---") || ln.startsWith("+++") ? "text-muted" : ""}>{ln || " "}</div>
       ))}

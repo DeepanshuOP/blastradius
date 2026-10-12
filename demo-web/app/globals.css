@@ -23,6 +23,21 @@
   --ink: rgb(var(--ink-rgb)); --muted: rgb(var(--muted-rgb)); --accent: rgb(var(--accent-rgb)); --amber: rgb(var(--amber-rgb));
   --blue: rgb(var(--blue-rgb)); --green: rgb(var(--green-rgb)); --red: rgb(var(--red-rgb));
   color-scheme: dark;
+
+  /* One type scale (ratio about 1.15 for UI, wider steps for the projector) and one spacing scale (4 px base).
+     Tailwind's text-* and spacing keys resolve to these, so every size on the page comes from here. */
+  --fs-2xs: 11px;   --lh-2xs: 16px;    /* chips, micro labels */
+  --fs-xs: 12px;    --lh-xs: 17px;     /* meta lines, captions, table notes */
+  --fs-sm: 13px;    --lh-sm: 19px;     /* dense UI: log, tables, code */
+  --fs-base: 14px;  --lh-base: 21px;   /* UI body */
+  --fs-md: 16px;    --lh-md: 23px;     /* panel titles */
+  --fs-lg: 20px;    --lh-lg: 27px;     /* section titles, key figures */
+  --fs-xl: 26px;    --lh-xl: 33px;     /* presenter body */
+  --fs-2xl: 36px;   --lh-2xl: 42px;    /* presenter headings */
+  --fs-3xl: 56px;   --lh-3xl: 60px;    /* presenter figures */
+  --space-0-5: 2px; --space-1: 4px; --space-1-5: 6px; --space-2: 8px; --space-2-5: 10px; --space-3: 12px;
+  --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+  --space-16: 64px;
 }
 :root[data-theme="light"] {
   --page-rgb: 244 245 247;
@@ -56,6 +71,12 @@ select, input[type="text"], input[type="url"], textarea { background: rgb(var(--
 table { font-size: 14px; font-variant-numeric: tabular-nums; border-collapse: collapse; }
 th, td { font-variant-numeric: tabular-nums; }
 code, pre, kbd, .mono { font-family: var(--font-mono), ui-monospace, Menlo, Consolas, monospace; }
+/* every metric is set in tabular figures so columns of numbers line up and live counters do not jitter */
+.num, .mono { font-variant-numeric: tabular-nums; }
+::selection { background: rgb(var(--accent-rgb) / 0.35); color: var(--ink); }
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--muted-rgb) / 0.45) transparent; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+input, textarea { caret-color: var(--accent); }
 
 p { margin: 0 0 1em; }
 h2 { margin: 0 0 0.75rem; }
@@ -82,8 +103,24 @@ details > summary { cursor: pointer; }
 @keyframes br-ring { from { transform: scale(0.4); opacity: 0.9; } to { transform: scale(8); opacity: 0; } }
 @keyframes br-open { from { opacity: 0; } to { opacity: 1; } }
 details[open] > :not(summary) { animation: br-open 0.15s ease-out; }
+/* Ring guides of the blast-radius layout: faint, dashed, one per hop, labelled at the top. */
+.br-guide { fill: none; stroke: rgb(var(--muted-rgb) / 0.28); stroke-width: 1; stroke-dasharray: 3 5; }
+.br-guide-far { stroke: rgb(var(--muted-rgb) / 0.16); }
+.br-guide-label {
+  position: absolute; transform: translate(-50%, -50%); padding: 0 var(--space-1-5); border-radius: 999px;
+  font-size: var(--fs-2xs); line-height: var(--lh-2xs); color: var(--muted); background: rgb(var(--page-rgb) / 0.9);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.br-wave-ring { fill: none; stroke: var(--accent); }
+/* The blast-radius shockwave on the ring layout: one ring per hop, expanding from the previous ring's radius. */
+.br-wave { transform-box: fill-box; transform-origin: center; animation: br-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes br-wave { from { opacity: 0.95; stroke-width: 6; } to { opacity: 0; stroke-width: 1; } }
+@keyframes br-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+.br-pulse { animation: br-pulse 1.4s ease-in-out infinite; }
+/* Reduced motion: no movement; state changes (rings lit, tests filled) still happen, instantly. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .br-pulse { animation: none !important; }
 }
 
 /* recharts appends a text-measurement span to <body>; keep it out of the page flow. */

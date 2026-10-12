@@ -1,5 +1,5 @@
 /** Event stream of the Live Lab (`python -m src.lab`), as it arrives over SSE or from a recorded run. */
-export type Stage = "meta" | "repo" | "graph" | "change" | "impact" | "tests" | "triage" | "repair" | "validate" | "report";
+export type Stage = "meta" | "repo" | "graph" | "change" | "impact" | "tests" | "arena" | "triage" | "repair" | "validate" | "report";
 export type Data = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type Status = "running" | "ok" | "failed" | "skipped";
 
