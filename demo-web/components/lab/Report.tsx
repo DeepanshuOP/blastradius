@@ -36,7 +36,7 @@ export function ReportPanel({ s }: { s: LabState }) {
 }
 
 /** A small Markdown renderer for the bot's own output: headings, tables, code fences, details, lists, inline code. */
-function MarkdownLite({ text }: { text: string }) {
+export function MarkdownLite({ text, className = "max-h-[32rem] overflow-y-auto" }: { text: string; className?: string }) {
   const lines = text.split("\n").filter((l) => !l.startsWith("<!--"));
   const out: JSX.Element[] = [];
   let i = 0;
@@ -66,7 +66,7 @@ function MarkdownLite({ text }: { text: string }) {
     else if (l.trim() === "" || l.startsWith("---")) { i++; }
     else { const t = l.replace(/<\/?sub>/g, ""); out.push(<p key={i} className={`ui m-0 mb-1.5 text-sm ${/^_.*_$/.test(t) ? "italic text-muted" : ""}`}>{inline(/^_.*_$/.test(t) ? t.slice(1, -1) : t)}</p>); i++; }
   }
-  return <div className="max-h-[32rem] overflow-y-auto rounded border border-rule bg-panel p-3">{out}</div>;
+  return <div className={`rounded border border-rule bg-panel p-3 ${className}`}>{out}</div>;
 }
 
 /** Everything needed to audit the run: commands, SHAs, model and sampling, cache, durations, mode, live vs recorded. */

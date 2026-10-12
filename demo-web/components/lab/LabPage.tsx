@@ -8,6 +8,7 @@ import { EventLog } from "./Log";
 import { NodeCard } from "./NodeDetails";
 import { ImpactPanel, RacePanel, RepairPanel, TriagePanel, stageFailure } from "./Panels";
 import { Picker, type Change, type RepoInfo, type RunInfo, type Scenario } from "./Picker";
+import { Presenter } from "./Presenter";
 import { PipelineRail } from "./Rail";
 import { IntegrityPanel, ReportPanel } from "./Report";
 import { TopBar } from "./TopBar";
@@ -123,6 +124,8 @@ export default function LabPage() {
   const [codeOpen, setCodeOpen] = useState(false);
   const [waveKey, setWaveKey] = useState(0);
   const [tab, setTab] = useState<TabId>("impact");
+  const [presenting, setPresenting] = useState(false);
+  const lastReplay = useRef<{ name: string; speed: number } | null>(null);
   const pinnedAt = useRef<Stage | null>(null);
   const graphRef = useRef<GraphHandle>(null);
   const results = useRef<HTMLDivElement>(null);
@@ -164,7 +167,12 @@ export default function LabPage() {
   const canRun = scenario !== null && (scenario.kind === "replay" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
   const run = useCallback(() => {
     if (!scenario) return;
-    if (scenario.kind === "replay") { startReplay(scenario.name, Number(new URLSearchParams(window.location.search).get("speed")) || 1); return; }
+    if (scenario.kind === "replay") {
+      lastReplay.current = { name: scenario.name, speed: Number(new URLSearchParams(window.location.search).get("speed")) || 1 };
+      startReplay(lastReplay.current.name, lastReplay.current.speed);
+      return;
+    }
+    lastReplay.current = null;
     if (!change) return;
     const body: Record<string, unknown> = { model, ...(scenario.kind === "repo" ? { repo: scenario.name } : { url: scenario.url }) };
     if (change.kind === "task") Object.assign(body, { task: change.id, variant: change.variant });
@@ -181,7 +189,11 @@ export default function LabPage() {
   return (
     <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3">
       <TopBar s={s} avail={avail} model={model} canRun={canRun} onRun={run} onReset={() => { reset(); setScenario(null); setChange(null); }}
-        onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} />
+        onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
+      {presenting && (
+        <Presenter s={s} g={{ nodes: g.nodes, edges: g.edges, changed: g.changed, paths: g.paths, atRisk: g.atRisk, outcomes: g.outcomes }} onClose={() => setPresenting(false)}
+          onRestart={() => { if (s.mode === "replay" && lastReplay.current) startReplay(lastReplay.current.name, lastReplay.current.speed); }} />
+      )}
       {s.mode === "idle" && (
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <label className="ui text-xs text-muted" htmlFor="model">Model for the repair step</label>

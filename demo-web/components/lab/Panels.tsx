@@ -186,7 +186,7 @@ export function CheckList({ checks, attempt, large = false }: { checks: Check[];
         const st = checkTone(x);
         return (
           <li key={c.name} className="flex gap-2">
-            <StatusIcon tone={st} className={`${large ? "mt-1.5 text-lg" : "mt-[3px]"}`} />
+            <span className={large ? "mt-0.5 text-2xl leading-none" : "mt-[3px]"}><StatusIcon tone={st} /></span>
             <span className={`ui min-w-0 ${large ? "text-xl" : "text-sm"}`}><span className={st === "pending" ? "text-muted" : ""}>{c.label}</span>
               {x && !large && <span className="mono block text-xs text-muted [overflow-wrap:anywhere]">{x.evidence}</span>}
             </span>

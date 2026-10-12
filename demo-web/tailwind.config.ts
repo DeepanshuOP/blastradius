@@ -24,7 +24,7 @@ const config: Config = {
       current: "currentColor",
       white: "#FFFFFF",
       page: c("page"), panel: c("panel"), panel2, ink, muted, rule,
-      accent: c("accent"), green: c("green"),
+      accent: c("accent"), green: c("green"), chart1: c("chart-1"), chart2: c("chart-2"),
       amber: { DEFAULT: c("amber"), 50: "rgb(var(--amber-rgb) / 0.12)", 100: "rgb(var(--amber-rgb) / 0.16)", 200: "rgb(var(--amber-rgb) / 0.4)", 300: c("amber"), 400: c("amber"), 500: c("amber"), 600: c("amber"), 700: c("amber"), 800: c("amber"), 900: c("amber") },
       pass: c("green"), fail: c("red"),
       slate: { 50: panel2, 100: panel2, 200: rule, 300: rule, 400: muted, 500: muted, 600: muted, 700: ink, 800: ink, 900: ink },

@@ -14,6 +14,8 @@ export function parseDiff(diff: string): FileDiff[] {
   let o = 0, n = 0;
   for (const ln of diff.split("\n")) {
     if (ln.startsWith("diff --git ")) { cur = { path: ln.replace(/^diff --git a\/(.*) b\/.*$/, "$1"), lines: [] }; files.push(cur); continue; }
+    // difflib output has no "diff --git" header: a "--- a/" line outside a hunk starts the next file
+    if (ln.startsWith("--- a/") && (!cur || cur.lines.length)) { cur = { path: ln.slice(6), lines: [] }; files.push(cur); continue; }
     if (!cur || ln.startsWith("index ") || ln.startsWith("--- ") || ln.startsWith("+++ ") || ln.startsWith("new file") || ln.startsWith("deleted file")) {
       if (cur && ln.startsWith("+++ b/")) cur.path = ln.slice(6);
       continue;

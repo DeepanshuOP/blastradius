@@ -23,6 +23,9 @@
   --ink: rgb(var(--ink-rgb)); --muted: rgb(var(--muted-rgb)); --accent: rgb(var(--accent-rgb)); --amber: rgb(var(--amber-rgb));
   --blue: rgb(var(--blue-rgb)); --green: rgb(var(--green-rgb)); --red: rgb(var(--red-rgb));
   color-scheme: dark;
+  /* Two chart series, validated for CVD separation and lightness on both surfaces (dataviz validate_palette.js). */
+  --chart-1-rgb: 47 127 176;   /* #2F7FB0: share of the suite run */
+  --chart-2-rgb: 201 131 40;   /* #C98328: failures caught (recall) */
 
   /* One type scale (ratio about 1.15 for UI, wider steps for the projector) and one spacing scale (4 px base).
      Tailwind's text-* and spacing keys resolve to these, so every size on the page comes from here. */
@@ -112,6 +115,9 @@ details[open] > :not(summary) { animation: br-open 0.15s ease-out; }
   white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 .br-wave-ring { fill: none; stroke: var(--accent); }
+/* A lane of the test race revealed left to right, as if the tests were running. */
+.br-reveal { animation: br-reveal 3.2s cubic-bezier(0.33, 0, 0.2, 1) both; }
+@keyframes br-reveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 /* The blast-radius shockwave on the ring layout: one ring per hop, expanding from the previous ring's radius. */
 .br-wave { transform-box: fill-box; transform-origin: center; animation: br-wave 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 @keyframes br-wave { from { opacity: 0.95; stroke-width: 6; } to { opacity: 0; stroke-width: 1; } }
