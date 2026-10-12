@@ -124,11 +124,10 @@ def cmd_run(ns: argparse.Namespace) -> int:
     llm = None
     key_present = bool(os.environ.get("GROQ_API_KEY"))
     if args.use_llm and key_present:
-        from src.agents.llm import GroqLLM
-        from src.lab.cache import for_model
+        from src.lab.cache import LabGroqLLM, for_model
 
         cache = for_model(args.model)
-        llm = GroqLLM(api_key=os.environ["GROQ_API_KEY"], model=args.model, cache=cache, max_retries=0)
+        llm = LabGroqLLM(api_key=os.environ["GROQ_API_KEY"], model=args.model, cache=cache, max_retries=0)
     with _lock():
         lab = Lab(args, em, llm)
         try:

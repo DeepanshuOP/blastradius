@@ -236,6 +236,27 @@
     "variant": "standard"
    }
   ],
+  "lab": [
+   {
+    "calls": 1,
+    "completion_tokens": 158,
+    "file": "lab_openai_gpt-oss-120b.jsonl",
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 523,
+    "tokens_per_call": 681.0,
+    "usd_list_per_call": 0.00017325,
+    "usd_list_total": 0.00017325
+   }
+  ],
+  "lab_ledger": {
+   "by_model": {
+    "openai/gpt-oss-120b": {
+     "calls": 1,
+     "tokens": 681
+    }
+   },
+   "paid_usd": 0.0
+  },
   "ledger": {
    "by_model": {
     "openai/gpt-oss-120b": {
@@ -568,7 +589,7 @@
   "/figures/fig6_e3_arms.png",
   "/figures/fig7_retrieval.png"
  ],
- "generated_at_git_sha": "a11c0bd128893d5ac2402e435e5116aeb1d6adf0",
+ "generated_at_git_sha": "1433e9de5650acb47786166ab8bf2df7e04e4ace",
  "localization": {
   "l4_vs_l1": [
    {

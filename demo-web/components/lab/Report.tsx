@@ -83,6 +83,7 @@ export function IntegrityDrawer({ s, onClose }: { s: LabState; onClose: () => vo
     ["Interpreter", s.repo?.interpreter ?? "n/a"],
     ["Model", h.model ? `${h.model} · temperature ${h.temperature}, seed ${h.seed}` : `none (${h.llm ?? "n/a"})`],
     ["LLM cache", h.cache ?? "n/a"],
+    ["Token ledger", h.ledger ? `${h.ledger} (the lab's own; E3's usage.jsonl is never written)` : "n/a"],
     ["Model calls", s.repair.replies.length ? `${s.repair.replies.length}: ${live} live, ${cached} from cache` : "0"],
     ["Tokens", `${s.tokens.total.toLocaleString()} total (${s.tokens.prompt.toLocaleString()} prompt, ${s.tokens.completion.toLocaleString()} completion)`],
     ["Test command", s.triage ? "pytest, one process, at-risk files first (plugin sort), junit xml" : "n/a"],

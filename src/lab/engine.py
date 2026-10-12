@@ -251,7 +251,8 @@ class Lab:
         self.em.emit("meta", "run.header", "ok", {
             "date": now_iso(), "git_sha": git_sha(), "model": a.model if self.llm else None, "mode": "live",
             "llm": "enabled" if self.llm else ("disabled by --no-llm" if not a.use_llm else "no GROQ_API_KEY"),
-            "temperature": 0, "seed": 0, "cache": cache, "command": ["python", "-m", "src.lab", *a.command],
+            "temperature": 0, "seed": 0, "cache": cache,
+            "ledger": "eval/llm_cache/lab_usage.jsonl" if self.llm else None, "command": ["python", "-m", "src.lab", *a.command],
             "run_id": self.run_id, "timeout_s": a.timeout, "title": a.title, "description": a.description,
             **self.extra_header})
 

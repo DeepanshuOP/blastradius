@@ -5,6 +5,7 @@ Offline and deterministic; reads only files already on disk:
   - `paper/generated/e3_usage.json`, written by `make repair-eval` from the replayed E3 caches (per model, variant
     and arm: tasks, plausible fixes, summed prompt and completion tokens);
   - `eval/llm_cache/usage.jsonl`, the client-side ledger (every live call; Bedrock rows carry `usd`);
+  - `eval/llm_cache/lab_usage.jsonl`, the Live Lab's own ledger (D-65), reported separately;
   - `eval/llm_cache/bot_*.jsonl` and `ask_*.jsonl`, the recorded PR-bot and Ask runs.
 
 Dollars at list price are what the recorded tokens would have cost on Groq's paid plan; the amount actually paid
@@ -22,6 +23,7 @@ from analysis import paper_md
 
 E3_USAGE = Path("paper/generated/e3_usage.json")
 LEDGER = Path("eval/llm_cache/usage.jsonl")
+LAB_LEDGER = Path("eval/llm_cache/lab_usage.jsonl")
 CACHE_DIR = Path("eval/llm_cache")
 OUT_JSON = Path("paper/generated/cost_report.json")
 
@@ -70,6 +72,8 @@ def recorded_runs(prefix: str) -> list[dict]:
     """Per model: calls and summed tokens in the `<prefix>_*.jsonl` caches."""
     out = []
     for path in sorted(CACHE_DIR.glob(f"{prefix}_*.jsonl")):
+        if path == LAB_LEDGER or path.name == LAB_LEDGER.name:
+            continue
         recs = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
         if not recs:
             continue
@@ -95,6 +99,8 @@ def ledger_summary(path: Path = LEDGER) -> dict:
     """Calls and tokens per model in the client-side ledger, and the USD actually paid (Bedrock rows only)."""
     by_model: dict[str, dict] = {}
     paid = 0.0
+    if not path.exists():
+        return {"by_model": by_model, "paid_usd": paid}
     for ln in path.read_text(encoding="utf-8").splitlines():
         if not ln.strip():
             continue
@@ -112,7 +118,7 @@ def build() -> dict:
         raise SystemExit(f"{E3_USAGE} is missing: run `make repair-eval` first (it writes the per-arm token sums)")
     return {"prices": {"date": PRICES_DATE, "url": PRICES_URL,
                        "usd_per_million_in_out": {m: list(p) for m, p in GROQ_LIST_PRICES.items()}},
-            "ledger": ledger_summary(), "e3": e3_rows(json.loads(E3_USAGE.read_text(encoding="utf-8"))),
+            "ledger": ledger_summary(), "lab_ledger": ledger_summary(LAB_LEDGER), "lab": recorded_runs("lab"), "e3": e3_rows(json.loads(E3_USAGE.read_text(encoding="utf-8"))),
             "bot": recorded_runs("bot"), "bot_live": live_pr_run(), "ask": recorded_runs("ask"), "context": CHATREPAIR_CONTEXT}
 
 
@@ -141,17 +147,24 @@ def render(doc: dict) -> str:
              "R0 never calls a model. R3 includes its retries.\n\n"
              + paper_md.table(["model", "arm", "tasks", "plausible fixes", "input tok / task", "output tok / task",
                                "input tok / fix", "output tok / fix", "USD at list / task", "USD at list / fix"], rows))
-    for title, key in (("PR bot: recorded runs", "bot"), ("Ask: recorded questions", "ask")):
+    for title, key in (("PR bot: recorded runs", "bot"), ("Ask: recorded questions", "ask"),
+                       ("Live Lab: cached replies (D-65, not E3)", "lab")):
         rr = [[r["model"], r["calls"], f"{r['prompt_tokens']:,}", f"{r['completion_tokens']:,}",
                _n(r["tokens_per_call"]), _n(r["usd_list_per_call"], 5), r["file"]] for r in doc[key]]
         text += (f"\n## {title}\n\n" + paper_md.table(
-            ["model", "model calls", "input tokens", "output tokens", "tokens / call", "USD at list / call", "cache file"], rr))
+            ["model", "model calls", "input tokens", "output tokens", "tokens / call", "USD at list / call", "cache file"], rr)
+            if rr else f"\n## {title}\n\nNone recorded.\n")
     if doc.get("bot_live"):
         b = doc["bot_live"]
         text += (f"\nLive PR #1 run (`{b['file']}`, footer of the bot's comment): model `{b['model']}`, {b['tokens']:,} tokens in one run; "
                  "the comment records no input/output split, so no dollar figure is computed.\n")
     lr = [[m, v["calls"], f"{v['tokens']:,}"] for m, v in sorted(doc["ledger"]["by_model"].items())]
-    text += "\n## Client-side ledger (every live call, all uses)\n\n" + paper_md.table(["model", "calls", "tokens"], lr)
+    text += ("\n## Client-side ledger (`usage.jsonl`: E3, the PR bot and Ask)\n\n"
+             + paper_md.table(["model", "calls", "tokens"], lr))
+    lab = doc.get("lab_ledger") or {"by_model": {}}
+    lr = [[m, v["calls"], f"{v['tokens']:,}"] for m, v in sorted(lab["by_model"].items())]
+    text += ("\n## Live Lab ledger (`lab_usage.jsonl`, D-65; demonstration runs, not E3)\n\n"
+             + (paper_md.table(["model", "calls", "tokens"], lr) if lr else "No live lab calls recorded.\n"))
     text += f"\n## Context, not a comparison\n\n{doc['context']}\n"
     return text
 

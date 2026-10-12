@@ -25,15 +25,18 @@ function Card({ title, big, body, source }: { title: string; big: string; body: 
 export function EvidenceStrip() {
   const c = useDoc<Compare>("compare");
   const r = useDoc<Results>("results");
-  const rq1 = r.doc?.rq1_k10.methods.slice().sort((a, b) => b.micro_recall.n / b.micro_recall.d - a.micro_recall.n / a.micro_recall.d)[0];
+  const methods = r.doc?.rq1_k10.methods ?? [];
+  const cochange = methods.find((m) => m.method === "co-change, all partner files");
+  const history = methods.find((m) => m.method === "historical-frequency baseline");
+  const pct = (m: { micro_recall: { n: number; d: number } }) => `${((100 * m.micro_recall.n) / m.micro_recall.d).toFixed(2)}%`;
   const ours = c.doc?.e1?.rows.find((x) => x.id === "ours");
   const best = c.doc?.e1?.rows.find((x) => x.id === "B7");
   const gate = c.doc?.e1?.verdict.match(/Gate 3 \([^)]*\) is (NOT MET|MET)/)?.[1];
   const e3 = c.doc?.e3 ? parsePrimary(c.doc.e3.primary) : null;
   return (
     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Key results">
-      <Card title="RQ1 · co-change baseline" big={rq1 ? rq1.micro_recall.text.split(" ").slice(-1)[0].replace(/[()]/g, "") : "…"}
-        body={rq1 ? `Best co-change baseline (${rq1.method}) recovers ${rq1.micro_recall.n} of ${rq1.micro_recall.d} failing test files at k = ${r.doc?.rq1_k10.k} over ${rq1.n} instances.` : "Loading."}
+      <Card title="RQ1 · co-change vs failure history" big={cochange && history ? `${pct(cochange)} vs ${pct(history)}` : "…"}
+        body={cochange && history ? `Micro recall at k = ${r.doc?.rq1_k10.k} over ${cochange.n} instances: co-change (all partner files) recovers ${cochange.micro_recall.n} of ${cochange.micro_recall.d.toLocaleString("en-US")} failing test files; failure history (historical frequency) ${history.micro_recall.n} of ${history.micro_recall.d.toLocaleString("en-US")}.` : "Loading."}
         source={r.doc?.rq1_k10.source ?? "paper/generated/rq1.md"} />
       <Card title="E1 · ranker, Gate 3" big={gate ? `Gate 3: ${gate}` : "…"}
         body={ours && best ? `Recall@10 ${ours.recall10} against ${best.recall10} for ${best.method}; Holm-adjusted p = ${best.p_adj_text}, Cliff's delta ${best.delta}.` : "Loading."}
