@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArenaPanel } from "./Arena";
+import { ChallengeCard } from "./Challenge";
 import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
 import { CodePanel } from "./CodePanel";
 import { BTN, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
@@ -148,6 +149,7 @@ export default function LabPage() {
   const [tab, setTab] = useState<TabId>("impact");
   const [presenting, setPresenting] = useState(false);
   const [explain, setExplain] = useState(false);
+  const [challenge, setChallenge] = useState(false);
   const [hidden, setHidden] = useState<Filter[]>([]);
   const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
   const { probe, startProbe, clearProbe } = useProbe();
@@ -228,15 +230,15 @@ export default function LabPage() {
   const stage: 1 | 2 | 3 | 4 = s.events.length ? 4 : !scenario ? 1 : scenario.kind === "pr" || scenario.kind === "replay" || change ? 3 : 2;
 
   /** Start a live run of `ch` on `sc`. */
-  const launch = useCallback((sc: NonNullable<Scenario>, ch: Change) => {
+  const launch = useCallback((sc: NonNullable<Scenario>, ch: Change, opts?: { noLlm?: boolean }) => {
     if (sc.kind === "replay") return;
     lastReplay.current = null;
     const body: Record<string, unknown> = { model, ...(sc.kind === "repo" ? { repo: sc.name } : sc.kind === "pr" ? { pr: sc.url } : { url: sc.url }) };
     if (ch?.kind === "task") Object.assign(body, { task: ch.id, variant: ch.variant });
     if (ch?.kind === "inject") body.inject = { file: ch.file, function: ch.function, operator: ch.operator, ...(ch.line ? { line: ch.line } : {}) };
     if (ch?.kind === "edit") body.edit = { file: ch.file, text: ch.text };
-    if (!avail.llm) body.noLlm = true;
-    if (repairArena && modelOk) body.repairArena = true;
+    if (!avail.llm || opts?.noLlm) body.noLlm = true;
+    if (repairArena && modelOk && !opts?.noLlm) body.repairArena = true;
     startLive(body);
   }, [model, avail.llm, repairArena, modelOk, startLive]);
 
@@ -269,13 +271,29 @@ export default function LabPage() {
       <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3 pb-14">
         <h1 className="sr-only">Live Lab</h1>
         <TopBar s={s} avail={avail} model={model} tally={tally} explain={explain} setExplain={setExplain}
-          onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); }}
+          onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); setChallenge(false); }}
           onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
         {presenting && (
           <Presenter s={s} g={{ nodes: g.nodes, edges: g.edges, changed: g.changed, paths: g.paths, atRisk: g.atRisk, outcomes: g.outcomes }} onClose={() => setPresenting(false)}
             onRestart={() => { if (s.mode === "replay" && lastReplay.current) startReplay(lastReplay.current.name, lastReplay.current.speed); }} />
         )}
-        <Steps stage={stage} />
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Steps stage={stage} />
+          <button type="button" onClick={() => setChallenge((v) => !v)} aria-pressed={challenge} aria-expanded={challenge}
+            className={`${BTN} min-h-[36px] font-semibold ${challenge ? "border-accent text-accent" : ""}`}><Icon name="bug" />Challenge</button>
+        </div>
+        {challenge && (
+          <ChallengeCard s={s} live={avail.live} running={s.running} llmOk={modelOk}
+            repo={scenario?.kind === "repo" ? scenario.name : s.repo?.prepared ? String(s.repo.name) : null}
+            onRun={(c, opts) => {
+              const name = scenario?.kind === "repo" ? scenario.name : String(s.repo?.name ?? "");
+              const sc = { kind: "repo", name } as NonNullable<Scenario>;
+              const ch: Change = { kind: "inject", ...c };
+              setScenario(sc); setChange(ch); launch(sc, ch, opts);
+            }}
+            onPickMyself={() => { setChallenge(false); document.getElementById("panel-graph")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+            onClose={() => setChallenge(false)} />
+        )}
         {s.error && <p className="ui m-0 flex items-center gap-2 rounded border border-red px-3 py-2 text-sm text-red" role="alert"><Icon name="warn" />{s.error}</p>}
         {s.repo && s.repo.tests_runnable === false && s.repo.reason && (
           <p className="ui m-0 rounded border border-amber px-3 py-2 text-sm text-amber" role="status">Tests were not run: {s.repo.reason}</p>

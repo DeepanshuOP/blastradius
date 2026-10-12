@@ -200,6 +200,17 @@ def cmd_index(_ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_challenge(ns: argparse.Namespace) -> int:
+    """The function and operator a seed chooses in a prepared repository (no repository code runs, no model)."""
+    from src.lab import challenge
+
+    try:
+        print(json.dumps(challenge.pick_for(ns.repo, ns.seed)))
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    return 0
+
+
 def cmd_history(ns: argparse.Namespace) -> int:
     """How many earlier runs the arena's failure-history store holds for a repository; `--reset` forgets them."""
     import re
@@ -460,6 +471,10 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(fn=cmd_tasks)
     s = sub.add_parser("index")
     s.set_defaults(fn=cmd_index)
+    s = sub.add_parser("challenge", help="the function and operator a seed chooses (reviewer challenge)")
+    s.add_argument("--repo", required=True)
+    s.add_argument("--seed", type=int, required=True)
+    s.set_defaults(fn=cmd_challenge)
     s = sub.add_parser("history", help="the arena's failure-history store of a repository (--reset forgets it)")
     s.add_argument("--repo", required=True)
     s.add_argument("--reset", action="store_true")
