@@ -152,10 +152,17 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
     Returns:
         Markdown under `MAX_COMMENT` characters. A `suggestion` fence appears only when `repair["validated"]`.
     """
+    failed_cases = [r for r in results if r["outcome"] in ("failed", "error")]
+    results = _unique_ids(results)            # one row per canonical test id, a failure wins over a pass
     failed = [r for r in results if r["outcome"] in ("failed", "error")]
+    # Unit: the canonical test id (the project's join key). It drops the subclass, so an inherited test method run
+    # under several subclasses is several executed cases but one id; both counts are printed when they differ.
+    ids_note = "" if len(results) == n_total else f" ({n_total} executed cases, inherited methods share ids)"
+    cases_note = "" if len(failed) == len(failed_cases) else f" ({len(failed_cases)} failing cases)"
     L = [MARKER, "## BlastRadius", "",
-         f"PR #{pr} · `{base[:10]}` → `{head[:10]}` · {n_total} tests · **{len(failed)} failing**"
-         + (f" · first failure at position {first_failure} of {n_total}" if first_failure else ""), ""]
+         f"PR #{pr} · `{base[:10]}` → `{head[:10]}` · {len(results)} unique test ids{ids_note} · "
+         f"**{len(failed)} failing ids**{cases_note}"
+         + (f" · first failure at case {first_failure} of {n_total}" if first_failure else ""), ""]
     L += [f"### 1. Tests most at risk ({ranker})", ""]
     if risk:
         L += ["| # | Test file | Score | Why |", "|--:|---|--:|---|"]
@@ -211,6 +218,16 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
     if len(text) > MAX_COMMENT:           # shed the longest, least important parts, never the failures or the suggestion
         text = _shrink(text)
     return text
+
+
+def _unique_ids(results: list[dict]) -> list[dict]:
+    """First row per test id, in order; an id that failed in any case is reported as failed."""
+    out: dict[str, dict] = {}
+    for r in results:
+        cur = out.get(r["test"])
+        if cur is None or (cur["outcome"] not in ("failed", "error") and r["outcome"] in ("failed", "error")):
+            out[r["test"]] = r
+    return list(out.values())
 
 
 def _shrink(text: str) -> str:
@@ -381,7 +398,11 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
     results.sort(key=lambda r: (r["outcome"] not in ("failed", "error"),
                                 next((i for i, f in enumerate(risk_files) if r["test"].startswith(f)), 10 ** 6),
                                 r["test"]))
-    fails = failures_of(report)
+    fails_cases = failures_of(report)
+    by_first: dict[str, dict] = {}
+    for f in fails_cases:
+        by_first.setdefault(f["test_id"], f)          # unique ids, first case wins, order kept
+    fails = list(by_first.values())
     triage_rows: list[dict] = []
     repair: dict | None = None
     notes: list[str] = []
@@ -400,7 +421,10 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
             for r in base_run.results:
                 fh.write(json.dumps({"ts": "2000-01-01T00:00:00+00:00", "commit": base, "test_id": r.test_id,
                                      "outcome": r.outcome, "message": r.message, "branch": "base"}) + "\n")
-        tri = TriageAgent().run(fails, hist, branch="base", commit=head)
+        # The wall-clock duration of a test is measured on this machine and varies by tens of milliseconds between
+        # identical runs; it is an input of the E2 model, so passing it made the rendered confidence (and a replayed
+        # comment) depend on machine load. The bot triages on history and failure class only.
+        tri = TriageAgent().run([{**f, "duration_s": None} for f in fails], hist, branch="base", commit=head)
         triage_rows = [{"test": f.test_id, "class": "inherited" if f.test_id in base_failing else f.klass,
                         "confidence": f.confidence, "reason": ("fails on the base commit too" if f.test_id in base_failing
                                                                else f.reason)} for f in tri.failures]
@@ -416,7 +440,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
                              repair=repair, model=model, tokens=tokens, notes=notes)
     sugg = repair["suggestions"] if repair and repair.get("validated") else []
     return BotOutcome(comment, sugg, bool(repair and repair.get("validated")),
-                      {"failing": len(fails), "mine": len(mine), "tokens": tokens, "model": model,
+                      {"failing": len(fails), "failing_cases": len(fails_cases), "tests": len({r["test"] for r in results}),
+                       "cases": len(results), "unit": "unique canonical test ids", "mine": len(mine), "tokens": tokens, "model": model,
                        "diff": gitops.diff_text(repo, base, head, max_chars=10 ** 7)})
 
 
