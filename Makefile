@@ -1,4 +1,4 @@
-.PHONY: lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
+.PHONY: lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
 
 test:
 	uv run pytest -q
@@ -185,6 +185,10 @@ e3-sync:
 # every JSON the site loads, Compare numbers against their sources. Prints a PASS/FAIL table; non-zero on any FAIL.
 demo-check:
 	uv run --extra graph --extra ml --extra rag --extra figures python -m analysis.demo_check
+
+# Live Lab for live use: build and serve the site on http://127.0.0.1:3000 and print the URL once it answers.
+lab:
+	bash scripts/lab.sh
 
 # Live Lab (D-65): record the demonstration scenarios. `test-gap` needs no model. The others are live runs that call
 # openai/gpt-oss-120b (about 1,500 tokens per repair attempt; repair-arena adds one R1 call) and share the Groq daily

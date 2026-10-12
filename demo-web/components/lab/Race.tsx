@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { ArenaDoc, Strategy } from "./Arena";
+import { shortName, type ArenaDoc, type Strategy } from "./Arena";
 import { Icon, fmtMs } from "./common";
 import { Info, reducedMotion } from "./Info";
 
@@ -58,7 +58,7 @@ export function ArenaRace({ a }: { a: ArenaDoc }) {
           const reached = ff !== null && ff !== undefined && t >= ff;
           return (
             <li key={x.id} className="grid grid-cols-[9rem_minmax(0,1fr)_7.5rem] items-center gap-3">
-              <span className={`ui truncate text-sm ${x.ours ? "font-semibold" : "text-muted"}`} title={x.name}>{x.name}</span>
+              <span className={`ui truncate text-sm ${x.ours ? "font-semibold" : "text-muted"}`} title={x.name}>{shortName(x)}</span>
               <div className="relative h-5 rounded-sm bg-panel2" role="img"
                 aria-label={x.status === "unavailable" ? `${x.name}: unavailable` : flagAt === null ? `${x.name}: ${a.n_failing ? "no failure reached" : "no failure to reach"}` : `${x.name}: first failure at test ${x.first_failure_position}, ${fmtMs(ff)}`}>
                 {x.status !== "unavailable" && <div className={`absolute inset-y-0 left-0 rounded-sm ${x.ours ? "bg-accent/70" : "bg-muted/50"}`} style={{ width: `${fill}%` }} />}

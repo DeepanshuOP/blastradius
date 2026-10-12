@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BTN, Empty, Icon, Id, StatusIcon, fmtMs, type Tone } from "./common";
+import { BTN, Empty, Icon, Id, StatusIcon, fmtMs, uniqueSuffixes, type Tone } from "./common";
 import { Explain } from "./Info";
 import { ArenaRace, Podium } from "./Race";
 import { UnifiedDiff } from "./Diff";
@@ -45,6 +45,12 @@ export function withHistoryView(a: ArenaDoc, excludeSame: boolean): ArenaDoc {
   return { ...a, strategies: a.strategies.map((x) => (x.id === "history" ? { ...x, ...v, orders_all: false } : x)),
     history: { ...a.history, excluded: excludeSame } };
 }
+
+/** Lane labels short enough for a narrow column; the full name goes in the tooltip. */
+const SHORT_NAMES: Record<string, string> = {
+  "retest-all": "Retest-all", "static-rts": "Static RTS", coverage: "Coverage", history: "History", cochange: "Co-change", blastradius: "BlastRadius",
+};
+export const shortName = (x: Pick<Strategy, "id" | "name">) => SHORT_NAMES[x.id] ?? x.name;
 
 const pct = (x: number | null) => (x === null ? "–" : `${(x * 100).toFixed(x === 1 || x === 0 ? 0 : 1)}%`);
 
@@ -116,10 +122,11 @@ export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean 
 
 function MissedList({ ids }: { ids: string[] }) {
   const [open, setOpen] = useState(false);
+  const names = uniqueSuffixes(ids);
   return (
     <div>
       <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} className="ui flex items-center gap-1 text-red hover:underline"><Icon name="cross" />{ids.length} missed</button>
-      {open && <ul className="m-0 mt-1 list-none space-y-0.5 p-0">{ids.slice(0, 30).map((t) => <li key={t}><Id id={t} n={46} className="text-2xs" /></li>)}{ids.length > 30 && <li className="ui text-2xs text-muted">{ids.length - 30} more</li>}</ul>}
+      {open && <ul className="m-0 mt-1 list-none space-y-0.5 p-0">{ids.slice(0, 30).map((t) => <li key={t}><Id id={t} label={names.get(t)} className="text-2xs" /></li>)}{ids.length > 30 && <li className="ui text-2xs text-muted">{ids.length - 30} more</li>}</ul>}
     </div>
   );
 }
@@ -143,7 +150,7 @@ export function ArenaChart({ a }: { a: ArenaDoc }) {
           const tip = `${x.name}: runs ${x.selected} of ${a.n_cases} tests (${x.pct.toFixed(1)}%)${rec === null ? "" : `, catches ${x.caught} of ${a.n_failing} failures (${rec.toFixed(1)}%)`}`;
           return (
             <div key={x.id} role="row" className="grid grid-cols-[9.5rem_minmax(0,1fr)] items-center gap-3" onMouseEnter={() => setHover(x.id)} onMouseLeave={() => setHover(null)} title={tip}>
-              <span role="rowheader" className={`ui truncate text-xs ${x.ours ? "font-semibold text-ink" : "text-muted"}`}>{x.name}</span>
+              <span role="rowheader" className={`ui truncate text-xs ${x.ours ? "font-semibold text-ink" : "text-muted"}`} title={x.name}>{shortName(x)}</span>
               <div role="cell" className="relative space-y-[2px]">
                 <div className="flex items-center gap-2"><div className="h-2 rounded-r bg-chart1" style={{ width: `${Math.max(run, 0.6)}%` }} /><span className="num mono text-2xs text-muted">{x.pct.toFixed(0)}%</span></div>
                 {hasRecall && <div className="flex items-center gap-2"><div className="h-2 rounded-r bg-chart2" style={{ width: `${Math.max(rec ?? 0, 0.6)}%` }} /><span className="num mono text-2xs text-ink">{rec === null ? "–" : `${rec.toFixed(0)}%`}</span></div>}

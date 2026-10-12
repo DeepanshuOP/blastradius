@@ -248,11 +248,19 @@
    {
     "id": "D-65",
     "title": "Live Lab is a demonstration path, like the agents demo (D-55) and the PR bot (D-63)"
+   },
+   {
+    "id": "D-66",
+    "title": "Live Lab orders test cases by graph hop distance inside E1's file tiers"
+   },
+   {
+    "id": "D-67",
+    "title": "The arena's failure-history row excludes earlier runs of the same diff by default, and both rows are reported"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "1433e9de5650acb47786166ab8bf2df7e04e4ace",
+ "generated_at_git_sha": "4013aec001d69adf4a1737c83b761acb91f5e622",
  "panels": [
   {
    "id": "funnel",

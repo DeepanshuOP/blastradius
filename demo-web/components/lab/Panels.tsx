@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Counter, Explain, Info } from "./Info";
-import { Drawer, Empty, Icon, Id, OUTCOME_COLOR, SEG, StageError, StatusIcon, fmtMs, midEllipsis, type Tone } from "./common";
+import { Drawer, Empty, Icon, Id, OUTCOME_COLOR, SEG, StageError, StatusIcon, fmtMs, midEllipsis, uniqueSuffixes, type Tone } from "./common";
 import { SideBySide, UnifiedDiff } from "./Diff";
 import type { Check, LabEvent, LabState, Lane } from "./types";
 
@@ -151,6 +151,7 @@ export function TriagePanel({ s }: { s: LabState }) {
   const [open, setOpen] = useState<string | null>(null);
   if (!t) return <Empty title="Failures are sorted into mine, inherited and flaky once the suite ends." />;
   if (t.skipped) return <Empty title="Nothing to triage.">{t.skipped}</Empty>;
+  const names = uniqueSuffixes(t.rows.map((r) => r.test));
   return (
     <>
       <div className="grid gap-3 md:grid-cols-3">
@@ -162,7 +163,7 @@ export function TriagePanel({ s }: { s: LabState }) {
               <Counter value={rows.length} className="block text-3xl font-semibold leading-tight text-ink" />
               <p className="ui m-0 text-xs text-muted">{c.what}</p>
               <ul className="m-0 mt-2 flex list-none flex-wrap gap-1 p-0">
-                {rows.slice(0, 4).map((r) => <li key={r.test}><span className="mono block max-w-[11rem] truncate rounded border border-rule bg-panel px-1.5 py-0.5 text-2xs" title={r.test}>{r.test.split("::").slice(-1)[0]}</span></li>)}
+                {rows.slice(0, 4).map((r) => <li key={r.test}><span className="mono block max-w-[15rem] truncate rounded border border-rule bg-panel px-1.5 py-0.5 text-2xs" title={r.test}>{names.get(r.test)}</span></li>)}
                 {rows.length > 4 && <li><span className="ui block rounded px-1 py-0.5 text-2xs text-muted">+{rows.length - 4}</span></li>}
                 {rows.length === 0 && <li className="ui text-2xs text-muted">none</li>}
               </ul>
@@ -188,7 +189,7 @@ export function TriagePanel({ s }: { s: LabState }) {
                     {rows.map((r) => (
                       <li key={r.test}>
                         <button type="button" onClick={() => setOpen(open === r.test ? null : r.test)} aria-expanded={open === r.test} className="block w-full rounded border border-rule bg-page px-2 py-1.5 text-left hover:border-muted">
-                          <Id id={r.test} n={52} className="block text-xs" />
+                          <Id id={r.test} label={names.get(r.test)} className="block text-xs" />
                           <span className="ui mt-0.5 flex flex-wrap items-center gap-x-2 text-xs text-muted">
                             <span className="flex items-center gap-1">base <StatusIcon tone={(r.base_outcome === "passed" || r.base_outcome === "absent" ? "passed" : "failed") as Tone} text /></span>
                             <span className="flex items-center gap-1">head <StatusIcon tone="failed" text /></span>

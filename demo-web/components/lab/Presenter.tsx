@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Icon, Id, StatusIcon, fmtMs, midEllipsis } from "./common";
+import { Icon, Id, StatusIcon, fmtMs, midEllipsis, uniqueSuffixes } from "./common";
 import { Info } from "./Info";
 import { parseDiff } from "./CodePanel";
 import { MiniBars, useEvidence } from "./EvidenceStrip";
@@ -185,6 +185,7 @@ const SCREENS: Screen[] = [
     render: (s) => {
       const t = s.triage!;
       if (t.skipped) return <div className="grid h-full place-items-center"><p className="ui m-0 text-2xl text-muted">{t.skipped}: nothing to triage.</p></div>;
+      const names = uniqueSuffixes(t.rows.map((r) => r.test));
       const cols = [["mine", "Mine", "this change broke it", "text-accent"], ["inherited", "Inherited", "already failing before", "text-blue"], ["flaky", "Flaky", "fails without a code reason", "text-amber"]] as const;
       return (
         <div className="grid h-full grid-cols-3 gap-6">
@@ -198,7 +199,7 @@ const SCREENS: Screen[] = [
                 <ul className="m-0 min-h-0 list-none space-y-3 overflow-hidden p-0">
                   {rows.slice(0, 4).map((r) => (
                     <li key={r.test} className="ui text-base">
-                      <Id id={r.test.split("::").slice(-1)[0]} n={30} className="block text-base" />
+                      <Id id={r.test} label={names.get(r.test)} className="block text-base" />
                       <span className="flex items-center gap-3 text-sm text-muted">base <StatusIcon tone={r.base_outcome === "passed" || r.base_outcome === "absent" ? "passed" : "failed"} text /> head <StatusIcon tone="failed" text /></span>
                     </li>
                   ))}

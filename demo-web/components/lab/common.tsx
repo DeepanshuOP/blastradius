@@ -15,8 +15,32 @@ export function midEllipsis(s: string, n = 56): string {
   return `${s.slice(0, n - 1 - keepEnd)}…${s.slice(s.length - keepEnd)}`;
 }
 
-/** An id shortened in the middle, with the full id in a tooltip (and for screen readers). */
-export function Id({ id, n = 56, className = "" }: { id: string; n?: number; className?: string }) {
+/** The shortest unique suffix of each test id among `ids`, cut at `::` and `/` boundaries and without `.py`:
+ * `TestTimedSerializer::test_max_age`, `TestTimestampSigner::test_max_age`, `test_timed::test_max_age`. */
+export function uniqueSuffixes(ids: string[]): Map<string, string> {
+  const uniq = [...new Set(ids)];
+  const toks = uniq.map((id) => {
+    const [file, ...rest] = id.split("::");
+    const path = file.replace(/\.py$/, "").split("/");
+    return { id, parts: [...path, ...rest], nPath: path.length };
+  });
+  const render = (t: (typeof toks)[number], k: number) => {
+    const from = t.parts.length - Math.min(k, t.parts.length);
+    return t.parts.slice(from).map((x, i) => (i === 0 ? x : from + i >= t.nPath ? `::${x}` : `/${x}`)).join("");
+  };
+  const out = new Map<string, string>();
+  for (const t of toks) {
+    let k = 1;
+    while (k < t.parts.length && toks.some((o) => o !== t && render(o, k) === render(t, k))) k++;
+    out.set(t.id, render(t, k));
+  }
+  return out;
+}
+
+/** An id shortened in the middle, with the full id in a tooltip (and for screen readers). With `label`, that text is
+ * shown instead (a unique suffix, see `uniqueSuffixes`) and the full id is always in the tooltip. */
+export function Id({ id, n = 56, className = "", label }: { id: string; n?: number; className?: string; label?: string }) {
+  if (label !== undefined) return <span className={`mono whitespace-nowrap ${className}`} title={id} aria-label={id}>{label}</span>;
   const s = midEllipsis(id, n);
   return <span className={`mono whitespace-nowrap ${className}`} title={s === id ? undefined : id} aria-label={s === id ? undefined : id}>{s}</span>;
 }
