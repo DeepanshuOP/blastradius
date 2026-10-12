@@ -375,6 +375,18 @@ def cmd_probe(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_quota(ns: argparse.Namespace) -> int:
+    """Exit 0 when `--need` more tokens of `--model` fit under the 24 h cap (E3 and lab ledgers together), else 3."""
+    q = quota().get(ns.model)
+    if q is None:
+        raise SystemExit(f"unknown model {ns.model}")
+    room = q["cap"] - q["used"]
+    ok = room >= ns.need
+    log(f"{ns.model}: {q['used']:,} of {q['cap']:,} tokens used in the last 24 h ({', '.join(q['ledgers'])}); "
+        f"room {room:,}, needed {ns.need:,}: " + ("OK" if ok else "NOT ENOUGH" + (f", the oldest counted call leaves the window at {q['resume_after']} UTC" if q["resume_after"] else "")))
+    return 0 if ok else 3
+
+
 def cmd_status(_ns: argparse.Namespace) -> int:
     print(json.dumps({"llm": bool(os.environ.get("GROQ_API_KEY")), "quota": quota()}))
     return 0
@@ -422,6 +434,10 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--file", required=True)
     s.add_argument("--function", required=True)
     s.set_defaults(fn=cmd_probe)
+    s = sub.add_parser("quota")
+    s.add_argument("--model", default="openai/gpt-oss-120b")
+    s.add_argument("--need", type=int, default=CALL_ESTIMATE)
+    s.set_defaults(fn=cmd_quota)
     s = sub.add_parser("status")
     s.set_defaults(fn=cmd_status)
     ns = ap.parse_args(argv)

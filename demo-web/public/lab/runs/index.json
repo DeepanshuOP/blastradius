@@ -14,5 +14,13 @@
   "git_sha": "ca56f0f4cc",
   "title": "Seeded task: one swapped operator, fixed and validated",
   "description": "BR-Seeded task itsdangerous-ARITH_SWAP-00 (a + turned into a -). The model answer is the recorded one for this exact prompt (bot cache); the validation runs the full suite live."
+ },
+ {
+  "name": "test-gap",
+  "date": "2026-10-12T12:07:14.530+00:00",
+  "model": null,
+  "git_sha": "e040c66bb9",
+  "title": "Test gap: a real bug the whole suite lets through",
+  "description": "CMP_FLIP on timed.py:141 (if age > max_age becomes if age >= max_age). All 297 tests pass; the lab names the tests that run the line. No model call."
  }
 ]
