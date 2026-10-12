@@ -10,7 +10,8 @@ Checks, in order:
   6. the 15 recorded Ask questions replayed with the network forbidden;
   7. the recorded PR-bot task replayed (the committed comment must come back byte for byte);
   8. every JSON file the website loads exists and parses;
-  9. every number on Compare panels 2 and 4 appears in the generated file it was read from.
+  9. every number on Compare panels 2 and 4 appears in the generated file it was read from;
+  10. the six-section page structure (`check_structure`).
 
 Replays run against a scratch copy of `data/seeded` (BR_SEEDED_DIR) so they never queue behind a live E3 run's repo
 locks. No step can reach a model or the network: replay mode is forced and the keys are removed from the environment.
@@ -104,8 +105,59 @@ def check_demo_data() -> tuple[bool, str]:
 
 
 def check_build() -> tuple[bool, str]:
-    rc, out = run(["npm", "run", "build"], cwd=ROOT / "demo-web", env={**os.environ, "NEXT_TELEMETRY_DISABLED": "1"})
-    return rc == 0 and "Compiled successfully" in out, "Compiled successfully" if rc == 0 else last(out)
+    """`npm run build`. The first build fetches the three Google fonts; when that fails (offline, cold cache) the build is
+    repeated with `demo-web/font-fallback.js`, which makes the page use the local font stack, and the detail says so."""
+    env = {**os.environ, "NEXT_TELEMETRY_DISABLED": "1"}
+    rc, out = run(["npm", "run", "build"], cwd=ROOT / "demo-web", env=env)
+    note = ""
+    if rc != 0 and "Google Fonts" in out:
+        env["NEXT_FONT_GOOGLE_MOCKED_RESPONSES"] = str(ROOT / "demo-web/font-fallback.js")
+        rc, out = run(["npm", "run", "build"], cwd=ROOT / "demo-web", env=env)
+        note = " (Google Fonts unreachable: local font stack)"
+    return rc == 0 and "Compiled successfully" in out, ("Compiled successfully" + note) if rc == 0 else last(out)
+
+
+SECTION_IDS = ["overview", "data", "results", "compare", "try-it", "use-it"]
+FORBIDDEN = ["outperforms", "state-of-the-art", "intelligent", "fixes any error", "guaranteed", "revolutionary", "seamless"]
+
+
+def check_structure() -> tuple[bool, str]:
+    """The six-section page: ids and table of contents in the built page, one id per section component, the footer,
+    the design-system fonts, no forbidden words in the site text or its data, vendor cells with URLs."""
+    problems: list[str] = []
+    comps = ROOT / "demo-web/components"
+    text = "\n".join(f.read_text(encoding="utf-8") for f in comps.glob("*.tsx"))
+    demo = (comps / "Demo.tsx").read_text(encoding="utf-8")
+    for sid in SECTION_IDS:
+        if f'id: "{sid}"' not in demo:
+            problems.append(f"table of contents lacks {sid}")
+        if f'id="{sid}"' not in text:
+            problems.append(f"no section element with id {sid}")
+    for need in ("Built from commit", "VIT BITE497J", "doi.org"):
+        if need not in demo:
+            problems.append(f"footer lacks {need!r}")
+    layout = (ROOT / "demo-web/app/layout.tsx").read_text(encoding="utf-8")
+    for font in ("Source_Serif_4", "IBM_Plex_Sans", "IBM_Plex_Mono"):
+        if font not in layout:
+            problems.append(f"layout lacks {font}")
+    html_files = list((ROOT / "demo-web/.next/server/app").glob("index.html"))
+    if not html_files:
+        problems.append("built index.html missing")
+    else:
+        html = html_files[0].read_text(encoding="utf-8")
+        for sid in SECTION_IDS:
+            if f'id="{sid}"' not in html and f'href="#{sid}"' not in html:
+                problems.append(f"built page lacks #{sid}")
+    blob = text + "\n" + "\n".join(p.read_text(encoding="utf-8") for p in DATA.glob("*.json"))
+    for w in FORBIDDEN:
+        if w in blob.lower():
+            problems.append(f"forbidden word {w!r} in the site")
+    ov = json.loads((DATA / "overview.json").read_text(encoding="utf-8"))
+    if not ov.get("pr1") or not ov.get("built_from"):
+        problems.append("overview.json lacks pr1 or built_from")
+    prod = cm.validate_products(cm.load().get("products"))
+    problems += prod
+    return not problems, ("6 sections, footer, fonts, no forbidden words, vendor URLs" if not problems else "; ".join(problems[:4]))
 
 
 def check_agents_demo() -> tuple[bool, str]:
@@ -153,6 +205,7 @@ def loaded_json_names() -> set[str]:
         text = f.read_text(encoding="utf-8")
         names |= set(re.findall(r'"/data/([A-Za-z0-9_./-]+\.json)"', text))
         names |= {f"{n}.json" for n in re.findall(r'load<[^>]*>\(\s*"(\w+)"', text)}
+        names |= {f"{n}.json" for n in re.findall(r'useDoc<[\s\S]*?>\(\s*"(\w+)"', text)}
         names |= set(re.findall(r"`/data/([A-Za-z0-9_./-]+\.json)`", text))
     return names
 
@@ -231,6 +284,7 @@ def main() -> int:
              ("safety checklist: named tests pass, none skipped", check_safety_tests),
              ("make demo-data", check_demo_data),
              ("npm run build", check_build),
+             ("site structure: six sections, footer, fonts, wording, vendor sources", check_structure),
              ("agents demo, 4 recorded scenarios (the make agents-demo command)", check_agents_demo),
              ("Ask replay of the 15 recorded questions", None),
              ("PR bot replay on the recorded task", None),
