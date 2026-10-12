@@ -9,7 +9,13 @@ run; none is run separately and none is a vendor's product:
                     touches a changed function
     history         tests ranked by earlier failures in this repo      Develocity / Meta-style predictive selection
     cochange        tests of files that changed together in git        change-impact-analysis proxy (RQ1)
-    blastradius     the at-risk files of the E1 ranking, in order      ours
+    blastradius     every test, in the BlastRadius order (src/lab/order.py: E1 file rank, then graph hop distance to the
+                    changed functions, then id; a rule fixed on 2026-10-12, after the PR 1 case was seen)
+
+Strategies are of two kinds. A *selector* runs fewer tests and can miss failures (static-rts, coverage, history,
+cochange): its columns are tests run and failures caught. An *orderer* runs every test and only changes the order
+(retest-all, blastradius): its columns are tests until the first failure and time to the first failure. The column
+`needs` states what an approach requires before it can work at all.
 
 The unit is a test case (one executed item). Recall is failing cases selected / all failing cases. Times are sums of
 this run's measured per-case durations. Nothing here calls a model; nothing here is a paper number (D-65).
@@ -36,12 +42,12 @@ COCHANGE_MAX_FILES = 50          # a commit touching more files than this is a b
 PLUGIN_DIR = Path(__file__).resolve().parent / "plugin"
 
 STRATEGIES = (
-    ("retest-all", "Retest-all", "every test, alphabetical", "Jenkins / GitHub Actions default", False),
-    ("static-rts", "Static reachability (RTS)", "tests whose file reaches the change in the code graph", "STARTS-style static RTS", False),
-    ("coverage", "Per-test coverage", "tests whose base-commit coverage touches a changed function", "the approach Datadog TIA documents", False),
-    ("history", "Failure history", "tests ranked by earlier failures in this repo", "Develocity / Meta-style predictive selection", False),
-    ("cochange", "Co-change", "tests of files that changed together in git history", "change-impact-analysis proxy (RQ1)", False),
-    ("blastradius", "BlastRadius", "E1 ranking + graph: the at-risk test files, in rank order", "ours", True),
+    ("retest-all", "Retest-all", "every test, alphabetical", "Jenkins / GitHub Actions default", False, "orderer"),
+    ("static-rts", "Static reachability (RTS)", "tests whose file reaches the change in the code graph", "STARTS-style static RTS", False, "selector"),
+    ("coverage", "Per-test coverage", "tests whose base-commit coverage touches a changed function", "the approach Datadog TIA documents", False, "selector"),
+    ("history", "Failure history", "tests ranked by earlier failures in this repo", "Develocity / Meta-style predictive selection", False, "selector"),
+    ("cochange", "Co-change", "tests of files that changed together in git history", "change-impact-analysis proxy (RQ1)", False, "selector"),
+    ("blastradius", "BlastRadius", "every test: E1 file rank, then graph hops to the change, then id", "ours", True, "orderer"),
 )
 
 
@@ -223,35 +229,69 @@ def cochange_counts(repo_dir: Path, base: str, changed_files: list[str]) -> tupl
 def takeaway(strats: list[dict], n_cases: int, n_failing: int) -> str:
     """One sentence generated from the numbers (never written by hand)."""
     ours = next(s for s in strats if s["ours"])
-    ok = [s for s in strats if s["status"] == "ok" and not s["ours"] and s["id"] != "retest-all"]
+    base = next(s for s in strats if s["id"] == "retest-all")
+    sel = [s for s in strats if s["kind"] == "selector" and s["status"] == "ok"]
+    if ours["status"] != "ok":
+        return "The BlastRadius order is not available for this run."
     if n_failing == 0:
-        return (f"No test failed on this change, so no strategy had anything to catch; they differ only in cost: "
-                f"BlastRadius would run {ours['pct']:.0f}% of the {n_cases} tests, retest-all 100%.")
-    s = (f"BlastRadius ran {ours['pct']:.0f}% of the suite and caught {ours['caught']} of {n_failing} failures"
-         + (f", the first at test {ours['first_failure_position']}" if ours["first_failure_position"] else "") + "; ")
-    full = sorted([x for x in ok if x["caught"] == n_failing], key=lambda x: x["pct"])
+        return (f"No test failed on this change, so there was nothing to reach sooner or to miss: BlastRadius ordered "
+                f"all {n_cases} tests and every one passed, as under retest-all.")
+    s = (f"BlastRadius ordered all {ours['selected']} tests and reached its first failure at test "
+         f"{ours['first_failure_position']} ({ours['first_failure_ms']:.0f} ms); retest-all reached it at test "
+         f"{base['first_failure_position']} ({base['first_failure_ms']:.0f} ms)")
+    full = sorted([x for x in sel if x["caught"] == n_failing], key=lambda x: x["pct"])
     if full:
-        s += f"the cheapest other strategy that caught them all, {full[0]['name'].lower()}, ran {full[0]['pct']:.0f}%"
+        s += f"; the cheapest selector that caught every failure, {full[0]['name'].lower()}, ran {full[0]['pct']:.0f}% of the suite"
     else:
-        s += "no other selective strategy caught them all"
-    worst = [x for x in ok if x["caught"] < n_failing]
+        s += "; no selector caught every failure"
+    worst = [x for x in sel if x["caught"] < n_failing]
     if worst:
         w = min(worst, key=lambda x: (x["caught"], x["pct"]))
         s += f"; {w['name'].lower()} missed {n_failing - w['caught']}"
-    cold = [x for x in strats if x["status"] == "cold-start"]
-    if cold:
+    if any(x["status"] == "cold-start" for x in strats):
         s += "; failure history had no earlier runs to learn from"
     return s + "."
 
 
+def needs_text(sid: str, row: dict, coverage: dict | None, history: list[dict], cochange: tuple,
+               cochange_info: dict | None) -> str:
+    """What the approach requires before it can work, with the cost where this run measured one."""
+    if sid == "retest-all":
+        return "nothing"
+    if sid == "static-rts":
+        return "code graph"
+    if sid == "coverage":
+        if coverage and coverage.get("status") == "ok":
+            return (f"an instrumented coverage run at base: {coverage['wall_s']:.1f} s for {coverage['n_tests']} tests"
+                    + (" (measured when first built, cached)" if coverage.get("cached") else ""))
+        return "an instrumented coverage run at base (not available here)"
+    if sid == "history":
+        return f"earlier runs ({len(history)} in this repository's lab history)"
+    if sid == "cochange":
+        used = cochange[1]
+        if cochange[2]:
+            return "git history (none usable here)"
+        src = (cochange_info or {}).get("source")
+        extra = f", fetched from upstream in {cochange_info['fetch_s']:.1f} s" if src == "fetched" else (
+            ", from the upstream cache" if src == "cached" else "")
+        return f"git history ({used} commits{extra})"
+    return "graph and model (E1)"
+
+
 def compute(results: list[dict], *, order_files: list[str], view: dict, changed_nodes: list[str],
             changed_fns: list[dict], coverage: dict | None, history: list[dict], cochange: tuple[Counter, int, str | None],
-            ) -> dict:
-    """The arena for one run. `results` are the run's executed cases, in execution order."""
+            rule: dict | None = None, cochange_info: dict | None = None) -> dict:
+    """The arena for one run. `results` are the run's executed cases, in execution order.
+
+    `rule` is the BlastRadius test-case rule payload (`src.lab.order.rule_payload`); without it the BlastRadius row
+    cannot be ordered and is reported unavailable.
+    """
+    from src.lab import order as case_order
+
     n = len(results)
     out = []
-    for sid, name, what, source, ours in STRATEGIES:
-        meta = {"id": sid, "name": name, "what": what, "source": source, "ours": ours}
+    for sid, name, what, source, ours, kind in STRATEGIES:
+        meta = {"id": sid, "name": name, "what": what, "source": source, "ours": ours, "kind": kind}
         if sid == "retest-all":
             row = score(results, alphabetical(results))
         elif sid == "static-rts":
@@ -279,11 +319,18 @@ def compute(results: list[dict], *, order_files: list[str], view: dict, changed_
                              key=lambda i: (-counts[case_file(results[i])], results[i]["id"], i))
                 row = score(results, sel, note=f"{used} commits of history; {len(counts)} test file(s) co-changed")
         else:
-            rank = {f: k for k, f in enumerate(order_files)}
-            row = score(results, [i for i in range(n) if case_file(results[i]) in rank],
-                        note=f"{len(order_files)} at-risk test file(s), in execution order")
+            if rule is None:
+                row = score(results, None, note="unavailable: no test-case rule for this run")
+            else:
+                row = score(results, case_order.derive(results, rule),
+                            note=f"E1 file rank, then graph hops, then id ({len(set(rule['tiers'].values()))} tier(s), "
+                                 f"{len(order_files)} test file(s))")
+        row["needs"] = needs_text(sid, row, coverage, history, cochange, cochange_info)
+        row["orders_all"] = kind == "orderer" and row["selected"] == n
         out.append({**meta, **row})
     n_failing = sum(1 for r in results if r["outcome"] in FAILED)
-    return {"basis": BASIS, "unit": "test cases (one executed item each)", "n_cases": n, "n_failing": n_failing,
-            "suite_ms": round(sum(float(r["duration_s"]) * 1000 for r in results), 1), "strategies": out,
-            "takeaway": takeaway(out, n, n_failing)}
+    doc = {"basis": BASIS, "unit": "test cases (one executed item each)", "n_cases": n, "n_failing": n_failing,
+           "suite_ms": round(sum(float(r["duration_s"]) * 1000 for r in results), 1), "strategies": out,
+           "takeaway": takeaway(out, n, n_failing),
+           "rule": {"id": case_order.RULE_ID, "fixed": case_order.RULE_FIXED, "text": case_order.RULE_TEXT}}
+    return doc

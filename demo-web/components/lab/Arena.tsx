@@ -9,6 +9,7 @@ import type { LabState } from "./types";
 /** One strategy, computed from this run's full-suite results (`src/lab/arena.py`). */
 export interface Strategy {
   id: string; name: string; what: string; source: string; ours: boolean;
+  kind: "selector" | "orderer"; needs: string; orders_all: boolean;
   status: "ok" | "cold-start" | "unavailable"; note: string;
   selected: number; pct: number; caught: number; n_failing: number; recall: number | null;
   first_failure_position: number | null; first_failure_ms: number | null; ci_ms: number; missed: string[];
@@ -16,8 +17,10 @@ export interface Strategy {
 export interface ArenaDoc {
   basis: string; unit: string; n_cases: number; n_failing: number; suite_ms: number; strategies: Strategy[]; takeaway: string;
   coverage: { status: string; wall_s?: number; cached?: boolean; n_tests?: number; n_functions?: number; reason?: string };
-  history: { n_runs: number; store: string };
-  cochange: { n_commits: number; reason?: string };
+  history: { n_runs: number | null; store?: string };
+  cochange: { n_commits: number; reason?: string; upstream?: { status: string; commits: number; fetch_s: number; reason: string } };
+  rule?: { id: string; fixed: string; text: string };
+  rederived?: { date: string; rule: string; rows: string[]; note: string; before: Record<string, { first_failure_position: number | null; first_failure_ms: number | null; status: string }> };
 }
 export interface RepairColumn {
   id: "R1" | "R2" | "push"; title: string; input: string; chunks: { file: string; qualname: string }[];
@@ -31,42 +34,68 @@ export const repairArenaOf = (s: LabState) => [...s.events].reverse().find((e) =
 
 const pct = (x: number | null) => (x === null ? "–" : `${(x * 100).toFixed(x === 1 || x === 0 ? 0 : 1)}%`);
 
-/** The comparison table: one row per strategy, every number computed from this run's results. */
+/** The comparison tables: orderers (run every test, change the order) and selectors (run fewer tests), every number
+ * computed from this run's results. */
 export function ArenaTable({ a, large = false }: { a: ArenaDoc; large?: boolean }) {
   const T = large ? "text-lg" : "text-sm";
   const S = large ? "text-base" : "text-xs";
+  const orderers = a.strategies.filter((x) => (x.kind ?? (x.id === "retest-all" || x.ours ? "orderer" : "selector")) === "orderer");
+  const selectors = a.strategies.filter((x) => !orderers.includes(x));
+  const name = (x: Strategy) => (
+    <td className={`pr-4 ${large ? "py-2" : "py-1.5"}`}>
+      <span className="ui font-semibold">{x.name}</span>{x.ours && <span className={`ui ml-2 rounded bg-accent/20 px-1.5 ${S} font-semibold text-accent`}>ours</span>}
+      <span className={`ui block ${S} text-muted`}>{x.status === "ok" || x.kind === "orderer" ? x.what : x.note}</span>
+    </td>
+  );
+  const needs = (x: Strategy) => <td className={`ui ${S} text-muted`}>{x.needs ?? "–"}</td>;
+  const head = (cols: string[]) => (
+    <thead>
+      <tr className={`ui text-left ${S} uppercase tracking-wide text-muted`}>
+        {cols.map((c, k) => <th key={c} className={`py-1 pr-4 font-medium ${k > 0 && k < cols.length - 1 ? "text-right" : ""}`}>{c}</th>)}
+      </tr>
+    </thead>
+  );
   return (
-    <div className="overflow-x-auto">
-      <table className={`w-full ${T}`}>
-        <thead>
-          <tr className={`ui text-left ${S} uppercase tracking-wide text-muted`}>
-            <th className="py-1 pr-4 font-medium">Strategy</th>
-            {!large && <th className="pr-4 font-medium">Source of the approach</th>}
-            <th className="pr-4 text-right font-medium">Tests run</th>
-            <th className="pr-4 text-right font-medium">Failures caught</th>
-            <th className="pr-4 text-right font-medium">First failure</th>
-            <th className="pr-4 text-right font-medium">CI time</th>
-            {!large && <th className="font-medium">Missed</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {a.strategies.map((x) => (
-            <tr key={x.id} className={`border-t border-rule align-top ${x.ours ? "bg-accent/10" : ""}`}>
-              <td className={`pr-4 ${large ? "py-2" : "py-1.5"}`}>
-                <span className="ui font-semibold">{x.name}</span>{x.ours && <span className={`ui ml-2 rounded bg-accent/20 px-1.5 ${S} font-semibold text-accent`}>ours</span>}
-                <span className={`ui block ${S} text-muted`}>{x.status === "ok" ? x.what : x.note}</span>
-              </td>
-              {!large && <td className={`ui pr-4 ${S} text-muted`}>{x.source}</td>}
-              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : <>{x.selected}<span className="text-muted"> · {x.pct.toFixed(0)}%</span></>}</td>
-              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : a.n_failing === 0 ? "no failures" : <>{x.caught}/{a.n_failing}<span className="text-muted"> · {pct(x.recall)}</span></>}</td>
-              <td className="num mono whitespace-nowrap pr-4 text-right">{x.first_failure_position ? <>#{x.first_failure_position}<span className="text-muted"> · {fmtMs(x.first_failure_ms)}</span></> : "–"}</td>
-              <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" || x.selected === 0 ? "–" : fmtMs(x.ci_ms)}</td>
-              {!large && <td className={`${S}`}>{x.status !== "ok" || a.n_failing === 0 ? "–" : x.missed.length === 0 ? <span className="flex items-center gap-1 text-green"><Icon name="check" />none</span> : <MissedList ids={x.missed} />}</td>}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className={`ui m-0 mt-2 ${S} text-muted`}>Every row: {a.basis}. Unit: {a.unit}; {a.n_cases} in the suite, {a.n_failing} failing. Each strategy is an approach re-implemented here, not the vendor&apos;s product.</p>
+    <div className="space-y-4 overflow-x-auto">
+      <section aria-label="Orderers">
+        <h4 className={`ui m-0 mb-1 ${S} font-semibold uppercase tracking-wide text-muted`}>Orderers: run all {a.n_cases} tests, change the order</h4>
+        <table className={`w-full ${T}`}>
+          {head(["Strategy", "Tests until first failure", "Time to first failure", "Orders all", "Needs"])}
+          <tbody>
+            {orderers.map((x) => (
+              <tr key={x.id} className={`border-t border-rule align-top ${x.ours ? "bg-accent/10" : ""}`}>
+                {name(x)}
+                <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : x.first_failure_position ? `#${x.first_failure_position}` : a.n_failing === 0 ? "no failure" : "–"}</td>
+                <td className="num mono whitespace-nowrap pr-4 text-right">{x.first_failure_ms !== null && x.first_failure_ms !== undefined ? fmtMs(x.first_failure_ms) : "–"}</td>
+                <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : x.orders_all ? `all ${a.n_cases}` : `${x.selected}`}</td>
+                {needs(x)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {a.rule && !large && <p className={`ui m-0 mt-2 ${S} text-muted`}>BlastRadius order rule, fixed on {a.rule.fixed}, after the PR 1 case was seen: {a.rule.text.replace(/ Fixed on .*$/, "")}</p>}
+      </section>
+      <section aria-label="Selectors">
+        <h4 className={`ui m-0 mb-1 ${S} font-semibold uppercase tracking-wide text-muted`}>Selectors: run fewer tests, can miss failures</h4>
+        <table className={`w-full ${T}`}>
+          {head(large ? ["Strategy", "Tests run", "Failures caught", "Needs"] : ["Strategy", "Tests run", "Failures caught", "Needs", "Missed"])}
+          <tbody>
+            {selectors.map((x) => (
+              <tr key={x.id} className="border-t border-rule align-top">
+                {name(x)}
+                <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : <>{x.selected}<span className="text-muted"> · {x.pct.toFixed(0)}%</span></>}</td>
+                <td className="num mono whitespace-nowrap pr-4 text-right">{x.status === "unavailable" ? "–" : a.n_failing === 0 ? "no failures" : <>{x.caught}/{a.n_failing}<span className="text-muted"> · {pct(x.recall)}</span></>}</td>
+                {needs(x)}
+                {!large && <td className={`${S}`}>{x.status !== "ok" || a.n_failing === 0 ? "–" : x.missed.length === 0 ? <span className="flex items-center gap-1 text-green"><Icon name="check" />none</span> : <MissedList ids={x.missed} />}</td>}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+      <p className={`ui m-0 ${S} text-muted`}>
+        Every row: {a.basis}. Unit: {a.unit}; {a.n_cases} in the suite, {a.n_failing} failing. Each strategy is an approach re-implemented here, not the vendor&apos;s product.
+        {a.rederived && <> Rows re-derived on {a.rederived.date.slice(0, 10)} from this recording&apos;s stored results ({a.rederived.rows.join(", ")}); the run itself was executed in the earlier order.</>}
+      </p>
     </div>
   );
 }
@@ -84,12 +113,12 @@ function MissedList({ ids }: { ids: string[] }) {
 /** One chart: for each strategy, the share of the suite it runs against the share of failures it catches. */
 export function ArenaChart({ a }: { a: ArenaDoc }) {
   const [hover, setHover] = useState<string | null>(null);
-  const rows = a.strategies.filter((x) => x.status !== "unavailable");
+  const rows = a.strategies.filter((x) => x.status !== "unavailable" && x.kind === "selector");
   const hasRecall = a.n_failing > 0;
   return (
     <figure className="m-0">
       <figcaption className="ui mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-        <span className="text-sm font-semibold text-ink">Failures caught against share of the suite run</span>
+        <span className="text-sm font-semibold text-ink">Selectors: failures caught against share of the suite run</span>
         <span className="flex items-center gap-1.5"><span className="inline-block h-2 w-3 rounded-sm bg-chart1" />share of the suite run</span>
         {hasRecall && <span className="flex items-center gap-1.5"><span className="inline-block h-2 w-3 rounded-sm bg-chart2" />failures caught (recall)</span>}
       </figcaption>
@@ -167,8 +196,8 @@ export function ArenaPanel({ s }: { s: LabState }) {
       <div className="max-w-3xl"><ArenaChart a={a} /></div>
       <dl className="ui m-0 grid gap-3 text-xs sm:grid-cols-3">
         <div><dt className="text-muted">Per-test coverage (one-time cost)</dt><dd className="m-0">{a.coverage.status === "ok" ? <><span className="num mono">{a.coverage.wall_s?.toFixed(1)} s</span> for {a.coverage.n_tests} tests at the base commit{a.coverage.cached ? ", read from the cache this run" : ", recorded this run"}</> : a.coverage.reason}</dd></div>
-        <div><dt className="text-muted">Failure history</dt><dd className="m-0">history: {a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository on this machine{a.history.n_runs === 0 ? " (cold start)" : ""}</dd></div>
-        <div><dt className="text-muted">Co-change</dt><dd className="m-0">{a.cochange.reason ?? `${a.cochange.n_commits} commits of git history before the base`}</dd></div>
+        <div><dt className="text-muted">Failure history</dt><dd className="m-0">{a.history.n_runs === null ? "not known for this recording" : <>history: {a.history.n_runs} earlier lab run{a.history.n_runs === 1 ? "" : "s"} of this repository on this machine{a.history.n_runs === 0 ? " (cold start)" : ""}</>}</dd></div>
+        <div><dt className="text-muted">Co-change</dt><dd className="m-0">{a.cochange.reason ?? `${a.cochange.n_commits} commits of git history before the base${a.cochange.upstream?.status === "fetched" ? `, fetched from upstream in ${a.cochange.upstream.fetch_s.toFixed(1)} s` : a.cochange.upstream?.status === "cached" ? ", from the upstream cache" : ""}`}</dd></div>
       </dl>
       <RepairArena s={s} />
     </div>

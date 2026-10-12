@@ -97,15 +97,18 @@ export function RacePanel({ s }: { s: LabState }) {
         <span><span className="num text-ink">{n}</span>{total ? <>/<span className="num">{total}</span></> : null} test cases {done ? "ran" : "so far"}{done ? <> in <span className="num">{fmtMs(done.wall_s * 1000)}</span></> : null}</span>
         <StatusIcon tone="passed" text className="text-xs" /><span className="num -ml-2 text-ink">{n - failedN}</span>
         <StatusIcon tone="failed" text className="text-xs" /><span className="num -ml-2 text-ink">{failedN}</span>
-        {race && !race.order_respected && <span className="text-amber">{race.order_note}.</span>}
+        {race && race.order_respected !== true && <span className={race.order_respected === false ? "text-amber" : ""}>{race.order_note}.</span>}
       </p>
       {race ? (
         <>
           <LaneRow lane={race.lanes[1]} total={n} failed={failedN} />
           <LaneRow lane={race.lanes[0]} total={n} failed={failedN} />
           <p className="cap m-0 text-xs">
-            The risk-first lane is the order pytest actually ran, enforced by a plugin that sorts collected tests by their file&apos;s rank. The retest-all lane is{" "}
-            <strong>computed</strong> from this run&apos;s measured per-test durations in alphabetical id order; it was not run separately. {race.unit}.
+            {race.order_rule?.source === "derived"
+              ? <>The risk-first lane is <strong>computed</strong> with the BlastRadius rule over this recording&apos;s stored results ({race.order_rule.text.replace(/ Fixed on .*$/, "")}) </>
+              : <>The risk-first lane is the order pytest actually ran: collected tests sorted by E1 file tier, then graph hop distance to the changed functions, then id. </>}
+            {race.order_rule?.before && <>Before this rule (E1 file rank, then collection order) the first failure came at <span className="num">{race.order_rule.before.first_failure_position ?? "–"}</span>{race.order_rule.before.first_failure_ms != null && <> after <span className="num">{fmtMs(race.order_rule.before.first_failure_ms)}</span></>}. </>}
+            The retest-all lane is <strong>computed</strong> from this run&apos;s measured per-test durations in alphabetical id order; it was not run separately. {race.unit}.
             {race.lanes[0].measured_wall_to_first_failure_ms !== undefined && <> Measured wall time from suite start to the first failure in the real run, including pytest start-up: <span className="num">{fmtMs(race.lanes[0].measured_wall_to_first_failure_ms)}</span>.</>}
           </p>
         </>

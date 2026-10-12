@@ -23,6 +23,7 @@ export interface GraphDoc { nodes: GNode[]; edges: GEdge[]; counts?: { nodes: Re
 
 export interface TestResult { id: string; nodeid?: string; outcome: string; duration_s: number; message: string; index: number; t?: number }
 export interface Lane { name: string; label: string; ticks: { i: number; id: string; outcome: string; ms: number }[]; total_ms: number; first_failure_position: number | null; first_failure_id: string | null; elapsed_to_first_failure_ms: number | null; basis: string; measured_wall_to_first_failure_ms?: number }
+export interface OrderRule { id: string; fixed: string; text: string; source: "as run" | "derived"; before: { first_failure_position: number | null; first_failure_ms: number | null; basis: string } | null }
 export interface TriageRow { test: string; class: "mine" | "inherited" | "flaky"; confidence: number; reason: string; head_outcome?: string; base_outcome?: string; message?: string }
 export interface Check { attempt: number; name: string; status: Status; ok: boolean | null; evidence: string }
 
@@ -37,7 +38,7 @@ export interface LabState {
   graph: (GraphDoc & { graph_id?: string; truncated?: boolean; n_nodes?: number; n_edges?: number; reason?: string; streamed_nodes?: number }) | null;
   change: Data | null;
   impact: { ranking: Data | null; paths: Data | null }; // eslint-disable-line @typescript-eslint/no-explicit-any
-  tests: { started: boolean; results: TestResult[]; done: Data | null; race: { lanes: Lane[]; order_respected: boolean; order_note: string; unit: string } | null }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  tests: { started: boolean; results: TestResult[]; done: Data | null; race: { lanes: Lane[]; order_respected: boolean | null; order_note: string; unit: string; order_rule?: OrderRule } | null }; // eslint-disable-line @typescript-eslint/no-explicit-any
   triage: { rows: TriageRow[]; counts: Record<string, number>; model?: string; failing_cases?: number; unit?: string; skipped?: string } | null;
   repair: {
     chunks: Data[]; requests: Data[]; replies: Data[]; blocks: Data[];

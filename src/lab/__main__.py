@@ -199,6 +199,20 @@ def cmd_index(_ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rederive(ns: argparse.Namespace) -> int:
+    """Apply the 2026-10-12 test-case rule to recordings made before it (offline; see `src/lab/rederive.py`)."""
+    from src.lab import rederive
+
+    out = []
+    with _lock():
+        for name in ns.names:
+            out.append(rederive.run(name, RUNS, write=not ns.dry_run))
+    print(json.dumps(out, indent=1))
+    if not ns.dry_run:
+        write_index()
+    return 0
+
+
 def cmd_repos(ns: argparse.Namespace) -> int:
     from src.lab import changes
     from src.lab.workspace import PREPARED, REPOS, VENVS, count_files, git, prepared_info
@@ -426,6 +440,10 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(fn=cmd_tasks)
     s = sub.add_parser("index")
     s.set_defaults(fn=cmd_index)
+    s = sub.add_parser("rederive", help="apply the test-case rule to recordings made before it")
+    s.add_argument("names", nargs="+")
+    s.add_argument("--dry-run", action="store_true")
+    s.set_defaults(fn=cmd_rederive)
     s = sub.add_parser("graph")
     s.add_argument("--repo", required=True)
     s.set_defaults(fn=cmd_graph)

@@ -381,7 +381,7 @@ class _RepairUnavailable(RuntimeError):
 
 def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, *, llm=None,
             state_dir: Path | None = None, python: str | None = None, on_event: EventFn | None = None,
-            timeout: float | None = None) -> BotOutcome:
+            timeout: float | None = None, case_order=None) -> BotOutcome:
     """Run impact, regression, triage and repair on one PR and render the comment.
 
     Args:
@@ -397,6 +397,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
             validation checks, the comment). With it, the suite is run once, at-risk files first, and streamed;
             without it nothing changes and the comment is byte-identical to earlier runs.
         timeout: Seconds allowed for each pytest process when `on_event` is given.
+        case_order: Optional zero-argument callable giving the Live Lab test-case rule for the single pass (evaluated
+            after the ranking event, so it can use the ranking); None keeps the file-level order.
 
     Returns:
         The rendered comment, the suggestions of a validated patch, and run statistics.
@@ -421,8 +423,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
 
     report = RegressionSuiteAgent().run(
         impact, repo, state, commit=head, full=True, python=python,
-        **({"on_test": lambda r: emit("tests", "test.result", "ok", r), "single_pass": True, "timeout": timeout}
-           if on_event else {}))
+        **({"on_test": lambda r: emit("tests", "test.result", "ok", r), "single_pass": True, "timeout": timeout,
+           "case_order": case_order} if on_event else {}))
     full = report.full or report.selected
     results = [{"test": r["test_id"], "outcome": r["outcome"], "message": r["message"]} for r in full["results"]]
     risk_files = [t.file for t in impact.tests]

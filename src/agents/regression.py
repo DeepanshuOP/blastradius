@@ -107,7 +107,8 @@ PLUGIN_DIR = Path(__file__).resolve().parents[1] / "lab" / "plugin"
 
 
 def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: str, python: str | None = None, *,
-               on_result=None, order_files: list[str] | None = None, timeout: float | None = None) -> SuiteRun:
+               on_result=None, order_files: list[str] | None = None, timeout: float | None = None,
+               rule: dict | None = None) -> SuiteRun:
     """Run pytest in ``workdir`` (all tests when ``test_ids`` is None).
 
     Args:
@@ -120,6 +121,7 @@ def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: 
             `duration_s`, `message`, `index`, `t`); selects the streaming path, which loads the Live Lab plugin.
         order_files: Optional repo-relative test files that must run first, in this order (needs the plugin).
         timeout: Seconds before the process is killed; the run is then marked `timed_out` and keeps what finished.
+        rule: Optional test-case order for the Live Lab plugin (`src/lab/plugin/br_order.py`); replaces `order_files`.
     """
     cmd = [python or sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
            "-o", "junit_family=xunit1", f"--junitxml={out_xml}"]
@@ -132,18 +134,19 @@ def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: 
     # Import the code of THIS worktree, not an editable install of another checkout (a `src/` layout installed with
     # `pip install -e` would otherwise run the tests against the checkout the install points at).
     paths = [str(workdir)] + ([str(workdir / "src")] if (workdir / "src").is_dir() else [])
-    if on_result is None and order_files is None and timeout is None:
+    if on_result is None and order_files is None and timeout is None and rule is None:
         env["PYTHONPATH"] = os.pathsep.join(paths + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
         proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=env)
         wall = time.perf_counter() - started
         results = parse_junit([out_xml]) if out_xml.exists() else []
         order = execution_order([out_xml]) if out_xml.exists() else []
         return SuiteRun(label, cmd, proc.returncode, round(wall, 3), results, order)
-    return _run_pytest_streaming(workdir, cmd, env, paths, out_xml, label, on_result, order_files, timeout, started)
+    return _run_pytest_streaming(workdir, cmd, env, paths, out_xml, label, on_result, order_files, timeout, started, rule)
 
 
 def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[str], out_xml: Path, label: str,
-                          on_result, order_files: list[str] | None, timeout: float | None, started: float) -> SuiteRun:
+                          on_result, order_files: list[str] | None, timeout: float | None, started: float,
+                          rule: dict | None = None) -> SuiteRun:
     import json as _json
     import tempfile
     import threading
@@ -151,7 +154,9 @@ def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[
     r_fd, w_fd = os.pipe()
     env["PYTHONPATH"] = os.pathsep.join([str(PLUGIN_DIR), *paths] + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
     env["BR_LAB_FD"] = str(w_fd)
-    if order_files:
+    if rule:
+        env["BR_LAB_RULE"] = _json.dumps(rule)
+    elif order_files:
         env["BR_LAB_ORDER"] = _json.dumps(order_files)
     cmd = [*cmd[:3], "-p", "br_lab_plugin", *cmd[3:]]
     streamed: list[TestResult] = []
@@ -238,7 +243,7 @@ class RegressionSuiteAgent:
     def run(self, impact: ImpactAnalysis, repo: Path | str, state_dir: Path | str | None = None, *,
             commit: str | None = None, full: bool = False, runner_cmd: str | None = None,
             junit_glob: str = "**/TEST-*.xml", python: str | None = None, on_test=None, single_pass: bool = False,
-            timeout: float | None = None) -> RegressionReport:
+            timeout: float | None = None, case_order=None) -> RegressionReport:
         """Run the selected scope (and optionally the full suite) at ``commit``.
 
         Args:
@@ -254,6 +259,8 @@ class RegressionSuiteAgent:
             single_pass: Run the suite once, the impact files first, instead of the selected scope and then the
                 whole suite. The selected results are the subset of that run in the at-risk files. Needs `full`.
             timeout: Seconds before a pytest process is killed.
+            case_order: Optional zero-argument callable returning the Live Lab test-case rule (a dict, see
+                `run_pytest(rule=...)`) or None; called just before the single pass starts.
         """
         repo = Path(repo).resolve()
         state = Path(state_dir) if state_dir else repo / ".blastradius"
@@ -272,7 +279,8 @@ class RegressionSuiteAgent:
                 full_run = run_template(tree, runner_cmd, None, junit_glob, "full") if full else None
             elif single_pass and full:
                 full_run = run_pytest(tree, None, out / "full.xml", "full", python, on_result=on_test,
-                                      order_files=selected_targets, timeout=timeout)
+                                      order_files=selected_targets, timeout=timeout,
+                                      rule=case_order() if case_order else None)
                 in_scope = [r for r in full_run.results if r.test_id.split("::")[0] in set(selected_targets)]
                 sel = SuiteRun("selected", full_run.command, full_run.exit_code,
                                round(sum(r.duration_s for r in in_scope), 3), in_scope,

@@ -198,3 +198,62 @@ def prepare_pr(url: str, scratch: Path, install: bool = True) -> tuple[Workspace
     info.update({"merge_base": base, "head": head})
     ws.timings["fetch_pr_s"] = round(time.perf_counter() - t0, 1)
     return ws, info
+
+
+UPSTREAM_DIR = LAB_ROOT / "upstream"
+UPSTREAM_DEPTH = 500
+UPSTREAM_TIMEOUT_S = 150
+
+
+def fetch_history(repo_dir: Path, url: str, sha: str, cache: Path, depth: int = UPSTREAM_DEPTH) -> dict:
+    """Make `depth` commits of history behind `sha` available in `repo_dir`, through a cached bare repository.
+
+    The first call fetches `sha` from `url` into `cache` (network); later calls, and every other scratch clone of the
+    same pin, fetch from `cache` only. Only `repo_dir` (a scratch copy) is written.
+
+    Returns:
+        `{"status": "fetched" | "cached" | "unavailable", "fetch_s", "commits", "reason"}`.
+    """
+    import time
+
+    t0 = time.perf_counter()
+    status = "cached"
+    try:
+        if not cache.exists() or subprocess.run(["git", "-C", str(cache), "cat-file", "-e", f"{sha}^{{commit}}"],
+                                                capture_output=True, timeout=30).returncode != 0:
+            status = "fetched"
+            cache.mkdir(parents=True, exist_ok=True)
+            subprocess.run(["git", "init", "--bare", "-q", str(cache)], check=True, capture_output=True, timeout=30)
+            p = subprocess.run(["git", "-C", str(cache), "fetch", "--quiet", f"--depth={depth}", url, sha],
+                               capture_output=True, text=True, timeout=UPSTREAM_TIMEOUT_S,
+                               env={**os.environ, "GIT_TERMINAL_PROMPT": "0"})
+            if p.returncode != 0:
+                return {"status": "unavailable", "fetch_s": round(time.perf_counter() - t0, 1), "commits": 0,
+                        "reason": f"the pinned commit could not be fetched from {url}: "
+                                  f"{(p.stderr or p.stdout).strip().splitlines()[-1][:200] if (p.stderr or p.stdout).strip() else 'no output'}"}
+            subprocess.run(["git", "-C", str(cache), "update-ref", "refs/lab/pin", sha], check=True, capture_output=True,
+                           timeout=30)
+        git(repo_dir, "fetch", "--quiet", f"--depth={depth}", f"file://{cache}", sha, timeout=UPSTREAM_TIMEOUT_S)
+        commits = int(git(repo_dir, "rev-list", "--count", sha, timeout=60) or 0)
+    except (subprocess.SubprocessError, RuntimeError, OSError, ValueError) as exc:
+        return {"status": "unavailable", "fetch_s": round(time.perf_counter() - t0, 1), "commits": 0,
+                "reason": f"fetching upstream history failed: {type(exc).__name__}: {str(exc)[:200]}"}
+    return {"status": status, "fetch_s": round(time.perf_counter() - t0, 1), "commits": commits, "reason": ""}
+
+
+def fetch_upstream_history(ws: Workspace) -> dict:
+    """Co-change needs git history. A prepared repository is a one-commit snapshot of an upstream pin; when that pin
+    exists upstream, fetch its history into the scratch clone (cached per pin). Anything else is reported as it is:
+    a repository cloned from a URL keeps the history its own clone has, and the scratch sample repository has none.
+
+    Returns:
+        `{"status": "not-needed" | "fetched" | "cached" | "unavailable", ...}` as `fetch_history`.
+    """
+    if not ws.prepared:
+        return {"status": "not-needed", "reason": "", "commits": 0, "fetch_s": 0.0}
+    pin = prepared_info().get(ws.name, {})
+    url, sha = pin.get("url", ""), pin.get("sha", "")
+    if not URL_RE.match(url or "") or not sha:
+        return {"status": "unavailable", "fetch_s": 0.0, "commits": 0,
+                "reason": f"{ws.name} is a scratch sample repository with no upstream: its history is one commit"}
+    return fetch_history(ws.repo_dir, url, sha, UPSTREAM_DIR / f"{ws.name}-{sha[:12]}.git")

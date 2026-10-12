@@ -23,7 +23,7 @@ TYPES: dict[str, tuple[str, ...]] = {
     "change": ("change.applied",),
     "impact": ("impact.ranking", "impact.paths"),
     "tests": ("tests.start", "test.result", "tests.done", "tests.race"),
-    "arena": ("arena.coverage", "arena.result", "arena.gap", "arena.repair", "arena.probe"),
+    "arena": ("arena.coverage", "arena.upstream", "arena.result", "arena.gap", "arena.repair", "arena.probe"),
     "triage": ("triage.result",),
     "repair": ("repair.chunks", "repair.request", "repair.reply", "repair.blocks", "repair.patch", "repair.skipped",
                "repair.unavailable"),

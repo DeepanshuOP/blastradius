@@ -19,7 +19,7 @@ import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.lab import changes, graphview
+from src.lab import changes, graphview, order as case_order
 from src.lab.events import Emitter
 from src.lab.workspace import LAB_ROOT, Workspace, new_scratch, prepare_github, prepare_seeded
 
@@ -61,11 +61,15 @@ def git_sha() -> str:
         return "unknown"
 
 
-def race(results: list[dict], order_files: list[str], t_start: float | None) -> dict:
+def race(results: list[dict], order_files: list[str], t_start: float | None, rule: dict | None = None,
+         native: list[str] | None = None, derived: bool = False) -> dict:
     """Risk-first (as run) against alphabetical (what a retest-all job does), from this run's measured durations.
 
     The alphabetical lane is *computed*: the same measured per-test durations summed in alphabetical id order. It was
-    not run separately, and the data says so.
+    not run separately, and the data says so. `rule` is the test-case rule payload the run used (`order.rule_payload`);
+    with `native` (pytest's own collection order as node ids) the order *before* the rule is derived from the same
+    measured durations and reported as `order_rule.before`. `derived=True` is for a recording made before the rule:
+    the top lane is then the rule's order computed over the stored results, not an order pytest ran.
     """
     ticks = [{"i": i, "id": r["id"], "outcome": r["outcome"], "ms": round(float(r["duration_s"]) * 1000, 2)}
              for i, r in enumerate(results, 1)]
@@ -78,23 +82,51 @@ def race(results: list[dict], order_files: list[str], t_start: float | None) -> 
                 "first_failure_id": seq[ff]["id"] if ff is not None else None,
                 "elapsed_to_first_failure_ms": elapsed, "basis": basis}
 
-    risk = lane("risk-first", "BlastRadius risk-first", ticks,
-                "the order pytest actually ran; durations measured per test in this run")
+    if derived and rule:
+        by_pos = case_order.derive(results, rule)
+        risk = lane("risk-first", "BlastRadius risk-first", [ticks[i] for i in by_pos],
+                    "computed: this run's measured per-test durations summed in the BlastRadius order; this recording "
+                    "was executed before the rule existed, so that order was not run")
+    else:
+        risk = lane("risk-first", "BlastRadius risk-first", ticks,
+                    "the order pytest actually ran; durations measured per test in this run")
     alpha = lane("alphabetical", "Retest-all (alphabetical id order)",
                  sorted(ticks, key=lambda t: (t["id"], t["i"])),
                  "computed: this run's measured per-test durations summed in alphabetical id order; "
                  "that order was not run separately")
     ff = next((r for r in results if r["outcome"] in FAILED), None)
-    if ff is not None and t_start and ff.get("t"):
+    if ff is not None and t_start and ff.get("t") and not derived:
         risk["measured_wall_to_first_failure_ms"] = round((float(ff["t"]) - t_start) * 1000, 1)
+    out = {"lanes": [risk, alpha], "unit": "test cases (one JUnit testcase each); ids can repeat when a subclass "
+                                           "inherits a test"}
+    if rule:
+        by_pos = case_order.derive(results, rule)
+        respected = by_pos == list(range(len(results)))
+        out["order_respected"] = None if derived else respected
+        out["order_note"] = (
+            "re-derived: this recording was executed in the earlier order (E1 file rank, then collection order); the top "
+            "lane is the rule's order over the same measured durations" if derived else
+            "pytest ran the cases in the rule's order: E1 file tier, then graph hops, then id" if respected else
+            "pytest did NOT keep the requested order; the lanes show what actually ran")
+        out["order_rule"] = {"id": case_order.RULE_ID, "fixed": case_order.RULE_FIXED, "text": case_order.RULE_TEXT,
+                             "source": "derived" if derived else "as run", "before": None}
+        if native:
+            from src.lab import arena
+
+            b = arena.score(results, case_order.old_order(results, native, order_files))
+            out["order_rule"]["before"] = {
+                "first_failure_position": b["first_failure_position"], "first_failure_ms": b["first_failure_ms"],
+                "basis": "derived from this run's measured durations in the order before the rule (E1 file rank, then "
+                         "pytest's collection order); that order was not run separately"}
+        return out
     rank = {f: i for i, f in enumerate(order_files)}
     # the collected node id (not the canonical id, which carries the file that *defines* an inherited test)
     seq_rank = [rank.get((r.get("nodeid") or r["id"]).split("::")[0], len(rank)) for r in results]
     respected = all(a <= b for a, b in zip(seq_rank, seq_rank[1:]))
-    return {"lanes": [risk, alpha], "order_respected": respected,
-            "order_note": ("pytest ran every at-risk file before the others, in ranking order" if respected else
-                           "pytest did NOT keep the requested order; the lanes show what actually ran"),
-            "unit": "test cases (one JUnit testcase each); ids can repeat when a subclass inherits a test"}
+    out["order_respected"] = respected
+    out["order_note"] = ("pytest ran every at-risk file before the others, in ranking order" if respected else
+                         "pytest did NOT keep the requested order; the lanes show what actually ran")
+    return out
 
 
 class Lab:
@@ -113,6 +145,8 @@ class Lab:
         self.tokens = {"prompt": 0, "completion": 0, "total": 0, "cached": 0, "calls": 0}
         self.validate_seen = False
         self.extra_header: dict = {}
+        self.rule: dict | None = None          # the test-case rule the suite runs under (order.rule_payload)
+        self.native_path = self.scratch / "native-order.json"
 
     # -- stages ------------------------------------------------------------------------------
     def repo_stage(self) -> Workspace:
@@ -215,6 +249,8 @@ class Lab:
         if type_ == "impact.ranking":
             e.emit("impact", type_, status, data)
             self.order_files = data["at_risk_files"]
+            self.rule = {**case_order.rule_payload(data["rows"], self.order_files, self.view, self.changed_nodes),
+                         "native_out": str(self.native_path)}
             paths = graphview.paths_to_tests(self.view, self.changed_nodes, data["at_risk_files"])
             reach = {k: v for k, v in self.hops.items()}
             e.emit("impact", "impact.paths", "ok", {
@@ -224,13 +260,22 @@ class Lab:
                                  "definition": "nodes within 4 undirected hops of a changed node in the base-commit graph"}})
         elif type_ == "tests.start":
             self.t_tests = time.time()
+            if self.rule:
+                data = {**data, "order_enforced_by": "pytest plugin: collected items sorted by E1 file tier, then graph "
+                        "hop distance to the changed functions, then id", "order_rule": {
+                            "id": case_order.RULE_ID, "fixed": case_order.RULE_FIXED, "text": case_order.RULE_TEXT,
+                            "n_tiers": len(set(self.rule["tiers"].values())), "n_hops_known": len(self.rule["hops"])}}
             e.emit(stage, type_, status, data)
         elif type_ == "test.result":
             self.results.append(data)
             e.emit(stage, type_, "failed" if data["outcome"] in FAILED else "ok", data, dur_ms=data["duration_s"] * 1000)
         elif type_ == "tests.done":
             data = {**data, "n_results": len(self.results)}
-            rc = race(self.results, self.order_files, self.t_tests)
+            native = None
+            if self.rule and self.native_path.exists():
+                native = json.loads(self.native_path.read_text(encoding="utf-8"))
+            rc = race(self.results, self.order_files, self.t_tests, self.rule, native)
+            self.native = native
             e.emit(stage, type_, status, {**data, "order_respected": rc["order_respected"],
                                           "order_note": rc["order_note"]})
             e.emit("tests", "tests.race", "ok", rc)
@@ -281,15 +326,24 @@ class Lab:
         e.emit("arena", "arena.coverage", "ok" if cov["status"] == "ok" else "skipped",
                {k: v for k, v in cov.items() if k != "tests"})
         hist = arena.read_history(key)
+        e.emit("arena", "arena.upstream", "running", {"what": "git history for co-change"})
+        from src.lab.workspace import fetch_upstream_history
+
+        up = fetch_upstream_history(ws)
+        e.emit("arena", "arena.upstream", "ok" if up["status"] in ("fetched", "cached", "not-needed") else "skipped", up)
         try:
             cc = arena.cochange_counts(ws.repo_dir, ch.base, ch.changed_files)
         except Exception as exc:  # noqa: BLE001
             cc = (arena.Counter(), 0, f"git log failed: {exc}"[:200])
+        if cc[2] and up["status"] == "unavailable":      # say why the history is missing, not just that it is
+            cc = (cc[0], cc[1], up["reason"])
         doc = arena.compute(self.results, order_files=self.order_files, view=self.view, changed_nodes=self.changed_nodes,
-                            changed_fns=getattr(self, "changed_detail", []), coverage=cov, history=hist, cochange=cc)
+                            changed_fns=getattr(self, "changed_detail", []), coverage=cov, history=hist, cochange=cc,
+                            rule=self.rule, cochange_info={"source": up["status"] if up["status"] in ("fetched", "cached") else None,
+                                                           "fetch_s": up.get("fetch_s", 0.0)})
         doc["coverage"] = {k: v for k, v in cov.items() if k != "tests"}
         doc["history"] = {"n_runs": len(hist), "store": str(arena.history_path(key))}
-        doc["cochange"] = {"n_commits": cc[1], **({"reason": cc[2]} if cc[2] else {})}
+        doc["cochange"] = {"n_commits": cc[1], "upstream": up, **({"reason": cc[2]} if cc[2] else {})}
         e.emit("arena", "arena.result", "ok", doc)
         if ch.source.get("kind") == "inject" and doc["n_failing"] == 0:
             e.emit("arena", "arena.gap", "ok", self.test_gap(doc, cov))
@@ -391,7 +445,7 @@ class Lab:
         if ws.runnable:
             out = bot.run_bot(ws.repo_dir, ch.base, ch.head, 1, llm=self.llm if self.a.use_llm else None,
                               state_dir=self.scratch / "state", python=py, on_event=self.on_bot_event,
-                              timeout=self.a.timeout)
+                              timeout=self.a.timeout, case_order=lambda: self.rule)
             stats = out.stats
             validated = out.validated
             if self.a.repair_arena:
