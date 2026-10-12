@@ -30,7 +30,7 @@ function Chips({ text, onPick, valid }: { text: string; onPick: (id: string) => 
         const ok = valid.has(m[1]);
         return (
           <button key={i} onClick={() => ok && onPick(m[1])} title={ok ? "show the cited item" : "not a retrieved item"}
-            className={`mx-0.5 rounded px-1.5 py-0.5 align-baseline text-[11px] font-semibold ring-1 ${ok ? "bg-sky-50 text-sky-800 ring-sky-200 hover:bg-sky-100" : "bg-red-50 text-red-700 ring-red-200"}`}>
+            className={`mx-0.5 rounded px-1.5 py-0.5 align-baseline text-[12.5px] font-semibold ring-1 ${ok ? "bg-sky-50 text-sky-800 ring-sky-200 hover:bg-sky-100" : "bg-red-50 text-red-700 ring-red-200"}`}>
             {m[1]}
           </button>
         );
@@ -44,26 +44,26 @@ function AnswerView({ a }: { a: Answer }) {
   const valid = useMemo(() => new Set(a.context.map((c) => c.id)), [a]);
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2 text-xs">
+      <div className="flex flex-wrap items-center gap-2 text-[13px]">
         <Badge tone="slate">{a.qtype}</Badge>
         {a.faithful === true && a.cited.length > 0 && <Badge tone="green">every citation points to a retrieved item</Badge>}
         {a.faithful === false && <Badge tone="red">cites an item that was not retrieved</Badge>}
         {a.answer === null && <Badge tone="amber">retrieval only (no model)</Badge>}
-        {a.model && <span className="text-slate-500">{a.model} · {a.tokens.toLocaleString()} tokens</span>}
+        {a.model && <span className="text-slate-500">{a.model}, {a.tokens.toLocaleString()} tokens</span>}
       </div>
-      {a.answer !== null && <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-800"><Chips text={a.answer} onPick={setOpen} valid={valid} /></div>}
-      {a.notes.length > 0 && <ul className="list-disc pl-5 text-xs text-slate-500">{a.notes.map((n) => <li key={n}>{n}</li>)}</ul>}
+      {a.answer !== null && <div className="rounded border border-slate-200 bg-slate-50 p-4 text-[15px] text-slate-800"><Chips text={a.answer} onPick={setOpen} valid={valid} /></div>}
+      {a.notes.length > 0 && <ul className="list-disc pl-5 text-[13px] text-slate-500">{a.notes.map((n) => <li key={n}>{n}</li>)}</ul>}
       <div>
-        <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Retrieved context ({a.context.length})</h4>
+        <h4 className="mb-2 text-[13px] font-semibold text-slate-500">Retrieved context ({a.context.length})</h4>
         <ul className="space-y-2">
           {a.context.map((c) => (
-            <li key={c.id} className={`rounded-lg border bg-white p-3 text-xs ${open === c.id ? "border-sky-400 ring-1 ring-sky-200" : "border-slate-200"}`}>
+            <li key={c.id} className={`rounded border bg-white p-3 text-[13px] ${open === c.id ? "border-sky-400 ring-1 ring-sky-200" : "border-slate-200"}`}>
               <button className="flex w-full flex-wrap items-center gap-2 text-left" onClick={() => setOpen(open === c.id ? null : c.id)}>
                 <span className="font-semibold text-slate-900">{c.id}</span>
                 <Badge tone={SOURCE_TONE[c.source] ?? "slate"}>{c.source}</Badge>
                 <Mono>{c.ref}</Mono>
               </button>
-              {open === c.id && <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap rounded bg-slate-900 p-3 font-mono text-[11px] text-slate-100">{c.text}</pre>}
+              {open === c.id && <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap border border-rule bg-panel p-3 font-mono text-[12.5px] text-ink">{c.text}</pre>}
             </li>
           ))}
         </ul>
@@ -104,26 +104,27 @@ export default function Ask() {
   const cur = qs[sel];
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-        <strong>Exploratory (BlastRadius 2.1, not pre-registered).</strong> Answers come from retrieval over code, BR-Bench failure
-        history and docs; the model is told to answer only from that context and to cite every claim. Scores below say whether
-        citations point at real retrieved items, not whether an answer is correct.
-      </div>
-      {err && <p className="text-sm text-red-700">Could not load /data/rag.json: {err}. Run <Mono>make demo-data</Mono>.</p>}
+      <p className="ui m-0 border border-rule bg-panel px-4 py-3 text-[15px]" role="status">
+        <span className="font-semibold">Mode: {live?.live ? "live (a key and the network are present)" : "recorded answers (no live key or network here)"}.</span>{" "}
+        Exploratory, not pre-registered. Answers come from retrieval over code, BR-Bench failure history and docs; the model is told to
+        answer only from that context and to cite every claim. The checks below say whether citations point at retrieved items, not
+        whether an answer is correct.
+      </p>
+      {err && <p className="text-[15px] text-red-700">Could not load /data/rag.json: {err}. Run <Mono>make demo-data</Mono>.</p>}
 
       <Card title="Ask a question (live)">
         {live?.live ? (
           <div className="space-y-3">
             <div className="flex flex-col gap-2 sm:flex-row">
-              <select value={repo} onChange={(e) => setRepo(e.target.value)} className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm">
+              <select value={repo} onChange={(e) => setRepo(e.target.value)} className="rounded-md border border-slate-300 bg-white px-3 py-2 text-[15px]">
                 {live.repos.map((r) => <option key={r}>{r}</option>)}
               </select>
               <input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="What is at risk if I change src/click/parser.py?"
-                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm" />
+                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-[15px]" />
               <button onClick={ask} disabled={busy || question.trim().length < 8}
-                className="rounded-md bg-slate-900 px-5 py-2 text-sm font-semibold text-white disabled:bg-slate-400">{busy ? "Asking…" : "Ask"}</button>
+                className="bg-accent px-5 py-2 text-[15px] font-semibold text-white disabled:bg-muted">{busy ? "Asking…" : "Ask"}</button>
             </div>
-            {liveErr && <p className="text-sm text-red-700">{liveErr}</p>}
+            {liveErr && <p className="text-[15px] text-red-700">{liveErr}</p>}
             {liveAnswer && <AnswerView a={liveAnswer} />}
           </div>
         ) : (
@@ -138,10 +139,10 @@ export default function Ask() {
         {!doc?.ask && <p className="text-slate-600">No answers have been recorded yet (<Mono>python -m analysis.ask_eval record</Mono>).</p>}
         {qs.length > 0 && (
           <div className="space-y-4">
-            <select value={sel} onChange={(e) => setSel(Number(e.target.value))} className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm">
-              {qs.map((q, i) => <option key={i} value={i}>{q.id} · {q.type} · {q.question.slice(0, 110)}</option>)}
+            <select value={sel} onChange={(e) => setSel(Number(e.target.value))} className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-[15px]">
+              {qs.map((q, i) => <option key={i} value={i}>{q.id}, {q.type}, {q.question.slice(0, 110)}</option>)}
             </select>
-            {cur && <><p className="text-sm font-medium text-slate-900">{cur.question}</p><AnswerView a={cur} /></>}
+            {cur && <><p className="text-[15px] font-medium text-slate-900">{cur.question}</p><AnswerView a={cur} /></>}
           </div>
         )}
       </Card>

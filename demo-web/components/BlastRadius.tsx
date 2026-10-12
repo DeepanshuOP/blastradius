@@ -42,7 +42,7 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
 
   return (
     <div>
-      <div className="mb-2 flex flex-wrap items-center gap-4 text-xs text-slate-600">
+      <div className="mb-2 flex flex-wrap items-center gap-4 text-[13px] text-slate-600">
         <label className="flex cursor-pointer items-center gap-1.5">
           <input type="checkbox" checked={showCo} onChange={(e) => setShowCo(e.target.checked)} className="accent-orange-600" />
           co-change predictions ({b.nodes.filter((n) => n.cochange_pred).length}, {coHits} hit{coHits === 1 ? "" : "s"})
@@ -63,7 +63,7 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
                 <circle cx={C} cy={C} r={r} fill="none" stroke={i === b.max_hops + 1 ? "#cbd5e1" : "#e2e8f0"}
                   strokeDasharray={i === b.max_hops + 1 ? "4 4" : undefined} />
                 <text x={C} y={C - r - 4} textAnchor="middle" fontSize="10" fill="#94a3b8">
-                  {RING_LABELS[i]} · {cnt}
+                  {RING_LABELS[i]}, {cnt}
                 </text>
               </g>
             );
@@ -93,28 +93,28 @@ export default function BlastRadius({ b }: { b: BlastDoc }) {
           })}
         </svg>
         {hover && (
-          <div className="pointer-events-none absolute z-10 max-w-xs -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1.5 text-[11px] text-white shadow-lg"
+          <div className="pointer-events-none absolute z-10 max-w-xs -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1.5 text-[12.5px] text-white-lg"
             style={{ left: `${(hover.x / SIZE) * 100}%`, top: `calc(${(hover.y / SIZE) * 100}% + 14px)` }}>
             <div className="break-all font-mono">{hover.n.path ?? hover.n.label}</div>
-            {hover.n.kind !== "file" && hover.n.in_graph && <div className="text-slate-300">{hover.n.kind} · {hover.n.label}</div>}
+            {hover.n.kind !== "file" && hover.n.in_graph && <div className="text-slate-300">{hover.n.kind}, {hover.n.label}</div>}
             <div className="text-slate-300">
               {hover.n.hop === null ? (hover.n.in_graph ? "beyond 4 hops" : "not reachable / not in graph") : `${hover.n.hop} hop${hover.n.hop === 1 ? "" : "s"} from a changed file`}
               {[hover.n.changed && "changed", hover.n.actual_failing && "actually failed", hover.n.cochange_pred && "co-change predicted",
-                hover.n.history_pred && "history predicted"].filter(Boolean).map((x) => ` · ${x}`).join("")}
+                hover.n.history_pred && "history predicted"].filter(Boolean).map((x) => `, ${x}`).join("")}
             </div>
           </div>
         )}
       </div>
-      <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-slate-600">
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-slate-900" /> changed file</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-red-600" /> actually failing test file</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-red-300" /> other test node</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-slate-300" /> code node</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-orange-600" /> co-change prediction</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-blue-600" /> history prediction</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-orange-600 bg-orange-300" /> filled ring = hit</span>
+      <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] text-slate-600">
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 bg-slate-900" /> changed file</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 bg-red-600" /> actually failing test file</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 bg-red-300" /> other test node</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 bg-slate-300" /> code node</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 border-2 border-orange-600" /> co-change prediction</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 border-2 border-blue-600" /> history prediction</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-3.5 w-3.5 border-2 border-orange-600 bg-orange-300" /> filled ring = hit</span>
       </div>
-      <p className="mt-2 text-center text-xs text-slate-500">
+      <p className="mt-2 text-center text-[13px] text-slate-500">
         {b.nodes.length} of {b.within_hops_total.toLocaleString()} nodes within {b.max_hops} hops shown
         {b.truncated.nodes ? ` (capped at ${b.caps.nodes}, priority: changed, failing, predicted, shortest paths, nearest)` : ""}
         ; {b.edges.length} edges{b.truncated.edges ? ` (capped at ${b.caps.edges})` : ""}. {b.note}.

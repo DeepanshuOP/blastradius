@@ -70,7 +70,7 @@ export default function GraphPaths({ paths, testLabel }: { paths: GraphPath[]; t
               <rect x={rightX} y={y} width={NODE_W} height={NODE_H} rx={6} fill="#fffbeb" stroke="#f59e0b" />
               <text x={rightX + NODE_W / 2} y={y + 17} textAnchor="middle" fontSize="12" fill="#92400e">{clip(changedNode.label)}</text>
               <text x={rightX + NODE_W / 2} y={y + 31} textAnchor="middle" fontSize="10" fill="#b45309">
-                {p.hops} hop{p.hops === 1 ? "" : "s"}{p.hops === 0 ? " · the test file itself" : ""}
+                {p.hops} hop{p.hops === 1 ? "" : "s"}{p.hops === 0 ? ", the test file itself" : ""}
               </text>
               <title>{p.changed_file}</title>
             </g>
@@ -80,7 +80,7 @@ export default function GraphPaths({ paths, testLabel }: { paths: GraphPath[]; t
         <text x={leftX + NODE_W / 2} y={testY + 17} textAnchor="middle" fontSize="12" fill="#991b1b">{clip(testLabel)}</text>
         <text x={leftX + NODE_W / 2} y={testY + 31} textAnchor="middle" fontSize="10" fill="#b91c1c">failing test</text>
       </svg>
-      <div className="mt-2 flex flex-wrap gap-4 text-xs text-slate-500">
+      <div className="mt-2 flex flex-wrap gap-4 text-[13px] text-slate-500">
         <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded border border-red-500 bg-red-50" /> failing test</span>
         <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded border border-slate-300 bg-slate-50" /> intermediate code node</span>
         <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded border border-amber-500 bg-amber-50" /> changed file</span>

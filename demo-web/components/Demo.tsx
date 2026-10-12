@@ -1,206 +1,167 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Agents from "./Agents";
-import Analyze from "./Analyze";
-import Ask from "./Ask";
 import Compare from "./Compare";
-import Corpus from "./Corpus";
-import Intelligence from "./Intelligence";
-import Overview from "./Overview";
-import { Decisions, MoreResults, type PanelsDoc } from "./Panels";
-import Results from "./Results";
+import DataSection from "./DataSection";
+import { useDoc } from "./lib";
+import OverviewSection from "./OverviewSection";
+import ResultsSection, { type CompareLite, type E1Doc, type E2Doc, type E3Doc, type RagDoc } from "./ResultsSection";
+import TrySection from "./TrySection";
+import type { PanelsDoc } from "./Panels";
+import type { CorpusDoc, OverviewDoc, ResultsDoc } from "./types";
 import UseIt from "./UseIt";
-import { STAGE_TITLES, StageCard } from "./Stages";
-import type { CorpusDoc, IndexDoc, InstanceDoc, OverviewDoc, ResultsDoc } from "./types";
-import { Card, Mono, short } from "./ui";
+import { Mono, short } from "./ui";
 
-const TABS = ["Overview", "How it works", "Live run", "Results", "Intelligence", "Compare", "Use it", "Analyze a repo", "Ask", "Agents", "Corpus", "Decisions"] as const;
-type Tab = (typeof TABS)[number];
-const STEP_MS = 800;
-
-async function getJson<T>(path: string): Promise<T> {
-  const r = await fetch(path, { cache: "no-store" });
-  if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
-  return (await r.json()) as T;
-}
-
-const PIPELINE: [string, string][] = [
-  ["GitHub Actions", "Open-source projects run their test suites on every pull request."],
-  ["Harvester", "We download PR, run and job metadata through a rate-limited, resumable API client."],
-  ["CI logs", "The raw job logs of failed runs are stored locally; success-run logs are pruned."],
-  ["Parsers", "Harness-specific parsers (JUnit/Maven/Gradle, pytest) extract each failing test from the log."],
-  ["Canonical test_id", "Every raw test name is normalised to one join key, so the same test matches across runs."],
-  ["Base-run resolution", "We find the CI run of the commit the PR branched from, to see what was already broken."],
-  ["Fault-revealing labels", "A test is labelled when it fails at head, did not fail at base, and is not flaky."],
-  ["Binding", "Each labelled test is bound to its test file at a pinned commit of the repository."],
-  ["Code graph", "A static graph of files, functions and imports is built at the base commit."],
-  ["Predictors vs reality", "Co-change and historical-frequency predictions are scored against the tests that actually failed."],
+const SECTIONS: { id: string; label: string }[] = [
+  { id: "overview", label: "Overview" },
+  { id: "data", label: "Data" },
+  { id: "results", label: "Results" },
+  { id: "compare", label: "Compare" },
+  { id: "try-it", label: "Try it" },
+  { id: "use-it", label: "Use it" },
 ];
 
-function HowItWorks() {
+const REPO = "https://github.com/DeepanshuOP/blastradius";
+
+type E1File = { e1: E1Doc };
+type E2File = { e2: E2Doc };
+type E3File = { e3: E3Doc };
+
+/** Fills "Figure n." and "Table n." in order of appearance, in the whole page, whenever content changes. */
+function useCaptionNumbers(root: React.RefObject<HTMLElement>) {
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const number = () => {
+      const counts: Record<string, number> = {};
+      el.querySelectorAll<HTMLElement>("[data-cap]").forEach((cap) => {
+        const kind = cap.dataset.cap ?? "";
+        counts[kind] = (counts[kind] ?? 0) + 1;
+        const slot = cap.querySelector<HTMLElement>(".cap-num");
+        if (slot && slot.textContent !== String(counts[kind])) slot.textContent = String(counts[kind]);
+      });
+    };
+    number();
+    const mo = new MutationObserver(number);
+    mo.observe(el, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, [root]);
+}
+
+/** The id of the section nearest the top of the viewport, for the table of contents. */
+function useActive(ids: string[]): string {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const onScroll = () => {
+      let cur = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 96) cur = id;
+      }
+      setActive(cur);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [ids]);
+  return active;
+}
+
+function Toc({ active, vertical }: { active: string; vertical: boolean }) {
   return (
-    <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-      {PIPELINE.map(([t, d], i) => (
-        <li key={t} className="relative flex">
-          <div className="flex w-full flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400">STEP {i + 1}</span>
-            <span className="mt-1 font-semibold text-slate-900">{t}</span>
-            <span className="mt-1 text-sm text-slate-600">{d}</span>
-          </div>
-          {i < PIPELINE.length - 1 && (
-            <span aria-hidden className="absolute -bottom-3 left-1/2 z-10 -translate-x-1/2 text-slate-400 sm:hidden">↓</span>
-          )}
-          {i < PIPELINE.length - 1 && (
-            <span aria-hidden className="absolute -right-2.5 top-1/2 z-10 hidden -translate-y-1/2 text-slate-400 sm:block">→</span>
-          )}
+    <ul className={`m-0 list-none p-0 ${vertical ? "flex flex-col gap-1" : "flex flex-col"}`}>
+      {SECTIONS.map((s) => (
+        <li key={s.id}>
+          <a href={`#${s.id}`} aria-current={active === s.id ? "location" : undefined}
+            className={`ui block py-1 pl-3 text-[15px] no-underline ${vertical ? "border-l-2" : ""} ${active === s.id ? "border-accent font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}>
+            {s.label}
+          </a>
         </li>
       ))}
-    </ol>
+    </ul>
   );
 }
 
-function LiveRun({ index }: { index: IndexDoc }) {
-  const [id, setId] = useState(index.default);
-  const [doc, setDoc] = useState<InstanceDoc | null>(null);
-  const [shown, setShown] = useState(0);
-  const [running, setRunning] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
-
-  const stop = () => { if (timer.current) clearInterval(timer.current); timer.current = null; };
-
-  const run = async () => {
-    stop();
-    setShown(0);
-    setErr(null);
-    setRunning(true);
-    try {
-      const d = doc && doc.id === id ? doc : await getJson<InstanceDoc>(`/data/instances/${id}.json`);
-      setDoc(d);
-      let n = 0;
-      timer.current = setInterval(() => {
-        n += 1;
-        setShown(n);
-        if (n >= STAGE_TITLES.length) { stop(); setRunning(false); }
-      }, STEP_MS);
-    } catch (e) {
-      setErr(String(e));
-      setRunning(false);
-    }
-  };
-
-  const total = STAGE_TITLES.length;
+/** The section heading while its data loads, so every anchor of the table of contents exists from the first paint. */
+function Pending({ id, title }: { id: string; title: string }) {
   return (
-    <div className="space-y-4">
-      <div className="rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">
-        Replaying a recorded run computed by <Mono>analysis/export_demo_data.py</Mono> at{" "}
-        <Mono>{short(index.generated_at_git_sha)}</Mono>. The same pipeline runs live with <Mono>make demo</Mono>.
-      </div>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-        <label className="flex-1 text-sm">
-          <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">Instance</span>
-          <select value={id} disabled={running}
-            onChange={(e) => { stop(); setId(e.target.value); setShown(0); setDoc(null); }}
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none">
-            {index.instances.map((x) => (
-              <option key={x.id} value={x.id}>
-                {x.repo} · PR #{x.pr_number} · run {x.run_id} · {x.failure_class} · {x.test_count} fault-revealing test{x.test_count === 1 ? "" : "s"}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button onClick={run} disabled={running}
-          className="rounded-md bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-400">
-          {running ? "Running…" : shown >= total ? "Run again" : "Run pipeline"}
-        </button>
-      </div>
-      {index.instances.length === 1 && (
-        <p className="text-xs text-slate-500">
-          One instance qualified: it must clear every gate (strict label, bound test, no holdout job, raw log on disk) and have a graph buildable offline from local git objects.
-        </p>
-      )}
-      {err && <p className="text-sm text-red-700">{err}</p>}
-      {(running || shown > 0) && (
-        <div>
-          <div className="mb-1 flex justify-between text-xs text-slate-500">
-            <span>{shown < total ? `Stage ${Math.min(shown + 1, total)} of ${total}: ${STAGE_TITLES[Math.min(shown, total - 1)]}` : "All stages complete"}</span>
-            <span>{Math.round((shown / total) * 100)}%</span>
-          </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
-            <div className="h-full rounded-full bg-slate-800 transition-all duration-500" style={{ width: `${(shown / total) * 100}%` }} />
-          </div>
-        </div>
-      )}
-      <div className="space-y-4">
-        {doc && Array.from({ length: shown }, (_, i) => <StageCard key={`${doc.id}-${i}`} i={i} doc={doc} />)}
-      </div>
-    </div>
+    <section id={id} aria-labelledby={`h-${id}`} className="scroll-mt-20">
+      <h2 id={`h-${id}`} className="m-0 mb-3">{title}</h2>
+      <p className="text-muted">Loading.</p>
+    </section>
   );
 }
 
 export default function Demo() {
-  const [tab, setTab] = useState<Tab>("Overview");
-  const [index, setIndex] = useState<IndexDoc | null>(null);
-  const [results, setResults] = useState<ResultsDoc | null>(null);
-  const [overview, setOverview] = useState<OverviewDoc | null>(null);
-  const [corpus, setCorpus] = useState<CorpusDoc | null>(null);
-  const [panels, setPanels] = useState<PanelsDoc | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const overview = useDoc<OverviewDoc>("overview");
+  const corpus = useDoc<CorpusDoc>("corpus");
+  const results = useDoc<ResultsDoc>("results");
+  const panels = useDoc<PanelsDoc>("panels");
+  const e1 = useDoc<E1File>("e1");
+  const e2 = useDoc<E2File>("e2");
+  const e3 = useDoc<E3File>("e3");
+  const compare = useDoc<CompareLite & { generated_at_git_sha: string; e3: { primary: string; interim: boolean; interim_text: string } | null }>("compare");
+  const rag = useDoc<RagDoc & { ask: NonNullable<RagDoc>["ask"] }>("rag");
+  const main = useRef<HTMLElement>(null);
+  const ids = SECTIONS.map((s) => s.id);
+  const active = useActive(ids);
+  useCaptionNumbers(main);
+  const errors = [overview, corpus, results].map((d) => d.error).filter(Boolean);
+  const o = overview.doc;
+  const built = o?.built_from ?? compare.doc?.generated_at_git_sha;
 
-  useEffect(() => {
-    Promise.all([getJson<IndexDoc>("/data/index.json"), getJson<ResultsDoc>("/data/results.json"),
-      getJson<OverviewDoc>("/data/overview.json"), getJson<CorpusDoc>("/data/corpus.json")])
-      .then(([i, r, o, c]) => { setIndex(i); setResults(r); setOverview(o); setCorpus(c); })
-      .catch((e) => setErr(String(e)));
-    getJson<PanelsDoc>("/data/panels.json").then(setPanels).catch((e) => setErr(String(e)));
-  }, []);
-
-  const go = (t: Tab, anchor?: string) => {
-    setTab(t);
-    if (anchor) setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" }), 350);
-  };
-  const loading = !err && <p className="text-sm text-slate-500">Loading…</p>;
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 pt-3 sm:flex-row sm:items-end sm:justify-between sm:px-6">
-          <div className="pb-1 sm:pb-3">
-            <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">BlastRadius</h1>
-            <p className="text-xs text-slate-500">Which tests did a pull request actually break, and can a predictor tell in advance?</p>
-          </div>
-          <nav className="-mb-px flex gap-1 overflow-x-auto" role="tablist">
-            {TABS.map((t) => (
-              <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)}
-                className={`whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium transition-colors ${tab === t ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
-                {t}
-              </button>
-            ))}
-          </nav>
-        </div>
+    <div className="min-h-screen">
+      <a href="#main" className="ui sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:bg-white focus:p-2">Skip to content</a>
+      <header className="sticky top-0 z-30 border-b border-rule bg-white lg:hidden">
+        <details className="px-4">
+          <summary className="ui flex items-center justify-between py-3 text-[15px] font-semibold">
+            <span>BlastRadius</span><span className="font-normal text-muted">Contents</span>
+          </summary>
+          <nav aria-label="Sections" className="pb-3"><Toc active={active} vertical={false} /></nav>
+        </details>
       </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
-        {err && <p className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">Could not load /data: {err}. Run <Mono>make demo-data</Mono>.</p>}
-        {tab === "Overview" && (overview ? <Overview o={overview} /> : loading)}
-        {tab === "How it works" && <HowItWorks />}
-        {tab === "Live run" && (index ? <LiveRun index={index} /> : loading)}
-        {tab === "Results" && (results ? <><Results r={results} />{panels && <div className="mt-8"><MoreResults d={panels} /></div>}</> : loading)}
-        {tab === "Intelligence" && <Intelligence />}
-        {tab === "Compare" && <Compare />}
-        {tab === "Use it" && <UseIt onEvidence={(n) => go("Compare", `compare-panel-${n}`)} />}
-        {tab === "Analyze a repo" && <Analyze />}
-        {tab === "Ask" && <Ask />}
-        {tab === "Agents" && <Agents />}
-        {tab === "Corpus" && (corpus ? <Corpus c={corpus} /> : loading)}
-        {tab === "Decisions" && (panels ? <Decisions d={panels.decisions} /> : loading)}
-      </main>
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 sm:px-6">
-          data at <Mono className="text-slate-600">{index ? short(index.generated_at_git_sha) : "…"}</Mono> · static replay · <Mono className="text-slate-600">make demo</Mono> runs it live
-        </div>
-      </footer>
+      <div className="mx-auto flex max-w-[1320px] gap-10 px-4 sm:px-6 lg:px-8">
+        <aside className="hidden w-48 shrink-0 lg:block">
+          <nav aria-label="Sections" className="sticky top-8 pt-8">
+            <p className="ui m-0 mb-3 text-[17px] font-semibold">BlastRadius</p>
+            <Toc active={active} vertical />
+            <p className="cap mt-6 pr-2">Execution-grounded change impact prediction for CI.</p>
+          </nav>
+        </aside>
+        <main id="main" ref={main} className="min-w-0 flex-1 py-8">
+          {errors.length > 0 && (
+            <p className="ui border border-fail p-3 text-[15px] text-fail">Could not load /data: {String(errors[0])}. Run <Mono>make demo-data</Mono>.</p>
+          )}
+          <div className="space-y-16">
+            {o ? <OverviewSection o={o} e3={compare.doc?.e3 ?? null} loc={compare.doc?.localization ?? null} /> : <Pending id="overview" title="Overview" />}
+            {corpus.doc && o && results.doc ? <DataSection c={corpus.doc} o={o} r={results.doc} panels={panels.doc} /> : <Pending id="data" title="Data: BR-Bench" />}
+            <ResultsSection r={results.doc} e1={e1.doc?.e1 ?? null} e2={e2.doc?.e2 ?? null} e3={e3.doc?.e3 ?? null} c={compare.doc} rag={rag.doc} panels={panels.doc} />
+            <Compare />
+            <TrySection />
+            <section id="use-it" aria-labelledby="h-use" className="scroll-mt-20">
+              <h2 id="h-use" className="m-0 mb-3">Use it</h2>
+              <div className="prose-col">
+                <p className="mt-0">Three ways to run BlastRadius on your own repository: a GitHub Action, a Jenkins stage and a command line.</p>
+              </div>
+              <UseIt />
+            </section>
+          </div>
+          <footer className="ui mt-16 border-t border-rule pt-6 text-[14px] text-muted">
+            <p className="m-0">
+              Team: Prisha Vadhavkar, Sanskriti Singh and Deepanshu. Guide: Dr. Yoga Raja C A. Course: VIT BITE497J Project I.
+            </p>
+            <p className="mb-0 mt-2">
+              {(panels.doc?.release.dois ?? []).map((d, i) => (
+                <span key={d.doi}>{i > 0 ? "; " : ""}{d.what[0].toUpperCase() + d.what.slice(1)} DOI <a href={`https://doi.org/${d.doi}`}>{d.doi}</a></span>
+              ))}
+              {panels.doc ? ". " : ""}
+              Repository <a href={REPO}>{REPO.replace("https://", "")}</a>. Licence: code MIT, data CC BY 4.0.
+            </p>
+            <p className="mb-0 mt-2">Built from commit <Mono>{built ? short(built) : "unknown"}</Mono>.</p>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }

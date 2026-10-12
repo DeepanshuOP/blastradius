@@ -25,9 +25,9 @@ type ReachDoc = {
 function MdTable({ t }: { t: Table }) {
   return (
     <div className="mb-4 last:mb-0">
-      <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{t.heading}</h4>
+      <h4 className="mb-1 text-[13px] font-semibold text-slate-500">{t.heading}</h4>
       <div className="max-h-96 overflow-auto">
-        <table className="w-full text-left text-xs">
+        <table className="w-full text-left text-[13px]">
           <thead className="sticky top-0 bg-white"><tr>{t.columns.map((c, i) => <th key={i} className="border-b border-slate-200 px-2 py-1.5 font-semibold text-slate-600">{inline(c)}</th>)}</tr></thead>
           <tbody>{t.rows.map((r, i) => (
             <tr key={i} className="odd:bg-slate-50">{r.map((c, j) => <td key={j} className={`px-2 py-1.5 align-top ${j > 0 ? "tabular-nums" : ""}`}>{inline(c)}</td>)}</tr>))}
@@ -42,7 +42,7 @@ function PanelCard({ p, open = false }: { p: Panel; open?: boolean }) {
   return (
     <Card title={p.title}>
       <details open={open}>
-        <summary className="cursor-pointer text-xs font-semibold text-slate-600">{p.tables.length} table{p.tables.length === 1 ? "" : "s"}</summary>
+        <summary className="cursor-pointer text-[13px] font-semibold text-slate-600">{p.tables.length} table{p.tables.length === 1 ? "" : "s"}</summary>
         <div className="mt-3">{p.tables.map((t, i) => <MdTable key={i} t={t} />)}</div>
       </details>
       <Source file={`${p.source}${p.source_generated_at_git_sha ? ` (generated at ${p.source_generated_at_git_sha.slice(0, 10)})` : ""}`} />
@@ -53,8 +53,8 @@ function PanelCard({ p, open = false }: { p: Panel; open?: boolean }) {
 function ReachTable({ title, rows }: { title: string; rows: ReachRow[] }) {
   return (
     <div className="mb-4 overflow-x-auto">
-      <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</h4>
-      <table className="w-full min-w-[560px] text-left text-xs">
+      <h4 className="mb-1 text-[13px] font-semibold text-slate-500">{title}</h4>
+      <table className="w-full min-w-[560px] text-left text-[13px]">
         <thead><tr className="text-slate-500"><th className="py-1">method</th><th className="text-right">mean P</th><th className="text-right">mean R</th>
           <th className="text-right">mean J</th><th className="text-right">micro recall</th><th className="text-right">median size</th></tr></thead>
         <tbody>{rows.map((r) => (
@@ -80,7 +80,7 @@ function Reachability() {
       {err && <p className="text-red-700">Could not load /data/reachability.json ({err}).</p>}
       {d && (
         <>
-          <table className="mb-3 w-full text-left text-xs"><tbody>{d.funnel.map((f) => (
+          <table className="mb-3 w-full text-left text-[13px]"><tbody>{d.funnel.map((f) => (
             <tr key={f.step} className="border-t border-slate-100"><td className="py-1 pr-2">{f.step}</td><td className="text-right tabular-nums font-semibold">{f.n}</td></tr>))}
           </tbody></table>
           {d.n === 0 ? (
@@ -91,14 +91,14 @@ function Reachability() {
             </p>
           ) : (
             <>
-              {d.unbound && <p className="mb-2 text-xs">Ground-truth test_ids with no graph node: {d.unbound.n}/{d.unbound.d}</p>}
+              {d.unbound && <p className="mb-2 text-[13px]">Ground-truth test_ids with no graph node: {d.unbound.n}/{d.unbound.d}</p>}
               {d.test_id_level.map((s) => <ReachTable key={`t${s.scope}`} title={`test-id level: ${s.scope} (n=${s.n})`} rows={s.rows} />)}
               {d.file_level.map((s) => <ReachTable key={`f${s.scope}`} title={`file level: ${s.scope} (n=${s.n})`} rows={s.rows} />)}
             </>
           )}
         </>
       )}
-      <Source file={d ? `${d.source} → demo-web/public/data/reachability.json (at ${d.generated_at_git_sha})` : "analysis/reachability_mini.py"} />
+      <Source file={d ? `${d.source} to demo-web/public/data/reachability.json (at ${d.generated_at_git_sha})` : "analysis/reachability_mini.py"} />
     </Card>
   );
 }
@@ -108,13 +108,13 @@ function Release({ r }: { r: PanelsDoc["release"] }) {
     <Card title="Release v0.2 and datasheet">
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <h4 className="mb-1 text-xs font-semibold uppercase text-slate-500">DOIs</h4>
-          <ul className="space-y-1">{r.dois.map((x) => <li key={x.doi}>{x.what}: <a className="text-sky-700 hover:underline" href={`https://doi.org/${x.doi}`}>{x.doi}</a></li>)}</ul>
-          <h4 className="mb-1 mt-3 text-xs font-semibold uppercase text-slate-500">{r.tables.length} released tables</h4>
+          <h4 className="mb-1 text-[13px] font-semibold text-slate-500">DOIs</h4>
+          <ul className="space-y-1">{r.dois.map((x) => <li key={x.doi}>{x.what}: <a href={`https://doi.org/${x.doi}`}>{x.doi}</a></li>)}</ul>
+          <h4 className="mb-1 mt-3 text-[13px] font-semibold text-slate-500">{r.tables.length} released tables</h4>
           <ul className="space-y-1">{r.tables.map((t) => <li key={t.table} className="flex justify-between"><Mono>{t.table}.parquet</Mono><span className="tabular-nums">{t.rows.toLocaleString()} rows</span></li>)}</ul>
         </div>
         <div>
-          <h4 className="mb-1 text-xs font-semibold uppercase text-slate-500">Checks</h4>
+          <h4 className="mb-1 text-[13px] font-semibold text-slate-500">Checks</h4>
           <ul className="space-y-2">
             <li><Badge tone={r.validator.verdict === "PASS" ? "green" : "amber"}>{r.validator.verdict}</Badge> schema v0.2 validator (T1.6a, D-54){r.validator.violations.length ? `: ${r.validator.violations.length} violations` : ""}</li>
             {r.datasheet_rows.map((x) => <li key={x.item}><span className="font-medium">{inline(x.item)}</span>: <span className="text-slate-600">{inline(x.status)}</span></li>)}
@@ -132,10 +132,9 @@ export function MoreResults({ d }: { d: PanelsDoc }) {
   const order = ["gates", "funnel", "binding", "classes", "rq1_k5", "rq1_k10", "rq1_k20", "rq1_size", "sensitivity", "leakage", "flakiness", "expiry", "expiry_d23", "parser"];
   return (
     <div className="space-y-5">
-      <h2 className="pt-4 text-lg font-bold text-slate-900">All results, table by table</h2>
-      <p className="-mt-3 text-sm text-slate-600">Copied cell for cell from the generated files by <Mono>analysis/export_demo_data.py</Mono>; nothing here is typed in by hand.</p>
+      <p className="prose-col mt-0">Copied cell for cell from the generated files by <Mono>analysis/export_demo_data.py</Mono>; nothing here is typed in by hand.</p>
       <Reachability />
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {order.map((id) => by(id)).filter((p): p is Panel => !!p).map((p) => <PanelCard key={p.id} p={p} open={["gates", "flakiness", "expiry", "parser"].includes(p.id)} />)}
       </div>
       <Release r={d.release} />
@@ -151,7 +150,7 @@ export function Decisions({ d }: { d: PanelsDoc["decisions"] }) {
       <ul className="divide-y divide-slate-100">{d.rows.map((r) => (
         <li key={r.id} className="grid grid-cols-[4rem_1fr] gap-3 py-1.5"><Mono className="font-semibold">{r.id}</Mono><span>{inline(r.title)}</span></li>))}
       </ul>
-      <p className="mt-3 text-xs text-slate-500">{missing.length ? `Not present as an entry in the log: ${missing.join(", ")} (the log states D-51 was never assigned). ` : ""}Full rationale and revisit triggers are in the source file.</p>
+      <p className="mt-3 text-[13px] text-slate-500">{missing.length ? `Not present as an entry in the log: ${missing.join(", ")} (the log states D-51 was never assigned). ` : ""}Full rationale and revisit triggers are in the source file.</p>
       <Source file={d.source} />
     </Card>
   );

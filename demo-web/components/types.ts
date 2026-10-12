@@ -167,6 +167,12 @@ export type OverviewDoc = {
   kpis: { label: string; value: number; source: string }[];
   binding: { source: string; combined: Rate; full_confidence: Rate };
   headline: Sourced & { k: number; methods: { method: string; n: number; micro_recall: Rate }[] };
+  pr1: {
+    tests_total: number; failing_count: number; failing: { test_id: string; message: string }[];
+    file: string; line: number; old: string | null; new: string; validated: boolean; source: string;
+  } | null;
+  live_pr_url: string;
+  built_from: string;
 };
 
 export type CorpusDoc = {
