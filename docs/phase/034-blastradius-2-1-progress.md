@@ -399,3 +399,13 @@ study, so L5 moved from 68 / 57 to **69 / 58** (standard / hard) and the hard-va
   value 349.480 matches a third, unrecorded seed. Only B5's Recall@20%, first-fail position, APFD and suite fraction move; Recall@10, MAP,
   every Holm p and the Gate 3 verdict were identical in all three. The generated files were restored to HEAD; nothing was merged to
   `main`. The fix is `for t in sorted(set(query))`, but it changes a published B5 value, so it is the operator's decision.
+
+## Finish sprint (2026-10-11 to 2026-10-12)
+
+- **B5 (D-64).** `sorted(set(query))` in `bm25_scores`. `make tables` at the new code reproduces the committed B5 row exactly (Recall@20%
+  0.457, first-fail position 349.480); the drift of the earlier HARD STOP was the unpinned hash seed. `tests/test_determinism_hashseed.py`
+  (BM25 under four seeds; `analysis.rq2_predictor` under `PYTHONHASHSEED=0` and `=1`, about 30 minutes) passes. No generated value changed.
+- **E3 sync.** Standard variant complete at n = 70 for gpt-oss-120b and gpt-oss-20b: primary test R2 50/70 vs R1 33/70, one-sided exact
+  McNemar p = 0.0007569 (confirmatory, docs/phase/033). Hard variant 29 and 17 of 70, qwen 25 of 70: interim. R4 built, not run.
+- **Site.** Six-section research-page layout (Overview, Data, Results, Compare, Try it, Use it); commercial-tools matrix with vendor URLs;
+  `make demo-check` 10 of 10; full `make test` 998 passed, 2 skipped; `make tables` stamp-only diffs.
