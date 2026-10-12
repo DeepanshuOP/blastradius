@@ -1,4 +1,4 @@
-.PHONY: e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check
+.PHONY: lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
 
 test:
 	uv run pytest -q
@@ -185,6 +185,35 @@ e3-sync:
 # every JSON the site loads, Compare numbers against their sources. Prints a PASS/FAIL table; non-zero on any FAIL.
 demo-check:
 	uv run --extra graph --extra ml --extra rag --extra figures python -m analysis.demo_check
+
+# Live Lab for live use: build and serve the site on http://127.0.0.1:3000 and print the URL once it answers.
+lab:
+	bash scripts/lab.sh
+
+# Live Lab (D-65): record the demonstration scenarios. `test-gap` needs no model. The others are live runs that call
+# openai/gpt-oss-120b (about 1,500 tokens per repair attempt; repair-arena adds one R1 call) and share the Groq daily
+# quota with the E3 loop: `lab-record` first checks the rolling 24 h total of eval/llm_cache/usage.jsonl and
+# lab_usage.jsonl together and stops if 16,000 more tokens do not fit (a refused call would still be recorded as
+# repair.unavailable, so check the output before committing). The lab writes only its own ledger, lab_usage.jsonl.
+LAB_RUN = uv run --env-file .env --extra graph --extra ml --extra rag python -m src.lab
+LAB = $(LAB_RUN) run --mode live --model openai/gpt-oss-120b
+lab-record-offline:
+	$(LAB_RUN) run --mode live --no-llm --repo itsdangerous --inject "src/itsdangerous/timed.py::TimestampSigner.unsign::CMP_FLIP::141" \
+	  --record test-gap --title "Test gap: a real bug the whole suite lets through" \
+	  --description "CMP_FLIP on timed.py:141 (if age > max_age becomes if age >= max_age). All 297 tests pass; the lab names the tests that run the line. No model call."
+lab-record: lab-record-offline
+	$(LAB_RUN) quota --model openai/gpt-oss-120b --need 16000
+	$(LAB) --repo itsdangerous --edit "src/itsdangerous/timed.py=@eval/lab/pr1_timed.py" --record itsdangerous-pr1 \
+	  --title "PR 1: one comparison flipped in TimestampSigner.unsign" \
+	  --description "The live PR 1 change (if age > max_age becomes if age < max_age), from detection to a validated fix."
+	$(LAB) --repo shopcart --base-patch eval/lab/inherited_base.patch --inject "shopcart/cart.py::Cart.add::ARITH_SWAP" \
+	  --record inherited-failure --title "Inherited failure plus a real bug" \
+	  --description "Scratch repository whose base commit already fails test_known_sku_price; the change adds a real bug. One failure is inherited, the others mine; repair targets only the mine ones."
+	$(LAB) --repo itsdangerous --task itsdangerous-CMP_FLIP-00 --variant hard --record hard-decoys \
+	  --title "Hard variant: decoy edits beside the bug" --description "A hard-variant seeded task: the bug plus decoy edits (comments, parentheses) in the diff."
+	$(LAB) --repo itsdangerous --edit "src/itsdangerous/timed.py=@eval/lab/pr1_timed.py" --repair-arena --record repair-arena \
+	  --title "Repair arena on the PR 1 change: R1, R2 and an unvalidated push" \
+	  --description "The PR 1 change with one extra model call: R1 sees only the failure log, R2 also sees the change; the third column is the R1 patch pushed without running the full suite."
 
 # Token and USD report from usage.jsonl and the E3 caches. Offline; NOT part of `tables`.
 cost-report:

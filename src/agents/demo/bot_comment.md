@@ -1,7 +1,7 @@
 <!-- blastradius-bot -->
 ## BlastRadius
 
-PR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first failure at position 9 of 297
+PR #1 · `672971d66a` → `a24e22e7a1` · 181 unique test ids (297 executed cases, inherited methods share ids) · **155 failing ids** (260 failing cases) · first failure at case 9 of 297
 
 ### 1. Tests most at risk (e1-lgbm-v1)
 
@@ -56,39 +56,39 @@ PR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first 
 | `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_kwargs[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
 | `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_signer_kwargs[serializer…` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
 | `tests/test_itsdangerous/test_serializer.py::test_alt_salt` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
-| `tests/test_itsdangerous/test_serializer.py::test_alt_salt` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
 | `tests/test_itsdangerous/test_serializer.py::test_alt_salt[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
+| `tests/test_itsdangerous/test_serializer.py::test_alt_salt[serializer_factory1]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
 
-_257 more passing tests not shown._
+_141 more passing tests not shown._
 
 ### 3. Triage of each failure
 
-260 mine, 0 inherited, 0 flaky (of 260 failing).
+155 mine, 0 inherited, 0 flaky (of 155 failing).
 
 | Failing test | Class | Confidence | Why |
 |---|---|--:|---|
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Seria…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[seria…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[Serialize…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[serialize…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[S…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
-| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[s…` | **mine** | 0.98 | model P(not mine) = 0.02 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Seria…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[seria…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_payload_ex…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_bad_signature_…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_changed_value[…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_fallback_signe…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[Serialize…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_file[serialize…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[S…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
+| `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_loads_unsafe[s…` | **mine** | 0.90 | model P(not mine) = 0.10 (threshold 0.84); no evidence it was already failing |
 
-_240 more failures not shown._
+_135 more failures not shown._
 
 _mine = caused by this change; inherited = already failing on the base; flaky = reruns flip._
 

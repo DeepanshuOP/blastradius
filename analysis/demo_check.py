@@ -11,7 +11,21 @@ Checks, in order:
   7. the recorded PR-bot task replayed (the committed comment must come back byte for byte);
   8. every JSON file the website loads exists and parses;
   9. every number on Compare panels 2 and 4 appears in the generated file it was read from;
-  10. the six-section page structure (`check_structure`).
+  10. the site structure: four tabs (Live Lab, Graph Explorer, Evidence, Use it), the four Evidence sections, footer;
+  11. the Live Lab engine tests (`tests/test_lab.py`: stage order, streamed results, replay, injection, no writes);
+  12. every recorded lab run validates against the event schema and replays identically through the CLI;
+  13. `/api/lab/*` smoke calls on a started server (localhost guard, repos, mutations, file, graph, replay, one run);
+  14. the strategy arena against a real recorded run, with hand-counted expected values (`tests/test_lab_arena.py`);
+  15. the sys.settrace coverage plugin on itsdangerous: identical function sets across two cold runs;
+  16. every presenter screen rendered from every recorded run (react-dom/server, offline, no browser);
+  17. the token ledgers are separate: the lab writes only `lab_usage.jsonl`, E3's `usage.jsonl` holds no lab row;
+  18. the BlastRadius test-case order against the hand-computed order of a recorded run (tests/test_lab_order.py;
+      that expected order is ground truth: fix the code if it fails, never the expectation);
+  19. the arena columns (orderers and selectors, `needs`) and the failure-history row with and without runs of the
+      same diff (tests/test_lab_arena.py);
+  20. the reviewer challenge: the same seed names the same function and operator (tests/test_lab_challenge.py);
+  21. the text budget of the Live Lab main screen, counted in server-rendered HTML: no visible paragraph over 2 lines,
+      no caption over 14 words (demo-web/scripts/text_budget.tsx).
 
 Replays run against a scratch copy of `data/seeded` (BR_SEEDED_DIR) so they never queue behind a live E3 run's repo
 locks. No step can reach a model or the network: replay mode is forced and the keys are removed from the environment.
@@ -117,24 +131,32 @@ def check_build() -> tuple[bool, str]:
     return rc == 0 and "Compiled successfully" in out, ("Compiled successfully" + note) if rc == 0 else last(out)
 
 
-SECTION_IDS = ["overview", "data", "results", "compare", "try-it", "use-it"]
+SECTION_IDS = ["overview", "data", "results", "compare"]
+TABS = ["Live Lab", "Graph Explorer", "Evidence", "Use it"]
 FORBIDDEN = ["outperforms", "state-of-the-art", "intelligent", "fixes any error", "guaranteed", "revolutionary", "seamless"]
 
 
 def check_structure() -> tuple[bool, str]:
-    """The six-section page: ids and table of contents in the built page, one id per section component, the footer,
-    the design-system fonts, no forbidden words in the site text or its data, vendor cells with URLs."""
+    """The four-tab site: the navigation in the built page, the four Evidence sections (ids, one element each), the
+    try-it and use-it sections, the footer, the fonts, no forbidden words in the site text or its data, vendor URLs."""
     problems: list[str] = []
     comps = ROOT / "demo-web/components"
-    text = "\n".join(f.read_text(encoding="utf-8") for f in comps.glob("*.tsx"))
+    text = "\n".join(f.read_text(encoding="utf-8") for f in list(comps.glob("*.tsx")) + list((comps / "lab").glob("*.tsx")))
     demo = (comps / "Demo.tsx").read_text(encoding="utf-8")
+    app = (comps / "LabApp.tsx").read_text(encoding="utf-8")
     for sid in SECTION_IDS:
         if f'id: "{sid}"' not in demo:
-            problems.append(f"table of contents lacks {sid}")
+            problems.append(f"Evidence table of contents lacks {sid}")
         if f'id="{sid}"' not in text:
             problems.append(f"no section element with id {sid}")
+    for sid in ("try-it", "use-it"):
+        if f'id="{sid}"' not in text:
+            problems.append(f"no section element with id {sid}")
+    for tab in TABS:
+        if f'label: "{tab}"' not in app:
+            problems.append(f"navigation lacks the {tab} tab")
     for need in ("Built from commit", "VIT BITE497J", "doi.org"):
-        if need not in demo:
+        if need not in app:
             problems.append(f"footer lacks {need!r}")
     layout = (ROOT / "demo-web/app/layout.tsx").read_text(encoding="utf-8")
     for font in ("Source_Serif_4", "IBM_Plex_Sans", "IBM_Plex_Mono"):
@@ -145,9 +167,9 @@ def check_structure() -> tuple[bool, str]:
         problems.append("built index.html missing")
     else:
         html = html_files[0].read_text(encoding="utf-8")
-        for sid in SECTION_IDS:
-            if f'id="{sid}"' not in html and f'href="#{sid}"' not in html:
-                problems.append(f"built page lacks #{sid}")
+        for tab in TABS:
+            if tab not in html:
+                problems.append(f"built page lacks the {tab} tab")
     blob = text + "\n" + "\n".join(p.read_text(encoding="utf-8") for p in DATA.glob("*.json"))
     for w in FORBIDDEN:
         if w in blob.lower():
@@ -155,9 +177,209 @@ def check_structure() -> tuple[bool, str]:
     ov = json.loads((DATA / "overview.json").read_text(encoding="utf-8"))
     if not ov.get("pr1") or not ov.get("built_from"):
         problems.append("overview.json lacks pr1 or built_from")
-    prod = cm.validate_products(cm.load().get("products"))
-    problems += prod
-    return not problems, ("6 sections, footer, fonts, no forbidden words, vendor URLs" if not problems else "; ".join(problems[:4]))
+    problems += cm.validate_products(cm.load().get("products"))
+    return not problems, ("4 tabs, 4 evidence sections, footer, fonts, no forbidden words, vendor URLs" if not problems
+                          else "; ".join(problems[:4]))
+
+
+def check_lab_tests() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab.py", "tests/test_lab_breakit.py"],
+                  env=_env(replay=False))
+    return rc == 0, last(out, 1)
+
+
+def check_arena() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k", "not coverage_plugin"],
+                  env=_env(replay=False))
+    return rc == 0, last(out, 1)
+
+
+def check_coverage_plugin() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k", "coverage_plugin"],
+                  env=_env(replay=False))
+    return rc == 0 and "skipped" not in out, last(out, 1)
+
+
+def check_presenter() -> tuple[bool, str]:
+    """Compile `demo-web/scripts/presenter_check.tsx` with the site's own TypeScript and render every screen of every
+    recording with react-dom/server."""
+    web = ROOT / "demo-web"
+    out_dir = Path(tempfile.mkdtemp(prefix="br-presenter-"))
+    try:
+        rc, out = run(["npx", "tsc", "--outDir", str(out_dir), "--rootDir", ".", "--module", "commonjs", "--moduleResolution", "node",
+                       "--jsx", "react-jsx", "--target", "es2020", "--esModuleInterop", "--skipLibCheck", "--resolveJsonModule",
+                       "--strict", "scripts/presenter_check.tsx"], cwd=web)
+        if rc != 0:
+            return False, "tsc: " + last(out, 2)
+        env = {**os.environ, "NODE_PATH": str(web / "node_modules")}
+        rc, out = run(["node", str(out_dir / "scripts" / "presenter_check.js"), str(web / "public" / "lab" / "runs")], cwd=web, env=env)
+    finally:
+        shutil.rmtree(out_dir, ignore_errors=True)
+    docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+    n = sum(len(d["screens"]) for d in docs)
+    bad = [f"{d['recording']}/{s['id']}: {s['problem']}" for d in docs for s in d["screens"] if not s["ok"]]
+    shown = sum(1 for d in docs for s in d["screens"] if s["state"] == "shown")
+    return rc == 0 and not bad and n > 0, (f"{len(docs)} recordings x 8 screens: {shown} shown, {n - shown} with a stated reason"
+                                           if not bad else "; ".join(bad[:3]))
+
+
+def check_order_rule() -> tuple[bool, str]:
+    """The tie-breaking rule against the hand-computed order of a recorded run. A failure here means the code is
+    wrong; the expected order is ground truth and is never edited to make the check pass."""
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_order.py"], env=_env(replay=False))
+    return rc == 0 and "passed" in out and "skipped" not in out, last(out, 1)
+
+
+def check_arena_columns() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_arena.py", "-k",
+                   "columns or same_diff or diff_identity or cold_start or hand_counts"], env=_env(replay=False))
+    return rc == 0 and "passed" in out, last(out, 1)
+
+
+def check_challenge() -> tuple[bool, str]:
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", "tests/test_lab_challenge.py"], env=_env(replay=False))
+    return rc == 0 and "passed" in out, last(out, 1)
+
+
+def check_text_budget() -> tuple[bool, str]:
+    """Compile `demo-web/scripts/text_budget.tsx` and count paragraph lines in the server-rendered HTML of the idle page
+    and of every result panel of every recording."""
+    web = ROOT / "demo-web"
+    out_dir = Path(tempfile.mkdtemp(prefix="br-budget-"))
+    try:
+        rc, out = run(["npx", "tsc", "--outDir", str(out_dir), "--rootDir", ".", "--module", "commonjs", "--moduleResolution", "node",
+                       "--jsx", "react-jsx", "--target", "es2020", "--esModuleInterop", "--skipLibCheck", "--resolveJsonModule",
+                       "--strict", "scripts/text_budget.tsx"], cwd=web)
+        if rc != 0:
+            return False, "tsc: " + last(out, 2)
+        env = {**os.environ, "NODE_PATH": str(web / "node_modules")}
+        rc, out = run(["node", str(out_dir / "scripts" / "text_budget.js"), str(web / "public" / "lab" / "runs")], cwd=web, env=env)
+    finally:
+        shutil.rmtree(out_dir, ignore_errors=True)
+    docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+    bad = [f"{d['screen']}: " + (d.get("error") or "; ".join(f"{o['lines']} lines/{o['words']} words '{o['text'][:40]}'" for o in d["over"][:1]))
+           for d in docs if d.get("error") or d.get("over") or d.get("ok") is False]
+    n = sum(d.get("paragraphs", 0) for d in docs)
+    return rc == 0 and not bad and len(docs) > 1, (f"{len(docs) - 1} screens, {n} visible paragraphs, none over 2 lines or 14 caption words"
+                                                   if not bad else "; ".join(bad[:3]))
+
+
+def check_ledger() -> tuple[bool, str]:
+    """The lab's calls are counted in its own ledger: the client defaults to it, the lab code never names E3's ledger,
+    no lab row sits in usage.jsonl, and the ledger tests pass."""
+    problems = []
+    lab = ROOT / "eval/llm_cache/lab_usage.jsonl"
+    e3 = ROOT / "eval/llm_cache/usage.jsonl"
+    lab_rows = set(lab.read_text(encoding="utf-8").splitlines()) if lab.exists() else set()
+    e3_rows = set(e3.read_text(encoding="utf-8").splitlines()) if e3.exists() else set()
+    if lab_rows & e3_rows:
+        problems.append(f"{len(lab_rows & e3_rows)} lab row(s) also in usage.jsonl")
+    for f in (ROOT / "src/lab").rglob("*.py"):
+        if "USAGE_LEDGER" in f.read_text(encoding="utf-8"):
+            problems.append(f"{f.relative_to(ROOT)} names USAGE_LEDGER")
+    rc, out = run(["uv", "run", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_lab_ledger.py"], env=_env(replay=False))
+    if rc != 0:
+        problems.append("ledger tests: " + last(out, 1))
+    return not problems, (f"lab_usage.jsonl {len(lab_rows)} row(s), none in usage.jsonl; " + last(out, 1)) if not problems else "; ".join(problems[:3])
+
+
+def check_lab_runs() -> tuple[bool, str]:
+    """Every recorded run: schema-valid events, a header, a run.end, a full graph file; and `--mode replay` through the
+    CLI reproduces its events exactly (except `ts` and the `replay` flag)."""
+    from src.lab.events import validate_event
+
+    runs = sorted((ROOT / "demo-web/public/lab/runs").glob("*.jsonl"))
+    if not runs:
+        return False, "no recorded runs"
+    problems: list[str] = []
+    for p in runs:
+        evs = [json.loads(ln) for ln in p.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        bad = [(e.get("seq"), v) for e in evs for v in [validate_event(e)] if v]
+        if bad:
+            problems.append(f"{p.stem}: {len(bad)} invalid, first {bad[0]}")
+        if evs[0]["type"] != "run.header" or evs[-1]["type"] != "run.end":
+            problems.append(f"{p.stem}: header or end missing")
+        if not p.with_suffix(".graph.json").exists():
+            problems.append(f"{p.stem}: graph file missing")
+        rc, out = run(["uv", "run", "--extra", "graph", "python", "-m", "src.lab", "run", "--mode", "replay", p.stem,
+                       "--speed", "100000"])
+        got = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+        strip = lambda e: {k: v for k, v in e.items() if k not in ("ts", "replay")}   # noqa: E731
+        if rc != 0 or [strip(e) for e in got] != [strip(e) for e in evs] or not all(e.get("replay") for e in got):
+            problems.append(f"{p.stem}: replay differs ({len(got)} of {len(evs)} events)")
+    return not problems, f"{len(runs)} recorded run(s) valid and replayed" if not problems else "; ".join(problems[:3])
+
+
+def check_lab_api() -> tuple[bool, str]:
+    """Start the built site on a spare port and call every /api/lab route once, including a real run."""
+    import urllib.error
+    import urllib.request
+
+    port = 3217
+    env = {**os.environ, "NEXT_TELEMETRY_DISABLED": "1"}
+    env.pop("GROQ_API_KEY", None)
+    # the check's run must not add to the lab's failure-history store or coverage cache: give it its own temp root
+    env["TMPDIR"] = tempfile.mkdtemp(prefix="br-demo-check-")
+    proc = subprocess.Popen(["npx", "next", "start", "-H", "127.0.0.1", "-p", str(port)], cwd=ROOT / "demo-web", env=env,
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    base = f"http://127.0.0.1:{port}"
+    problems: list[str] = []
+
+    def get(path: str, timeout: int = 180, headers: dict | None = None, data: bytes | None = None) -> tuple[int, bytes]:
+        req = urllib.request.Request(base + path, headers=headers or {}, data=data)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return r.status, r.read()
+        except urllib.error.HTTPError as e:
+            return e.code, e.read()
+
+    try:
+        for _ in range(60):
+            try:
+                get("/api/lab/run", timeout=5)
+                break
+            except Exception:  # noqa: BLE001
+                time.sleep(1)
+        else:
+            return False, "server did not start"
+        st, body = get("/api/lab/run")
+        if st != 200 or not json.loads(body).get("live"):
+            problems.append(f"GET run: {st}")
+        st, _ = get("/api/lab/run", headers={"Host": "evil.example"})
+        if st != 403:
+            problems.append(f"localhost guard: {st}")
+        st, body = get("/api/lab/repos")
+        names = sorted(r["name"] for r in json.loads(body).get("repos", [])) if st == 200 else []
+        if names != ["click", "itsdangerous", "markupsafe", "shopcart"]:
+            problems.append(f"repos: {st} {names}")
+        st, body = get("/api/lab/mutations?repo=shopcart&file=shopcart/cart.py")
+        if st != 200 or not json.loads(body).get("functions"):
+            problems.append(f"mutations: {st}")
+        st, body = get("/api/lab/file?repo=shopcart&path=shopcart/cart.py")
+        if st != 200 or "class Cart" not in json.loads(body).get("text", ""):
+            problems.append(f"file: {st}")
+        st, _ = get("/api/lab/file?repo=shopcart&path=../../etc/passwd")
+        if st != 400:
+            problems.append(f"path traversal not refused: {st}")
+        st, body = get("/api/lab/graph?repo=shopcart")
+        if st != 200 or not json.loads(body).get("nodes"):
+            problems.append(f"graph: {st}")
+        name = sorted(p.stem for p in (ROOT / "demo-web/public/lab/runs").glob("*.jsonl"))[0]
+        st, body = get(f"/api/lab/replay?name={name}&speed=50")
+        n = sum(1 for ln in body.decode().splitlines() if ln.startswith("data: "))
+        if st != 200 or n < 10:
+            problems.append(f"replay: {st}, {n} events")
+        st, body = get("/api/lab/run", data=json.dumps({"repo": "shopcart", "task": "shopcart-CMP_FLIP-00", "noLlm": True}).encode(),
+                       headers={"Content-Type": "application/json"}, timeout=240)
+        evs = [json.loads(ln[6:]) for ln in body.decode().splitlines() if ln.startswith("data: ")]
+        if st != 200 or not evs or evs[-1]["type"] != "run.end" or evs[-1]["status"] != "ok":
+            problems.append(f"run: {st}, {len(evs)} events, last {evs[-1]['type'] if evs else None}")
+    finally:
+        try:
+            os.killpg(proc.pid, 15)
+        except OSError:
+            pass
+    return not problems, "7 routes, guard, one live run" if not problems else "; ".join(problems[:3])
 
 
 def check_agents_demo() -> tuple[bool, str]:
@@ -263,7 +485,20 @@ def check_numbers() -> tuple[bool, str]:
             _in(rq5, f"| {r['cell']} |", misses, f"L {r['mode']}")
     cost_md = (GEN / "cost_report.md").read_text(encoding="utf-8") if (GEN / "cost_report.md").exists() else ""
     cost_json = json.loads((GEN / "cost_report.json").read_text(encoding="utf-8")) if (GEN / "cost_report.json").exists() else None
-    if d["cost"] != cost_json:
+    # the Live Lab's ledger (D-65) is read by export_demo_data directly, so compare.json may carry it before the committed
+    # report is regenerated: those two keys are checked against the ledger itself, everything else against the report
+    lab_keys = ("lab_ledger", "lab")
+    if d["cost"] is not None and cost_json is not None:
+        from analysis import cost_report as cr
+
+        core = {k: v for k, v in d["cost"].items() if k not in lab_keys or k in cost_json}
+        if core != cost_json:
+            misses.append("panel 4: compare.json cost differs from paper/generated/cost_report.json")
+        if "lab_ledger" in d["cost"] and d["cost"]["lab_ledger"] != cr.ledger_summary(cr.LAB_LEDGER):
+            misses.append("panel 4: compare.json lab_ledger differs from eval/llm_cache/lab_usage.jsonl")
+        if "lab" in d["cost"] and d["cost"]["lab"] != cr.recorded_runs("lab"):
+            misses.append("panel 4: compare.json lab runs differ from eval/llm_cache/lab_*.jsonl")
+    elif d["cost"] != cost_json:
         misses.append("panel 4: compare.json cost differs from paper/generated/cost_report.json")
     if d["cost"]:
         for r in d["cost"]["e3"]:
@@ -284,12 +519,23 @@ def main() -> int:
              ("safety checklist: named tests pass, none skipped", check_safety_tests),
              ("make demo-data", check_demo_data),
              ("npm run build", check_build),
-             ("site structure: six sections, footer, fonts, wording, vendor sources", check_structure),
+             ("site structure: four tabs, evidence sections, footer, fonts, wording, vendor sources", check_structure),
              ("agents demo, 4 recorded scenarios (the make agents-demo command)", check_agents_demo),
              ("Ask replay of the 15 recorded questions", None),
              ("PR bot replay on the recorded task", None),
              ("every JSON file the website loads exists and parses", check_json),
-             ("Compare panels 2 and 4 match their generated sources", check_numbers)]
+             ("Compare panels 2 and 4 match their generated sources", check_numbers),
+             ("live lab engine tests (stage order, streaming, replay, injection, no writes, test gap, probe, PR)", check_lab_tests),
+             ("recorded lab runs: schema-valid and replay identically", check_lab_runs),
+             ("/api/lab/* smoke calls on a started server", check_lab_api),
+             ("strategy arena against a recorded run, hand-counted values", check_arena),
+             ("coverage plugin on itsdangerous: same function sets in two runs", check_coverage_plugin),
+             ("presenter: every screen renders from every recording", check_presenter),
+             ("token ledgers separated (lab_usage.jsonl vs usage.jsonl)", check_ledger),
+             ("BlastRadius test-case order against the hand-computed order of a recorded run", check_order_rule),
+             ("arena columns, and the history row with and without runs of the same diff", check_arena_columns),
+             ("reviewer challenge: the same seed names the same bug", check_challenge),
+             ("text budget of the main screen in server-rendered HTML (2 lines, 14 caption words)", check_text_budget)]
     try:
         for name, fn in steps:
             t0 = time.time()

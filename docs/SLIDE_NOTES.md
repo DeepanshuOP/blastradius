@@ -55,7 +55,7 @@ restricting the search to what the change touched. Exploratory; one untuned embe
 
 ```markdown
 ## BlastRadius
-PR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first failure at position 9 of 297
+PR #1 · `672971d66a` → `a24e22e7a1` · 181 unique test ids (297 executed cases, inherited methods share ids) · **155 failing ids** (260 failing cases) · first failure at case 9 of 297
 
 ### 1. Tests most at risk (e1-lgbm-v1)
 | # | Test file | Score | Why |
@@ -65,7 +65,7 @@ PR #1 · `672971d66a` → `a24e22e7a1` · 297 tests · **260 failing** · first 
 | `tests/test_itsdangerous/test_serializer.py::TestSerializer::test_alt_salt[Serializer]` | failed | TypeError: unsupported operand type(s) for -: 'bytes' and 'bytes' |
 
 ### 3. Triage of each failure
-260 mine, 0 inherited, 0 flaky (of 260 failing).
+155 mine, 0 inherited, 0 flaky (of 155 failing).
 
 ### 4. Proposed fix
 Validated: the full suite passed with this patch (1 attempt(s)).

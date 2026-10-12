@@ -48,7 +48,7 @@ function Value({ v }: { v: unknown }) {
 function StepCard({ s, n }: { s: Step; n: number }) {
   const [open, setOpen] = useState(n === 1);
   return (
-    <section className={`rounded border bg-white p-5 ${s.status === "failed" ? "border-red-200" : s.status === "blocked" ? "border-amber-200" : "border-slate-200"}`}>
+    <section className={`rounded border bg-panel p-5 ${s.status === "failed" ? "border-red-200" : s.status === "blocked" ? "border-amber-200" : "border-slate-200"}`}>
       <div className="flex flex-wrap items-center gap-3">
         <span className="ui text-[15px] font-semibold text-accent">{n}.</span>
         <h3 className="font-semibold text-slate-900">{s.agent}</h3>
@@ -72,7 +72,7 @@ function StepCard({ s, n }: { s: Step; n: number }) {
           <button onClick={() => setOpen(!open)} className="text-[13px] font-semibold text-orange-700 hover:underline">
             {open ? "Hide" : "Show"} the document this agent produced
           </button>
-          {open && <div className="mt-2 max-h-[32rem] overflow-y-auto rounded border border-slate-200 bg-white p-4"><Markdown text={s.document} /></div>}
+          {open && <div className="mt-2 max-h-[32rem] overflow-y-auto rounded border border-slate-200 bg-panel p-4"><Markdown text={s.document} /></div>}
         </div>
       )}
     </section>
@@ -127,7 +127,7 @@ export default function Agents() {
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
         {doc.scenarios.map((s) => (
           <button key={s.id} disabled={running} onClick={() => { stop(); setSid(s.id); setShown(0); }}
-            className={`rounded border p-4 text-left ${s.id === sc.id ? "border-slate-900 bg-white" : "border-slate-200 bg-white/70 hover:border-slate-400"}`}>
+            className={`rounded border p-4 text-left ${s.id === sc.id ? "border-slate-900 bg-panel" : "border-slate-200 bg-panel/70 hover:border-slate-400"}`}>
             <div className="flex items-center justify-between gap-2">
               <span className="font-semibold text-slate-900">{s.title}</span>
               <Badge tone={outcomeTone(s.outcome)}>{s.outcome}</Badge>

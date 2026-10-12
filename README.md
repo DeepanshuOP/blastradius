@@ -113,6 +113,15 @@ make analyze REPO=https://github.com/pallets/itsdangerous \
 
 Using the dataset only: download the release from Zenodo and read the Parquet tables with DuckDB or pandas. Schema: `docs/SCHEMAS.md` (section "Release schema v0.2"); datasheet: `docs/DATASHEET.md`; reproduction: `docs/REPRODUCE.md`.
 
+## Run the Live Lab
+
+1. Prerequisites: WSL2 Ubuntu or Linux, `uv sync --extra graph --extra ml --extra rag --extra figures`, Node >= 18 and `npm ci` in `demo-web/` once.
+2. `make lab` builds the site and prints `Live Lab ready: http://127.0.0.1:3000` when it answers (Ctrl-C stops it).
+3. Open that URL and pick a scenario; the recorded runs replay at once.
+4. **Present** gives a full-screen walkthrough of the run; **Challenge** lets the audience pick the bug.
+5. Offline: every replay, the arena, graph, test-gap and offline live runs; no model call is made.
+6. Needs `GROQ_API_KEY` in `.env` (never printed): only the live repair step and the repair arena.
+
 ## Repository map
 
 | Path | What |

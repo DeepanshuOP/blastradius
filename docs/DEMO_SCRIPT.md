@@ -1,84 +1,142 @@
-# Demo script: 10 minutes for the review panel
+# Demo script: 8 minutes, live, in front of the review panel
 
-Run `make demo-web` (site at http://127.0.0.1:3000) and open the page in a browser. The page is one scroll with a table of contents
-on the left (a menu at the top on a phone). Every number below is on the page and comes from a generated file named in the page. If
-the network is down, nothing here breaks: the page replays recorded data, and the steps that are live say so on screen. Run
-`make demo-check` the day before; it prints PASS or FAIL per check and needs no network.
+The home page is the **Live Lab**: a working simulation of the whole system. Everything in it is real execution shown as it
+happens, or an honest replay of a recorded run (the badge at top left says which: green LIVE, amber REPLAY with the recording
+date). The main screen carries almost no prose: explanations sit behind the **Explain** switch and the small **i** buttons.
+The talk opens with the **Challenge** and is given from **presenter mode** (the Present button): one stage per screen,
+projector-sized, one caption line each, and a "what is real here" popover on every screen. The research results sit under
+**Evidence**, as cards with a small chart; the tables are behind "Show table".
 
-| min | section | what to click |
+## Before you go in (5 minutes, once)
+
+1. `make demo-check` the day before. It prints PASS or FAIL per check and needs no network. The lab checks are: engine tests
+   (stage order, test gap, probe, PR mode), recorded runs, `/api/lab/*` on a started server, the strategy arena and its columns
+   against a recorded run, the history row with and without runs of the same diff, the BlastRadius order against the
+   hand-computed order, the coverage plugin, every presenter screen from every recording, the challenge seed, the text budget of
+   the main screen and the separate token ledgers.
+2. `make demo-web` (builds and serves http://127.0.0.1:3000, localhost only). The badge should read **READY · live available**.
+3. Check the model line under the top bar. `uv run --env-file .env python -m src.lab quota --need 4000` prints the rolling 24 h
+   total of E3's ledger and the lab's ledger together against the daily cap. If the quota is used up, live runs still go through
+   graph, prediction, tests, arena and triage, the repair step says "unavailable", and **Fix it** in the challenge is disabled with
+   that reason; use the recorded runs for that step (see Fallbacks).
+4. Press **Reset history** in the arena tab once before you start, so that the failure-history row on stage learns only from what
+   happens on stage. Then do one dry run, so the first run on stage is not the first run of the day: the graph and the per-test
+   coverage of a repository are built once and cached (coverage of itsdangerous takes about 2 s the first time).
+
+## The flow (8 minutes)
+
+| min | what | where |
 |---|---|---|
-| 0:00 | Overview | scroll slowly |
-| 1:30 | Data | funnel figure, corpus table, Known limits |
-| 3:00 | Results | RQ1, E1, E2, E3 |
-| 5:30 | Compare | papers matrix, products matrix, cost |
-| 7:30 | Try it | Agent scenarios, live-run replay, Ask |
-| 9:00 | Use it | workflow YAML, live PR link |
+| 0:00 | **Challenge**: "Will the tests catch this bug?", a panel member answers, live run, reveal | Challenge button, itsdangerous |
+| 1:30 | The change and the blast radius | **Present**, screens 1 and 2 |
+| 2:30 | The test race | screen 3 |
+| 3:15 | The arena race: the answer to "Jenkins does this" | screen 4 (or the Strategy arena tab) |
+| 4:45 | Triage, then repair and the five checks (**Fix it** in the challenge, or the recorded PR 1 run) | screens 5 and 6 |
+| 6:00 | The test gap | challenge seed 135, or the recorded "Test gap" run, screen 7 |
+| 7:15 | Evidence, and close | screen 8 |
 
-## 1. Overview (1.5 min)
+### 1. The challenge (1:30)
 
-**Click.** Stay on Overview. Point at Figure 1 (the pull request 1 comment), then Figure 2 (the pipeline), then the three findings.
-Click "Open the live pull request".
+**Click.** Pick itsdangerous, press **Challenge**. The card shows a function and an operator drawn by a seeded generator, and the
+seed. Seed 7 draws `NEGATE_COND` in `HMACAlgorithm.__init__` (`digest_method is None` becomes `not (digest_method is None)`);
+seed 135 draws `CMP_FLIP` on line 141 of `TimestampSigner.unsign`. Ask a panel member: **Will the tests catch this bug?** Press
+their answer. The change is committed in a scratch copy and the whole suite runs. The reveal says caught or survived, whether
+they were right, the session tally of correct guesses, where BlastRadius and retest-all reached their first failure, and, if the
+bug survived, the test-gap card. A panel member who prefers to choose the function themselves presses **Pick the function myself**,
+then clicks a function in the graph (right-click, long-press, or arrow to the node and Shift+F10).
 
-**Say.** "A pull request flipped one comparison in itsdangerous. Five of 297 tests failed; BlastRadius traced them to
-`src/itsdangerous/timed.py:141`, proposed the one-line fix, and showed it only because all 297 tests passed with it. The pipeline has four
-stages, predict, run, triage, repair, all measured on BR-Bench, a dataset of tests that really failed in GitHub Actions."
+**Say.** "Nobody rehearsed this bug: a seeded random draw over every function of the library that has a mutation, and the seed is
+on screen, so you can ask for the same draw again. No model is called unless I press **Fix it**."
 
-**If the network is down.** The figure is recorded data; the live-PR link will not open, so say the comment text is the recorded one.
+**Rehearsal numbers (read the real ones off the screen).** Seed 7: 4 tests fail; BlastRadius reaches its first failure at test 5,
+retest-all at test 119 of 297. Seed 135: all 297 tests pass, a test gap.
 
-## 2. Data (1.5 min)
+### 2. The change and the blast radius (1:00)
 
-**Click.** Funnel figure, the corpus table, then open "Known limits".
+**Click.** Present. **Watch.** Screen 1: the edit on the left, the changed function at the centre of the graph on the right.
+Screen 2: the shockwave sweeps out ring by ring, the paths to the at-risk test files light up, and the most at-risk files are
+listed with their three strongest reasons. In live mode a screen holds and shows "running…" until its stage has finished.
 
-**Say.** "A test is labelled when it fails at head, did not fail at the base commit, and is not flaky. The funnel goes from 165,349
-discovered runs to 762 instances with a strict label, 4,168 labels. We did not reach the 5,000-label gate, and binding is
-94.29% combined but 63.83% at full confidence; we always show both. The corpus is 35 Java and 2 Python repositories, and parser
-precision was measured on development sets only."
+**Say.** "The rings are hop distances in our own code graph of this commit. The ranking and its reasons are the E1 model's."
 
-**If the network is down.** No change; this section is static.
+### 3. The test race (0:45)
 
-## 3. Results (2.5 min)
+**Watch.** Two lanes fill left to right: retest-all in alphabetical order on top, BlastRadius risk-first below, with the first
+failure marked in each. The caption states both positions; it does not claim a win.
 
-**Click.** RQ1 table, E1 figure and table, E2 table, E3 tables (120b standard first).
+**Say.** "Both lanes are this one run. The bottom lane is the order pytest actually ran. The top lane is computed from the same
+measured durations in alphabetical order; we did not run it twice, and the popover says so."
 
-**Say.** "Co-change names 4.64% of the failing tests in its top 10 and failure history 39.44%, so history beats co-change. The E1
-ranker reaches Recall@10 0.525 against 0.522 for the best baseline; the difference is not significant, Gate 3 is not met, and that is a
-result, not a failure of the project. Triage is a small-sample trade-off: 18 not-mine pairs in the test split. Repair is the
-confirmatory result: on 70 seeded tasks, change-aware repair fixed 50 against 33 for log-only, exact one-sided McNemar p = 0.0007569,
-pre-registered in docs/phase/033. The hard variant and the third model are interim and still running; R4 is built but not run."
+### 4. The arena race: "Jenkins does this" (1:30)
 
-**If the network is down.** No change; results are read from files.
+**Watch.** Screen 4, or the **Strategy arena** tab: one lane per strategy, all on one clock built from this run's measured
+durations, a flag where each lane meets its first failure, then a podium by time to first failure with the cost of each. The table
+is behind **Details**. Orderers (retest-all, BlastRadius) run every test and are judged by tests and time until the first failure;
+selectors (static reachability, per-test coverage, failure history, co-change) run fewer tests and can miss failures. The **Needs**
+column says what each one requires first: nothing; a code graph; an instrumented coverage run at the base with its measured cost;
+earlier runs; git history; a graph and a model.
 
-## 4. Compare (2 min)
+**Say.** "Jenkins runs every test in a fixed order: that is the first lane. The other lanes are the approaches people use instead,
+re-implemented here and scored on this run's measured results; none is a vendor's product and none was run separately. On the PR 1
+change (`if age > max_age` flipped to `<`, recorded 2026-10-12) retest-all meets its first failure at test 283 after 886 ms,
+BlastRadius at test 17 after 97 ms; per-test coverage needs an instrumented run first (2.5 s here) and then selects 97 tests."
 
-**Click.** Papers matrix (click one "not reported" cell and one BlastRadius cell), products matrix (click the Develocity "works without
-project history" cell), then the same-data table, the "other data" banner, and Cost.
+**The failure-history row, said plainly.** "Failure history learns from earlier lab runs. Earlier runs of this very diff are
+excluded by default, because with them it has seen the answer. The toggle shows both: on the recorded PR 1 run, excluding the four
+earlier runs of the same diff, history selects 3 tests and catches 0 of 5; including them, it selects 8, catches 5 of 5 and meets
+the first failure at test 1. Both are real; we show the excluded one." (Numbers: `itsdangerous-pr1`, history 6 earlier runs,
+4 of them on this same diff.)
 
-**Say.** "Each mark has a source; a BlastRadius yes names the test that proves it. The commercial tools are shown only as their own
-documentation describes them, with the vendor URL on each cell; anything their pages do not state says 'not documented'. Same-data
-results and other papers' numbers are never in one table. We paid USD 0.00; at list prices the tokens would cost a fraction of a cent per task."
+**Not always a win.** On the recorded hard-variant run (`hard-decoys`, 30 failing cases) retest-all meets its first failure at
+test 45 after 151 ms and BlastRadius at test 99 after 739 ms. Say so if asked; it is in the recording.
 
-**If the network is down.** The vendor URLs will not open; the cell text and the URL are still shown.
+### 5. Triage, repair and validation (1:15)
 
-## 5. Try it (1.5 min)
+**Watch.** Screen 5: mine, inherited and flaky, with base and head outcomes. Screen 6: the context chunks, then the patch, then the
+five checks ticking: patch applies, syntax compiles, previously failing tests pass, **full suite passes**, no edits outside the
+allowed files. In the challenge, **Fix it** does the same live (about 600 to 1,500 tokens).
 
-**Click.** Agent scenarios: pick the clean scenario, "Run the agents". Live-run replay: "Replay run". Ask: read the mode line, open
-one recorded answer and click a citation chip.
+**Say.** "Every failing test was re-run on the base commit; a test that already failed there is inherited and nobody is paged for
+it. The model sees at most three functions; a patch is accepted only after the full suite passes, and the checks are the evidence."
 
-**Say.** "These replay recordings, nothing is executed. Ask says on screen whether it is live or recorded; with a key and the
-network it calls the model, otherwise it shows the recorded answers. Citation checks say only that citations point at retrieved
-items, not that answers are correct."
+### 6. The test gap (1:15)
 
-**If the network is down.** This is the fallback: Ask shows "recorded answers", the rest is unchanged. "Analyze repository" needs
-a clone and a local server; if it is unavailable, use the command-line twin shown on the page.
+**Click.** Challenge seed 135, or Reset, the recorded run **"Test gap: a real bug the whole suite lets through"**, Present, screen 7.
 
-## 6. Use it (1 min)
+**Say.** "This change flips `>` to `>=` on line 141. All 297 tests pass. The panel names the tests that execute this function and
+the test files that reach it in the graph: none of them tells the two versions of this line apart. Nobody had to write a bug report
+for us to find that."
 
-**Click.** Copy the workflow YAML; show the Jenkinsfile and the CLI lines.
+### 7. Evidence (0:45)
 
-**Say.** "Three ways in: a GitHub Action that comments on every pull request, a Jenkins stage where Jenkins stays the executor, and a
-command line. The bot only comments; it never pushes or merges, and that is a tested claim in the Compare safety panel."
+**Watch.** Screen 8: the four BR-Bench results, each with a small chart and the file it was read from.
 
-**If the network is down.** Static content; the live-PR link will not open.
+**Say.** "None of these numbers comes from the live run. RQ1: co-change recovers 4.64% of failing test files at k = 10, failure
+history 39.44%. Gate 3 is not met: the ranker is not significantly better than the best baseline, and we report that. The repair
+result is the pre-registered one: R2 against R1, exact McNemar."
+
+## Fallbacks
+
+| problem | what you see | what to do |
+|---|---|---|
+| Quota exhausted | top line: "Repair is unavailable: the daily token quota of … is used up"; the repair-arena toggle is disabled with that reason | Run as usual: graph, prediction, tests, arena and triage are live. For screen 6 pick the recorded run "Seeded task: one swapped operator, fixed and validated" (REPLAY, with its date). |
+| No network (clone, model) | prepared repositories still run; the model call fails | Same as above. The Repair tab shows "model unavailable (network)"; nothing was retried. |
+| A test run hangs | the Tests stage stays running; each pytest process has a timeout (300 s by default) | Press **Reset**: the server kills the whole process group. Use a recorded run. |
+| Static build, no server | badge "READY · replay only" with the reason | Recorded runs replay in the browser, with their original timing; `?speed=2` plays faster. Presenter mode works on a replay. |
+| Anything looks wrong | | Open **Integrity** (top bar or the last result tab): commands, SHAs, model and temperature, cache and ledger files, what was live and what was recorded. |
+
+The model recordings of `make lab-record` (`itsdangerous-pr1`, `inherited-failure`, `hard-decoys`, `repair-arena`, plus `test-gap`
+without a model) were made on 2026-10-12 with gpt-oss-120b; `make lab-record` checks the quota first and stops if 16,000 more
+tokens do not fit under the cap. Their chips are labelled **Replay** and the badge says REPLAY with the date.
+
+## "Jenkins can do this" in three lines
+
+1. "Jenkins runs every test in a fixed order and reports every red one: that is the **Retest-all** row of the arena, first failure
+   at its alphabetical position, 100% of the suite every time."
+2. "The arena puts that row next to static reachability, per-test coverage, failure history, co-change and ours, on the same
+   change and the same measured results, so you can see what each one buys and what it misses."
+3. "BlastRadius adds the order, whose failure each one is, and a fix it has verified on the full suite, as stages inside the
+   Jenkins job you already have."
 
 ## Likely panel questions
 

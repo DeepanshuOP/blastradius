@@ -22,21 +22,21 @@ export function BarFigure({ bars, max, summary, caption, unit = "", log = false 
   return (
     <figure className="wide-col my-6">
       <svg viewBox={`0 0 ${w} ${h}`} role="img" aria-label={summary} className="ui h-auto w-full" style={{ maxWidth: 720 }}>
-        <line x1={left} x2={left} y1={0} y2={h - 4} stroke="#DCE1E7" />
+        <line x1={left} x2={left} y1={0} y2={h - 4} stroke="var(--rule)" />
         {bars.map((b, i) => {
           const y = i * row + 4;
           return (
             <g key={b.label}>
-              <text x={left - 8} y={y + 16} textAnchor="end" fontSize={13} fill="#18212B" fontWeight={b.strong ? 600 : 400}>{b.label}</text>
-              <rect x={left} y={y + 4} width={Math.max(1, x(b.value) - left)} height={16} fill={b.strong ? "#1F5A96" : "#5B6673"} />
+              <text x={left - 8} y={y + 16} textAnchor="end" fontSize={13} fill="var(--ink)" fontWeight={b.strong ? 600 : 400}>{b.label}</text>
+              <rect x={left} y={y + 4} width={Math.max(1, x(b.value) - left)} height={16} fill={b.strong ? "rgb(var(--blue-text-rgb))" : "var(--muted)"} />
               {b.lo !== undefined && b.hi !== undefined && (
-                <g stroke="#18212B" strokeWidth={1.5}>
+                <g stroke="var(--ink)" strokeWidth={1.5}>
                   <line x1={x(b.lo)} x2={x(b.hi)} y1={y + 12} y2={y + 12} />
                   <line x1={x(b.lo)} x2={x(b.lo)} y1={y + 7} y2={y + 17} />
                   <line x1={x(b.hi)} x2={x(b.hi)} y1={y + 7} y2={y + 17} />
                 </g>
               )}
-              <text x={Math.max(x(b.value), b.hi !== undefined ? x(b.hi) : 0) + 8} y={y + 17} fontSize={13} fill="#18212B">{b.text}{unit}</text>
+              <text x={Math.max(x(b.value), b.hi !== undefined ? x(b.hi) : 0) + 8} y={y + 17} fontSize={13} fill="var(--ink)">{b.text}{unit}</text>
             </g>
           );
         })}
@@ -63,53 +63,53 @@ export function PipelineFigure() {
         aria-label="Four stages in a row: 1 Predict, 2 Run, 3 Triage, 4 Repair. Below them, one bar: BR-Bench trains stages 1 and 3 and scores all four.">
         <defs>
           <marker id="pf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 L10 5 L0 10 z" fill="#5B6673" />
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--muted)" />
           </marker>
         </defs>
         {STAGES.map((s, i) => {
           const x = 4 + i * (bw + gap);
           return (
             <g key={s.n}>
-              <rect x={x} y={4} width={bw} height={104} fill="#FFFFFF" stroke="#DCE1E7" />
-              <text x={x + 10} y={26} fontSize={14} fontWeight={600} fill="#18212B">{s.n}. {s.title}</text>
+              <rect x={x} y={4} width={bw} height={104} fill="var(--panel)" stroke="var(--rule)" />
+              <text x={x + 10} y={26} fontSize={14} fontWeight={600} fill="var(--ink)">{s.n}. {s.title}</text>
               <foreignObject x={x + 8} y={32} width={bw - 16} height={62}>
-                <div className="ui" style={{ fontSize: 12, lineHeight: 1.35, color: "#18212B" }}>{s.what}</div>
+                <div className="ui" style={{ fontSize: 12, lineHeight: 1.35, color: "var(--ink)" }}>{s.what}</div>
               </foreignObject>
-              <text x={x + 10} y={98} fontSize={11.5} fill="#1F5A96">{s.model}</text>
-              {i < STAGES.length - 1 && <line x1={x + bw + 2} x2={x + bw + gap - 2} y1={56} y2={56} stroke="#5B6673" strokeWidth={1.5} markerEnd="url(#pf-arrow)" />}
+              <text x={x + 10} y={98} fontSize={11.5} fill="rgb(var(--blue-text-rgb))">{s.model}</text>
+              {i < STAGES.length - 1 && <line x1={x + bw + 2} x2={x + bw + gap - 2} y1={56} y2={56} stroke="var(--muted)" strokeWidth={1.5} markerEnd="url(#pf-arrow)" />}
             </g>
           );
         })}
-        <path d="M86 108 V130 M450 108 V130" stroke="#DCE1E7" strokeDasharray="4 3" />
-        <rect x={4} y={130} width={732} height={52} fill="#F4F6F8" stroke="#DCE1E7" />
-        <text x={16} y={152} fontSize={14} fontWeight={600} fill="#18212B">BR-Bench</text>
-        <text x={16} y={171} fontSize={12.5} fill="#18212B">Tests that really failed in GitHub Actions runs. It trains stages 1 and 3 and measures all four.</text>
+        <path d="M86 108 V130 M450 108 V130" stroke="var(--rule)" strokeDasharray="4 3" />
+        <rect x={4} y={130} width={732} height={52} fill="var(--panel2)" stroke="var(--rule)" />
+        <text x={16} y={152} fontSize={14} fontWeight={600} fill="var(--ink)">BR-Bench</text>
+        <text x={16} y={171} fontSize={12.5} fill="var(--ink)">Tests that really failed in GitHub Actions runs. It trains stages 1 and 3 and measures all four.</text>
       </svg>
       <svg viewBox="0 0 360 520" role="img" className="ui block h-auto w-full sm:hidden"
         aria-label="Four stages in a column: 1 Predict, 2 Run, 3 Triage, 4 Repair. Below them, one bar: BR-Bench trains stages 1 and 3 and scores all four.">
         <defs>
           <marker id="pf-arrow-v" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 L10 5 L0 10 z" fill="#5B6673" />
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--muted)" />
           </marker>
         </defs>
         {STAGES.map((s, i) => {
           const y = 4 + i * 100;
           return (
             <g key={s.n}>
-              <rect x={4} y={y} width={352} height={78} fill="#FFFFFF" stroke="#DCE1E7" />
-              <text x={14} y={y + 24} fontSize={16} fontWeight={600} fill="#18212B">{s.n}. {s.title}</text>
+              <rect x={4} y={y} width={352} height={78} fill="var(--panel)" stroke="var(--rule)" />
+              <text x={14} y={y + 24} fontSize={16} fontWeight={600} fill="var(--ink)">{s.n}. {s.title}</text>
               <foreignObject x={12} y={y + 30} width={336} height={26}>
-                <div className="ui" style={{ fontSize: 13, lineHeight: 1.3, color: "#18212B" }}>{s.what}</div>
+                <div className="ui" style={{ fontSize: 13, lineHeight: 1.3, color: "var(--ink)" }}>{s.what}</div>
               </foreignObject>
-              <text x={14} y={y + 70} fontSize={13} fill="#1F5A96">{s.model}</text>
-              {i < STAGES.length - 1 && <line x1={180} x2={180} y1={y + 80} y2={y + 98} stroke="#5B6673" strokeWidth={1.5} markerEnd="url(#pf-arrow-v)" />}
+              <text x={14} y={y + 70} fontSize={13} fill="rgb(var(--blue-text-rgb))">{s.model}</text>
+              {i < STAGES.length - 1 && <line x1={180} x2={180} y1={y + 80} y2={y + 98} stroke="var(--muted)" strokeWidth={1.5} markerEnd="url(#pf-arrow-v)" />}
             </g>
           );
         })}
-        <rect x={4} y={406} width={352} height={104} fill="#F4F6F8" stroke="#DCE1E7" />
-        <text x={14} y={432} fontSize={16} fontWeight={600} fill="#18212B">BR-Bench</text>
+        <rect x={4} y={406} width={352} height={104} fill="var(--panel2)" stroke="var(--rule)" />
+        <text x={14} y={432} fontSize={16} fontWeight={600} fill="var(--ink)">BR-Bench</text>
         <foreignObject x={12} y={440} width={336} height={64}>
-          <div className="ui" style={{ fontSize: 13, lineHeight: 1.35, color: "#18212B" }}>Tests that really failed in GitHub Actions runs. It trains stages 1 and 3 and measures all four.</div>
+          <div className="ui" style={{ fontSize: 13, lineHeight: 1.35, color: "var(--ink)" }}>Tests that really failed in GitHub Actions runs. It trains stages 1 and 3 and measures all four.</div>
         </foreignObject>
       </svg>
       <Caption kind="Figure">

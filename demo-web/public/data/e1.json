@@ -729,5 +729,5 @@
   },
   "verdict": "Gate 3 (ROADMAP §37.1) is NOT MET: on the 148 test instances the ranker's Recall@10 is 0.525 (95% bootstrap CI [0.447, 0.599]) against 0.522 for the best baseline (B7 readily-available-info LTR); Holm-adjusted Wilcoxon p = 0.3823, Cliff's delta = +0.030 (negligible). The criterion is: higher mean, adjusted p < 0.05 and |delta| >= 0.147."
  },
- "generated_at_git_sha": "a11c0bd128893d5ac2402e435e5116aeb1d6adf0"
+ "generated_at_git_sha": "1433e9de5650acb47786166ab8bf2df7e04e4ace"
 }

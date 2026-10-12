@@ -103,8 +103,9 @@ outside the retrieved items; 14 of 15 cite at least one item (test-failure 4/5, 
 answers cite only the E1-ranker block. Recording cost 17,969 tokens in all (sum of the 15 usage records) (`eval/llm_cache/ask_openai_gpt-oss-20b.jsonl`).
 
 **PR bot: one recording run** on seeded task `itsdangerous-ARITH_SWAP-00` (`src/agents/demo/bot_comment.md`, replays
-offline from `eval/llm_cache/bot_openai_gpt-oss-20b.jsonl`). The seeded edit breaks the signer, so 260 of 297 tests fail and
-all 260 are triaged mine; the model proposed one one-line patch on its first attempt (1,495 tokens), the full suite passed
+offline from `eval/llm_cache/bot_openai_gpt-oss-20b.jsonl`). The seeded edit breaks the signer, so 260 of the 297 executed test cases fail; they
+collapse to 155 failing canonical test ids (inherited test methods run under several subclasses share one id), and all 155 are
+triaged mine; the model proposed one one-line patch on its first attempt (1,495 tokens), the full suite passed
 with it, and the bot offered it as a suggestion on `src/itsdangerous/signer.py` line 204. This is one run on one seeded task,
 not a rate.
 

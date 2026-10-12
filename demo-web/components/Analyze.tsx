@@ -102,7 +102,7 @@ export default function Analyze() {
             {EXAMPLES.map((x) => (
               <button key={x.url} disabled={busy || live === false}
                 onClick={() => { setUrl(x.url); setStory(x.story); setBranch(""); analyze(x.url, x.story, ""); }}
-                className="rounded border border-slate-200 bg-white p-3 text-left text-[13px] hover:border-slate-400 disabled:opacity-60">
+                className="rounded border border-slate-200 bg-panel p-3 text-left text-[13px] hover:border-slate-400 disabled:opacity-60">
                 <span className="flex items-center justify-between gap-2">
                   <span className="font-mono font-semibold text-slate-900">{x.url.replace("https://github.com/", "")}</span>
                   <Badge tone="slate">{x.lang}</Badge>
@@ -132,7 +132,7 @@ export default function Analyze() {
             {im.tests.length === 0 ? <p className="text-slate-500">No test reaches a file to change in the code graph.</p> : (
               <div className="max-h-[28rem] overflow-auto">
                 <table className="w-full min-w-[640px] text-left text-[13px]">
-                  <thead className="sticky top-0 bg-white text-slate-500"><tr>
+                  <thead className="sticky top-0 bg-panel text-slate-500"><tr>
                     <th className="py-1.5 pr-2">#</th><th className="py-1.5 pr-2">test</th>
                     <th className="py-1.5 pr-2 text-right">hops</th><th className="py-1.5 pr-2 text-right">score</th><th className="py-1.5">why</th>
                   </tr></thead>

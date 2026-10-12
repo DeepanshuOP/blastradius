@@ -57,7 +57,7 @@ function AnswerView({ a }: { a: Answer }) {
         <h4 className="mb-2 text-[13px] font-semibold text-slate-500">Retrieved context ({a.context.length})</h4>
         <ul className="space-y-2">
           {a.context.map((c) => (
-            <li key={c.id} className={`rounded border bg-white p-3 text-[13px] ${open === c.id ? "border-sky-400 ring-1 ring-sky-200" : "border-slate-200"}`}>
+            <li key={c.id} className={`rounded border bg-panel p-3 text-[13px] ${open === c.id ? "border-sky-400 ring-1 ring-sky-200" : "border-slate-200"}`}>
               <button className="flex w-full flex-wrap items-center gap-2 text-left" onClick={() => setOpen(open === c.id ? null : c.id)}>
                 <span className="font-semibold text-slate-900">{c.id}</span>
                 <Badge tone={SOURCE_TONE[c.source] ?? "slate"}>{c.source}</Badge>
@@ -116,7 +116,7 @@ export default function Ask() {
         {live?.live ? (
           <div className="space-y-3">
             <div className="flex flex-col gap-2 sm:flex-row">
-              <select value={repo} onChange={(e) => setRepo(e.target.value)} className="rounded-md border border-slate-300 bg-white px-3 py-2 text-[15px]">
+              <select value={repo} onChange={(e) => setRepo(e.target.value)} className="rounded-md border border-slate-300 bg-panel px-3 py-2 text-[15px]">
                 {live.repos.map((r) => <option key={r}>{r}</option>)}
               </select>
               <input value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="What is at risk if I change src/click/parser.py?"
@@ -139,7 +139,7 @@ export default function Ask() {
         {!doc?.ask && <p className="text-slate-600">No answers have been recorded yet (<Mono>python -m analysis.ask_eval record</Mono>).</p>}
         {qs.length > 0 && (
           <div className="space-y-4">
-            <select value={sel} onChange={(e) => setSel(Number(e.target.value))} className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-[15px]">
+            <select value={sel} onChange={(e) => setSel(Number(e.target.value))} className="w-full rounded-md border border-slate-300 bg-panel px-3 py-2 text-[15px]">
               {qs.map((q, i) => <option key={i} value={i}>{q.id}, {q.type}, {q.question.slice(0, 110)}</option>)}
             </select>
             {cur && <><p className="text-[15px] font-medium text-slate-900">{cur.question}</p><AnswerView a={cur} /></>}

@@ -32,7 +32,7 @@ function Copy({ text, label = "Copy" }: { text: string; label?: string }) {
     setTimeout(() => setDone(false), 1500);
   };
   return (
-    <button onClick={copy} className="rounded border border-slate-300 bg-white px-2 py-0.5 text-[13px] font-medium text-slate-700 hover:bg-slate-100">
+    <button onClick={copy} className="rounded border border-slate-300 bg-panel px-2 py-0.5 text-[13px] font-medium text-slate-700 hover:bg-slate-100">
       {done ? "Copied" : label}
     </button>
   );

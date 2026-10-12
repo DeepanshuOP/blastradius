@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ShowTable } from "./ShowTable";
 
 /** A titled block of a section: a rule, a heading, the body. No box, no shadow. */
 export function Card({ title, step, children, className = "" }: {
@@ -51,7 +52,7 @@ export function Caption({ kind, children }: { kind: "Figure" | "Table"; children
 export function NumTable({ caption, children, source }: { caption: ReactNode; children: ReactNode; source?: string }) {
   return (
     <figure className="wide-col my-6">
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Table, scrolls horizontally">{children}</div>
+      <ShowTable>{children}</ShowTable>
       <Caption kind="Table">{caption}</Caption>
       {source && <p className="cap">Source: <Mono>{source}</Mono></p>}
     </figure>

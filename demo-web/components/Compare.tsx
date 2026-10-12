@@ -38,6 +38,7 @@ type CompareDoc = {
     prices: { date: string; url: string; usd_per_million_in_out: Record<string, [number, number]> };
     ledger: { paid_usd: number; by_model: Record<string, { calls: number; tokens: number }> };
     e3: CostRow[]; bot: Run[]; bot_live: { model: string; tokens: number; file: string } | null; ask: Run[]; context: string;
+    lab_ledger?: { paid_usd: number; by_model: Record<string, { calls: number; tokens: number }> }; lab?: Run[];
   } | null;
   time: {
     e1: { source: string; n: number; candidates_median: string; history_drop_recall10?: number;
@@ -292,6 +293,19 @@ function CostPanel({ c }: { c: CompareDoc["cost"] }) {
               <tr key={r.file}><td className={TD}>{r.model}</td><td className={`${TD} text-right`}>{r.calls}</td><td className={`${TD} text-right`}>{fmt(r.prompt_tokens)}</td><td className={`${TD} text-right`}>{fmt(r.completion_tokens)}</td>
                 <td className={`${TD} text-right`}>{fmt(r.tokens_per_call)}</td><td className={`${TD} text-right`}>{fmt(r.usd_list_per_call, 5)}</td></tr>
             ))}
+          </tbody>
+        </table>
+      </NumTable>
+      <NumTable caption={<>Token ledgers, kept apart: <Mono>usage.jsonl</Mono> holds every live call of E3, the PR bot and Ask; <Mono>lab_usage.jsonl</Mono> holds the Live Lab&apos;s demonstration calls (D-65), which are not E3 and never enter <Mono>make tables</Mono>. Both count against the same daily quota.</>} source="eval/llm_cache/usage.jsonl, eval/llm_cache/lab_usage.jsonl">
+        <table className="w-full min-w-[480px] border-collapse">
+          <thead><tr><th className={TH}>ledger</th><th className={TH}>model</th><th className={`${TH} text-right`}>calls</th><th className={`${TH} text-right`}>tokens</th></tr></thead>
+          <tbody>
+            {([["E3, bot and Ask", c.ledger], ["Live Lab", c.lab_ledger ?? { paid_usd: 0, by_model: {} }]] as const).flatMap(([name, l]) => {
+              const rows = Object.entries(l.by_model).sort(([a], [b]) => a.localeCompare(b));
+              return rows.length ? rows.map(([m, v]) => (
+                <tr key={name + m}><td className={TD}>{name}</td><td className={TD}>{m}</td><td className={`${TD} text-right`}>{fmt(v.calls)}</td><td className={`${TD} text-right`}>{fmt(v.tokens)}</td></tr>
+              )) : [<tr key={name}><td className={TD}>{name}</td><td className={TD} colSpan={3}>no calls recorded</td></tr>];
+            })}
           </tbody>
         </table>
       </NumTable>

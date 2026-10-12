@@ -1088,7 +1088,15 @@ def compare_time() -> dict:
 def compare_cost() -> dict | None:
     """Panel 4: the cost report's JSON as written by `analysis/cost_report.py` (None until it has run)."""
     p = GENERATED / "cost_report.json"
-    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+    if not p.exists():
+        return None
+    doc = json.loads(p.read_text(encoding="utf-8"))
+    # the Live Lab's own ledger (D-65) is read here as well, so lab usage is labelled apart from E3 even when the
+    # committed report predates the split
+    from analysis import cost_report
+    doc["lab_ledger"] = cost_report.ledger_summary(cost_report.LAB_LEDGER)
+    doc["lab"] = cost_report.recorded_runs("lab")
+    return doc
 
 
 def compare_doc(sha: str) -> dict:

@@ -1,0 +1,12 @@
+diff --git a/tests/test_catalog.py b/tests/test_catalog.py
+--- a/tests/test_catalog.py
++++ b/tests/test_catalog.py
+@@ -4,7 +4,7 @@
+ 
+ 
+ def test_known_sku_price():
+-    assert unit_price("BOOK-001") == 49900
++    assert unit_price("BOOK-001") == 49000
+ 
+ 
+ def test_unknown_sku_raises():
