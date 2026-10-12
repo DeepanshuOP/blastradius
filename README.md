@@ -6,6 +6,8 @@
 [![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23250690-blue)](https://doi.org/10.5281/zenodo.23250690)
 ![License: MIT (code), CC BY 4.0 (data)](https://img.shields.io/badge/license-MIT%20%2F%20CC%20BY%204.0-green)
 
+Team: Deepanshu, Sanskriti Singh and Prisha Vadhavkar; guide Dr. Yoga Raja C A; VIT BITE497J Project I.
+
 ## What it does, in one sentence
 
 BlastRadius tells a team, for each pull request, which tests are most at risk, runs them first, says which failures are the change's own, and proposes a fix only when the whole test suite passes with it; it comments, and never merges or pushes.
@@ -20,7 +22,20 @@ BlastRadius tells a team, for each pull request, which tests are most at risk, r
 
 A live example, the bot's comment on a pull request in a sandbox repository: <https://github.com/DeepanshuOP/itsdangerous/pull/1>.
 
-The website replays everything offline. `make demo-data` (once, after any change to the generated files), then `make demo-web`, opens it at <http://localhost:3000>; the **Compare** tab sets BlastRadius against other work (same-data comparisons, cost, time, safety) and **Use it** has the setup steps with copy buttons. `make demo-check` runs an offline PASS/FAIL check of the whole demo before a presentation.
+The project page replays everything offline. `make demo-data` (once, after any change to the generated files), then `make demo-web`, opens it at <http://localhost:3000>: Overview, Data, Results, Compare (papers and commercial tools, same-data results, cost, time, safety), Try it (analyze a repository, ask, agent scenarios, run replay) and Use it. `make demo-check` verifies it offline before a presentation; `docs/DEMO_SCRIPT.md` is a 10-minute walkthrough with panel questions.
+
+## Headline numbers and their status
+
+| result | value | status |
+|---|---|---|
+| BR-Bench strict split | 762 instances, 4,168 labels (Gate 1 of 5,000 not met) | released, DOI above |
+| Test-to-file binding | 94.29% combined; 63.83% at full confidence | both always shown; full confidence below its 70% gate |
+| RQ1, k = 10, n = 576 | failure history 39.44%, co-change 4.64% | descriptive |
+| E1 ranker, Recall@10 (n = 148, Java only) | 0.525 against 0.522 for the best baseline | Gate 3 not met (Holm-adjusted p = 0.3823) |
+| E2 triage | small sample: 18 not-mine pairs in the test split | exploratory trade-off, not a working triager |
+| E3 repair, standard variant (n = 70) | gpt-oss-120b 50 vs 33 plausible fixes, one-sided McNemar p = 0.0007569; gpt-oss-20b 41 vs 19 | pre-registered (docs/phase/033), confirmatory |
+| E3 hard variant, third model | 29 and 17 of 70; 25 of 70 | interim, run continuing |
+| E3 arm R4 | none | built, not run |
 
 ## BlastRadius 2.0 (course deliverable, D-56)
 

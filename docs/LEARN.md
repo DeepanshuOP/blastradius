@@ -83,7 +83,8 @@ Every number below is copied from the file named next to it; regenerate with `ma
 22. **Why is the LLM outside the core?** D-17: every published number must regenerate without a model. Only the repair step calls one
     (D-58), with a pinned model, temperature 0, and every reply cached and replayable.
 23. **What does a negative or small result mean here?** E2 has 18 not-mine pairs in its test split: the point estimates have wide
-    intervals and the confusion table shows a trade-off. E3 is interim: the primary test (R2 > R1, gpt-oss-120b, standard) is
-    p = 0.0036 on 47 of 70 tasks, and the remaining tasks and the hard variant wait for the free-tier quota. Both are stated as such.
+    intervals and the confusion table shows a trade-off. E3 is confirmatory on the standard variant: the primary test (R2 > R1,
+    gpt-oss-120b, n = 70) is 50 against 33 plausible fixes, one-sided p = 0.0007569; the hard variant (29 and 17 of 70) and the third
+    model (25 of 70) are interim and still running. Both are stated as such.
 24. **Why not just Jenkins?** Jenkins executes; BlastRadius decides what to run first, why a test failed and how to fix it. The CI
     server's behaviour is the baseline row of every experiment.
