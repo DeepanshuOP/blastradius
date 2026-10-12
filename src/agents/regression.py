@@ -49,6 +49,7 @@ class SuiteRun:
     wall_s: float
     results: list[TestResult] = field(default_factory=list)
     order: list[str] = field(default_factory=list)
+    timed_out: bool = False
 
     @property
     def failed(self) -> list[TestResult]:
@@ -64,6 +65,15 @@ class SuiteRun:
         return out
 
 
+def junit_test_id(file: str | None, cls: str, name: str) -> str:
+    """The id `parse_junit` gives a test case (also used for results streamed by the Live Lab plugin)."""
+    if file and file.endswith(".py"):
+        module = file[:-3].replace("/", ".")
+        owner = cls[len(module) + 1:] if cls.startswith(module + ".") else ""
+        return f"{file}::{owner}::{name}" if owner else f"{file}::{name}"
+    return f"{cls.split('.')[-1]}#{name}" if cls else name
+
+
 def parse_junit(paths: list[Path], sort: bool = True) -> list[TestResult]:
     """Parse JUnit XML files into results; ids are pytest node ids for Python files.
 
@@ -76,12 +86,7 @@ def parse_junit(paths: list[Path], sort: bool = True) -> list[TestResult]:
             name = case.get("name", "")
             cls = case.get("classname", "")
             file = case.get("file")
-            if file and file.endswith(".py"):
-                module = file[:-3].replace("/", ".")
-                owner = cls[len(module) + 1:] if cls.startswith(module + ".") else ""
-                tid = f"{file}::{owner}::{name}" if owner else f"{file}::{name}"
-            else:
-                tid = f"{cls.split('.')[-1]}#{name}" if cls else name
+            tid = junit_test_id(file, cls, name)
             outcome, message = "passed", ""
             for tag in ("failure", "error", "skipped"):
                 el = case.find(tag)
@@ -98,8 +103,24 @@ def execution_order(paths: list[Path]) -> list[str]:
     return [r.test_id for r in parse_junit(paths, sort=False)]
 
 
-def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: str, python: str | None = None) -> SuiteRun:
-    """Run pytest in ``workdir`` (all tests when ``test_ids`` is None)."""
+PLUGIN_DIR = Path(__file__).resolve().parents[1] / "lab" / "plugin"
+
+
+def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: str, python: str | None = None, *,
+               on_result=None, order_files: list[str] | None = None, timeout: float | None = None) -> SuiteRun:
+    """Run pytest in ``workdir`` (all tests when ``test_ids`` is None).
+
+    Args:
+        workdir: Working tree.
+        test_ids: Node ids or files to run; None runs everything.
+        out_xml: JUnit XML path.
+        label: Name of the run.
+        python: Interpreter (default: this one).
+        on_result: Optional callable receiving one dict per finished test while the suite runs (`id`, `outcome`,
+            `duration_s`, `message`, `index`, `t`); selects the streaming path, which loads the Live Lab plugin.
+        order_files: Optional repo-relative test files that must run first, in this order (needs the plugin).
+        timeout: Seconds before the process is killed; the run is then marked `timed_out` and keeps what finished.
+    """
     cmd = [python or sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
            "-o", "junit_family=xunit1", f"--junitxml={out_xml}"]
     if test_ids is not None:
@@ -111,12 +132,70 @@ def run_pytest(workdir: Path, test_ids: list[str] | None, out_xml: Path, label: 
     # Import the code of THIS worktree, not an editable install of another checkout (a `src/` layout installed with
     # `pip install -e` would otherwise run the tests against the checkout the install points at).
     paths = [str(workdir)] + ([str(workdir / "src")] if (workdir / "src").is_dir() else [])
-    env["PYTHONPATH"] = os.pathsep.join(paths + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
-    proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=env)
+    if on_result is None and order_files is None and timeout is None:
+        env["PYTHONPATH"] = os.pathsep.join(paths + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
+        proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=env)
+        wall = time.perf_counter() - started
+        results = parse_junit([out_xml]) if out_xml.exists() else []
+        order = execution_order([out_xml]) if out_xml.exists() else []
+        return SuiteRun(label, cmd, proc.returncode, round(wall, 3), results, order)
+    return _run_pytest_streaming(workdir, cmd, env, paths, out_xml, label, on_result, order_files, timeout, started)
+
+
+def _run_pytest_streaming(workdir: Path, cmd: list[str], env: dict, paths: list[str], out_xml: Path, label: str,
+                          on_result, order_files: list[str] | None, timeout: float | None, started: float) -> SuiteRun:
+    import json as _json
+    import tempfile
+    import threading
+
+    r_fd, w_fd = os.pipe()
+    env["PYTHONPATH"] = os.pathsep.join([str(PLUGIN_DIR), *paths] + ([env["PYTHONPATH"]] if env.get("PYTHONPATH") else []))
+    env["BR_LAB_FD"] = str(w_fd)
+    if order_files:
+        env["BR_LAB_ORDER"] = _json.dumps(order_files)
+    cmd = [*cmd[:3], "-p", "br_lab_plugin", *cmd[3:]]
+    streamed: list[TestResult] = []
+    with tempfile.TemporaryFile() as sink:
+        proc = subprocess.Popen(cmd, cwd=workdir, env=env, stdout=sink, stderr=subprocess.STDOUT, pass_fds=[w_fd])
+        os.close(w_fd)
+        timed_out = threading.Event()
+
+        def _kill() -> None:
+            timed_out.set()
+            proc.kill()
+
+        timer = threading.Timer(timeout, _kill) if timeout else None
+        if timer:
+            timer.start()
+        try:
+            with os.fdopen(r_fd, "r", encoding="utf-8") as rf:
+                for line in rf:
+                    try:
+                        ev = _json.loads(line)
+                    except ValueError:
+                        continue
+                    if ev.get("k") != "result":
+                        continue
+                    tid = junit_test_id(ev.get("file"), ev.get("classname", ""), ev.get("name", ""))
+                    res = TestResult(tid, ev["outcome"], round(float(ev["duration"]), 4), ev.get("message", ""))
+                    streamed.append(res)
+                    if on_result:
+                        on_result({"id": tid, "nodeid": ev.get("nodeid", ""), "outcome": res.outcome,
+                                   "duration_s": res.duration_s, "message": res.message, "index": len(streamed),
+                                   "t": ev.get("t")})
+            proc.wait()
+        finally:
+            if timer:
+                timer.cancel()
     wall = time.perf_counter() - started
-    results = parse_junit([out_xml]) if out_xml.exists() else []
-    order = execution_order([out_xml]) if out_xml.exists() else []
-    return SuiteRun(label, cmd, proc.returncode, round(wall, 3), results, order)
+    if out_xml.exists() and not timed_out.is_set():
+        results = parse_junit([out_xml])
+        order = execution_order([out_xml])
+    else:                                    # killed before pytest wrote its XML: what finished is what we have
+        results = sorted(streamed, key=lambda r: r.test_id)
+        order = [r.test_id for r in streamed]
+    return SuiteRun(label, cmd, proc.returncode if proc.returncode is not None else -9, round(wall, 3), results, order,
+                    timed_out.is_set())
 
 
 def run_template(workdir: Path, template: str, tests: list[str] | None, junit_glob: str, label: str) -> SuiteRun:
@@ -146,6 +225,7 @@ class RegressionReport:
     first_failure_position: int | None = None   # 1-based, in execution order (selected tests first, then the rest)
     first_failure_test: str | None = None
     ranker: str = "heuristic"
+    timed_out: bool = False
 
 
 class RegressionSuiteAgent:
@@ -153,7 +233,8 @@ class RegressionSuiteAgent:
 
     def run(self, impact: ImpactAnalysis, repo: Path | str, state_dir: Path | str | None = None, *,
             commit: str | None = None, full: bool = False, runner_cmd: str | None = None,
-            junit_glob: str = "**/TEST-*.xml", python: str | None = None) -> RegressionReport:
+            junit_glob: str = "**/TEST-*.xml", python: str | None = None, on_test=None, single_pass: bool = False,
+            timeout: float | None = None) -> RegressionReport:
         """Run the selected scope (and optionally the full suite) at ``commit``.
 
         Args:
@@ -165,6 +246,10 @@ class RegressionSuiteAgent:
             runner_cmd: Non-Python runner template with ``{tests}``.
             junit_glob: Where that runner writes JUnit XML.
             python: Interpreter for pytest (default: this one).
+            on_test: Called with one dict per finished test (streaming; Python suites only).
+            single_pass: Run the suite once, the impact files first, instead of the selected scope and then the
+                whole suite. The selected results are the subset of that run in the at-risk files. Needs `full`.
+            timeout: Seconds before a pytest process is killed.
         """
         repo = Path(repo).resolve()
         state = Path(state_dir) if state_dir else repo / ".blastradius"
@@ -181,9 +266,18 @@ class RegressionSuiteAgent:
             if runner_cmd:
                 sel = run_template(tree, runner_cmd, selected_targets, junit_glob, "selected")
                 full_run = run_template(tree, runner_cmd, None, junit_glob, "full") if full else None
+            elif single_pass and full:
+                full_run = run_pytest(tree, None, out / "full.xml", "full", python, on_result=on_test,
+                                      order_files=selected_targets, timeout=timeout)
+                in_scope = [r for r in full_run.results if r.test_id.split("::")[0] in set(selected_targets)]
+                sel = SuiteRun("selected", full_run.command, full_run.exit_code,
+                               round(sum(r.duration_s for r in in_scope), 3), in_scope,
+                               [t for t in full_run.order if t.split("::")[0] in set(selected_targets)])
             else:
-                sel = run_pytest(tree, selected_targets, out / "selected.xml", "selected", python)
-                full_run = run_pytest(tree, None, out / "full.xml", "full", python) if full else None
+                sel = run_pytest(tree, selected_targets, out / "selected.xml", "selected", python, on_result=on_test,
+                                 timeout=timeout)
+                full_run = run_pytest(tree, None, out / "full.xml", "full", python, on_result=on_test,
+                                      timeout=timeout) if full else None
 
         missed: list[str] = []
         recall = None
@@ -225,6 +319,7 @@ class RegressionSuiteAgent:
             impact_recall=recall, missed_failures=missed, selection_ratio=f"{n_sel}/{total}",
             markdown_path=str(out / "report.md"), json_path=str(out / "report.json"),
             first_failure_position=ff_pos, first_failure_test=ff_test, ranker=impact.ranker,
+            timed_out=bool((full_run and full_run.timed_out) or sel.timed_out),
         )
         (out / "report.json").write_text(json.dumps(asdict(report), indent=2), encoding="utf-8")
         return report
