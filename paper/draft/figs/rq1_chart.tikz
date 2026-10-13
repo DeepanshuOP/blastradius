@@ -6,8 +6,8 @@
     height=4.4cm,
     ymin=0,
     ymax=45,
-    ylabel={Micro Recall at $k=10$ (\%)},
-    symbolic x coords={Co-change (All), Co-change (Test), Changeset, Hist. Freq.},
+    ylabel={Micro recall at $k=10$ (\%)},
+    symbolic x coords={Co-change (all), Co-change (test), Changeset, Failure history},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
@@ -19,10 +19,10 @@
     enlarge x limits=0.18,
 ]
 \addplot[fill=blue!30, draw=blue!70] coordinates {
-    (Co-change (All), 4.64)
-    (Co-change (Test), 7.67)
+    (Co-change (all), 4.64)
+    (Co-change (test), 7.67)
     (Changeset, 17.02)
-    (Hist. Freq., 39.44)
+    (Failure history, 39.44)
 };
 \end{axis}
 \end{tikzpicture}

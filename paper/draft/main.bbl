@@ -21,16 +21,16 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{borg2017supporting}
-M.~Borg, K.~Wnuk, B.~Regnell, and P.~Runeson, ``Supporting change impact
-  analysis using a recommendation system: An industrial case study in a
-  safety-critical context,'' \emph{IEEE Trans. Softw. Eng.}, vol.~43, no.~7,
-  pp. 675--700, 2017.
+\bibitem{machalica2019predictive}
+M.~Machalica, A.~Samylkin, M.~Porth, and S.~Chandra, ``Predictive test
+  selection,'' in \emph{Proc. 41st Int. Conf. Softw. Eng.: Softw. Eng. Pract.
+  (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2019, pp. 91--100.
 
-\bibitem{huang2022change}
-Y.~Huang, J.~Jiang, X.~Luo, X.~Chen, Z.~Zheng, N.~Jia, and G.~Huang,
-  ``Change-patterns mapping: A boosting way for change impact analysis,''
-  \emph{IEEE Trans. Softw. Eng.}, vol.~48, no.~7, pp. 2376--2398, 2022.
+\bibitem{memon2017taming}
+A.~Memon, Z.~Gao, B.~Nguyen, S.~Dhanda, E.~Nickell, R.~Siemborski, and
+  J.~Micco, ``Taming {Google}-scale continuous testing,'' in \emph{Proc. 39th
+  Int. Conf. Softw. Eng.: Softw. Eng. Pract. (ICSE-SEIP)}.\hskip 1em plus 0.5em
+  minus 0.4em\relax IEEE, 2017, pp. 233--242.
 
 \bibitem{gligoric2015practical}
 M.~Gligoric, L.~Eloussi, and D.~Marinov, ``Practical regression test selection
@@ -44,28 +44,16 @@ O.~Legunsen, A.~Shi, and D.~Marinov, ``{STARTS}: {STAtic} regression test
   (ASE), Tool Demos}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2017, pp.
   949--954.
 
-\bibitem{machalica2019predictive}
-M.~Machalica, A.~Samylkin, M.~Porth, and S.~Chandra, ``Predictive test
-  selection,'' in \emph{Proc. 41st Int. Conf. Softw. Eng.: Softw. Eng. Pract.
-  (ICSE-SEIP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2019, pp. 91--100.
+\bibitem{borg2017supporting}
+M.~Borg, K.~Wnuk, B.~Regnell, and P.~Runeson, ``Supporting change impact
+  analysis using a recommendation system: An industrial case study in a
+  safety-critical context,'' \emph{IEEE Trans. Softw. Eng.}, vol.~43, no.~7,
+  pp. 675--700, 2017.
 
-\bibitem{memon2017taming}
-A.~Memon, Z.~Gao, B.~Nguyen, S.~Dhanda, E.~Nickell, R.~Siemborski, and
-  J.~Micco, ``Taming {Google}-scale continuous testing,'' in \emph{Proc. 39th
-  Int. Conf. Softw. Eng.: Softw. Eng. Pract. (ICSE-SEIP)}.\hskip 1em plus 0.5em
-  minus 0.4em\relax IEEE, 2017, pp. 233--242.
-
-\bibitem{mattis2020rtptorrent}
-T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
-  open-source dataset for evaluating regression test prioritization,'' in
-  \emph{Proc. 17th Int. Conf. Mining Softw. Repos. (MSR)}.\hskip 1em plus 0.5em
-  minus 0.4em\relax ACM, 2020, pp. 385--396.
-
-\bibitem{moriconi2025ghalogs}
-F.~Moriconi, T.~Durieux, J.-R. Falleri, R.~Troncy, and A.~Francillon,
-  ``{GHALogs}: Large-scale dataset of {GitHub} actions runs,'' in \emph{Proc.
-  22nd Int. Conf. Mining Softw. Repos. (MSR), Data and Tool Showcase
-  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 669--673.
+\bibitem{huang2022change}
+Y.~Huang, J.~Jiang, X.~Luo, X.~Chen, Z.~Zheng, N.~Jia, and G.~Huang,
+  ``Change-patterns mapping: A boosting way for change impact analysis,''
+  \emph{IEEE Trans. Softw. Eng.}, vol.~48, no.~7, pp. 2376--2398, 2022.
 
 \bibitem{dabic2021sampling}
 O.~Dabic, E.~Aghajani, and G.~Bavota, ``Sampling projects in {GitHub} for {MSR}
@@ -87,6 +75,18 @@ T.~Gebru, J.~Morgenstern, B.~Vecchione, J.~W. Vaughan, H.~Wallach,
 Deepanshu, S.~Singh, P.~Vadhavkar, and {Yoga Raja C A}, ``{BR-Bench}:
   Execution-grounded change-to-failing-test data from {GitHub} actions (release
   v0.1),'' \url{https://doi.org/10.5281/zenodo.23250262}, 2026.
+
+\bibitem{mattis2020rtptorrent}
+T.~Mattis, P.~Rein, F.~D{\"u}rsch, and R.~Hirschfeld, ``{RTPTorrent}: An
+  open-source dataset for evaluating regression test prioritization,'' in
+  \emph{Proc. 17th Int. Conf. Mining Softw. Repos. (MSR)}.\hskip 1em plus 0.5em
+  minus 0.4em\relax ACM, 2020, pp. 385--396.
+
+\bibitem{moriconi2025ghalogs}
+F.~Moriconi, T.~Durieux, J.-R. Falleri, R.~Troncy, and A.~Francillon,
+  ``{GHALogs}: Large-scale dataset of {GitHub} actions runs,'' in \emph{Proc.
+  22nd Int. Conf. Mining Softw. Repos. (MSR), Data and Tool Showcase
+  Track}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 669--673.
 
 \bibitem{ren2004chianti}
 X.~Ren, F.~Shah, F.~Tip, B.~G. Ryder, and O.~Chesley, ``Chianti: A tool for

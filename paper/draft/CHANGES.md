@@ -17,3 +17,4 @@
 15. Verified and completed bibliographic metadata (DOIs, pages, conference proceedings) across all 12 literature entries in `refs.bib`.
 16. Added formal `@misc` bibliography entries for published Zenodo dataset (`brbench_data`) and code repository (`brbench_code`).
 17. B5 (BM25 path tokens) made independent of the Python hash seed (D-64: `sorted(set(query))`); the committed B5 values (Recall@20% 0.457, first-fail position 349.480) are reproduced exactly, and no table or Holm p changes.
+18. Final rewrite of every section in the style of `paper/STYLE_NOTES.md`; E1/E3 kept out (D-56), one no-number sentence in Future Research; Table I cut to fields whose counts read from the release parquet; v0.2 stated as built, not deposited; test count from a fresh `make test` (1,039 passed, 2 skipped); single-file Overleaf copy in `paper/overleaf/main.tex`.

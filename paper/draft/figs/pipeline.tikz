@@ -7,13 +7,13 @@
   res/.style={box, fill=green!8, draw=green!50, font=\scriptsize\bfseries},
   arr/.style={->, >=latex, semithick}
 ]
-  \node[proc] (harvest) {1. Harvester\\(GHA runs, logs)};
-  \node[proc, right=of harvest] (parse) {2. Log Parser\\(Maven, Gradle, pytest)};
-  \node[proc, right=of parse] (norm) {3. Normaliser\\(\texttt{test\_id} FQCN)};
-  \node[filter, below=of norm] (base) {4. Base Resolution\\(exact-green / diff)};
-  \node[filter, left=of base] (label) {5. Label Engine\\(strict / relaxed)};
-  \node[filter, left=of label] (bind) {6. Test Binding\\(pinned clones)};
-  \node[res, below=of label] (release) {7. Release Bundle (\textsc{BR-Bench})\\(\texttt{instances.parquet}, \texttt{outcomes.parquet})};
+  \node[proc] (harvest) {1. Harvester\\(runs, jobs, logs)};
+  \node[proc, right=of harvest] (parse) {2. Log parsers\\(Maven, Gradle, pytest)};
+  \node[proc, right=of parse] (norm) {3. Normaliser\\(canonical \texttt{test\_id})};
+  \node[filter, below=of norm] (base) {4. Base-run resolution\\(five statuses)};
+  \node[filter, left=of base] (label) {5. Labelling engine\\(all / relaxed / strict)};
+  \node[filter, left=of label] (bind) {6. Binding\\(pinned clones)};
+  \node[res, below=of label] (release) {7. Release (\textsc{BR-Bench})\\(four Parquet tables)};
 
   \draw[arr] (harvest) -- (parse);
   \draw[arr] (parse) -- (norm);
