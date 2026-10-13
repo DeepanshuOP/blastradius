@@ -150,6 +150,9 @@ def cmd_run(ns: argparse.Namespace) -> int:
                 gf = getattr(lab, "graph_file", None)
                 if gf and Path(gf).exists():
                     (RUNS / f"{args.record}.graph.json").write_bytes(Path(gf).read_bytes())
+                alog = getattr(lab, "audit", None)
+                if alog is not None and alog.path.exists():    # the decision log ships beside the recording (D-71)
+                    (RUNS / f"{args.record}.audit.jsonl").write_bytes(alog.path.read_bytes())
                 rec.close()
                 write_index()
             lab.cleanup()

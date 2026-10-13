@@ -76,8 +76,12 @@ def itsdangerous_run(seeded_copy):
 def test_stage_order_streamed_results_unique_triage_and_repair_skipped(itsdangerous_run, seeded_copy) -> None:
     evs = itsdangerous_run
     assert all(not validate_event(e) for e in evs), [validate_event(e) for e in evs if validate_event(e)][:3]
-    first = list(dict.fromkeys(e["stage"] for e in evs))
-    assert first == [s for s in STAGES if s in first] and first == list(STAGES), first
+    # decision-log records (D-71) interleave with the stages they describe, so they are left out of the order check
+    first = list(dict.fromkeys(e["stage"] for e in evs if e["stage"] != "audit"))
+    pipeline = [s for s in STAGES if s != "audit"]
+    assert first == [s for s in pipeline if s in first] and first == pipeline, first
+    assert any(e["type"] == "audit.record" for e in evs)
+    assert next(e for e in evs if e["type"] == "audit.verify")["data"]["ok"] is True
     assert [e["seq"] for e in evs] == list(range(1, len(evs) + 1))
 
     results = [e for e in evs if e["type"] == "test.result"]

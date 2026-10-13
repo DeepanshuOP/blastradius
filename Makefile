@@ -1,4 +1,4 @@
-.PHONY: lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
+.PHONY: agent-log lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
 
 test:
 	uv run pytest -q
@@ -263,3 +263,11 @@ reproduce:
 	uv run --extra graph python analysis/reproduce_mini_corpus.py
 
 all: test reproduce
+
+# Decision log of one agent run (D-71): the readable trail and the chain check. RUN is a run id under logs/agent/
+# or a path to a .jsonl log (a Live Lab recording ships one as demo-web/public/lab/runs/<name>.audit.jsonl).
+#   make agent-log RUN=lab-itsdangerous-pr1-20261013T120000Z
+agent-log:
+	@test -n "$(RUN)" || { echo 'usage: make agent-log RUN=<run_id|path.jsonl>' >&2; exit 2; }
+	uv run python -m src.agents.audit show $(RUN)
+	uv run python -m src.agents.audit verify $(RUN)

@@ -381,7 +381,7 @@ class _RepairUnavailable(RuntimeError):
 
 def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, *, llm=None,
             state_dir: Path | None = None, python: str | None = None, on_event: EventFn | None = None,
-            timeout: float | None = None, case_order=None) -> BotOutcome:
+            timeout: float | None = None, case_order=None, audit=None) -> BotOutcome:
     """Run impact, regression, triage and repair on one PR and render the comment.
 
     Args:
@@ -399,10 +399,23 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
         timeout: Seconds allowed for each pytest process when `on_event` is given.
         case_order: Optional zero-argument callable giving the Live Lab test-case rule for the single pass (evaluated
             after the ranking event, so it can use the ranking); None keeps the file-level order.
+        audit: Optional :class:`src.agents.audit.DecisionLog`. Every stage is then recorded (D-71); it implies the
+            event path (a no-op `on_event` is used when none is given).
 
     Returns:
         The rendered comment, the suggestions of a validated patch, and run statistics.
     """
+    auditor = None
+    if audit is not None:
+        from src.agents.audit import EventAuditor
+
+        auditor = EventAuditor(audit)
+        auditor.max_attempts = MAX_REPAIR_ATTEMPTS
+        outer = on_event or (lambda *_a: None)
+
+        def on_event(stage: str, type_: str, status: str, data: dict) -> None:   # noqa: F811 - both sinks
+            outer(stage, type_, status, data)
+            auditor.on_event(stage, type_, status, data)
     emit = on_event or (lambda *_a: None)
     repo = Path(repo_dir).resolve()
     state = Path(state_dir) if state_dir else repo / ".blastradius"
@@ -488,7 +501,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
         elif mine:
             try:
                 repair, model, tokens = _repair(repo, state, impact, report, sorted(mine), fails, base, head, llm,
-                                                python, emit if on_event else None, timeout if on_event else None)
+                                                python, emit if on_event else None, timeout if on_event else None,
+                                                auditor)
             except _RepairUnavailable as exc:
                 notes.append(f"No patch was attempted: {exc}")
     if on_event and not fails:
@@ -515,8 +529,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
 class _EventLLM:
     """Wraps an LLM so each call is announced (request, reply) and a quota / network failure becomes an event."""
 
-    def __init__(self, inner, emit: EventFn) -> None:
-        self.inner, self.emit, self.n = inner, emit, 0
+    def __init__(self, inner, emit: EventFn, auditor=None) -> None:
+        self.inner, self.emit, self.n, self.auditor = inner, emit, 0, auditor
 
     @property
     def model(self) -> str:
@@ -563,12 +577,14 @@ class _EventLLM:
             "provider": res.provider or getattr(self.inner, "name", None),
             "fallback_reason": getattr(self.inner, "fallback_reason", None),
             "latency_s": res.latency_s if res.latency_s is not None else round(time.perf_counter() - t0, 3)})
+        if self.auditor is not None:
+            self.auditor.model_call(self.n, system, user, res, self.inner)
         return res
 
 
 def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[str], fails: list[dict], base: str,
             head: str, llm, python: str | None, emit: EventFn | None = None,
-            timeout: float | None = None) -> tuple[dict, str, int]:
+            timeout: float | None = None, auditor=None) -> tuple[dict, str, int]:
     by_id = {f["test_id"]: f for f in fails}
     others = {t for t in by_id if t not in mine}
     fr = FailureReport(failing=[{"test_id": t, "output": by_id[t].get("message", "")} for t in mine],
@@ -672,7 +688,7 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
             ok = full_ok and not still and not outside
             return ok, "\n".join(f"{r.test_id}: {r.message}" for r in run.failed if r.test_id not in others)[:1000]
 
-        agent_llm = _EventLLM(llm, emit) if emit else llm
+        agent_llm = _EventLLM(llm, emit, auditor) if emit else llm
         res = RepairAgent(agent_llm, "R3", max_retries=MAX_REPAIR_RETRIES,
                           applier=applier if emit else apply_blocks_tolerant).run(tree, srcs, fr, validate)
         head_files = {}

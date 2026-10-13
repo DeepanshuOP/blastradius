@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timezone
 from typing import IO
 
-STAGES = ("meta", "repo", "graph", "change", "impact", "tests", "arena", "triage", "repair", "validate", "report")
+STAGES = ("meta", "repo", "graph", "change", "impact", "tests", "arena", "triage", "repair", "validate", "report", "audit")
 STATUSES = ("running", "ok", "failed", "skipped")
 #: Event types each stage may carry (the schema `validate_event` checks recorded runs against).
 TYPES: dict[str, tuple[str, ...]] = {
@@ -29,6 +29,7 @@ TYPES: dict[str, tuple[str, ...]] = {
                "repair.unavailable"),
     "validate": ("validate.check", "validate.verdict"),
     "report": ("report.comment", "report.summary"),
+    "audit": ("audit.record", "audit.verify"),
 }
 REQUIRED_DATA: dict[str, tuple[str, ...]] = {
     "repo.info": ("name", "url", "commit", "language", "n_files", "tests_runnable"),
@@ -47,6 +48,8 @@ REQUIRED_DATA: dict[str, tuple[str, ...]] = {
     "validate.verdict": ("accepted",),
     "report.comment": ("comment",),
     "report.summary": ("stages", "mode"),
+    "audit.record": ("v", "run_id", "seq", "stage", "decision", "reason", "prev_hash", "hash"),
+    "audit.verify": ("ok", "records", "run_id"),
 }
 
 

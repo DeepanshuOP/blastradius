@@ -449,7 +449,7 @@ class Lab:
         if ws.runnable:
             out = bot.run_bot(ws.repo_dir, ch.base, ch.head, 1, llm=self.llm if self.a.use_llm else None,
                               state_dir=self.scratch / "state", python=py, on_event=self.on_bot_event,
-                              timeout=self.a.timeout, case_order=lambda: self.rule)
+                              timeout=self.a.timeout, case_order=lambda: self.rule, audit=self.open_audit())
             stats = out.stats
             validated = out.validated
             if self.a.repair_arena:
@@ -458,7 +458,32 @@ class Lab:
             self._impact_only(ws, ch, bot)
             stats, validated = {}, False
         self.summary(ws, stats, validated)
+        self.close_audit()
         return 0
+
+    # -- decision log (D-71) ---------------------------------------------------------------------
+    def open_audit(self):
+        """A fresh hash-chained decision log for this run; each record is also streamed as an `audit.record` event."""
+        from datetime import datetime, timezone
+
+        from src.agents.audit import DecisionLog
+
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        self.audit = DecisionLog(f"lab-{self.run_id}-{stamp}",
+                                 on_record=lambda r: self.em.emit("audit", "audit.record", "ok", r))
+        return self.audit
+
+    def close_audit(self) -> None:
+        """Verify the chain and emit the result (`audit.verify`)."""
+        from src.agents.audit import summary, verify
+
+        log = getattr(self, "audit", None)
+        if log is None or not log.records:
+            return
+        ok, problems, n = verify(log.run_id, log.root)
+        self.em.emit("audit", "audit.verify", "ok" if ok else "failed", {
+            "run_id": log.run_id, "ok": ok, "records": n, "problems": problems[:10], "summary": summary(log.records),
+            "file": f"logs/agent/{log.run_id}.jsonl"})
 
     def _impact_only(self, ws: Workspace, ch: changes.Change, bot) -> None:
         e = self.em
