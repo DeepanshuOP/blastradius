@@ -20,6 +20,7 @@ import signal
 import sys
 import time
 from pathlib import Path
+from typing import IO, Iterator
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNS = ROOT / "demo-web" / "public" / "lab" / "runs"
@@ -27,6 +28,19 @@ RUNS = ROOT / "demo-web" / "public" / "lab" / "runs"
 
 def log(*a: object) -> None:
     print(*a, file=sys.stderr, flush=True)
+
+
+@contextlib.contextmanager
+def _json_stdout() -> Iterator[IO[str]]:
+    """Yield the real stdout for the one JSON document; anything else printed meanwhile (vendored graphify's status lines) goes to stderr."""
+    out = sys.stdout
+    with contextlib.redirect_stdout(sys.stderr):
+        yield out
+
+
+def _print_json(out: IO[str], obj: object, **kw: object) -> None:
+    out.write(json.dumps(obj, **kw) + "\n")
+    out.flush()
 
 
 def _replay(name: str, speed: float) -> int:
@@ -210,10 +224,12 @@ def cmd_challenge(ns: argparse.Namespace) -> int:
     """The function and operator a seed chooses in a prepared repository (no repository code runs, no model)."""
     from src.lab import challenge
 
-    try:
-        print(json.dumps(challenge.pick_for(ns.repo, ns.seed)))
-    except ValueError as exc:
-        raise SystemExit(str(exc)) from exc
+    with _json_stdout() as out:
+        try:
+            picked = challenge.pick_for(ns.repo, ns.seed)
+        except ValueError as exc:
+            raise SystemExit(str(exc)) from exc
+        _print_json(out, picked)
     return 0
 
 
@@ -225,12 +241,12 @@ def cmd_history(ns: argparse.Namespace) -> int:
 
     if not re.fullmatch(r"[\w.-]{1,80}(__[\w.-]{1,80})?", ns.repo):
         raise SystemExit("--repo must be a prepared slug or owner__repo")
-    with _lock():
+    with _json_stdout() as out, _lock():
         removed = arena.reset_history(ns.repo) if ns.reset else 0
         runs = arena.read_history(ns.repo)
-    print(json.dumps({"repo": ns.repo, "n_runs": len(runs), "removed": removed,
+    _print_json(out, {"repo": ns.repo, "n_runs": len(runs), "removed": removed,
                       "runs": [{"run_id": r.get("run_id"), "date": r.get("date"), "kind": (r.get("change") or {}).get("kind"),
-                                "n_failed": len(r.get("failed", []))} for r in runs[-20:]]}))
+                                "n_failed": len(r.get("failed", []))} for r in runs[-20:]]})
     return 0
 
 
@@ -238,17 +254,24 @@ def cmd_rederive(ns: argparse.Namespace) -> int:
     """Apply the 2026-10-12 test-case rule to recordings made before it (offline; see `src/lab/rederive.py`)."""
     from src.lab import rederive
 
-    out = []
-    with _lock():
+    res = []
+    with _json_stdout() as out, _lock():
         for name in ns.names:
-            out.append(rederive.run(name, RUNS, write=not ns.dry_run))
-    print(json.dumps(out, indent=1))
+            res.append(rederive.run(name, RUNS, write=not ns.dry_run))
+    _print_json(out, res, indent=1)
     if not ns.dry_run:
         write_index()
     return 0
 
 
 def cmd_repos(ns: argparse.Namespace) -> int:
+    with _json_stdout() as stdout:
+        _print_json(stdout, _repos_listing())
+    return 0
+
+
+def _repos_listing() -> dict:
+    """The prepared repositories (files, test cases, tasks) and the recorded runs, as `repos` prints them."""
     from src.lab import changes
     from src.lab.workspace import PREPARED, REPOS, VENVS, count_files, git, prepared_info
 
@@ -275,8 +298,7 @@ def cmd_repos(ns: argparse.Namespace) -> int:
                 hdr = {}
             runs.append({"name": p.stem, "date": hdr.get("date"), "model": hdr.get("model"),
                          "git_sha": hdr.get("git_sha"), "title": hdr.get("title"), "description": hdr.get("description")})
-    print(json.dumps({"repos": out, "runs": runs, "llm": bool(os.environ.get("GROQ_API_KEY"))}))
-    return 0
+    return {"repos": out, "runs": runs, "llm": bool(os.environ.get("GROQ_API_KEY"))}
 
 
 def cmd_mutations(ns: argparse.Namespace) -> int:
@@ -288,14 +310,16 @@ def cmd_mutations(ns: argparse.Namespace) -> int:
     p = (REPOS / ns.repo / ns.file).resolve()
     if REPOS.resolve() not in p.parents or not p.is_file() or p.suffix != ".py":
         raise SystemExit("not a Python file of the repository")
-    print(json.dumps({"file": ns.file, "functions": changes.mutations_of(p.read_text(encoding="utf-8"))}))
+    with _json_stdout() as out:
+        _print_json(out, {"file": ns.file, "functions": changes.mutations_of(p.read_text(encoding="utf-8"))})
     return 0
 
 
 def cmd_tasks(ns: argparse.Namespace) -> int:
     from src.lab import changes
 
-    print(json.dumps(changes.list_tasks(ns.repo)))
+    with _json_stdout() as out:
+        _print_json(out, changes.list_tasks(ns.repo))
     return 0
 
 
@@ -309,20 +333,22 @@ def cmd_graph(ns: argparse.Namespace) -> int:
     if ns.repo not in PREPARED:
         raise SystemExit("unknown repo")
     scratch = new_scratch("graph")
-    try:
-        ws = prepare_seeded(ns.repo, scratch)
-        cache = LAB_ROOT / "graphs" / f"repo-{ns.repo}-{ws.base[:12]}.json"
-        if not cache.exists():
-            st = build_graph_at(f"lab/{ws.name}", ws.base, clone_dir=ws.repo_dir, out_dir=scratch / "graphs")
-            view = graphview.to_cytoscape(load_graph(st.graph_path))
-            view.update({"repo": ws.name, "commit": ws.base, "parse_failures": st.n_parse_failures,
-                         "files_considered": st.n_files_considered, "failed_source_files": st.failed_source_files[:30],
-                         "counts": graphview.count_by_type(view)})
-            graphview.store(view, cache)
-        sys.stdout.write(cache.read_text(encoding="utf-8"))
-        return 0
-    finally:
-        shutil.rmtree(scratch, ignore_errors=True)
+    with _json_stdout() as out:
+        try:
+            ws = prepare_seeded(ns.repo, scratch)
+            cache = LAB_ROOT / "graphs" / f"repo-{ns.repo}-{ws.base[:12]}.json"
+            if not cache.exists():
+                st = build_graph_at(f"lab/{ws.name}", ws.base, clone_dir=ws.repo_dir, out_dir=scratch / "graphs")
+                view = graphview.to_cytoscape(load_graph(st.graph_path))
+                view.update({"repo": ws.name, "commit": ws.base, "parse_failures": st.n_parse_failures,
+                             "files_considered": st.n_files_considered, "failed_source_files": st.failed_source_files[:30],
+                             "counts": graphview.count_by_type(view)})
+                graphview.store(view, cache)
+            out.write(cache.read_text(encoding="utf-8"))
+            out.flush()
+            return 0
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
 
 
 #: Tokens one lab repair call may take (prompt about 1,000, completion budget 1,500, with slack); used for headroom only.
@@ -440,11 +466,12 @@ def cmd_status(_ns: argparse.Namespace) -> int:
     from src.agents.llm_provider import status
     from src.lab.engine import DEFAULT_MODEL
 
-    q = quota()
-    prov = {m: status(m, q.get(m, {}).get("ok")) for m in q}
-    print(json.dumps({"llm": any(p["provider"] for p in prov.values()) or bool(os.environ.get("GROQ_API_KEY")),
+    with _json_stdout() as out:
+        q = quota()
+        prov = {m: status(m, q.get(m, {}).get("ok")) for m in q}
+    _print_json(out, {"llm": any(p["provider"] for p in prov.values()) or bool(os.environ.get("GROQ_API_KEY")),
                       "quota": q, "providers": prov, "default_model": DEFAULT_MODEL,
-                      "fix_mode": os.environ.get("BR_FIX_MODE") or "suggest"}))
+                      "fix_mode": os.environ.get("BR_FIX_MODE") or "suggest"})
     return 0
 
 

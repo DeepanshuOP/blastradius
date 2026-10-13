@@ -55,6 +55,19 @@ export function labJson(args: string[], timeoutMs = 120_000, withKey = false): P
   });
 }
 
+/** The JSON a lab CLI command printed: its last stdout line starting with "{" or "[". Any other stdout line is a library
+ *  print that leaked past the CLI's own stderr redirect; it is logged here as a server-side warning, never parsed. */
+export function labOut(r: { out: string }, what: string): string {
+  const lines = r.out.split("\n").filter((l) => l.trim());
+  let i = lines.length - 1;
+  while (i >= 0 && !/^[{[]/.test(lines[i])) i--;
+  const stray = lines.filter((_, k) => k !== i);
+  if (stray.length) console.warn(`[lab ${what}] ignored ${stray.length} non-JSON stdout line(s): ${stray.join(" | ").slice(0, 500)}`);
+  return i >= 0 ? lines[i] : "";
+}
+
+export const labParse = <T = Record<string, unknown>>(r: { out: string }, what: string): T => JSON.parse(labOut(r, what)) as T;
+
 /** SIGTERM the whole process group (uv, python, and the pytest children), then SIGKILL after 3 s. */
 export function killGroup(child: ChildProcess): void {
   if (!child.pid || child.exitCode !== null) return;

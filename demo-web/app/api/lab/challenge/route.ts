@@ -4,7 +4,7 @@
  * called. Without `seed` the route draws one and returns it, so the reviewer sees which seed made the choice.
  */
 import { randomInt } from "node:crypto";
-import { PREPARED, fail, isLocal, labJson } from "../_lib";
+import { PREPARED, fail, isLocal, labJson, labParse } from "../_lib";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,5 +24,5 @@ export async function GET(req: Request) {
   }
   const r = await labJson(["challenge", "--repo", repo, "--seed", String(seed)], 60_000);
   if (r.code !== 0) return fail(500, "Choosing the bug failed.", (r.err || r.out).slice(-600));
-  return Response.json({ ok: true, ...JSON.parse(r.out) });
+  return Response.json({ ok: true, ...labParse(r, "challenge") });
 }

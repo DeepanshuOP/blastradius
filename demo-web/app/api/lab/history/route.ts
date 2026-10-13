@@ -3,7 +3,7 @@
  * POST /api/lab/history {repo}  -> forgets them (the "Reset history" button). Refused while a run is active.
  * The store is the lab's own scratch file under the OS temp directory; nothing under data/ is touched.
  */
-import { PREPARED, fail, isLocal, labJson, lock } from "../_lib";
+import { PREPARED, fail, isLocal, labJson, labParse, lock } from "../_lib";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   if (!known(repo)) return fail(400, "repo must be a prepared repository or owner__repo");
   const r = await labJson(["history", "--repo", repo], 30_000);
   if (r.code !== 0) return fail(500, "Reading the history failed.", r.err.slice(-500));
-  return Response.json({ ok: true, ...JSON.parse(r.out) });
+  return Response.json({ ok: true, ...labParse(r, "history") });
 }
 
 export async function POST(req: Request) {
@@ -28,5 +28,5 @@ export async function POST(req: Request) {
   if (lock().busy) return fail(409, "A lab run is active; reset the history when it ends.");
   const r = await labJson(["history", "--repo", repo, "--reset"], 30_000);
   if (r.code !== 0) return fail(500, "Resetting the history failed.", r.err.slice(-500));
-  return Response.json({ ok: true, ...JSON.parse(r.out) });
+  return Response.json({ ok: true, ...labParse(r, "history") });
 }

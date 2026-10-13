@@ -5,6 +5,7 @@ import { BTN, Drawer } from "./common";
 
 /** One plain sentence per term. The same text feeds the dotted-underline tooltips and the "?" drawer. */
 export const GLOSSARY = {
+  test: "A test function is one test node in the graph; pytest parametrisation can expand it into several test cases, which is what a run counts.",
   "blast radius": "The code and tests a change can reach through calls and imports in the code graph.",
   "co-change": "Two files that were edited together in past commits, often used as a sign that they are related.",
   binding: "Matching a failing test's name to the test source file that defines it, at a pinned commit.",

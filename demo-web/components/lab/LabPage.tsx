@@ -117,13 +117,13 @@ const LEGEND: { k: Filter; label: string; swatch: React.ReactNode }[] = [
   { k: "file", label: "file", swatch: <span className="inline-block h-2.5 w-3 rounded-sm bg-blue" /> },
   { k: "class", label: "class", swatch: <span className="inline-block h-2.5 w-2.5 rotate-45 bg-amber" /> },
   { k: "function", label: "function", swatch: <span className="inline-block h-2.5 w-2.5 rounded-full bg-muted" /> },
-  { k: "test", label: "test", swatch: <span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-green" /> },
+  { k: "test", label: "test functions", swatch: <span className="inline-block h-2.5 w-2.5 rounded-full border-2 border-green" /> },
   { k: "passed", label: "passed", swatch: <StatusIcon tone="passed" /> },
   { k: "failed", label: "failed", swatch: <StatusIcon tone="failed" /> },
 ];
 
-/** Legend chips that are also the filters: a chip that is off hides that kind of node. */
-export function GraphFilters({ hidden, toggle, counts }: { hidden: Filter[]; toggle: (k: Filter) => void; counts: Partial<Record<Filter, number>> }) {
+/** Legend chips that are also the filters: a chip that is off hides that kind of node. `cases`: collected pytest cases, when known. */
+export function GraphFilters({ hidden, toggle, counts, cases }: { hidden: Filter[]; toggle: (k: Filter) => void; counts: Partial<Record<Filter, number>>; cases?: number | null }) {
   return (
     <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Graph filters">
       {LEGEND.map((x) => {
@@ -131,7 +131,7 @@ export function GraphFilters({ hidden, toggle, counts }: { hidden: Filter[]; tog
         return (
           <button key={x.k} type="button" onClick={() => toggle(x.k)} aria-pressed={!off}
             className={`ui inline-flex min-h-[26px] items-center gap-1.5 rounded-full border px-2 text-xs ${off ? "border-rule text-muted line-through opacity-60" : "border-rule text-ink hover:border-muted"}`}>
-            {x.swatch}{x.label}{counts[x.k] !== undefined && <span className="num text-muted">{counts[x.k]}</span>}
+            {x.swatch}{x.label}{counts[x.k] !== undefined && <span className="num text-muted">{counts[x.k]}{x.k === "test" && cases != null ? ` (${cases} cases)` : ""}</span>}
           </button>
         );
       })}
@@ -422,7 +422,7 @@ export default function LabPage() {
                 </div>
               )}
               {idle && prepared && !change && g.nodes.length > 0 && (
-                <span className="ui pointer-events-none absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-full border border-accent bg-panel px-3 py-1 text-sm font-semibold text-accent shadow-[0_4px_16px_rgb(0_0_0/0.4)]">Click a function to break it</span>
+                <span className="ui pointer-events-none absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full border border-accent bg-panel px-3 py-1 text-sm font-semibold text-accent shadow-[0_4px_16px_rgb(0_0_0/0.4)]">Click a function to break it</span>
               )}
               <GraphView ref={graphRef} className="absolute inset-0" nodes={g.nodes} edges={g.edges} layout="rings"
                 changed={g.changed} waveKey={waveKey} paths={g.paths} atRisk={g.atRisk} outcomes={g.outcomes}
@@ -451,8 +451,8 @@ export default function LabPage() {
               )}
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-rule px-3 py-2">
-              <GraphFilters hidden={hidden} counts={typeCounts} toggle={(k) => setHidden((h) => (h.includes(k) ? h.filter((x) => x !== k) : [...h, k]))} />
-              {g.runGraph && <span className="num mono ml-auto text-xs text-muted">{s.graph?.n_nodes ?? g.nodes.length} nodes · {s.graph?.n_edges ?? g.edges.length} edges{counts ? ` · ${counts.nodes.test ?? 0} tests` : ""}</span>}
+              <GraphFilters hidden={hidden} counts={typeCounts} cases={prepared?.n_tests} toggle={(k) => setHidden((h) => (h.includes(k) ? h.filter((x) => x !== k) : [...h, k]))} />
+              {g.runGraph && <span className="num mono ml-auto text-xs text-muted">{s.graph?.n_nodes ?? g.nodes.length} nodes · {s.graph?.n_edges ?? g.edges.length} edges{counts ? ` · ${counts.nodes.test ?? 0} test functions${prepared?.n_tests != null ? ` (${prepared.n_tests} cases)` : ""}` : ""}</span>}
               <Info label="About the graph" align="right">
                 <span className="block">Node size is the number of tests that reach it along calls and imports. Click a node to focus it; click empty space to clear.</span>
                 <span className="mt-1 block">{s.graph?.parse_failures ?? g.runGraph?.parse_failures ?? 0} parse failures in this graph.</span>

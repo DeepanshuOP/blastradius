@@ -246,6 +246,13 @@ def check_challenge() -> tuple[bool, str]:
     return rc == 0 and "passed" in out, last(out, 1)
 
 
+def check_lab_graph_json() -> tuple[bool, str]:
+    """`python -m src.lab graph` on a cache miss: stdout is one JSON document, graphify's status lines go to stderr."""
+    rc, out = run(["uv", "run", *EXTRAS, "pytest", "-q", "-rs", "-p", "no:cacheprovider", "tests/test_lab.py", "-k",
+                   "graph_command_stdout_is_json"], env=_env(replay=False))
+    return rc == 0 and "passed" in out and "skipped" not in out, last(out, 1)
+
+
 def check_text_budget() -> tuple[bool, str]:
     """Compile `demo-web/scripts/text_budget.tsx` and count paragraph lines in the server-rendered HTML of the idle page
     and of every result panel of every recording."""
@@ -689,7 +696,8 @@ def main() -> int:
              ("provider chip and Groq -> Bedrock fallback (D-69)", check_provider),
              ("Decisions tab renders from the recorded run (review check above) and audit verify passes on it (D-71)", check_audit_guided),
              ("fix-PR gate refusals (D-70)", check_fixpr),
-             ("no secret in logs/agent (D-71)", check_agent_logs_secret_free)]
+             ("no secret in logs/agent (D-71)", check_agent_logs_secret_free),
+             ("lab graph CLI on a cache miss: stdout parses as JSON, graphify lines on stderr", check_lab_graph_json)]
     try:
         for name, fn in steps:
             t0 = time.time()

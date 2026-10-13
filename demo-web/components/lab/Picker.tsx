@@ -89,7 +89,7 @@ export function RepoCards({ repos, live, disabled, scenario, setScenario, setCha
                 <span className={`ui grid h-10 w-10 shrink-0 place-items-center rounded-md text-md font-bold ${m.tone}`} aria-hidden="true">{m.text}</span>
                 <span className="min-w-0 flex-1">
                   <span className="ui flex flex-wrap items-center gap-x-1.5 text-base font-semibold">{r.name}<span className="ui rounded bg-panel2 px-1.5 text-2xs font-medium text-muted">{LANG[r.language] ?? r.language}</span></span>
-                  <span className="num mono block truncate text-xs text-muted">{r.n_files} files · {r.n_tests ?? "?"} tests</span>
+                  <span className="num mono block truncate text-xs text-muted">{r.n_files} files · {r.n_tests ?? "?"} test cases</span>
                 </span>
               </button>
             </li>

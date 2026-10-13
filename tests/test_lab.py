@@ -164,3 +164,17 @@ def test_event_schema_rejects_a_malformed_event() -> None:
         {"seq": 1, "ts": "x", "stage": "tests", "type": "nonsense", "status": "ok", "dur_ms": 0, "data": {}})
     assert not validate_event({"seq": 1, "ts": "x", "stage": "tests", "type": "test.result", "status": "ok",
                                "dur_ms": 1, "data": {"id": "a::b", "outcome": "passed", "duration_s": 0.1}})
+
+
+@requires_data("data/seeded/repos/click")
+def test_graph_command_stdout_is_json_on_a_cache_miss(tmp_path) -> None:
+    """A cache miss runs vendored graphify, whose status lines must reach stderr, never the JSON on stdout."""
+    import os
+    import sys
+
+    p = subprocess.run([sys.executable, "-m", "src.lab", "graph", "--repo", "click"], cwd=ROOT, capture_output=True,
+                       text=True, timeout=600, env={**os.environ, "TMPDIR": str(tmp_path)})   # empty LAB_ROOT: no cached graph
+    assert p.returncode == 0, p.stderr[-2000:]
+    view = json.loads(p.stdout)
+    assert view["repo"] == "click" and view["counts"]["nodes"]["test"] > 0
+    assert "[graphify] Deduplicated" in p.stderr

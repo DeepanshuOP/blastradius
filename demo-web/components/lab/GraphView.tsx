@@ -87,11 +87,19 @@ function styleSheet() {
     { selector: "node.trace, node.sel", style: { "border-color": c.ink, "border-width": 4, label: "data(short)", "z-index": 30 } },
     { selector: "edge.trace", style: { "line-color": c.ink, width: 3, opacity: 1, "z-index": 25 } },
     { selector: "node.imp", style: { label: "data(short)", "z-index": 12 } },
+    // zoomed out (below LABEL_ZOOM) only the hovered, changed, selected or keyboard-focused node keeps its label
+    { selector: "node.lo", style: { label: "" } },
+    { selector: "node.lo.hover, node.lo.changed, node.lo.sel, node.lo.kbd", style: { label: "data(short)", "min-zoomed-font-size": 0 } },
     { selector: "node.dim", style: { opacity: 0.12 } },
     { selector: "edge.dim", style: { opacity: 0.03 } },
     { selector: ".hidden", style: { display: "none" } },
   ] as never;
 }
+
+/** Fit padding, in px: room for the outermost ring's title above the ring. */
+const PAD = 40;
+/** Below this zoom, labels overlap: only the hovered and changed nodes keep theirs. */
+const LABEL_ZOOM = 0.9;
 
 const shortLabel = (n: GNode) => (n.type === "file" ? n.file.split("/").slice(-1)[0] : n.label.replace(/^\./, ""));
 const edgeBetween = (cy: Core, a: string, b: string) =>
@@ -105,6 +113,7 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
   const waves = useRef<SVGGElement>(null);
   const timers = useRef<number[]>([]);
   const sig = useRef("");
+  const lo = useRef<boolean | null>(null);
   const cb = useRef({ select: p.onSelect, context: p.onContext, tap: p.onTap });
   cb.current = { select: p.onSelect, context: p.onContext, tap: p.onTap };
   const [ready, setReady] = useState(0);
@@ -142,12 +151,23 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       l.className = "ui br-guide-label";
       l.textContent = `${ring.label} · ${ring.count}`;
       l.style.left = `${pan.x}px`;
-      l.style.top = `${pan.y - ring.radius * z}px`;
+      l.style.top = `${pan.y - ring.radius * z - 10 * z - 3}px`;   // just outside the ring, clear of its largest nodes
+      l.style.transform = "translate(-50%, -100%)";
     });
   };
 
+  /** Toggle the zoomed-out label rule when the zoom crosses LABEL_ZOOM (or always, after a rebuild). */
+  const syncLabels = (force = false) => {
+    const cy = cyRef.current;
+    if (!cy) return;
+    const now = cy.zoom() < LABEL_ZOOM;
+    if (!force && now === lo.current) return;
+    lo.current = now;
+    cy.nodes().not(":parent").toggleClass("lo", now);
+  };
+
   useImperativeHandle(ref, () => ({
-    fit: () => cyRef.current?.fit(undefined, 24),
+    fit: () => cyRef.current?.fit(undefined, PAD),
     zoomIn: () => cyRef.current?.zoom({ level: cyRef.current.zoom() * 1.3, renderedPosition: { x: (box.current?.clientWidth ?? 0) / 2, y: (box.current?.clientHeight ?? 0) / 2 } }),
     zoomOut: () => cyRef.current?.zoom({ level: cyRef.current.zoom() / 1.3, renderedPosition: { x: (box.current?.clientWidth ?? 0) / 2, y: (box.current?.clientHeight ?? 0) / 2 } }),
     center: (id: string) => { const n = cyRef.current?.getElementById(id); if (n && n.nonempty()) cyRef.current?.animate({ center: { eles: n }, zoom: Math.max(cyRef.current.zoom(), 1.4) }, { duration: reduced() ? 0 : 220 }); },
@@ -178,11 +198,12 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       });
       cy.on("mouseout", "node", (e) => { (e.target as NodeSingular).removeClass("hover"); setTip(null); });
       cy.on("pan zoom", () => setTip(null));
+      cy.on("zoom", () => syncLabels());
       cy.on("viewport resize", drawGuides);
       cyRef.current = cy;
       setReady((x) => x + 1);
     })();
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => { cyRef.current?.resize(); cyRef.current?.fit(undefined, 24); drawGuides(); }) : null;
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => { cyRef.current?.resize(); cyRef.current?.fit(undefined, PAD); drawGuides(); }) : null;
     if (box.current && ro) ro.observe(box.current);
     return () => { dead = true; ro?.disconnect(); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -207,16 +228,17 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
       p.edges.filter((e) => ids.has(e.source) && ids.has(e.target)).forEach((e) => els.push({ group: "edges", data: { id: e.id, source: e.source, target: e.target, type: e.type } }));
       cy.elements().remove();
       cy.add(els);
-      if (layout === "rings" && rl) cy.layout({ name: "preset", positions: (n: NodeSingular) => rl.positions[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: 24 } as never).run();
+      if (layout === "rings" && rl) cy.layout({ name: "preset", positions: (n: NodeSingular) => rl.positions[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: PAD } as never).run();
       else if (layout === "groups") {
         const pos = groupLayout(p.nodes);
-        cy.layout({ name: "preset", positions: (n: NodeSingular) => pos[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: 24 } as never).run();
+        cy.layout({ name: "preset", positions: (n: NodeSingular) => pos[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: PAD } as never).run();
       } else cy.layout({ name: "cose", animate: false, randomize: false, nodeRepulsion: () => 12000, idealEdgeLength: () => 60,
-        componentSpacing: 60, gravity: 0.6, numIter: p.nodes.length > 400 ? 400 : 900, fit: true, padding: 24 } as never).run();
+        componentSpacing: 60, gravity: 0.6, numIter: p.nodes.length > 400 ? 400 : 900, fit: true, padding: PAD } as never).run();
     } else if (layout === "rings" && rl) {        // same graph, new centre (the change arrived): move to the rings
-      cy.layout({ name: "preset", positions: (n: NodeSingular) => rl.positions[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: 24, animate: !reduced(), animationDuration: 450,
+      cy.layout({ name: "preset", positions: (n: NodeSingular) => rl.positions[n.id()] ?? { x: 0, y: 0 }, fit: true, padding: PAD, animate: !reduced(), animationDuration: 450,
         animationEasing: "ease-out-cubic" } as never).run();
     }
+    syncLabels(true);
     drawGuides();
     window.setTimeout(drawGuides, 500);
   }, [ready, layout, p.nodes, p.edges, rl, p.sizeBy]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -342,7 +364,6 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
   return (
     <div className={p.className ?? "relative h-full w-full"}>
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true"><g ref={guide} /><g ref={waves} /></svg>
-      <div ref={labels} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true" />
       <div ref={box} className="absolute inset-0 rounded outline-none focus-visible:ring-2 focus-visible:ring-accent" tabIndex={0} role="application"
         aria-label={`${p.ariaLabel ?? "Code graph"}: ${p.nodes.length} nodes. Arrow keys move between nodes ring by ring, Enter opens the node card, Escape closes it.`}
         onKeyDown={(e) => {
@@ -354,6 +375,8 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
           } else if (e.key === "Escape") { p.onSelect?.(null); }
         }}
         onContextMenu={(e) => e.preventDefault()} />
+      {/* ring titles sit over the canvas so no node covers them; they never take a pointer event */}
+      <div ref={labels} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true" />
       <p className="sr-only" aria-live="polite">{kbdNode ? `${kbdNode.type} ${kbdNode.label} in ${kbdNode.file}${rl && rl.mode === "change" ? `, ${rl.hops[kbdNode.id] === null ? "not reachable from the change" : `${rl.hops[kbdNode.id]} hops from the change`}` : ""}` : ""}</p>
       {tip && tipLines.length > 0 && !card && (
         <div className="ui pointer-events-none absolute z-10 max-w-[260px] rounded border border-rule bg-panel px-2 py-1 text-xs shadow-[0_4px_16px_rgb(0_0_0/0.4)]"

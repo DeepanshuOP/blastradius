@@ -7,7 +7,7 @@ import { spawn } from "node:child_process";
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { MODELS, OPERATORS, PREPARED, REPO_ROOT, SSE_HEADERS, fail, isLocal, killGroup, labCommand, labJson, lock, safeName, safePath, sse } from "../_lib";
+import { MODELS, OPERATORS, PREPARED, REPO_ROOT, SSE_HEADERS, fail, isLocal, killGroup, labCommand, labJson, labParse, lock, safeName, safePath, sse } from "../_lib";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   if (!isLocal(req)) return fail(403, "The lab only serves localhost.");
   const st = lock();
   const s = await labJson(["status"], 60_000, true);
-  const j = s.code === 0 ? JSON.parse(s.out) : {};
+  const j = s.code === 0 ? labParse(s, "status") : {};
   return Response.json({ ok: true, live: true, llm: Boolean(j.llm), quota: j.quota ?? null, providers: j.providers ?? null, fix_mode: j.fix_mode ?? "suggest", busy: st.busy, since: st.busy ? st.since : null, what: st.what });
 }
 
