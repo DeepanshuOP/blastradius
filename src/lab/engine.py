@@ -450,7 +450,8 @@ class Lab:
             out = bot.run_bot(ws.repo_dir, ch.base, ch.head, 1, llm=self.llm if self.a.use_llm else None,
                               state_dir=self.scratch / "state", python=py, on_event=self.on_bot_event,
                               timeout=self.a.timeout, case_order=lambda: self.rule, audit=self.open_audit(),
-                              fix_mode=self.fix_mode)
+                              fix_mode=self.fix_mode,
+                              graph_view=self.view if getattr(self, "view", None) and self.view.get("nodes") else None)
             stats = out.stats
             self.fix_stage(ws, out)
             validated = out.validated

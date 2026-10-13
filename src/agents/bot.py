@@ -390,7 +390,8 @@ class _RepairUnavailable(RuntimeError):
 
 def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, *, llm=None,
             state_dir: Path | None = None, python: str | None = None, on_event: EventFn | None = None,
-            timeout: float | None = None, case_order=None, audit=None, fix_mode: str = "suggest") -> BotOutcome:
+            timeout: float | None = None, case_order=None, audit=None, fix_mode: str = "suggest",
+            graph_view: dict | None = None) -> BotOutcome:
     """Run impact, regression, triage and repair on one PR and render the comment.
 
     Args:
@@ -411,6 +412,8 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
         audit: Optional :class:`src.agents.audit.DecisionLog`. Every stage is then recorded (D-71); it implies the
             event path (a no-op `on_event` is used when none is given), and a validated patch is re-verified on a
             fresh worktree (full suite and scope; checks `reverify_full`, `reverify_scope`).
+        graph_view: The code graph (`graphview.to_cytoscape` shape) for graph localisation; when None on the event
+            path, it is built at the head commit (and the localisation is skipped if that fails).
         fix_mode: `suggest` (default, comment unchanged), `ask` or `auto` (D-70): the comment says how the fix PR is
             opened. Opening it is :func:`src.agents.fixpr.apply_fix`, never this function.
 
@@ -514,7 +517,7 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
             try:
                 repair, model, tokens = _repair(repo, state, impact, report, sorted(mine), fails, base, head, llm,
                                                 python, emit if on_event else None, timeout if on_event else None,
-                                                auditor)
+                                                auditor, graph_view)
             except _RepairUnavailable as exc:
                 notes.append(f"No patch was attempted: {exc}")
     if on_event and not fails:
@@ -605,7 +608,7 @@ class _EventLLM:
 
 def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[str], fails: list[dict], base: str,
             head: str, llm, python: str | None, emit: EventFn | None = None,
-            timeout: float | None = None, auditor=None) -> tuple[dict, str, int]:
+            timeout: float | None = None, auditor=None, graph_view: dict | None = None) -> tuple[dict, str, int]:
     by_id = {f["test_id"]: f for f in fails}
     others = {t for t in by_id if t not in mine}
     fr = FailureReport(failing=[{"test_id": t, "output": by_id[t].get("message", "")} for t in mine],
@@ -619,18 +622,23 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
         dirs = sorted({p.split("/")[0] for p in gitops.tracked_files(tree)
                        if p.endswith(".py") and not is_conventional_test_file(p)})
         srcs = source_files(tree, {"src_dirs": dirs})
+        loc_ev, graph_ctx = None, None
+        if emit:                                   # graph localisation (no model); the repair context only with BR_LOCALIZE=graph
+            loc_ev, graph_ctx = _localize(tree, srcs, fr, graph_view, head, note)
         if emit:                                   # the chunks the agent will show, chosen by the same call it makes
             from src.agents.repair import changed_line_ranges, select_chunks
 
             ranges = changed_line_ranges(fr.pr_diff)
-            chosen = select_chunks("R2", tree, srcs, fr)
+            chosen = graph_ctx or select_chunks("R2", tree, srcs, fr)
             note("repair.chunks", "ok", {"chunks": [
                 {"file": c.file, "qualname": c.qualname, "start": c.start, "end": c.end, "focus": c.focus,
                  "bm25": round(c.score, 4), "rank": i + 1,
-                 "why": ("changed function (the diff touches line " + str(c.focus) + ")"
-                         if any(c.start <= ln <= c.end for ln in ranges.get(c.file, [])) else "BM25 rank")
-                        + f"; BM25 rank {i + 1}, score {c.score:.3f}"} for i, c in enumerate(chosen)],
-                "failing": [t["test_id"] for t in fr.failing[:8]]})
+                 "why": (f"graph localisation rank {i + 1} (RRF {c.score:.4f})" if graph_ctx else
+                         ("changed function (the diff touches line " + str(c.focus) + ")"
+                          if any(c.start <= ln <= c.end for ln in ranges.get(c.file, [])) else "BM25 rank")
+                         + f"; BM25 rank {i + 1}, score {c.score:.3f}")} for i, c in enumerate(chosen)],
+                "failing": [t["test_id"] for t in fr.failing[:8]],
+                **({"context": "graph localisation (BR_LOCALIZE=graph)"} if graph_ctx else {})})
             allowed_edit = {c.file for c in chosen} | set(fr.changed_files)
         counters = {"attempt": 0, "validate": 0}
 
@@ -715,7 +723,7 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
 
         agent_llm = _EventLLM(llm, emit, auditor) if emit else llm
         res = RepairAgent(agent_llm, "R3", max_retries=MAX_REPAIR_RETRIES,
-                          applier=applier if emit else apply_blocks_tolerant).run(tree, srcs, fr, validate)
+                          applier=applier if emit else apply_blocks_tolerant, context=graph_ctx).run(tree, srcs, fr, validate)
         reverified: list[dict] = []
         if res.accepted and auditor is not None and emit is not None:
             # D-70: before anything can become a fix PR, the accepted patch is applied to a FRESH worktree of the head
@@ -748,7 +756,7 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
     last = next((a for a in reversed(res.attempts) if a.applied), None)
     if res.accepted and last is not None:
         checks = list(last_checks.get(counters["attempt"], {}).values()) + reverified
-        return ({"validated": True, "attempts": len(res.attempts), "files": last.files, "checks": checks,
+        return ({"validated": True, "attempts": len(res.attempts), "files": last.files, "checks": checks, "localize": loc_ev,
                  "diff": unified(head_files, last.files), "suggestions": patch_hunks(head_files, last.files)}, model, tokens)
     if last is not None:
         return ({"validated": False, "attempts": len(res.attempts), "files": last.files,
@@ -756,6 +764,35 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
                  "suggestions": []}, model, tokens)
     return ({"validated": False, "attempts": len(res.attempts), "files": {}, "diff": "(no applicable patch)",
              "note": "the model's reply could not be applied", "suggestions": []}, model, tokens)
+
+
+def _localize(tree: Path, srcs: list[str], fr: FailureReport, view: dict | None, head: str, note) -> tuple[dict | None, list | None]:
+    """Graph localisation of the failure (event `localize.result`); the top three chunks when ``BR_LOCALIZE=graph``."""
+    import os
+
+    from src.agents import localize as L
+
+    if view is None:
+        try:
+            import tempfile
+
+            from src.graph.build import build_graph_at, load_graph
+            from src.lab import graphview
+
+            with tempfile.TemporaryDirectory(prefix="br-loc-") as d:
+                st = build_graph_at(f"bot/{tree.name}", head, clone_dir=tree, out_dir=d)
+                view = graphview.to_cytoscape(load_graph(st.graph_path))
+        except Exception as exc:  # noqa: BLE001 - localisation is evidence, never a reason to stop the run
+            note("localize.result", "skipped", {"ranked": [], "paths": [], "reason": f"no graph: {type(exc).__name__}"})
+            return None, None
+    from src.agents.repair import index_functions
+
+    chunks = index_functions(tree, srcs)
+    ranked = L.localize(tree, srcs, fr.failing, fr.pr_diff, view, chunks)
+    ev = {**L.evidence(ranked), "coverage": L.graph_coverage(view, chunks, fr.failing)}
+    use = (os.environ.get("BR_LOCALIZE") or "").strip().lower() == "graph" and bool(ranked)
+    note("localize.result", "ok", {**ev, "context": "graph" if use else "bm25 (BR_LOCALIZE unset)"})
+    return ev, (L.as_chunks(ranked, tree, 3) if use else None)
 
 
 def post(outcome: BotOutcome, forge, pr: int, head: str) -> dict:

@@ -25,7 +25,7 @@ TYPES: dict[str, tuple[str, ...]] = {
     "tests": ("tests.start", "test.result", "tests.done", "tests.race"),
     "arena": ("arena.coverage", "arena.upstream", "arena.result", "arena.gap", "arena.repair", "arena.probe"),
     "triage": ("triage.result",),
-    "repair": ("repair.chunks", "repair.request", "repair.reply", "repair.blocks", "repair.patch", "repair.skipped",
+    "repair": ("localize.result", "repair.chunks", "repair.request", "repair.reply", "repair.blocks", "repair.patch", "repair.skipped",
                "repair.unavailable"),
     "validate": ("validate.check", "validate.verdict"),
     "report": ("report.comment", "report.summary"),

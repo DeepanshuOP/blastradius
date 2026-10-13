@@ -390,7 +390,8 @@ def apply_blocks(repo: Path, blocks: list[tuple[str, str, str]], allowed: set[st
 class RepairAgent:
     """Triage-routed, retrieval-grounded, validation-gated repair."""
 
-    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES, rag=None, applier=None) -> None:
+    def __init__(self, llm, arm: str = "R2", max_retries: int = MAX_RETRIES, rag=None, applier=None,
+                 context: list[Chunk] | None = None) -> None:
         """Create the agent.
 
         Args:
@@ -403,6 +404,8 @@ class RepairAgent:
                 (`src.rag.context.RagContext`).
             applier: Replacement for :func:`apply_blocks` with the same signature (the PR bot passes an
                 indentation-tolerant one). The default keeps the pre-registered strict behaviour.
+            context: Chunks to show instead of the arm's own retrieval (the PR bot's ``BR_LOCALIZE=graph`` passes
+                graph-localised chunks). None, the default and the only value E3 uses, keeps the arm's retrieval.
         """
         if arm not in ALL_ARMS:
             raise ValueError(f"unknown arm {arm!r}")
@@ -410,6 +413,7 @@ class RepairAgent:
             raise ValueError("arm R4 needs a RAG context provider (src.rag.context.RagContext)")
         self.llm, self.arm, self.max_retries, self.rag = llm, arm, max_retries, rag
         self.applier = applier or apply_blocks
+        self.context = context
 
     def run(self, repo: Path, source_files: list[str], report: FailureReport,
             validate: Callable[[dict[str, str]], tuple[bool, str]],
@@ -439,6 +443,8 @@ class RepairAgent:
         if self.arm == "R4":
             chunks = self.rag.select(repo, source_files, report, tie_break)
             history, similar = self.rag.extras(repo, chunks, source_files) if chunks else ([], [])
+        elif self.context:
+            chunks = list(self.context)
         else:
             chunks = select_chunks("R1" if self.arm == "R1" else "R2", repo, source_files, report, tie_break)
         res = RepairResult(self.arm, "repair", chunks)

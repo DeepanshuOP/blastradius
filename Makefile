@@ -1,4 +1,4 @@
-.PHONY: agent-log lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
+.PHONY: agent-log localize-eval lab lab-record-offline e1 e2 seeded repair-run repair-estimate repair-eval rag-eval bot-local test tables resolve-bases fetch-base-logs figures all reproduce check-log-isolation demo demo-data demo-web agents-demo analyze e3-sync cost-report demo-check lab-record
 
 test:
 	uv run pytest -q
@@ -271,3 +271,10 @@ agent-log:
 	@test -n "$(RUN)" || { echo 'usage: make agent-log RUN=<run_id|path.jsonl>' >&2; exit 2; }
 	uv run python -m src.agents.audit show $(RUN)
 	uv run python -m src.agents.audit verify $(RUN)
+
+# Graph-guided localisation L6 against L1 / L4 on BR-Seeded (exploratory, NOT part of `tables`): no LLM, no network.
+# Writes paper/generated/rq5_graph_localize.md. The repair agent uses L6 as context only with BR_LOCALIZE=graph.
+localize-eval: export BR_OFFLINE=1
+localize-eval:
+	mkdir -p paper/generated
+	uv run --extra graph --extra ml --extra rag python -m analysis.localize_eval

@@ -159,9 +159,12 @@ def test_audited_bot_run_records_every_stage_and_leaks_nothing(pr_repo, tmp_path
     assert ok, problems
     recs = audit.read(log.path)
     stages = [r["stage"] for r in recs]
-    for st in ("detect", "triage", "retrieve", "patch", "verify", "retry", "finish"):
+    for st in ("detect", "triage", "localize", "retrieve", "patch", "verify", "retry", "finish"):
         assert st in stages, st
     assert stages[0] == "detect" and stages[-1] == "finish"
+    loc = next(r for r in recs if r["stage"] == "localize")
+    assert loc["evidence"]["ranked"][0]["qualname"] == "apply_discount" and loc["evidence"]["paths"][0]["hops"] == 1
+    assert "graph" not in next(r for r in recs if r["stage"] == "retrieve")["reason"]     # BR_LOCALIZE unset: BM25
     models = [r for r in recs if r["actor"] == "model"]
     assert len(models) == 2 and all(r["model"]["provider"] == "groq" for r in models)
     assert models[0]["model"]["tokens_in"] == 900 and models[0]["model"]["cost_usd"] == 0.0
@@ -192,3 +195,22 @@ def test_existing_logs_agent_folder_has_no_secret() -> None:
         text = p.read_text(encoding="utf-8", errors="replace")
         assert not any(scan_text(text).get(c) for c in BLOCKERS), p
         assert not any(s in text for s in secrets), p
+
+
+def test_br_localize_graph_makes_the_graph_ranking_the_repair_context(pr_repo, tmp_path, monkeypatch) -> None:
+    repo, base, head = pr_repo
+    monkeypatch.setenv("BR_LOCALIZE", "graph")
+    good = f"shopcart/pricing.py\n<<<<<<< SEARCH\n{BUG}\n=======\n{FIXED}\n>>>>>>> REPLACE"
+    prompts: list[str] = []
+    monkeypatch.setattr("src.agents.llm.requests.post",
+                        lambda *a, **k: prompts.append(k["json"]["messages"][1]["content"]) or Resp(good))
+    llm = GroqLLM(api_key="k", model="openai/gpt-oss-20b", cache=LLMCache(tmp_path / "c.jsonl"),
+                  ledger=tmp_path / "u.jsonl", sleeper=lambda s: None)
+    log = audit.DecisionLog("graph-ctx", root=tmp_path / "logs")
+    out = bot.run_bot(repo, base, head, 7, llm=llm, state_dir=tmp_path / "s", python=sys.executable, audit=log)
+    assert out.validated
+    recs = audit.read(log.path)
+    ret = next(r for r in recs if r["stage"] == "retrieve")
+    assert "graph localisation" in ret["reason"]
+    assert ret["evidence"]["chunks"][0]["qualname"] == "apply_discount"
+    assert "apply_discount" in prompts[0]

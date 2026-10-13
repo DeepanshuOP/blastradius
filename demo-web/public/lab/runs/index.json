@@ -9,9 +9,9 @@
  },
  {
   "name": "guided-demo",
-  "date": "2026-10-13T16:19:55.126+00:00",
+  "date": "2026-10-13T16:38:42.703+00:00",
   "model": "openai/gpt-oss-120b",
-  "git_sha": "45cedb8a0d",
+  "git_sha": "ac78fc101c",
   "title": "Guided demo: reviewer challenge seed 7, end to end",
   "description": "Reviewer-challenge seed 7 on itsdangerous: NEGATE_COND in HMACAlgorithm.__init__ (signer.py:57, digest_method is None becomes not (digest_method is None)). Change, impact, tests, triage and a validated repair."
  },
