@@ -71,6 +71,8 @@ tables:
 	# E1 (D-56..D-59): feature table, then the ranker and baselines. No network, no LLM.
 	uv run --extra ml python -m analysis.build_e1_features
 	uv run --extra ml python -m analysis.rq2_predictor
+	# Base-paper metrics (Machalica et al., ICSE-SEIP 2019) over the ranked lists rq2_predictor just wrote. No training.
+	uv run --extra ml python -m analysis.pts_comparison
 	# E2 (D-56..D-59): triage of failing tests as mine / inherited / flaky. No network, no LLM.
 	uv run --extra ml python -m analysis.rq3_triage
 	uv run python analysis/leakage_audit.py
