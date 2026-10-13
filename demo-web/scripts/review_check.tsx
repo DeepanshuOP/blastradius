@@ -4,7 +4,7 @@
  *   node <compiled>/scripts/review_check.js <runs dir>
  *
  * Prints one JSON line per check ({check, ok, detail}); exit 1 if any fails. Checks:
- *   - the model chip says "ready (<model>)" or "offline — <reason>" for each server state, and the idle page has it;
+ *   - the model chip says "ready (<model> via Groq|Bedrock)" or "offline — <reason>" for each server state, and the idle page has it;
  *   - the guided demo completes on its recording: every one of the five steps ends ok, no step falls back, and the
  *     stepper renders five REPLAY steps with timings and the "Finished" caption;
  *   - a skipped repair shows its reason and the "Play recorded repair" button labelled REPLAY with its date;
@@ -32,7 +32,13 @@ const M = "openai/gpt-oss-120b";
 const base: Availability = { checked: true, live: true, llm: true, reason: "", quota: { [M]: { used: 5175, cap: 200000, ok: true, resume_after: null } } };
 const idle = initialState;
 const cases: [string, LabState, Availability, string][] = [
-  ["ready", idle, base, "Model: ready (gpt-oss-120b)"],
+  ["ready", idle, base, "Model: ready (gpt-oss-120b via Groq)"],
+  // D-69: Groq's quota used up, the Bedrock fallback configured and under budget -> the chip names Bedrock
+  ["bedrock fallback", idle, { ...base, quota: { [M]: { used: 200000, cap: 200000, ok: false, resume_after: null } },
+    providers: { [M]: { provider: "bedrock", why: "Groq unavailable", bedrock: { configured: true, model_id: "openai.gpt-oss-120b-1:0", spent_usd: 0, budget_usd: 5, ok: true } } } },
+    "Model: ready (gpt-oss-120b via Bedrock)"],
+  ["forced bedrock", idle, { ...base, providers: { [M]: { provider: "bedrock", why: "BR_LLM_PROVIDER=bedrock", bedrock: { configured: true, model_id: "openai.gpt-oss-120b-1:0", spent_usd: 0, budget_usd: 5, ok: true } } } },
+    "Model: ready (gpt-oss-120b via Bedrock)"],
   ["no key", idle, { ...base, llm: false }, "Model: offline — no key"],
   ["quota", idle, { ...base, quota: { [M]: { used: 200000, cap: 200000, ok: false, resume_after: "2026-10-14T08:00:00" } } }, "Model: offline — quota"],
   ["static", idle, { ...base, live: false, llm: false, reason: "static build" }, "Model: offline — no server (static build)"],

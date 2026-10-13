@@ -57,7 +57,19 @@ export type Guided = { phase: "idle" | "running" | "done"; live: StepRecord[]; f
 export const GUIDED_IDLE: Guided = { phase: "idle", live: [], fellBackAt: null, reason: null, pick: null };
 
 /** The five-step stepper of the guided demo: per-step status, timing and source label, one caption for the current step. */
-export function GuidedStepper({ s, g, onStop }: { s: LabState; g: Guided; onStop: () => void }) {
+/** Step 6, "Fix PR" (D-70): shown only when the fix mode is not `suggest`; its state is read from the decision log. */
+export function fixPrTone(s: LabState): { tone: Tone; text: string } {
+  const recs = s.audit.records.filter((r) => r.stage === "approve" || r.stage === "git" || r.stage === "pr");
+  const pr = recs.filter((r) => r.stage === "pr").pop();
+  if (pr) return pr.decision === "accept" ? { tone: "ok", text: "fix PR opened" } : { tone: pr.decision === "reject" ? "failed" : "skipped", text: pr.reason };
+  const last = recs.pop();
+  if (!last) return { tone: "pending", text: "no fix PR step yet" };
+  if (last.decision === "wait") return { tone: "running", text: "waiting for approval" };
+  return { tone: last.decision === "reject" ? "failed" : last.decision === "skip" ? "skipped" : "running", text: last.reason };
+}
+
+export function GuidedStepper({ s, g, onStop, fixMode = "suggest" }: { s: LabState; g: Guided; onStop: () => void; fixMode?: string }) {
+  const fix = fixMode !== "suggest" ? fixPrTone(s) : null;
   const cur = g.phase === "done" ? GUIDED_STEPS.length - 1 : currentStep(s);
   const rows = GUIDED_STEPS.map((step, i) => {
     const kept = g.fellBackAt !== null && i < g.fellBackAt ? g.live[i] : null;
@@ -83,6 +95,12 @@ export function GuidedStepper({ s, g, onStop }: { s: LabState; g: Guided; onStop
               </li>
             );
           })}
+          {fix && (
+            <li className="flex items-center gap-1.5" data-step="fixpr" data-tone={fix.tone} title={fix.text}>
+              <Icon name="chevron" className="text-muted" />
+              <span className="ui inline-flex items-center gap-1.5 rounded-full border border-rule px-2 py-1 text-sm"><StatusIcon tone={fix.tone} />Fix PR<span className="text-2xs text-muted">{fixMode}</span></span>
+            </li>
+          )}
         </ol>
         {!done && g.phase === "running" && <button type="button" onClick={onStop} className="ui text-xs text-muted underline">stop</button>}
       </div>

@@ -1,5 +1,5 @@
 /** Event stream of the Live Lab (`python -m src.lab`), as it arrives over SSE or from a recorded run. */
-export type Stage = "meta" | "repo" | "graph" | "change" | "impact" | "tests" | "arena" | "triage" | "repair" | "validate" | "report";
+export type Stage = "meta" | "repo" | "graph" | "change" | "impact" | "tests" | "arena" | "triage" | "repair" | "validate" | "report" | "audit";
 export type Data = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type Status = "running" | "ok" | "failed" | "skipped";
 
@@ -27,6 +27,14 @@ export interface OrderRule { id: string; fixed: string; text: string; source: "a
 export interface TriageRow { test: string; class: "mine" | "inherited" | "flaky"; confidence: number; reason: string; head_outcome?: string; base_outcome?: string; message?: string }
 export interface Check { attempt: number; name: string; status: Status; ok: boolean | null; evidence: string }
 
+export interface AuditRecord {
+  v: number; run_id: string; seq: number; ts: string; actor: "system" | "model" | "human"; stage: string; action: string;
+  decision: "accept" | "reject" | "retry" | "skip" | "wait" | "done"; reason: string; evidence: Data;
+  model: { provider: string; model: string; prompt_sha256: string; reply_sha256: string; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; cache_hit: boolean } | null;
+  artifacts: { patch_sha256: string | null; diff_path: string | null; branch: string | null; commit: string | null; pr_url: string | null } | null;
+  prev_hash: string; hash: string;
+}
+
 export interface LabState {
   mode: "idle" | "live" | "replay";
   running: boolean;
@@ -46,6 +54,8 @@ export interface LabState {
   };
   validate: { checks: Check[]; verdict: Data | null }; // eslint-disable-line @typescript-eslint/no-explicit-any
   report: { comment: string | null; summary: Data | null }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /** Decision-log records (D-71) streamed as `audit.record`, and the chain check `audit.verify`. */
+  audit: { records: AuditRecord[]; verify: Data | null };
   tokens: { prompt: number; completion: number; total: number; cached: number; calls: number };
   startedAt: number | null;
   elapsedMs: number;

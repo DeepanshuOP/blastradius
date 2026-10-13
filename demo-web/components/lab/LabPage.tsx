@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArenaPanel } from "./Arena";
 import { ChallengeCard } from "./Challenge";
 import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
+import { CiVsBrPanel } from "./CiVsBr";
 import { CodePanel } from "./CodePanel";
 import { BTN, BTN_PRIMARY, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
@@ -26,7 +27,7 @@ import { useLab } from "./useLab";
 
 const MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
 
-export type TabId = "impact" | "race" | "arena" | "triage" | "repair" | "verdict" | "comment" | "integrity";
+export type TabId = "impact" | "race" | "arena" | "triage" | "repair" | "verdict" | "comment" | "integrity" | "ci" | "decisions";
 export const RESULT_TABS: { id: TabId; label: string; stages: Stage[] }[] = [
   { id: "impact", label: "Impact", stages: ["repo", "graph", "change", "impact"] },
   { id: "race", label: "Test race", stages: ["tests"] },
@@ -36,6 +37,7 @@ export const RESULT_TABS: { id: TabId; label: string; stages: Stage[] }[] = [
   { id: "verdict", label: "Verdict", stages: ["report"] },
   { id: "comment", label: "PR comment", stages: [] },
   { id: "integrity", label: "Integrity", stages: [] },
+  { id: "ci", label: "CI vs BlastRadius", stages: [] },
 ];
 export const tabOf = (st: Stage): TabId => RESULT_TABS.find((t) => t.stages.includes(st))?.id ?? "impact";
 
@@ -246,7 +248,8 @@ export default function LabPage() {
   const sel = g.nodes.find((n) => n.id === selected) ?? null;
   const repoName = (s.repo?.prepared ? s.repo.name : null) ?? (scenario?.kind === "repo" ? scenario.name : null);
   const q = avail.quota?.[model];
-  const quotaReason = q && !q.ok ? `the daily token quota of ${model} is used up (${q.used.toLocaleString()} of ${q.cap.toLocaleString()} tokens in the last 24 h, E3 and lab ledgers together)${q.resume_after ? `; the next call is possible after ${q.resume_after.replace("T", " ")} UTC` : ""}` : "";
+  const bedrockNext = avail.providers?.[model]?.provider === "bedrock";   // Groq quota used up, Bedrock takes the call (D-69)
+  const quotaReason = q && !q.ok && !bedrockNext ? `the daily token quota of ${model} is used up (${q.used.toLocaleString()} of ${q.cap.toLocaleString()} tokens in the last 24 h, E3 and lab ledgers together)${q.resume_after ? `; the next call is possible after ${q.resume_after.replace("T", " ")} UTC` : ""}` : "";
   const modelOk = avail.llm && !quotaReason;
   const canRun = scenario !== null && (scenario.kind === "replay" || scenario.kind === "pr" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
   const breakable = (n: GNode | undefined | null) => Boolean(n && n.type === "function" && repoName && avail.live && !s.running && !n.is_test_file);
@@ -360,7 +363,7 @@ export default function LabPage() {
               className={`${BTN} min-h-[36px] font-semibold ${challenge ? "border-accent text-accent" : ""}`}><Icon name="bug" />Challenge</button>
           </div>
         </div>
-        {guided.phase !== "idle" && <GuidedStepper s={s} g={guided} onStop={() => { reset(); setGuided(GUIDED_IDLE); }} />}
+        {guided.phase !== "idle" && <GuidedStepper s={s} g={guided} fixMode={avail.fixMode ?? "suggest"} onStop={() => { reset(); setGuided(GUIDED_IDLE); }} />}
         {challenge && (
           <ChallengeCard s={s} live={avail.live} running={s.running} llmOk={modelOk}
             repo={scenario?.kind === "repo" ? scenario.name : s.repo?.prepared ? String(s.repo.name) : null}
@@ -498,6 +501,7 @@ export default function LabPage() {
             {tab === "verdict" && <VerdictPanel s={s} />}
             {tab === "comment" && <ReportPanel s={s} />}
             {tab === "integrity" && <IntegrityPanel s={s} />}
+            {tab === "ci" && <CiVsBrPanel s={s} onDecisions={RESULT_TABS.some((t) => t.id === "decisions") ? () => pick("decisions") : undefined} />}
           </div>
         </section>
 

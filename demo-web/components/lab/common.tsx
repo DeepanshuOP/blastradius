@@ -148,7 +148,7 @@ export const OUTCOME_COLOR: Record<string, string> = { passed: "bg-green", faile
 
 export const STAGE_LABEL: Record<Stage, string> = {
   meta: "run", repo: "Repo", graph: "Graph", change: "Change", impact: "Impact", tests: "Tests", arena: "Arena", triage: "Triage",
-  repair: "Repair", validate: "Validate", report: "Report",
+  repair: "Repair", validate: "Validate", report: "Report", audit: "Decisions",
 };
 
 /** One-line summary of an event for the log. Ids are shortened in the middle; the full text is the line's tooltip. */
@@ -158,6 +158,8 @@ export function summarize(type: string, d: Record<string, unknown>, status: stri
   switch (type) {
     case "run.header": return `${g("mode")} run ${g("run_id")} · model ${g("model") ?? "none"} · ${g("llm")}`;
     case "run.end": return status === "ok" ? "run complete" : `run ended: ${g("reason")}`;
+    case "audit.record": return `#${g("seq")} ${g("stage")} · ${g("action")} → ${g("decision")}`;
+    case "audit.verify": return g("ok") ? `decision log verified · ${g("records")} records` : `decision log BROKEN`;
     case "repo.info": return status === "running" ? `preparing ${g("name")}` : `${g("name")} @ ${sha(g("commit"))} · ${g("language")} · ${g("n_files")} files · tests ${g("tests_runnable") ? "runnable" : `not runnable: ${g("reason")}`}`;
     case "graph.built": return status === "running" ? "building the code graph" : status === "failed" ? `graph failed: ${g("reason")}` : `${g("n_nodes")} nodes · ${g("n_edges")} edges · ${g("parse_failures")} parse failures${g("truncated") ? " · stream is a subset" : ""}`;
     case "change.applied": return `${(g("changed_files") as string[]).length} file(s) · ${(g("changed_nodes") as string[]).length} graph node(s) changed · head ${sha(g("head"))}`;

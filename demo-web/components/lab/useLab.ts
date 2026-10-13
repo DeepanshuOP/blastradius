@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import type { Check, LabEvent, LabState, Stage, TestResult, TriageRow } from "./types";
+import type { AuditRecord, Check, LabEvent, LabState, Stage, TestResult, TriageRow } from "./types";
 
 export const initialState: LabState = {
   mode: "idle", running: false, error: null, events: [], header: null, stage: {}, repo: null, graph: null, change: null,
@@ -9,7 +9,7 @@ export const initialState: LabState = {
   tests: { started: false, results: [], done: null, race: null },
   triage: null,
   repair: { chunks: [], requests: [], replies: [], blocks: [], patch: null, skipped: null, unavailable: null },
-  validate: { checks: [], verdict: null }, report: { comment: null, summary: null },
+  validate: { checks: [], verdict: null }, report: { comment: null, summary: null }, audit: { records: [], verify: null },
   tokens: { prompt: 0, completion: 0, total: 0, cached: 0, calls: 0 }, startedAt: null, elapsedMs: 0,
 };
 
@@ -57,6 +57,8 @@ export function applyEvent(s: LabState, ev: LabEvent): LabState {
     case "validate.verdict": n.validate = { ...s.validate, verdict: { ...d, status: ev.status } }; break;
     case "report.comment": n.report = { ...s.report, comment: d.comment }; break;
     case "report.summary": n.report = { ...s.report, summary: d }; break;
+    case "audit.record": n.audit = { ...s.audit, records: [...s.audit.records, d as AuditRecord] }; break;
+    case "audit.verify": n.audit = { ...s.audit, verify: { ...d, status: ev.status } }; break;
   }
   return n;
 }

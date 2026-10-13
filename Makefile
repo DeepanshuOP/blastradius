@@ -265,7 +265,7 @@ reproduce:
 all: test reproduce
 
 # Decision log of one agent run (D-71): the readable trail and the chain check. RUN is a run id under logs/agent/
-# or a path to a .jsonl log (a Live Lab recording ships one as demo-web/public/lab/runs/<name>.audit.jsonl).
+# or a path to a .jsonl log (a Live Lab recording ships one as demo-web/public/lab/runs/audit/<name>.jsonl).
 #   make agent-log RUN=lab-itsdangerous-pr1-20261013T120000Z
 agent-log:
 	@test -n "$(RUN)" || { echo 'usage: make agent-log RUN=<run_id|path.jsonl>' >&2; exit 2; }
