@@ -72,7 +72,10 @@ function reducer(s: LabState, a: Action): LabState {
 }
 
 export type Quota = Record<string, { used: number; cap: number; ok: boolean; resume_after: string | null }>;
-export type Availability = { checked: boolean; live: boolean; llm: boolean; reason: string; quota?: Quota | null };
+export type ProviderStatus = { provider: "groq" | "bedrock" | null; why: string;
+  bedrock: { configured: boolean; model_id: string | null; spent_usd: number; budget_usd: number; ok: boolean } };
+export type Availability = { checked: boolean; live: boolean; llm: boolean; reason: string; quota?: Quota | null;
+  providers?: Record<string, ProviderStatus> | null; fixMode?: string };
 
 /** The lab's state, the stream readers (live over SSE, replay from a recorded file) and the server's availability. */
 export function useLab() {
@@ -99,8 +102,9 @@ export function useLab() {
     let alive = true;
     fetch("/api/lab/run", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
-      .then((j: { live: boolean; llm: boolean; busy: boolean; quota: Quota | null }) => {
-        if (alive) setAvail({ checked: true, live: j.live, llm: j.llm, quota: j.quota, reason: j.llm ? "" : "GROQ_API_KEY is not set on the server: runs go through triage and stop before repair." });
+      .then((j: { live: boolean; llm: boolean; busy: boolean; quota: Quota | null; providers?: Record<string, ProviderStatus> | null; fix_mode?: string }) => {
+        if (alive) setAvail({ checked: true, live: j.live, llm: j.llm, quota: j.quota, providers: j.providers ?? null, fixMode: j.fix_mode ?? "suggest",
+          reason: j.llm ? "" : "Neither GROQ_API_KEY nor a Bedrock key is set on the server: runs go through triage and stop before repair." });
       })
       .catch(() => {
         if (alive) setAvail({ checked: true, live: false, llm: false, reason: "This is a static build with no Python server behind it, so live runs are unavailable. Recorded runs replay in the browser." });

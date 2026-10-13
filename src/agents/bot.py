@@ -560,6 +560,8 @@ class _EventLLM:
             raise _RepairUnavailable(str(exc)[:200]) from exc
         self.emit("repair", "repair.reply", "ok", {
             "attempt": self.n, "model": res.model, "text": res.text, "usage": res.usage, "from_cache": res.from_cache,
+            "provider": res.provider or getattr(self.inner, "name", None),
+            "fallback_reason": getattr(self.inner, "fallback_reason", None),
             "latency_s": res.latency_s if res.latency_s is not None else round(time.perf_counter() - t0, 3)})
         return res
 

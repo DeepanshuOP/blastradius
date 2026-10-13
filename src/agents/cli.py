@@ -235,7 +235,12 @@ def main(argv: list[str] | None = None) -> int:
         state = _state(args)
         on_actions = os.environ.get("GITHUB_ACTIONS") == "true"
         provider = args.provider or ("groq" if os.environ.get("GROQ_API_KEY") else "offline")
-        out = botmod.run_bot(repo, args.base, args.head, args.pr, llm=chat_llm(provider, state / "bot_llm_cache.jsonl"),
+        from src.agents.llm_provider import with_fallback
+
+        cache_path = state / "bot_llm_cache.jsonl"
+        llm = with_fallback(chat_llm(provider, cache_path), os.environ.get("BR_AGENT_MODEL") or "openai/gpt-oss-120b",
+                            cache_path) if provider != "offline" else None
+        out = botmod.run_bot(repo, args.base, args.head, args.pr, llm=llm,
                              state_dir=state, python=args.python)
         print(out.comment)
         if args.post or (on_actions and not args.no_post):

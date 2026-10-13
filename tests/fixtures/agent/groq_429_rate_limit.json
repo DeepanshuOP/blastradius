@@ -1,0 +1,5 @@
+{
+  "status": 429,
+  "headers": {"retry-after": "7", "content-type": "application/json"},
+  "body": {"error": {"message": "Rate limit reached for model `openai/gpt-oss-120b` in organization `org_fixture` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 7912, Requested 1530. Please try again in 7.06s.", "type": "tokens", "code": "rate_limit_exceeded"}}
+}

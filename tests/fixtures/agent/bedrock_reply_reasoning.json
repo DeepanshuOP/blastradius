@@ -1,0 +1,12 @@
+{
+  "status": 200,
+  "headers": {"x-amzn-requestid": "fixture-req-0001", "content-type": "application/json"},
+  "body": {
+    "id": "chatcmpl-fixture-0001",
+    "object": "chat.completion",
+    "created": 1792195200,
+    "model": "openai.gpt-oss-120b-1:0",
+    "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "<reasoning>The test expects expired(10, 5) to be True, so the comparison must be age > max_age. The block below replaces the line. Do not include the gutter.</reasoning>src/m.py\n<<<<<<< SEARCH\n        return age < max_age\n=======\n        return age > max_age\n>>>>>>> REPLACE"}}],
+    "usage": {"prompt_tokens": 1012, "completion_tokens": 388, "total_tokens": 1400}
+  }
+}

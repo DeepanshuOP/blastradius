@@ -123,12 +123,14 @@ def cmd_run(ns: argparse.Namespace) -> int:
     sys.stdout = sys.stderr            # vendored libraries print status lines; stdout carries events and nothing else
     em = Emitter(events_out, rec)
     llm = None
-    key_present = bool(os.environ.get("GROQ_API_KEY"))
-    if args.use_llm and key_present:
+    if args.use_llm:
+        from src.agents.llm_provider import with_fallback
         from src.lab.cache import LabGroqLLM, for_model
 
         cache = for_model(args.model)
-        llm = LabGroqLLM(api_key=os.environ["GROQ_API_KEY"], model=args.model, cache=cache, max_retries=0)
+        groq = (LabGroqLLM(api_key=os.environ["GROQ_API_KEY"], model=args.model, cache=cache, max_retries=0)
+                if os.environ.get("GROQ_API_KEY") else None)
+        llm = with_fallback(groq, args.model, cache.path)     # Groq, else Bedrock on 429 / quota (D-69)
     with _lock():
         lab = Lab(args, em, llm)
         try:
@@ -431,7 +433,14 @@ def cmd_quota(ns: argparse.Namespace) -> int:
 
 
 def cmd_status(_ns: argparse.Namespace) -> int:
-    print(json.dumps({"llm": bool(os.environ.get("GROQ_API_KEY")), "quota": quota()}))
+    from src.agents.llm_provider import status
+    from src.lab.engine import DEFAULT_MODEL
+
+    q = quota()
+    prov = {m: status(m, q.get(m, {}).get("ok")) for m in q}
+    print(json.dumps({"llm": any(p["provider"] for p in prov.values()) or bool(os.environ.get("GROQ_API_KEY")),
+                      "quota": q, "providers": prov, "default_model": DEFAULT_MODEL,
+                      "fix_mode": os.environ.get("BR_FIX_MODE") or "suggest"}))
     return 0
 
 

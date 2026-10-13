@@ -94,6 +94,10 @@ class LLMError(RuntimeError):
     """The provider answered, but not with usable JSON."""
 
 
+class RateLimited(LLMError):
+    """The provider answered 429 (per-minute limit) and the retries are spent; a fallback provider may take over."""
+
+
 class DailyQuotaReached(RuntimeError):
     """The free tier's daily token budget (client-side or reported by the provider) is spent."""
 
@@ -182,6 +186,7 @@ class ChatResult:
     from_cache: bool
     provider_id: str | None = None
     latency_s: float | None = None
+    provider: str | None = None          # which provider answered ("groq" | "bedrock"); set by llm_provider
 
 
 @dataclass
@@ -317,7 +322,7 @@ class GroqLLM:
                     raise DailyQuotaReached((datetime.fromtimestamp(self.clock(), timezone.utc)
                                              + timedelta(hours=24)).isoformat(timespec="minutes"))
                 if attempt == self.max_retries:
-                    raise LLMError(f"Groq rate limit persisted after {self.max_retries} retries")
+                    raise RateLimited(f"Groq rate limit persisted after {self.max_retries} retries")
                 self.sleeper(float(resp.headers.get("retry-after", 20)))
                 continue
             if resp.status_code == 400 and "tool_use_failed" in resp.text:

@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   const st = lock();
   const s = await labJson(["status"], 60_000, true);
   const j = s.code === 0 ? JSON.parse(s.out) : {};
-  return Response.json({ ok: true, live: true, llm: Boolean(j.llm), quota: j.quota ?? null, busy: st.busy, since: st.busy ? st.since : null, what: st.what });
+  return Response.json({ ok: true, live: true, llm: Boolean(j.llm), quota: j.quota ?? null, providers: j.providers ?? null, fix_mode: j.fix_mode ?? "suggest", busy: st.busy, since: st.busy ? st.since : null, what: st.what });
 }
 
 type Body = {

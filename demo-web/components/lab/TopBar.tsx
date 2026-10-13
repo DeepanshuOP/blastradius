@@ -14,12 +14,19 @@ export function modelStatus(s: LabState, avail: Availability, model: string): { 
   const off = (why: string, detail = why) => ({ ready: false, text: `Model: offline \u2014 ${why}`, detail });
   if (!avail.checked) return { ready: false, text: "Model: checking\u2026", detail: "asking the local server" };
   if (!avail.live) return off("no server (static build)", avail.reason);
-  if (!avail.llm) return off("no key", "GROQ_API_KEY is not set in .env on the server");
+  if (!avail.llm) return off("no key", "neither GROQ_API_KEY nor AWS_BEARER_TOKEN_BEDROCK is set in .env on the server");
   const q = avail.quota?.[model];
-  if (q && !q.ok) return off("quota", `${q.used.toLocaleString("en-US")} of ${q.cap.toLocaleString("en-US")} tokens used in the last 24 h${q.resume_after ? `; next call after ${q.resume_after.replace("T", " ")} UTC` : ""}`);
+  const p = avail.providers?.[model];
+  // the provider that answered this run wins over the one the server would pick next
+  const replied = [...s.repair.replies].reverse().find((r) => r?.provider)?.provider as string | undefined;
+  const prov = replied ?? p?.provider ?? (q && !q.ok ? null : "groq");
+  const via = prov === "bedrock" ? "Bedrock" : "Groq";
+  const bedDetail = p?.bedrock?.configured ? `; Bedrock fallback ${p.bedrock.model_id}, USD ${p.bedrock.spent_usd.toFixed(4)} of ${p.bedrock.budget_usd.toFixed(2)} spent` : "";
+  if (q && !q.ok && prov !== "bedrock") return off("quota", `${q.used.toLocaleString("en-US")} of ${q.cap.toLocaleString("en-US")} tokens used in the last 24 h${q.resume_after ? `; next call after ${q.resume_after.replace("T", " ")} UTC` : ""}`);
   if (s.mode === "live" && String(s.header?.llm ?? "").startsWith("disabled")) return off("disabled by option", "this run was started with --no-llm");
   if (s.mode === "live" && s.repair.unavailable) return off(s.repair.unavailable.kind, s.repair.unavailable.reason);
-  return { ready: true, text: `Model: ready (${name})`, detail: q ? `${q.used.toLocaleString("en-US")} of ${q.cap.toLocaleString("en-US")} tokens used in the last 24 h` : "key present" };
+  return { ready: true, text: `Model: ready (${name} via ${via})`,
+    detail: (q ? `Groq: ${q.used.toLocaleString("en-US")} of ${q.cap.toLocaleString("en-US")} tokens used in the last 24 h` : "key present") + (p ? `; ${p.why}` : "") + bedDetail };
 }
 
 export function ModelChip({ s, avail, model }: { s: LabState; avail: Availability; model: string }) {
