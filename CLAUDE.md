@@ -8,7 +8,7 @@
 BlastRadius — execution-grounded change impact prediction for CI. We mine GitHub Actions runs to build a dataset linking code changes to the individual tests that actually failed, then predict that from a code graph.
 
 **Target:** MSR 2027 Data & Tool Showcase. Abstract 5 Nov 2026, paper 10 Nov 2026.
-**Course:** VIT BITE497J Project I. Team: Prisha Vadhavkar (23BIT0010), Sanskriti Singh (23BIT0256), Deepanshu (23BIT0264). Guide: Dr. Yoga Raja C A.
+**Course:** project deliverable. Team: Prisha Vadhavkar (23BIT0010), Sanskriti Singh (23BIT0256), Deepanshu (23BIT0264). Guide: Dr. Yoga Raja C A.
 
 **The contribution is the dataset and the honest measurement, not a novel predictor.** A negative model result is publishable (roadmap §37.1 Gate 3). Do not optimise numbers at the cost of correctness.
 

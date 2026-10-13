@@ -81,7 +81,7 @@ export default function LabApp() {
         </main>
       )}
       <footer className="ui mx-auto mt-10 max-w-[1760px] border-t border-rule px-3 pb-8 pt-5 text-sm text-muted">
-        <p className="m-0">Team: Prisha Vadhavkar, Sanskriti Singh and Deepanshu. Guide: Dr. Yoga Raja C A. Course: VIT BITE497J Project I.</p>
+        <p className="m-0">Team: Prisha Vadhavkar, Sanskriti Singh and Deepanshu. Guide: Dr. Yoga Raja C A.</p>
         <p className="mb-0 mt-2">
           {(panels.doc?.release.dois ?? []).map((d, i) => (
             <span key={d.doi}>{i > 0 ? "; " : ""}{d.what[0].toUpperCase() + d.what.slice(1)} DOI <a href={`https://doi.org/${d.doi}`}>{d.doi}</a></span>

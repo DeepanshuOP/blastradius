@@ -24,7 +24,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] Parser suite: JUnit XML + pytest, precision number on the 40-log fixture set
 - [ ] `normalize_test_id()` with contract test passing
 - [ ] Labelling engine v0 on ≥20 repos
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
+- [ ] (OUT OF PAPER — project deliverable (D-48)) Commit-pinned graph on the 3-repo mini-corpus, node/edge counts
 - [ ] Architecture diagram + literature positioning
 - [ ] Scope-drift conversation with the guide — **done, not pending**
 
@@ -68,7 +68,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T1.1h` `resolve_test_file()` + binding-rate report ⭐
 - [ ] `T1.1i` Per-parser coverage + precision report — blocked on corpus provenance (32-fixture/47-row corpus is not hand-labelled, see `T1.1a`), not on remaining effort
 - [x] `T1.1j` `dispatch.py` parser dispatch cascade — `src/parse/dispatch.py` verified on disk 2026-09-07; no subtask line previously existed for it
-- [ ] `T1.2a` Changed-file extraction with hunks
+- [x] `T1.2a` Changed-file extraction with hunks
 - [ ] `T1.2b` tree-sitter symbol-level change extraction
 - [ ] `T1.2c` Change taxonomy flags (full taxonomy §18.2)
 - [x] `T1.3a` Base-run resolution with `base_run_distance` ⭐
@@ -77,40 +77,40 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T1.3d` Rolling flip-rate flakiness scoring
 - [x] `T1.3e` Three splits: strict / permissive / raw
 - [x] `T1.3f` Emit `instances.parquet` + `outcomes.parquet`
-- [ ] `T1.4a` PyDriller co-change mining
+- [x] `T1.4a` PyDriller co-change mining
 - [ ] `T1.4b` Evolutionary coupling (support/confidence/lift)
 - [ ] `T1.5a` Docker re-execution harness
 - [ ] `T1.5b` Base/head double-run protocol + causal labelling
 - [ ] `T1.5c` Observational-vs-causal agreement report ⭐
-- [ ] `T1.6a` Schema validator + `schema.json`
-- [ ] `T1.6b` Secret scan + pseudonymisation
+- [x] `T1.6a` Schema validator + `schema.json`
+- [x] `T1.6b` Secret scan + pseudonymisation
 - [ ] `T1.6c` HuggingFace dataset card + loader
-- [ ] `T1.6d` Datasheet for Datasets
-- [ ] `T1.7` `[v2]` Canary string + datasheet note
+- [x] `T1.6d` Datasheet for Datasets
+- [x] `T1.7` `[v2]` Canary string + datasheet note
 - [ ] `T1.8` `[new]` File-level ground-truth arm (`actual_changed_files`) ⭐
 - [ ] `T1.9` `[new]` Label-provenance tiers mirroring graphify confidence vocabulary
 
 ### Weeks 3–7 — Graph Layer (Aug 24–Sep 20)
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1b` Strip LLM pass and non-code extractors
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1c` Pin versions; re-run their test suite
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2a` `git worktree` commit-pinned checkout manager
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2c` Incremental rebuild via content hashing ⭐
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2d` Graph validation + parse-failure-rate gate
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.1a` Fork Graphify v8 → `vendor/graphify-br/`, preserve LICENSE + NOTICE
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.1b` Strip LLM pass and non-code extractors
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.1c` Pin versions; re-run their test suite
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.1d` `[v2]` Record `GRAPHIFY_COMMIT.txt`; follow the ordered fork sequence §10.1
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.2a` `git worktree` commit-pinned checkout manager
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.2b` Graph build at SHA → `graph_{repo}_{sha}.json`
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.2c` Incremental rebuild via content hashing ⭐
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.2d` Graph validation + parse-failure-rate gate
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.2e` `[v2]` Incremental-vs-cold equivalence assertion (blocking) ⭐
 - [ ] (CUT) `T2.2f` `[new]` Snapshot + delta storage and `graph_index.parquet` (§19.3)
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3a` Node type classification (test/source/config/build)
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.3d` Extended edge-type schema (§16.3)
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.3a` Node type classification (test/source/config/build)
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.3b` `test_id` ↔ test-node binding as a registered `LanguageResolver` ⭐
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.3c` `tests` / `tests_by_convention` / `tests_by_layout` edges
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.3d` Extended edge-type schema (§16.3)
 - [ ] (CUT) `T2.3e` `[new]` Binding-rate report + dashboard tile ⭐ (**Gate 1.5**)
 - [ ] (CUT) `T2.4a` `co_changes` weighted edges
 - [ ] (CUT) `T2.4b` `co_fails` edges
 - [ ] (CUT) `T2.4c` Node attributes (churn, complexity, age, failure rate)
-- [ ] (OUT OF PAPER — BITE497J deliverable, five §10.5 primitives only (D-48)) `T2.5a` Query API primitives (§20.1 Q1–Q10)
-- [ ] (OUT OF PAPER — BITE497J deliverable (D-48)) `T2.5b` DuckDB feature cache + benchmark
+- [ ] (OUT OF PAPER — project deliverable, five §10.5 primitives only (D-48)) `T2.5a` Query API primitives (§20.1 Q1–Q10)
+- [ ] (OUT OF PAPER — project deliverable (D-48)) `T2.5b` DuckDB feature cache + benchmark
 - [ ] (CUT) `T2.6` `[v2]` SCIP precision tier on the Java subset (RQ5, optional)
 - [ ] (CUT) `T2.7` `[v2]` `manifest_ingest` package layer + `depends_on` edges
 - [ ] (CUT) `T2.8` `[new]` Phantom-edge rate measurement, 100 hand-checked edges/language
@@ -119,11 +119,11 @@ Must exist — see ROADMAP §39.1:
 - [ ] (CUT) `T2.11` `[new]` Dynamic-boundary flagging (§17.3)
 
 ### Weeks 6–10 — Measurement (Sep 14–Oct 11)
-- [ ] `T3.1` Retest-all baseline
-- [ ] `T3.2` Random + path-similarity baselines
+- [x] `T3.1` Retest-all baseline
+- [x] `T3.2` Random + path-similarity baselines
 - [ ] `T3.3` Static k-hop reachability baseline (k ∈ {1,2,3,∞})
 - [ ] `T3.4` Ekstazi on Java gold subset
-- [ ] `T3.5` Historical-failure-frequency baseline — **build early, know the number**
+- [x] `T3.5` Historical-failure-frequency baseline — **build early, know the number**
 - [ ] `T3.6` Co-change association-rule baseline
 - [ ] `T3.7a` `[v2]` GRAPHIFY-COMMUNITY baseline ⭐
 - [ ] `T3.7b` `[v2]` GRAPHIFY-DIRECT baseline (the floor)
@@ -131,7 +131,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T3.7d` `[new]` BLASTRADIUS-HEURISTIC baseline (§18.5, unlearned)
 - [ ] `T3.8a` Jaccard / P / R / F1 of each proxy vs fault-revealing set
 - [ ] `T3.8b` Stratified analysis (language, change size, change type)
-- [ ] `T3.8c` Wilcoxon + Holm–Bonferroni + Cliff's delta
+- [x] `T3.8c` Wilcoxon + Holm–Bonferroni + Cliff's delta
 - [ ] `T3.8d` Per-repo random-effects check
 - [ ] `T3.8e` `[new]` Reach-curve figure justifying the depth cap (§18.4)
 - [ ] `T3.9a` Teaser figure ⭐
@@ -177,7 +177,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] (CUT - Roadmap Phase removed) `T5.5` MCP `predict_blast_radius` tool in the fork's `serve.py`
 - [ ] `T5.6a` Dockerfile + compose
 - [ ] `T5.6b` `make all` mini-corpus reproduction <15 min
-- [ ] `T5.6c` `REPRODUCE.md`
+- [x] `T5.6c` `REPRODUCE.md`
 - [ ] `T5.7` `[new]` Explainability contract + unexplained-fraction metric (§20.4)
 - [ ] `T5.8` `[new]` Demo degradation plan (static-example fallback)
 

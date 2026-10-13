@@ -155,7 +155,7 @@ def check_structure() -> tuple[bool, str]:
     for tab in TABS:
         if f'label: "{tab}"' not in app:
             problems.append(f"navigation lacks the {tab} tab")
-    for need in ("Built from commit", "VIT BITE497J", "doi.org"):
+    for need in ("Built from commit", "doi.org"):
         if need not in app:
             problems.append(f"footer lacks {need!r}")
     layout = (ROOT / "demo-web/app/layout.tsx").read_text(encoding="utf-8")
