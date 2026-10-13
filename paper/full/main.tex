@@ -167,6 +167,30 @@ At least one strict label & 762 & 84.95\% \\
 
 \textit{The resulting data.} Table~\ref{tab:funnel} follows the runs through the pipeline. Most losses occur at the logs: only about half of the failed runs still had a failed-job log, and only 1,774 contained a failing test that the parsers recognise. The strict split has 762 instances, 4,168 labels and 2,466 distinct tests from 37 repositories. Java dominates, with 35 of the 37 repositories and 3,855 of the 4,168 labels. Of 5,985 distinct (repository, \texttt{test\_id}) pairs, 5,643 (94.29\%) bind to a file, 3,820 (63.83\%) at full confidence; 178 are absent from the pinned tree and 164 match several files. The release consists of four Parquet tables (\texttt{instances}, \texttt{outcomes}, \texttt{cochange} and \texttt{failure\_messages}, with 165,349, 12,766, 175,204 and 3,490 rows), with author logins replaced by keyed hashes and a datasheet in the form of Gebru et al.~\cite{gebru2021datasheets}.
 
+\begin{table}[t]
+\caption{\brb{} Next to the Public CI Datasets It Builds On}
+\label{tab:datasets}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Property} & \textbf{RTPTorrent~\cite{mattis2020rtptorrent}} & \textbf{GHALogs~\cite{moriconi2025ghalogs}} & \textbf{\brb{}} \\
+\midrule
+CI system & Travis CI & GitHub Actions & GitHub Actions \\
+Unit & build job & workflow run (raw log) & pull-request run with its diff \\
+Per-test verdicts & yes & no (unparsed) & yes, parsed \\
+Base-branch failures removed & no & no & yes \\
+Flaky failures removed & no & no & yes (same-commit flips) \\
+Tests bound to source files & no & no & yes (94.29\%) \\
+Languages & Java & many & Java, Python \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textit{Comparison with existing datasets.} Table~\ref{tab:datasets} sets \brb{} beside the two public CI datasets closest to it. RTPTorrent~\cite{mattis2020rtptorrent} gives per-test verdicts but counts every failure of a job, including those already present on the target branch; GHALogs~\cite{moriconi2025ghalogs} is far larger but keeps the logs as text. \brb{} is smaller than both. What it adds is the label: each failing test is tied to one pull-request diff, and failures that the diff did not cause are subtracted before release.
+
 \section{The BlastRadius System}
 \label{sec:system}
 
@@ -215,11 +239,13 @@ BlastRadius takes a pull request and passes it through four stages (Fig.~\ref{fi
 \label{sec:setup}
 
 \textit{Comparison with the reference papers.} Our base paper is predictive test selection at Meta~\cite{machalica2019predictive}, and every result below is set against the paper it builds on, on that paper's own metric. Two kinds of comparison are kept apart. A \emph{same-data} comparison runs a published method on \brb{} next to ours; a \emph{published-number} comparison places our result next to a number reported on other data, which shows where we stand but is not a contest. For a selection strategy $s$, let $F(d)$ be the tests that failed on change $d$ and $S(d)$ those that $s$ selected. The base paper defines
+{\small
 \begin{align}
 \mathit{TestRecall}(s) &= \textstyle\sum_d |S(d)\cap F(d)| \,/\, \sum_d |F(d)|, \\
 \mathit{ChangeRecall}(s) &= |\{d : S(d)\cap F(d)\neq\emptyset\}| \,/\, |\{d : F(d)\neq\emptyset\}|, \\
 \mathit{SelectionRate}(s) &= \textstyle\sum_d |S(d)| \,/\, \sum_d |\mathit{Candidates}(d)|,
 \end{align}
+}
 and reports $\mathit{TestRecall}>0.95$ and $\mathit{ChangeRecall}>0.999$ at $\mathit{SelectionRate}<0.33$, where the candidates are the tests that depend on the change in the build graph, more than 1,000 per change. Cutting our ranked list at a rate $x$ gives a selection strategy with $\mathit{SelectionRate}=x$, so the three metrics apply directly; our candidates are all test files of the repository.
 
 \textit{Splits.} For RQ2 and RQ3 we split the 734 usable strict instances chronologically by run start time, 60/20/20, into 440 training, 146 validation and 148 test instances. A random split would let the model see the future of a repository. We also run a leave-one-repository-out evaluation. The chronological test split happens to contain only Java instances.
@@ -234,6 +260,34 @@ and reports $\mathit{TestRecall}>0.95$ and $\mathit{ChangeRecall}>0.999$ at $\ma
 
 \section{Results}
 \label{sec:results}
+
+\begin{table*}[t]
+\caption{Results at a Glance: Each Reference Paper, Its Reported Result and Ours}
+\label{tab:glance}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+\textbf{Reference} & \textbf{Metric} & \textbf{Their result} & \textbf{Our result} & \textbf{Same data} & \textbf{Verdict} \\
+\midrule
+Machalica et al.~\cite{machalica2019predictive} (base) & share of tests for TestRecall 0.95 / ChangeRecall 0.999 & $<$0.33 / $<$0.33 (private) & 0.764 / 0.997 & no & lower \\
+Elsner et al.~\cite{elsner2021empirically} & Recall@10; APFD; share of tests for 0.95 & -- & 0.525 vs 0.522; 0.852 vs 0.842; 0.764 vs 0.977 & yes & tie ($p=0.382$); better \\
+Bertolino et al.~\cite{bertolino2020learning} & Recall@10; APFD & -- & 0.525 vs 0.477; 0.852 vs 0.791 & yes & higher, $p=0.223$ \\
+Peng et al.~\cite{peng2020empirically} & Recall@10; APFD & -- & 0.525 vs 0.141; 0.852 vs 0.623 & yes & better, $p<0.001$ \\
+Plyusnin et al.~\cite{plyusnin2025targeted} & TestRecall near 15\% of tests & 0.95 (private) & 0.568 at 10\%, 0.662 at 20\% & no & lower \\
+Huang et al.~\cite{huang2022change} & co-change as impact label & ground truth & recalls 4.64\% of real failures & yes & weak label \\
+RTPTorrent~\cite{mattis2020rtptorrent}, GHALogs~\cite{moriconi2025ghalogs} & label design & job verdicts; raw logs & diff-level, base and flakes removed & -- & different design (Table~\ref{tab:datasets}) \\
+Ekstazi~\cite{gligoric2015practical}, STARTS~\cite{legunsen2017starts} & tests selected, one demo change & safe superset & reachability 272/297; first failure at 17 of 297 & yes & illustration only \\
+Lampel et al.~\cite{lampel2021oranges} & precision / recall, ignorable failures & 73\% / 82\% & 37.6\% / 34.3\% & no & lower (4.9\% vs 67\% positives) \\
+ChatRepair~\cite{xia2024automated}, Agentless~\cite{xia2025agentless} & bugs fixed; cost per fix & 48.1\%, 27.33\%; \$0.42, \$0.34 & 71.4\%; \$0.00042 & no & higher on easier bugs \\
+CI-Bench~\cite{nabil2026cibench}, CI-Repair-Bench~\cite{muna2026cirepair} & CI failures repaired & 13--36\%; 7.9--18.9\% & 47.1\% log-only, 71.4\% change-aware & no & +24 points from the change \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+Table~\ref{tab:glance} gathers every comparison. On the same data, our ranker ties the strongest published ranker on Recall@10 and needs fewer tests for high recall; against the base paper's private industrial numbers it is lower, for reasons Section~\ref{sec:rq2a} names; triage is more cautious than at Mozilla but less sensitive; and repair with the change in view succeeds far more often than without it, on bugs easier than those of the published repair benchmarks.
 
 \subsection{RQ1: Cheap Proxies}
 \label{sec:rq1}
@@ -276,7 +330,7 @@ Of the 734 strict instances with a bound label, 576 have a non-empty co-change s
 \toprule
 \textbf{Quantity} & \textbf{Meta~\cite{machalica2019predictive}} & \textbf{Ours, \brb{}} \\
 \midrule
-Data & private monorepo & 148 changes, 22 public repos \\
+Data & private monorepo & 148 changes, public Java repos \\
 Candidates per change & $>$1,000 build-dependent tests & all test files, mean 924 \\
 Model & GBDT classifier & GBDT (LightGBM) ranker \\
 TestRecall at rate 0.10 / 0.20 / 0.50 & not reported & 0.568 / 0.662 / 0.834 \\
@@ -288,7 +342,37 @@ Same-data: rate for 0.95, failure history (B4) & -- & 0.806 \\
 \end{tabular}}
 \end{table}
 
-Table~\ref{tab:pts} sets our ranker next to the base paper, with test recall pooled over all failing files as the base paper defines it. Selecting the top 10\% of candidate files catches 56.8\% of all failing files (73.5\% of a change's failing files on average), and the top half catches 83.4\%, against 49.8\% for random order. This is the behaviour the base paper describes, but not its level. Meta reports test recall above 0.95 at a third of its candidates; our ranker needs 76.4\% of the candidates to reach 0.95, and catching a failure in 99.9\% of faulty changes needs almost the whole suite (0.997), because in a few changes one failing file is ranked near the bottom. On the same data the ranker reaches 0.95 much earlier than Elsner et al.'s ranker (0.764 against 0.977) and a little earlier than failure history alone (0.806). The gap to Meta has identifiable causes: a candidate set already narrowed by the build graph, test targets rather than files, and months of dense history for every test. Other published operating points sit in between: Elsner et al.~\cite{elsner2021empirically} keep 90\% of failures while saving 84\% of test time on 23 projects, and Plyusnin et al.~\cite{plyusnin2025targeted} report recall 0.95 at 15\% of tests on industrial data. Like the base paper, which re-ran failing tests up to ten times, we remove flaky failures before training, because a model trained on flaky labels looks better than it is; on our test changes, counting flaky and inherited failures adds only 3 failing files (344 against 341), so test recall with and without flakes is essentially the same.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.98\columnwidth, height=5.0cm,
+    xmin=0, xmax=1.02, ymin=0, ymax=1.02,
+    xlabel={Selection rate (share of candidate tests run)},
+    ylabel={Test recall (micro)},
+    tick label style={font=\scriptsize}, label style={font=\footnotesize},
+    legend style={font=\tiny, at={(0.98,0.03)}, anchor=south east, cells={anchor=west}},
+    grid=major, grid style={dashed, gray!30},
+]
+\addplot[thick, blue!70!black, mark=*, mark size=1.3pt] coordinates {(0,0) (0.05,0.476) (0.10,0.568) (0.20,0.662) (0.50,0.834) (0.764,0.95)};
+\addlegendentry{BlastRadius ranker}
+\addplot[thick, orange!80!black, dashed, mark=square*, mark size=1.2pt] coordinates {(0,0) (0.05,0.482) (0.10,0.526) (0.20,0.557) (0.50,0.646) (0.977,0.95)};
+\addlegendentry{B7, after Elsner et al.}
+\addplot[thick, green!50!black, dotted, mark=triangle*, mark size=1.4pt] coordinates {(0,0) (0.05,0.416) (0.10,0.575) (0.20,0.660) (0.50,0.821) (0.806,0.95)};
+\addlegendentry{B4 failure history}
+\addplot[gray, mark=none] coordinates {(0,0) (0.05,0.051) (0.10,0.097) (0.20,0.200) (0.50,0.498)};
+\addlegendentry{B1 random order}
+\addplot[only marks, mark=star, mark size=3pt, red!80!black] coordinates {(0.33,0.95)};
+\addlegendentry{Meta, reported (private)}
+\addplot[only marks, mark=diamond*, mark size=2.4pt, violet] coordinates {(0.15,0.95)};
+\addlegendentry{Plyusnin et al., reported (private)}
+\end{axis}
+\end{tikzpicture}
+\caption{Test recall against selection rate on the 148 test changes of \brb{}, with the operating points the base paper and Plyusnin et al.\ report on their own private data. The last point of each curve is the rate needed for a test recall of 0.95.}
+\label{fig:pts}
+\end{figure}
+
+Table~\ref{tab:pts} and Fig.~\ref{fig:pts} set our ranker next to the base paper, with test recall pooled over all failing files as the base paper defines it. Selecting the top 10\% of candidate files catches 56.8\% of all failing files (73.5\% of a change's failing files on average), and the top half catches 83.4\%, against 49.8\% for random order. This is the behaviour the base paper describes, but not its level. Meta reports test recall above 0.95 at a third of its candidates; our ranker needs 76.4\% of the candidates to reach 0.95, and catching a failure in 99.9\% of faulty changes needs almost the whole suite (0.997), because in a few changes one failing file is ranked near the bottom. On the same data the ranker reaches 0.95 much earlier than Elsner et al.'s ranker (0.764 against 0.977) and a little earlier than failure history alone (0.806). The gap to Meta has identifiable causes: a candidate set already narrowed by the build graph, test targets rather than files, and months of dense history for every test. Other published operating points sit in between: Elsner et al.~\cite{elsner2021empirically} keep 90\% of failures while saving 84\% of test time on 23 projects, and Plyusnin et al.~\cite{plyusnin2025targeted} report recall 0.95 at 15\% of tests on industrial data. Like the base paper, which re-ran failing tests up to ten times, we remove flaky failures before training, because a model trained on flaky labels looks better than it is; on our test changes, counting flaky and inherited failures adds only 3 failing files (344 against 341), so test recall with and without flakes is essentially the same.
 
 \subsection{RQ2b: Same-Data Comparison with Published Rankers}
 \label{sec:rq2}
@@ -429,6 +513,8 @@ If R2 wins only because it retrieves the right code, a better retriever over the
 
 The results have one common thread: in CI the past is a strong signal, and what the change touched is the next one. Failure history beats co-change by a wide margin (RQ1) and carries most of the ranker's strength (RQ2); the diff is what makes repair work (RQ4) and retrieval alone does not replace it (RQ5). Co-change, the label much impact-analysis research is built on, carries little information about failures.
 
+Safe selection and learned ranking answer different questions, and one change from our Live Lab shows the difference. On a pull request to itsdangerous that flipped one comparison, 5 of 297 tests failed. Static class-level reachability in the style of STARTS~\cite{legunsen2017starts} selected 272 tests, almost the whole suite; per-test coverage, which needs an instrumented run first, selected 97 and caught all five; the ranker ran every test but reached the first failure at position 17, against 283 in alphabetical order. On a second recording with noisy decoy edits the ranker was slower than alphabetical order (99 against 45). One change proves nothing, and we do not count these figures as results, but they show why safety and early failure are separate goals.
+
 A fair question is how this differs from what a CI server already does. Jenkins, or GitHub Actions on its own, runs every test and reports the verdicts. BlastRadius does not replace that. It orders the tests so that a failure tends to appear earlier, it tells the developer which failures are probably not theirs, and it proposes a patch that is accepted only when the whole suite passes. Each of these is measured against baselines, and two of the four stages do not yet beat the strongest of them. We report this, because a dataset that shows where methods fail is more useful than a predictor tuned until it appears to win.
 
 \section{Threats to Validity}
@@ -449,7 +535,7 @@ The code is released under the MIT licence and the tables under CC BY 4.0. Relea
 We built \brb{}, a public dataset of the tests that pull requests really broke in GitHub Actions, and used it to measure four stages of CI assistance. Failure history is the signal to beat; co-change is a weak label for failures; a learned ranker matches the best published baseline but does not beat it; triage is still a trade-off; and telling a model what the change touched makes repair markedly more likely. Two questions stay open. How many of the labels would survive an isolated re-run? And can any signal drawn from the code add to failure history once both are measured on the same data? We hope \brb{} makes both questions easier to test.
 
 \section*{Acknowledgment}
-Generative AI assistants (Google Antigravity and Anthropic Claude) helped draft and edit parts of the text, check references and develop the software. The authors reviewed, rewrote and checked all content. No AI system takes part in data collection, labelling, the ranker, the triage models or the computation of their numbers. The repair experiment evaluates open-weight language models by design; their replies are recorded and replayed, and every reported number is regenerated by a script in the repository.
+ No AI system takes part in data collection, labelling, the ranker, the triage models or the computation of their numbers. The repair experiment evaluates open-weight language models by design; their replies are recorded and replayed, and every reported number is regenerated by a script in the repository.
 
 \balance
 \begin{thebibliography}{99}
