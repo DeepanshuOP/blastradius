@@ -169,7 +169,8 @@ def test_audited_bot_run_records_every_stage_and_leaks_nothing(pr_repo, tmp_path
     assert retry["decision"] == "retry" and "applies" in retry["reason"]
     checks = {r["action"]: r["decision"] for r in recs if r["stage"] == "verify" and r["evidence"].get("attempt") == 2}
     assert checks == {"check_applies": "accept", "check_syntax": "accept", "check_targeted": "accept",
-                      "check_full": "accept", "check_scope": "accept"}
+                      "check_full": "accept", "check_scope": "accept",
+                      "check_reverify_full": "accept", "check_reverify_scope": "accept"}   # fresh worktree (D-70)
     verdict = next(r for r in recs if r["action"] == "verdict")
     assert verdict["decision"] == "accept" and verdict["evidence"]["attempts"] == 2
     # reasons are code-written: the model's reply text never appears in a record

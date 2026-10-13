@@ -133,7 +133,7 @@ def _cell(s: object, n: int = 110) -> str:
 
 def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: str, results: list[dict],
                    n_total: int, first_failure: int | None, triage: list[dict], repair: dict | None,
-                   model: str, tokens: int, notes: list[str] | None = None) -> str:
+                   model: str, tokens: int, notes: list[str] | None = None, fix: dict | None = None) -> str:
     """The comment body.
 
     Args:
@@ -150,6 +150,8 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
         model: Model id (or "none").
         tokens: Total tokens used by repair.
         notes: Extra caveats to print.
+        fix: None (suggest mode: the comment is unchanged), or `{"mode": "ask"|"auto", "branch"}` (D-70): says how the
+            validated patch becomes a fix PR on its own branch.
 
     Returns:
         Markdown under `MAX_COMMENT` characters. A `suggestion` fence appears only when `repair["validated"]`.
@@ -203,6 +205,12 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
             for s in repair["suggestions"]:
                 where = f"line {s.start}" if s.start == s.end else f"lines {s.start}-{s.end}"
                 L += [f"`{s.path}` {where}:", "", s.body(), ""]
+            if fix and fix.get("mode") == "ask":
+                L += [f"To open this fix as a pull request on `{fix['branch']}` (based on this PR's branch), the repository "
+                      "owner replies `/blastradius apply`. Nothing is pushed before that, and BlastRadius never merges.", ""]
+            elif fix and fix.get("mode") == "auto":
+                L += [f"This repository is in the fix allowlist, so the fix is opened as a pull request on `{fix['branch']}` "
+                      "against this PR's branch. BlastRadius never merges it.", ""]
         else:
             L += [f"**Not validated** ({repair.get('note', 'the full suite did not pass')}). This patch is shown for "
                   "information only and is not offered as a suggestion.", "",
@@ -215,7 +223,8 @@ def render_comment(*, pr: int, base: str, head: str, risk: list[dict], ranker: s
     status = ("validated: full suite passed" if repair and repair.get("validated")
               else "validated: no patch to validate" if repair is None else "validated: no (see above)")
     L += ["", "---", f"<sub>BlastRadius (exploratory) · model `{model}` · {tokens:,} tokens · {status} · "
-          "this bot only comments; it never pushes or merges.</sub>"]
+          + ("this bot only comments; it never pushes or merges.</sub>" if not fix else
+             "with approval this bot opens a fix PR on its own branch; it never merges and never pushes to your branch.</sub>")]
     text = "\n".join(L) + "\n"
     if len(text) > MAX_COMMENT:           # shed the longest, least important parts, never the failures or the suggestion
         text = _shrink(text)
@@ -381,7 +390,7 @@ class _RepairUnavailable(RuntimeError):
 
 def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, *, llm=None,
             state_dir: Path | None = None, python: str | None = None, on_event: EventFn | None = None,
-            timeout: float | None = None, case_order=None, audit=None) -> BotOutcome:
+            timeout: float | None = None, case_order=None, audit=None, fix_mode: str = "suggest") -> BotOutcome:
     """Run impact, regression, triage and repair on one PR and render the comment.
 
     Args:
@@ -400,7 +409,10 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
         case_order: Optional zero-argument callable giving the Live Lab test-case rule for the single pass (evaluated
             after the ranking event, so it can use the ranking); None keeps the file-level order.
         audit: Optional :class:`src.agents.audit.DecisionLog`. Every stage is then recorded (D-71); it implies the
-            event path (a no-op `on_event` is used when none is given).
+            event path (a no-op `on_event` is used when none is given), and a validated patch is re-verified on a
+            fresh worktree (full suite and scope; checks `reverify_full`, `reverify_scope`).
+        fix_mode: `suggest` (default, comment unchanged), `ask` or `auto` (D-70): the comment says how the fix PR is
+            opened. Opening it is :func:`src.agents.fixpr.apply_fix`, never this function.
 
     Returns:
         The rendered comment, the suggestions of a validated patch, and run statistics.
@@ -514,16 +526,25 @@ def run_bot(repo_dir: Path | str, base_sha: str, head_sha: str, pr_number: int, 
                                                       "mine": 0})
     order = [r["test"] for r in results]
     ff = next((i for i, r in enumerate(results, 1) if r["outcome"] in ("failed", "error")), None)
+    fix = None
+    if fix_mode in ("ask", "auto") and repair and repair.get("validated"):
+        from src.agents.fixpr import branch_name
+
+        fix = {"mode": fix_mode, "branch": branch_name(head)}
     comment = render_comment(pr=pr_number, base=base, head=head, risk=risk, ranker=ranker, results=results,
                              n_total=len(order), first_failure=report.first_failure_position or ff, triage=triage_rows,
-                             repair=repair, model=model, tokens=tokens, notes=notes)
+                             repair=repair, model=model, tokens=tokens, notes=notes, fix=fix)
     sugg = repair["suggestions"] if repair and repair.get("validated") else []
     if on_event:
         emit("report", "report.comment", "ok", {"comment": comment, "validated": bool(repair and repair.get("validated"))})
     return BotOutcome(comment, sugg, bool(repair and repair.get("validated")),
                       {"failing": len(fails), "failing_cases": len(fails_cases), "tests": len({r["test"] for r in results}),
                        "cases": len(results), "unit": "unique canonical test ids", "mine": len(mine), "tokens": tokens, "model": model,
-                       "diff": gitops.diff_text(repo, base, head, max_chars=10 ** 7)})
+                       "diff": gitops.diff_text(repo, base, head, max_chars=10 ** 7), "risk": risk[:AT_RISK_ROWS],
+                       "triage": triage_rows, "base": base, "head": head,
+                       "fix": ({"files": repair["files"], "checks": repair.get("checks", []), "diff": repair.get("diff", ""),
+                                "localize": repair.get("localize")}
+                               if repair and repair.get("validated") else None)})
 
 
 class _EventLLM:
@@ -627,9 +648,13 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
                 {"path": p_, "search": s_, "replace": r_} for p_, s_, r_ in blocks], "files": sorted(out)})
             return out
 
+        last_checks: dict[int, dict[str, dict]] = {}
+
         def check(name: str, ok: bool | None, evidence: str) -> None:
             note("validate.check", "running" if ok is None else ("ok" if ok else "failed"),
                  {"attempt": counters["attempt"], "name": name, "ok": ok, "evidence": evidence})
+            if ok is not None:
+                last_checks.setdefault(counters["attempt"], {})[name] = {"name": name, "ok": ok, "evidence": evidence}
 
         def validate(files: dict[str, str]) -> tuple[bool, str]:
             before = {p: (tree / p).read_text(encoding="utf-8") for p in files}
@@ -691,6 +716,18 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
         agent_llm = _EventLLM(llm, emit, auditor) if emit else llm
         res = RepairAgent(agent_llm, "R3", max_retries=MAX_REPAIR_RETRIES,
                           applier=applier if emit else apply_blocks_tolerant).run(tree, srcs, fr, validate)
+        reverified: list[dict] = []
+        if res.accepted and auditor is not None and emit is not None:
+            # D-70: before anything can become a fix PR, the accepted patch is applied to a FRESH worktree of the head
+            # and the full suite and the scope are checked again there
+            from src.agents.fixpr import reverify
+
+            acc = next(a for a in reversed(res.attempts) if a.applied)
+            for c in reverify(repo, head, acc.files, allowed_edit, others, python, timeout):
+                note("validate.check", "ok" if c["ok"] else "failed", {"attempt": counters["attempt"], **c})
+                reverified.append(c)
+            if not all(c["ok"] for c in reverified):
+                res.accepted = False
         head_files = {}
         for a in res.attempts:
             for p in a.files:
@@ -710,8 +747,9 @@ def _repair(repo: Path, state: Path, impact: ImpactAnalysis, report, mine: list[
     model = getattr(llm, "model", "model")
     last = next((a for a in reversed(res.attempts) if a.applied), None)
     if res.accepted and last is not None:
-        return ({"validated": True, "attempts": len(res.attempts), "files": last.files,
-                 "suggestions": patch_hunks(head_files, last.files)}, model, tokens)
+        checks = list(last_checks.get(counters["attempt"], {}).values()) + reverified
+        return ({"validated": True, "attempts": len(res.attempts), "files": last.files, "checks": checks,
+                 "diff": unified(head_files, last.files), "suggestions": patch_hunks(head_files, last.files)}, model, tokens)
     if last is not None:
         return ({"validated": False, "attempts": len(res.attempts), "files": last.files,
                  "diff": unified(head_files, last.files), "note": "the full suite still failed with it",

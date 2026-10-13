@@ -449,8 +449,10 @@ class Lab:
         if ws.runnable:
             out = bot.run_bot(ws.repo_dir, ch.base, ch.head, 1, llm=self.llm if self.a.use_llm else None,
                               state_dir=self.scratch / "state", python=py, on_event=self.on_bot_event,
-                              timeout=self.a.timeout, case_order=lambda: self.rule, audit=self.open_audit())
+                              timeout=self.a.timeout, case_order=lambda: self.rule, audit=self.open_audit(),
+                              fix_mode=self.fix_mode)
             stats = out.stats
+            self.fix_stage(ws, out)
             validated = out.validated
             if self.a.repair_arena:
                 self.repair_arena_stage()
@@ -460,6 +462,41 @@ class Lab:
         self.summary(ws, stats, validated)
         self.close_audit()
         return 0
+
+    @property
+    def fix_mode(self) -> str:
+        from src.agents.fixpr import fix_mode
+
+        return fix_mode()
+
+    def fix_stage(self, ws: Workspace, out) -> None:
+        """D-70: a validated patch becomes a fix plan; outside `suggest` the gate decides (allowlist, checks, approval).
+
+        Only a pull-request run has a head branch a fix PR can target; a local change is refused with that reason.
+        Ask mode stops at an `approve/wait` record; the Live Lab "Approve fix" button continues it
+        (`python -m src.agents.fixpr approve`).
+        """
+        from src.agents import fixpr
+        from src.agents.audit import sha256
+
+        fix, log = out.stats.get("fix"), getattr(self, "audit", None)
+        if not fix or log is None:
+            return
+        info = getattr(self, "pr_info", None) or {}
+        m = re.match(r"https://github\.com/([\w.-]+/[\w.-]+?)(?:\.git)?/?$", str(ws.url or ""))
+        slug = info.get("head_repo") or (m.group(1) if m else ws.name)
+        plan = fixpr.FixPlan(repo_dir=str(ws.repo_dir), slug=slug, pr_number=int(info.get("number") or 0),
+                             head_branch=str(info.get("head_ref") or ""), head_sha=out.stats["head"], files=fix["files"],
+                             checks=fix["checks"], patch_sha256=sha256(fix["diff"]), ranked=out.stats.get("risk", []),
+                             triage=out.stats.get("triage", []), evidence_path=(fix.get("localize") or {}).get("paths", []),
+                             diff=fix["diff"])
+        plan.save(log)
+        mode = self.fix_mode
+        if mode != "suggest" and not plan.head_branch:
+            log.record("system", "pr", "gate", "reject", "This run's change is a local commit, not a pull request, so "
+                       "there is no head branch for a fix PR", {"mode": mode, "slug": slug})
+            return
+        fixpr.apply_fix(plan, log, mode=mode)
 
     # -- decision log (D-71) ---------------------------------------------------------------------
     def open_audit(self):

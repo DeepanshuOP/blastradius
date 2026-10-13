@@ -169,7 +169,8 @@ def pr_info(owner: str, repo: str, number: int) -> dict:
     j = r.json()
     return {"number": number, "title": j.get("title"), "state": j.get("state"), "merged": bool(j.get("merged_at")),
             "merged_at": j.get("merged_at"), "base_sha": j["base"]["sha"], "head_sha": j["head"]["sha"],
-            "base_ref": j["base"]["ref"], "html_url": j.get("html_url"), "changed_files": j.get("changed_files"),
+            "base_ref": j["base"]["ref"], "head_ref": j["head"]["ref"],
+            "head_repo": ((j["head"].get("repo") or {}).get("full_name")), "html_url": j.get("html_url"), "changed_files": j.get("changed_files"),
             "additions": j.get("additions"), "deletions": j.get("deletions")}
 
 

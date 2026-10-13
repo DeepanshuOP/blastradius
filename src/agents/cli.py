@@ -164,6 +164,10 @@ def main(argv: list[str] | None = None) -> int:
     g = sp.add_mutually_exclusive_group()
     g.add_argument("--post", action="store_true", help="post the comment (default on GitHub Actions)")
     g.add_argument("--no-post", action="store_true", help="only print the comment")
+    sp.add_argument("--audit-run", help="decision-log run id under logs/agent/ (D-71); default bot-pr<N>-<UTC stamp>")
+    sp.add_argument("--fix-mode", choices=["suggest", "ask", "auto"], help="D-70 gate (default: BR_FIX_MODE or suggest)")
+    sp.add_argument("--slug", help="owner/name of the GitHub repository (needed for a fix PR)")
+    sp.add_argument("--head-branch", help="the PR's head branch (the fix PR's base)")
     sp = sub.add_parser("pipeline", help="impact, code, regress, triage, repair, review, deploy"); common(sp)
     sp.add_argument("--stages", choices=["2.0", "classic"], default="2.0")
     sp.add_argument("--story"); sp.add_argument("--story-file"); sp.add_argument("--title"); sp.add_argument("--patch")
@@ -240,12 +244,42 @@ def main(argv: list[str] | None = None) -> int:
         cache_path = state / "bot_llm_cache.jsonl"
         llm = with_fallback(chat_llm(provider, cache_path), os.environ.get("BR_AGENT_MODEL") or "openai/gpt-oss-120b",
                             cache_path) if provider != "offline" else None
+        from datetime import datetime, timezone
+
+        from src.agents import fixpr
+        from src.agents.audit import DecisionLog
+
+        mode = args.fix_mode or fixpr.fix_mode()
+        run_id = args.audit_run or f"bot-pr{args.pr}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
+        log = DecisionLog(run_id)
         out = botmod.run_bot(repo, args.base, args.head, args.pr, llm=llm,
-                             state_dir=state, python=args.python)
+                             state_dir=state, python=args.python, audit=log, fix_mode=mode)
         print(out.comment)
-        if args.post or (on_actions and not args.no_post):
+        posted = args.post or (on_actions and not args.no_post)
+        if posted:
             forge = get_forge(args.forge or ("github" if on_actions else "local"), repo, state)
             print(json.dumps(botmod.post(out, forge, args.pr, args.head)), file=sys.stderr)
+        fix = out.stats.get("fix")
+        result: dict = {"audit_run": run_id, "log": str(log.path), "fix_mode": mode, "validated": out.validated}
+        if fix and mode != "suggest":
+            if not (args.slug and args.head_branch):
+                log.record("system", "pr", "gate", "reject", "No --slug or --head-branch was given, so no fix PR can be "
+                           "opened", {"mode": mode})
+            else:
+                from src.agents.audit import sha256
+
+                loc = fix.get("localize") or {}
+                plan = fixpr.FixPlan(repo_dir=str(repo), slug=args.slug, pr_number=args.pr, head_branch=args.head_branch,
+                                     head_sha=out.stats["head"], files=fix["files"], checks=fix["checks"],
+                                     patch_sha256=sha256(fix["diff"]), ranked=out.stats.get("risk", []),
+                                     triage=out.stats.get("triage", []), evidence_path=loc.get("paths", []),
+                                     diff=fix["diff"])
+                plan.save(log)
+                result.update(fixpr.apply_fix(plan, log, mode=mode))
+        elif mode == "suggest" and out.validated:
+            fixpr.apply_fix(fixpr.FixPlan(str(repo), args.slug or "", args.pr, args.head_branch or "", out.stats["head"],
+                                          {}, [], ""), log, mode="suggest")
+        print(json.dumps(result), file=sys.stderr)
         return 0
 
     if args.cmd == "ask":
