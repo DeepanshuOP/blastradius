@@ -242,7 +242,9 @@ class EventAuditor:
             first = top[0] if top else {}
             L.record("system", "localize", "graph_localize", "accept" if top else "skip",
                      (f"Graph localisation ranked {len(data.get('ranked') or [])} function(s); top is "
-                      f"{first.get('node')} at {first.get('hops')} hop(s) from a failing test" if top else
+                      f"{first.get('file')}::{first.get('qualname')} "
+                      + (f"at {first['hops']} hop(s) from a failing test" if first.get("hops") is not None
+                         else "with no calls path from a failing test (diff and frame signals only)") if top else
                       "Graph localisation found no candidate function"),
                      {"ranked": top, "paths": (data.get("paths") or [])[:5], "signals": data.get("signals")})
         elif type_ == "repair.chunks":

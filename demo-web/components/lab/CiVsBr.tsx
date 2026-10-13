@@ -79,7 +79,7 @@ export function CiVsBrPanel({ s, onDecisions }: { s: LabState; onDecisions?: () 
           <Row k="Triage">{s.triage && !s.triage.skipped ? <><span className="num mono">{tri.mine ?? 0}</span> mine · <span className="num mono">{tri.inherited ?? 0}</span> inherited · <span className="num mono">{tri.flaky ?? 0}</span> flaky</> : <span className="text-muted">{s.triage?.skipped || "not run"}</span>}</Row>
           <Row k="Localised line">
             {v.loc?.ranked?.[0] ? (
-              <span data-testid="br-loc"><Id id={`${v.loc.ranked[0].file}:${v.loc.ranked[0].line ?? "?"}`} n={60} /> <span className="text-muted">({v.loc.ranked[0].node}, {v.loc.ranked[0].hops ?? "?"} hop(s))</span>
+              <span data-testid="br-loc"><Id id={`${v.loc.ranked[0].file}:${v.loc.ranked[0].line ?? "?"}`} n={60} /> <span className="text-muted">({v.loc.ranked[0].qualname}, {v.loc.ranked[0].hops != null ? `${v.loc.ranked[0].hops} hop(s) from a failing test` : "no calls path from a failing test"})</span>
                 {v.loc.paths?.[0]?.path?.length ? <span className="mono block text-2xs text-muted">{short(v.loc.paths[0].path.join(" → "), 160)}</span> : null}</span>
             ) : v.chunk ? (
               <span data-testid="br-loc"><Id id={`${v.chunk.file}:${v.chunk.focus}`} n={60} /> <span className="text-muted">({v.chunk.qualname})</span>

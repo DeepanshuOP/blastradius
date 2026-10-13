@@ -39,6 +39,7 @@ class Workspace:
     reason: str = ""
     src_dirs: list[str] = field(default_factory=list)
     timings: dict[str, float] = field(default_factory=dict)
+    interpreter: str | None = None          # how the suite's interpreter was obtained, when not the default
 
 
 def git(repo: Path, *args: str, check: bool = True, timeout: int = 60) -> str:
@@ -132,6 +133,13 @@ def prepare_github(url: str, scratch: Path, install: bool = True) -> Workspace:
         return ws
     if not install:
         ws.reason = "install skipped"
+        return ws
+    prepared_py = VENVS / name / "bin" / "python"
+    if name in PREPARED and prepared_py.exists():
+        # a fork of a prepared repository: its test dependencies are already in the prepared virtualenv (read-only
+        # use); `run_pytest` puts this clone's own src/ first on PYTHONPATH, so the clone's code is what is tested
+        ws.python, ws.runnable = str(prepared_py), True
+        ws.interpreter = f"the prepared virtualenv of data/seeded ({name}, read-only); this clone's code is imported"
         return ws
     venv = scratch / "venv"
     t1 = time.perf_counter()

@@ -164,7 +164,7 @@ class Lab:
         e.emit("repo", "repo.info", "ok", {
             "name": ws.name, "url": ws.url, "commit": ws.base, "language": ws.language, "n_files": ws.n_files,
             "prepared": ws.prepared, "tests_runnable": ws.runnable, "reason": ws.reason, "timings": ws.timings,
-            "interpreter": "the prepared virtualenv of data/seeded (read-only)" if ws.prepared else
+            "interpreter": ws.interpreter or "the prepared virtualenv of data/seeded (read-only)" if ws.prepared else ws.interpreter or
                            ("a fresh scratch virtualenv" if ws.runnable else None),
             **({"pr": self.pr_info} if self.a.pr else {})},
                dur_ms=(time.perf_counter() - t0) * 1000)
