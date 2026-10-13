@@ -25,9 +25,9 @@ function readHash(): Tab {
 }
 
 function Theme() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   useEffect(() => {
-    try { if (localStorage.getItem("br-theme") === "light") setTheme("light"); } catch { /* storage blocked */ }
+    try { if (localStorage.getItem("br-theme") === "dark") setTheme("dark"); } catch { /* storage blocked */ }
   }, []);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

@@ -183,7 +183,7 @@
    },
    {
     "id": "D-48",
-    "title": "Graph layer excluded from the MSR 2027 paper; continues as a BITE497J deliverable"
+    "title": "Graph layer excluded from the MSR 2027 paper; continues as a course deliverable"
    },
    {
     "id": "D-49",
@@ -211,7 +211,7 @@
    },
    {
     "id": "D-56",
-    "title": "BITE497J deliverable is dataset + predictor + triage + repair; the MSR paper stays a dataset paper"
+    "title": "Course deliverable is dataset + predictor + triage + repair; the MSR paper stays a dataset paper"
    },
    {
     "id": "D-57",
@@ -256,11 +256,15 @@
    {
     "id": "D-67",
     "title": "The arena's failure-history row excludes earlier runs of the same diff by default, and both rows are reported"
+   },
+   {
+    "id": "D-68",
+    "title": "A full-length paper reports BR-Bench plus E1, E2, E3 and retrieval for the project record"
    }
   ],
   "source": "docs/DECISIONS.md"
  },
- "generated_at_git_sha": "4013aec001d69adf4a1737c83b761acb91f5e622",
+ "generated_at_git_sha": "43c09f30200a32c624cd058a543545dd5a271a50",
  "panels": [
   {
    "id": "funnel",

@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { Counter, Explain, Info } from "./Info";
-import { Drawer, Empty, Icon, Id, OUTCOME_COLOR, SEG, StageError, StatusIcon, fmtMs, midEllipsis, uniqueSuffixes, type Tone } from "./common";
+import { BTN, Drawer, Empty, Icon, Id, OUTCOME_COLOR, Prov, SEG, StageError, StatusIcon, fmtMs, midEllipsis, uniqueSuffixes, type Tone } from "./common";
 import { SideBySide, UnifiedDiff } from "./Diff";
+import { Term } from "./Glossary";
 import type { Check, LabEvent, LabState, Lane } from "./types";
 
 /** The failure event of a stage, if it failed (its reason, from the event itself). */
@@ -95,6 +96,44 @@ function LaneRow({ lane, total, failed }: { lane: Lane; total: number; failed: n
   );
 }
 
+/** What running only the first `pct` % of this run's BlastRadius order would have done, from the run's own measured
+ * verdicts and per-test durations (no model, nothing estimated). */
+export function topShare(lane: Lane, pct: number) {
+  const ticks = lane.ticks;
+  const n = ticks.length;
+  const k = Math.min(n, Math.ceil((pct / 100) * n));
+  const bad = (o: string) => o === "failed" || o === "error";
+  const failing = ticks.filter((t) => bad(t.outcome)).length;
+  const caught = ticks.slice(0, k).filter((t) => bad(t.outcome)).length;
+  const totalMs = ticks.reduce((a, t) => a + t.ms, 0);
+  const savedMs = ticks.slice(k).reduce((a, t) => a + t.ms, 0);
+  return { n, k, failing, caught, totalMs, savedMs };
+}
+
+/** The slider "run only the top x % of tests" on the current run. */
+export function TopSlider({ lane, mode }: { lane: Lane; mode: LabState["mode"] }) {
+  const [pct, setPct] = useState(20);
+  const r = topShare(lane, pct);
+  if (!r.n) return null;
+  const Stat = ({ label, value, sub }: { label: string; value: React.ReactNode; sub: string }) => (
+    <div className="min-w-0"><div className="ui text-2xs uppercase tracking-wide text-muted">{label}</div><div className="num mono text-lg font-semibold leading-tight text-ink">{value}</div><div className="ui text-xs text-muted">{sub}</div></div>
+  );
+  return (
+    <div className="mt-2 rounded-md border border-rule bg-page p-3" data-testid="top-slider">
+      <div className="ui mb-2 flex flex-wrap items-center gap-2 text-sm">
+        <Prov mode={mode} />
+        <label htmlFor="top-pct" className="font-semibold">Run only the top <span className="num mono">{pct}%</span> of tests</label>
+        <input id="top-pct" type="range" min={1} max={100} step={1} value={pct} onChange={(e) => setPct(Number(e.target.value))} className="min-w-[160px] flex-1 accent-[var(--accent)]" />
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        <Stat label="tests run" value={<>{r.k}<span className="text-muted">/{r.n}</span></>} sub="in this run's order" />
+        <Stat label="failures caught" value={<span className={r.caught === r.failing ? "text-green" : "text-amber"}>{r.caught}<span className="text-muted">/{r.failing}</span></span>} sub="failing cases" />
+        <Stat label="time saved" value={fmtMs(r.savedMs)} sub={`of ${fmtMs(r.totalMs)} measured`} />
+      </div>
+    </div>
+  );
+}
+
 /** Test race: two lanes over the same measured results. */
 export function RacePanel({ s }: { s: LabState }) {
   const race = s.tests.race;
@@ -124,6 +163,7 @@ export function RacePanel({ s }: { s: LabState }) {
         <>
           <LaneRow lane={race.lanes[1]} total={n} failed={failedN} />
           <LaneRow lane={race.lanes[0]} total={n} failed={failedN} />
+          <TopSlider lane={race.lanes.find((l) => l.name === "risk-first") ?? race.lanes[0]} mode={s.mode} />
           <Explain>
             Retest-all is <strong>computed</strong> from this run&apos;s measured per-test durations in alphabetical id order; it was not run separately. {race.unit}.
             {race.lanes[0].measured_wall_to_first_failure_ms !== undefined && <> Measured wall time to the first failure in the real run, pytest start-up included: <span className="num">{fmtMs(race.lanes[0].measured_wall_to_first_failure_ms)}</span>.</>}
@@ -159,7 +199,7 @@ export function TriagePanel({ s }: { s: LabState }) {
           const rows = t.rows.filter((r) => r.class === c.k);
           return (
             <div key={c.k} className={`rounded-md border bg-page p-3 ${rows.length ? c.ring : "border-rule"}`}>
-              <div className={`ui flex items-center gap-1.5 text-sm font-semibold ${c.tone}`}><Icon name={c.icon} />{c.title}</div>
+              <div className={`ui flex items-center gap-1.5 text-sm font-semibold ${c.tone}`}><Icon name={c.icon} />{c.k === "mine" ? c.title : <Term k={c.k}>{c.title}</Term>}</div>
               <Counter value={rows.length} className="block text-3xl font-semibold leading-tight text-ink" />
               <p className="ui m-0 text-xs text-muted">{c.what}</p>
               <ul className="m-0 mt-2 flex list-none flex-wrap gap-1 p-0">
@@ -260,8 +300,22 @@ const Step = ({ n, title, state, children }: { n: number; title: string; state: 
   </li>
 );
 
+export type RecordedRepair = { name: string; title: string; date: string; exact: boolean };
+
+/** When this run's repair did not run: the recorded run to play instead, labelled REPLAY with its date. */
+function PlayRecorded({ rec, onPlay }: { rec?: RecordedRepair | null; onPlay?: (name: string) => void }) {
+  if (!rec || !onPlay) return null;
+  return (
+    <div className="ui mt-3 flex flex-wrap items-center gap-2">
+      <button type="button" onClick={() => onPlay(rec.name)} className={BTN} data-testid="play-recorded-repair"><Icon name="play" />Play recorded repair</button>
+      <Prov mode="replay" /><span className="num mono text-xs text-muted">{rec.date.slice(0, 10)}</span>
+      <span className="text-xs text-muted" title={rec.title}>{rec.exact ? "same change" : "a different change"}: {midEllipsis(rec.title, 48)}</span>
+    </div>
+  );
+}
+
 /** Repair: a horizontal flow of context, patch and the five checks. The model's reply sits behind a toggle. */
-export function RepairPanel({ s }: { s: LabState }) {
+export function RepairPanel({ s, recorded, onPlayRecorded }: { s: LabState; recorded?: RecordedRepair | null; onPlayRecorded?: (name: string) => void }) {
   const r = s.repair;
   const [view, setView] = useState<"side" | "unified">("side");
   const [showReply, setShowReply] = useState(false);
@@ -269,8 +323,8 @@ export function RepairPanel({ s }: { s: LabState }) {
   const lastAttempt = attempts[attempts.length - 1] ?? 1;
   const v = s.validate.verdict;
   const accepted = v?.accepted === true && v.status === "ok";
-  if (r.unavailable) return <StageError what={`The model is unavailable (${r.unavailable.kind}).`} reason={r.unavailable.reason} next={NEXT.repair} />;
-  if (r.skipped && !r.requests.length) return <Empty title="Repair did not run.">{r.skipped}</Empty>;
+  if (r.unavailable) return <><StageError what={`The model is unavailable (${r.unavailable.kind}).`} reason={r.unavailable.reason} next={NEXT.repair} /><PlayRecorded rec={recorded} onPlay={onPlayRecorded} /></>;
+  if (r.skipped && !r.requests.length) return <><Empty title="Repair did not run.">Reason: {r.skipped}</Empty><PlayRecorded rec={recorded} onPlay={onPlayRecorded} /></>;
   if (!r.chunks.length) return <Empty title="A patch is generated here when a failure is triaged mine." />;
   const files = (r.patch?.files ?? []) as { path: string; before: string; after: string }[];
   const checks = s.validate.checks.filter((c) => c.attempt === lastAttempt);

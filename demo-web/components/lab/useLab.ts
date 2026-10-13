@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import type { Check, LabEvent, LabState, TestResult, TriageRow } from "./types";
+import type { Check, LabEvent, LabState, Stage, TestResult, TriageRow } from "./types";
 
 export const initialState: LabState = {
   mode: "idle", running: false, error: null, events: [], header: null, stage: {}, repo: null, graph: null, change: null,
@@ -157,8 +157,9 @@ export function useLab() {
     }
   }, [push, flush]);
 
-  /** Replay a recorded run in the browser from `/lab/runs/<name>.jsonl`, with its original relative timing. */
-  const startReplay = useCallback(async (name: string, speed = 1) => {
+  /** Replay a recorded run in the browser from `/lab/runs/<name>.jsonl`, with its original relative timing. With
+   * `fastUntil`, the events before that stage's first event arrive without waiting (the guided demo's fallback). */
+  const startReplay = useCallback(async (name: string, speed = 1, fastUntil?: Stage) => {
     abort.current?.abort();
     const ac = new AbortController();
     abort.current = ac;
@@ -169,10 +170,12 @@ export function useLab() {
       if (!r.ok) throw new Error(`recorded run ${name}: HTTP ${r.status}`);
       const evs = (await r.text()).split("\n").filter((l) => l.trim()).map((l) => ({ ...(JSON.parse(l) as LabEvent), replay: true }));
       let prev: number | null = null;
+      let fast = Boolean(fastUntil && evs.some((e) => e.stage === fastUntil));
       for (const ev of evs) {
         if (ac.signal.aborted) return;
+        if (fast && ev.stage === fastUntil) fast = false;
         const t = Date.parse(ev.ts);
-        if (prev !== null) {
+        if (prev !== null && !fast) {
           const wait = Math.min(Math.max(t - prev, 0) / speed, 4000 / speed);
           if (wait > 8) await new Promise((res) => setTimeout(res, wait));
         }

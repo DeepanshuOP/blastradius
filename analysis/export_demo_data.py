@@ -762,7 +762,8 @@ def decisions(path: Path = Path("docs/DECISIONS.md")) -> dict:
              or re.match(r"^D-(\d+) \((\d{4}-\d{2}-\d{2})\) \u2014 (.+?)\.\s", ln))
         if m:
             title = m.group(m.lastindex).strip().strip("*")
-            seen.setdefault(int(m.group(1)), title)
+            seen.setdefault(int(m.group(1)), title.replace("a BITE497J deliverable", "a course deliverable")
+                            .replace("BITE497J deliverable", "Course deliverable").replace("BITE497J", "the course"))
     return {"source": str(path), "rows": [{"id": f"D-{k:02d}", "title": v} for k, v in sorted(seen.items())]}
 
 
@@ -1118,6 +1119,98 @@ def compare_doc(sha: str) -> dict:
             "time": compare_time(), "figures": have}
 
 
+# -- Live Lab review cards: the base-paper comparison and the results at a glance -------------------------
+
+PAPER_TEX = Path("paper/full/main.tex")
+
+
+def tex_table(label: str, path: Path = PAPER_TEX) -> list[list[str]]:
+    """The body rows of the LaTeX table labelled `label` (between `\\midrule` and `\\bottomrule`), raw cells."""
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r"\\label\{" + re.escape(label) + r"\}(.*?)\\end\{table\*?\}", text, re.S)
+    if not m:
+        raise SystemExit(f"BLOCKED: no table {label} in {path}")
+    body = m.group(1).split("\\midrule", 1)[1].split("\\bottomrule", 1)[0]
+    return [[c.strip() for c in ln.split("&")] for ln in (x.strip() for x in body.split("\\\\")) if ln and "&" in ln]
+
+
+def tex_plain(cell: str) -> str:
+    """A LaTeX table cell as the text a reader sees: citations and macros dropped, math and escapes resolved."""
+    s = re.sub(r"~?\\cite\{[^}]*\}", "", cell)
+    s = re.sub(r"Table~\\ref\{tab:datasets\}", "dataset table", s)
+    s = re.sub(r"\\text(?:bf|it)\{([^}]*)\}", r"\1", s)
+    s = s.replace("\\$", "\0").replace("$<$", "<").replace("$>$", ">").replace("$\\geq$", "\u2265")
+    s = re.sub(r"\$([^$]*)\$", r"\1", s).replace("\\%", "%").replace("\0", "$").replace("~", " ").replace("--", "\u2013")
+    return re.sub(r"\s+", " ", s).strip()
+
+
+# The paper's own Verdict cell, read into one of five chips. The rule is written here, not in the page: `better`
+# only for a same-data difference with p < 0.05, `tie` for a same-data difference that is not significant, `lower`
+# where the paper says lower, `illustration` for the one-change demo, and `different task` for every other row
+# (another benchmark, another label design, or co-change used as a label).
+def glance_chip(verdict: str) -> str:
+    """The chip of one `tab:glance` row, from its Verdict cell."""
+    v = verdict.lower()
+    if v.startswith("lower"):
+        return "lower"
+    if v.startswith("illustration"):
+        return "illustration"
+    if v.startswith("tie"):
+        return "tie"
+    p = re.search(r"p\s*([<=])\s*([0-9.]+)", v)
+    if v.startswith(("better", "higher")) and p:
+        return "better" if float(p.group(2)) < 0.05 else "tie"
+    return "different task"
+
+
+def glance_doc(sha: str, path: Path = PAPER_TEX) -> dict:
+    """`tab:glance` of the paper, row by row, with the chip each Verdict cell maps to."""
+    cols = ["reference", "metric", "theirs", "ours", "same_data", "verdict"]
+    rows = []
+    for cells in tex_table("tab:glance", path):
+        if len(cells) != len(cols):
+            raise SystemExit(f"BLOCKED: tab:glance row with {len(cells)} cells: {cells[:2]}")
+        row = dict(zip(cols, (tex_plain(c) for c in cells)))
+        row["chip"] = glance_chip(row["verdict"])
+        rows.append(row)
+    return {"generated_at_git_sha": sha, "source": f"{path} (tab:glance)", "rows": rows}
+
+
+def pts_doc(sha: str, path: Path = GENERATED / "pts_comparison.md", tex: Path = PAPER_TEX) -> dict:
+    """The base-paper comparison: selection-rate curves of `pts_comparison.md` and Meta's reported operating points,
+    which are read from the Meta column of the paper's `tab:pts` (published numbers, not ours)."""
+    tables = md_tables(path)
+
+    def table(head: str) -> tuple[list[str], list[list[str]]]:
+        for trail, cols, rows in tables:
+            if trail and trail[-1].startswith(head):
+                return cols, rows
+        raise SystemExit(f"BLOCKED: no table under {head!r} in {path}")
+
+    def curves(head: str) -> list[dict]:
+        cols, rows = table(head)
+        rates = [float(c.rstrip("%")) / 100 for c in cols[1:]]
+        return [{"method": r[0], "points": [{"rate": x, "value": num(v)} for x, v in zip(rates, r[1:])]} for r in rows]
+
+    cols, rows = table("Candidates per change")
+    cand = {r[0]: dict(zip(cols[1:], r[1:])) for r in rows}
+    _, targets = table("(b) Smallest per-change selection rate")
+    meta = {}
+    for cells in tex_table("tab:pts", tex):
+        q = tex_plain(cells[0])
+        if q.startswith("Rate for TestRecall"):
+            meta["test_recall"] = {"target": q.split("\u2265")[-1].strip(), "rate": tex_plain(cells[1])}
+        elif q.startswith("Rate for ChangeRecall"):
+            meta["change_recall"] = {"target": q.split("\u2265")[-1].strip(), "rate": tex_plain(cells[1])}
+    if set(meta) != {"test_recall", "change_recall"}:
+        raise SystemExit(f"BLOCKED: tab:pts lacks Meta's two rate rows in {tex}")
+    return {"generated_at_git_sha": sha, "source": str(path), "meta_source": f"{tex} (tab:pts, Meta column)",
+            "candidates_mean": cand["candidate test files"]["mean"], "candidates_median": cand["candidate test files"]["median"],
+            "test_recall": curves("micro TestRecall"), "change_recall": curves("ChangeRecall"),
+            "targets": [{"method": r[0], "test_recall_95": r[1], "change_recall_999": r[2]} for r in targets],
+            "meta": meta}
+
+
 # -- Use it tab ----------------------------------------------------------------
 
 LIVE_PR_URL = "https://github.com/DeepanshuOP/itsdangerous/pull/1"
@@ -1191,6 +1284,8 @@ def write_docs(out_dir: Path, sha: str) -> None:
     write_json(out_dir / "rag.json", rag_doc(sha))
     write_json(out_dir / "compare.json", compare_doc(sha))
     write_json(out_dir / "use_it.json", use_it_doc(sha))
+    write_json(out_dir / "pts.json", pts_doc(sha))
+    write_json(out_dir / "glance.json", glance_doc(sha))
     intel = intelligence(sha)
     for key in ("e1", "e2", "e3"):
         write_json(out_dir / f"{key}.json", {"generated_at_git_sha": sha, key: intel[key]})

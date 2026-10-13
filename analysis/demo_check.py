@@ -25,7 +25,12 @@ Checks, in order:
       same diff (tests/test_lab_arena.py);
   20. the reviewer challenge: the same seed names the same function and operator (tests/test_lab_challenge.py);
   21. the text budget of the Live Lab main screen, counted in server-rendered HTML: no visible paragraph over 2 lines,
-      no caption over 14 words (demo-web/scripts/text_budget.tsx).
+      no caption over 14 words (demo-web/scripts/text_budget.tsx);
+  22. the review-ready lab, server-rendered (demo-web/scripts/review_check.tsx): the model chip's states, the guided demo
+      completing on its recording, the recorded-repair fallback, the top-x% slider;
+  23. the "vs Meta" card's numbers (pts.json) against paper/generated/pts_comparison.md and the Meta column of tab:pts;
+  24. the "Results at a glance" rows (glance.json) against tab:glance of paper/full/main.tex;
+  25. no "BITE" string anywhere in demo-web (sources and data; node_modules and .next excluded).
 
 Replays run against a scratch copy of `data/seeded` (BR_SEEDED_DIR) so they never queue behind a live E3 run's repo
 locks. No step can reach a model or the network: replay mode is forced and the keys are removed from the environment.
@@ -262,6 +267,88 @@ def check_text_budget() -> tuple[bool, str]:
     n = sum(d.get("paragraphs", 0) for d in docs)
     return rc == 0 and not bad and len(docs) > 1, (f"{len(docs) - 1} screens, {n} visible paragraphs, none over 2 lines or 14 caption words"
                                                    if not bad else "; ".join(bad[:3]))
+
+
+def check_review() -> tuple[bool, str]:
+    """Compile `demo-web/scripts/review_check.tsx` and run it on the recorded runs."""
+    web = ROOT / "demo-web"
+    out_dir = Path(tempfile.mkdtemp(prefix="br-review-"))
+    try:
+        rc, out = run(["npx", "tsc", "--outDir", str(out_dir), "--rootDir", ".", "--module", "commonjs", "--moduleResolution", "node",
+                       "--jsx", "react-jsx", "--target", "es2020", "--esModuleInterop", "--skipLibCheck", "--resolveJsonModule",
+                       "--strict", "scripts/review_check.tsx"], cwd=web)
+        if rc != 0:
+            return False, "tsc: " + last(out, 2)
+        env = {**os.environ, "NODE_PATH": str(web / "node_modules")}
+        rc, out = run(["node", str(out_dir / "scripts" / "review_check.js"), str(web / "public" / "lab" / "runs")], cwd=web, env=env)
+    finally:
+        shutil.rmtree(out_dir, ignore_errors=True)
+    docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
+    bad = [f"{d['check']}: {d['detail']}" for d in docs if not d["ok"]]
+    return rc == 0 and not bad and len(docs) == 6, (f"{len(docs)} checks: " + "; ".join(d["check"] for d in docs)) if not bad else "; ".join(bad[:2])[:300]
+
+
+def check_meta_card() -> tuple[bool, str]:
+    """Every number of the "vs Meta" card (pts.json) against `pts_comparison.md`, cell by cell, and Meta's two
+    reported rates against the Meta column of `tab:pts` in the paper."""
+    from analysis import export_demo_data as ex
+
+    d = json.loads((DATA / "pts.json").read_text(encoding="utf-8"))
+    src = GEN / "pts_comparison.md"
+    md = src.read_text(encoding="utf-8")
+    misses, n = [], 0
+    for t in d["targets"]:
+        n += 1
+        _in(md, f"| {t['method']} | {t['test_recall_95']} | {t['change_recall_999']} |", misses, f"targets {t['method']}")
+    for key, head in (("test_recall", "### micro TestRecall"), ("change_recall", "### ChangeRecall")):
+        block = md.split(head, 1)[1].split("###", 1)[0]
+        for c in d[key]:
+            n += len(c["points"])
+            _in(block, "| " + " | ".join([c["method"], *(f"{p['value']:.3f}" for p in c["points"])]) + " |", misses, f"{key} {c['method']}")
+    n += 1
+    _in(md, f"| candidate test files | {d['candidates_mean']} | {d['candidates_median']} |", misses, "candidates")
+    ours = next((t for t in d["targets"] if t["method"] == "BlastRadius ranker"), None)
+    if not ours or (ours["test_recall_95"], ours["change_recall_999"]) != ("0.764", "0.997"):
+        misses.append(f"ours is not (0.764, 0.997): {ours}")
+    tex = {ex.tex_plain(r[0]): ex.tex_plain(r[1]) for r in ex.tex_table("tab:pts")}
+    for key, label in (("test_recall", "TestRecall"), ("change_recall", "ChangeRecall")):
+        n += 1
+        row = next((v for k, v in tex.items() if k.startswith(f"Rate for {label}")), None)
+        if row != d["meta"][key]["rate"]:
+            misses.append(f"Meta {label}: card {d['meta'][key]['rate']!r}, tab:pts {row!r}")
+    return not misses, f"{n} numbers equal pts_comparison.md / tab:pts" if not misses else "; ".join(misses[:3])
+
+
+def check_glance() -> tuple[bool, str]:
+    """glance.json against a fresh read of tab:glance: same rows, same cells, same order; every chip one of five."""
+    from analysis import export_demo_data as ex
+
+    d = json.loads((DATA / "glance.json").read_text(encoding="utf-8"))
+    fresh = ex.glance_doc(d["generated_at_git_sha"])["rows"]
+    tex = (ROOT / "paper/full/main.tex").read_text(encoding="utf-8")
+    body = tex.split("\\label{tab:glance}", 1)[1].split("\\midrule", 1)[1].split("\\bottomrule", 1)[0]
+    n_tex = sum(1 for ln in body.split("\\\\") if "&" in ln)
+    chips = {"better", "tie", "lower", "different task", "illustration"}
+    problems = []
+    if d["rows"] != fresh:
+        problems.append("glance.json differs from tab:glance (run make demo-data)")
+    if len(d["rows"]) != n_tex:
+        problems.append(f"{len(d['rows'])} rows, tab:glance has {n_tex}")
+    problems += [f"chip {r['chip']!r}" for r in d["rows"] if r["chip"] not in chips]
+    return not problems, f"{len(d['rows'])} rows equal tab:glance" if not problems else "; ".join(problems[:3])
+
+
+def check_no_bite() -> tuple[bool, str]:
+    """No "BITE" string in demo-web, generated data included (node_modules and the build output excluded)."""
+    web = ROOT / "demo-web"
+    hits = []
+    for f in web.rglob("*"):
+        rel = f.relative_to(web)
+        if not f.is_file() or rel.parts[0] in ("node_modules", ".next") or f.suffix in (".png", ".pdf", ".ico", ".woff2"):
+            continue
+        if "BITE" in f.read_text(encoding="utf-8", errors="ignore"):
+            hits.append(str(rel))
+    return not hits, "no BITE in demo-web" if not hits else f"BITE in {hits[:4]}"
 
 
 def check_ledger() -> tuple[bool, str]:
@@ -535,7 +622,11 @@ def main() -> int:
              ("BlastRadius test-case order against the hand-computed order of a recorded run", check_order_rule),
              ("arena columns, and the history row with and without runs of the same diff", check_arena_columns),
              ("reviewer challenge: the same seed names the same bug", check_challenge),
-             ("text budget of the main screen in server-rendered HTML (2 lines, 14 caption words)", check_text_budget)]
+             ("text budget of the main screen in server-rendered HTML (2 lines, 14 caption words)", check_text_budget),
+             ("review lab: model chip, guided demo on its recording, recorded-repair fallback, slider", check_review),
+             ("vs Meta card numbers equal pts_comparison.md and tab:pts", check_meta_card),
+             ("results-at-a-glance rows equal tab:glance of paper/full/main.tex", check_glance),
+             ("no BITE string in demo-web", check_no_bite)]
     try:
         for name, fn in steps:
             t0 = time.time()

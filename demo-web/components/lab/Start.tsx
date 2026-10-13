@@ -47,7 +47,7 @@ export function RunPanel({ scenario, change, running, canRun, why, onRun, runs, 
   return (
     <div className="flex flex-col gap-3">
       <button type="button" onClick={onRun} disabled={!canRun || running}
-        className="ui flex min-h-[72px] w-full items-center justify-center gap-3 rounded-lg bg-accent px-4 text-2xl font-bold text-white shadow-[0_6px_20px_rgb(var(--accent-rgb)/0.35)] hover:brightness-110 disabled:cursor-not-allowed disabled:bg-panel2 disabled:text-muted disabled:shadow-none">
+        className={`ui flex min-h-[72px] w-full items-center justify-center gap-3 rounded-lg bg-accent px-4 ${running ? "text-lg" : "text-2xl"} font-bold text-white shadow-[0_6px_20px_rgb(var(--accent-rgb)/0.35)] hover:brightness-110 disabled:cursor-not-allowed disabled:bg-panel2 disabled:text-muted disabled:shadow-none`}>
         <Icon name="play" className="text-2xl" />{running ? (stageLabel ?? "Running") : "Run"}
       </button>
       <p className="ui m-0 min-h-[20px] truncate text-center text-sm" title={summary || why}>

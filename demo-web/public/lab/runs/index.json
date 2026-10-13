@@ -8,6 +8,14 @@
   "description": "A harmless comment edit in itsdangerous. BlastRadius ranks, runs the suite, finds no failure and does not call the model."
  },
  {
+  "name": "guided-demo",
+  "date": "2026-10-13T14:30:07.145+00:00",
+  "model": "openai/gpt-oss-120b",
+  "git_sha": "43c09f3020",
+  "title": "Guided demo: reviewer challenge seed 7, end to end",
+  "description": "Reviewer-challenge seed 7 on itsdangerous: NEGATE_COND in HMACAlgorithm.__init__ (signer.py:57, digest_method is None becomes not (digest_method is None)). Change, impact, tests, triage and a validated repair."
+ },
+ {
   "name": "hard-decoys",
   "date": "2026-10-12T16:52:14.620+00:00",
   "model": "openai/gpt-oss-120b",

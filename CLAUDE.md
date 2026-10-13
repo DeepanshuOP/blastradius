@@ -84,7 +84,7 @@ If a task seems to need one of these, **stop and ask** — it is either scope cr
 
 Branch `upgrade-2.0`; plan and progress in `docs/phase/032-blastradius-2-progress.md`.
 
-- **D-56** contribution for BITE497J = dataset + predictor (E1) + triage (E2) + repair (E3). The MSR paper stays a dataset paper.
+- **D-56** contribution for the course project = dataset + predictor (E1) + triage (E2) + repair (E3). The MSR paper stays a dataset paper.
 - **D-57** split: chronological 60/20/20 by `run_started_at` (ties by `run_id`), plus leave-one-repo-out. Never random.
 - **D-58** only `src/agents/repair.py` (via `src/agents/llm.py`) may call an LLM: Groq free tier, cached in `eval/llm_cache/`, replayable. E1, E2, features, labels and `make tables` stay LLM-free (D-17).
 - **D-59** extra `ml` (lightgbm, scikit-learn, scipy), pinned. `uv sync --extra graph --extra ml --extra figures`.

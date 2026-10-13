@@ -1,0 +1,464 @@
+{
+ "candidates_mean": "924.4",
+ "candidates_median": "595",
+ "change_recall": [
+  {
+   "method": "BlastRadius ranker",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.709
+    },
+    {
+     "rate": 0.1,
+     "value": 0.772
+    },
+    {
+     "rate": 0.15,
+     "value": 0.792
+    },
+    {
+     "rate": 0.2,
+     "value": 0.808
+    },
+    {
+     "rate": 0.33,
+     "value": 0.85
+    },
+    {
+     "rate": 0.5,
+     "value": 0.888
+    }
+   ]
+  },
+  {
+   "method": "B7 readily-available-info LTR",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.715
+    },
+    {
+     "rate": 0.1,
+     "value": 0.774
+    },
+    {
+     "rate": 0.15,
+     "value": 0.792
+    },
+    {
+     "rate": 0.2,
+     "value": 0.814
+    },
+    {
+     "rate": 0.33,
+     "value": 0.843
+    },
+    {
+     "rate": 0.5,
+     "value": 0.878
+    }
+   ]
+  },
+  {
+   "method": "B6 history-only LTR",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.612
+    },
+    {
+     "rate": 0.1,
+     "value": 0.659
+    },
+    {
+     "rate": 0.15,
+     "value": 0.688
+    },
+    {
+     "rate": 0.2,
+     "value": 0.712
+    },
+    {
+     "rate": 0.33,
+     "value": 0.777
+    },
+    {
+     "rate": 0.5,
+     "value": 0.843
+    }
+   ]
+  },
+  {
+   "method": "B4 failure history",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.635
+    },
+    {
+     "rate": 0.1,
+     "value": 0.662
+    },
+    {
+     "rate": 0.15,
+     "value": 0.669
+    },
+    {
+     "rate": 0.2,
+     "value": 0.676
+    },
+    {
+     "rate": 0.33,
+     "value": 0.716
+    },
+    {
+     "rate": 0.5,
+     "value": 0.797
+    }
+   ]
+  },
+  {
+   "method": "B2 changed test files",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.304
+    },
+    {
+     "rate": 0.1,
+     "value": 0.311
+    },
+    {
+     "rate": 0.15,
+     "value": 0.338
+    },
+    {
+     "rate": 0.2,
+     "value": 0.345
+    },
+    {
+     "rate": 0.33,
+     "value": 0.466
+    },
+    {
+     "rate": 0.5,
+     "value": 0.534
+    }
+   ]
+  },
+  {
+   "method": "B0 retest-all (alphabetical)",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.128
+    },
+    {
+     "rate": 0.1,
+     "value": 0.128
+    },
+    {
+     "rate": 0.15,
+     "value": 0.162
+    },
+    {
+     "rate": 0.2,
+     "value": 0.169
+    },
+    {
+     "rate": 0.33,
+     "value": 0.324
+    },
+    {
+     "rate": 0.5,
+     "value": 0.446
+    }
+   ]
+  },
+  {
+   "method": "B1 random (mean of 20 seeds)",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.087
+    },
+    {
+     "rate": 0.1,
+     "value": 0.145
+    },
+    {
+     "rate": 0.15,
+     "value": 0.202
+    },
+    {
+     "rate": 0.2,
+     "value": 0.256
+    },
+    {
+     "rate": 0.33,
+     "value": 0.384
+    },
+    {
+     "rate": 0.5,
+     "value": 0.542
+    }
+   ]
+  }
+ ],
+ "generated_at_git_sha": "43c09f30200a32c624cd058a543545dd5a271a50",
+ "meta": {
+  "change_recall": {
+   "rate": "<0.33",
+   "target": "0.999"
+  },
+  "test_recall": {
+   "rate": "<0.33",
+   "target": "0.95"
+  }
+ },
+ "meta_source": "paper/full/main.tex (tab:pts, Meta column)",
+ "source": "paper/generated/pts_comparison.md",
+ "targets": [
+  {
+   "change_recall_999": "0.997",
+   "method": "BlastRadius ranker",
+   "test_recall_95": "0.764"
+  },
+  {
+   "change_recall_999": "0.976",
+   "method": "B7 readily-available-info LTR",
+   "test_recall_95": "0.977"
+  },
+  {
+   "change_recall_999": "0.999",
+   "method": "B6 history-only LTR",
+   "test_recall_95": "0.854"
+  },
+  {
+   "change_recall_999": "0.999",
+   "method": "B4 failure history",
+   "test_recall_95": "0.806"
+  },
+  {
+   "change_recall_999": "0.999",
+   "method": "B2 changed test files",
+   "test_recall_95": "0.912"
+  },
+  {
+   "change_recall_999": "0.999",
+   "method": "B0 retest-all (alphabetical)",
+   "test_recall_95": "0.913"
+  },
+  {
+   "change_recall_999": "0.999",
+   "method": "B1 random (mean of 20 seeds)",
+   "test_recall_95": "0.948"
+  }
+ ],
+ "test_recall": [
+  {
+   "method": "BlastRadius ranker",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.476
+    },
+    {
+     "rate": 0.1,
+     "value": 0.568
+    },
+    {
+     "rate": 0.15,
+     "value": 0.63
+    },
+    {
+     "rate": 0.2,
+     "value": 0.662
+    },
+    {
+     "rate": 0.33,
+     "value": 0.74
+    },
+    {
+     "rate": 0.5,
+     "value": 0.834
+    }
+   ]
+  },
+  {
+   "method": "B7 readily-available-info LTR",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.482
+    },
+    {
+     "rate": 0.1,
+     "value": 0.526
+    },
+    {
+     "rate": 0.15,
+     "value": 0.543
+    },
+    {
+     "rate": 0.2,
+     "value": 0.557
+    },
+    {
+     "rate": 0.33,
+     "value": 0.579
+    },
+    {
+     "rate": 0.5,
+     "value": 0.646
+    }
+   ]
+  },
+  {
+   "method": "B6 history-only LTR",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.35
+    },
+    {
+     "rate": 0.1,
+     "value": 0.375
+    },
+    {
+     "rate": 0.15,
+     "value": 0.397
+    },
+    {
+     "rate": 0.2,
+     "value": 0.422
+    },
+    {
+     "rate": 0.33,
+     "value": 0.487
+    },
+    {
+     "rate": 0.5,
+     "value": 0.616
+    }
+   ]
+  },
+  {
+   "method": "B4 failure history",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.416
+    },
+    {
+     "rate": 0.1,
+     "value": 0.575
+    },
+    {
+     "rate": 0.15,
+     "value": 0.657
+    },
+    {
+     "rate": 0.2,
+     "value": 0.66
+    },
+    {
+     "rate": 0.33,
+     "value": 0.689
+    },
+    {
+     "rate": 0.5,
+     "value": 0.821
+    }
+   ]
+  },
+  {
+   "method": "B2 changed test files",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.287
+    },
+    {
+     "rate": 0.1,
+     "value": 0.443
+    },
+    {
+     "rate": 0.15,
+     "value": 0.507
+    },
+    {
+     "rate": 0.2,
+     "value": 0.51
+    },
+    {
+     "rate": 0.33,
+     "value": 0.587
+    },
+    {
+     "rate": 0.5,
+     "value": 0.716
+    }
+   ]
+  },
+  {
+   "method": "B0 retest-all (alphabetical)",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.176
+    },
+    {
+     "rate": 0.1,
+     "value": 0.331
+    },
+    {
+     "rate": 0.15,
+     "value": 0.381
+    },
+    {
+     "rate": 0.2,
+     "value": 0.384
+    },
+    {
+     "rate": 0.33,
+     "value": 0.501
+    },
+    {
+     "rate": 0.5,
+     "value": 0.657
+    }
+   ]
+  },
+  {
+   "method": "B1 random (mean of 20 seeds)",
+   "points": [
+    {
+     "rate": 0.05,
+     "value": 0.051
+    },
+    {
+     "rate": 0.1,
+     "value": 0.097
+    },
+    {
+     "rate": 0.15,
+     "value": 0.149
+    },
+    {
+     "rate": 0.2,
+     "value": 0.2
+    },
+    {
+     "rate": 0.33,
+     "value": 0.329
+    },
+    {
+     "rate": 0.5,
+     "value": 0.498
+    }
+   ]
+  }
+ ]
+}

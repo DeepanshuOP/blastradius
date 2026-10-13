@@ -5,16 +5,18 @@ import { ArenaPanel } from "./Arena";
 import { ChallengeCard } from "./Challenge";
 import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
 import { CodePanel } from "./CodePanel";
-import { BTN, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
+import { BTN, BTN_PRIMARY, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
 import { ExplainContext, Info } from "./Info";
 import { EventLog, Ticker } from "./Log";
 import { NodeCard } from "./NodeDetails";
-import { ImpactPanel, RacePanel, RepairPanel, TriagePanel, VerdictPanel, stageFailure } from "./Panels";
+import { GUIDED_IDLE, GUIDED_RECORDING, GUIDED_REPO, GUIDED_SEED, GUIDED_STEPS, GuidedStepper, liveFailure, stepMs, stepTone, type Guided, type StepRecord } from "./GuidedDemo";
+import { ImpactPanel, RacePanel, RepairPanel, TriagePanel, VerdictPanel, stageFailure, type RecordedRepair } from "./Panels";
 import { ChangePicker, RepoCards, type Change, type RepoInfo, type RunInfo, type Scenario } from "./Picker";
 import { Presenter } from "./Presenter";
 import { PipelineRail } from "./Rail";
 import { IntegrityPanel, ReportPanel } from "./Report";
+import { GlanceCard, MetaCard } from "./ReviewCards";
 import { importantNodes, reachCounts, sizeByReach } from "./reach";
 import { useSessionTally } from "./Scoreboard";
 import { RunPanel, Steps } from "./Start";
@@ -134,6 +136,23 @@ export function GraphFilters({ hidden, toggle, counts }: { hidden: Filter[]; tog
   );
 }
 
+/** The recorded run whose repair stands in for this run's: the same change when one was recorded (its description
+ * names the task, or the function and operator), otherwise a recording of the same repository whose repair ran
+ * (for itsdangerous, the guided demo's validated repair). */
+export function recordedRepairFor(s: LabState, runs: RunInfo[]): RecordedRepair | null {
+  const cands = runs.filter((r) => r.model);
+  if (!cands.length) return null;
+  const src = (s.change?.source ?? {}) as Record<string, unknown>;
+  const text = (r: RunInfo) => `${r.name} ${r.title ?? ""} ${r.description ?? ""}`;
+  const exact = cands.find((r) => (src.task_id && text(r).includes(String(src.task_id)))
+    || (src.function && src.operator && text(r).includes(String(src.function)) && text(r).includes(String(src.operator))));
+  const repo = String(s.repo?.name ?? "");
+  const repaired = cands.filter((r) => !/no model call/i.test(text(r)));   // recordings whose repair actually ran
+  const pick = exact ?? (repo === GUIDED_REPO ? repaired.find((r) => r.name === GUIDED_RECORDING) : undefined)
+    ?? repaired.find((r) => repo && text(r).includes(repo)) ?? repaired[0] ?? cands[0];
+  return { name: pick.name, title: pick.title ?? pick.name, date: pick.date ?? "", exact: Boolean(exact) };
+}
+
 export default function LabPage() {
   const { state: s, avail, startLive, startReplay, reset } = useLab();
   const [repos, setRepos] = useState<RepoInfo[] | null>(null);
@@ -161,6 +180,8 @@ export default function LabPage() {
   const pinnedAt = useRef<Stage | null>(null);
   const graphRef = useRef<GraphHandle>(null);
   const results = useRef<HTMLDivElement>(null);
+  const holdTab = useRef<TabId | null>(null);           // a tab the reader asked for that the running stage must not move
+  const [guided, setGuided] = useState<Guided>(GUIDED_IDLE);
 
   useEffect(() => {
     let alive = true;
@@ -179,7 +200,7 @@ export default function LabPage() {
   const previewUrl = !idle ? null : scenario?.kind === "repo" ? `/api/lab/graph?repo=${scenario.name}` : scenario?.kind === "replay" ? `/lab/runs/${scenario.name}.graph.json` : null;
   const preview = useGraphDoc(previewUrl);
   const g = useRunGraph(s, preview.doc);
-  useEffect(() => { setSelected(null); setTab("impact"); pinnedAt.current = null; }, [s.startedAt]);
+  useEffect(() => { setSelected(null); setTab(holdTab.current ?? "impact"); pinnedAt.current = null; }, [s.startedAt]);
 
   const changeEv = useMemo(() => s.events.find((e) => e.type === "change.applied"), [s.events]);
   useEffect(() => { if (changeEv) setWaveKey(changeEv.seq); }, [changeEv]);
@@ -187,12 +208,12 @@ export default function LabPage() {
   // the active tab follows the running stage, unless the reader picked a tab while that stage was running
   const runningStage = useMemo(() => [...s.events].reverse().find((e) => e.stage !== "meta")?.stage ?? null, [s.events]);
   useEffect(() => {
-    if (!runningStage) return;
+    if (!runningStage || holdTab.current) return;
     if (pinnedAt.current && pinnedAt.current === runningStage) return;
     pinnedAt.current = null;
     setTab(tabOf(runningStage));
   }, [runningStage]);
-  const pick = (t: TabId) => { setTab(t); pinnedAt.current = runningStage; };
+  const pick = (t: TabId) => { setTab(t); pinnedAt.current = runningStage; holdTab.current = null; };
   const pickStage = (st: Stage) => { pick(tabOf(st)); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); };
 
   const reach = useMemo(() => reachCounts(g.nodes, g.edges), [g.nodes, g.edges]);
@@ -236,6 +257,7 @@ export default function LabPage() {
   const launch = useCallback((sc: NonNullable<Scenario>, ch: Change, opts?: { noLlm?: boolean }) => {
     if (sc.kind === "replay") return;
     lastReplay.current = null;
+    holdTab.current = null;
     const body: Record<string, unknown> = { model, ...(sc.kind === "repo" ? { repo: sc.name } : sc.kind === "pr" ? { pr: sc.url } : { url: sc.url }) };
     if (ch?.kind === "task") Object.assign(body, { task: ch.id, variant: ch.variant });
     if (ch?.kind === "inject") body.inject = { file: ch.file, function: ch.function, operator: ch.operator, ...(ch.line ? { line: ch.line } : {}) };
@@ -247,6 +269,7 @@ export default function LabPage() {
 
   const run = useCallback(() => {
     if (!scenario) return;
+    setGuided(GUIDED_IDLE); holdTab.current = null;
     if (scenario.kind === "replay") {
       lastReplay.current = { name: scenario.name, speed: Number(new URLSearchParams(window.location.search).get("speed")) || 1 };
       startReplay(lastReplay.current.name, lastReplay.current.speed);
@@ -257,11 +280,59 @@ export default function LabPage() {
   }, [scenario, change, launch, startReplay]);
 
   const replay = useCallback((name: string) => {
+    setGuided(GUIDED_IDLE); holdTab.current = null;
     setScenario({ kind: "replay", name });
     setChange(null);
     lastReplay.current = { name, speed: Number(new URLSearchParams(window.location.search).get("speed")) || 1 };
     startReplay(name, lastReplay.current.speed);
   }, [startReplay]);
+
+  /** Play a recorded run from its repair stage on, labelled REPLAY, and keep the Repair tab in front. */
+  const playRecorded = useCallback((name: string) => {
+    setGuided(GUIDED_IDLE);
+    setScenario({ kind: "replay", name }); setChange(null);
+    lastReplay.current = { name, speed: 1 };
+    holdTab.current = "repair"; setTab("repair");
+    startReplay(name, 1, "repair");
+  }, [startReplay]);
+  const recorded = useMemo(() => (s.mode === "live" ? recordedRepairFor(s, runs) : null), [s.mode, s.change, s.repo, runs]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ---- guided demo: itsdangerous, seed 7, end to end; a live step that fails hands over to the recording ----
+  const fallBack = useCallback((at: number, reason: string, live: StepRecord[]) => {
+    setGuided((g) => ({ ...g, phase: "running", fellBackAt: at, reason: reason.slice(0, 70), live }));
+    setScenario({ kind: "replay", name: GUIDED_RECORDING }); setChange(null);
+    lastReplay.current = { name: GUIDED_RECORDING, speed: 1 };
+    holdTab.current = null;
+    startReplay(GUIDED_RECORDING, 1, at > 0 ? GUIDED_STEPS[at].stages[0] : undefined);
+  }, [startReplay]);
+  const runFullDemo = useCallback(async () => {
+    holdTab.current = null;
+    setChallenge(false);
+    setGuided({ ...GUIDED_IDLE, phase: "running" });
+    if (!avail.live) { fallBack(0, "no local server", []); return; }
+    let c: { file: string; function: string; operator: string; line: number } | null = null;
+    try {
+      const r = await fetch(`/api/lab/challenge?repo=${GUIDED_REPO}&seed=${GUIDED_SEED}`);
+      if (r.ok) c = await r.json();
+    } catch { /* falls back below */ }
+    if (!c) { fallBack(0, `seed ${GUIDED_SEED} could not be resolved`, []); return; }
+    setGuided((g) => ({ ...g, pick: `seed ${GUIDED_SEED}: ${c!.operator} in ${c!.function}` }));
+    const sc = { kind: "repo", name: GUIDED_REPO } as NonNullable<Scenario>;
+    const ch: Change = { kind: "inject", file: c.file, function: c.function, operator: c.operator, line: c.line };
+    setScenario(sc); setChange(ch);
+    launch(sc, ch, { noLlm: !modelOk });
+  }, [avail.live, fallBack, launch, modelOk]);
+  useEffect(() => {
+    if (guided.phase !== "running" || s.running || !s.startedAt) return;
+    if (guided.fellBackAt === null && s.mode === "live" && (s.events.length || s.error)) {
+      const f = liveFailure(s);
+      if (f === null) { setGuided((g) => ({ ...g, phase: "done" })); return; }
+      const why = s.repair.unavailable?.reason ?? s.repair.skipped ?? s.error ?? stageFailure(s, GUIDED_STEPS[f].stages.find((k) => stageFailure(s, k)) ?? "")?.data.reason ?? "the step failed";
+      fallBack(f, String(why), GUIDED_STEPS.slice(0, f).map((_, i) => ({ ms: stepMs(s, i), tone: stepTone(s, i), source: "live" as const })));
+    } else if (guided.fellBackAt !== null && s.mode === "replay" && s.events.length) {
+      setGuided((g) => ({ ...g, phase: "done" }));
+    }
+  }, [s.running, s.startedAt, s.mode, s.events.length, s.error, guided.phase, guided.fellBackAt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const graphFail = stageFailure(s, "graph");
   const counts = s.graph?.counts ?? g.runGraph?.counts;
@@ -274,7 +345,7 @@ export default function LabPage() {
       <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3 pb-14">
         <h1 className="sr-only">Live Lab</h1>
         <TopBar s={s} avail={avail} model={model} tally={tally} explain={explain} setExplain={setExplain}
-          onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); setChallenge(false); }}
+          onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); setChallenge(false); setGuided(GUIDED_IDLE); holdTab.current = null; }}
           onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
         {presenting && (
           <Presenter s={s} g={{ nodes: g.nodes, edges: g.edges, changed: g.changed, paths: g.paths, atRisk: g.atRisk, outcomes: g.outcomes }} onClose={() => setPresenting(false)}
@@ -282,9 +353,14 @@ export default function LabPage() {
         )}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Steps stage={stage} />
-          <button type="button" onClick={() => setChallenge((v) => !v)} aria-pressed={challenge} aria-expanded={challenge}
-            className={`${BTN} min-h-[36px] font-semibold ${challenge ? "border-accent text-accent" : ""}`}><Icon name="bug" />Challenge</button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button type="button" onClick={runFullDemo} disabled={s.running} data-testid="run-full-demo"
+              className={`${BTN_PRIMARY} min-h-[36px]`} title={`itsdangerous, seed ${GUIDED_SEED}, from the change to the repair`}><Icon name="play" />Run full demo</button>
+            <button type="button" onClick={() => setChallenge((v) => !v)} aria-pressed={challenge} aria-expanded={challenge}
+              className={`${BTN} min-h-[36px] font-semibold ${challenge ? "border-accent text-accent" : ""}`}><Icon name="bug" />Challenge</button>
+          </div>
         </div>
+        {guided.phase !== "idle" && <GuidedStepper s={s} g={guided} onStop={() => { reset(); setGuided(GUIDED_IDLE); }} />}
         {challenge && (
           <ChallengeCard s={s} live={avail.live} running={s.running} llmOk={modelOk}
             repo={scenario?.kind === "repo" ? scenario.name : s.repo?.prepared ? String(s.repo.name) : null}
@@ -293,6 +369,7 @@ export default function LabPage() {
               const sc = { kind: "repo", name } as NonNullable<Scenario>;
               const ch: Change = { kind: "inject", ...c };
               fixPending.current = !opts.noLlm;
+              setGuided(GUIDED_IDLE);
               setScenario(sc); setChange(ch); launch(sc, ch, opts);
             }}
             onPickMyself={() => { setChallenge(false); document.getElementById("panel-graph")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
@@ -417,12 +494,17 @@ export default function LabPage() {
             {tab === "race" && <RacePanel s={s} />}
             {tab === "arena" && <ArenaPanel s={s} />}
             {tab === "triage" && <TriagePanel s={s} />}
-            {tab === "repair" && <RepairPanel s={s} />}
+            {tab === "repair" && <RepairPanel s={s} recorded={recorded} onPlayRecorded={playRecorded} />}
             {tab === "verdict" && <VerdictPanel s={s} />}
             {tab === "comment" && <ReportPanel s={s} />}
             {tab === "integrity" && <IntegrityPanel s={s} />}
           </div>
         </section>
+
+        <div className="grid gap-3 pt-2" aria-label="Paper results">
+          <MetaCard />
+          <GlanceCard />
+        </div>
       </div>
 
       {otherOpen && (scenario?.kind === "repo" || scenario?.kind === "github") && (

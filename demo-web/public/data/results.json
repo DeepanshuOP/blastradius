@@ -187,7 +187,7 @@
   "source": "paper/generated/gates.md",
   "source_generated_at_git_sha": "ecc105c424585145f45ca7249764d3816b77897b"
  },
- "generated_at_git_sha": "1433e9de5650acb47786166ab8bf2df7e04e4ace",
+ "generated_at_git_sha": "43c09f30200a32c624cd058a543545dd5a271a50",
  "leakage": {
   "audited": {
    "d": 762,

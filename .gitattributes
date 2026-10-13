@@ -4,3 +4,4 @@
 *.gz binary
 *.parquet binary
 *.jsonl.gz binary
+paper/full/main.tex text eol=lf

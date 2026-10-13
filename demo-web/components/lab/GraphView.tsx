@@ -55,7 +55,7 @@ function styleSheet() {
     { selector: "node", style: { "background-color": c.fn, width: "mapData(size, 0, 1, 8, 20)", height: "mapData(size, 0, 1, 8, 20)",
         "border-width": 1, "border-color": c.page, label: "", color: c.ink, "font-size": 11, "font-family": font, "text-valign": "bottom", "text-margin-y": 4,
         "text-background-color": c.page, "text-background-opacity": 0.85, "text-background-padding": 2, "text-background-shape": "roundrectangle",
-        "min-zoomed-font-size": 6, "overlay-opacity": 0, "transition-property": "background-color, border-color, border-width", "transition-duration": 180 } },
+        "min-zoomed-font-size": 6, "overlay-opacity": 0, "transition-property": "background-color, border-color, border-width, underlay-opacity, underlay-padding", "transition-duration": 600 } },
     { selector: 'node[type = "file"]', style: { shape: "round-rectangle", "background-color": c.file } },
     { selector: 'node[type = "class"]', style: { shape: "diamond", "background-color": c.cls } },
     { selector: 'node[type = "function"]', style: { shape: "ellipse" } },
@@ -77,6 +77,10 @@ function styleSheet() {
     { selector: "node.atrisk", style: { "border-color": c.accent, "border-width": 3, label: "data(short)" } },
     { selector: "node.pass", style: { "background-color": c.green, "border-color": c.green } },
     { selector: "node.fail", style: { "background-color": c.red, "border-color": c.ink, "border-width": 3, "border-style": "double", width: 16, height: 16, "z-index": 18 } },
+    // the heartbeat: failing tests pulse red and the changed node's glow breathes (toggled by an interval; static under reduced motion)
+    { selector: "node.fail", style: { "underlay-color": c.red, "underlay-opacity": 0.2, "underlay-padding": 4, "underlay-shape": "ellipse" } },
+    { selector: "node.fail.throb", style: { "underlay-opacity": 0.55, "underlay-padding": 10 } },
+    { selector: "node.changed.throb", style: { "underlay-opacity": 0.65, "underlay-padding": 18 } },
     { selector: "node.hit", style: { "border-color": c.ink, "border-width": 3, label: "data(short)" } },
     { selector: "node.hover", style: { label: "data(short)", "z-index": 40 } },
     { selector: "node.kbd", style: { label: "data(short)", "border-color": c.ink, "border-width": 3, "z-index": 40 } },
@@ -304,6 +308,16 @@ export const GraphView = forwardRef<GraphHandle, GraphViewProps>(function GraphV
     });
     return () => { timers.current.forEach((t) => clearTimeout(t)); };
   }, [p.waveKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // the heartbeat, and a restyle when the page theme changes (Cytoscape cannot read CSS variables)
+  useEffect(() => {
+    const cy = cyRef.current;
+    if (!cy) return;
+    const id = reduced() ? null : window.setInterval(() => cy.nodes(".fail, .changed").toggleClass("throb"), 700);
+    const mo = typeof MutationObserver !== "undefined" ? new MutationObserver(() => cy.style(styleSheet())) : null;
+    mo?.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => { if (id) window.clearInterval(id); mo?.disconnect(); };
+  }, [ready]);
 
   useEffect(() => () => { cyRef.current?.destroy(); cyRef.current = null; }, []);
 

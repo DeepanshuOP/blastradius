@@ -1,0 +1,105 @@
+{
+ "generated_at_git_sha": "43c09f30200a32c624cd058a543545dd5a271a50",
+ "rows": [
+  {
+   "chip": "lower",
+   "metric": "share of tests for TestRecall 0.95 / ChangeRecall 0.999",
+   "ours": "0.764 / 0.997",
+   "reference": "Machalica et al. (base)",
+   "same_data": "no",
+   "theirs": "<0.33 / <0.33 (private)",
+   "verdict": "lower"
+  },
+  {
+   "chip": "tie",
+   "metric": "Recall@10; APFD; share of tests for 0.95",
+   "ours": "0.525 vs 0.522; 0.852 vs 0.842; 0.764 vs 0.977",
+   "reference": "Elsner et al.",
+   "same_data": "yes",
+   "theirs": "–",
+   "verdict": "tie (p=0.382); better"
+  },
+  {
+   "chip": "tie",
+   "metric": "Recall@10; APFD",
+   "ours": "0.525 vs 0.477; 0.852 vs 0.791",
+   "reference": "Bertolino et al.",
+   "same_data": "yes",
+   "theirs": "–",
+   "verdict": "higher, p=0.223"
+  },
+  {
+   "chip": "better",
+   "metric": "Recall@10; APFD",
+   "ours": "0.525 vs 0.141; 0.852 vs 0.623",
+   "reference": "Peng et al.",
+   "same_data": "yes",
+   "theirs": "–",
+   "verdict": "better, p<0.001"
+  },
+  {
+   "chip": "lower",
+   "metric": "TestRecall near 15% of tests",
+   "ours": "0.568 at 10%, 0.662 at 20%",
+   "reference": "Plyusnin et al.",
+   "same_data": "no",
+   "theirs": "0.95 (private)",
+   "verdict": "lower"
+  },
+  {
+   "chip": "different task",
+   "metric": "co-change as impact label",
+   "ours": "recalls 4.64% of real failures",
+   "reference": "Huang et al.",
+   "same_data": "yes",
+   "theirs": "ground truth",
+   "verdict": "weak label"
+  },
+  {
+   "chip": "different task",
+   "metric": "label design",
+   "ours": "diff-level, base and flakes removed",
+   "reference": "RTPTorrent, GHALogs",
+   "same_data": "–",
+   "theirs": "job verdicts; raw logs",
+   "verdict": "different design (dataset table)"
+  },
+  {
+   "chip": "illustration",
+   "metric": "tests selected, one demo change",
+   "ours": "reachability 272/297; first failure at 17 of 297",
+   "reference": "Ekstazi, STARTS",
+   "same_data": "yes",
+   "theirs": "safe superset",
+   "verdict": "illustration only"
+  },
+  {
+   "chip": "lower",
+   "metric": "precision / recall, ignorable failures",
+   "ours": "37.6% / 34.3%",
+   "reference": "Lampel et al.",
+   "same_data": "no",
+   "theirs": "73% / 82%",
+   "verdict": "lower (4.9% vs 67% positives)"
+  },
+  {
+   "chip": "different task",
+   "metric": "bugs fixed; cost per fix",
+   "ours": "71.4%; $0.00042",
+   "reference": "ChatRepair, Agentless",
+   "same_data": "no",
+   "theirs": "48.1%, 27.33%; $0.42, $0.34",
+   "verdict": "higher on easier bugs"
+  },
+  {
+   "chip": "different task",
+   "metric": "CI failures repaired",
+   "ours": "47.1% log-only, 71.4% change-aware",
+   "reference": "CI-Bench, CI-Repair-Bench",
+   "same_data": "no",
+   "theirs": "13–36%; 7.9–18.9%",
+   "verdict": "+24 points from the change"
+  }
+ ],
+ "source": "paper/full/main.tex (tab:glance)"
+}

@@ -200,7 +200,7 @@ Must exist — see ROADMAP §39.1:
 - [ ] `T6.12` `[new]` Pre-register the analysis plan before final runs
 
 ---
-## BlastRadius 2.0 (BITE497J, D-56..D-59; progress log `docs/phase/032-blastradius-2-progress.md`)
+## BlastRadius 2.0 (course project, D-56..D-59; progress log `docs/phase/032-blastradius-2-progress.md`)
 
 - [x] Shared feature layer, metrics, baselines B0-B7 (`src/features/`, `src/eval/`)
 - [x] E1 ranker, statistics, ablation, leakage audit; **Gate 3 NOT MET** (`paper/generated/rq2_predictor.md`)

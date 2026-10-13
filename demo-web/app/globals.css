@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark is the default (a CI control room on a projector); data-theme="light" is the toggle. Triplets, so Tailwind's
+/* Light is the default (it survives a washed-out projector); data-theme="dark" is the toggle. The block below holds
+   the dark values, and the light block after it overrides them unless dark is chosen. Triplets, so Tailwind's
    opacity modifiers work. The palette is the slide deck's. */
 :root {
   --page-rgb: 19 23 34;       /* #131722 */
@@ -42,7 +43,7 @@
   --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
   --space-16: 64px;
 }
-:root[data-theme="light"] {
+:root:not([data-theme="dark"]) {
   --page-rgb: 244 245 247;
   --panel-rgb: 255 255 255;
   --panel2-rgb: 238 240 244;
@@ -52,6 +53,12 @@
   --red-text-rgb: 168 40 30;
   --green-text-rgb: 30 112 72;
   --blue-text-rgb: 28 94 134;
+  /* status and accent hues one step darker, so small text on white keeps 4.5:1 */
+  --accent-rgb: 200 64 20;
+  --amber-rgb: 154 90 0;
+  --blue-rgb: 32 104 150;
+  --green-rgb: 28 122 78;
+  --red-rgb: 180 40 30;
   color-scheme: light;
 }
 
@@ -149,3 +156,17 @@ details[open] > :not(summary) { animation: br-open 0.15s ease-out; }
 /* Long test ids and paths wrap instead of widening the page. */
 main p, main li, main dd, main summary, main h3, main h4 { overflow-wrap: anywhere; }
 main select { max-width: 100%; }
+
+/* Glossary terms: a dotted underline, and the one-sentence definition on hover or focus. */
+.br-term { text-decoration: underline dotted rgb(var(--muted-rgb)); text-underline-offset: 3px; cursor: help; }
+.br-term:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 2px; }
+.br-term-tip:not(.sr-only) {
+  position: absolute; left: 0; top: calc(100% + 6px); z-index: 50; width: max-content; max-width: 18rem;
+  padding: var(--space-2) var(--space-2-5); border: 1px solid var(--rule); border-radius: 6px; background: var(--panel);
+  color: var(--ink); font-size: var(--fs-xs); line-height: var(--lh-xs); font-weight: 400; font-style: normal;
+  text-transform: none; letter-spacing: normal; white-space: normal; box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+/* Skeleton rows while a document loads. */
+@keyframes br-skel { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.br-skel { background: var(--panel2); animation: br-skel 1.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .br-skel { animation: none; } }
