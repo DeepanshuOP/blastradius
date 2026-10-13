@@ -5,6 +5,7 @@ import { ArenaPanel } from "./Arena";
 import { ChallengeCard } from "./Challenge";
 import { InjectMenu, ProbePanel, TestGapPanel, useProbe } from "./BreakIt";
 import { CiVsBrPanel } from "./CiVsBr";
+import { ApproveFix, DecisionsPanel } from "./Decisions";
 import { CodePanel } from "./CodePanel";
 import { BTN, BTN_PRIMARY, Drawer, Icon, Panel, Prov, StatusIcon, type Tone } from "./common";
 import { GraphView, type GraphHandle } from "./GraphView";
@@ -22,7 +23,7 @@ import { importantNodes, reachCounts, sizeByReach } from "./reach";
 import { useSessionTally } from "./Scoreboard";
 import { RunPanel, Steps } from "./Start";
 import { TopBar } from "./TopBar";
-import type { GEdge, GNode, GraphDoc, LabState, Stage } from "./types";
+import type { AuditRecord, GEdge, GNode, GraphDoc, LabState, Stage } from "./types";
 import { useLab } from "./useLab";
 
 const MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"];
@@ -38,6 +39,7 @@ export const RESULT_TABS: { id: TabId; label: string; stages: Stage[] }[] = [
   { id: "comment", label: "PR comment", stages: [] },
   { id: "integrity", label: "Integrity", stages: [] },
   { id: "ci", label: "CI vs BlastRadius", stages: [] },
+  { id: "decisions", label: "Decisions", stages: [] },
 ];
 export const tabOf = (st: Stage): TabId => RESULT_TABS.find((t) => t.stages.includes(st))?.id ?? "impact";
 
@@ -168,6 +170,7 @@ export default function LabPage() {
   const [otherOpen, setOtherOpen] = useState(false);
   const [waveKey, setWaveKey] = useState(0);
   const [tab, setTab] = useState<TabId>("impact");
+  const [late, setLate] = useState<AuditRecord[]>([]);
   const [presenting, setPresenting] = useState(false);
   const [explain, setExplain] = useState(false);
   const [challenge, setChallenge] = useState(false);
@@ -202,7 +205,7 @@ export default function LabPage() {
   const previewUrl = !idle ? null : scenario?.kind === "repo" ? `/api/lab/graph?repo=${scenario.name}` : scenario?.kind === "replay" ? `/lab/runs/${scenario.name}.graph.json` : null;
   const preview = useGraphDoc(previewUrl);
   const g = useRunGraph(s, preview.doc);
-  useEffect(() => { setSelected(null); setTab(holdTab.current ?? "impact"); pinnedAt.current = null; }, [s.startedAt]);
+  useEffect(() => { setSelected(null); setLate([]); setTab(holdTab.current ?? "impact"); pinnedAt.current = null; }, [s.startedAt]);
 
   const changeEv = useMemo(() => s.events.find((e) => e.type === "change.applied"), [s.events]);
   useEffect(() => { if (changeEv) setWaveKey(changeEv.seq); }, [changeEv]);
@@ -246,6 +249,13 @@ export default function LabPage() {
   }, [g.nodes, reach, hops]);
 
   const sel = g.nodes.find((n) => n.id === selected) ?? null;
+  // records written after the run ended (the Approve fix button), merged after the streamed ones
+  const sx = useMemo(() => {
+    const maxSeq = s.audit.records.reduce((m, r) => Math.max(m, r.seq), 0);
+    const run = s.audit.records[0]?.run_id;
+    const extra = late.filter((r) => r.run_id === run && r.seq > maxSeq);
+    return extra.length ? { ...s, audit: { ...s.audit, records: [...s.audit.records, ...extra] } } : s;
+  }, [s, late]);
   const repoName = (s.repo?.prepared ? s.repo.name : null) ?? (scenario?.kind === "repo" ? scenario.name : null);
   const q = avail.quota?.[model];
   const bedrockNext = avail.providers?.[model]?.provider === "bedrock";   // Groq quota used up, Bedrock takes the call (D-69)
@@ -497,11 +507,13 @@ export default function LabPage() {
             {tab === "race" && <RacePanel s={s} />}
             {tab === "arena" && <ArenaPanel s={s} />}
             {tab === "triage" && <TriagePanel s={s} />}
+            {tab === "repair" && <ApproveFix records={sx.audit.records} mode={avail.fixMode ?? "suggest"} live={avail.live} onRecords={setLate} />}
             {tab === "repair" && <RepairPanel s={s} recorded={recorded} onPlayRecorded={playRecorded} />}
             {tab === "verdict" && <VerdictPanel s={s} />}
             {tab === "comment" && <ReportPanel s={s} />}
             {tab === "integrity" && <IntegrityPanel s={s} />}
-            {tab === "ci" && <CiVsBrPanel s={s} onDecisions={RESULT_TABS.some((t) => t.id === "decisions") ? () => pick("decisions") : undefined} />}
+            {tab === "decisions" && <DecisionsPanel s={sx} records={sx.audit.records} />}
+            {tab === "ci" && <CiVsBrPanel s={sx} onDecisions={RESULT_TABS.some((t) => t.id === "decisions") ? () => pick("decisions") : undefined} />}
           </div>
         </section>
 
