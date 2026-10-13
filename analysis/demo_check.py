@@ -285,7 +285,7 @@ def check_review() -> tuple[bool, str]:
         shutil.rmtree(out_dir, ignore_errors=True)
     docs = [json.loads(ln) for ln in out.splitlines() if ln.startswith("{")]
     bad = [f"{d['check']}: {d['detail']}" for d in docs if not d["ok"]]
-    return rc == 0 and not bad and len(docs) == 6, (f"{len(docs)} checks: " + "; ".join(d["check"] for d in docs)) if not bad else "; ".join(bad[:2])[:300]
+    return rc == 0 and not bad and len(docs) == 8, (f"{len(docs)} checks: " + "; ".join(d["check"] for d in docs)) if not bad else "; ".join(bad[:2])[:300]
 
 
 def check_meta_card() -> tuple[bool, str]:
@@ -599,6 +599,65 @@ def check_numbers() -> tuple[bool, str]:
     return not misses, f"{n} numbers checked" + (f"; {len(misses)} not found: {misses[:3]}" if misses else "")
 
 
+# -- D-69..D-71 ------------------------------------------------------------------------------------
+GUIDED_AUDIT = ROOT / "demo-web/public/lab/runs/audit/guided-demo.jsonl"
+
+
+def check_provider() -> tuple[bool, str]:
+    """D-69: the provider tests (recorded 429 -> Bedrock, budget refusal, cache-key separation) pass, and the status the
+    model chip reads names Bedrock when it is forced and Groq otherwise (no network)."""
+    rc, out = run(["uv", "run", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_llm_provider.py"], env=_env(replay=False))
+    code = ("import json,os;from src.agents.llm_provider import status;"
+            "os.environ.update(GROQ_API_KEY='x'*20,AWS_BEARER_TOKEN_BEDROCK='y'*20);a=status('openai/gpt-oss-120b')['provider'];"
+            "os.environ['BR_LLM_PROVIDER']='bedrock';b=status('openai/gpt-oss-120b')['provider'];print(json.dumps([a,b]))")
+    rc2, out2 = run(["uv", "run", "python", "-c", code], env={k: v for k, v in _env(replay=False).items()
+                                                               if k not in ("BR_LLM_PROVIDER",)})
+    got = next((json.loads(ln) for ln in out2.splitlines() if ln.startswith("[")), None)
+    ok = rc == 0 and rc2 == 0 and got == ["groq", "bedrock"]
+    return ok, f"provider tests: {last(out, 1)}; chip provider default/forced: {got}"
+
+
+def check_audit_guided() -> tuple[bool, str]:
+    """D-71: `audit verify` passes on the guided-demo run's log, and the log is the one the recording streamed."""
+    rc, out = run(["uv", "run", "python", "-m", "src.agents.audit", "verify", str(GUIDED_AUDIT)])
+    recs = [json.loads(ln) for ln in GUIDED_AUDIT.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    evs = [json.loads(ln) for ln in (ROOT / "demo-web/public/lab/runs/guided-demo.jsonl").read_text(encoding="utf-8").splitlines() if ln.strip()]
+    streamed = [e["data"] for e in evs if e["type"] == "audit.record"]
+    same = streamed == recs
+    return rc == 0 and out.startswith("OK") and same, f"{out.strip().splitlines()[-1][:90]}; streamed records identical: {same}"
+
+
+def check_fixpr() -> tuple[bool, str]:
+    """D-70: the fix-PR gate tests (default branch, allowlist, failed checks, ask without approval) pass."""
+    rc, out = run(["uv", "run", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_fixpr.py"], env=_env(replay=False))
+    return rc == 0, last(out, 1)
+
+
+def check_agent_logs_secret_free() -> tuple[bool, str]:
+    """No credential in logs/agent: the release secret scanner's BLOCKER classes, and no value of a credential-named
+    variable of the environment or of .env (read in memory, never printed)."""
+    from analysis.secret_scan import scan_text
+    from src.agents.audit import secret_values
+
+    env = dict(os.environ)
+    dot = ROOT / ".env"
+    if dot.exists():
+        for ln in dot.read_text(encoding="utf-8").splitlines():
+            if "=" in ln and not ln.lstrip().startswith("#"):
+                k, v = ln.split("=", 1)
+                env[k.strip()] = v.strip().strip('"').strip("'")
+    secrets = secret_values(env)
+    root = ROOT / "logs/agent"
+    files = [p for p in root.rglob("*") if p.is_file()] if root.exists() else []
+    files += [GUIDED_AUDIT]
+    bad = []
+    for p in files:
+        text = p.read_text(encoding="utf-8", errors="replace")
+        if any(scan_text(text).get(c) for c in ("github_token", "bearer_token")) or any(s in text for s in secrets):
+            bad.append(str(p.relative_to(ROOT)))
+    return not bad, f"{len(files)} file(s) scanned, {len(secrets)} credential value(s) checked, none found" if not bad else f"secret in {bad[:3]}"
+
+
 def main() -> int:
     rows: list[tuple[str, bool, str, float]] = []
     seeded: Path | None = None
@@ -626,7 +685,11 @@ def main() -> int:
              ("review lab: model chip, guided demo on its recording, recorded-repair fallback, slider", check_review),
              ("vs Meta card numbers equal pts_comparison.md and tab:pts", check_meta_card),
              ("results-at-a-glance rows equal tab:glance of paper/full/main.tex", check_glance),
-             ("no BITE string in demo-web", check_no_bite)]
+             ("no BITE string in demo-web", check_no_bite),
+             ("provider chip and Groq -> Bedrock fallback (D-69)", check_provider),
+             ("Decisions tab renders from the recorded run (review check above) and audit verify passes on it (D-71)", check_audit_guided),
+             ("fix-PR gate refusals (D-70)", check_fixpr),
+             ("no secret in logs/agent (D-71)", check_agent_logs_secret_free)]
     try:
         for name, fn in steps:
             t0 = time.time()

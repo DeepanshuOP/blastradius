@@ -8,7 +8,10 @@
  *   - the guided demo completes on its recording: every one of the five steps ends ok, no step falls back, and the
  *     stepper renders five REPLAY steps with timings and the "Finished" caption;
  *   - a skipped repair shows its reason and the "Play recorded repair" button labelled REPLAY with its date;
- *   - the "top x %" slider renders on a recording and its counts agree with the recording's own verdicts.
+ *   - the "top x %" slider renders on a recording and its counts agree with the recording's own verdicts;
+ *   - the Decisions tab renders every decision record of the guided-demo recording, each chained to the previous one,
+ *     with the run's `audit verify` result (D-71);
+ *   - the CI-vs-BlastRadius view renders both sides from the same recording with values equal to its events.
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -17,6 +20,8 @@ import { GUIDED_RECORDING, GUIDED_STEPS, GuidedStepper, liveFailure, stepTone, t
 import LabPage, { recordedRepairFor } from "../components/lab/LabPage";
 import { RacePanel, RepairPanel, topShare } from "../components/lab/Panels";
 import { ModelChip, modelStatus } from "../components/lab/TopBar";
+import { CiVsBrPanel, ciView } from "../components/lab/CiVsBr";
+import { DecisionsPanel, chainLinks } from "../components/lab/Decisions";
 import type { LabEvent, LabState } from "../components/lab/types";
 import { applyEvent, initialState, type Availability } from "../components/lab/useLab";
 
@@ -92,5 +97,31 @@ try {
   const ok = html.includes('data-testid="top-slider"') && html.includes("REPLAY") && all.k === all.n && all.caught === all.failing && all.failing === failing && all.savedMs === 0;
   report("top-x% slider on a recording", ok, `n ${all.n}, failing ${all.failing} (recording: ${failing}); at 100% nothing saved: ${all.savedMs === 0}`);
 } catch (e) { report("top-x% slider on a recording", false, String(e).slice(0, 200)); }
+
+// ---- the Decisions tab on the guided-demo recording (D-71) ----
+try {
+  const s = load(GUIDED_RECORDING);
+  const recs = s.audit.records;
+  const html = renderToStaticMarkup(<DecisionsPanel s={s} records={recs} />);
+  const rows = (html.match(/data-decision=/g) ?? []).length;
+  const ticks = (html.match(/class="[^"]*text-green"[^>]*data-testid="hash-ok"/g) ?? []).length;
+  const ok = recs.length > 0 && rows === recs.length && chainLinks(recs).every(Boolean) && ticks === recs.length
+    && s.audit.verify?.ok === true && html.includes("audit verify: OK") && recs.some((r) => r.stage === "localize");
+  report("Decisions tab renders the recorded decision log", ok, `${rows} of ${recs.length} records rendered, ${ticks} chained, verify ${s.audit.verify?.ok}`);
+} catch (e) { report("Decisions tab renders the recorded decision log", false, String(e).slice(0, 200)); }
+
+// ---- CI server vs BlastRadius on the same recording ----
+try {
+  const s = load(GUIDED_RECORDING);
+  const v = ciView(s);
+  const html = renderToStaticMarkup(<CiVsBrPanel s={s} />);
+  const total = Number(s.tests.done?.counts?.total ?? 0);
+  const ok = html.includes('data-testid="ci-side"') && html.includes('data-testid="br-side"') && html.includes("REPLAY")
+    && html.includes('data-ci-stage="Test" data-tone="failed"') && html.includes("developer reads the log")
+    && v.alpha?.first_failure_position != null && html.includes(`>${v.alpha.first_failure_position}</span> of <span class="num mono">${total}`)
+    && v.risk?.first_failure_position != null && html.includes(`>${v.risk.first_failure_position}</span> of <span class="num mono">${total}`)
+    && html.includes('data-testid="ci-log"') && html.includes('data-testid="br-loc"') && html.includes('data-testid="br-fix"');
+  report("CI vs BlastRadius view from the recorded events", ok, `CI first failure ${v.alpha?.first_failure_position} of ${total}; BlastRadius ${v.risk?.first_failure_position} of ${total}`);
+} catch (e) { report("CI vs BlastRadius view from the recorded events", false, String(e).slice(0, 200)); }
 
 process.exit(failed ? 1 : 0);
