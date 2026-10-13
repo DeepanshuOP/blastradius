@@ -9,12 +9,13 @@ import type { Availability } from "./useLab";
 
 /** Whether the repair model can be called right now, and if not the exact reason, from the server's status
  * (`python -m src.lab status`), the quota ledgers and the options of the current live run. */
-export function modelStatus(s: LabState, avail: Availability, model: string): { ready: boolean; text: string; detail: string } {
+export function modelStatus(s: LabState, avail: Availability, model: string, offline = false): { ready: boolean; text: string; detail: string } {
   const name = model.replace(/^openai\//, "");
   const off = (why: string, detail = why) => ({ ready: false, text: `Model: offline \u2014 ${why}`, detail });
   if (!avail.checked) return { ready: false, text: "Model: checking\u2026", detail: "asking the local server" };
   if (!avail.live) return off("no server (static build)", avail.reason);
   if (!avail.llm) return off("no key", "neither GROQ_API_KEY nor AWS_BEARER_TOKEN_BEDROCK is set in .env on the server");
+  if (offline) return off("run without the model", "the Run options ask for no model calls: the graph, prediction and tests run, the repair step does not");
   const q = avail.quota?.[model];
   const p = avail.providers?.[model];
   // the provider that answered this run wins over the one the server would pick next
@@ -29,8 +30,8 @@ export function modelStatus(s: LabState, avail: Availability, model: string): { 
     detail: (q ? `Groq: ${q.used.toLocaleString("en-US")} of ${q.cap.toLocaleString("en-US")} tokens used in the last 24 h` : "key present") + (p ? `; ${p.why}` : "") + bedDetail };
 }
 
-export function ModelChip({ s, avail, model }: { s: LabState; avail: Availability; model: string }) {
-  const m = modelStatus(s, avail, model);
+export function ModelChip({ s, avail, model, offline = false }: { s: LabState; avail: Availability; model: string; offline?: boolean }) {
+  const m = modelStatus(s, avail, model, offline);
   return (
     <span role="status" title={m.detail} data-testid="model-chip"
       className={`ui inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${m.ready ? "border-green text-green" : avail.checked ? "border-amber text-amber" : "border-rule text-muted"}`}>
@@ -60,8 +61,8 @@ function ExplainSwitch({ on, set }: { on: boolean; set: (v: boolean) => void }) 
   );
 }
 
-export function TopBar({ s, avail, model, tally, explain, setExplain, onReset, onIntegrity, onPresent }: {
-  s: LabState; avail: Availability; model: string; tally: Tally; explain: boolean; setExplain: (v: boolean) => void;
+export function TopBar({ s, avail, model, offline, repoName, tally, explain, setExplain, onReset, onIntegrity, onPresent }: {
+  s: LabState; avail: Availability; model: string; offline: boolean; repoName: string | null; tally: Tally; explain: boolean; setExplain: (v: boolean) => void;
   onReset: () => void; onIntegrity: () => void; onPresent?: () => void;
 }) {
   const h = s.header;
@@ -69,9 +70,9 @@ export function TopBar({ s, avail, model, tally, explain, setExplain, onReset, o
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-md border border-rule bg-panel px-3 py-2">
       <ModeBadge s={s} avail={avail} />
-      <ModelChip s={s} avail={avail} model={model} />
+      <ModelChip s={s} avail={avail} model={model} offline={offline && s.mode !== "replay"} />
       <span className="ui flex items-baseline gap-1.5 text-sm">
-        <span className="mono">{s.repo?.name ?? "no repo"}</span>
+        <span className="mono">{s.repo?.name ?? repoName ?? "no repo"}</span>
         {s.repo?.commit && <span className="num mono text-xs text-muted">@{String(s.repo.commit).slice(0, 7)}</span>}
         <Info label="Run details">
           <span className="block"><span className="text-muted">model</span> <span className="mono">{h ? (h.model ?? "none") : model}</span></span>

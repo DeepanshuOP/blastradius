@@ -175,7 +175,9 @@ export default function LabPage() {
   const [explain, setExplain] = useState(false);
   const [challenge, setChallenge] = useState(false);
   const [hidden, setHidden] = useState<Filter[]>([]);
-  const [ctx, setCtx] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [ctxRaw, setCtxRaw] = useState<{ id: string; x: number; y: number; repo: string | null } | null>(null);
+  const [offlineChoice, setOfflineChoice] = useState<boolean | null>(null);   // null: follow the model's availability
+  const [graphBox, setGraphBox] = useState<HTMLDivElement | null>(null);
   const { probe, startProbe, clearProbe } = useProbe();
   const fixRuns = useRef<Set<number>>(new Set());          // runs started by the challenge's "Fix it": their bug is already counted
   const fixPending = useRef(false);
@@ -200,6 +202,8 @@ export default function LabPage() {
     }
     return () => { alive = false; };
   }, [avail.live]);
+
+  useEffect(() => { setCtxRaw(null); }, [scenario]);   // a menu opened on the previous repo must not fetch for the new one
 
   const idle = s.mode === "idle";
   const previewUrl = !idle ? null : scenario?.kind === "repo" ? `/api/lab/graph?repo=${scenario.name}` : scenario?.kind === "replay" ? `/lab/runs/${scenario.name}.graph.json` : null;
@@ -257,10 +261,14 @@ export default function LabPage() {
     return extra.length ? { ...s, audit: { ...s.audit, records: [...s.audit.records, ...extra] } } : s;
   }, [s, late]);
   const repoName = (s.repo?.prepared ? s.repo.name : null) ?? (scenario?.kind === "repo" ? scenario.name : null);
+  // the break menu belongs to the repo it was opened on: a switch must not render it (and fetch) against the new repo
+  const ctx = ctxRaw && ctxRaw.repo === repoName ? ctxRaw : null;
+  const setCtx = (v: { id: string; x: number; y: number } | null) => setCtxRaw(v && { ...v, repo: repoName });
   const q = avail.quota?.[model];
   const bedrockNext = avail.providers?.[model]?.provider === "bedrock";   // Groq quota used up, Bedrock takes the call (D-69)
   const quotaReason = q && !q.ok && !bedrockNext ? `the daily token quota of ${model} is used up (${q.used.toLocaleString()} of ${q.cap.toLocaleString()} tokens in the last 24 h, E3 and lab ledgers together)${q.resume_after ? `; the next call is possible after ${q.resume_after.replace("T", " ")} UTC` : ""}` : "";
   const modelOk = avail.llm && !quotaReason;
+  const offline = offlineChoice ?? !modelOk;          // "Run without the model": on by default while the model is unavailable
   const canRun = scenario !== null && (scenario.kind === "replay" || scenario.kind === "pr" || change !== null) && !s.running && (scenario.kind === "replay" || avail.live);
   const breakable = (n: GNode | undefined | null) => Boolean(n && n.type === "function" && repoName && avail.live && !s.running && !n.is_test_file);
   const why = s.running ? "Running…" : !scenario ? "Pick a repo first" : !avail.live && scenario.kind !== "replay" ? "Live runs need the local server" : scenario.kind !== "replay" && scenario.kind !== "pr" && !change ? "Click a function to break it" : "";
@@ -275,10 +283,10 @@ export default function LabPage() {
     if (ch?.kind === "task") Object.assign(body, { task: ch.id, variant: ch.variant });
     if (ch?.kind === "inject") body.inject = { file: ch.file, function: ch.function, operator: ch.operator, ...(ch.line ? { line: ch.line } : {}) };
     if (ch?.kind === "edit") body.edit = { file: ch.file, text: ch.text };
-    if (!avail.llm || opts?.noLlm) body.noLlm = true;
-    if (repairArena && modelOk && !opts?.noLlm) body.repairArena = true;
+    if (!avail.llm || opts?.noLlm || offline) body.noLlm = true;
+    if (repairArena && modelOk && !opts?.noLlm && !offline) body.repairArena = true;
     startLive(body);
-  }, [model, avail.llm, repairArena, modelOk, startLive]);
+  }, [model, avail.llm, repairArena, modelOk, offline, startLive]);
 
   const run = useCallback(() => {
     if (!scenario) return;
@@ -357,7 +365,7 @@ export default function LabPage() {
     <ExplainContext.Provider value={explain}>
       <div className="mx-auto max-w-[1760px] space-y-3 px-3 py-3 pb-14">
         <h1 className="sr-only">Live Lab</h1>
-        <TopBar s={s} avail={avail} model={model} tally={tally} explain={explain} setExplain={setExplain}
+        <TopBar s={s} avail={avail} model={model} offline={offline} repoName={repoName ?? (scenario?.kind === "github" ? scenario.url.replace(/^https?:\/\/github\.com\//, "") : null)} tally={tally} explain={explain} setExplain={setExplain}
           onReset={() => { reset(); setScenario(null); setChange(null); setHidden([]); setChallenge(false); setGuided(GUIDED_IDLE); holdTab.current = null; }}
           onIntegrity={() => { pick("integrity"); results.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onPresent={() => setPresenting(true)} />
         {presenting && (
@@ -375,7 +383,7 @@ export default function LabPage() {
         </div>
         {guided.phase !== "idle" && <GuidedStepper s={s} g={guided} fixMode={avail.fixMode ?? "suggest"} onStop={() => { reset(); setGuided(GUIDED_IDLE); }} />}
         {challenge && (
-          <ChallengeCard s={s} live={avail.live} running={s.running} llmOk={modelOk}
+          <ChallengeCard s={s} live={avail.live} running={s.running} llmOk={modelOk && !offline}
             repo={scenario?.kind === "repo" ? scenario.name : s.repo?.prepared ? String(s.repo.name) : null}
             onRun={(c, opts) => {
               const name = scenario?.kind === "repo" ? scenario.name : String(s.repo?.name ?? "");
@@ -403,7 +411,7 @@ export default function LabPage() {
             </Panel>
           ) : (
             <Panel id="panel-code" title="The change" className="hidden min-h-0 flex-col lg:flex" bodyClass="flex min-h-0 flex-1 flex-col" right={<Prov mode={s.change ? s.mode : "idle"} />}>
-              <CodePanel change={s.change} className="h-[clamp(420px,calc(100vh-300px),640px)]" />
+              <CodePanel change={s.change} className="h-[clamp(260px,calc(100vh-420px),640px)]" />
             </Panel>
           )}
 
@@ -414,7 +422,7 @@ export default function LabPage() {
               <button type="button" onClick={() => graphRef.current?.zoomIn()} className={BTN} aria-label="Zoom in">+</button>
               <button type="button" onClick={() => graphRef.current?.zoomOut()} className={BTN} aria-label="Zoom out">−</button>
             </>}>
-            <div className="relative h-[clamp(420px,calc(100vh-300px),640px)] overflow-hidden bg-page">
+            <div ref={setGraphBox} className="relative h-[clamp(260px,calc(100vh-420px),640px)] overflow-hidden bg-page">
               {g.nodes.length === 0 && (
                 <div className="absolute inset-0 grid place-items-center px-8 text-center">
                   {graphFail ? <div className="max-w-md text-left"><p className="ui m-0 text-sm font-semibold text-red">The graph could not be built.</p><p className="mono m-0 mt-1 text-xs">{String(graphFail.data.reason)}</p></div>
@@ -445,7 +453,7 @@ export default function LabPage() {
                     </>) : undefined} />
                 ) : null} />
               {ctx && repoName && g.nodes.find((n) => n.id === ctx.id) && (
-                <InjectMenu node={g.nodes.find((n) => n.id === ctx.id)!} repo={repoName} x={ctx.x} y={ctx.y} disabled={s.running}
+                <InjectMenu node={g.nodes.find((n) => n.id === ctx.id)!} repo={repoName} x={ctx.x} y={ctx.y} box={graphBox} disabled={s.running}
                   onClose={() => setCtx(null)}
                   onRun={(c) => { setScenario({ kind: "repo", name: repoName }); setChange({ kind: "inject", ...c }); setCtx(null); }} />
               )}
@@ -477,6 +485,10 @@ export default function LabPage() {
                   <label className={`ui flex items-center gap-1.5 text-xs ${modelOk ? "text-ink" : "text-muted"}`} title={modelOk ? "One extra model call: R1 (log-only) on the same failure" : quotaReason || avail.reason}>
                     <input type="checkbox" checked={repairArena && modelOk} disabled={!modelOk} onChange={(e) => setRepairArena(e.target.checked)} />
                     Repair arena (one extra call)
+                  </label>
+                  <label className="ui flex items-center gap-1.5 text-xs" title={modelOk ? "Skip every model call; the tests and the prediction still run" : "The model is unavailable, so this run uses no model"}>
+                    <input type="checkbox" data-testid="run-offline" checked={offline} disabled={!avail.llm} onChange={(e) => setOfflineChoice(e.target.checked)} />
+                    Run without the model (offline)
                   </label>
                   {avail.checked && !modelOk && <p className="ui m-0 text-xs text-amber" role="status">{quotaReason ? "Repair is off: quota used up." : avail.live ? "Repair is off: no model key." : "Static build: replays only."}</p>}
                 </div>

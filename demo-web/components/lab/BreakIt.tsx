@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { BTN, BTN_PRIMARY, Empty, Icon, Id, StatusIcon, fmtMs } from "./common";
 import { SideBySide } from "./Diff";
 import { applyMutation, type FnMut, type Mutation } from "./Picker";
@@ -17,8 +18,8 @@ export function matchFunction(node: GNode, fns: FnMut[]): FnMut | null {
 }
 
 /** Right-click (or long-press) menu on a function node: its real mutation operators, a diff preview, and Run. */
-export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
-  node: GNode; repo: string; x: number; y: number; disabled: boolean;
+export function InjectMenu({ node, repo, x, y, box, disabled, onRun, onClose }: {
+  node: GNode; repo: string; x: number; y: number; box: HTMLElement | null; disabled: boolean;
   onRun: (c: { file: string; function: string; operator: string; line: number }) => void; onClose: () => void;
 }) {
   const [fn, setFn] = useState<FnMut | null | undefined>(undefined);
@@ -26,8 +27,10 @@ export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
   const [pick, setPick] = useState<Mutation | null>(null);
   const [err, setErr] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   useEffect(() => {
     let alive = true;
+    setFn(undefined); setText(null); setPick(null); setErr("");
     Promise.all([
       fetch(`/api/lab/mutations?repo=${repo}&file=${encodeURIComponent(node.file)}`).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))),
       fetch(`/api/lab/file?repo=${repo}&path=${encodeURIComponent(node.file)}`).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))),
@@ -39,28 +42,48 @@ export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
     return () => { alive = false; };
   }, [node, repo]);
   useEffect(() => {
-    ref.current?.focus();
+    ref.current?.focus({ preventScroll: true });
     const on = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", on);
     return () => window.removeEventListener("keydown", on);
   }, [onClose]);
-  return (
-    <div ref={ref} tabIndex={-1} role="menu" aria-label={`Inject a bug in ${node.label}`}
-      className="ui absolute z-30 w-[420px] rounded-md border border-rule bg-panel p-3 shadow-[0_8px_28px_rgb(0_0_0/0.5)] outline-none"
-      style={{ left: Math.max(8, x - 20), top: Math.max(8, y + 14) }}>
-      <div className="mb-2 flex items-start justify-between gap-2">
+  // Fixed position in the viewport, anchored at the node and clamped so the whole menu, footer included, stays on screen.
+  // Re-measured when the content changes (mutations load, a diff opens) and when the window or zoom changes.
+  useLayoutEffect(() => {
+    const place = () => {
+      const el = ref.current;
+      if (!el) return;
+      const r = box?.getBoundingClientRect();
+      const w = el.offsetWidth, h = el.offsetHeight;
+      const left = Math.min(Math.max(8, (r?.left ?? 0) + x - 20), Math.max(8, window.innerWidth - w - 8));
+      const top = Math.min(Math.max(8, (r?.top ?? 0) + y + 14), Math.max(8, window.innerHeight - h - 8));
+      setPos((q) => (q && q.left === left && q.top === top ? q : { left, top }));
+    };
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
+  }, [box, x, y, fn, pick, err, text]);
+  if (typeof document === "undefined") return null;
+  return createPortal(
+    <div ref={ref} tabIndex={-1} role="menu" aria-label={`Inject a bug in ${node.label}`} data-testid="inject-menu"
+      className="ui fixed z-50 flex w-[420px] max-w-[calc(100vw-16px)] flex-col rounded-md border border-rule bg-panel shadow-[0_8px_28px_rgb(0_0_0/0.5)] outline-none"
+      style={{ left: pos?.left ?? 8, top: pos?.top ?? 8, maxHeight: "calc(100vh - 16px)", visibility: pos ? "visible" : "hidden" }}>
+      <div className="flex items-start justify-between gap-2 px-3 pb-2 pt-3">
         <p className="m-0 flex items-center gap-1.5 text-sm font-semibold"><Icon name="bug" className="text-accent" />Break this function</p>
         <button type="button" onClick={onClose} className="rounded p-0.5 text-muted hover:text-ink" aria-label="Close the menu"><Icon name="close" /></button>
       </div>
-      {err ? <p className="m-0 text-xs text-red">Could not list mutations: {err}</p>
-        : fn === undefined ? <p className="m-0 text-xs text-muted">Reading the function&apos;s mutation operators…</p>
-        : fn === null ? <Empty title="No mutation operator applies to this function." />
+      {err ? <p className="m-0 px-3 pb-3 text-xs text-red">Could not list mutations: {err}</p>
+        : fn === undefined ? <p className="m-0 px-3 pb-3 text-xs text-muted">Reading the function&apos;s mutation operators…</p>
+        : fn === null ? <div className="px-3 pb-3"><Empty title="No mutation operator applies to this function." /></div>
         : (
           <>
-            <p className="mono m-0 mb-2 truncate text-xs text-muted" title={`${node.file}::${fn.function}`}>{node.file}::{fn.function}</p>
-            <div className="max-h-40 space-y-1 overflow-y-auto pr-1" role="group" aria-label="Mutation operators">
+            <p className="mono m-0 mb-2 truncate px-3 text-xs text-muted" title={`${node.file}::${fn.function}`}>{node.file}::{fn.function}</p>
+            {/* ONE scroll area for the operators and the diff; the buttons below never scroll away */}
+            <div className="min-h-0 overflow-y-auto px-3" style={{ maxHeight: "min(460px, calc(100vh - 220px))" }} data-testid="inject-scroll">
+            <div className="space-y-1" role="group" aria-label="Mutation operators">
               {fn.mutations.map((m) => (
                 <button key={`${m.operator}${m.line}${m.col}`} type="button" role="menuitemradio" aria-checked={pick === m} onClick={() => setPick(m)}
+                  title={`${m.old} → ${m.new}`}
                   className={`flex w-full items-baseline gap-2 rounded border px-2 py-1 text-left text-xs ${pick === m ? "border-accent bg-accent/10" : "border-rule hover:border-muted"}`}>
                   <span className="mono font-semibold">{m.operator}</span><span className="num mono text-muted">L{m.line}</span>
                   <span className="mono min-w-0 truncate text-muted">{m.old} → {m.new}</span>
@@ -68,16 +91,18 @@ export function InjectMenu({ node, repo, x, y, disabled, onRun, onClose }: {
               ))}
             </div>
             {pick && text !== null && <div className="mt-2"><SideBySide path={node.file} before={text} after={applyMutation(text, pick)} context={2} /></div>}
-            <div className="mt-2 flex items-center justify-end gap-2">
+            </div>
+            <div className="mt-2 flex shrink-0 items-center justify-end gap-2 border-t border-rule px-3 py-2">
               <button type="button" onClick={onClose} className={BTN}>Cancel</button>
               <button type="button" disabled={!pick || disabled} onClick={() => pick && onRun({ file: node.file, function: fn.function, operator: pick.operator, line: pick.line })} className={BTN_PRIMARY}>
                 Break it
               </button>
             </div>
-            {disabled && <p className="m-0 mt-1 text-xs text-muted">A run is in progress.</p>}
+            {disabled && <p className="m-0 px-3 pb-2 text-xs text-muted">A run is in progress.</p>}
           </>
         )}
-    </div>
+    </div>,
+    document.body,
   );
 }
 
