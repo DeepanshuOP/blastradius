@@ -2,7 +2,7 @@
 
 **Which tests did a code change actually break?** BlastRadius mines GitHub Actions runs and links each pull-request change to the individual tests that *really failed because of it*, not the files usually edited together (co-change) and not every test that can reach the change (static reachability). The released dataset is **BR-Bench**.
 
-[![Dataset DOI](https://img.shields.io/badge/dataset-10.5281%2Fzenodo.23250262-blue)](https://doi.org/10.5281/zenodo.23250262)
+[![Dataset DOI](https://img.shields.io/badge/dataset-10.5281%2Fzenodo.23688064-blue)](https://doi.org/10.5281/zenodo.23688064)
 [![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23250690-blue)](https://doi.org/10.5281/zenodo.23250690)
 ![License: MIT (code), CC BY 4.0 (data)](https://img.shields.io/badge/license-MIT%20%2F%20CC%20BY%204.0-green)
 
@@ -111,7 +111,7 @@ make analyze REPO=https://github.com/pallets/itsdangerous \
                      # impact analysis of any public Python/Java repo (shallow clone, offline agent, no LLM)
 ```
 
-Using the dataset only: download the release from Zenodo and read the Parquet tables with DuckDB or pandas. Schema: `docs/SCHEMAS.md` (section "Release schema v0.2"); datasheet: `docs/DATASHEET.md`; reproduction: `docs/REPRODUCE.md`.
+Using the dataset only: download release v0.2 from Zenodo (DOI 10.5281/zenodo.23688064) and read the Parquet tables with DuckDB or pandas. Schema: `docs/SCHEMAS.md` (section "Release schema v0.2"); datasheet: `docs/DATASHEET.md`; reproduction: `docs/REPRODUCE.md`.
 
 ## Run the Live Lab
 
@@ -137,7 +137,7 @@ Using the dataset only: download the release from Zenodo and read the Parquet ta
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff). Dataset: Deepanshu, S. Singh, P. Vadhavkar, Y. R. C A, *BR-Bench* (release v0.1), Zenodo, doi:10.5281/zenodo.23250262.
+See [`CITATION.cff`](CITATION.cff). Dataset: Deepanshu, S. Singh, P. Vadhavkar, Y. R. C A, *BR-Bench* (release v0.2), Zenodo, doi:10.5281/zenodo.23688064.
 
 ## Team
 

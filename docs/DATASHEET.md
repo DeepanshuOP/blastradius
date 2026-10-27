@@ -2,7 +2,7 @@
 
 Structure follows Gebru et al., *Datasheets for Datasets* (CACM 64(12), 2021).
 
-Dataset name **BR-Bench**; project name **BlastRadius** (D-08). The release is deposited on Zenodo as DOI 10.5281/zenodo.23250262.
+Dataset name **BR-Bench**; project name **BlastRadius** (D-08). Release v0.1 is on Zenodo as DOI 10.5281/zenodo.23250262 and release v0.2 as DOI 10.5281/zenodo.23688064 (all versions: 10.5281/zenodo.23250261).
 
 **Provenance of every figure.** All figures regenerate from the chain fixed by
 D-49, run at commit `34aec6d` or later:
@@ -272,7 +272,7 @@ Release v0.2 is deposited as a new version of the same Zenodo record. It keeps e
 | Secret scan (T1.6b) | **PASS**: 4 files, 0 BLOCKER findings, 5 REVIEW findings, `analysis/secret_scan.py --root release`; the REVIEW findings were triaged (see below). v0.2: 4 files, 0 BLOCKER, 7 REVIEW (the 5 above plus 2 in the new instances.changed_files column: 25 `email`-shaped matches, all `@2x`/`@3x` icon asset filenames in Stirling-Tools/Stirling-PDF and dbeaver/dbeaver; 5 `internal_host`-shaped matches, two Java package or bundle paths (`jdk.internal`, `org.jkiss.dbeaver.app.local`) and three source or build filenames (`ConnectDialog.internalOnly.test.tsx`, `Dockerfile.localdev`, `heuristicEngine.corpus.test.ts`); no real address or hostname) |
 | Canary string (T1.7) | **PASS**: `release/v0.1/CANARY.txt` and `release/v0.2/CANARY.txt`, documented constant present verbatim and covered by the checksum manifest |
 | SHA-256 checksum manifest | **PASS**: `release/v0.1/CHECKSUMS.sha256` and `release/v0.2/CHECKSUMS.sha256` |
-| Zenodo deposit and DOI | **DONE**: 10.5281/zenodo.23250262 (one-way: the files cannot change after publication) |
+| Zenodo deposit and DOI | **DONE**: 10.5281/zenodo.23250262 (one-way: the files cannot change after publication); v0.2: DONE, 10.5281/zenodo.23688064 (2026-10-27) |
 | HuggingFace dataset card + loader | **NOT PROVIDED** |
 | `schema.json` + validator (T1.6a) | **PASS for v0.2**: `release/v0.2/schema.json`, `analysis/validate_release.py` |
 

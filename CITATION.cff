@@ -23,8 +23,11 @@ identifiers:
     value: "10.5281/zenodo.23250690"
     description: "Source code archive (GitHub release v1.0.0, Zenodo)"
   - type: doi
-    value: "10.5281/zenodo.23250262"
-    description: "BR-Bench release v0.1 dataset (Zenodo)"
+    value: "10.5281/zenodo.23688064"
+    description: "BR-Bench release v0.2 dataset (Zenodo)"
+  - type: doi
+    value: "10.5281/zenodo.23250261"
+    description: "BR-Bench, all versions (Zenodo concept DOI)"
 repository-code: "https://github.com/DeepanshuOP/blastradius"
 license: MIT
 keywords:
