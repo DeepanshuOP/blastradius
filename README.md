@@ -3,7 +3,7 @@
 **Which tests did a code change actually break?** BlastRadius mines GitHub Actions runs and links each pull-request change to the individual tests that *really failed because of it*, not the files usually edited together (co-change) and not every test that can reach the change (static reachability). The released dataset is **BR-Bench**.
 
 [![Dataset DOI](https://img.shields.io/badge/dataset-10.5281%2Fzenodo.23688064-blue)](https://doi.org/10.5281/zenodo.23688064)
-[![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23250690-blue)](https://doi.org/10.5281/zenodo.23250690)
+[![Code DOI](https://img.shields.io/badge/code-10.5281%2Fzenodo.23690493-blue)](https://doi.org/10.5281/zenodo.23690493)
 ![License: MIT (code), CC BY 4.0 (data)](https://img.shields.io/badge/license-MIT%20%2F%20CC%20BY%204.0-green)
 
 Team: Deepanshu, Sanskriti Singh and Prisha Vadhavkar; guide Dr. Yoga Raja C A; VIT BITE497J Project I.

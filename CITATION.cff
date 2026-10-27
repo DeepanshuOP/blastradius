@@ -20,8 +20,11 @@ authors:
     affiliation: "Vellore Institute of Technology, Vellore, India"
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23250690"
-    description: "Source code archive (GitHub release v1.0.0, Zenodo)"
+    value: "10.5281/zenodo.23690493"
+    description: "Source code archive (GitHub release v2.0.0, Zenodo)"
+  - type: doi
+    value: "10.5281/zenodo.23250689"
+    description: "BlastRadius code, all versions (Zenodo concept DOI)"
   - type: doi
     value: "10.5281/zenodo.23688064"
     description: "BR-Bench release v0.2 dataset (Zenodo)"
